@@ -1,0 +1,581 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2012-02-15 15:13\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 4a2211a3526d4d7aaec49ae9293bba70
+#: ../../topics/i18n/timezones.txt:5
+msgid "Time zones"
+msgstr ""
+
+# 7e46df56d21640148849f7fef584075c
+#: ../../topics/i18n/timezones.txt:10
+msgid "Overview"
+msgstr ""
+
+# afe5530bb4cc4e0da54a13868d826b71
+#: ../../topics/i18n/timezones.txt:12
+msgid ""
+"When support for time zones is enabled, Django stores date and time "
+"information in UTC in the database, uses time zone-aware datetime objects "
+"internally, and translates them to the end user's time zone in templates and "
+"forms."
+msgstr ""
+
+# 2fd88ebcbce249608b6d97771b07242f
+#: ../../topics/i18n/timezones.txt:17
+msgid ""
+"This is handy if your users live in more than one time zone and you want to "
+"display date and time information according to each user's wall clock. Even "
+"if your website is available in only one time zone, it's still a good "
+"practice to store data in UTC in your database. Here is why."
+msgstr ""
+
+# 9622acb98d1e452aa9ecadd03da4329a
+#: ../../topics/i18n/timezones.txt:22
+msgid ""
+"Many countries have a system of daylight saving time (DST), where clocks are "
+"moved forwards in spring and backwards in autumn. If you're working in local "
+"time, you're likely to encounter errors twice a year, when the transitions "
+"happen. pytz' docs discuss `these issues`_ in greater detail. It probably "
+"doesn't matter for your blog, but it's more annoying if you over-bill or "
+"under-bill your customers by one hour, twice a year, every year. The "
+"solution to this problem is to use UTC in the code and local time only when "
+"interacting with end users."
+msgstr ""
+
+# b6013b1b284643088c53019be8e32e27
+#: ../../topics/i18n/timezones.txt:31
+msgid ""
+"Time zone support is disabled by default. To enable it, set :setting:`USE_TZ "
+"= True <USE_TZ>` in your settings file. Installing pytz_ is highly "
+"recommended, but not mandatory."
+msgstr ""
+
+# cc27128b2dd4455a8e56e4292a2fa1e7
+#: ../../topics/i18n/timezones.txt:37
+msgid ""
+"The default :file:`settings.py` file created by :djadmin:`django-admin.py "
+"startproject <startproject>` includes :setting:`USE_TZ = True <USE_TZ>` for "
+"convenience."
+msgstr ""
+
+# 2f45604bed1949e2a30d8ca530d230ed
+#: ../../topics/i18n/timezones.txt:43
+msgid ""
+"There is also an independent but related :setting:`USE_L10N` setting that "
+"controls if Django should activate format localization. See :doc:`/topics/"
+"i18n/formatting` for more details."
+msgstr ""
+
+# 467f7430a3134b1c9b5974e862386b90
+#: ../../topics/i18n/timezones.txt:48
+msgid "Concepts"
+msgstr ""
+
+# 6b5f270ba13048beabfe3dc4c1901095
+#: ../../topics/i18n/timezones.txt:51
+msgid "Naive and aware datetime objects"
+msgstr ""
+
+# 10b3fd3484d846f4a3f93367056a91a8
+#: ../../topics/i18n/timezones.txt:53
+msgid ""
+"Python's :class:`datetime.datetime` objects have a ``tzinfo`` attribute that "
+"can be used to store time zone information, represented as an instance of a "
+"subclass of :class:`datetime.tzinfo`. When this attribute is set and "
+"describes an offset, a datetime object is **aware**; otherwise, it's "
+"**naive**."
+msgstr ""
+
+# aede204194da4e86b9757755f47a7575
+#: ../../topics/i18n/timezones.txt:58
+msgid ""
+"You can use :func:`~django.utils.timezone.is_aware` and :func:`~django.utils."
+"timezone.is_naive` to determine if datetimes are aware or naive."
+msgstr ""
+
+# bf7cd0aeb5824124ae70bcb61edce75e
+#: ../../topics/i18n/timezones.txt:62
+msgid ""
+"When time zone support is disabled, Django uses naive datetime objects in "
+"local time. This is simple and sufficient for many use cases. In this mode, "
+"to obtain the current time, you would write::"
+msgstr ""
+
+# 409e5559756d4095a1e088080d16b505
+#: ../../topics/i18n/timezones.txt:70
+msgid ""
+"When time zone support is enabled, Django uses time zone aware datetime "
+"objects. If your code creates datetime objects, they should be aware too. In "
+"this mode, the example above becomes::"
+msgstr ""
+
+# 0d21df80992343e5999264c264b60fb8
+#: ../../topics/i18n/timezones.txt:81
+msgid ""
+":mod:`django.utils.timezone` provides a :func:`~django.utils.timezone.now()` "
+"function that returns a naive or aware datetime object according to the "
+"value of :setting:`USE_TZ`."
+msgstr ""
+
+# 34b215bd1a104f0686aa59b162955ef4
+#: ../../topics/i18n/timezones.txt:87
+msgid ""
+"Dealing with aware datetime objects isn't always intuitive. For instance, "
+"the ``tzinfo`` argument of the standard datetime constructor doesn't work "
+"reliably for time zones with DST. Using UTC is generally safe; if you're "
+"using other time zones, you should review `pytz' documentation <pytz>`_ "
+"carefully."
+msgstr ""
+
+# ef7a525d2e1c4ba3be63002aa878e5e7
+#: ../../topics/i18n/timezones.txt:95
+msgid ""
+"Python's :class:`datetime.time` objects also feature a ``tzinfo`` attribute, "
+"and PostgreSQL has a matching ``time with time zone`` type. However, as "
+"PostgreSQL's docs put it, this type \"exhibits properties which lead to "
+"questionable usefulness\"."
+msgstr ""
+
+# 21ef4bc096d749bfbb75697155324ae4
+#: ../../topics/i18n/timezones.txt:100
+msgid ""
+"Django only supports naive time objects and will raise an exception if you "
+"attempt to save an aware time object."
+msgstr ""
+
+# 100e6f2bd6664bc8b945642149edfb89
+#: ../../topics/i18n/timezones.txt:106
+msgid "Interpretation of naive datetime objects"
+msgstr ""
+
+# 99d40200c7ef49718177913029559a61
+#: ../../topics/i18n/timezones.txt:108
+msgid ""
+"When :setting:`USE_TZ` is ``True``, Django still accepts naive datetime "
+"objects, in order to preserve backwards-compatibility. When the database "
+"layer receives one, it attempts to make it aware by interpreting it in the :"
+"ref:`default time zone <default-current-time-zone>` and raises a warning."
+msgstr ""
+
+# eb450feef9dc4f8f90faaaeec493aca5
+#: ../../topics/i18n/timezones.txt:113
+msgid ""
+"Unfortunately, during DST transitions, some datetimes don't exist or are "
+"ambiguous. In such situations, pytz_ raises an exception. Other :class:"
+"`~datetime.tzinfo` implementations, such as the local time zone used as a "
+"fallback when pytz_ isn't installed, may raise an exception or return "
+"inaccurate results. That's why you should always create aware datetime "
+"objects when time zone support is enabled."
+msgstr ""
+
+# 6b798c04cbcf4588a4cf35cce567fd53
+#: ../../topics/i18n/timezones.txt:120
+msgid ""
+"In practice, this is rarely an issue. Django gives you aware datetime "
+"objects in the models and forms, and most often, new datetime objects are "
+"created from existing ones through :class:`~datetime.timedelta` arithmetic. "
+"The only datetime that's often created in application code is the current "
+"time, and :func:`timezone.now() <django.utils.timezone.now>` automatically "
+"does the right thing."
+msgstr ""
+
+# 51f5d41b9cf444edb0d42d67257e40ec
+#: ../../topics/i18n/timezones.txt:130
+msgid "Default time zone and current time zone"
+msgstr ""
+
+# 7479643566f04e4981a122dab8de7383
+#: ../../topics/i18n/timezones.txt:132
+msgid ""
+"The **default time zone** is the time zone defined by the :setting:"
+"`TIME_ZONE` setting."
+msgstr ""
+
+# 22af8e81f011450bb6e29bae55fa0719
+#: ../../topics/i18n/timezones.txt:135
+msgid ""
+"When pytz_ is available, Django loads the definition of the default time "
+"zone from the `tz database`_. This is the most accurate solution. Otherwise, "
+"it relies on the difference between local time and UTC, as reported by the "
+"operating system, to compute conversions. This is less reliable, especially "
+"around DST transitions."
+msgstr ""
+
+# 943fab500b8d48b6adac4b444c42a98d
+#: ../../topics/i18n/timezones.txt:141
+msgid "The **current time zone** is the time zone that's used for rendering."
+msgstr ""
+
+# cb871ceaad2e4cfeac6f9ff9423b3ba0
+#: ../../topics/i18n/timezones.txt:143
+msgid ""
+"You should set it to the end user's actual time zone with :func:`~django."
+"utils.timezone.activate`. Otherwise, the default time zone is used."
+msgstr ""
+
+# ecb74e176f9548ee9e554b0ae2b56b1a
+#: ../../topics/i18n/timezones.txt:149
+msgid ""
+"As explained in the documentation of :setting:`TIME_ZONE`, Django sets "
+"environment variables so that its process runs in the default time zone. "
+"This happens regardless of the value of :setting:`USE_TZ` and of the current "
+"time zone."
+msgstr ""
+
+# f1c6e914b5b04e2496ed62e05360dcfe
+#: ../../topics/i18n/timezones.txt:154
+msgid ""
+"When :setting:`USE_TZ` is ``True``, this is useful to preserve backwards-"
+"compatibility with applications that still rely on local time. However, :ref:"
+"`as explained above <naive-datetime-objects>`, this isn't entirely reliable, "
+"and you should always work with aware datetimes in UTC in your own code. For "
+"instance, use :meth:`~datetime.datetime.utcfromtimestamp` instead of :meth:"
+"`~datetime.datetime.fromtimestamp` -- and don't forget to set ``tzinfo`` to :"
+"data:`~django.utils.timezone.utc`."
+msgstr ""
+
+# e9dfb3377eff49fdac96303887a1221d
+#: ../../topics/i18n/timezones.txt:164
+msgid "Selecting the current time zone"
+msgstr ""
+
+# dd0285ea6e284ea6b29a428905dd6e4f
+#: ../../topics/i18n/timezones.txt:166
+msgid ""
+"The current time zone is the equivalent of the current :term:`locale <locale "
+"name>` for translations. However, there's no equivalent of the ``Accept-"
+"Language`` HTTP header that Django could use to determine the user's time "
+"zone automatically. Instead, Django provides :ref:`time zone selection "
+"functions <time-zone-selection-functions>`. Use them to build the time zone "
+"selection logic that makes sense for you."
+msgstr ""
+
+# 99c20aed2c0b47598dc1ce3b61c44a7e
+#: ../../topics/i18n/timezones.txt:173
+msgid ""
+"Most websites who care about time zones just ask users in which time zone "
+"they live and store this information in the user's profile. For anonymous "
+"users, they use the time zone of their primary audience or UTC. pytz_ "
+"provides helpers, like a list of time zones per country, that you can use to "
+"pre-select the most likely choices."
+msgstr ""
+
+# bdd788f7ca184b5ab1096993896f3f92
+#: ../../topics/i18n/timezones.txt:179
+msgid ""
+"Here's an example that stores the current timezone in the session. (It skips "
+"error handling entirely for the sake of simplicity.)"
+msgstr ""
+
+# fd448587a8d047e581319d70da94a083
+#: ../../topics/i18n/timezones.txt:182
+msgid "Add the following middleware to :setting:`MIDDLEWARE_CLASSES`::"
+msgstr ""
+
+# 85b829948ee0461cb80f90e94fe76f85
+#: ../../topics/i18n/timezones.txt:192
+msgid "Create a view that can set the current timezone::"
+msgstr ""
+
+# 3c382a1b5746463aa91913b6e83ce2be
+#: ../../topics/i18n/timezones.txt:204
+msgid ""
+"Include in :file:`template.html` a form that will ``POST`` to this view:"
+msgstr ""
+
+# 30a6086abe38489085f859837bd052eb
+#: ../../topics/i18n/timezones.txt:221
+msgid "Time zone aware input in forms"
+msgstr ""
+
+# 7e8dd9dcf2da4edc88bd761b70214d37
+#: ../../topics/i18n/timezones.txt:223
+msgid ""
+"When you enable time zone support, Django interprets datetimes entered in "
+"forms in the :ref:`current time zone <default-current-time-zone>` and "
+"returns aware datetime objects in ``cleaned_data``."
+msgstr ""
+
+# d661a3f027cd4420b5940848b0ee870f
+#: ../../topics/i18n/timezones.txt:227
+msgid ""
+"If the current time zone raises an exception for datetimes that don't exist "
+"or are ambiguous because they fall in a DST transition (the timezones "
+"provided by pytz_ do this), such datetimes will be reported as invalid "
+"values."
+msgstr ""
+
+# 172ff31bc0c348ec89be3c5b79fba86b
+#: ../../topics/i18n/timezones.txt:234
+msgid "Time zone aware output in templates"
+msgstr ""
+
+# c90091171c7f4ad4a3ea7d241ad4a445
+#: ../../topics/i18n/timezones.txt:236
+msgid ""
+"When you enable time zone support, Django converts aware datetime objects to "
+"the :ref:`current time zone <default-current-time-zone>` when they're "
+"rendered in templates. This behaves very much like :doc:`format localization "
+"</topics/i18n/formatting>`."
+msgstr ""
+
+# 8a3ddded995946088ee94c108c153638
+#: ../../topics/i18n/timezones.txt:243
+msgid ""
+"Django doesn't convert naive datetime objects, because they could be "
+"ambiguous, and because your code should never produce naive datetimes when "
+"time zone support is enabled. However, you can force conversion with the "
+"template filters described below."
+msgstr ""
+
+# cb691db03aa9473caf9ec206b0f874d5
+#: ../../topics/i18n/timezones.txt:248
+msgid ""
+"Conversion to local time isn't always appropriate -- you may be generating "
+"output for computers rather than for humans. The following filters and tags, "
+"provided the ``tz`` template library, allow you to control the time zone "
+"conversions."
+msgstr ""
+
+# 14d0d4ad41784ec09bb966df14409509
+#: ../../topics/i18n/timezones.txt:254
+msgid "Template tags"
+msgstr ""
+
+# 77c9466e291a4383a8d959f0f13da338
+# f4b94f3103cd4bbe860eaf80f28e702a
+#: ../../topics/i18n/timezones.txt:259 ../../topics/i18n/timezones.txt:336
+msgid "localtime"
+msgstr ""
+
+# 897fe60be55d40f4bdebd6f282b30b4b
+#: ../../topics/i18n/timezones.txt:261
+msgid ""
+"Enables or disables conversion of aware datetime objects to the current time "
+"zone in the contained block."
+msgstr ""
+
+# 88d145a4fa3b43299a2ff0a24444d8fa
+#: ../../topics/i18n/timezones.txt:264
+msgid ""
+"This tag has exactly the same effects as the :setting:`USE_TZ` setting as "
+"far as the template engine is concerned. It allows a more fine grained "
+"control of conversion."
+msgstr ""
+
+# b5d8c6f810fe45828b995016bea6339e
+#: ../../topics/i18n/timezones.txt:268
+msgid "To activate or deactivate conversion for a template block, use::"
+msgstr ""
+
+# f3df92e307a840519ea50a9ac8846c37
+#: ../../topics/i18n/timezones.txt:282
+msgid ""
+"The value of :setting:`USE_TZ` isn't respected inside of a ``{% localtime %}"
+"`` block."
+msgstr ""
+
+# 55763c1c00c1472bb66bbbe1ea3dfaeb
+# 97db217a1245401d8a545e3dfa7ebf9b
+#: ../../topics/i18n/timezones.txt:288 ../../topics/i18n/timezones.txt:362
+msgid "timezone"
+msgstr ""
+
+# 81be80c6796d462a8638af4a7ba86157
+#: ../../topics/i18n/timezones.txt:290
+msgid ""
+"Sets or unsets the current time zone in the contained block. When the "
+"current time zone is unset, the default time zone applies."
+msgstr ""
+
+# 02a0c3997df34eb587b317d072f7b957
+#: ../../topics/i18n/timezones.txt:307
+msgid ""
+"In the second block, ``None`` resolves to the Python object ``None`` because "
+"isn't defined in the template context, not because it's the string ``None``."
+msgstr ""
+
+# 65dcab58f52e42c6954900360fe0c292
+#: ../../topics/i18n/timezones.txt:314
+msgid "get_current_timezone"
+msgstr ""
+
+# 596c19b3d417490495cd58a08472467f
+#: ../../topics/i18n/timezones.txt:316
+msgid ""
+"When the :func:`django.core.context_processors.tz` context processor is "
+"enabled -- by default, it is -- each :class:`~django.template."
+"RequestContext` contains a ``TIME_ZONE`` variable that provides the name of "
+"the current time zone."
+msgstr ""
+
+# 346d1fecc5fe4420a472583effcd7344
+#: ../../topics/i18n/timezones.txt:321
+msgid ""
+"If you don't use a :class:`~django.template.RequestContext`, you can obtain "
+"this value with the ``get_current_timezone`` tag::"
+msgstr ""
+
+# f4feca13d3b04643aa1fe1612e718773
+#: ../../topics/i18n/timezones.txt:327
+msgid "Template filters"
+msgstr ""
+
+# 676912c9036f4a5daefaf572eaf35af6
+#: ../../topics/i18n/timezones.txt:329
+msgid ""
+"These filters accept both aware and naive datetimes. For conversion "
+"purposes, they assume that naive datetimes are in the default time zone. "
+"They always return aware datetimes."
+msgstr ""
+
+# 83d3e3564426499695d886cf7f3b2cf8
+#: ../../topics/i18n/timezones.txt:338
+msgid "Forces conversion of a single value to the current time zone."
+msgstr ""
+
+# 19ef9ffc83234b89932cd979aec332ca
+# 876d7139c72a425e840ae513c41a4509
+# 4ba0be56f003430484447a34b15c4f1a
+#: ../../topics/i18n/timezones.txt:340 ../../topics/i18n/timezones.txt:353
+#: ../../topics/i18n/timezones.txt:369
+msgid "For example::"
+msgstr ""
+
+# a51fda8e133d4877997490787e0b08d7
+#: ../../topics/i18n/timezones.txt:349
+msgid "utc"
+msgstr ""
+
+# 539b2ad1914f40319cb2b63ccd1e0d31
+#: ../../topics/i18n/timezones.txt:351
+msgid "Forces conversion of a single value to UTC."
+msgstr ""
+
+# 70c4de77d7e74261b010a601ed74fe41
+#: ../../topics/i18n/timezones.txt:364
+msgid "Forces conversion of a single value to an arbitrary timezone."
+msgstr ""
+
+# 3fb5639ec6614f689017419704144c9c
+#: ../../topics/i18n/timezones.txt:366
+msgid ""
+"The argument must be an instance of a :class:`~datetime.tzinfo` subclass or "
+"a time zone name. If it is a time zone name, pytz_ is required."
+msgstr ""
+
+# 1ff79a41accd4b59a52cc470af7510a0
+#: ../../topics/i18n/timezones.txt:378
+msgid "Migration guide"
+msgstr ""
+
+# fbd692f94b754038807259a7701f66de
+#: ../../topics/i18n/timezones.txt:380
+msgid ""
+"Here's how to migrate a project that was started before Django supported "
+"time zones."
+msgstr ""
+
+# 7f69818e614a4c0f9b7a2299c7a41fb6
+#: ../../topics/i18n/timezones.txt:384
+msgid "Data"
+msgstr ""
+
+# a3f1e527d0b04b6e9a1dbc294ee06a98
+#: ../../topics/i18n/timezones.txt:387
+msgid "PostgreSQL"
+msgstr ""
+
+# 68dc0e0ca9bb4291832ccc670066db1c
+#: ../../topics/i18n/timezones.txt:389
+msgid ""
+"The PostgreSQL backend stores datetimes as ``timestamp with time zone``. In "
+"practice, this means it converts datetimes from the connection's time zone "
+"to UTC on storage, and from UTC to the connection's time zone on retrieval."
+msgstr ""
+
+# d3e717a1f7804c4195ba9cc8a26a9bec
+#: ../../topics/i18n/timezones.txt:393
+msgid ""
+"As a consequence, if you're using PostgreSQL, you can switch between "
+"``USE_TZ = False`` and ``USE_TZ = True`` freely. The database connection's "
+"time zone will be set to :setting:`TIME_ZONE` or ``UTC`` respectively, so "
+"that Django obtains correct datetimes in all cases. You don't need to "
+"perform any data conversions."
+msgstr ""
+
+# 393b0993d78846378df16d7ac9ac496f
+#: ../../topics/i18n/timezones.txt:400
+msgid "Other databases"
+msgstr ""
+
+# daf2486f59e34119bb561996a8f39727
+#: ../../topics/i18n/timezones.txt:402
+msgid ""
+"Other backends store datetimes without time zone information. If you switch "
+"from ``USE_TZ = False`` to ``USE_TZ = True``, you must convert your data "
+"from local time to UTC -- which isn't deterministic if your local time has "
+"DST."
+msgstr ""
+
+# be85825d755e4fbf9f5b77f85d221a0e
+#: ../../topics/i18n/timezones.txt:407
+msgid "Code"
+msgstr ""
+
+# c22790d5deda4784960b6317546782dc
+#: ../../topics/i18n/timezones.txt:409
+msgid ""
+"The first step is to add :setting:`USE_TZ = True <USE_TZ>` to your settings "
+"file and install pytz_ (if possible). At this point, things should mostly "
+"work. If you create naive datetime objects in your code, Django makes them "
+"aware when necessary."
+msgstr ""
+
+# 9f308493bc4c48139fdbfdcb7848ac9c
+#: ../../topics/i18n/timezones.txt:414
+msgid ""
+"However, these conversions may fail around DST transitions, which means you "
+"aren't getting the full benefits of time zone support yet. Also, you're "
+"likely to run into a few problems because it's impossible to compare a naive "
+"datetime with an aware datetime. Since Django now gives you aware datetimes, "
+"you'll get exceptions wherever you compare a datetime that comes from a "
+"model or a form with a naive datetime that you've created in your code."
+msgstr ""
+
+# 7774447f0ee549b890cdd94b3395ef22
+#: ../../topics/i18n/timezones.txt:421
+msgid ""
+"So the second step is to refactor your code wherever you instanciate "
+"datetime objects to make them aware. This can be done incrementally. :mod:"
+"`django.utils.timezone` defines some handy helpers for compatibility code: :"
+"func:`~django.utils.timezone.now`, :func:`~django.utils.timezone.is_aware`, :"
+"func:`~django.utils.timezone.is_naive`, :func:`~django.utils.timezone."
+"make_aware`, and :func:`~django.utils.timezone.make_naive`."
+msgstr ""
+
+# fe20b7b5507b4cacb26c006dc09178a1
+#: ../../topics/i18n/timezones.txt:430
+msgid ""
+"Finally, in order to help you locate code that needs upgrading, Django "
+"raises a warning when you attempt to save a naive datetime to the database. "
+"During development, you can turn such warnings into exceptions and get a "
+"traceback by adding to your settings file::"
+msgstr ""

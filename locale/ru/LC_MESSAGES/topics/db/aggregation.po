@@ -1,0 +1,519 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2012-02-15 15:13\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 0bcaa27a761b4011964d415b54377f59
+#: ../../topics/db/aggregation.txt:3
+msgid "Aggregation"
+msgstr ""
+
+# fffa983fd8904be6b538631e3194bf24
+#: ../../topics/db/aggregation.txt:7
+msgid ""
+"The topic guide on :doc:`Django's database-abstraction API </topics/db/"
+"queries>` described the way that you can use Django queries that create, "
+"retrieve, update and delete individual objects. However, sometimes you will "
+"need to retrieve values that are derived by summarizing or *aggregating* a "
+"collection of objects. This topic guide describes the ways that aggregate "
+"values can be generated and returned using Django queries."
+msgstr ""
+
+# 71a8e0af98f44f0e836e7c676f90a64a
+#: ../../topics/db/aggregation.txt:14
+msgid ""
+"Throughout this guide, we'll refer to the following models. These models are "
+"used to track the inventory for a series of online bookstores:"
+msgstr ""
+
+# 2b3997a640294e9e91559b33669c850f
+#: ../../topics/db/aggregation.txt:46
+msgid "Generating aggregates over a QuerySet"
+msgstr ""
+
+# b1c1a74e131e4e0280c0bb1e2f7e0f9d
+#: ../../topics/db/aggregation.txt:48
+msgid ""
+"Django provides two ways to generate aggregates. The first way is to "
+"generate summary values over an entire ``QuerySet``. For example, say you "
+"wanted to calculate the average price of all books available for sale. "
+"Django's query syntax provides a means for describing the set of all books::"
+msgstr ""
+
+# ff791af02ee74870addab1c02ebc3434
+#: ../../topics/db/aggregation.txt:55
+msgid ""
+"What we need is a way to calculate summary values over the objects that "
+"belong to this ``QuerySet``. This is done by appending an ``aggregate()`` "
+"clause onto the ``QuerySet``::"
+msgstr ""
+
+# d60c53f6e3254f9887fb466c4fc18293
+#: ../../topics/db/aggregation.txt:63
+msgid ""
+"The ``all()`` is redundant in this example, so this could be simplified to::"
+msgstr ""
+
+# 0dc0cf3d44684914bf5a93fe2e652b12
+#: ../../topics/db/aggregation.txt:68
+msgid ""
+"The argument to the ``aggregate()`` clause describes the aggregate value "
+"that we want to compute - in this case, the average of the ``price`` field "
+"on the ``Book`` model. A list of the aggregate functions that are available "
+"can be found in the :ref:`QuerySet reference <aggregation-functions>`."
+msgstr ""
+
+# b47801ad10c64752805e0062f6eda5b2
+#: ../../topics/db/aggregation.txt:73
+msgid ""
+"``aggregate()`` is a terminal clause for a ``QuerySet`` that, when invoked, "
+"returns a dictionary of name-value pairs. The name is an identifier for the "
+"aggregate value; the value is the computed aggregate. The name is "
+"automatically generated from the name of the field and the aggregate "
+"function. If you want to manually specify a name for the aggregate value, "
+"you can do so by providing that name when you specify the aggregate clause::"
+msgstr ""
+
+# 865d3da61f154d9bb5be589f5d05e949
+#: ../../topics/db/aggregation.txt:83
+msgid ""
+"If you want to generate more than one aggregate, you just add another "
+"argument to the ``aggregate()`` clause. So, if we also wanted to know the "
+"maximum and minimum price of all books, we would issue the query::"
+msgstr ""
+
+# 7bd279623dd44f02a33386c451b62164
+#: ../../topics/db/aggregation.txt:92
+msgid "Generating aggregates for each item in a QuerySet"
+msgstr ""
+
+# ea331a1bb38b478f9b6b2f63e5d17b97
+#: ../../topics/db/aggregation.txt:94
+msgid ""
+"The second way to generate summary values is to generate an independent "
+"summary for each object in a ``QuerySet``. For example, if you are "
+"retrieving a list of books, you may want to know how many authors "
+"contributed to each book. Each Book has a many-to-many relationship with the "
+"Author; we want to summarize this relationship for each book in the "
+"``QuerySet``."
+msgstr ""
+
+# d1d789375c094e399ebb04c7ca7a7645
+#: ../../topics/db/aggregation.txt:100
+msgid ""
+"Per-object summaries can be generated using the ``annotate()`` clause. When "
+"an ``annotate()`` clause is specified, each object in the ``QuerySet`` will "
+"be annotated with the specified values."
+msgstr ""
+
+# fc23f31d7f0a4b3daf94e8af4cb11f0f
+#: ../../topics/db/aggregation.txt:104
+msgid ""
+"The syntax for these annotations is identical to that used for the "
+"``aggregate()`` clause. Each argument to ``annotate()`` describes an "
+"aggregate that is to be calculated. For example, to annotate Books with the "
+"number of authors::"
+msgstr ""
+
+# 9d1e5aa9565b482eb55cfebb54cdc791
+#: ../../topics/db/aggregation.txt:122
+msgid ""
+"As with ``aggregate()``, the name for the annotation is automatically "
+"derived from the name of the aggregate function and the name of the field "
+"being aggregated. You can override this default name by providing an alias "
+"when you specify the annotation::"
+msgstr ""
+
+# 49f9a20e36054ecdbfec7af69bc5a489
+#: ../../topics/db/aggregation.txt:133
+msgid ""
+"Unlike ``aggregate()``, ``annotate()`` is *not* a terminal clause. The "
+"output of the ``annotate()`` clause is a ``QuerySet``; this ``QuerySet`` can "
+"be modified using any other ``QuerySet`` operation, including ``filter()``, "
+"``order_by``, or even additional calls to ``annotate()``."
+msgstr ""
+
+# a6070665cb734bd8a3906cfd58c0bd78
+#: ../../topics/db/aggregation.txt:139
+msgid "Joins and aggregates"
+msgstr ""
+
+# b54c3bea2101491b9d74e8742f158c4c
+#: ../../topics/db/aggregation.txt:141
+msgid ""
+"So far, we have dealt with aggregates over fields that belong to the model "
+"being queried. However, sometimes the value you want to aggregate will "
+"belong to a model that is related to the model you are querying."
+msgstr ""
+
+# 1a2e91528aa94c5c8d50c17993a52158
+#: ../../topics/db/aggregation.txt:145
+msgid ""
+"When specifying the field to be aggregated in an aggregate function, Django "
+"will allow you to use the same :ref:`double underscore notation <field-"
+"lookups-intro>` that is used when referring to related fields in filters. "
+"Django will then handle any table joins that are required to retrieve and "
+"aggregate the related value."
+msgstr ""
+
+# 7285f8906fe7445abdd143f342d82e8f
+#: ../../topics/db/aggregation.txt:151
+msgid ""
+"For example, to find the price range of books offered in each store, you "
+"could use the annotation::"
+msgstr ""
+
+# 8ea8d9b7f28e49c8a41f94579c8b1feb
+#: ../../topics/db/aggregation.txt:156
+msgid ""
+"This tells Django to retrieve the Store model, join (through the many-to-"
+"many relationship) with the Book model, and aggregate on the price field of "
+"the book model to produce a minimum and maximum value."
+msgstr ""
+
+# d3ea01a8b78740a5ae6612e5e141423b
+#: ../../topics/db/aggregation.txt:160
+msgid ""
+"The same rules apply to the ``aggregate()`` clause. If you wanted to know "
+"the lowest and highest price of any book that is available for sale in a "
+"store, you could use the aggregate::"
+msgstr ""
+
+# 5b48d4b2d7754c0798df075e2fbf26ee
+#: ../../topics/db/aggregation.txt:166
+msgid ""
+"Join chains can be as deep as you require. For example, to extract the age "
+"of the youngest author of any book available for sale, you could issue the "
+"query::"
+msgstr ""
+
+# 7c8f43904dbe4fe7bcc2e1cbc99d2917
+#: ../../topics/db/aggregation.txt:173
+msgid "Aggregations and other QuerySet clauses"
+msgstr ""
+
+# 8d73a44d849a4093a256dfb9ce45360d
+#: ../../topics/db/aggregation.txt:176
+msgid "``filter()`` and ``exclude()``"
+msgstr ""
+
+# 2cd6a4c9a1d448d6a7f141edfaab8017
+#: ../../topics/db/aggregation.txt:178
+msgid ""
+"Aggregates can also participate in filters. Any ``filter()`` (or ``exclude()"
+"``) applied to normal model fields will have the effect of constraining the "
+"objects that are considered for aggregation."
+msgstr ""
+
+# e0dcc106c131413bbb550a67ba01a519
+#: ../../topics/db/aggregation.txt:182
+msgid ""
+"When used with an ``annotate()`` clause, a filter has the effect of "
+"constraining the objects for which an annotation is calculated. For example, "
+"you can generate an annotated list of all books that have a title starting "
+"with \"Django\" using the query::"
+msgstr ""
+
+# c8057a8acb1341ed98bf9e8ea1ee17ce
+#: ../../topics/db/aggregation.txt:189
+msgid ""
+"When used with an ``aggregate()`` clause, a filter has the effect of "
+"constraining the objects over which the aggregate is calculated. For "
+"example, you can generate the average price of all books with a title that "
+"starts with \"Django\" using the query::"
+msgstr ""
+
+# e9161c498f964d7aa23e8b1f0c669034
+#: ../../topics/db/aggregation.txt:197
+msgid "Filtering on annotations"
+msgstr ""
+
+# 60e8528f2ff34e42a60e85d82bd02583
+#: ../../topics/db/aggregation.txt:199
+msgid ""
+"Annotated values can also be filtered. The alias for the annotation can be "
+"used in ``filter()`` and ``exclude()`` clauses in the same way as any other "
+"model field."
+msgstr ""
+
+# a08e83f1afac4484865179e4c66aff98
+#: ../../topics/db/aggregation.txt:203
+msgid ""
+"For example, to generate a list of books that have more than one author, you "
+"can issue the query::"
+msgstr ""
+
+# 734e607c8c0f400aa184f42ceb419869
+#: ../../topics/db/aggregation.txt:208
+msgid ""
+"This query generates an annotated result set, and then generates a filter "
+"based upon that annotation."
+msgstr ""
+
+# ec6c9eae74d8428484030b5cc02a4922
+#: ../../topics/db/aggregation.txt:212
+msgid "Order of ``annotate()`` and ``filter()`` clauses"
+msgstr ""
+
+# ef972f61ff3e4703846733c4a190eb0a
+#: ../../topics/db/aggregation.txt:214
+msgid ""
+"When developing a complex query that involves both ``annotate()`` and "
+"``filter()`` clauses, particular attention should be paid to the order in "
+"which the clauses are applied to the ``QuerySet``."
+msgstr ""
+
+# e3d1481616b24a6aa232bf62ca6d4f44
+#: ../../topics/db/aggregation.txt:218
+msgid ""
+"When an ``annotate()`` clause is applied to a query, the annotation is "
+"computed over the state of the query up to the point where the annotation is "
+"requested. The practical implication of this is that ``filter()`` and "
+"``annotate()`` are not commutative operations -- that is, there is a "
+"difference between the query::"
+msgstr ""
+
+# 99710d340e0a4faebf0839f6993f36b2
+#: ../../topics/db/aggregation.txt:226
+msgid "and the query::"
+msgstr ""
+
+# 32a967a88b464814a0c6b86ed80532be
+#: ../../topics/db/aggregation.txt:230
+msgid ""
+"Both queries will return a list of Publishers that have at least one good "
+"book (i.e., a book with a rating exceeding 3.0). However, the annotation in "
+"the first query will provide the total number of all books published by the "
+"publisher; the second query will only include good books in the annotated "
+"count. In the first query, the annotation precedes the filter, so the filter "
+"has no effect on the annotation. In the second query, the filter precedes "
+"the annotation, and as a result, the filter constrains the objects "
+"considered when calculating the annotation."
+msgstr ""
+
+# 0371b8585a81415f98b67ef7c4de8f02
+#: ../../topics/db/aggregation.txt:240
+msgid "``order_by()``"
+msgstr ""
+
+# 13c2ac20bc454882b9e47b6925e9ae89
+#: ../../topics/db/aggregation.txt:242
+msgid ""
+"Annotations can be used as a basis for ordering. When you define an "
+"``order_by()`` clause, the aggregates you provide can reference any alias "
+"defined as part of an ``annotate()`` clause in the query."
+msgstr ""
+
+# def51bbafd344c18b21c72432c92dbf7
+#: ../../topics/db/aggregation.txt:246
+msgid ""
+"For example, to order a ``QuerySet`` of books by the number of authors that "
+"have contributed to the book, you could use the following query::"
+msgstr ""
+
+# f598fc7cc708435ca8d4fc7b5002d93b
+#: ../../topics/db/aggregation.txt:252
+msgid "``values()``"
+msgstr ""
+
+# e482d10c99184e3b8b72268c160be0d6
+#: ../../topics/db/aggregation.txt:254
+msgid ""
+"Ordinarily, annotations are generated on a per-object basis - an annotated "
+"``QuerySet`` will return one result for each object in the original "
+"``QuerySet``. However, when a ``values()`` clause is used to constrain the "
+"columns that are returned in the result set, the method for evaluating "
+"annotations is slightly different. Instead of returning an annotated result "
+"for each result in the original ``QuerySet``, the original results are "
+"grouped according to the unique combinations of the fields specified in the "
+"``values()`` clause. An annotation is then provided for each unique group; "
+"the annotation is computed over all members of the group."
+msgstr ""
+
+# fe1cd19d7df04bc2bef51809faad05ac
+#: ../../topics/db/aggregation.txt:264
+msgid ""
+"For example, consider an author query that attempts to find out the average "
+"rating of books written by each author:"
+msgstr ""
+
+# 739a5379a9f146bba10dca11ccd739a6
+#: ../../topics/db/aggregation.txt:269
+msgid ""
+"This will return one result for each author in the database, annotated with "
+"their average book rating."
+msgstr ""
+
+# 955a3f5e374c4792856f891df9cc98f7
+#: ../../topics/db/aggregation.txt:272
+msgid ""
+"However, the result will be slightly different if you use a ``values()`` "
+"clause::"
+msgstr ""
+
+# f2caa8de21374bbda3dd6c923f06874d
+#: ../../topics/db/aggregation.txt:276
+msgid ""
+"In this example, the authors will be grouped by name, so you will only get "
+"an annotated result for each *unique* author name. This means if you have "
+"two authors with the same name, their results will be merged into a single "
+"result in the output of the query; the average will be computed as the "
+"average over the books written by both authors."
+msgstr ""
+
+# d6c0081183d74c75b48da79f31dc0a51
+#: ../../topics/db/aggregation.txt:283
+msgid "Order of ``annotate()`` and ``values()`` clauses"
+msgstr ""
+
+# 065e69d2b17b4ed681fa74a62dbbfeed
+#: ../../topics/db/aggregation.txt:285
+msgid ""
+"As with the ``filter()`` clause, the order in which ``annotate()`` and "
+"``values()`` clauses are applied to a query is significant. If the ``values()"
+"`` clause precedes the ``annotate()``, the annotation will be computed using "
+"the grouping described by the ``values()`` clause."
+msgstr ""
+
+# 424c267181bf45ee8260b31b89ad1e7b
+#: ../../topics/db/aggregation.txt:290
+msgid ""
+"However, if the ``annotate()`` clause precedes the ``values()`` clause, the "
+"annotations will be generated over the entire query set. In this case, the "
+"``values()`` clause only constrains the fields that are generated on output."
+msgstr ""
+
+# 999f406540f94039b9973d27a4f5878f
+#: ../../topics/db/aggregation.txt:295
+msgid ""
+"For example, if we reverse the order of the ``values()`` and ``annotate()`` "
+"clause from our previous example::"
+msgstr ""
+
+# 48472c6e750f4b1db39fcd9663b5a962
+#: ../../topics/db/aggregation.txt:300
+msgid ""
+"This will now yield one unique result for each author; however, only the "
+"author's name and the ``average_rating`` annotation will be returned in the "
+"output data."
+msgstr ""
+
+# 19fa9eae314843d8ba36bc3232e11274
+#: ../../topics/db/aggregation.txt:304
+msgid ""
+"You should also note that ``average_rating`` has been explicitly included in "
+"the list of values to be returned. This is required because of the ordering "
+"of the ``values()`` and ``annotate()`` clause."
+msgstr ""
+
+# dd014920e8c041d891584e5be69f6146
+#: ../../topics/db/aggregation.txt:308
+msgid ""
+"If the ``values()`` clause precedes the ``annotate()`` clause, any "
+"annotations will be automatically added to the result set. However, if the "
+"``values()`` clause is applied after the ``annotate()`` clause, you need to "
+"explicitly include the aggregate column."
+msgstr ""
+
+# 194bdac8f17c4ff598b7729cb69162ba
+#: ../../topics/db/aggregation.txt:314
+msgid "Interaction with default ordering or ``order_by()``"
+msgstr ""
+
+# 7b500b773348465d8057084c1cb3798c
+#: ../../topics/db/aggregation.txt:316
+msgid ""
+"Fields that are mentioned in the ``order_by()`` part of a queryset (or which "
+"are used in the default ordering on a model) are used when selecting the "
+"output data, even if they are not otherwise specified in the ``values()`` "
+"call. These extra fields are used to group \"like\" results together and "
+"they can make otherwise identical result rows appear to be separate. This "
+"shows up, particularly, when counting things."
+msgstr ""
+
+# c9c1ae608aa74eefa499d12b6e74a4f5
+#: ../../topics/db/aggregation.txt:323
+msgid "By way of example, suppose you have a model like this::"
+msgstr ""
+
+# 072d97628dd246c08a153df3db8d6fb5
+#: ../../topics/db/aggregation.txt:332
+msgid ""
+"The important part here is the default ordering on the ``name`` field. If "
+"you want to count how many times each distinct ``data`` value appears, you "
+"might try this::"
+msgstr ""
+
+# 02f6b7d709764aadb037835a2722af62
+#: ../../topics/db/aggregation.txt:339
+msgid ""
+"...which will group the ``Item`` objects by their common ``data`` values and "
+"then count the number of ``id`` values in each group. Except that it won't "
+"quite work. The default ordering by ``name`` will also play a part in the "
+"grouping, so this query will group by distinct ``(data, name)`` pairs, which "
+"isn't what you want. Instead, you should construct this queryset::"
+msgstr ""
+
+# 214c23cdab1a49fcbf3013b5f32e85a7
+#: ../../topics/db/aggregation.txt:347
+msgid ""
+"...clearing any ordering in the query. You could also order by, say, "
+"``data`` without any harmful effects, since that is already playing a role "
+"in the query."
+msgstr ""
+
+# 0fd82903cd754306afa13c44b576a253
+#: ../../topics/db/aggregation.txt:351
+msgid ""
+"This behavior is the same as that noted in the queryset documentation for :"
+"meth:`~django.db.models.query.QuerySet.distinct` and the general rule is the "
+"same: normally you won't want extra columns playing a part in the result, so "
+"clear out the ordering, or at least make sure it's restricted only to those "
+"fields you also select in a ``values()`` call."
+msgstr ""
+
+# a7c53d608f4f464ca85896ba4ddb3c21
+#: ../../topics/db/aggregation.txt:358
+msgid ""
+"You might reasonably ask why Django doesn't remove the extraneous columns "
+"for you. The main reason is consistency with ``distinct()`` and other "
+"places: Django **never** removes ordering constraints that you have "
+"specified (and we can't change those other methods' behavior, as that would "
+"violate our :doc:`/misc/api-stability` policy)."
+msgstr ""
+
+# 9b6679a6f6ef470c8a5ce305659c9c53
+#: ../../topics/db/aggregation.txt:365
+msgid "Aggregating annotations"
+msgstr ""
+
+# 99d93774018548d389532adba9e87bd8
+#: ../../topics/db/aggregation.txt:367
+msgid ""
+"You can also generate an aggregate on the result of an annotation. When you "
+"define an ``aggregate()`` clause, the aggregates you provide can reference "
+"any alias defined as part of an ``annotate()`` clause in the query."
+msgstr ""
+
+# c9ad8edfe19f432c9923c54f23ae82ea
+#: ../../topics/db/aggregation.txt:371
+msgid ""
+"For example, if you wanted to calculate the average number of authors per "
+"book you first annotate the set of books with the author count, then "
+"aggregate that author count, referencing the annotation field::"
+msgstr ""

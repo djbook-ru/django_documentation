@@ -1,0 +1,1151 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2012-02-15 15:13\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# c586a9a598fc419dae88177cd52bb841
+#: ../../ref/databases.txt:3
+msgid "Databases"
+msgstr ""
+
+# 2c469103f40b4c8f8722bd15ef5031bd
+#: ../../ref/databases.txt:5
+msgid ""
+"Django attempts to support as many features as possible on all database "
+"backends. However, not all database backends are alike, and we've had to "
+"make design decisions on which features to support and which assumptions we "
+"can make safely."
+msgstr ""
+
+# afce327157f24a8598e01f8c9a033125
+#: ../../ref/databases.txt:10
+msgid ""
+"This file describes some of the features that might be relevant to Django "
+"usage. Of course, it is not intended as a replacement for server-specific "
+"documentation or reference manuals."
+msgstr ""
+
+# 31727228b1a14d3f8a1b0187c5124f7f
+#: ../../ref/databases.txt:17
+msgid "PostgreSQL notes"
+msgstr ""
+
+# 84861503138a453f986a3801c5ce97fd
+#: ../../ref/databases.txt:21
+msgid "Django supports PostgreSQL 8.2 and higher."
+msgstr ""
+
+# bb7a7bc81fba419395daf79a9d448ced
+#: ../../ref/databases.txt:24
+msgid "PostgreSQL 8.2 to 8.2.4"
+msgstr ""
+
+# ada8d25e72974b099fa5f12cfc95864e
+#: ../../ref/databases.txt:26
+msgid ""
+"The implementation of the population statistics aggregates ``STDDEV_POP`` "
+"and ``VAR_POP`` that shipped with PostgreSQL 8.2 to 8.2.4 are `known to be "
+"faulty`_. Users of these releases of PostgreSQL are advised to upgrade to "
+"`Release 8.2.5`_ or later. Django will raise a ``NotImplementedError`` if "
+"you attempt to use the ``StdDev(sample=False)`` or ``Variance(sample=False)"
+"`` aggregate with a database backend that falls within the affected release "
+"range."
+msgstr ""
+
+# fa1343ffc1fd4b1285b92dd7d1eeef24
+#: ../../ref/databases.txt:37
+msgid "Optimizing PostgreSQL's configuration"
+msgstr ""
+
+# 70f4b63ce6ed45b8b866aa7208562559
+#: ../../ref/databases.txt:39
+msgid "Django needs the following parameters for its database connections:"
+msgstr ""
+
+# 2b19ed1f91c847c096a397f8cd9c3395
+#: ../../ref/databases.txt:41
+msgid "``client_encoding``: ``'UTF8'``,"
+msgstr ""
+
+# a7d26a3f9a3f46d59c28d48183dd091b
+#: ../../ref/databases.txt:42
+msgid "``default_transaction_isolation``: ``'read committed'``,"
+msgstr ""
+
+# bb1a61da0b2247049fa41ec346077b70
+#: ../../ref/databases.txt:43
+msgid ""
+"``timezone``: ``'UTC'`` when :setting:`USE_TZ` is ``True``, value of :"
+"setting:`TIME_ZONE` otherwise."
+msgstr ""
+
+# 53031fc87a8d4a9081a7bc49a881781d
+#: ../../ref/databases.txt:46
+msgid ""
+"If these parameters already have the correct values, Django won't set them "
+"for every new connection, which improves performance slightly. You can "
+"configure them directly in :file:`postgresql.conf` or more conveniently per "
+"database user with `ALTER ROLE`_."
+msgstr ""
+
+# 1e9064acf32a4bf28f4b32d6f808b31e
+#: ../../ref/databases.txt:51
+msgid ""
+"Django will work just fine without this optimization, but each new "
+"connection will do some additional queries to set these parameters."
+msgstr ""
+
+# d218ab6159e94fdf84bf109df2f64c93
+#: ../../ref/databases.txt:57
+msgid "Transaction handling"
+msgstr ""
+
+# 8c269ad17f2b4cd693ec8ec04d7d3f2e
+#: ../../ref/databases.txt:59
+msgid ""
+":doc:`By default </topics/db/transactions>`, Django starts a transaction "
+"when a database connection is first used and commits the result at the end "
+"of the request/response handling. The PostgreSQL backends normally operate "
+"the same as any other Django backend in this respect."
+msgstr ""
+
+# ed3e099b6d064dcea9b067cabc21ae9b
+#: ../../ref/databases.txt:67
+msgid "Autocommit mode"
+msgstr ""
+
+# 1a34b63463b545d9b74d23828b6a4090
+#: ../../ref/databases.txt:69
+msgid ""
+"If your application is particularly read-heavy and doesn't make many "
+"database writes, the overhead of a constantly open transaction can sometimes "
+"be noticeable. For those situations, you can configure Django to use *"
+"\"autocommit\"* behavior for the connection, meaning that each database "
+"operation will normally be in its own transaction, rather than having the "
+"transaction extend over multiple operations. In this case, you can still "
+"manually start a transaction if you're doing something that requires "
+"consistency across multiple database operations. The autocommit behavior is "
+"enabled by setting the ``autocommit`` key in the :setting:`OPTIONS` part of "
+"your database configuration in :setting:`DATABASES`::"
+msgstr ""
+
+# 8a25afde64a74313abae25d0181f0a20
+#: ../../ref/databases.txt:85
+msgid ""
+"In this configuration, Django still ensures that :ref:`delete() <topics-db-"
+"queries-delete>` and :ref:`update() <topics-db-queries-update>` queries run "
+"inside a single transaction, so that either all the affected objects are "
+"changed or none of them are."
+msgstr ""
+
+# 47c20be6377e4c45b5bf79d7e9bb88b2
+#: ../../ref/databases.txt:92
+msgid ""
+"This functionality is not the same as the :ref:`autocommit <topics-db-"
+"transactions-autocommit>` decorator. That decorator is a Django-level "
+"implementation that commits automatically after data changing operations. "
+"The feature enabled using the :setting:`OPTIONS` option provides autocommit "
+"behavior at the database adapter level. It commits after *every* operation."
+msgstr ""
+
+# 6ddc4878b43147e2b4a012b8a6144aa1
+#: ../../ref/databases.txt:99
+msgid ""
+"If you are using this feature and performing an operation akin to delete or "
+"updating that requires multiple operations, you are strongly recommended to "
+"wrap you operations in manual transaction handling to ensure data "
+"consistency. You should also audit your existing code for any instances of "
+"this behavior before enabling this feature. It's faster, but it provides "
+"less automatic protection for multi-call operations."
+msgstr ""
+
+# ccb30563456c40e6a87d40e2e826147e
+#: ../../ref/databases.txt:107
+msgid "Indexes for ``varchar`` and ``text`` columns"
+msgstr ""
+
+# 23c86968dd8a4539b1b88be78f9cfd85
+#: ../../ref/databases.txt:109
+msgid ""
+"When specifying ``db_index=True`` on your model fields, Django typically "
+"outputs a single ``CREATE INDEX`` statement.  However, if the database type "
+"for the field is either ``varchar`` or ``text`` (e.g., used by "
+"``CharField``, ``FileField``, and ``TextField``), then Django will create an "
+"additional index that uses an appropriate `PostgreSQL operator class`_ for "
+"the column.  The extra index is necessary to correctly perfrom lookups that "
+"use the ``LIKE`` operator in their SQL, as is done with the ``contains`` and "
+"``startswith`` lookup types."
+msgstr ""
+
+# 0988f645c38348c296c2a951eb2739e2
+#: ../../ref/databases.txt:123
+msgid "MySQL notes"
+msgstr ""
+
+# 49e120597f3d4735b124c0ac68194e44
+#: ../../ref/databases.txt:125
+msgid ""
+"Django expects the database to support transactions, referential integrity, "
+"and Unicode (UTF-8 encoding). Fortunately, MySQL_ has all these features as "
+"available as far back as 3.23. While it may be possible to use 3.23 or 4.0, "
+"you'll probably have less trouble if you use 4.1 or 5.0."
+msgstr ""
+
+# a7477fa47f1b45bcbdea8467c33b1f31
+#: ../../ref/databases.txt:131
+msgid "MySQL 4.1"
+msgstr ""
+
+# 21615f3ec77f4fa3a5200df3966ec0f7
+#: ../../ref/databases.txt:133
+msgid ""
+"`MySQL 4.1`_ has greatly improved support for character sets. It is possible "
+"to set different default character sets on the database, table, and column. "
+"Previous versions have only a server-wide character set setting. It's also "
+"the first version where the character set can be changed on the fly. 4.1 "
+"also has support for views, but Django currently doesn't use views."
+msgstr ""
+
+# 69ebd9566909407f9d11a9f8bf922ebc
+#: ../../ref/databases.txt:140
+msgid "MySQL 5.0"
+msgstr ""
+
+# 19db5f7a304e485db30d9a4fa1eb5f7c
+#: ../../ref/databases.txt:142
+msgid ""
+"`MySQL 5.0`_ adds the ``information_schema`` database, which contains "
+"detailed data on all database schema. Django's ``inspectdb`` feature uses "
+"this ``information_schema`` if it's available. 5.0 also has support for "
+"stored procedures, but Django currently doesn't use stored procedures."
+msgstr ""
+
+# 7fdf1eb5f1d44199a391ec5b14fdcd86
+#: ../../ref/databases.txt:152
+msgid "Storage engines"
+msgstr ""
+
+# 22a83eadf8604bf7b35ab72dac128029
+#: ../../ref/databases.txt:154
+msgid ""
+"MySQL has several `storage engines`_ (previously called table types). You "
+"can change the default storage engine in the server configuration."
+msgstr ""
+
+# baee00cde41948ddb844d95de7ea5449
+#: ../../ref/databases.txt:157
+msgid ""
+"The default engine is MyISAM_ [#]_. The main drawbacks of MyISAM are that it "
+"doesn't currently support transactions or enforce foreign keys constraints. "
+"On the plus side, it's currently the only engine that supports full-text "
+"indexing and searching."
+msgstr ""
+
+# 434f79988c2147f6b485a9b85beb2ec7
+#: ../../ref/databases.txt:162
+msgid ""
+"The InnoDB_ engine is fully transactional and supports foreign key "
+"references and is probably the best choice at this point in time."
+msgstr ""
+
+# 7d8ed79938c943fdb6bb508b8a7be2fb
+#: ../../ref/databases.txt:167
+msgid ""
+"In previous versions of Django, fixtures with forward references (i.e. "
+"relations to rows that have not yet been inserted into the database) would "
+"fail to load when using the InnoDB storage engine. This was due to the fact "
+"that InnoDB deviates from the SQL standard by checking foreign key "
+"constraints immediately instead of deferring the check until the transaction "
+"is committed. This problem has been resolved in Django 1.4. Fixture data is "
+"now loaded with foreign key checks turned off; foreign key checks are then "
+"re-enabled when the data has finished loading, at which point the entire "
+"table is checked for invalid foreign key references and an `IntegrityError` "
+"is raised if any are found."
+msgstr ""
+
+# 2f14b6fdc6ab4cd2bdd02dedd5dcac93
+#: ../../ref/databases.txt:181
+msgid ""
+"Unless this was changed by the packager of your MySQL package. We've had "
+"reports that the Windows Community Server installer sets up InnoDB as the "
+"default storage engine, for example."
+msgstr ""
+
+# ff7ed08e70794151a8f5bbaf1ef42da2
+#: ../../ref/databases.txt:186
+msgid "MySQLdb"
+msgstr ""
+
+# 155921b4f75d4a3aab3985134ff44207
+#: ../../ref/databases.txt:188
+msgid ""
+"`MySQLdb`_ is the Python interface to MySQL. Version 1.2.1p2 or later is "
+"required for full MySQL support in Django."
+msgstr ""
+
+# 9f13a60182fe4bb8bc8be2eb4ecbaa0e
+#: ../../ref/databases.txt:192
+msgid ""
+"If you see ``ImportError: cannot import name ImmutableSet`` when trying to "
+"use Django, your MySQLdb installation may contain an outdated ``sets.py`` "
+"file that conflicts with the built-in module of the same name from Python "
+"2.4 and later. To fix this, verify that you have installed MySQLdb version "
+"1.2.1p2 or newer, then delete the ``sets.py`` file in the MySQLdb directory "
+"that was left by an earlier version."
+msgstr ""
+
+# cdfa892660e14e72ac041e7879d85d33
+#: ../../ref/databases.txt:202
+msgid "Creating your database"
+msgstr ""
+
+# 95a145f3bbbe47f4b298850c0db23f5c
+#: ../../ref/databases.txt:204
+msgid ""
+"You can `create your database`_ using the command-line tools and this SQL::"
+msgstr ""
+
+# 6738cfef46d24d2b9f9ad2b8020bdf9a
+#: ../../ref/databases.txt:208
+msgid "This ensures all tables and columns will use UTF-8 by default."
+msgstr ""
+
+# b54c56a1186f45fe87a45aca5c416d78
+#: ../../ref/databases.txt:215
+msgid "Collation settings"
+msgstr ""
+
+# cb00b5b193324428923ad956b843cc1e
+#: ../../ref/databases.txt:217
+msgid ""
+"The collation setting for a column controls the order in which data is "
+"sorted as well as what strings compare as equal. It can be set on a database-"
+"wide level and also per-table and per-column. This is `documented "
+"thoroughly`_ in the MySQL documentation. In all cases, you set the collation "
+"by directly manipulating the database tables; Django doesn't provide a way "
+"to set this on the model definition."
+msgstr ""
+
+# 65e8fb678b2b4b54bd123594c2c52b7d
+#: ../../ref/databases.txt:226
+msgid ""
+"By default, with a UTF-8 database, MySQL will use the "
+"``utf8_general_ci_swedish`` collation. This results in all string equality "
+"comparisons being done in a *case-insensitive* manner. That is, ``\"Fred\"`` "
+"and ``\"freD\"`` are considered equal at the database level. If you have a "
+"unique constraint on a field, it would be illegal to try to insert both ``"
+"\"aa\"`` and ``\"AA\"`` into the same column, since they compare as equal "
+"(and, hence, non-unique) with the default collation."
+msgstr ""
+
+# df349ad4728d41a89cfa5d27c4970a1c
+#: ../../ref/databases.txt:234
+msgid ""
+"In many cases, this default will not be a problem. However, if you really "
+"want case-sensitive comparisons on a particular column or table, you would "
+"change the column or table to use the ``utf8_bin`` collation. The main thing "
+"to be aware of in this case is that if you are using MySQLdb 1.2.2, the "
+"database backend in Django will then return bytestrings (instead of unicode "
+"strings) for any character fields it receive from the database. This is a "
+"strong variation from Django's normal practice of *always* returning unicode "
+"strings. It is up to you, the developer, to handle the fact that you will "
+"receive bytestrings if you configure your table(s) to use ``utf8_bin`` "
+"collation. Django itself should mostly work smoothly with such columns "
+"(except for the ``contrib.sessions`` ``Session`` and ``contrib.admin`` "
+"``LogEntry`` tables described below), but your code must be prepared to call "
+"``django.utils.encoding.smart_unicode()`` at times if it really wants to "
+"work with consistent data -- Django will not do this for you (the database "
+"backend layer and the model population layer are separated internally so the "
+"database layer doesn't know it needs to make this conversion in this one "
+"particular case)."
+msgstr ""
+
+# 909132f026134fc79260e5fb3b357b28
+#: ../../ref/databases.txt:251
+msgid ""
+"If you're using MySQLdb 1.2.1p2, Django's standard :class:`~django.db.models."
+"CharField` class will return unicode strings even with ``utf8_bin`` "
+"collation. However, :class:`~django.db.models.TextField` fields will be "
+"returned as an ``array.array`` instance (from Python's standard ``array`` "
+"module). There isn't a lot Django can do about that, since, again, the "
+"information needed to make the necessary conversions isn't available when "
+"the data is read in from the database. This problem was `fixed in MySQLdb "
+"1.2.2`_, so if you want to use :class:`~django.db.models.TextField` with "
+"``utf8_bin`` collation, upgrading to version 1.2.2 and then dealing with the "
+"bytestrings (which shouldn't be too difficult) as described above is the "
+"recommended solution."
+msgstr ""
+
+# 87afbb7ab9bf4dce86a81bf00fdbcab3
+#: ../../ref/databases.txt:263
+msgid ""
+"Should you decide to use ``utf8_bin`` collation for some of your tables with "
+"MySQLdb 1.2.1p2 or 1.2.2, you should still use ``utf8_collation_ci_swedish`` "
+"(the default) collation for the :class:`django.contrib.sessions.models."
+"Session` table (usually called ``django_session``) and the :class:`django."
+"contrib.admin.models.LogEntry` table (usually called ``django_admin_log``). "
+"Those are the two standard tables that use :class:`~django.db.models."
+"TextField` internally."
+msgstr ""
+
+# 1c9f0938d39b4b48a099827998e1e6c4
+# 176c663a236d41228e00c0f4c5cc510c
+#: ../../ref/databases.txt:274 ../../ref/databases.txt:608
+msgid "Connecting to the database"
+msgstr ""
+
+# 926d139dfc2e47409c0ea793c1ff5f80
+#: ../../ref/databases.txt:276
+msgid "Refer to the :doc:`settings documentation </ref/settings>`."
+msgstr ""
+
+# 37738feab7d04b759de6a8245f9ce91e
+#: ../../ref/databases.txt:278
+msgid "Connection settings are used in this order:"
+msgstr ""
+
+# 89a3b3f73f684b11ada9e92c4132738b
+#: ../../ref/databases.txt:280
+msgid ":setting:`OPTIONS`."
+msgstr ""
+
+# a0cf6e193a30472ca57311b6287d1c9e
+#: ../../ref/databases.txt:281
+msgid ""
+":setting:`NAME`, :setting:`USER`, :setting:`PASSWORD`, :setting:`HOST`, :"
+"setting:`PORT`"
+msgstr ""
+
+# 49c0d71d9df74382b4304c18fd09600b
+#: ../../ref/databases.txt:283
+msgid "MySQL option files."
+msgstr ""
+
+# a623019f8b9c4dd49b5437e48ab07ada
+#: ../../ref/databases.txt:285
+msgid ""
+"In other words, if you set the name of the database in :setting:`OPTIONS`, "
+"this will take precedence over :setting:`NAME`, which would override "
+"anything in a `MySQL option file`_."
+msgstr ""
+
+# a82680eea99f47fcabd09d8c492022c3
+#: ../../ref/databases.txt:289
+msgid "Here's a sample configuration which uses a MySQL option file::"
+msgstr ""
+
+# 3611861e0060407e938efd7ca1e6af74
+#: ../../ref/databases.txt:309
+msgid ""
+"Several other MySQLdb connection options may be useful, such as ``ssl``, "
+"``use_unicode``, ``init_command``, and ``sql_mode``. Consult the `MySQLdb "
+"documentation`_ for more details."
+msgstr ""
+
+# 217308a487e84954a0959f6448cf1c33
+#: ../../ref/databases.txt:317
+msgid "Creating your tables"
+msgstr ""
+
+# 6483fb9c488c4a5ca7c1aab9be402b0e
+#: ../../ref/databases.txt:319
+msgid ""
+"When Django generates the schema, it doesn't specify a storage engine, so "
+"tables will be created with whatever default storage engine your database "
+"server is configured for. The easiest solution is to set your database "
+"server's default storage engine to the desired engine."
+msgstr ""
+
+# 125e3b961560407bb9c8888364c4bba4
+#: ../../ref/databases.txt:324
+msgid ""
+"If you're using a hosting service and can't change your server's default "
+"storage engine, you have a couple of options."
+msgstr ""
+
+# 12a7c9c979d54bdba2ecf64ad266e460
+#: ../../ref/databases.txt:327
+msgid ""
+"After the tables are created, execute an ``ALTER TABLE`` statement to "
+"convert a table to a new storage engine (such as InnoDB)::"
+msgstr ""
+
+# d8d09c00192c4bcc8b8bfcc2dd80e3e6
+#: ../../ref/databases.txt:332
+msgid "This can be tedious if you have a lot of tables."
+msgstr ""
+
+# 398f673dc5da4727b62c7f6e5ef9d849
+#: ../../ref/databases.txt:334
+msgid ""
+"Another option is to use the ``init_command`` option for MySQLdb prior to "
+"creating your tables::"
+msgstr ""
+
+# 42851d7c33aa496da4134c765a41d6c6
+#: ../../ref/databases.txt:341
+msgid ""
+"This sets the default storage engine upon connecting to the database. After "
+"your tables have been created, you should remove this option."
+msgstr ""
+
+# 88b1252ee7b947c9a35ec8cd7276c3a1
+#: ../../ref/databases.txt:344
+msgid ""
+"Another method for changing the storage engine is described in "
+"AlterModelOnSyncDB_."
+msgstr ""
+
+# fa8a014d4c204efca8768f3e3787cc65
+#: ../../ref/databases.txt:350
+msgid "Table names"
+msgstr ""
+
+# abea8b81741141ac89eee810483c3cb0
+#: ../../ref/databases.txt:352
+msgid ""
+"There are `known issues`_ in even the latest versions of MySQL that can "
+"cause the case of a table name to be altered when certain SQL statements are "
+"executed under certain conditions. It is recommended that you use lowercase "
+"table names, if possible, to avoid any problems that might arise from this "
+"behavior. Django uses lowercase table names when it auto-generates table "
+"names from models, so this is mainly a consideration if you are overriding "
+"the table name via the :class:`~django.db.models.Options.db_table` parameter."
+msgstr ""
+
+# 613fe0b08dfc42308264d832166cc1ea
+#: ../../ref/databases.txt:363
+msgid "Notes on specific fields"
+msgstr ""
+
+# 0170655b3f144a5c80006fa0a94f88e1
+#: ../../ref/databases.txt:366
+msgid "Boolean fields"
+msgstr ""
+
+# 4855c5d287b7465990ff1e7fac03a670
+#: ../../ref/databases.txt:370
+msgid ""
+"In previous versions of Django when running under MySQL ``BooleanFields`` "
+"would return their data as ``ints``, instead of true ``bools``.  See the "
+"release notes for a complete description of the change."
+msgstr ""
+
+# dec78d4d90b649cc8b9286ac8a1d002f
+#: ../../ref/databases.txt:375
+msgid "Character fields"
+msgstr ""
+
+# 610bd42fc85346ee85a323ad8c4e2e9f
+#: ../../ref/databases.txt:377
+msgid ""
+"Any fields that are stored with ``VARCHAR`` column types have their "
+"``max_length`` restricted to 255 characters if you are using ``unique=True`` "
+"for the field. This affects :class:`~django.db.models.CharField`, :class:"
+"`~django.db.models.SlugField` and :class:`~django.db.models."
+"CommaSeparatedIntegerField`."
+msgstr ""
+
+# 08f4ef62f0ec4d32a5f7e9b9f7dc8bd1
+#: ../../ref/databases.txt:383
+msgid ""
+"Furthermore, if you are using a version of MySQL prior to 5.0.3, all of "
+"those column types have a maximum length restriction of 255 characters, "
+"regardless of whether ``unique=True`` is specified or not."
+msgstr ""
+
+# cf82d630a6f346609370da677649ec3d
+#: ../../ref/databases.txt:388
+msgid "DateTime fields"
+msgstr ""
+
+# 89c5c6aa112d4b2f8a218af4403e25ac
+#: ../../ref/databases.txt:390
+msgid ""
+"MySQL does not have a timezone-aware column type. If an attempt is made to "
+"store a timezone-aware ``time`` or ``datetime`` to a :class:`~django.db."
+"models.TimeField` or :class:`~django.db.models.DateTimeField` respectively, "
+"a ``ValueError`` is raised rather than truncating data."
+msgstr ""
+
+# 3353dfe2492b4ccfbf3bbc52ba4de4af
+#: ../../ref/databases.txt:395
+msgid ""
+"MySQL does not store fractions of seconds. Fractions of seconds are "
+"truncated to zero when the time is stored."
+msgstr ""
+
+# 98debd2f8a8e46d7b27a0b681672a0ff
+#: ../../ref/databases.txt:399
+msgid "Row locking with ``QuerySet.select_for_update()``"
+msgstr ""
+
+# 99787140938942d6af6f4707757297d6
+#: ../../ref/databases.txt:401
+msgid ""
+"MySQL does not support the ``NOWAIT`` option to the ``SELECT ... FOR "
+"UPDATE`` statement. If ``select_for_update()`` is used with ``nowait=True`` "
+"then a ``DatabaseError`` will be raised."
+msgstr ""
+
+# 65f1b72f33864d42918dd946b9b52aa7
+#: ../../ref/databases.txt:408
+msgid "SQLite notes"
+msgstr ""
+
+# 8a844898e3804aa7a98fbbb0ca326d32
+#: ../../ref/databases.txt:410
+msgid ""
+"SQLite_ provides an excellent development alternative for applications that "
+"are predominantly read-only or require a smaller installation footprint. As "
+"with all database servers, though, there are some differences that are "
+"specific to SQLite that you should be aware of."
+msgstr ""
+
+# f5e3090499cb4e769c98d2b73d2ea739
+#: ../../ref/databases.txt:420
+msgid "Substring matching and case sensitivity"
+msgstr ""
+
+# f72a76b1283f4447b6d0d7d5574bf5bb
+#: ../../ref/databases.txt:422
+msgid ""
+"For all SQLite versions, there is some slightly counter-intuitive behavior "
+"when attempting to match some types of strings.  These are triggered when "
+"using the :lookup:`iexact` or :lookup:`contains` filters in Querysets. The "
+"behavior splits into two cases:"
+msgstr ""
+
+# 1b00a38d5fb441bcbab9ad0995841404
+#: ../../ref/databases.txt:427
+msgid ""
+"1. For substring matching, all matches are done case-insensitively. That is "
+"a filter such as ``filter(name__contains=\"aa\")`` will match a name of ``"
+"\"Aabb\"``."
+msgstr ""
+
+# 92491c4e2aaf4efe8b8463160fbf08d1
+#: ../../ref/databases.txt:430
+msgid ""
+"2. For strings containing characters outside the ASCII range, all exact "
+"string matches are performed case-sensitively, even when the case-"
+"insensitive options are passed into the query. So the :lookup:`iexact` "
+"filter will behave exactly the same as the :lookup:`exact` filter in these "
+"cases."
+msgstr ""
+
+# 023e4b4bb53a4da6954d3dc138bc27a9
+#: ../../ref/databases.txt:435
+msgid ""
+"Some possible workarounds for this are `documented at sqlite.org`_, but they "
+"aren't utilised by the default SQLite backend in Django, as incorporating "
+"them would be fairly difficult to do robustly. Thus, Django exposes the "
+"default SQLite behavior and you should be aware of this when doing case-"
+"insensitive or substring filtering."
+msgstr ""
+
+# da65651abe5e4ed59e20158124955965
+#: ../../ref/databases.txt:444
+msgid "SQLite 3.3.6 or newer strongly recommended"
+msgstr ""
+
+# 9d7b7c3e1e5b45c4a2ff508594360286
+#: ../../ref/databases.txt:446
+msgid "Versions of SQLite 3.3.5 and older contains the following bugs:"
+msgstr ""
+
+# 9ea61e284c694161bac1ac2fff6c1741
+#: ../../ref/databases.txt:448
+msgid ""
+"A bug when `handling`_ ``ORDER BY`` parameters. This can cause problems when "
+"you use the ``select`` parameter for the ``extra()`` QuerySet method. The "
+"bug can be identified by the error message ``OperationalError: ORDER BY "
+"terms must not be non-integer constants``."
+msgstr ""
+
+# 4eaaf0d5c04b4239b6c8839924140a98
+#: ../../ref/databases.txt:453
+msgid ""
+"A bug when handling `aggregation`_ together with DateFields and "
+"DecimalFields."
+msgstr ""
+
+# 153c9ce68a1641a89c8a928f06f2d69f
+#: ../../ref/databases.txt:459
+msgid ""
+"SQLite 3.3.6 was released in April 2006, so most current binary "
+"distributions for different platforms include newer version of SQLite usable "
+"from Python through either the ``pysqlite2`` or the ``sqlite3`` modules."
+msgstr ""
+
+# 5670bb8120bb4f0b8a8d3ac4223b1a24
+#: ../../ref/databases.txt:463
+msgid ""
+"However, some platform/Python version combinations include older versions of "
+"SQLite (e.g. the official binary distribution of Python 2.5 for Windows, "
+"2.5.4 as of this writing, includes SQLite 3.3.4). There are (as of Django "
+"1.1) even some tests in the Django test suite that will fail when run under "
+"this setup."
+msgstr ""
+
+# 9db9b2708eec45b8b635bf10085315d4
+#: ../../ref/databases.txt:468
+msgid ""
+"As described :ref:`below<using-newer-versions-of-pysqlite>`, this can be "
+"solved by downloading and installing a newer version of ``pysqlite2`` "
+"(``pysqlite-2.x.x.win32-py2.5.exe`` in the described case) that includes and "
+"uses a newer version of SQLite. Python 2.6 for Windows ships with a version "
+"of SQLite that is not affected by these issues."
+msgstr ""
+
+# d61d6f4f038a4793a007709e0ca367b7
+#: ../../ref/databases.txt:475
+msgid "Version 3.5.9"
+msgstr ""
+
+# cf33c0311227450aba84e605372c2da0
+#: ../../ref/databases.txt:477
+msgid ""
+"The Ubuntu \"Intrepid Ibex\" (8.10) SQLite 3.5.9-3 package contains a bug "
+"that causes problems with the evaluation of query expressions. If you are "
+"using Ubuntu \"Intrepid Ibex\", you will need to update the package to "
+"version 3.5.9-3ubuntu1 or newer (recommended) or find an alternate source "
+"for SQLite packages, or install SQLite from source."
+msgstr ""
+
+# 8afb4207f9324102adbad1f1b3aed553
+#: ../../ref/databases.txt:483
+msgid ""
+"At one time, Debian Lenny shipped with the same malfunctioning SQLite "
+"3.5.9-3 package. However the Debian project has subsequently issued updated "
+"versions of the SQLite package that correct these bugs. If you find you are "
+"getting unexpected results under Debian, ensure you have updated your SQLite "
+"package to 3.5.9-5 or later."
+msgstr ""
+
+# ccb1e7ee15724bbeabeacca1e62627d5
+#: ../../ref/databases.txt:489
+msgid ""
+"The problem does not appear to exist with other versions of SQLite packaged "
+"with other operating systems."
+msgstr ""
+
+# c115d6f309b541ac8c65eaf567fed69a
+#: ../../ref/databases.txt:493
+msgid "Version 3.6.2"
+msgstr ""
+
+# 66f49d4f52f34bb88a29c4cb625b57f2
+#: ../../ref/databases.txt:495
+msgid ""
+"SQLite version 3.6.2 (released August 30, 2008) introduced a bug into "
+"``SELECT DISTINCT`` handling that is triggered by, amongst other things, "
+"Django's ``DateQuerySet`` (returned by the ``dates()`` method on a queryset)."
+msgstr ""
+
+# 7d095ad8d8f34197818c905fecad6467
+#: ../../ref/databases.txt:499
+msgid ""
+"You should avoid using this version of SQLite with Django. Either upgrade to "
+"3.6.3 (released September 22, 2008) or later, or downgrade to an earlier "
+"version of SQLite."
+msgstr ""
+
+# 58f9b10f40764f56b48aa43b2b875731
+#: ../../ref/databases.txt:506
+msgid "Using newer versions of the SQLite DB-API 2.0 driver"
+msgstr ""
+
+# 4a5d1af5f15c4db599bd189e69fa03c8
+#: ../../ref/databases.txt:508
+msgid ""
+"For versions of Python 2.5 or newer that include ``sqlite3`` in the standard "
+"library Django will now use a ``pysqlite2`` interface in preference to "
+"``sqlite3`` if it finds one is available."
+msgstr ""
+
+# ac73d13142f340de89d184ece86bd3c6
+#: ../../ref/databases.txt:512
+msgid ""
+"This provides the ability to upgrade both the DB-API 2.0 interface or SQLite "
+"3 itself to versions newer than the ones included with your particular "
+"Python binary distribution, if needed."
+msgstr ""
+
+# 02441a738ba34954b51578e9b6f4bb6f
+#: ../../ref/databases.txt:517
+msgid "\"Database is locked\" errors"
+msgstr ""
+
+# 572d1b48d40e49aeab0adac1f8766e98
+#: ../../ref/databases.txt:519
+msgid ""
+"SQLite is meant to be a lightweight database, and thus can't support a high "
+"level of concurrency. ``OperationalError: database is locked`` errors "
+"indicate that your application is experiencing more concurrency than "
+"``sqlite`` can handle in default configuration. This error means that one "
+"thread or process has an exclusive lock on the database connection and "
+"another thread timed out waiting for the lock the be released."
+msgstr ""
+
+# cc3bc9561a4d4387bdb26e3dc84535a5
+#: ../../ref/databases.txt:526
+msgid ""
+"Python's SQLite wrapper has a default timeout value that determines how long "
+"the second thread is allowed to wait on the lock before it times out and "
+"raises the ``OperationalError: database is locked`` error."
+msgstr ""
+
+# 9848702c914940efabe623f57fcd5ab9
+#: ../../ref/databases.txt:531
+msgid "If you're getting this error, you can solve it by:"
+msgstr ""
+
+# c8a9678f0b1e4bae8ba8ce71915579b7
+#: ../../ref/databases.txt:533
+msgid ""
+"Switching to another database backend. At a certain point SQLite becomes too "
+"\"lite\" for real-world applications, and these sorts of concurrency errors "
+"indicate you've reached that point."
+msgstr ""
+
+# 346d5a36dc274aa4b5ea81825658f272
+#: ../../ref/databases.txt:537
+msgid ""
+"Rewriting your code to reduce concurrency and ensure that database "
+"transactions are short-lived."
+msgstr ""
+
+# c2c5b5f1da194469959488ab20f1b3c9
+#: ../../ref/databases.txt:540
+msgid ""
+"Increase the default timeout value by setting the ``timeout`` database "
+"option option::"
+msgstr ""
+
+# 02f8f4bc09594f8dbd6eeb5d60d7d793
+#: ../../ref/databases.txt:549
+msgid ""
+"This will simply make SQLite wait a bit longer before throwing \"database is "
+"locked\" errors; it won't really do anything to solve them."
+msgstr ""
+
+# a13e2fc148224ea5a4d91311ab531296
+#: ../../ref/databases.txt:553
+msgid "``QuerySet.select_for_update()`` not supported"
+msgstr ""
+
+# d2ac40e89a3a41a6b87a8bf0a2eeadff
+#: ../../ref/databases.txt:555
+msgid ""
+"SQLite does not support the ``SELECT ... FOR UPDATE`` syntax. Calling it "
+"will have no effect."
+msgstr ""
+
+# d1e554ff9a74418e9fea2738612ee988
+#: ../../ref/databases.txt:561
+msgid "Parameters not quoted in ``connection.queries``"
+msgstr ""
+
+# 7981b6a946624ee38274c4d321dd323e
+#: ../../ref/databases.txt:563
+msgid ""
+"``sqlite3`` does not provide a way to retrieve the SQL after quoting and "
+"substituting the parameters. Instead, the SQL in ``connection.queries`` is "
+"rebuilt with a simple string interpolation. It may be incorrect. Make sure "
+"you add quotes where necessary before copying a query into a SQLite shell."
+msgstr ""
+
+# 46c8788e1cf5420f9b327abed04f6c09
+#: ../../ref/databases.txt:571
+msgid "Oracle notes"
+msgstr ""
+
+# 82e0ed79785c4c91995744d64439f4f3
+#: ../../ref/databases.txt:573
+msgid ""
+"Django supports `Oracle Database Server`_ versions 9i and higher. Oracle "
+"version 10g or later is required to use Django's ``regex`` and ``iregex`` "
+"query operators. You will also need at least version 4.3.1 of the "
+"`cx_Oracle`_ Python driver."
+msgstr ""
+
+# 3b072b9a6fb14a318a39d1b198370821
+#: ../../ref/databases.txt:578
+msgid ""
+"Note that due to a Unicode-corruption bug in ``cx_Oracle`` 5.0, that version "
+"of the driver should **not** be used with Django; ``cx_Oracle`` 5.0.1 "
+"resolved this issue, so if you'd like to use a more recent ``cx_Oracle``, "
+"use version 5.0.1."
+msgstr ""
+
+# d9e71cc51bd542a48ec5a70902a1b877
+#: ../../ref/databases.txt:583
+msgid ""
+"``cx_Oracle`` 5.0.1 or greater can optionally be compiled with the "
+"``WITH_UNICODE`` environment variable.  This is recommended but not required."
+msgstr ""
+
+# 5d2018a82c2e4b4db4a84d83efd3f54e
+#: ../../ref/databases.txt:590
+msgid ""
+"In order for the ``python manage.py syncdb`` command to work, your Oracle "
+"database user must have privileges to run the following commands:"
+msgstr ""
+
+# bd49722b791c4be18f563e5a6cd8627c
+#: ../../ref/databases.txt:593
+msgid "CREATE TABLE"
+msgstr ""
+
+# a061e1814b4549948df9812a22101ec7
+#: ../../ref/databases.txt:594
+msgid "CREATE SEQUENCE"
+msgstr ""
+
+# 8274a4e4912b44f7bdeb9aefc6507fd7
+#: ../../ref/databases.txt:595
+msgid "CREATE PROCEDURE"
+msgstr ""
+
+# ef47a55683ee4403b5e19773030967c0
+#: ../../ref/databases.txt:596
+msgid "CREATE TRIGGER"
+msgstr ""
+
+# 8a7fc784230a4cce8688c254e6bdd83e
+#: ../../ref/databases.txt:598
+msgid ""
+"To run Django's test suite, the user needs these *additional* privileges:"
+msgstr ""
+
+# e9e0c85fd6f04aa4a96de9b5a6bf9534
+#: ../../ref/databases.txt:600
+msgid "CREATE USER"
+msgstr ""
+
+# 8f6bb7c9174e47689b33ba4459a43e62
+#: ../../ref/databases.txt:601
+msgid "DROP USER"
+msgstr ""
+
+# dbbc47a583de4e54b1ebc2cff5e44024
+#: ../../ref/databases.txt:602
+msgid "CREATE TABLESPACE"
+msgstr ""
+
+# b579bd2de96b49e1a3a723f52205219c
+#: ../../ref/databases.txt:603
+msgid "DROP TABLESPACE"
+msgstr ""
+
+# 2aa0c278de814db199b4949c37ead332
+#: ../../ref/databases.txt:604
+msgid "CONNECT WITH ADMIN OPTION"
+msgstr ""
+
+# 5f400a7b02eb4384bb414e1e446580dc
+#: ../../ref/databases.txt:605
+msgid "RESOURCE WITH ADMIN OPTION"
+msgstr ""
+
+# 06ba3c1b02e3449c8e2b93eb47a12a0f
+#: ../../ref/databases.txt:610
+msgid ""
+"Your Django settings.py file should look something like this for Oracle::"
+msgstr ""
+
+# 447fe8596c8447c68ad156f2d5c5fdd7
+#: ../../ref/databases.txt:624
+msgid ""
+"If you don't use a ``tnsnames.ora`` file or a similar naming method that "
+"recognizes the SID (\"xe\" in this example), then fill in both :setting:"
+"`HOST` and :setting:`PORT` like so::"
+msgstr ""
+
+# a2548d34c4324d88977c48fc816952ab
+#: ../../ref/databases.txt:639
+msgid ""
+"You should supply both :setting:`HOST` and :setting:`PORT`, or leave both as "
+"empty strings."
+msgstr ""
+
+# 70443cb5f9aa4e34ad97e370b9b325b7
+#: ../../ref/databases.txt:643
+msgid "Threaded option"
+msgstr ""
+
+# 005308a6bb064e22bf5ede00e00f0395
+#: ../../ref/databases.txt:645
+msgid ""
+"If you plan to run Django in a multithreaded environment (e.g. Apache in "
+"Windows using the default MPM module), then you **must** set the "
+"``threaded`` option of your Oracle database configuration to True::"
+msgstr ""
+
+# c28a8f1303054522bbac665ea8f658fd
+#: ../../ref/databases.txt:653
+msgid "Failure to do this may result in crashes and other odd behavior."
+msgstr ""
+
+# 016b8bacceeb4405bce9a22bc953d9ab
+#: ../../ref/databases.txt:656
+msgid "INSERT ... RETURNING INTO"
+msgstr ""
+
+# 721719a970074b5e85ccc7d2c9bff7b6
+#: ../../ref/databases.txt:658
+msgid ""
+"By default, the Oracle backend uses a ``RETURNING INTO`` clause to "
+"efficiently retrieve the value of an ``AutoField`` when inserting new rows.  "
+"This behavior may result in a ``DatabaseError`` in certain unusual setups, "
+"such as when inserting into a remote table, or into a view with an ``INSTEAD "
+"OF`` trigger. The ``RETURNING INTO`` clause can be disabled by setting the "
+"``use_returning_into`` option of the database configuration to False::"
+msgstr ""
+
+# d774572ec4c540e6b75278cea5ec331d
+#: ../../ref/databases.txt:669
+msgid ""
+"In this case, the Oracle backend will use a separate ``SELECT`` query to "
+"retrieve AutoField values."
+msgstr ""
+
+# 010810bfcba743bbbd47ecfd11493d66
+#: ../../ref/databases.txt:673
+msgid "Naming issues"
+msgstr ""
+
+# 2c59298fef524af68b6c7863a09bcc8e
+#: ../../ref/databases.txt:675
+msgid ""
+"Oracle imposes a name length limit of 30 characters. To accommodate this, "
+"the backend truncates database identifiers to fit, replacing the final four "
+"characters of the truncated name with a repeatable MD5 hash value."
+msgstr ""
+
+# 5aa152325d52438aa7277e08df3d440b
+#: ../../ref/databases.txt:679
+msgid ""
+"When running syncdb, an ``ORA-06552`` error may be encountered if certain "
+"Oracle keywords are used as the name of a model field or the value of a "
+"``db_column`` option.  Django quotes all identifiers used in queries to "
+"prevent most such problems, but this error can still occur when an Oracle "
+"datatype is used as a column name.  In particular, take care to avoid using "
+"the names ``date``, ``timestamp``, ``number`` or ``float`` as a field name."
+msgstr ""
+
+# a20530da3f1641a786da48a3b84b08ac
+#: ../../ref/databases.txt:688
+msgid "NULL and empty strings"
+msgstr ""
+
+# 64f3c8c0f22b46fba16328f71284ddca
+#: ../../ref/databases.txt:690
+msgid ""
+"Django generally prefers to use the empty string ('') rather than NULL, but "
+"Oracle treats both identically. To get around this, the Oracle backend "
+"coerces the ``null=True`` option on fields that have the empty string as a "
+"possible value. When fetching from the database, it is assumed that a NULL "
+"value in one of these fields really means the empty string, and the data is "
+"silently converted to reflect this assumption."
+msgstr ""
+
+# 947f0671a27b4f889a89054c794815d5
+#: ../../ref/databases.txt:699
+msgid "``TextField`` limitations"
+msgstr ""
+
+# c6bf8cfb1b63423ca3926564e7c61406
+#: ../../ref/databases.txt:701
+msgid ""
+"The Oracle backend stores ``TextFields`` as ``NCLOB`` columns. Oracle "
+"imposes some limitations on the usage of such LOB columns in general:"
+msgstr ""
+
+# d0f2199b50e64244b1ca9b27db1c37a8
+#: ../../ref/databases.txt:704
+msgid "LOB columns may not be used as primary keys."
+msgstr ""
+
+# 11c0d6bc4166488a938c3fd9ff91f7ee
+#: ../../ref/databases.txt:706
+msgid "LOB columns may not be used in indexes."
+msgstr ""
+
+# 720df93b8f9c4f9d9197269a0869da38
+#: ../../ref/databases.txt:708
+msgid ""
+"LOB columns may not be used in a ``SELECT DISTINCT`` list. This means that "
+"attempting to use the ``QuerySet.distinct`` method on a model that includes "
+"``TextField`` columns will result in an error when run against Oracle. As a "
+"workaround, use the ``QuerySet.defer`` method in conjunction with ``distinct"
+"()`` to prevent ``TextField`` columns from being included in the ``SELECT "
+"DISTINCT`` list."
+msgstr ""
+
+# f6b80f2d700e4d3ba396842b3c5e4464
+#: ../../ref/databases.txt:718
+msgid "Using a 3rd-party database backend"
+msgstr ""
+
+# b22a303d49434cbc9493d02898f6826b
+#: ../../ref/databases.txt:720
+msgid ""
+"In addition to the officially supported databases, there are backends "
+"provided by 3rd parties that allow you to use other databases with Django:"
+msgstr ""
+
+# 172c013e0957437db3057b048ad340c6
+#: ../../ref/databases.txt:723
+msgid "`Sybase SQL Anywhere`_"
+msgstr ""
+
+# d3700e63784c41c485574b038488125b
+#: ../../ref/databases.txt:724
+msgid "`IBM DB2`_"
+msgstr ""
+
+# 3f4df7bd794b4551807f81fc51084144
+#: ../../ref/databases.txt:725
+msgid "`Microsoft SQL Server 2005`_"
+msgstr ""
+
+# 0592880cb07544d2af0d0d27f81f8a62
+#: ../../ref/databases.txt:726
+msgid "Firebird_"
+msgstr ""
+
+# b37e690874ca43c5b1c9058da94cd528
+#: ../../ref/databases.txt:727
+msgid "ODBC_"
+msgstr ""
+
+# d8228665505d42ae822595511466ce79
+#: ../../ref/databases.txt:728
+msgid "ADSDB_"
+msgstr ""
+
+# 8418f167892b4f638a54569f326c0a09
+#: ../../ref/databases.txt:730
+msgid ""
+"The Django versions and ORM features supported by these unofficial backends "
+"vary considerably. Queries regarding the specific capabilities of these "
+"unofficial backends, along with any support queries, should be directed to "
+"the support channels provided by each 3rd party project."
+msgstr ""

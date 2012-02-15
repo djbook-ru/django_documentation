@@ -1,0 +1,208 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2012-02-15 15:13\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 8771ed849f834591afe192a1fc24298d
+#: ../../howto/initial-data.txt:3
+msgid "Providing initial data for models"
+msgstr ""
+
+# 29865d5b2e57456f828b7adf5d4b1c07
+#: ../../howto/initial-data.txt:5
+msgid ""
+"It's sometimes useful to pre-populate your database with hard-coded data "
+"when you're first setting up an app. There's a couple of ways you can have "
+"Django automatically create this data: you can provide `initial data via "
+"fixtures`_, or you can provide `initial data as SQL`_."
+msgstr ""
+
+# 649efad20e7a4286bd4c9e99d1726b80
+#: ../../howto/initial-data.txt:10
+msgid ""
+"In general, using a fixture is a cleaner method since it's database-"
+"agnostic, but initial SQL is also quite a bit more flexible."
+msgstr ""
+
+# 4c80aba4e80a4c5ab556e512f3856ca4
+#: ../../howto/initial-data.txt:17
+msgid "Providing initial data with fixtures"
+msgstr ""
+
+# 9f50148fa0524b20a2f35e1cfa6f5828
+#: ../../howto/initial-data.txt:19
+msgid ""
+"A fixture is a collection of data that Django knows how to import into a "
+"database. The most straightforward way of creating a fixture if you've "
+"already got some data is to use the :djadmin:`manage.py dumpdata <dumpdata>` "
+"command. Or, you can write fixtures by hand; fixtures can be written as XML, "
+"YAML, or JSON documents. The :doc:`serialization documentation </topics/"
+"serialization>` has more details about each of these supported :ref:"
+"`serialization formats <serialization-formats>`."
+msgstr ""
+
+# a700161023d14a0bb23d448c1bd43518
+#: ../../howto/initial-data.txt:27
+msgid ""
+"As an example, though, here's what a fixture for a simple ``Person`` model "
+"might look like in JSON:"
+msgstr ""
+
+# 68257a5c5c804719b0aa236c1641a0b7
+#: ../../howto/initial-data.txt:51
+msgid "And here's that same fixture as YAML:"
+msgstr ""
+
+# 3c2a6a3ca38344d7b9a320d00bbed0fb
+#: ../../howto/initial-data.txt:66
+msgid "You'll store this data in a ``fixtures`` directory inside your app."
+msgstr ""
+
+# bcfcc93bc86142b080cd091784f94ad5
+#: ../../howto/initial-data.txt:68
+msgid ""
+"Loading data is easy: just call :djadmin:`manage.py loaddata fixturename "
+"<loaddata>`, where *fixturename* is the name of the fixture file you've "
+"created. Every time you run :djadmin:`loaddata` the data will be read from "
+"the fixture and re-loaded into the database. Note that this means that if "
+"you change one of the rows created by a fixture and then run :djadmin:"
+"`loaddata` again you'll wipe out any changes you've made."
+msgstr ""
+
+# 1c80b81567d34f54aceef10b2c091a1b
+#: ../../howto/initial-data.txt:76
+msgid "Automatically loading initial data fixtures"
+msgstr ""
+
+# 9add2716be294645ab7e3cf8f0beeceb
+#: ../../howto/initial-data.txt:78
+msgid ""
+"If you create a fixture named ``initial_data.[xml/yaml/json]``, that fixture "
+"will be loaded every time you run :djadmin:`syncdb`. This is extremely "
+"convenient, but be careful: remember that the data will be refreshed *every "
+"time* you run :djadmin:`syncdb`. So don't use ``initial_data`` for data "
+"you'll want to edit."
+msgstr ""
+
+# 514d7a6d2a934825a17db1a2e4412ead
+#: ../../howto/initial-data.txt:85
+msgid ""
+"Fixtures are also used by the :ref:`testing framework <topics-testing-"
+"fixtures>` to help set up a consistent test environment."
+msgstr ""
+
+# 223a6a30409240ce9f91ed611e5fcac0
+#: ../../howto/initial-data.txt:91
+msgid "Providing initial SQL data"
+msgstr ""
+
+# ebc53ffcea9b4b098c7447b995981d2d
+#: ../../howto/initial-data.txt:93
+msgid ""
+"Django provides a hook for passing the database arbitrary SQL that's "
+"executed just after the CREATE TABLE statements when you run :djadmin:"
+"`syncdb`. You can use this hook to populate default records, or you could "
+"also create SQL functions, views, triggers, etc."
+msgstr ""
+
+# 21a3796e84014b4a98e26116eeac42e3
+#: ../../howto/initial-data.txt:98
+msgid ""
+"The hook is simple: Django just looks for a file called ``sql/<modelname>."
+"sql``, in your app directory, where ``<modelname>`` is the model's name in "
+"lowercase."
+msgstr ""
+
+# a5492dbf71044eb89237ddeee1ab3514
+#: ../../howto/initial-data.txt:101
+msgid ""
+"So, if you had a ``Person`` model in an app called ``myapp``, you could add "
+"arbitrary SQL to the file ``sql/person.sql`` inside your ``myapp`` "
+"directory. Here's an example of what the file might contain:"
+msgstr ""
+
+# 6e27e837eaf34bf6bba1987ae0bc29ff
+#: ../../howto/initial-data.txt:110
+msgid ""
+"Each SQL file, if given, is expected to contain valid SQL statements which "
+"will insert the desired data (e.g., properly-formatted ``INSERT`` statements "
+"separated by semicolons)."
+msgstr ""
+
+# 4dea2422175448a5b40433057325d656
+#: ../../howto/initial-data.txt:114
+msgid ""
+"The SQL files are read by the :djadmin:`sqlcustom`, :djadmin:`sqlreset`, :"
+"djadmin:`sqlall` and :djadmin:`reset` commands in :doc:`manage.py </ref/"
+"django-admin>`. Refer to the :doc:`manage.py documentation </ref/django-"
+"admin>` for more information."
+msgstr ""
+
+# 46caf301f03344fd80f219a415fd4cfd
+#: ../../howto/initial-data.txt:119
+msgid ""
+"Note that if you have multiple SQL data files, there's no guarantee of the "
+"order in which they're executed. The only thing you can assume is that, by "
+"the time your custom data files are executed, all the database tables "
+"already will have been created."
+msgstr ""
+
+# 86ee88c6d694432496f250ab27d12674
+#: ../../howto/initial-data.txt:126
+msgid ""
+"This technique *cannot* be used to provide initial data for testing "
+"purposes. Django's test framework flushes the contents of the test database "
+"after each test; as a result, any data added using the custom SQL hook will "
+"be lost."
+msgstr ""
+
+# 037bcb1315dd475d87887418ff911863
+#: ../../howto/initial-data.txt:131
+msgid ""
+"If you require data for a test case, you should add it using either a :ref:"
+"`test fixture <topics-testing-fixtures>`, or programatically add it during "
+"the ``setUp()`` of your test case."
+msgstr ""
+
+# 3c38c6ce108d4301a492562be2f1fd5b
+#: ../../howto/initial-data.txt:136
+msgid "Database-backend-specific SQL data"
+msgstr ""
+
+# a0cf390561104f0aaaf21cd085ba36ef
+#: ../../howto/initial-data.txt:138
+msgid ""
+"There's also a hook for backend-specific SQL data. For example, you can have "
+"separate initial-data files for PostgreSQL and SQLite. For each app, Django "
+"looks for a file called ``<appname>/sql/<modelname>.<backend>.sql``, where "
+"``<appname>`` is your app directory, ``<modelname>`` is the model's name in "
+"lowercase and ``<backend>`` is the last part of the module name provided for "
+"the :setting:`ENGINE` in your settings file (e.g., if you have defined a "
+"database with an :setting:`ENGINE` value of ``django.db.backends.sqlite3``, "
+"Django will look for ``<appname>/sql/<modelname>.sqlite3.sql``)."
+msgstr ""
+
+# 375409fb1c6040cd9c6c8e0eb85354fd
+#: ../../howto/initial-data.txt:149
+msgid ""
+"Backend-specific SQL data is executed before non-backend-specific SQL data. "
+"For example, if your app contains the files ``sql/person.sql`` and ``sql/"
+"person.sqlite3.sql`` and you're installing the app on SQLite, Django will "
+"execute the contents of ``sql/person.sqlite.sql`` first, then ``sql/person."
+"sql``."
+msgstr ""

@@ -1,0 +1,323 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2012-02-15 15:13\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# a852a3fc822042378c98195c6b7c4bbd
+#: ../../ref/contrib/comments/moderation.txt:3
+msgid "Generic comment moderation"
+msgstr ""
+
+# d0108abb14a54404a7f659ad87dbc2f6
+#: ../../ref/contrib/comments/moderation.txt:8
+msgid ""
+"Django's bundled comments application is extremely useful on its own, but "
+"the amount of comment spam circulating on the Web today essentially makes it "
+"necessary to have some sort of automatic moderation system in place for any "
+"application which makes use of comments. To make this easier to handle in a "
+"consistent fashion, ``django.contrib.comments.moderation`` provides a "
+"generic, extensible comment-moderation system which can be applied to any "
+"model or set of models which want to make use of Django's comment system."
+msgstr ""
+
+# c90c79ca97f74850b296f6ba35eb2523
+#: ../../ref/contrib/comments/moderation.txt:19
+msgid "Overview"
+msgstr ""
+
+# 8a85cf4f59204482bdd161a89b2bff2f
+#: ../../ref/contrib/comments/moderation.txt:21
+msgid ""
+"The entire system is contained within ``django.contrib.comments."
+"moderation``, and uses a two-step process to enable moderation for any given "
+"model:"
+msgstr ""
+
+# 8db98bb71e154f138a46277ca1d75c4a
+#: ../../ref/contrib/comments/moderation.txt:24
+msgid ""
+"A subclass of :class:`CommentModerator` is defined which specifies the "
+"moderation options the model wants to enable."
+msgstr ""
+
+# 6468c47a524942b9b98648f00bafbc99
+#: ../../ref/contrib/comments/moderation.txt:28
+msgid ""
+"The model is registered with the moderation system, passing in the model "
+"class and the class which specifies its moderation options."
+msgstr ""
+
+# a692bb3491c94329af702bc535c63152
+#: ../../ref/contrib/comments/moderation.txt:31
+msgid ""
+"A simple example is the best illustration of this. Suppose we have the "
+"following model, which would represent entries in a Weblog::"
+msgstr ""
+
+# b607947a9c424fc7bbc068b1e45ebfb6
+#: ../../ref/contrib/comments/moderation.txt:42
+msgid ""
+"Now, suppose that we want the following steps to be applied whenever a new "
+"comment is posted on an ``Entry``:"
+msgstr ""
+
+# 988c118400d04f4391a13374381e3d7b
+#: ../../ref/contrib/comments/moderation.txt:45
+msgid ""
+"If the ``Entry``'s ``enable_comments`` field is ``False``, the comment will "
+"simply be disallowed (i.e., immediately deleted)."
+msgstr ""
+
+# e1f08a6124c2400992f38e7144b31e6a
+#: ../../ref/contrib/comments/moderation.txt:48
+msgid ""
+"If the ``enable_comments`` field is ``True``, the comment will be allowed to "
+"save."
+msgstr ""
+
+# 0c6c6e982d33464589992b86a581ebf1
+#: ../../ref/contrib/comments/moderation.txt:51
+msgid ""
+"Once the comment is saved, an email should be sent to site staff notifying "
+"them of the new comment."
+msgstr ""
+
+# 320082fa530a499ca5f41e23a08dd885
+#: ../../ref/contrib/comments/moderation.txt:54
+msgid ""
+"Accomplishing this is fairly straightforward and requires very little code::"
+msgstr ""
+
+# 6d71fda578ad4995a1bd0a14e5639519
+#: ../../ref/contrib/comments/moderation.txt:65
+msgid ""
+"The :class:`CommentModerator` class pre-defines a number of useful "
+"moderation options which subclasses can enable or disable as desired, and "
+"``moderator`` knows how to work with them to determine whether to allow a "
+"comment, whether to moderate a comment which will be allowed to post, and "
+"whether to email notifications of new comments."
+msgstr ""
+
+# 6a0066942caf491395ecb64c40d13374
+#: ../../ref/contrib/comments/moderation.txt:72
+msgid "Built-in moderation options"
+msgstr ""
+
+# 7977fe5bfd984e849f8c8665899afdf5
+#: ../../ref/contrib/comments/moderation.txt:76
+msgid ""
+"Most common comment-moderation needs can be handled by subclassing :class:"
+"`CommentModerator` and changing the values of pre-defined attributes; the "
+"full range of built-in options is as follows."
+msgstr ""
+
+# 75da143d04db46b690df45d25698ca59
+#: ../../ref/contrib/comments/moderation.txt:83
+msgid ""
+"If this is set to the name of a :class:`~django.db.models.fields.DateField` "
+"or :class:`~django.db.models.fields.DateTimeField` on the model for which "
+"comments are being moderated, new comments for objects of that model will be "
+"disallowed (immediately deleted) when a certain number of days have passed "
+"after the date specified in that field. Must be used in conjunction with :"
+"attr:`close_after`, which specifies the number of days past which comments "
+"should be disallowed. Default value is ``None``."
+msgstr ""
+
+# d2639e1516794e25a6980f8a2565ca99
+#: ../../ref/contrib/comments/moderation.txt:95
+msgid ""
+"Like :attr:`auto_close_field`, but instead of outright deleting new comments "
+"when the requisite number of days have elapsed, it will simply set the "
+"``is_public`` field of new comments to ``False`` before saving them. Must be "
+"used in conjunction with :attr:`moderate_after`, which specifies the number "
+"of days past which comments should be moderated. Default value is ``None``."
+msgstr ""
+
+# ab56aeb322ff49f986c434e8ca4c91bb
+#: ../../ref/contrib/comments/moderation.txt:104
+msgid ""
+"If :attr:`auto_close_field` is used, this must specify the number of days "
+"past the value of the field specified by :attr:`auto_close_field` after "
+"which new comments for an object should be disallowed. Allowed values are "
+"``None``, 0 (which disallows comments immediately), or any positive integer. "
+"Default value is ``None``."
+msgstr ""
+
+# 9fca6bb9b1d344d788c95516d3066d80
+#: ../../ref/contrib/comments/moderation.txt:113
+msgid ""
+"If ``True``, any new comment on an object of this model which survives "
+"moderation (i.e., is not deleted) will generate an email to site staff. "
+"Default value is ``False``."
+msgstr ""
+
+# 0e8c178e5b344dbd9896a9d04cdbbd4d
+#: ../../ref/contrib/comments/moderation.txt:119
+msgid ""
+"If this is set to the name of a :class:`~django.db.models.fields."
+"BooleanField` on the model for which comments are being moderated, new "
+"comments on objects of that model will be disallowed (immediately deleted) "
+"whenever the value of that field is ``False`` on the object the comment "
+"would be attached to. Default value is ``None``."
+msgstr ""
+
+# 8e5b2708e62549db8f0d0ad8bcab3462
+#: ../../ref/contrib/comments/moderation.txt:128
+msgid ""
+"If :attr:`auto_moderate_field` is used, this must specify the number of days "
+"past the value of the field specified by :attr:`auto_moderate_field` after "
+"which new comments for an object should be marked non-public. Allowed values "
+"are ``None``, 0 (which moderates comments immediately), or any positive "
+"integer. Default value is ``None``."
+msgstr ""
+
+# c1360eb06ced44d48df74466d71c4969
+#: ../../ref/contrib/comments/moderation.txt:135
+msgid ""
+"Simply subclassing :class:`CommentModerator` and changing the values of "
+"these options will automatically enable the various moderation methods for "
+"any models registered using the subclass."
+msgstr ""
+
+# d394949e480f463e922cb96483f39c42
+#: ../../ref/contrib/comments/moderation.txt:141
+msgid "``moderate_after`` and ``close_after`` now accept 0 as a valid value."
+msgstr ""
+
+# 38357c0e69cf44929a4018177c0c416a
+#: ../../ref/contrib/comments/moderation.txt:144
+msgid "Adding custom moderation methods"
+msgstr ""
+
+# 102806f06d70404b8c516536d722f3bb
+#: ../../ref/contrib/comments/moderation.txt:146
+msgid ""
+"For situations where the built-in options listed above are not sufficient, "
+"subclasses of :class:`CommentModerator` can also override the methods which "
+"actually perform the moderation, and apply any logic they desire.  :class:"
+"`CommentModerator` defines three methods which determine how moderation will "
+"take place; each method will be called by the moderation system and passed "
+"two arguments: ``comment``, which is the new comment being posted, "
+"``content_object``, which is the object the comment will be attached to, and "
+"``request``, which is the :class:`~django.http.HttpRequest` in which the "
+"comment is being submitted:"
+msgstr ""
+
+# adbccdd0904b40c394712a46501ec01e
+#: ../../ref/contrib/comments/moderation.txt:158
+msgid ""
+"Should return ``True`` if the comment should be allowed to post on the "
+"content object, and ``False`` otherwise (in which case the comment will be "
+"immediately deleted)."
+msgstr ""
+
+# 42382979b6e841c9aea8fbb6f6bb4a56
+#: ../../ref/contrib/comments/moderation.txt:164
+msgid ""
+"If email notification of the new comment should be sent to site staff or "
+"moderators, this method is responsible for sending the email."
+msgstr ""
+
+# a82daef486a549d8ba51daeabffdfd25
+#: ../../ref/contrib/comments/moderation.txt:170
+msgid ""
+"Should return ``True`` if the comment should be moderated (in which case its "
+"``is_public`` field will be set to ``False`` before saving), and ``False`` "
+"otherwise (in which case the ``is_public`` field will not be changed)."
+msgstr ""
+
+# abd81ffffdb342dea28289b79dbd0759
+#: ../../ref/contrib/comments/moderation.txt:177
+msgid "Registering models for moderation"
+msgstr ""
+
+# f5c9e601dbff46c293adb37fa764f29c
+#: ../../ref/contrib/comments/moderation.txt:179
+msgid ""
+"The moderation system, represented by ``django.contrib.comments.moderation."
+"moderator`` is an instance of the class :class:`Moderator`, which allows "
+"registration and \"unregistration\" of models via two methods:"
+msgstr ""
+
+# 0f262b8095e74987bd055a503af128cc
+#: ../../ref/contrib/comments/moderation.txt:186
+msgid ""
+"Takes two arguments: the first should be either a model class or list of "
+"model classes, and the second should be a subclass of ``CommentModerator``, "
+"and register the model or models to be moderated using the options defined "
+"in the ``CommentModerator`` subclass. If any of the models are already "
+"registered for moderation, the exception :exc:`AlreadyModerated` will be "
+"raised."
+msgstr ""
+
+# ca4a5f583ff3488aaae5b44aa94bbf72
+#: ../../ref/contrib/comments/moderation.txt:196
+msgid ""
+"Takes one argument: a model class or list of model classes, and removes the "
+"model or models from the set of models which are being moderated. If any of "
+"the models are not currently being moderated, the exception :exc:"
+"`NotModerated` will be raised."
+msgstr ""
+
+# 4a48f59c82484612ab727417dc3c6ae7
+#: ../../ref/contrib/comments/moderation.txt:204
+msgid "Customizing the moderation system"
+msgstr ""
+
+# 2c283bc21ca6451d93bd21dfa88429bc
+#: ../../ref/contrib/comments/moderation.txt:206
+msgid ""
+"Most use cases will work easily with simple subclassing of :class:"
+"`CommentModerator` and registration with the provided :class:`Moderator` "
+"instance, but customization of global moderation behavior can be achieved by "
+"subclassing :class:`Moderator` and instead registering models with an "
+"instance of the subclass."
+msgstr ""
+
+# 0feccf598f4741daadd46e29cd970bb7
+#: ../../ref/contrib/comments/moderation.txt:214
+msgid ""
+"In addition to the :meth:`Moderator.register` and :meth:`Moderator."
+"unregister` methods detailed above, the following methods on :class:"
+"`Moderator` can be overridden to achieve customized behavior:"
+msgstr ""
+
+# a9e402a3d2904edb8a156fa22b4f7b02
+#: ../../ref/contrib/comments/moderation.txt:220
+msgid ""
+"Determines how moderation is set up globally. The base implementation in :"
+"class:`Moderator` does this by attaching listeners to the :data:`~django."
+"contrib.comments.signals.comment_will_be_posted` and :data:`~django.contrib."
+"comments.signals.comment_was_posted` signals from the comment models."
+msgstr ""
+
+# 48f4e165f3da4e30a92285b3ca7b8fd6
+#: ../../ref/contrib/comments/moderation.txt:229
+msgid ""
+"In the base implementation, applies all pre-save moderation steps (such as "
+"determining whether the comment needs to be deleted, or whether it needs to "
+"be marked as non-public or generate an email)."
+msgstr ""
+
+# e04d427042bc4edfb7d212d222cb5d89
+#: ../../ref/contrib/comments/moderation.txt:236
+msgid ""
+"In the base implementation, applies all post-save moderation steps "
+"(currently this consists entirely of deleting comments which were "
+"disallowed)."
+msgstr ""

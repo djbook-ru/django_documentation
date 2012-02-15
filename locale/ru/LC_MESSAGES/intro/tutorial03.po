@@ -1,0 +1,770 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2012-02-15 15:13\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 4bd9a7400c83448eb9c33478afc3ec94
+#: ../../intro/tutorial03.txt:3
+msgid "Writing your first Django app, part 3"
+msgstr ""
+
+# a9399315a7434949b3d50a753bf625c8
+#: ../../intro/tutorial03.txt:5
+msgid ""
+"This tutorial begins where :doc:`Tutorial 2 </intro/tutorial02>` left off. "
+"We're continuing the Web-poll application and will focus on creating the "
+"public interface -- \"views.\""
+msgstr ""
+
+# 09b283e7f586442c81216ba8e5167325
+#: ../../intro/tutorial03.txt:10
+msgid "Philosophy"
+msgstr ""
+
+# dd6d3d0ee2a34666acf16a140c77a4dc
+#: ../../intro/tutorial03.txt:12
+msgid ""
+"A view is a \"type\" of Web page in your Django application that generally "
+"serves a specific function and has a specific template. For example, in a "
+"Weblog application, you might have the following views:"
+msgstr ""
+
+# 811d465bc81a4df69d1ff5be78aa22fe
+#: ../../intro/tutorial03.txt:16
+msgid "Blog homepage -- displays the latest few entries."
+msgstr ""
+
+# b27365c91ada45c69d2448d764f0a7e0
+#: ../../intro/tutorial03.txt:18
+msgid "Entry \"detail\" page -- permalink page for a single entry."
+msgstr ""
+
+# 749b0796fd4941689cf0f88365e99d2d
+#: ../../intro/tutorial03.txt:20
+msgid ""
+"Year-based archive page -- displays all months with entries in the given "
+"year."
+msgstr ""
+
+# 6ad4b90c532449f698785f2938bf73b2
+#: ../../intro/tutorial03.txt:23
+msgid ""
+"Month-based archive page -- displays all days with entries in the given "
+"month."
+msgstr ""
+
+# 712633e7beef49f89149cef07e2b09c1
+#: ../../intro/tutorial03.txt:26
+msgid "Day-based archive page -- displays all entries in the given day."
+msgstr ""
+
+# a5d8e1fd0eb145f99a5bc52f8b9a6f03
+#: ../../intro/tutorial03.txt:28
+msgid "Comment action -- handles posting comments to a given entry."
+msgstr ""
+
+# 18b55b059a4449e09021d287997db3ce
+#: ../../intro/tutorial03.txt:30
+msgid "In our poll application, we'll have the following four views:"
+msgstr ""
+
+# 564e29ca0cf048ebb748b53837be5c76
+#: ../../intro/tutorial03.txt:32
+msgid "Poll \"index\" page -- displays the latest few polls."
+msgstr ""
+
+# ec13bfaa27fa4691b7361c3fe9d888e5
+#: ../../intro/tutorial03.txt:34
+msgid ""
+"Poll \"detail\" page -- displays a poll question, with no results but with a "
+"form to vote."
+msgstr ""
+
+# 4bee0d0b52904ad6aeb2f7c6198d03b5
+#: ../../intro/tutorial03.txt:37
+msgid "Poll \"results\" page -- displays results for a particular poll."
+msgstr ""
+
+# 6c2d1ff6c0c04c2f8a6c0657df600585
+#: ../../intro/tutorial03.txt:39
+msgid ""
+"Vote action -- handles voting for a particular choice in a particular poll."
+msgstr ""
+
+# d0130d29b3e94292a46d442e73a45398
+#: ../../intro/tutorial03.txt:42
+msgid "In Django, each view is represented by a simple Python function."
+msgstr ""
+
+# 377f503ff9a64aa58ab4e9360d5e9f65
+#: ../../intro/tutorial03.txt:45
+msgid "Design your URLs"
+msgstr ""
+
+# 03dae15c012a4826ac7243c2f47029d8
+#: ../../intro/tutorial03.txt:47
+msgid ""
+"The first step of writing views is to design your URL structure. You do this "
+"by creating a Python module, called a URLconf. URLconfs are how Django "
+"associates a given URL with given Python code."
+msgstr ""
+
+# c67a3c077d6148d4b306559eb245029d
+#: ../../intro/tutorial03.txt:51
+msgid ""
+"When a user requests a Django-powered page, the system looks at the :setting:"
+"`ROOT_URLCONF` setting, which contains a string in Python dotted syntax. "
+"Django loads that module and looks for a module-level variable called "
+"``urlpatterns``, which is a sequence of tuples in the following format::"
+msgstr ""
+
+# 0004df64361c4fad8cb0b38617c16231
+#: ../../intro/tutorial03.txt:58
+msgid ""
+"Django starts at the first regular expression and makes its way down the "
+"list, comparing the requested URL against each regular expression until it "
+"finds one that matches."
+msgstr ""
+
+# 7c0341c55de34f81a90348f6a88a89cc
+#: ../../intro/tutorial03.txt:62
+msgid ""
+"When it finds a match, Django calls the Python callback function, with an :"
+"class:`~django.http.HttpRequest` object as the first argument, any \"captured"
+"\" values from the regular expression as keyword arguments, and, optionally, "
+"arbitrary keyword arguments from the dictionary (an optional third item in "
+"the tuple)."
+msgstr ""
+
+# 869f85f2c9324550b9d334f1cc5657e6
+#: ../../intro/tutorial03.txt:68
+msgid ""
+"For more on :class:`~django.http.HttpRequest` objects, see the :doc:`/ref/"
+"request-response`. For more details on URLconfs, see the :doc:`/topics/http/"
+"urls`."
+msgstr ""
+
+# 4b5800caeaaa45ea9a9e0a5200ea4c12
+#: ../../intro/tutorial03.txt:72
+msgid ""
+"When you ran ``django-admin.py startproject mysite`` at the beginning of "
+"Tutorial 1, it created a default URLconf in ``mysite/urls.py``. It also "
+"automatically set your :setting:`ROOT_URLCONF` setting (in ``settings.py``) "
+"to point at that file::"
+msgstr ""
+
+# d48fe7d806394ac9a12a8c3f81633320
+#: ../../intro/tutorial03.txt:79
+msgid "Time for an example. Edit ``mysite/urls.py`` so it looks like this::"
+msgstr ""
+
+# 96293366e72d45ad8e55a9ab69a4ed1a
+#: ../../intro/tutorial03.txt:94
+msgid ""
+"This is worth a review. When somebody requests a page from your Web site -- "
+"say, \"/polls/23/\", Django will load this Python module, because it's "
+"pointed to by the :setting:`ROOT_URLCONF` setting. It finds the variable "
+"named ``urlpatterns`` and traverses the regular expressions in order. When "
+"it finds a regular expression that matches -- ``r'^polls/(?P<poll_id>\\d+)/"
+"$'`` -- it loads the function ``detail()`` from ``polls/views.py``. Finally, "
+"it calls that ``detail()`` function like so::"
+msgstr ""
+
+# e68fe2de50e143c087374c25c7fbc798
+#: ../../intro/tutorial03.txt:104
+msgid ""
+"The ``poll_id='23'`` part comes from ``(?P<poll_id>\\d+)``. Using "
+"parentheses around a pattern \"captures\" the text matched by that pattern "
+"and sends it as an argument to the view function; the ``?P<poll_id>`` "
+"defines the name that will be used to identify the matched pattern; and ``\\d"
+"+`` is a regular expression to match a sequence of digits (i.e., a number)."
+msgstr ""
+
+# 7ff0aac158694f4d92c28727242b5ec4
+#: ../../intro/tutorial03.txt:110
+msgid ""
+"Because the URL patterns are regular expressions, there really is no limit "
+"on what you can do with them. And there's no need to add URL cruft such as "
+"``.php`` -- unless you have a sick sense of humor, in which case you can do "
+"something like this::"
+msgstr ""
+
+# 13bbfbd28c63492caeb5f275f5977700
+#: ../../intro/tutorial03.txt:117
+msgid "But, don't do that. It's silly."
+msgstr ""
+
+# 008937c1e6d64729b842b716f4ffc465
+#: ../../intro/tutorial03.txt:119
+msgid ""
+"Note that these regular expressions do not search GET and POST parameters, "
+"or the domain name. For example, in a request to ``http://www.example.com/"
+"myapp/``, the URLconf will look for ``myapp/``. In a request to ``http://www."
+"example.com/myapp/?page=3``, the URLconf will look for ``myapp/``."
+msgstr ""
+
+# 00edffee15c6422993c1af8f417fcd2d
+#: ../../intro/tutorial03.txt:124
+msgid ""
+"If you need help with regular expressions, see `Wikipedia's entry`_ and the "
+"documentation of the :mod:`re` module. Also, the O'Reilly book \"Mastering "
+"Regular Expressions\" by Jeffrey Friedl is fantastic."
+msgstr ""
+
+# 1c10a81d81634036b6d3b9097f73fcff
+#: ../../intro/tutorial03.txt:128
+msgid ""
+"Finally, a performance note: these regular expressions are compiled the "
+"first time the URLconf module is loaded. They're super fast."
+msgstr ""
+
+# eb368fb3ef5c474396ff837e4967f966
+#: ../../intro/tutorial03.txt:134
+msgid "Write your first view"
+msgstr ""
+
+# fb84479c0b354542b5974f5cb50003ee
+#: ../../intro/tutorial03.txt:136
+msgid ""
+"Well, we haven't created any views yet -- we just have the URLconf. But "
+"let's make sure Django is following the URLconf properly."
+msgstr ""
+
+# c0791a83769b434f8a66d6fa88c3e6d1
+#: ../../intro/tutorial03.txt:139
+msgid "Fire up the Django development Web server:"
+msgstr ""
+
+# 1aa714366c0d4c7c885dc7a5bb6a75c0
+#: ../../intro/tutorial03.txt:145
+msgid ""
+"Now go to \"http://localhost:8000/polls/\" on your domain in your Web "
+"browser. You should get a pleasantly-colored error page with the following "
+"message::"
+msgstr ""
+
+# fe59a9f907674b1b9343c3d3c12e1134
+#: ../../intro/tutorial03.txt:152
+msgid ""
+"This error happened because you haven't written a function ``index()`` in "
+"the module ``polls/views.py``."
+msgstr ""
+
+# 762f99295ada456fa8284d44c7760f1d
+#: ../../intro/tutorial03.txt:155
+msgid ""
+"Try \"/polls/23/\", \"/polls/23/results/\" and \"/polls/23/vote/\". The "
+"error messages tell you which view Django tried (and failed to find, because "
+"you haven't written any views yet)."
+msgstr ""
+
+# 156291223b39468c9c3163b681e09628
+#: ../../intro/tutorial03.txt:159
+msgid ""
+"Time to write the first view. Open the file ``polls/views.py`` and put the "
+"following Python code in it::"
+msgstr ""
+
+# 9942f2f8ae1c4d2bbbd4a8530ddf0ebe
+#: ../../intro/tutorial03.txt:167
+msgid ""
+"This is the simplest view possible. Go to \"/polls/\" in your browser, and "
+"you should see your text."
+msgstr ""
+
+# 261399035a8b4cb8b8d4c2025955d4e6
+#: ../../intro/tutorial03.txt:170
+msgid ""
+"Now lets add a few more views. These views are slightly different, because "
+"they take an argument (which, remember, is passed in from whatever was "
+"captured by the regular expression in the URLconf)::"
+msgstr ""
+
+# 32d56cc326c84abf9d6ea38b3d5b1fda
+#: ../../intro/tutorial03.txt:183
+msgid ""
+"Take a look in your browser, at \"/polls/34/\". It'll run the `detail()` "
+"method and display whatever ID you provide in the URL. Try \"/polls/34/"
+"results/\" and \"/polls/34/vote/\" too -- these will display the placeholder "
+"results and voting pages."
+msgstr ""
+
+# 309a7ba6b31a438e9b6932f720d493ca
+#: ../../intro/tutorial03.txt:189
+msgid "Write views that actually do something"
+msgstr ""
+
+# b5cbead2e2ec4fbda6ac32120e2b16ec
+#: ../../intro/tutorial03.txt:191
+msgid ""
+"Each view is responsible for doing one of two things: Returning an :class:"
+"`~django.http.HttpResponse` object containing the content for the requested "
+"page, or raising an exception such as :exc:`~django.http.Http404`. The rest "
+"is up to you."
+msgstr ""
+
+# af5b10f7d16141ed8173dda5dc743613
+#: ../../intro/tutorial03.txt:196
+msgid ""
+"Your view can read records from a database, or not. It can use a template "
+"system such as Django's -- or a third-party Python template system -- or "
+"not. It can generate a PDF file, output XML, create a ZIP file on the fly, "
+"anything you want, using whatever Python libraries you want."
+msgstr ""
+
+# 848efaff283440c48a2f37e47a842067
+#: ../../intro/tutorial03.txt:201
+msgid ""
+"All Django wants is that :class:`~django.http.HttpResponse`. Or an exception."
+msgstr ""
+
+# 0ace0a50ebf74f1aa4c0c57c84f9e6a5
+#: ../../intro/tutorial03.txt:203
+msgid ""
+"Because it's convenient, let's use Django's own database API, which we "
+"covered in :doc:`Tutorial 1 </intro/tutorial01>`. Here's one stab at the "
+"``index()`` view, which displays the latest 5 poll questions in the system, "
+"separated by commas, according to publication date::"
+msgstr ""
+
+# a644bb267bc74d52bef3ab7cf57e1541
+#: ../../intro/tutorial03.txt:216
+msgid ""
+"There's a problem here, though: The page's design is hard-coded in the view. "
+"If you want to change the way the page looks, you'll have to edit this "
+"Python code. So let's use Django's template system to separate the design "
+"from Python::"
+msgstr ""
+
+# b4fa1222550d417db6deebe8228bba84
+#: ../../intro/tutorial03.txt:232
+msgid ""
+"That code loads the template called \"polls/index.html\" and passes it a "
+"context. The context is a dictionary mapping template variable names to "
+"Python objects."
+msgstr ""
+
+# 0d031e2336684af782c57026d7363ae8
+#: ../../intro/tutorial03.txt:235
+msgid "Reload the page. Now you'll see an error::"
+msgstr ""
+
+# a7dbbec4da914b618991c239f71abff3
+#: ../../intro/tutorial03.txt:240
+msgid ""
+"Ah. There's no template yet. First, create a directory, somewhere on your "
+"filesystem, whose contents Django can access. (Django runs as whatever user "
+"your server runs.) Don't put them under your document root, though. You "
+"probably shouldn't make them public, just for security's sake. Then edit :"
+"setting:`TEMPLATE_DIRS` in your ``settings.py`` to tell Django where it can "
+"find templates -- just as you did in the \"Customize the admin look and feel"
+"\" section of Tutorial 2."
+msgstr ""
+
+# 0aaaf5adaee343d4aedf51d889959d7d
+#: ../../intro/tutorial03.txt:248
+msgid ""
+"When you've done that, create a directory ``polls`` in your template "
+"directory. Within that, create a file called ``index.html``. Note that our "
+"``loader.get_template('polls/index.html')`` code from above maps to "
+"\"[template_directory]/polls/index.html\" on the filesystem."
+msgstr ""
+
+# 93a83f92747d44f2b7b49c7646f09cc9
+#: ../../intro/tutorial03.txt:253
+msgid "Put the following code in that template:"
+msgstr ""
+
+# 24013aa672af4fd080dc6e43311d0562
+#: ../../intro/tutorial03.txt:267
+msgid ""
+"Load the page in your Web browser, and you should see a bulleted-list "
+"containing the \"What's up\" poll from Tutorial 1. The link points to the "
+"poll's detail page."
+msgstr ""
+
+# 34b2d108451e43c8adf493205bf05233
+#: ../../intro/tutorial03.txt:272
+msgid "A shortcut: render_to_response()"
+msgstr ""
+
+# f94955e9e07946a58bf0476118a5943f
+#: ../../intro/tutorial03.txt:274
+msgid ""
+"It's a very common idiom to load a template, fill a context and return an :"
+"class:`~django.http.HttpResponse` object with the result of the rendered "
+"template. Django provides a shortcut. Here's the full ``index()`` view, "
+"rewritten::"
+msgstr ""
+
+# 0981bf469c3f4bffb0cc3b59c0be8399
+#: ../../intro/tutorial03.txt:286
+msgid ""
+"Note that once we've done this in all these views, we no longer need to "
+"import :mod:`~django.template.loader`, :class:`~django.template.Context` "
+"and :class:`~django.http.HttpResponse`."
+msgstr ""
+
+# 72318c4437f243c691dd0066338b16bc
+#: ../../intro/tutorial03.txt:290
+msgid ""
+"The :func:`~django.shortcuts.render_to_response` function takes a template "
+"name as its first argument and a dictionary as its optional second argument. "
+"It returns an :class:`~django.http.HttpResponse` object of the given "
+"template rendered with the given context."
+msgstr ""
+
+# 44d8c973240645b19878ca5847db67b7
+#: ../../intro/tutorial03.txt:296
+msgid "Raising 404"
+msgstr ""
+
+# ddf20155adc44a8ab8f3e8bf23b6001c
+#: ../../intro/tutorial03.txt:298
+msgid ""
+"Now, let's tackle the poll detail view -- the page that displays the "
+"question for a given poll. Here's the view::"
+msgstr ""
+
+# 86d6ccfb0900405d9cafe67dcd132d0c
+#: ../../intro/tutorial03.txt:310
+msgid ""
+"The new concept here: The view raises the :exc:`~django.http.Http404` "
+"exception if a poll with the requested ID doesn't exist."
+msgstr ""
+
+# 43d5f1c9531d4dc0a52406b5ad703ef4
+#: ../../intro/tutorial03.txt:313
+msgid ""
+"We'll discuss what you could put in that ``polls/detail.html`` template a "
+"bit later, but if you'd like to quickly get the above example working, just::"
+msgstr ""
+
+# 0a6dea78a32f49e4b8534f1b07ef00b3
+#: ../../intro/tutorial03.txt:318
+msgid "will get you started for now."
+msgstr ""
+
+# aaa6010e3ced4b79af0d6f2f5417f070
+#: ../../intro/tutorial03.txt:321
+msgid "A shortcut: get_object_or_404()"
+msgstr ""
+
+# 4eee416028884fc79143afae2b8e17a5
+#: ../../intro/tutorial03.txt:323
+msgid ""
+"It's a very common idiom to use :meth:`~django.db.models.query.QuerySet.get` "
+"and raise :exc:`~django.http.Http404` if the object doesn't exist. Django "
+"provides a shortcut. Here's the ``detail()`` view, rewritten::"
+msgstr ""
+
+# 830169f09d92437e957745fe722aa7cf
+#: ../../intro/tutorial03.txt:333
+msgid ""
+"The :func:`~django.shortcuts.get_object_or_404` function takes a Django "
+"model as its first argument and an arbitrary number of keyword arguments, "
+"which it passes to the module's :meth:`~django.db.models.query.QuerySet.get` "
+"function. It raises :exc:`~django.http.Http404` if the object doesn't exist."
+msgstr ""
+
+# 674303397dbb4734a23b9aba4468346a
+#: ../../intro/tutorial03.txt:340
+msgid ""
+"Why do we use a helper function :func:`~django.shortcuts.get_object_or_404` "
+"instead of automatically catching the :exc:`~django.core.exceptions."
+"ObjectDoesNotExist` exceptions at a higher level, or having the model API "
+"raise :exc:`~django.http.Http404` instead of :exc:`~django.core.exceptions."
+"ObjectDoesNotExist`?"
+msgstr ""
+
+# f253fde43f9a4d3690f56afdfa033884
+#: ../../intro/tutorial03.txt:346
+msgid ""
+"Because that would couple the model layer to the view layer. One of the "
+"foremost design goals of Django is to maintain loose coupling."
+msgstr ""
+
+# 48fea9f564054bdea0d046bbb3ca06bc
+#: ../../intro/tutorial03.txt:349
+msgid ""
+"There's also a :func:`~django.shortcuts.get_list_or_404` function, which "
+"works just as :func:`~django.shortcuts.get_object_or_404` -- except using :"
+"meth:`~django.db.models.query.QuerySet.filter` instead of :meth:`~django.db."
+"models.query.QuerySet.get`. It raises :exc:`~django.http.Http404` if the "
+"list is empty."
+msgstr ""
+
+# 3e368d96d54a40a4942760e016a0fda3
+#: ../../intro/tutorial03.txt:356
+msgid "Write a 404 (page not found) view"
+msgstr ""
+
+# 94e0e93e08d04dd8b865f62578013d18
+#: ../../intro/tutorial03.txt:358
+msgid ""
+"When you raise :exc:`~django.http.Http404` from within a view, Django will "
+"load a special view devoted to handling 404 errors. It finds it by looking "
+"for the variable ``handler404`` in your root URLconf (and only in your root "
+"URLconf; setting ``handler404`` anywhere else will have no effect), which is "
+"a string in Python dotted syntax -- the same format the normal URLconf "
+"callbacks use. A 404 view itself has nothing special: It's just a normal "
+"view."
+msgstr ""
+
+# a649b0a0fbe644ee89f49b4ee2d50d1c
+#: ../../intro/tutorial03.txt:366
+msgid ""
+"You normally won't have to bother with writing 404 views. By default, "
+"URLconfs have the following line up top::"
+msgstr ""
+
+# b681f7f8f8bb481eb96315de36b49ad2
+#: ../../intro/tutorial03.txt:371
+msgid ""
+"That takes care of setting ``handler404`` in the current module. As you can "
+"see in ``django/conf/urls/defaults.py``, ``handler404`` is set to :func:"
+"`django.views.defaults.page_not_found` by default."
+msgstr ""
+
+# abb5144d48ef45de8b0e6245f9852c6d
+#: ../../intro/tutorial03.txt:375
+msgid "Four more things to note about 404 views:"
+msgstr ""
+
+# 822c01aa5e5d441299a8b9f290477eb5
+#: ../../intro/tutorial03.txt:377
+msgid ""
+"If :setting:`DEBUG` is set to ``True`` (in your settings module) then your "
+"404 view will never be used (and thus the ``404.html`` template will never "
+"be rendered) because the traceback will be displayed instead."
+msgstr ""
+
+# 925c939f58304292ac0589eea14ed8fc
+#: ../../intro/tutorial03.txt:381
+msgid ""
+"The 404 view is also called if Django doesn't find a match after checking "
+"every regular expression in the URLconf."
+msgstr ""
+
+# 9d96ac20bdc84b1fa31d6d4aada8cf3b
+#: ../../intro/tutorial03.txt:384
+msgid ""
+"If you don't define your own 404 view -- and simply use the default, which "
+"is recommended -- you still have one obligation: To create a ``404.html`` "
+"template in the root of your template directory. The default 404 view will "
+"use that template for all 404 errors."
+msgstr ""
+
+# f72e754438664345b61b916a2dde7a63
+#: ../../intro/tutorial03.txt:389
+msgid ""
+"If :setting:`DEBUG` is set to ``False`` (in your settings module) and if you "
+"didn't create a ``404.html`` file, an ``Http500`` is raised instead. So "
+"remember to create a ``404.html``."
+msgstr ""
+
+# 0a4eaca6d1c7402fbd4d86ee1d555a35
+#: ../../intro/tutorial03.txt:394
+msgid "Write a 500 (server error) view"
+msgstr ""
+
+# b48085218bfd43749079ff08d3d89c6f
+#: ../../intro/tutorial03.txt:396
+msgid ""
+"Similarly, your root URLconf may define a ``handler500``, which points to a "
+"view to call in case of server errors. Server errors happen when you have "
+"runtime errors in view code."
+msgstr ""
+
+# 3adf70cf3b784f20849f76a011f17587
+#: ../../intro/tutorial03.txt:401
+msgid "Use the template system"
+msgstr ""
+
+# cc12bd0bfe544a2abcbfacb319c277ef
+#: ../../intro/tutorial03.txt:403
+msgid ""
+"Back to the ``detail()`` view for our poll application. Given the context "
+"variable ``poll``, here's what the \"polls/detail.html\" template might look "
+"like:"
+msgstr ""
+
+# e476899cdc454041b8645fe14ca7e60f
+#: ../../intro/tutorial03.txt:416
+msgid ""
+"The template system uses dot-lookup syntax to access variable attributes. In "
+"the example of ``{{ poll.question }}``, first Django does a dictionary "
+"lookup on the object ``poll``. Failing that, it tries an attribute lookup -- "
+"which works, in this case. If attribute lookup had failed, it would've tried "
+"a list-index lookup."
+msgstr ""
+
+# 70e8e225c2f24fe1899de54f65e0b571
+#: ../../intro/tutorial03.txt:422
+msgid ""
+"Method-calling happens in the :ttag:`{% for %}<for>` loop: ``poll.choice_set."
+"all`` is interpreted as the Python code ``poll.choice_set.all()``, which "
+"returns an iterable of Choice objects and is suitable for use in the :ttag:`"
+"{% for %}<for>` tag."
+msgstr ""
+
+# 090a8a0c54a448e0b8bffd1954854670
+#: ../../intro/tutorial03.txt:427
+msgid ""
+"See the :doc:`template guide </topics/templates>` for more about templates."
+msgstr ""
+
+# a0769fc60f6e4dcbb9a6598ecdf0dbc8
+#: ../../intro/tutorial03.txt:430
+msgid "Simplifying the URLconfs"
+msgstr ""
+
+# fc45a9367ec44a6c83b852a39055afc8
+#: ../../intro/tutorial03.txt:432
+msgid ""
+"Take some time to play around with the views and template system. As you "
+"edit the URLconf, you may notice there's a fair bit of redundancy in it::"
+msgstr ""
+
+# e14f9766662043b5be054a79f8663307
+#: ../../intro/tutorial03.txt:442
+msgid "Namely, ``polls.views`` is in every callback."
+msgstr ""
+
+# b4131e90466a45888a2e066a25d6dc41
+#: ../../intro/tutorial03.txt:444
+msgid ""
+"Because this is a common case, the URLconf framework provides a shortcut for "
+"common prefixes. You can factor out the common prefixes and add them as the "
+"first argument to :func:`~django.conf.urls.patterns`, like so::"
+msgstr ""
+
+# bfc5b09400fc444789b6b841157e97d1
+#: ../../intro/tutorial03.txt:455
+msgid ""
+"This is functionally identical to the previous formatting. It's just a bit "
+"tidier."
+msgstr ""
+
+# af9df562a4044e4dbd285266e5eee899
+#: ../../intro/tutorial03.txt:458
+msgid ""
+"Since you generally don't want the prefix for one app to be applied to every "
+"callback in your URLconf, you can concatenate multiple :func:`~django.conf."
+"urls.patterns`. Your full ``mysite/urls.py`` might now look like this::"
+msgstr ""
+
+# 1180d3dfbf8145bb8403f645d2f5b84c
+#: ../../intro/tutorial03.txt:480
+msgid "Decoupling the URLconfs"
+msgstr ""
+
+# 78c698c577774fb48caa75c42263c09b
+#: ../../intro/tutorial03.txt:482
+msgid ""
+"While we're at it, we should take the time to decouple our poll-app URLs "
+"from our Django project configuration. Django apps are meant to be pluggable "
+"-- that is, each particular app should be transferable to another Django "
+"installation with minimal fuss."
+msgstr ""
+
+# 29400e8a35bf49fd8d54908aeecf995c
+#: ../../intro/tutorial03.txt:487
+msgid ""
+"Our poll app is pretty decoupled at this point, thanks to the strict "
+"directory structure that ``python manage.py startapp`` created, but one part "
+"of it is coupled to the Django settings: The URLconf."
+msgstr ""
+
+# 689d2c1d34bf440e878e7ae19b223864
+#: ../../intro/tutorial03.txt:491
+msgid ""
+"We've been editing the URLs in ``mysite/urls.py``, but the URL design of an "
+"app is specific to the app, not to the Django installation -- so let's move "
+"the URLs within the app directory."
+msgstr ""
+
+# feaae62798624c49a9ba32d69ed6631c
+#: ../../intro/tutorial03.txt:495
+msgid ""
+"Copy the file ``mysite/urls.py`` to ``polls/urls.py``. Then, change ``mysite/"
+"urls.py`` to remove the poll-specific URLs and insert an :func:`~django.conf."
+"urls.include`, leaving you with::"
+msgstr ""
+
+# f4c6fcd56a2d4d8d86cad8b74de45552
+#: ../../intro/tutorial03.txt:509
+msgid ""
+":func:`~django.conf.urls.include` simply references another URLconf. Note "
+"that the regular expression doesn't have a ``$`` (end-of-string match "
+"character) but has the trailing slash. Whenever Django encounters :func:"
+"`~django.conf.urls.include`, it chops off whatever part of the URL matched "
+"up to that point and sends the remaining string to the included URLconf for "
+"further processing."
+msgstr ""
+
+# 3eeac260c3fa44a5a7e5cbc2046c4a93
+#: ../../intro/tutorial03.txt:516
+msgid "Here's what happens if a user goes to \"/polls/34/\" in this system:"
+msgstr ""
+
+# 5e30a94af6f6422091c8ea6f6ecae338
+#: ../../intro/tutorial03.txt:518
+msgid "Django will find the match at ``'^polls/'``"
+msgstr ""
+
+# 59e53ede773341e68436f4b613e4c57e
+#: ../../intro/tutorial03.txt:520
+msgid ""
+"Then, Django will strip off the matching text (``\"polls/\"``) and send the "
+"remaining text -- ``\"34/\"`` -- to the 'polls.urls' URLconf for further "
+"processing."
+msgstr ""
+
+# fedecd4db64e43fe85ba870f7204d2ad
+#: ../../intro/tutorial03.txt:524
+msgid ""
+"Now that we've decoupled that, we need to decouple the ``polls.urls`` "
+"URLconf by removing the leading \"polls/\" from each line, and removing the "
+"lines registering the admin site. Your ``polls/urls.py`` file should now "
+"look like this::"
+msgstr ""
+
+# dcb12cdbdd8149838380307414d6bdbe
+#: ../../intro/tutorial03.txt:538
+msgid ""
+"The idea behind :func:`~django.conf.urls.include` and URLconf decoupling is "
+"to make it easy to plug-and-play URLs. Now that polls are in their own "
+"URLconf, they can be placed under \"/polls/\", or under \"/fun_polls/\", or "
+"under \"/content/polls/\", or any other path root, and the app will still "
+"work."
+msgstr ""
+
+# a70a2fbdb3e94e978c9593088c6c58bd
+#: ../../intro/tutorial03.txt:543
+msgid ""
+"All the poll app cares about is its relative path, not its absolute path."
+msgstr ""
+
+# 02c4d147ec0b415faef98c71873e5b53
+#: ../../intro/tutorial03.txt:545
+msgid ""
+"When you're comfortable with writing views, read :doc:`part 4 of this "
+"tutorial </intro/tutorial04>` to learn about simple form processing and "
+"generic views."
+msgstr ""

@@ -1,0 +1,631 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2012-02-15 15:13\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# c097dd0357e04273a8f1746b8ac24050
+#: ../../topics/http/file-uploads.txt:3
+msgid "File Uploads"
+msgstr ""
+
+# 9c41e65a75024b698a49f77c7bd45d11
+#: ../../topics/http/file-uploads.txt:7
+msgid ""
+"When Django handles a file upload, the file data ends up placed in :attr:"
+"`request.FILES <django.http.HttpRequest.FILES>` (for more on the ``request`` "
+"object see the documentation for :doc:`request and response objects </ref/"
+"request-response>`). This document explains how files are stored on disk and "
+"in memory, and how to customize the default behavior."
+msgstr ""
+
+# 6dc0c5d716424bd5b5ec921708e8b467
+#: ../../topics/http/file-uploads.txt:14
+msgid "Basic file uploads"
+msgstr ""
+
+# 0773879a49014d95844db44e32a58390
+#: ../../topics/http/file-uploads.txt:16
+msgid "Consider a simple form containing a :class:`~django.forms.FileField`::"
+msgstr ""
+
+# 6d97c789ff1b4dcbb1a975c1caa86631
+#: ../../topics/http/file-uploads.txt:24
+msgid ""
+"A view handling this form will receive the file data in :attr:`request.FILES "
+"<django.http.HttpRequest.FILES>`, which is a dictionary containing a key for "
+"each :class:`~django.forms.FileField` (or :class:`~django.forms.ImageField`, "
+"or other :class:`~django.forms.FileField` subclass) in the form. So the data "
+"from the above form would be accessible as ``request.FILES['file']``."
+msgstr ""
+
+# 74f58ff63c2040bdbaadc7be6604ac94
+#: ../../topics/http/file-uploads.txt:31
+msgid ""
+"Note that :attr:`request.FILES <django.http.HttpRequest.FILES>` will only "
+"contain data if the request method was ``POST`` and the ``<form>`` that "
+"posted the request has the attribute ``enctype=\"multipart/form-data\"``. "
+"Otherwise, ``request.FILES`` will be empty."
+msgstr ""
+
+# 9300b42a621842f7956fa824b022f6e2
+#: ../../topics/http/file-uploads.txt:36
+msgid ""
+"Most of the time, you'll simply pass the file data from ``request`` into the "
+"form as described in :ref:`binding-uploaded-files`. This would look "
+"something like::"
+msgstr ""
+
+# 48cc0c1edcfd4a69a3af8649157f23e0
+#: ../../topics/http/file-uploads.txt:56
+msgid ""
+"Notice that we have to pass :attr:`request.FILES <django.http.HttpRequest."
+"FILES>` into the form's constructor; this is how file data gets bound into a "
+"form."
+msgstr ""
+
+# 4e95a3afb8cb42cc94c917fbe44d2b03
+#: ../../topics/http/file-uploads.txt:60
+msgid "Handling uploaded files"
+msgstr ""
+
+# 527fffbb13db402189b69591591ba352
+#: ../../topics/http/file-uploads.txt:64
+msgid ""
+"The final piece of the puzzle is handling the actual file data from :attr:"
+"`request.FILES <django.http.HttpRequest.FILES>`. Each entry in this "
+"dictionary is an ``UploadedFile`` object -- a simple wrapper around an "
+"uploaded file. You'll usually use one of these methods to access the "
+"uploaded content:"
+msgstr ""
+
+# d0a600dc158e4ef6861736fc53ae1fad
+#: ../../topics/http/file-uploads.txt:71
+msgid ""
+"Read the entire uploaded data from the file. Be careful with this method: if "
+"the uploaded file is huge it can overwhelm your system if you try to read it "
+"into memory. You'll probably want to use ``chunks()`` instead; see below."
+msgstr ""
+
+# 2d9978b87aa640c0af778d0b628f1852
+#: ../../topics/http/file-uploads.txt:78
+msgid ""
+"Returns ``True`` if the uploaded file is big enough to require reading in "
+"multiple chunks. By default this will be any file larger than 2.5 megabytes, "
+"but that's configurable; see below."
+msgstr ""
+
+# 5b6f68402de8432b812a30dbb4fe3f93
+#: ../../topics/http/file-uploads.txt:84
+msgid ""
+"A generator returning chunks of the file. If ``multiple_chunks()`` is "
+"``True``, you should use this method in a loop instead of ``read()``."
+msgstr ""
+
+# 6cfeb3ed05804b64a0bcb99e8be85951
+#: ../../topics/http/file-uploads.txt:87
+msgid ""
+"In practice, it's often easiest simply to use ``chunks()`` all the time; see "
+"the example below."
+msgstr ""
+
+# 1ca5b87e1e914ee1a8d59b0f731906d0
+#: ../../topics/http/file-uploads.txt:92
+msgid "The name of the uploaded file (e.g. ``my_file.txt``)."
+msgstr ""
+
+# 02f7126a69ec4e17b449cc7450f8c81d
+#: ../../topics/http/file-uploads.txt:96
+msgid "The size, in bytes, of the uploaded file."
+msgstr ""
+
+# a064fe9c816b42a1af746d6ede25c285
+#: ../../topics/http/file-uploads.txt:98
+msgid ""
+"There are a few other methods and attributes available on ``UploadedFile`` "
+"objects; see `UploadedFile objects`_ for a complete reference."
+msgstr ""
+
+# 99b1443c96474c6d912c6362502a3339
+#: ../../topics/http/file-uploads.txt:101
+msgid ""
+"Putting it all together, here's a common way you might handle an uploaded "
+"file::"
+msgstr ""
+
+# 9dc1317a45004f69968d09d426fb1549
+#: ../../topics/http/file-uploads.txt:109
+msgid ""
+"Looping over ``UploadedFile.chunks()`` instead of using ``read()`` ensures "
+"that large files don't overwhelm your system's memory."
+msgstr ""
+
+# 022d578a80834ccf9cf207898cd36414
+#: ../../topics/http/file-uploads.txt:113
+msgid "Where uploaded data is stored"
+msgstr ""
+
+# 95e31c71c1db4f2ebd6b990268bc78a4
+#: ../../topics/http/file-uploads.txt:115
+msgid "Before you save uploaded files, the data needs to be stored somewhere."
+msgstr ""
+
+# 2298f681725f421a934ddef7e2ee0483
+#: ../../topics/http/file-uploads.txt:117
+msgid ""
+"By default, if an uploaded file is smaller than 2.5 megabytes, Django will "
+"hold the entire contents of the upload in memory. This means that saving the "
+"file involves only a read from memory and a write to disk and thus is very "
+"fast."
+msgstr ""
+
+# ab7438a775bf4a89ab013311ce9bf0c5
+#: ../../topics/http/file-uploads.txt:121
+msgid ""
+"However, if an uploaded file is too large, Django will write the uploaded "
+"file to a temporary file stored in your system's temporary directory. On a "
+"Unix-like platform this means you can expect Django to generate a file "
+"called something like ``/tmp/tmpzfp6I6.upload``. If an upload is large "
+"enough, you can watch this file grow in size as Django streams the data onto "
+"disk."
+msgstr ""
+
+# a9ee8abbdf514c04bdbe5e80c3cdc68c
+#: ../../topics/http/file-uploads.txt:127
+msgid ""
+"These specifics -- 2.5 megabytes; ``/tmp``; etc. -- are simply \"reasonable "
+"defaults\". Read on for details on how you can customize or completely "
+"replace upload behavior."
+msgstr ""
+
+# a9f16b09d4a34f9a943655b8b1a06586
+#: ../../topics/http/file-uploads.txt:132
+msgid "Changing upload handler behavior"
+msgstr ""
+
+# 373af4e2e652431ca9c3fa6416a11e7b
+#: ../../topics/http/file-uploads.txt:134
+msgid "Three settings control Django's file upload behavior:"
+msgstr ""
+
+# a4e0354315ee42e19a022ec97c348f23
+#: ../../topics/http/file-uploads.txt:137
+msgid ""
+"The maximum size, in bytes, for files that will be uploaded into memory. "
+"Files larger than :setting:`FILE_UPLOAD_MAX_MEMORY_SIZE` will be streamed to "
+"disk."
+msgstr ""
+
+# 403427a148764f52865c58e6bdfa304c
+#: ../../topics/http/file-uploads.txt:141
+msgid "Defaults to 2.5 megabytes."
+msgstr ""
+
+# ba3c29498ed84ffab9f97933c6f3c366
+#: ../../topics/http/file-uploads.txt:144
+msgid ""
+"The directory where uploaded files larger than :setting:"
+"`FILE_UPLOAD_MAX_MEMORY_SIZE` will be stored."
+msgstr ""
+
+# d4212b198e6b466eb79049d3174b3979
+#: ../../topics/http/file-uploads.txt:147
+msgid ""
+"Defaults to your system's standard temporary directory (i.e. ``/tmp`` on "
+"most Unix-like systems)."
+msgstr ""
+
+# 91af59e672c945dc8f1a43372fb3f2dc
+#: ../../topics/http/file-uploads.txt:151
+msgid ""
+"The numeric mode (i.e. ``0644``) to set newly uploaded files to. For more "
+"information about what these modes mean, see the documentation for :func:`os."
+"chmod`."
+msgstr ""
+
+# 925b7a589eda495cbc690f5e18ee17be
+#: ../../topics/http/file-uploads.txt:155
+msgid ""
+"If this isn't given or is ``None``, you'll get operating-system dependent "
+"behavior. On most platforms, temporary files will have a mode of ``0600``, "
+"and files saved from memory will be saved using the system's standard umask."
+msgstr ""
+
+# 1f3f76486eb9431ca8ef2f30bc5cab69
+#: ../../topics/http/file-uploads.txt:162
+msgid ""
+"If you're not familiar with file modes, please note that the leading ``0`` "
+"is very important: it indicates an octal number, which is the way that modes "
+"must be specified. If you try to use ``644``, you'll get totally incorrect "
+"behavior."
+msgstr ""
+
+# e96947d7a3ec463c8b91f0d86353e3fb
+#: ../../topics/http/file-uploads.txt:167
+msgid "**Always prefix the mode with a 0.**"
+msgstr ""
+
+# a14ced1f69a1414094a357c5305026bb
+#: ../../topics/http/file-uploads.txt:170
+msgid ""
+"The actual handlers for uploaded files. Changing this setting allows "
+"complete customization -- even replacement -- of Django's upload process. "
+"See `upload handlers`_, below, for details."
+msgstr ""
+
+# fc27148b2975425aabfc1f373b2598bb
+#: ../../topics/http/file-uploads.txt:174
+msgid "Defaults to::"
+msgstr ""
+
+# af52caa564924e8ab9dfd50e45ea7fe1
+#: ../../topics/http/file-uploads.txt:179
+msgid ""
+"Which means \"try to upload to memory first, then fall back to temporary "
+"files.\""
+msgstr ""
+
+# 55935377fd864cf4a874106a8b54c0aa
+#: ../../topics/http/file-uploads.txt:183
+msgid "``UploadedFile`` objects"
+msgstr ""
+
+# 46074885a40643c3a26346efcfef5c1a
+#: ../../topics/http/file-uploads.txt:185
+msgid ""
+"In addition to those inherited from :class:`File`, all ``UploadedFile`` "
+"objects define the following methods/attributes:"
+msgstr ""
+
+# 58cfaa851c5d475592d63b7da1c0ff94
+#: ../../topics/http/file-uploads.txt:190
+msgid ""
+"The content-type header uploaded with the file (e.g. :mimetype:`text/plain` "
+"or :mimetype:`application/pdf`). Like any data supplied by the user, you "
+"shouldn't trust that the uploaded file is actually this type. You'll still "
+"need to validate that the file contains the content that the content-type "
+"header claims -- \"trust but verify.\""
+msgstr ""
+
+# 612cfb3d432d439998d71eba1ae2291f
+#: ../../topics/http/file-uploads.txt:198
+msgid ""
+"For :mimetype:`text/*` content-types, the character set (i.e. ``utf8``) "
+"supplied by the browser. Again, \"trust but verify\" is the best policy here."
+msgstr ""
+
+# f80310f355444fe3a59d62d246b1f62c
+#: ../../topics/http/file-uploads.txt:203
+msgid ""
+"Only files uploaded onto disk will have this method; it returns the full "
+"path to the temporary uploaded file."
+msgstr ""
+
+# e2c79ede8567425c85acfd8c2f4264c5
+#: ../../topics/http/file-uploads.txt:208
+msgid ""
+"Like regular Python files, you can read the file line-by-line simply by "
+"iterating over the uploaded file:"
+msgstr ""
+
+# c42b85e2ed634b1388286ea6182a40df
+#: ../../topics/http/file-uploads.txt:216
+msgid ""
+"However, *unlike* standard Python files, :class:`UploadedFile` only "
+"understands ``\\n`` (also known as \"Unix-style\") line endings. If you know "
+"that you need to handle uploaded files with different line endings, you'll "
+"need to do so in your view."
+msgstr ""
+
+# 5856b4cc510f4739af05ae2bc0b624cb
+#: ../../topics/http/file-uploads.txt:222
+msgid "Upload Handlers"
+msgstr ""
+
+# 8533ac80430b4c2db21e76faa49c7a8e
+#: ../../topics/http/file-uploads.txt:224
+msgid ""
+"When a user uploads a file, Django passes off the file data to an *upload "
+"handler* -- a small class that handles file data as it gets uploaded. Upload "
+"handlers are initially defined in the :setting:`FILE_UPLOAD_HANDLERS` "
+"setting, which defaults to::"
+msgstr ""
+
+# 0776796c14654e96a19e49a032d2fe63
+#: ../../topics/http/file-uploads.txt:232
+msgid ""
+"Together the ``MemoryFileUploadHandler`` and ``TemporaryFileUploadHandler`` "
+"provide Django's default file upload behavior of reading small files into "
+"memory and large ones onto disk."
+msgstr ""
+
+# c4bc9f29800e4635ab5e56024ba87019
+#: ../../topics/http/file-uploads.txt:236
+msgid ""
+"You can write custom handlers that customize how Django handles files. You "
+"could, for example, use custom handlers to enforce user-level quotas, "
+"compress data on the fly, render progress bars, and even send data to "
+"another storage location directly without storing it locally."
+msgstr ""
+
+# df0987a8821f46d98e4f42ae89c3771f
+#: ../../topics/http/file-uploads.txt:244
+msgid "Modifying upload handlers on the fly"
+msgstr ""
+
+# 69a90fed87cd4f6e9786b3b70f40fa55
+#: ../../topics/http/file-uploads.txt:246
+msgid ""
+"Sometimes particular views require different upload behavior. In these "
+"cases, you can override upload handlers on a per-request basis by modifying "
+"``request.upload_handlers``. By default, this list will contain the upload "
+"handlers given by :setting:`FILE_UPLOAD_HANDLERS`, but you can modify the "
+"list as you would any other list."
+msgstr ""
+
+# da5657e8db7648afa55997bfd244459f
+#: ../../topics/http/file-uploads.txt:252
+msgid ""
+"For instance, suppose you've written a ``ProgressBarUploadHandler`` that "
+"provides feedback on upload progress to some sort of AJAX widget. You'd add "
+"this handler to your upload handlers like this::"
+msgstr ""
+
+# 5c6c415ad67e4f7f8d5df574cc584fb6
+#: ../../topics/http/file-uploads.txt:258
+msgid ""
+"You'd probably want to use ``list.insert()`` in this case (instead of "
+"``append()``) because a progress bar handler would need to run *before* any "
+"other handlers. Remember, the upload handlers are processed in order."
+msgstr ""
+
+# 4da0dec2bb8d416bbe5324bb13a1680f
+#: ../../topics/http/file-uploads.txt:262
+msgid ""
+"If you want to replace the upload handlers completely, you can just assign a "
+"new list::"
+msgstr ""
+
+# b4e456f696184fc0b81060773ffd867d
+#: ../../topics/http/file-uploads.txt:269
+msgid ""
+"You can only modify upload handlers *before* accessing ``request.POST`` or "
+"``request.FILES`` -- it doesn't make sense to change upload handlers after "
+"upload handling has already started. If you try to modify ``request."
+"upload_handlers`` after reading from ``request.POST`` or ``request.FILES`` "
+"Django will throw an error."
+msgstr ""
+
+# fddd46c2332d46ab95fcbf3321a704bf
+#: ../../topics/http/file-uploads.txt:276
+msgid ""
+"Thus, you should always modify uploading handlers as early in your view as "
+"possible."
+msgstr ""
+
+# 5626f10113114fc3b63f8d8bbeef1e8a
+#: ../../topics/http/file-uploads.txt:279
+msgid ""
+"Also, ``request.POST`` is accessed by :class:`~django.middleware.csrf."
+"CsrfViewMiddleware` which is enabled by default. This means you will need to "
+"use :func:`~django.views.decorators.csrf.csrf_exempt` on your view to allow "
+"you to change the upload handlers.  You will then need to use :func:`~django."
+"views.decorators.csrf.csrf_protect` on the function that actually processes "
+"the request.  Note that this means that the handlers may start receiving the "
+"file upload before the CSRF checks have been done. Example code:"
+msgstr ""
+
+# eb91584715f84ef294e646264fba42de
+#: ../../topics/http/file-uploads.txt:304
+msgid "Writing custom upload handlers"
+msgstr ""
+
+# 2415de6ac6c74746b2c3b8e70a0b3951
+#: ../../topics/http/file-uploads.txt:306
+msgid ""
+"All file upload handlers should be subclasses of ``django.core.files."
+"uploadhandler.FileUploadHandler``. You can define upload handlers wherever "
+"you wish."
+msgstr ""
+
+# bf9ce994ae2c42918a62e78e0052d6ff
+#: ../../topics/http/file-uploads.txt:311
+msgid "Required methods"
+msgstr ""
+
+# e7d9aa05fa69459a8e16ba31a13496fd
+#: ../../topics/http/file-uploads.txt:313
+msgid "Custom file upload handlers **must** define the following methods:"
+msgstr ""
+
+# 8891c43c58264084af2c373bdd9498a0
+#: ../../topics/http/file-uploads.txt:316
+msgid "Receives a \"chunk\" of data from the file upload."
+msgstr ""
+
+# 3def19e654af406abb9b58a7ca8858b3
+#: ../../topics/http/file-uploads.txt:318
+msgid "``raw_data`` is a byte string containing the uploaded data."
+msgstr ""
+
+# 76f5ad1cda39444187b27a3ccffc64ec
+#: ../../topics/http/file-uploads.txt:320
+msgid ""
+"``start`` is the position in the file where this ``raw_data`` chunk begins."
+msgstr ""
+
+# 4c9cccc847c24a368f537eb0ce59e334
+#: ../../topics/http/file-uploads.txt:323
+msgid ""
+"The data you return will get fed into the subsequent upload handlers' "
+"``receive_data_chunk`` methods. In this way, one handler can be a \"filter\" "
+"for other handlers."
+msgstr ""
+
+# 5631126d68ac4be0bc57e4807896c985
+#: ../../topics/http/file-uploads.txt:327
+msgid ""
+"Return ``None`` from ``receive_data_chunk`` to sort-circuit remaining upload "
+"handlers from getting this chunk.. This is useful if you're storing the "
+"uploaded data yourself and don't want future handlers to store a copy of the "
+"data."
+msgstr ""
+
+# 7392fe17c12f4f69bf2a0c94c4d0214f
+#: ../../topics/http/file-uploads.txt:332
+msgid ""
+"If you raise a ``StopUpload`` or a ``SkipFile`` exception, the upload will "
+"abort or the file will be completely skipped."
+msgstr ""
+
+# a45b2ffe69444aec8856f1a18c8be0c4
+#: ../../topics/http/file-uploads.txt:336
+msgid "Called when a file has finished uploading."
+msgstr ""
+
+# a31ad4d6c9614383968d5d9e7384bf01
+#: ../../topics/http/file-uploads.txt:338
+msgid ""
+"The handler should return an ``UploadedFile`` object that will be stored in "
+"``request.FILES``. Handlers may also return ``None`` to indicate that the "
+"``UploadedFile`` object should come from subsequent upload handlers."
+msgstr ""
+
+# 2999b5f7bcdc4849a11c5911fe7b86fc
+#: ../../topics/http/file-uploads.txt:343
+msgid "Optional methods"
+msgstr ""
+
+# 07d64797234846dcb72764fde4371994
+#: ../../topics/http/file-uploads.txt:345
+msgid ""
+"Custom upload handlers may also define any of the following optional methods "
+"or attributes:"
+msgstr ""
+
+# 84373936ba8941b48f32824329a1247f
+#: ../../topics/http/file-uploads.txt:349
+msgid ""
+"Size, in bytes, of the \"chunks\" Django should store into memory and feed "
+"into the handler. That is, this attribute controls the size of chunks fed "
+"into ``FileUploadHandler.receive_data_chunk``."
+msgstr ""
+
+# fd610497c3944078af7ac93d2923c6bc
+#: ../../topics/http/file-uploads.txt:353
+msgid ""
+"For maximum performance the chunk sizes should be divisible by ``4`` and "
+"should not exceed 2 GB (2\\ :sup:`31` bytes) in size. When there are "
+"multiple chunk sizes provided by multiple handlers, Django will use the "
+"smallest chunk size defined by any handler."
+msgstr ""
+
+# 924905416cb84e589729b00bc278a222
+#: ../../topics/http/file-uploads.txt:358
+msgid "The default is 64*2\\ :sup:`10` bytes, or 64 KB."
+msgstr ""
+
+# d4c2214d4358428a952985fec66c79aa
+#: ../../topics/http/file-uploads.txt:361
+msgid ""
+"Callback signaling that a new file upload is starting. This is called before "
+"any data has been fed to any upload handlers."
+msgstr ""
+
+# fb3b866e71ba42c0a3e5e4814a2ed72b
+#: ../../topics/http/file-uploads.txt:364
+msgid "``field_name`` is a string name of the file ``<input>`` field."
+msgstr ""
+
+# 4955f27aa08d4addb2b6da4b092c5a6b
+#: ../../topics/http/file-uploads.txt:366
+msgid "``file_name`` is the unicode filename that was provided by the browser."
+msgstr ""
+
+# a773a1ad93ac4818b3f447250819ae55
+#: ../../topics/http/file-uploads.txt:368
+msgid ""
+"``content_type`` is the MIME type provided by the browser -- E.g. ``'image/"
+"jpeg'``."
+msgstr ""
+
+# 9f3aadf534e54f998bcc4e0182c65e27
+#: ../../topics/http/file-uploads.txt:371
+msgid ""
+"``content_length`` is the length of the image given by the browser. "
+"Sometimes this won't be provided and will be ``None``."
+msgstr ""
+
+# afc4e81d79db4fa5a1a5744f46a19052
+#: ../../topics/http/file-uploads.txt:374
+msgid ""
+"``charset`` is the character set (i.e. ``utf8``) given by the browser. Like "
+"``content_length``, this sometimes won't be provided."
+msgstr ""
+
+# ea46f36d3a9a468d8993b0c84b680817
+#: ../../topics/http/file-uploads.txt:377
+msgid ""
+"This method may raise a ``StopFutureHandlers`` exception to prevent future "
+"handlers from handling this file."
+msgstr ""
+
+# 89b1e939596c4f6e98fbb4019bc12b21
+#: ../../topics/http/file-uploads.txt:381
+msgid "Callback signaling that the entire upload (all files) has completed."
+msgstr ""
+
+# 2e297edb2ab34f44ae16b098b97d01fd
+#: ../../topics/http/file-uploads.txt:384
+msgid ""
+"Allows the handler to completely override the parsing of the raw HTTP input."
+msgstr ""
+
+# 904572a138914bd2917b062718b69a54
+#: ../../topics/http/file-uploads.txt:387
+msgid "``input_data`` is a file-like object that supports ``read()``-ing."
+msgstr ""
+
+# 54ceb3925f8c4c5cab2e0bb3e01725b7
+#: ../../topics/http/file-uploads.txt:389
+msgid "``META`` is the same object as ``request.META``."
+msgstr ""
+
+# 1adf8dfae7f843128dcbbf5fbe6655a5
+#: ../../topics/http/file-uploads.txt:391
+msgid ""
+"``content_length`` is the length of the data in ``input_data``. Don't read "
+"more than ``content_length`` bytes from ``input_data``."
+msgstr ""
+
+# f873ea6df22b4f89aca0d87e0367784d
+#: ../../topics/http/file-uploads.txt:394
+msgid "``boundary`` is the MIME boundary for this request."
+msgstr ""
+
+# 24a2f387ee974ec1b8582188dc1a8d1c
+#: ../../topics/http/file-uploads.txt:396
+msgid "``encoding`` is the encoding of the request."
+msgstr ""
+
+# a7a701072e984d0eb83bfa0079d67e62
+#: ../../topics/http/file-uploads.txt:398
+msgid ""
+"Return ``None`` if you want upload handling to continue, or a tuple of ``"
+"(POST, FILES)`` if you want to return the new data structures suitable for "
+"the request directly."
+msgstr ""
