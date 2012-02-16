@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-16 17:02+0200\n"
+"PO-Revision-Date: 2012-02-16 18:35+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1299,7 +1299,7 @@ msgstr ""
 # 4b5c4b51c1b04b4f9046c09aa3002bf5
 #: ../../topics/db/models.txt:782
 msgid "Executing custom SQL"
-msgstr ""
+msgstr "Выполнение SQL запросов"
 
 # 744146f5d4c943798a8e763fff6b89ab
 #: ../../topics/db/models.txt:784
@@ -1308,11 +1308,14 @@ msgid ""
 "module-level methods. For more details on using raw SQL, see the "
 "documentation on :doc:`using raw SQL</topics/db/sql>`."
 msgstr ""
+"Запросы на чистом SQL лучше выполнять в методе модели. Подробнее о SQL "
+"запросах можно прочитать в :doc:`разделе о запросах на чистом SQL</topics/db/"
+"sql>`."
 
 # 240cdeffffdc4b5a8b0878e4d5c68813
 #: ../../topics/db/models.txt:791
 msgid "Model inheritance"
-msgstr ""
+msgstr "Наследование моделей"
 
 # 5d0f522f2dad47f1a79fff497061d9cf
 #: ../../topics/db/models.txt:793
@@ -1323,11 +1326,16 @@ msgid ""
 "database tables), or if the parents are just holders of common information "
 "that will only be visible through the child models."
 msgstr ""
+"Наследование моделей в Django работает почти так же как и наследование "
+"классов в Python. Единственное что вам нужно определить, это должна ли "
+"родительская модель быть независимой моделью (с собственной таблицей в базе "
+"данных), или же родительская модель просто контейнер для хранения информации "
+"доступной только через дочерние модели."
 
 # 622d456b641c456f93db612633dc82e6
 #: ../../topics/db/models.txt:800
 msgid "There are three styles of inheritance that are possible in Django."
-msgstr ""
+msgstr "Существует три вида наследования моделей в Django."
 
 # 387406a3478b426ba32b62fbab5dcd7c
 #: ../../topics/db/models.txt:802
@@ -1337,6 +1345,10 @@ msgid ""
 "going to ever be used in isolation, so :ref:`abstract-base-classes` are what "
 "you're after."
 msgstr ""
+"Чаще всего вы будете использовать родительскую модель для хранения общих "
+"полей, что бы не добавлять их в каждую дочернюю модель. Если вы не "
+"собираетесь использовать его как независимую модель - :ref:`abstract-base-"
+"classes` то, что вам нужно."
 
 # edd79a2639a242fc913ee01e878dd3fe
 #: ../../topics/db/models.txt:806
@@ -1345,6 +1357,9 @@ msgid ""
 "application entirely) and want each model to have its own database table, :"
 "ref:`multi-table-inheritance` is the way to go."
 msgstr ""
+"Если родительская модель независимая(возможно из другого приложения) и "
+"должна храниться в отдельной таблице, :ref:`multi-table-inheritance` то, что "
+"вам нужно."
 
 # 7ffe0a41523d4f0bafa7688dee9ebb35
 #: ../../topics/db/models.txt:809
@@ -1353,11 +1368,13 @@ msgid ""
 "without changing the models fields in any way, you can use :ref:`proxy-"
 "models`."
 msgstr ""
+"Если же вы хотите переопределить поведение модели на уровне Python, не меня "
+"структуры базы данных, вы можете использовать :ref:`proxy-models`."
 
 # 1e0180e04bb341d7a61c669ca83d5ed6
 #: ../../topics/db/models.txt:816
 msgid "Abstract base classes"
-msgstr ""
+msgstr "Абстрактные модели"
 
 # 7c5d668e42b5464eac3bfd734efbdd08
 #: ../../topics/db/models.txt:818
@@ -1370,11 +1387,18 @@ msgid ""
 "class. It is an error to have fields in the abstract base class with the "
 "same name as those in the child (and Django will raise an exception)."
 msgstr ""
+"Абстрактные модель удобны при определении общих, для нескольких моделей, "
+"полей. Вы создаете базовую модель и добавляете ``abstract=True`` в класс :"
+"ref:`Meta <meta-options>`. Для этой модели не будет создана таблица в базе "
+"данных. Используя эту модель как родительскую для другой модели - все ее "
+"поля будут добавлены в таблицу в базе данных для этой модели. Нельзя "
+"использовать поля с одинаковыми названиями в дочерней и родительской моделях "
+"(Django вызовет исключение)."
 
 # 9383f0ace70c4e9da05fc5ba2076b8fc
 #: ../../topics/db/models.txt:827
 msgid "An example::"
-msgstr ""
+msgstr "Например::"
 
 # a9abb69d7ac84aa2a533700033163851
 #: ../../topics/db/models.txt:839
@@ -1384,6 +1408,11 @@ msgid ""
 "model, since it is an abstract base class. It does not generate a database "
 "table or have a manager, and cannot be instantiated or saved directly."
 msgstr ""
+"Модель ``Student`` содержит три поля: ``name``, ``age`` и ``home_group``. "
+"Модель ``CommonInfo`` не может использовать как обычная модель Django, т.к. "
+"это абстрактный класс. Она не имеет собственной таблице в базе данных и не "
+"имеет менеджера, нельзя создать экземпляр модели и сохранить его в базе "
+"данных."
 
 # 682792d1ed594e50a47bf6e3df554517
 #: ../../topics/db/models.txt:844
@@ -1393,11 +1422,14 @@ msgid ""
 "whilst still only creating one database table per child model at the "
 "database level."
 msgstr ""
+"В большинстве случаев вы будете использовать этот тип наследования моделей. "
+"Он позволяет на уровне Python разделить общие данные, используя в то же "
+"время одну таблицу в базе данных."
 
 # 9598bd584a164731a56215b6679ba257
 #: ../../topics/db/models.txt:849
 msgid "``Meta`` inheritance"
-msgstr ""
+msgstr "Наследование класса ``Meta``"
 
 # 2fb27a269e76447caa3949fb45a940dc
 #: ../../topics/db/models.txt:851
@@ -1409,6 +1441,11 @@ msgid ""
 "the child wants to extend the parent's :ref:`Meta <meta-options>` class, it "
 "can subclass it. For example::"
 msgstr ""
+"После создания абстрактной модели, Django добавляет класс :ref:`Meta <meta-"
+"options>` как атрибут класса. Если дочерний класс не определяет собственный "
+"класс :ref:`Meta <meta-options>`, он унаследует родительский класс :ref:"
+"`Meta <meta-options>`. Если дочерняя модель хочет расширить родительский :"
+"ref:`Meta <meta-options>` класс, она может унаследовать его. Например::"
 
 # 831ac15359c64f668a913c7245b87aa7
 #: ../../topics/db/models.txt:868
@@ -1421,6 +1458,12 @@ msgid ""
 "abstract base class. You just need to remember to explicitly set "
 "``abstract=True`` each time."
 msgstr ""
+"Django делает одно изменени в :ref:`Meta <meta-options>` для абстрактной "
+"модели: перед добавлением в модель изменяет атрибут ``abstract=False``. Это "
+"означает что дочерняя модель, наследуя :ref:`Meta <meta-options>`, не "
+"становится сама абстрактной моделью. Конечно вы можете создать абстрактную "
+"модель, которая наследуется от другой абстрактной модели. Вам только нужно "
+"определить атрибут ``abstract=True``."
 
 # 52859d946dfc415bb502b4234103f595
 #: ../../topics/db/models.txt:875
@@ -1431,11 +1474,16 @@ msgid ""
 "specify their own :ref:`Meta <meta-options>`) would use the same database "
 "table, which is almost certainly not what you want."
 msgstr ""
+"Некоторые атрибуты не имеет смысла добавлять в класс :ref:`Meta <meta-"
+"options>` абстрактной модели. Например, добавление ``db_table`` означает, "
+"что каждая дочерняя модель(каждая, которая не определяет свой собственный "
+"класс :ref:`Meta <meta-options>`) будет использовать туже таблицу в базе "
+"данных, что точно не то, что вам нужно."
 
 # 09581e211daf44158073d27e1b1b4d59
 #: ../../topics/db/models.txt:883
 msgid "Be careful with ``related_name``"
-msgstr ""
+msgstr "Осторожно с ``related_name``"
 
 # 7077856cb48845cfa1223b1c0b7072c9
 #: ../../topics/db/models.txt:885
@@ -1448,6 +1496,12 @@ msgid ""
 "the attributes (including :attr:`~django.db.models.ForeignKey.related_name`) "
 "each time."
 msgstr ""
+"Используя атрибут :attr:`~django.db.models.ForeignKey.related_name` для "
+"``ForeignKey`` или ``ManyToManyField``, вы должны всегда определять "
+"*уникальное* название для обратной связи. Это одна из проблем абстрактных "
+"моделей, т.к. ее поля будут добавлены в каждой из дочерних моделей, с теми "
+"же значениями аргументов (включая :attr:`~django.db.models.ForeignKey."
+"related_name`)."
 
 # c9d07202089e4079a0d7f2611b037132
 #: ../../topics/db/models.txt:893
@@ -1456,6 +1510,9 @@ msgid ""
 "ForeignKey.related_name` in an abstract base class (only), part of the name "
 "should contain ``'%(app_label)s'`` and ``'%(class)s'``."
 msgstr ""
+"Для решения этой проблемы, добавляя :attr:`~django.db.models.ForeignKey."
+"related_name` для абстрактной модели (и только для абстрактной), можно "
+"использовать в названии ``'%(app_label)s'`` и ``'%(class)s'``."
 
 # cb082381ac45410ca32aaf390a1ada71
 #: ../../topics/db/models.txt:897
@@ -1463,6 +1520,8 @@ msgid ""
 "``'%(class)s'`` is replaced by the lower-cased name of the child class that "
 "the field is used in."
 msgstr ""
+"``'%(class)s'`` будет заменен на название дочерней модели, в которой поле "
+"используется, в нижнем регистре."
 
 # 59ad42ab31d74b28af6526904a60f533
 #: ../../topics/db/models.txt:899
@@ -1472,16 +1531,20 @@ msgid ""
 "and the model class names within each app must also be unique, therefore the "
 "resulting name will end up being different."
 msgstr ""
+"``'%(app_label)s'`` будет заменено на название приложения, в котором "
+"находится модель, в нижнем регистре. Название приложения должно быть "
+"уникальным, так же как и название модели в приложении, в результате должно "
+"получится уникальное значение атрибута."
 
 # 73355bd1bc6e43fd96353dcc118b6bad
 #: ../../topics/db/models.txt:904
 msgid "For example, given an app ``common/models.py``::"
-msgstr ""
+msgstr "Например, есть приложение с ``common/models.py``::"
 
 # 42c336bb451a4ea8baee3df5811da3b7
 #: ../../topics/db/models.txt:918
 msgid "Along with another app ``rare/models.py``::"
-msgstr ""
+msgstr "И еще другое ``rare/models.py``::"
 
 # 74cf8b09934842baa3363d70abbd01c3
 #: ../../topics/db/models.txt:925
@@ -1494,6 +1557,13 @@ msgid ""
 "construct your related name, but if you forget to use it, Django will raise "
 "errors when you validate your models (or run :djadmin:`syncdb`)."
 msgstr ""
+"Имя обратной связи поля ``common.ChildA.m2m`` будет "
+"``common_childa_related``, в то время как для ``common.ChildB.m2m`` будет "
+"``common_childb_related``, а для ``rare.ChildB.m2m`` - "
+"``rare_childb_related``. Вы можете использовать ``'%(class)s'`` и "
+"``'%(app_label)s`` как вам угодно для создания названия,  но если вы "
+"забудете о них, Django вызовет исключение при проверке модели (или при :"
+"djadmin:`syncdb`)."
 
 # 44e39271527e48f9a91e7937097c7652
 #: ../../topics/db/models.txt:933
@@ -1507,11 +1577,17 @@ msgid ""
 "would be ``childa_set`` in the ``ChildA`` case and ``childb_set`` for the "
 "``ChildB`` field."
 msgstr ""
+"Не указав :attr:`~django.db.models.ForeignKey.related_name` для абстрактной "
+"модели, для обратной связи будет использовано название дочерней модели плюс "
+"``'_set'``, так же, как при добавлении связи непосредственно в дочернюю "
+"модель. Например, в примере выше, без указания :attr:`~django.db.models."
+"ForeignKey.related_name` название для обратной связи поля ``m2m`` будет "
+"``childa_set`` для модели ``ChildA`` и ``childb_set`` для ``ChildB``."
 
 # d928287b998f41ff8513e1b52abd30a5
 #: ../../topics/db/models.txt:945
 msgid "Multi-table inheritance"
-msgstr ""
+msgstr "Multi-table наследование"
 
 # 5b71b61ebf754279add14a1c5195f822
 #: ../../topics/db/models.txt:947
@@ -1523,6 +1599,11 @@ msgid ""
 "parents (via an automatically-created :class:`~django.db.models."
 "OneToOneField`). For example::"
 msgstr ""
+"Это второй тип наследования в Django - когда каждая модель в иерархии будет "
+"независимой. Каждая модель имеет собственную таблицу в базе данных и может "
+"быть использована независимо. Наследование использует связь между "
+"родительской и дочерней моделью (через автоматически созданное поле :class:"
+"`~django.db.models.OneToOneField`). Например::"
 
 # bfcc95089b0b4b4da0690f517815f25a
 #: ../../topics/db/models.txt:962
@@ -1531,6 +1612,8 @@ msgid ""
 "although the data will reside in a different database table. So these are "
 "both possible::"
 msgstr ""
+"Все поля ``Place`` будут доступны и в ``Restaurant``, в то время как данные "
+"будут храниться в разных таблицах. Например::"
 
 # 3012002ea44449c0a089a10c3d49e6d4
 #: ../../topics/db/models.txt:969
@@ -1539,6 +1622,9 @@ msgid ""
 "``Place`` object to the ``Restaurant`` object by using the lower-case "
 "version of the model name::"
 msgstr ""
+"Если объект ``Place`` является так же и ``Restaurant``, вы можете из объекта "
+"``Place`` получить связанный объект ``Restaurant`` используя название модели "
+"в нижнем регистре::"
 
 # abc97764e172404b8bd083ab31e6a268
 #: ../../topics/db/models.txt:978
@@ -1548,11 +1634,14 @@ msgid ""
 "class), referring to ``p.restaurant`` would raise a Restaurant.DoesNotExist "
 "exception."
 msgstr ""
+"Но, если ``p`` в примере выше *не* ``Restaurant`` (был создан "
+"непосредственно как объект ``Place`` или был родителем другой модели), "
+"использование ``p.restaurant`` вызовет ошибку Restaurant.DoesNotExist."
 
 # 76d9a43a2a0e4fea8c6afa325018a32f
 #: ../../topics/db/models.txt:983
 msgid "``Meta`` and multi-table inheritance"
-msgstr ""
+msgstr "``Meta`` и multi-table наследование"
 
 # 993dc2d9294e45a68c2977e9c967fb40
 #: ../../topics/db/models.txt:985
@@ -1564,6 +1653,11 @@ msgid ""
 "contradictory behavior (this is in contrast with the abstract base class "
 "case, where the base class doesn't exist in its own right)."
 msgstr ""
+"При multi-table наследовании, не имеет смысле дочерней модели наследовать :"
+"ref:`Meta <meta-options>` от родительской. Все атрибуты класса :ref:`Meta "
+"<meta-options>` уже используются в родительской модели и использование их "
+"снова может привести к противоречивому поведению (это отличие от абстрактной "
+"модели, которая сама по себе не существует как независимая модель)."
 
 # 524b703d562542bc8cdeb00cdd56c14f
 #: ../../topics/db/models.txt:992
@@ -1574,6 +1668,11 @@ msgid ""
 "`~django.db.models.Options.ordering` attribute or a :attr:`~django.db.models."
 "Options.get_latest_by` attribute, it will inherit these from its parent."
 msgstr ""
+"По-этому дочерняя модель не имеет доступа к родительскому классу :ref:`Meta "
+"<meta-options>`. Но есть исключения, когда дочерняя модель наследует "
+"поведение родительской: если дочерняя модель не определяет атрибут :attr:"
+"`~django.db.models.Options.ordering` или :attr:`~django.db.models.Options."
+"get_latest_by`, они будут унаследованы."
 
 # 06e77dc6db65453eb16d86cfddfc8175
 #: ../../topics/db/models.txt:999
@@ -1581,11 +1680,13 @@ msgid ""
 "If the parent has an ordering and you don't want the child to have any "
 "natural ordering, you can explicitly disable it::"
 msgstr ""
+"Если родительская модель определяет сортировку, но вы не ходите ее "
+"наследовать в дочерней модели, вы можете указать это таким способом::"
 
 # ea60945ee09f4f0aa61a920d6036973e
 #: ../../topics/db/models.txt:1009
 msgid "Inheritance and reverse relations"
-msgstr ""
+msgstr "Наследование и обратные связи"
 
 # c11a08bb6aef4be7b7e4b74513b1d4b5
 #: ../../topics/db/models.txt:1011
@@ -1608,11 +1709,13 @@ msgid ""
 "For example, using the above ``Place`` class again, let's create another "
 "subclass with a :class:`~django.db.models.ManyToManyField`::"
 msgstr ""
+"Например, используя ``Place`` определенную выше, создадим еще одну дочернюю "
+"модель с :class:`~django.db.models.ManyToManyField`::"
 
 # 6b7c685d836847928a3a0395a90ac4ed
 #: ../../topics/db/models.txt:1033
 msgid "Specifying the parent link field"
-msgstr ""
+msgstr "Определение связи к родительской модели"
 
 # 3b342bbc60db458dbe652238a4c13d0e
 #: ../../topics/db/models.txt:1035
@@ -1628,7 +1731,7 @@ msgstr ""
 # c047d5ee744642dbb949a9cba0dc4ad1
 #: ../../topics/db/models.txt:1046
 msgid "Proxy models"
-msgstr ""
+msgstr "Proxy-модели"
 
 # 30fe4cdf231d46bfa5caafbe188cac13
 #: ../../topics/db/models.txt:1048
