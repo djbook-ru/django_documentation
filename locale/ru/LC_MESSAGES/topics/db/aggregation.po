@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated, 2012.
+# Automatically generated <>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2012-02-17 13:43+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 # 0bcaa27a761b4011964d415b54377f59
 #: ../../topics/db/aggregation.txt:3
 msgid "Aggregation"
-msgstr ""
+msgstr "Агрегация"
 
 # fffa983fd8904be6b538631e3194bf24
 #: ../../topics/db/aggregation.txt:7
@@ -33,6 +33,11 @@ msgid ""
 "collection of objects. This topic guide describes the ways that aggregate "
 "values can be generated and returned using Django queries."
 msgstr ""
+"Руководство о :doc:`API для доступа к данных</topics/db/queries>` описывает, "
+"как создавать запросы с помощью Django для создания, обновления, получения и "
+"удаления отдельных объектов. Но иногда необходимы данные полученные через "
+"обобщение или *агрегацию* данных нескольких объектов. Этот раздел расскажет "
+"как создавать такие запросы с помощью Django."
 
 # 71a8e0af98f44f0e836e7c676f90a64a
 #: ../../topics/db/aggregation.txt:14
@@ -40,11 +45,13 @@ msgid ""
 "Throughout this guide, we'll refer to the following models. These models are "
 "used to track the inventory for a series of online bookstores:"
 msgstr ""
+"В данном руководстве мы будем ссылаться на следующие модели. Эти модели "
+"хранят информацию для книжного магазина:"
 
 # 2b3997a640294e9e91559b33669c850f
 #: ../../topics/db/aggregation.txt:46
 msgid "Generating aggregates over a QuerySet"
-msgstr ""
+msgstr "Создание агрегации с помощью QuerySet"
 
 # b1c1a74e131e4e0280c0bb1e2f7e0f9d
 #: ../../topics/db/aggregation.txt:48
@@ -54,6 +61,10 @@ msgid ""
 "wanted to calculate the average price of all books available for sale. "
 "Django's query syntax provides a means for describing the set of all books::"
 msgstr ""
+"Django имеет два способа использовать агрегацию. Первый способ заключается в "
+"использовании агрегации для всего ``QuerySet``. Например, например мы хотим "
+"вычислить среднюю цену для всех книг. Что бы получить все книги необходимо "
+"выполнить такой запрос::"
 
 # ff791af02ee74870addab1c02ebc3434
 #: ../../topics/db/aggregation.txt:55
@@ -62,12 +73,16 @@ msgid ""
 "belong to this ``QuerySet``. This is done by appending an ``aggregate()`` "
 "clause onto the ``QuerySet``::"
 msgstr ""
+"Нам нужно вычислить значения для каждого объекта в ``QuerySet``. Это можно "
+"сделать добавив ``aggregate()`` в ``QuerySet``::"
 
 # d60c53f6e3254f9887fb466c4fc18293
 #: ../../topics/db/aggregation.txt:63
 msgid ""
 "The ``all()`` is redundant in this example, so this could be simplified to::"
 msgstr ""
+"``all()`` не обязательно использовать в данном примере, так что можно "
+"упростить::"
 
 # 0dc0cf3d44684914bf5a93fe2e652b12
 #: ../../topics/db/aggregation.txt:68
@@ -77,6 +92,10 @@ msgid ""
 "on the ``Book`` model. A list of the aggregate functions that are available "
 "can be found in the :ref:`QuerySet reference <aggregation-functions>`."
 msgstr ""
+"Аргумент для ``aggregate()`` определяет что нам нужно вычислить - в данном "
+"примере среднее значение поля ``price`` для модели ``Book``. Полный список "
+"функций агрегации можно найти в :ref:`разделе о QuerySet<aggregation-"
+"functions>`."
 
 # b47801ad10c64752805e0062f6eda5b2
 #: ../../topics/db/aggregation.txt:73
@@ -88,6 +107,11 @@ msgid ""
 "function. If you want to manually specify a name for the aggregate value, "
 "you can do so by providing that name when you specify the aggregate clause::"
 msgstr ""
+"``aggregate()`` завершающая инструкция для ``QuerySet``, которая возвращает "
+"словарь с результатом. Ключ словаря - идентификатор вычисленного значения; "
+"значение - результат. Название создается автоматически из поля и функции "
+"агрегации. Если вы хотите самостоятельно определить имя результата, вы "
+"можете указать его при определении функции агрегации::"
 
 # 865d3da61f154d9bb5be589f5d05e949
 #: ../../topics/db/aggregation.txt:83
@@ -96,11 +120,14 @@ msgid ""
 "argument to the ``aggregate()`` clause. So, if we also wanted to know the "
 "maximum and minimum price of all books, we would issue the query::"
 msgstr ""
+"Если вам необходимо вычислить больше одного значения, добавьте еще один "
+"аргумент в ``aggregate()``. Например, нам нужно узнать минимальную и "
+"максимальную цену книг::"
 
 # 7bd279623dd44f02a33386c451b62164
 #: ../../topics/db/aggregation.txt:92
 msgid "Generating aggregates for each item in a QuerySet"
-msgstr ""
+msgstr "Создание агрегации для каждого объекта в QuerySet"
 
 # ea331a1bb38b478f9b6b2f63e5d17b97
 #: ../../topics/db/aggregation.txt:94
@@ -112,6 +139,10 @@ msgid ""
 "Author; we want to summarize this relationship for each book in the "
 "``QuerySet``."
 msgstr ""
+"Второй способ это применение агрегации для каждого объекта в ``QuerySet``. "
+"Например, при получении списка книг, вы хотите знать количество их авторов. "
+"Каждая модель книги имеет связь много-ко-многому с моделью автора, нам нужно "
+"обобщить это отношение для каждой книги в ``QuerySet``."
 
 # d1d789375c094e399ebb04c7ca7a7645
 #: ../../topics/db/aggregation.txt:100
@@ -120,6 +151,8 @@ msgid ""
 "an ``annotate()`` clause is specified, each object in the ``QuerySet`` will "
 "be annotated with the specified values."
 msgstr ""
+"Обобщение отношения можно выполнить с помощью ``annotate()``. ``annotate()`` "
+"для каждого объекта ``QuerySet`` добавит вычисленное значение."
 
 # fc23f31d7f0a4b3daf94e8af4cb11f0f
 #: ../../topics/db/aggregation.txt:104
@@ -129,6 +162,9 @@ msgid ""
 "aggregate that is to be calculated. For example, to annotate Books with the "
 "number of authors::"
 msgstr ""
+"Синтаксис совпадает с синтаксисом ``aggregate()``. Каждый аргумент ``annotate"
+"()`` описывает агрегацию, которая должна быть выполнена. Например, что бы "
+"добавить количество авторов необходимо выполнить такой код::"
 
 # 9d1e5aa9565b482eb55cfebb54cdc791
 #: ../../topics/db/aggregation.txt:122
@@ -138,6 +174,9 @@ msgid ""
 "being aggregated. You can override this default name by providing an alias "
 "when you specify the annotation::"
 msgstr ""
+"Как и для ``aggregate()``, название будет вычислено из названия поля и "
+"функции агрегации. Вы можете переопределить это имя добавив его при "
+"определении аннотации::"
 
 # 49f9a20e36054ecdbfec7af69bc5a489
 #: ../../topics/db/aggregation.txt:133
@@ -147,11 +186,15 @@ msgid ""
 "be modified using any other ``QuerySet`` operation, including ``filter()``, "
 "``order_by``, or even additional calls to ``annotate()``."
 msgstr ""
+"В отличии от ``aggregate()``, ``annotate()`` *не* завершающая функция. "
+"Результат функции ``annotate()`` будет ``QuerySet``; этот ``QuerySet`` может "
+"быть изменен любой другой операцией ``QuerySet``, включая ``filter()``, "
+"``order_by``, или еще одним вызовом ``annotate()``."
 
 # a6070665cb734bd8a3906cfd58c0bd78
 #: ../../topics/db/aggregation.txt:139
 msgid "Joins and aggregates"
-msgstr ""
+msgstr "Объединения и агрегация"
 
 # b54c3bea2101491b9d74e8742f158c4c
 #: ../../topics/db/aggregation.txt:141
