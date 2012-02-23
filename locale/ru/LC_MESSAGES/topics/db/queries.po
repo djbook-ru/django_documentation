@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-22 17:56+0200\n"
+"PO-Revision-Date: 2012-02-23 14:23+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -562,21 +562,26 @@ msgid ""
 "a certain number of results. This is the equivalent of SQL's ``LIMIT`` and "
 "``OFFSET`` clauses."
 msgstr ""
+"Используйте синтаксис срезов для списков Python для ограничения результата "
+"выборки ``QuerySet``. Это эквивалент таких операторов SQL как ``LIMIT`` и "
+"``OFFSET``."
 
 # 9bfb58adbc01425c9338db52127220d9
 #: ../../topics/db/queries.txt:319
 msgid "For example, this returns the first 5 objects (``LIMIT 5``)::"
-msgstr ""
+msgstr "Например, этот код возвращает 5 первых объектов (``LIMIT 5``)::"
 
 # 9339b0a5a1424cd788eea90b9736832d
 #: ../../topics/db/queries.txt:323
 msgid "This returns the sixth through tenth objects (``OFFSET 5 LIMIT 5``)::"
-msgstr ""
+msgstr "Этот возвращает с шестого по десятый (``OFFSET 5 LIMIT 5``)::"
 
 # c21b44f0108f450e8d1cbfb175c98afb
 #: ../../topics/db/queries.txt:327
 msgid "Negative indexing (i.e. ``Entry.objects.all()[-1]``) is not supported."
 msgstr ""
+"Отрицательные индексы (например, ``Entry.objects.all()[-1]``) не "
+"поддерживается."
 
 # 5b26a862fb314eb9878516d586f8ed4b
 #: ../../topics/db/queries.txt:329
@@ -586,6 +591,10 @@ msgid ""
 "Python slice syntax. For example, this would actually execute the query in "
 "order to return a list of every *second* object of the first 10::"
 msgstr ""
+"На самом деле, срез ``QuerySet`` возвращает новый ``QuerySet`` -- запрос не "
+"выполняется. При использовании аргумента \"шаг\" синтаксиса срезов в Python "
+"будет вызвано исключение. Например, этот пример выполнил бы запрос, "
+"возвращающий каждый *второй* объект из первых 10::"
 
 # fadc974392e040b8b3a3fff0c101d29a
 #: ../../topics/db/queries.txt:336
@@ -595,11 +604,15 @@ msgid ""
 "the first ``Entry`` in the database, after ordering entries alphabetically "
 "by headline::"
 msgstr ""
+"Для получения *одного* объекта, а не списка (например, ``SELECT foo FROM bar "
+"LIMIT 1``), используйте индекс вместо среза. Например, этот код возвращает "
+"первый объект ``Entry`` в базе данных, после сортировки записей по "
+"заголовку::"
 
 # 220cb5d52ebc474e87721620ed596880
 #: ../../topics/db/queries.txt:343
 msgid "This is roughly equivalent to::"
-msgstr ""
+msgstr "Это эквивалент::"
 
 # 569721c7a2fa41db8548d77a432bca46
 #: ../../topics/db/queries.txt:347
@@ -608,11 +621,14 @@ msgid ""
 "second will raise ``DoesNotExist`` if no objects match the given criteria. "
 "See :meth:`~django.db.models.query.QuerySet.get` for more details."
 msgstr ""
+"Заметим, что первый пример вызовет ``IndexError`` в то время как первый - "
+"``DoesNotExist``, если запрос вернет ни один объект. Смотрите :meth:`~django."
+"db.models.query.QuerySet.get` для подробностей."
 
 # 02f871217c9f4b9ea83acb8b1287a2cf
 #: ../../topics/db/queries.txt:354
 msgid "Field lookups"
-msgstr ""
+msgstr "Фильтры полей"
 
 # 598d069f7a26443fa09d4d8eea785a44
 #: ../../topics/db/queries.txt:356
@@ -621,6 +637,9 @@ msgid ""
 "They're specified as keyword arguments to the ``QuerySet`` methods ``filter()"
 "``, ``exclude()`` and ``get()``."
 msgstr ""
+"Фильтры полей -- это \"операторы\" для составления условий SQL ``WHERE``. "
+"Они задаются как именованные аргументы для метода ``filter()``, ``exclude()"
+"`` и ``get()`` в ``QuerySet``."
 
 # 9f1e3bb16101488693f7c293b170d957
 #: ../../topics/db/queries.txt:360
@@ -628,11 +647,13 @@ msgid ""
 "Basic lookups keyword arguments take the form ``field__lookuptype=value``. "
 "(That's a double-underscore). For example::"
 msgstr ""
+"Фильтры полей выглядят как ``field__lookuptype=value``. (Используется "
+"двойное подчеркивание). Например::"
 
 # 1a5163a9e32446308bf900587d901cec
 #: ../../topics/db/queries.txt:365
 msgid "translates (roughly) into the following SQL::"
-msgstr ""
+msgstr "будет транслировано в SQL::"
 
 # fea015493f45478bb68f74805f67e744
 #: ../../topics/db/queries.txt:371
@@ -641,6 +662,10 @@ msgid ""
 "arguments whose names and values are evaluated at runtime. For more "
 "information, see `Keyword Arguments`_ in the official Python tutorial."
 msgstr ""
+"Python позволяет определить функции, которые принимают именованные аргументы "
+"с динамически вычисляемыми названиями и значениями. Подробности смотрите в "
+"разделе `Именованные аргументы <http://docs.python.org/tutorial/controlflow."
+"html#keyword-arguments>`_ в официальной документации Python."
 
 # e3c6e5556fe04855a379c97c888c3b8e
 #: ../../topics/db/queries.txt:386
@@ -648,6 +673,8 @@ msgid ""
 "If you pass an invalid keyword argument, a lookup function will raise "
 "``TypeError``."
 msgstr ""
+"При передаче неверного именованного аргумента, будет вызвано исключение "
+"``TypeError``."
 
 # 43f6899d141c4ab9ade3aa47a6c1052f
 #: ../../topics/db/queries.txt:389
@@ -657,16 +684,19 @@ msgid ""
 "you a taste of what's available, here's some of the more common lookups "
 "you'll probably use:"
 msgstr ""
+"API базы данных поддерживает около двух дюжин фильтров; полный список можно "
+"найти в :ref:`разделе о фильтрах полей <field-lookups>`. Вот пример самых "
+"используемых фильтров:"
 
 # 28bae35c780c4821ae88dba1112fb92e
 #: ../../topics/db/queries.txt:394
 msgid "An \"exact\" match. For example::"
-msgstr ""
+msgstr "\"Точное\" совпадение. Например::"
 
 # b019ec8c34b146878d932824f57f1ae9
 #: ../../topics/db/queries.txt:398
 msgid "Would generate SQL along these lines:"
-msgstr ""
+msgstr "Создаст такой SQL запрос:"
 
 # 8614ff18facd4222a3ad393eaf8905b3
 #: ../../topics/db/queries.txt:404
@@ -675,21 +705,24 @@ msgid ""
 "doesn't contain a double underscore -- the lookup type is assumed to be "
 "``exact``."
 msgstr ""
+"Если вы не укажите фильтр -- именованный аргумент не содержит двойное "
+"подчеркивание -- будет использован фильтр ``exact``."
 
 # 37440d02b41842a183968a9de6a21096
 #: ../../topics/db/queries.txt:408
 msgid "For example, the following two statements are equivalent::"
-msgstr ""
+msgstr "Например, эти два выражения идентичны::"
 
 # ef0175f7fcca4bcf9b90b44d1c0ce1a9
 #: ../../topics/db/queries.txt:413
 msgid "This is for convenience, because ``exact`` lookups are the common case."
 msgstr ""
+"Это сделано для удобства, т.к. ``exact`` самый распространенный фильтр."
 
 # 71dcd93a692e47b6a4047f2d9dd82f06
 #: ../../topics/db/queries.txt:416
 msgid "A case-insensitive match. So, the query::"
-msgstr ""
+msgstr "Регистро-независимый совпадение. Такой запрос::"
 
 # 8433df2478144fbda0847a88ed8ccca6
 #: ../../topics/db/queries.txt:420
@@ -697,16 +730,18 @@ msgid ""
 "Would match a ``Blog`` titled \"Beatles Blog\", \"beatles blog\", or even "
 "\"BeAtlES blOG\"."
 msgstr ""
+"Найдет ``Blog`` с названием \"Beatles Blog\", \"beatles blog\", и даже "
+"\"BeAtlES blOG\"."
 
 # 76db870a6e6c41db983f2ffff7de61ce
 #: ../../topics/db/queries.txt:424
 msgid "Case-sensitive containment test. For example::"
-msgstr ""
+msgstr "Регистро-зависимая проверка на вхождение. Например::"
 
 # bc59e9b2d10d44c9a3c49044f7dc3b6f
 #: ../../topics/db/queries.txt:428
 msgid "Roughly translates to this SQL:"
-msgstr ""
+msgstr "Будет конвертировано в такой SQL запрос:"
 
 # 2307a528ce81481382b9a8a56a3682ef
 #: ../../topics/db/queries.txt:434
@@ -714,11 +749,13 @@ msgid ""
 "Note this will match the headline ``'Today Lennon honored'`` but not "
 "``'today lennon honored'``."
 msgstr ""
+"Заметим что этот пример найдет заголовок ``'Today Lennon honored'``, но не "
+"найдет ``'today lennon honored'``."
 
 # f7a625a14ee24abebce04602d73e8f6c
 #: ../../topics/db/queries.txt:437
 msgid "There's also a case-insensitive version, :lookup:`icontains`."
-msgstr ""
+msgstr "Существует так же регистро-независимые версии, :lookup:`icontains`."
 
 # 203d7a48fcab4001a57459e299a75d81
 #: ../../topics/db/queries.txt:440
@@ -726,6 +763,8 @@ msgid ""
 "Starts-with and ends-with search, respectively. There are also case-"
 "insensitive versions called :lookup:`istartswith` and :lookup:`iendswith`."
 msgstr ""
+"Поиск по началу и окончанию соответственно. Существуют также регистро-"
+"независимые версии :lookup:`istartswith` и :lookup:`iendswith`."
 
 # 87cd7f058691427ba396a54066760024
 #: ../../topics/db/queries.txt:444
@@ -733,11 +772,13 @@ msgid ""
 "Again, this only scratches the surface. A complete reference can be found in "
 "the :ref:`field lookup reference <field-lookups>`."
 msgstr ""
+"Это только основные фильтры. Полный список ищите в :ref:`разделе о фильтрах "
+"по полям <field-lookups>`."
 
 # 29d44ab4f0cc4353909092c2dfe0ea24
 #: ../../topics/db/queries.txt:448
 msgid "Lookups that span relationships"
-msgstr ""
+msgstr "Фильтры по связанным объектам"
 
 # 9f2fa0201f9949d9aae759ad993fa66e
 #: ../../topics/db/queries.txt:450
@@ -748,6 +789,10 @@ msgid ""
 "fields across models, separated by double underscores, until you get to the "
 "field you want."
 msgstr ""
+"Django предлагает удобный и понятный интерфейс для фильтрации по связанным "
+"объектам, самостоятельно заботясь о ``JOIN`` в SQL. Для фильтра по полю из "
+"связанных моделей, используйте имена связывающих полей разделенных двойным "
+"нижним подчеркиванием, пока вы не достигните нужного поля."
 
 # 55e64e2168d84553a6b63ad8f2b42fdf
 #: ../../topics/db/queries.txt:456
@@ -755,11 +800,13 @@ msgid ""
 "This example retrieves all ``Entry`` objects with a ``Blog`` whose ``name`` "
 "is ``'Beatles Blog'``::"
 msgstr ""
+"Этот пример получает все объекты ``Entry`` с ``Blog``, ``name`` которого "
+"равен ``'Beatles Blog'``::"
 
 # 168b259fd9f04a82ac775974bef1915e
 #: ../../topics/db/queries.txt:461
 msgid "This spanning can be as deep as you'd like."
-msgstr ""
+msgstr "Этот поиск может быть на столько глубоким, на сколько вам нужно."
 
 # 9069ac0d75b44358b5f125d83bb77179
 #: ../../topics/db/queries.txt:463
@@ -767,6 +814,8 @@ msgid ""
 "It works backwards, too. To refer to a \"reverse\" relationship, just use "
 "the lowercase name of the model."
 msgstr ""
+"Все работает и в другую сторону. Что бы обратиться к \"обратной\" связи, "
+"просто используйте имя модели в нижнем регистре."
 
 # d27965616e9f48a18d38c51eaf12d4c6
 #: ../../topics/db/queries.txt:466
@@ -774,6 +823,8 @@ msgid ""
 "This example retrieves all ``Blog`` objects which have at least one "
 "``Entry`` whose ``headline`` contains ``'Lennon'``::"
 msgstr ""
+"Этот пример получает все объект ``Blog``, которые имеют хотя бы один "
+"связанный объект ``Entry`` с ``headline`` содержащим ``'Lennon'``::"
 
 # 36fad69af884472cb2ced7751e38b3bc
 #: ../../topics/db/queries.txt:471
@@ -784,6 +835,10 @@ msgid ""
 "valid, object there. All this means is that no error will be raised. For "
 "example, in this filter::"
 msgstr ""
+"Если вы используйте фильтр через несколько связей и одна из промежуточных "
+"моделей не содержит подходящей связи, Django расценит это как пустое "
+"значение (все значения равны ``NULL``). Исключение не будет вызвано. "
+"Например, в этом фильтре::"
 
 # ea722f4d5cae4ae8a56cfdec92c36bac
 #: ../../topics/db/queries.txt:478
@@ -794,6 +849,11 @@ msgid ""
 "``author``. Usually this is exactly what you want to have happen. The only "
 "case where it might be confusing is if you are using ``isnull``. Thus::"
 msgstr ""
+"(при связанной модели ``Author``), если нет объекта ``author`` связанного с "
+"``entry``, это будет расценено как отсутствие ``name``, вместо вызова "
+"исключения т.к. ``author`` отсутствует. В большинстве случаев это то, что "
+"вам нужно. Единственный случай, когда это может работать не однозначно - при "
+"использовании ``isnull``. Например::"
 
 # 6b8ae985d83a4a9182be16753422ad76
 #: ../../topics/db/queries.txt:486
@@ -802,6 +862,9 @@ msgid ""
 "and also those which have an empty ``author`` on the ``entry``. If you don't "
 "want those latter objects, you could write::"
 msgstr ""
+"вернет объекты ``Blog`` у которого пустое поле ``name`` у ``author`` и также "
+"объекты, у которых пустой ``author``в  ``entry``. Если вы не хотите включать "
+"вторые объекты, используйте::"
 
 # 7dfbc48ae5eb436293a1ebe39fe76c49
 #: ../../topics/db/queries.txt:494
@@ -1666,7 +1729,7 @@ msgstr ""
 # ecf21c78d1ee407092fd93800876f849
 #: ../../topics/db/queries.txt:1170
 msgid "Falling back to raw SQL"
-msgstr ""
+msgstr "Использование чистого SQL"
 
 # eea72f40671a41d2bf2c11ec33d9ba86
 #: ../../topics/db/queries.txt:1172
@@ -1676,6 +1739,9 @@ msgid ""
 "hand. Django has a couple of options for writing raw SQL queries; see :doc:`/"
 "topics/db/sql`."
 msgstr ""
+"Если вам нужно создать SQL запрос, который слишком сложен для API Django, вы "
+"можете использовать чистый SQL. Django имеет несколько возможностей "
+"использовать SQL запросы; смотрите :doc:`/topics/db/sql`."
 
 # 5c5bcff1298f471abee7b10697f6d16a
 #: ../../topics/db/queries.txt:1177
