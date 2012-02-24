@@ -1,0 +1,46 @@
+{% extends "djangodocs/layout.html" %}
+
+{% block document %}
+  <div id="custom-doc" class="{% block bodyclass %}{{ 'yui-t6' if pagename != 'index' else '' }}{% endblock %}">
+    <div id="hd">
+      <h1><a href="{{ pathto('index') }}">{{ docstitle }}</a></h1>
+      <div id="global-nav">
+        <a title="Djbook.ru" href="http://djbook.ru">Djbook.ru</a> {{ reldelim2 }}
+        <a title="Home page" href="{{ pathto('index') }}">Home</a> {{ reldelim2 }}
+        <a title="Table of contents" href="{{ pathto('contents') }}">Table of contents</a> {{ reldelim2 }}
+        <a title="Global index" href="{{ pathto('genindex') }}">Index</a> {{ reldelim2 }}
+        <a title="Module index" href="{{ pathto('py-modindex') }}">Modules</a>
+      </div>
+      <div class="nav">{{ secondnav() }}</div>
+    </div>
+    
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="{{ pagename|replace('/', '-') }}">
+            {% block body %}{% endblock %}
+          </div>         
+        </div>
+      </div>
+      {% block sidebarwrapper %}
+        {% if pagename != 'index' %}
+          <div class="yui-b" id="sidebar">
+            {{ sidebar() }}
+            {%- if last_updated %}
+              <h3>Last update:</h3>
+              <p class="topless">{{ last_updated }}</p>
+            {%- endif %}
+          </div> 
+        {% endif %}
+      {% endblock %}
+    </div>
+    
+    <div id="ft">
+      <div class="nav">{{ secondnav() }}</div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+<footer>Translated by &nbsp;&nbsp;&nbsp; Ruslan Popov @ gmail.com &nbsp;&nbsp;&nbsp; Dmitriy Kostochko @ gmail.com</footer>
+{% endblock %}
