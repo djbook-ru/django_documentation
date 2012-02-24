@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-24 01:02+0400\n"
+"PO-Revision-Date: 2012-02-24 09:06+0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -296,22 +296,39 @@ msgid ""
 "`` method won't have any effect) because these fields are displayed as text "
 "rather than as input elements, and thus are not posted back to the server."
 msgstr ""
+"После того, как ``is_valid()`` возвратила ``True``, вы можете спокойно "
+"работать с полученными данными, зная, что они прошли валидацию в вашей "
+"форме. Несмотря на наличие прямого доступа к  ``request.POST``, "
+"рекомендуется использовать ``form.cleaned_data``. Данные, представленные "
+"этой структурой не только проверены, но и преобразованы в соответствующие "
+"типы языка Python. В приведённом выше примере, ``cc_myself`` представлено "
+"булевым значением. Аналогично, поля, подобные ``IntegerField`` и "
+"``FloatField`` преобразуют значения в типы ``int`` и ``float`` "
+"соответственно. Следует отметить, что нередактируемые поля (readonly) не "
+"представлены ``form.cleaned_data`` (и установка значения в перекрытом методе "
+"``clean()`` не будет иметь эффекта), потому что эти поля отображаются как "
+"текст, а не элемент ввода и, таким образом, не отправляются обратно на "
+"сервер."
 
 # 3a5b10193c7e47e0b7d66e32c16b1e2c
 #: ../../topics/forms/index.txt:148
 msgid ""
 "Extending the above example, here's how the form data could be processed:"
 msgstr ""
+"Продолжая работать над предыдущим примером, покажем как могут быть "
+"обработаны данные из формы:"
 
 # 36f8d70fd4d44fc297854735310b18e8
 #: ../../topics/forms/index.txt:166
 msgid "For more on sending email from Django, see :doc:`/topics/email`."
 msgstr ""
+"Подробную информацию про отправку электронной почты с помощью Django можно "
+"найти в :doc:`/topics/email`."
 
 # 132ae3965e8f4747a74c51a7984942cc
 #: ../../topics/forms/index.txt:169
 msgid "Displaying a form using a template"
-msgstr ""
+msgstr "Отображение формы с помощью шаблона"
 
 # 72d35b966a044252b2f019a4c120382a
 #: ../../topics/forms/index.txt:171
@@ -320,6 +337,9 @@ msgid ""
 "example, we passed our ``ContactForm`` instance to the template using the "
 "context variable ``form``. Here's a simple example template::"
 msgstr ""
+"Формы разработаны для работы с шаблонным языком Django. В приведённом ранее "
+"примере мы передавали экземпляр ``ContactForm`` в шаблон, используя "
+"контекстную переменную ``form``. Покажем простой пример шаблона::"
 
 # b8a2d53c66ad40acbf285b7f253b92a1
 #: ../../topics/forms/index.txt:180
@@ -327,6 +347,8 @@ msgid ""
 "The form only outputs its own fields; it is up to you to provide the "
 "surrounding ``<form>`` tags and the submit button."
 msgstr ""
+"Форма просто выводит свои поля. Указание тага ``<form>`` и кнопки для "
+"отправки формы -- это ваша задача."
 
 # a845262370ab42f996e12a74af9626b7
 #: ../../topics/forms/index.txt:185
@@ -338,6 +360,12 @@ msgid ""
 "to forms in templates, this tag is omitted from the following examples in "
 "this document."
 msgstr ""
+"Django поставляется с :doc:`защитой против Cross Site Request Forgeries </"
+"ref/contrib/csrf>`. Для отправки формы через POST при включенной защите от "
+"CSRF вы должны использовать шаблонный таг :ttag:`csrf_token`, как показано в "
+"предыдущем примере. Тем не менее, раз CSRF защита не обязательна для "
+"применения в шаблонах при оформлении формы, этот таг опущен в последующих "
+"примерах."
 
 # d04382d8802649ffaa8439e29121b5f5
 #: ../../topics/forms/index.txt:192
@@ -345,6 +373,9 @@ msgid ""
 "``form.as_p`` will output the form with each form field and accompanying "
 "label wrapped in a paragraph. Here's the output for our example template::"
 msgstr ""
+"Таг ``form.as_p`` выводит поля формы в виде параграфов (т.е. ``<p/>``) "
+"вместе с соответствующими метками. Ниже представлены пример с результатом "
+"использования нашего шаблона::"
 
 # 5d49b8a5614140fbb8ffd629360ca453
 #: ../../topics/forms/index.txt:207
@@ -355,6 +386,11 @@ msgid ""
 "software. You can also :ref:`customize the way in which labels and ids are "
 "generated <ref-forms-api-configuring-label>`."
 msgstr ""
+"Следует отметить, что каждое поле формы обладает атрибутом с идентификатором "
+"``id_<field-name>``, с помощью которого обеспечивается связь с тагом метки. "
+"Это позволяет формам быть дружественными к вспомогательным технологиям, "
+"например, это поможет работе ПО для слепых. Также вы можете :ref:`настроить "
+"способ генерации меток и идентификаторов <ref-forms-api-configuring-label>`."
 
 # 9fbdbdc15bb24601b29872cdd9c1438e
 #: ../../topics/forms/index.txt:213
@@ -362,11 +398,14 @@ msgid ""
 "You can also use ``form.as_table`` to output table rows (you'll need to "
 "provide your own ``<table>`` tags) and ``form.as_ul`` to output list items."
 msgstr ""
+"Вы можете использовать ``form.as_table`` для вывода полей формы в виде "
+"таблицы (потребуется прописать в шаблоне таги ``<table>``) и ``form.as_ul`` "
+"для вывода полей формы в виде элементов списка."
 
 # d700e18901ca4b6787a6b5d5f4409f7a
 #: ../../topics/forms/index.txt:217
 msgid "Customizing the form template"
-msgstr ""
+msgstr "Настройка шаблона формы"
 
 # 7de2b9dd3a654371bb66f2f29584c603
 #: ../../topics/forms/index.txt:219
@@ -375,6 +414,9 @@ msgid ""
 "customize the way a form is presented using the Django template language. "
 "Extending the above example::"
 msgstr ""
+"Если сгенерированный по умолчанию HTML не подходит для решения вашей задачи, "
+"вы можете изменить представление формы с помощью шаблонного языка Django. "
+"Продолжая работу с приведённым ранее примером::"
 
 # 4fd086364ead4e0d841d81ef593c1d7f
 #: ../../topics/forms/index.txt:248
@@ -384,6 +426,11 @@ msgid ""
 "widget. Using ``{{ form.name_of_field.errors }}`` displays a list of form "
 "errors, rendered as an unordered list. This might look like::"
 msgstr ""
+"Каждое именованное поле формы может быть выведено в шаблоне с помощью тага ``"
+"{{ form.name_of_field }}``, который создаст HTML код необходимый для "
+"отображения виджета. Использование тага ``{{ form.name_of_field.errors }}`` "
+"отобразит список ошибок поля формы в виде ненумерованного списка. Результат "
+"может быть таким::"
 
 # 7aa879ce5ac04fe1a34b35ea4d89e3b0
 #: ../../topics/forms/index.txt:257
@@ -392,11 +439,14 @@ msgid ""
 "appearance. If you wish to further customize the display of errors you can "
 "do so by looping over them::"
 msgstr ""
+"Список имеет CSS класс ``errorlist``, что позволяет вам настроить параметры "
+"его отображения. Если потребуется более тонкая настройка отображения ошибок, "
+"вы можете это организовать с помощью цикла по ним::"
 
 # 3dad1b00ccaa41c7946d85ae678f6936
 #: ../../topics/forms/index.txt:270
 msgid "Looping over the form's fields"
-msgstr ""
+msgstr "Цикл по полям формы"
 
 # c657a3e1408849fdb0d02115af17d717
 #: ../../topics/forms/index.txt:272
@@ -405,6 +455,9 @@ msgid ""
 "duplicate code by looping through each field in turn using a ``{% for %}`` "
 "loop::"
 msgstr ""
+"Если вы используете однотипный HTML для каждого поля формы, вы можете "
+"избежать дублирования кода, используя таг ``{% for %}`` для прохода по полям "
+"формы::"
 
 # d79186e16c134b29aad267ccb5d1e4c2
 #: ../../topics/forms/index.txt:286
@@ -413,11 +466,14 @@ msgid ""
 "``BoundField`` also has the following attributes, which can be useful in "
 "your templates:"
 msgstr ""
+"Внутри цикла таг``{{ field }}`` представляет собой экземпляр класса :class:"
+"`BoundField`. Класс ``BoundField`` также имеет приведённые далее атрибуты, "
+"которые могут быть полезны в вашем шаблоне:"
 
 # 07429c499b33436084dc86e90da0bb95
 #: ../../topics/forms/index.txt:291
 msgid "The label of the field, e.g. ``Email address``."
-msgstr ""
+msgstr "Метка поля, т.е. ``Email address``."
 
 # f7835c78f1fd4282ab0dc8258669a144
 #: ../../topics/forms/index.txt:294
@@ -425,11 +481,13 @@ msgid ""
 "The field's label wrapped in the appropriate HTML ``<label>`` tag, e.g. "
 "``<label for=\"id_email\">Email address</label>``"
 msgstr ""
+"Метка поля обёрнута в соответствующий HTML таг ``<label>``, т.е. ``<label "
+"for=\"id_email\">Email address</label>``."
 
 # 5bf862eec06a42c991fc4b7588938125
 #: ../../topics/forms/index.txt:298
 msgid "The value of the field. e.g ``someone@example.com``"
-msgstr ""
+msgstr "Значение поля, т.е. ``someone@example.com``."
 
 # 33d895e5c6c446588dc6bf6aa90449c4
 #: ../../topics/forms/index.txt:301
