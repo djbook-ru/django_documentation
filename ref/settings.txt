@@ -6,6 +6,13 @@ Settings
     :local:
     :depth: 1
 
+.. warning::
+
+    Be careful when you override settings, especially when the default value
+    is a non-empty tuple or dict, like :setting:`MIDDLEWARE_CLASSES` and
+    :setting:`TEMPLATE_CONTEXT_PROCESSORS`. Make sure you keep the components
+    required by the features of Django you wish to use.
+
 Available settings
 ==================
 
@@ -697,11 +704,13 @@ Default::
     '%b %d, %Y', '%d %b %Y', '%d %b, %Y', '%B %d %Y',
     '%B %d, %Y', '%d %B %Y', '%d %B, %Y')
 
-A tuple of formats that will be accepted when inputting data on a date
-field. Formats will be tried in order, using the first valid.
-Note that these format strings are specified in Python's datetime_ module
-syntax, that is different from the one used by Django for formatting dates
-to be displayed.
+A tuple of formats that will be accepted when inputting data on a date field.
+Formats will be tried in order, using the first valid. Note that these format
+strings are specified in Python's datetime_ module syntax, that is different
+from the one used by Django for formatting dates to be displayed.
+
+When :setting:`USE_L10N` is ``True``, the locale-dictated format has higher
+precedence and will be applied instead.
 
 See also :setting:`DATETIME_INPUT_FORMATS` and :setting:`TIME_INPUT_FORMATS`.
 
@@ -738,10 +747,12 @@ Default::
     '%m/%d/%y %H:%M:%S', '%m/%d/%y %H:%M', '%m/%d/%y')
 
 A tuple of formats that will be accepted when inputting data on a datetime
-field. Formats will be tried in order, using the first valid.
-Note that these format strings are specified in Python's datetime_ module
-syntax, that is different from the one used by Django for formatting dates
-to be displayed.
+field. Formats will be tried in order, using the first valid. Note that these
+format strings are specified in Python's datetime_ module syntax, that is
+different from the one used by Django for formatting dates to be displayed.
+
+When :setting:`USE_L10N` is ``True``, the locale-dictated format has higher
+precedence and will be applied instead.
 
 See also :setting:`DATE_INPUT_FORMATS` and :setting:`TIME_INPUT_FORMATS`.
 
@@ -756,22 +767,44 @@ Default: ``False``
 
 A boolean that turns on/off debug mode.
 
-If you define custom settings, `django/views/debug.py`_ has a ``HIDDEN_SETTINGS``
-regular expression which will hide from the DEBUG view anything that contains
-``'SECRET'``, ``'PASSWORD'``, ``'PROFANITIES'``, or ``'SIGNATURE'``. This allows
-untrusted users to be able to give backtraces without seeing sensitive (or
-offensive) settings.
+Never deploy a site into production with :setting:`DEBUG` turned on.
 
-Still, note that there are always going to be sections of your debug output that
-are inappropriate for public consumption. File paths, configuration options, and
-the like all give attackers extra information about your server.
+Did you catch that? NEVER deploy a site into production with :setting:`DEBUG`
+turned on.
+
+One of the main features of debug mode is the display of detailed error pages.
+If your app raises an exception when ``DEBUG`` is ``True``, Django will display
+a detailed traceback, including a lot of metadata about your environment, such
+as all the currently defined Django settings (from ``settings.py``).
+
+As a security measure, Django will *not* include settings that might be
+sensitive (or offensive), such as ``SECRET_KEY`` or ``PROFANITIES_LIST``.
+Specifically, it will exclude any setting whose name includes any of the
+following:
+
+    * API
+    * KEY
+    * PASS
+    * PROFANITIES_LIST
+    * SECRET
+    * SIGNATURE
+    * TOKEN
+
+.. versionchanged:: 1.4
+
+    We changed ``'PASSWORD'`` ``'PASS'``. ``'API'``, ``'TOKEN'`` and ``'KEY'``
+    were added.
+
+Note that these are *partial* matches. ``'PASS'`` will also match PASSWORD,
+just as ``'TOKEN'`` will also match TOKENIZED and so on.
+
+Still, note that there are always going to be sections of your debug output
+that are inappropriate for public consumption. File paths, configuration
+options and the like all give attackers extra information about your server.
 
 It is also important to remember that when running with :setting:`DEBUG`
 turned on, Django will remember every SQL query it executes. This is useful
-when you are debugging, but on a production server, it will rapidly consume
-memory.
-
-Never deploy a site into production with :setting:`DEBUG` turned on.
+when you're debugging, but it'll rapidly consume memory on a production server.
 
 .. _django/views/debug.py: http://code.djangoproject.com/browser/django/trunk/django/views/debug.py
 
@@ -1072,9 +1105,12 @@ FIXTURE_DIRS
 
 Default: ``()`` (Empty tuple)
 
-List of locations of the fixture data files, in search order. Note that
-these paths should use Unix-style forward slashes, even on Windows. See
-:doc:`/topics/testing`.
+List of directories searched for fixture files, in addition to the
+``fixtures`` directory of each application, in search order.
+
+Note that these paths should use Unix-style forward slashes, even on Windows.
+
+See :ref:`initial-data-via-fixtures` and :ref:`topics-testing-fixtures`.
 
 FORCE_SCRIPT_NAME
 ------------------
@@ -1528,7 +1564,7 @@ A secret key for this particular Django installation. Used to provide a seed in
 secret-key hashing algorithms. Set this to a random string -- the longer, the
 better. ``django-admin.py startproject`` creates one automatically.
 
-.. setting:: SEND_BROKEN_LINK_EMAILS
+.. setting:: SECURE_PROXY_SSL_HEADER
 
 SECURE_PROXY_SSL_HEADER
 -----------------------
@@ -1587,6 +1623,8 @@ available in ``request.META``.)
 
     If any of those are not true, you should keep this setting set to ``None``
     and find another way of determining HTTPS, perhaps via custom middleware.
+
+.. setting:: SEND_BROKEN_LINK_EMAILS
 
 SEND_BROKEN_LINK_EMAILS
 -----------------------
@@ -1917,8 +1955,10 @@ TEMPLATE_DIRS
 
 Default: ``()`` (Empty tuple)
 
-List of locations of the template source files, in search order. Note that
-these paths should use Unix-style forward slashes, even on Windows.
+List of locations of the template source files searched by
+:class:`django.template.loaders.filesystem.Loader`, in search order.
+
+Note that these paths should use Unix-style forward slashes, even on Windows.
 
 See :doc:`/topics/templates`.
 
@@ -2014,11 +2054,13 @@ TIME_INPUT_FORMATS
 
 Default: ``('%H:%M:%S', '%H:%M')``
 
-A tuple of formats that will be accepted when inputting data on a time
-field. Formats will be tried in order, using the first valid.
-Note that these format strings are specified in Python's datetime_ module
-syntax, that is different from the one used by Django for formatting dates
-to be displayed.
+A tuple of formats that will be accepted when inputting data on a time field.
+Formats will be tried in order, using the first valid. Note that these format
+strings are specified in Python's datetime_ module syntax, that is different
+from the one used by Django for formatting dates to be displayed.
+
+When :setting:`USE_L10N` is ``True``, the locale-dictated format has higher
+precedence and will be applied instead.
 
 See also :setting:`DATE_INPUT_FORMATS` and :setting:`DATETIME_INPUT_FORMATS`.
 
@@ -2044,14 +2086,14 @@ one of the choices for a given time zone. For instance, one line says
 ``'Europe/London GB GB-Eire'``, but you should use the first bit of
 that -- ``'Europe/London'`` -- as your :setting:`TIME_ZONE` setting.)
 
-Note that this isn't necessarily the timezone of the server. For example, one
+Note that this isn't necessarily the time zone of the server. For example, one
 server may serve multiple Django-powered sites, each with a separate time zone
 setting.
 
-When :setting:`USE_TZ` is ``False``, this is the time zone in which Django will
-store all datetimes. When :setting:`USE_TZ` is ``True``, this is the default
-time zone that Django will use to display datetimes in templates and to
-interpret datetimes entered in forms.
+When :setting:`USE_TZ` is ``False``, this is the time zone in which Django
+will store all datetimes. When :setting:`USE_TZ` is ``True``, this is the
+default time zone that Django will use to display datetimes in templates and
+to interpret datetimes entered in forms.
 
 Django sets the ``os.environ['TZ']`` variable to the time zone you specify in
 the :setting:`TIME_ZONE` setting. Thus, all your views and models will
@@ -2063,17 +2105,19 @@ environment variable under the following conditions:
   <settings-without-django-settings-module>`, or
 
 * If you specify ``TIME_ZONE = None``. This will cause Django to fall
-  back to using the system timezone.
+  back to using the system time zone.
 
 If Django doesn't set the ``TZ`` environment variable, it's up to you
 to ensure your processes are running in the correct environment.
 
 .. note::
-    Django cannot reliably use alternate time zones in a Windows
-    environment. If you're running Django on Windows, this variable
-    must be set to match the system timezone.
+    Django cannot reliably use alternate time zones in a Windows environment.
+    If you're running Django on Windows, :setting:`TIME_ZONE` must be set to
+    match the system time zone.
 
 .. _See available choices: http://www.postgresql.org/docs/8.1/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
+
+.. _pytz: http://pytz.sourceforge.net/
 
 .. setting:: URL_VALIDATOR_USER_AGENT
 
