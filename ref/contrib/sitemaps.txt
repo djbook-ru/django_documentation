@@ -161,6 +161,9 @@ Sitemap class reference
         the ``get_absolute_url()`` method on each object as returned by
         :attr:`~Sitemap.items()`.
 
+        To specify a protocol other than ``'http'``, use
+        :attr:`~Sitemap.protocol`.
+
     .. attribute:: Sitemap.lastmod
 
         **Optional.** Either a method or attribute.
@@ -193,7 +196,7 @@ Sitemap class reference
         * ``'yearly'``
         * ``'never'``
 
-    .. method:: Sitemap.priority
+    .. attribute:: Sitemap.priority
 
         **Optional.** Either a method or attribute.
 
@@ -207,6 +210,18 @@ Sitemap class reference
         page is ``0.5``. See the `sitemaps.org documentation`_ for more.
 
         .. _sitemaps.org documentation: http://www.sitemaps.org/protocol.html#prioritydef
+
+    .. attribute:: Sitemap.protocol
+
+        .. versionadded:: 1.4
+
+        **Optional.**
+
+        This attribute defines the protocol (``'http'`` or ``'https'``) of the
+        URLs in the sitemap. If it isn't set, the protocol with which the
+        sitemap was requested is used. If the sitemap is built outside the
+        context of a request, the default is ``'http'``.
+
 
 Shortcuts
 =========
@@ -293,10 +308,29 @@ You should create an index file if one of your sitemaps has more than 50,000
 URLs. In this case, Django will automatically paginate the sitemap, and the
 index will reflect that.
 
-.. versionadded:: 1.3
+.. versionadded:: 1.4
+
+If you're not using the vanilla sitemap view -- for example, if it's wrapped
+with a caching decorator -- you must name your sitemap view and pass
+``sitemap_url_name`` to the index view::
+
+    from django.contrib.sitemaps import views as sitemaps_views
+    from django.views.decorators.cache import cache_page
+
+    urlpatterns = patterns('',
+        url(r'^sitemap.xml$',
+            cache_page(86400)(sitemaps_views.index),
+            {'sitemaps': sitemaps, 'sitemap_url_name': 'sitemaps'}),
+        url(r'^sitemap-(?P<section>.+)\.xml$',
+            cache_page(86400)(sitemaps_views.sitemap),
+            {'sitemaps': sitemaps}, name='sitemaps'),
+    )
+
 
 Template customization
 ======================
+
+.. versionadded:: 1.3
 
 If you wish to use a different template for each sitemap or sitemap index
 available on your site, you may specify it by passing a ``template_name``

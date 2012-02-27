@@ -697,8 +697,18 @@ subclass::
 
       .. note::
 
-          The ``FieldListFilter`` API is currently considered internal
-          and prone to refactoring.
+        The ``FieldListFilter`` API is considered internal and might be
+        changed.
+
+    .. versionadded:: 1.4
+
+    It is possible to specify a custom template for rendering a list filter::
+
+        class FilterWithCustomTemplate(SimpleListFilter):
+            template = "custom_template.html"
+
+    See the default template provided by django (``admin/filter.html``) for
+    a concrete example.
 
 .. attribute:: ModelAdmin.list_max_show_all
 
@@ -1268,11 +1278,10 @@ provided some extra mapping data that would not otherwise be available::
             pass
 
         def change_view(self, request, object_id, extra_context=None):
-            my_context = {
-                'osm_data': self.get_osm_info(),
-            }
+            extra_context = extra_context or {}
+            extra_context['osm_data'] = self.get_osm_info()
             return super(MyModelAdmin, self).change_view(request, object_id,
-                extra_context=my_context)
+                extra_context=extra_context)
 
 .. versionadded:: 1.4
 
@@ -1927,6 +1936,31 @@ a pattern for your new view.
     :class:`~django.template.Context` when rendering the template.  It should
     be set to either ``self.name`` if your view is on an ``AdminSite`` or
     ``self.admin_site.name`` if your view is on a ``ModelAdmin``.
+
+.. _auth_password_reset:
+
+Adding a password-reset feature
+-------------------------------
+
+You can add a password-reset feature to the admin site by adding a few lines to
+your URLconf. Specifically, add these four patterns:
+
+.. code-block:: python
+
+    url(r'^admin/password_reset/$', 'django.contrib.auth.views.password_reset', name='admin_password_reset'),
+    (r'^admin/password_reset/done/$', 'django.contrib.auth.views.password_reset_done'),
+    (r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm'),
+    (r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
+
+(This assumes you've added the admin at ``admin/`` and requires that you put
+the URLs starting with ``^admin/`` before the line that includes the admin app
+itself).
+
+.. versionchanged:: 1.4
+
+The presence of the ``admin_password_reset`` named URL will cause a "forgotten
+your password?" link to appear on the default admin log-in page under the
+password box.
 
 .. _admin-reverse-urls:
 

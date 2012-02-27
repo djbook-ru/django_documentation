@@ -274,5 +274,9 @@ epub_copyright = u'2010, Django Software Foundation'
 # Allow duplicate toc entries.
 #epub_tocdup = True
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "djbook")))
-from djbook_conf import *
+language = 'ru'
+locale_dirs = ['./locale/']
+gettext_compact = False
+
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "djbook")))
+#from djbook_conf import *

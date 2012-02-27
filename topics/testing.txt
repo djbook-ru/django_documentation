@@ -581,16 +581,16 @@ Some of the things you can do with the test client are:
 * Test that a given request is rendered by a given Django template, with
   a template context that contains certain values.
 
-Note that the test client is not intended to be a replacement for Windmill_,
-Selenium_, or other "in-browser" frameworks. Django's test client has
-a different focus. In short:
+Note that the test client is not intended to be a replacement for Selenium_ or
+other "in-browser" frameworks. Django's test client has a different focus. In
+short:
 
 * Use Django's test client to establish that the correct view is being
   called and that the view is collecting the correct context data.
 
-* Use in-browser frameworks such as Windmill_ and Selenium_ to test *rendered*
-  HTML and the *behavior* of Web pages, namely JavaScript functionality. Django
-  also provides special support for those frameworks; see the section on
+* Use in-browser frameworks like Selenium_ to test *rendered* HTML and the
+  *behavior* of Web pages, namely JavaScript functionality. Django also
+  provides special support for those frameworks; see the section on
   :class:`~django.test.LiveServerTestCase` for more details.
 
 A comprehensive test suite should use a combination of both test types.
@@ -1542,16 +1542,32 @@ your test suite.
         self.assertFieldOutput(EmailField, {'a@a.com': 'a@a.com'}, {'aaa': [u'Enter a valid e-mail address.']})
 
 
-.. method:: TestCase.assertContains(response, text, count=None, status_code=200, msg_prefix='')
+.. method:: TestCase.assertContains(response, text, count=None, status_code=200, msg_prefix='', html=False)
 
     Asserts that a ``Response`` instance produced the given ``status_code`` and
     that ``text`` appears in the content of the response. If ``count`` is
     provided, ``text`` must occur exactly ``count`` times in the response.
 
-.. method:: TestCase.assertNotContains(response, text, status_code=200, msg_prefix='')
+    .. versionadded:: 1.4
+
+    Set ``html`` to ``True`` to handle ``text`` as HTML. The comparison with
+    the response content will be based on HTML semantics instead of
+    character-by-character equality. Whitespace is ignored in most cases,
+    attribute ordering is not significant. See
+    :func:`~TestCase.assertHTMLEqual` for more details.
+
+.. method:: TestCase.assertNotContains(response, text, status_code=200, msg_prefix='', html=False)
 
     Asserts that a ``Response`` instance produced the given ``status_code`` and
     that ``text`` does not appears in the content of the response.
+
+    .. versionadded:: 1.4
+
+    Set ``html`` to ``True`` to handle ``text`` as HTML. The comparison with
+    the response content will be based on HTML semantics instead of
+    character-by-character equality. Whitespace is ignored in most cases,
+    attribute ordering is not significant. See
+    :func:`~TestCase.assertHTMLEqual` for more details.
 
 .. method:: TestCase.assertFormError(response, form, field, errors, msg_prefix='')
 
@@ -1575,10 +1591,28 @@ your test suite.
 
     The name is a string such as ``'admin/index.html'``.
 
+    .. versionadded:: 1.4
+
+    You can use this as a context manager, like this::
+
+        # This is necessary in Python 2.5 to enable the with statement.
+        # In 2.6 and up, it's not necessary.
+        from __future__ import with_statement
+
+        with self.assertTemplateUsed('index.html'):
+            render_to_string('index.html')
+        with self.assertTemplateUsed(template_name='index.html'):
+            render_to_string('index.html')
+
 .. method:: TestCase.assertTemplateNotUsed(response, template_name, msg_prefix='')
 
     Asserts that the template with the given name was *not* used in rendering
     the response.
+
+    .. versionadded:: 1.4
+
+    You can use this as a context manager in the same way as
+    :func:`~TestCase.assertTemplateUsed`.
 
 .. method:: TestCase.assertRedirects(response, expected_url, status_code=302, target_status_code=200, msg_prefix='')
 
@@ -1637,6 +1671,47 @@ your test suite.
             Person.objects.create(name="Aaron")
             Person.objects.create(name="Daniel")
 
+.. method:: TestCase.assertHTMLEqual(html1, html2, msg=None)
+
+    .. versionadded:: 1.4
+
+    Asserts that the strings ``html1`` and ``html2`` are equal. The comparison
+    is based on HTML semantics. The comparison takes following things into
+    account:
+
+    * Whitespace before and after HTML tags is ignored.
+    * All types of whitespace are considered equivalent.
+    * All open tags are closed implicitly, e.g. when a surrounding tag is
+      closed or the HTML document ends.
+    * Empty tags are equivalent to their self-closing version.
+    * The ordering of attributes of an HTML element is not significant.
+    * Attributes without an argument are equal to attributes that equal in
+      name and value (see the examples).
+
+    The following examples are valid tests and don't raise any
+    ``AssertionError``::
+
+        self.assertHTMLEqual('<p>Hello <b>world!</p>',
+            '''<p>
+                Hello   <b>world! <b/>
+            </p>''')
+        self.assertHTMLEqual(
+            '<input type="checkbox" checked="checked" id="id_accept_terms" />',
+            '<input id="id_accept_terms" type='checkbox' checked>')
+
+    ``html1`` and ``html2`` must be valid HTML. An ``AssertionError`` will be
+    raised if one of them cannot be parsed.
+
+.. method:: TestCase.assertHTMLNotEqual(html1, html2, msg=None)
+
+    .. versionadded:: 1.4
+
+    Asserts that the strings ``html1`` and ``html2`` are *not* equal. The
+    comparison is based on HTML semantics. See
+    :func:`~TestCase.assertHTMLEqual` for details.
+
+    ``html1`` and ``html2`` must be valid HTML. An ``AssertionError`` will be
+    raised if one of them cannot be parsed.
 
 .. _topics-testing-email:
 
@@ -1743,7 +1818,7 @@ it would under MySQL with MyISAM tables)::
 Skip the decorated test if the named database feature is *not*
 supported.
 
-For example, the following test will not be executed if the database
+For example, the following test will only be executed if the database
 supports transactions (e.g., it would run under PostgreSQL, but *not*
 under MySQL with MyISAM tables)::
 
@@ -1765,22 +1840,44 @@ Live test server
 :class:`~django.test.TransactionTestCase` with one extra feature: it launches a
 live Django server in the background on setup, and shuts it down on teardown.
 This allows the use of automated test clients other than the
-:ref:`Django dummy client <test-client>` such as, for example, the Selenium_ or
-Windmill_ clients, to execute a series of functional tests inside a browser and
-simulate a real user's actions.
+:ref:`Django dummy client <test-client>` such as, for example, the Selenium_
+client, to execute a series of functional tests inside a browser and simulate a
+real user's actions.
 
 By default the live server's address is `'localhost:8081'` and the full URL
 can be accessed during the tests with ``self.live_server_url``. If you'd like
 to change the default address (in the case, for example, where the 8081 port is
-already taken) you may pass a different one to the :djadmin:`test` command via
-the :djadminopt:`--liveserver` option, for example:
+already taken) then you may pass a different one to the :djadmin:`test` command
+via the :djadminopt:`--liveserver` option, for example:
 
 .. code-block:: bash
 
     ./manage.py test --liveserver=localhost:8082
 
 Another way of changing the default server address is by setting the
-`DJANGO_LIVE_TEST_SERVER_ADDRESS` environment variable.
+`DJANGO_LIVE_TEST_SERVER_ADDRESS` environment variable somewhere in your
+code (for example, in a :ref:`custom test runner<topics-testing-test_runner>`):
+
+.. code-block:: python
+
+    import os
+    os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = 'localhost:8082'
+
+In the case where the tests are run by multiple processes in parallel (for
+example, in the context of several simultaneous `continuous integration`_
+builds), the processes will compete for the same address, and therefore your
+tests might randomly fail with an "Address already in use" error. To avoid this
+problem, you can pass a comma-separated list of ports or ranges of ports (at
+least as many as the number of potential parallel processes). For example:
+
+.. code-block:: bash
+
+    ./manage.py test --liveserver=localhost:8082,8090-8100,9000-9200,7041
+
+Then, during test execution, each new live test server will try every specified
+port until it finds one that is free and takes it.
+
+.. _continuous integration: http://en.wikipedia.org/wiki/Continuous_integration
 
 To demonstrate how to use ``LiveServerTestCase``, let's write a simple Selenium
 test. First of all, you need to install the `selenium package`_ into your
@@ -1831,7 +1928,6 @@ case you do not have Firefox installed or wish to use another browser. The
 example above is just a tiny fraction of what the Selenium client can do; check
 out the `full reference`_ for more details.
 
-.. _Windmill: http://www.getwindmill.com/
 .. _Selenium: http://seleniumhq.org/
 .. _selenium package: http://pypi.python.org/pypi/selenium
 .. _full reference: http://readthedocs.org/docs/selenium-python/en/latest/api.html
@@ -1843,6 +1939,40 @@ out the `full reference`_ for more details.
     </howto/static-files>` so you'll need to have your project configured
     accordingly (in particular by setting :setting:`STATIC_URL`).
 
+.. note::
+
+    When using an in-memory SQLite database to run the tests, the same database
+    connection will be shared by two threads in parallel: the thread in which
+    the live server is run and the thread in which the test case is run. It's
+    important to prevent simultaneous database queries via this shared
+    connection by the two threads, as that may sometimes randomly cause the
+    tests to fail. So you need to ensure that the two threads don't access the
+    database at the same time. In particular, this means that in some cases
+    (for example, just after clicking a link or submitting a form), you might
+    need to check that a response is received by Selenium and that the next
+    page is loaded before proceeding with further test execution.
+    Do this, for example, by making Selenium wait until the `<body>` HTML tag
+    is found in the response (requires Selenium > 2.13):
+
+    .. code-block:: python
+
+        def test_login(self):
+            from selenium.webdriver.support.wait import WebDriverWait
+            ...
+            self.selenium.find_element_by_xpath('//input[@value="Log in"]').click()
+            # Wait until the response is received
+            WebDriverWait(self.selenium, timeout).until(
+                lambda driver: driver.find_element_by_tag_name('body'), timeout=10)
+
+    The tricky thing here is that there's really no such thing as a "page load,"
+    especially in modern Web apps that generate HTML dynamically after the
+    server generates the initial document. So, simply checking for the presence
+    of `<body>` in the response might not necessarily be appropriate for all
+    use cases. Please refer to the `Selenium FAQ`_ and
+    `Selenium documentation`_ for more information.
+
+    .. _Selenium FAQ: http://code.google.com/p/selenium/wiki/FrequentlyAskedQuestions#Q:_WebDriver_fails_to_find_elements_/_Does_not_block_on_page_loa
+    .. _Selenium documentation: http://seleniumhq.org/docs/04_webdriver_advanced.html#explicit-waits
 
 Using different testing frameworks
 ==================================

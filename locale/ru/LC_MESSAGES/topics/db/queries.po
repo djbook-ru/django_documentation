@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-23 14:23+0200\n"
+"PO-Revision-Date: 2012-02-24 19:45+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -869,7 +869,7 @@ msgstr ""
 # 7dfbc48ae5eb436293a1ebe39fe76c49
 #: ../../topics/db/queries.txt:494
 msgid "Spanning multi-valued relationships"
-msgstr ""
+msgstr "Фильтрация по связям много-ко-многим"
 
 # ae164b44f5564345b5d2ce74f2fae93a
 #: ../../topics/db/queries.txt:496
@@ -884,6 +884,14 @@ msgid ""
 "Since there are multiple entries associated with a single ``Blog``, both of "
 "these queries are possible and make sense in some situations."
 msgstr ""
+"Когда вы используете фильтрация по связанным через ``ManyToManyField`` "
+"объектам или по обратной связи для ``ForeignKey``, может быть два вида "
+"фильтров. Рассмотрим свзять ``Blog``/``Entry`` (от ``Blog`` к ``Entry`` -- "
+"это связь один-ко-многим). Нам может понадобиться получить блоги с записями, "
+"у которых заголовок содержит *\"Lennon\"* и которые были опубликованы в "
+"2008. Или нам могут понадобиться блоги с записями с *\"Lennon\"* в заголовке "
+"и в то же время блоги с записями опубликованными до 2008. Т.к. один ``Blog`` "
+"может иметь несколько связанных ``Entry``, оба варианта возможны."
 
 # 3723c17a0362496e9cb5312c546c5ee2
 #: ../../topics/db/queries.txt:506
@@ -894,6 +902,10 @@ msgid ""
 "want an entry that contains a tag with a name of *\"music\"* and a status of "
 "*\"public\"*."
 msgstr ""
+"Аналогичная ситуация и с ``ManyToManyField``. Например, если ``Entry`` имеет "
+"``ManyToManyField`` названное ``tags``, нам могут понадобиться записи "
+"связанные с тегами *\"music\"* и *\"bands\"* или нам может понадобиться "
+"запись содержащая тег *\"music\"* и статусом *\"public\"*."
 
 # c0cfd5cb496e46b9a50035f791c80e6f
 #: ../../topics/db/queries.txt:511
@@ -906,6 +918,13 @@ msgid ""
 "to the primary model, not necessarily those objects that were selected by an "
 "earlier ``filter()`` call."
 msgstr ""
+"Что бы обеспечить оба варианта, Django использует определенные правила для "
+"вызовов ``filter()`` и ``exclude()``. Все, что в одном вызове ``filter()``, "
+"применяется одновременно, чтобы отфильтровать все объекты, соответствующие "
+"этим параметрам фильтрации. Успешные вызовы ``filter()`` каждый раз "
+"сокращают выборку объектов, но для множественных связей, они применяются "
+"каждый раз ко всем связанным объектам, а не только к объектам "
+"отфильтрованным предыдущим вызовом ``filter()``."
 
 # 7bd3f99bf3fe44208404a8672d8a7292
 #: ../../topics/db/queries.txt:519
@@ -915,6 +934,10 @@ msgid ""
 "and that were published in 2008 (the same entry satisfying both conditions), "
 "we would write::"
 msgstr ""
+"Звучит немного непонятно, но пример должен все прояснить. Для выбора всех "
+"блогов, содержащих записи и с *\"Lennon\"* в заголовке и опубликованные в "
+"2008 (запись должна удовлетворять оба условия), мы будем использовать такой "
+"код::"
 
 # 7a884561801443c9a3944ea257dd4c99
 #: ../../topics/db/queries.txt:527
@@ -922,6 +945,8 @@ msgid ""
 "To select all blogs that contain an entry with *\"Lennon\"* in the headline "
 "**as well as** an entry that was published in 2008, we would write::"
 msgstr ""
+"Для выбора блогов с записями, у которых заголовок содержит *\"Lennon\"*, **а "
+"так же** с записями опубликованными в 2008, мы напишем::"
 
 # 0171ffc0fb7c48c2a81d1c78dbad5d72
 #: ../../topics/db/queries.txt:533
@@ -933,6 +958,11 @@ msgid ""
 "be the same as the entries in the first filter. We are filtering the "
 "``Blog`` items with each filter statement, not the ``Entry`` items."
 msgstr ""
+"В это примере, первый фильтр ограничит выборку блогами с определенными "
+"связанными записями. Второй фильтр *расширит* выборку блогами с записями "
+"второго типа. Записи выбранные вторым фильтром могут быть такими же как и из "
+"первого фильтра, а могут и не быть. Мы фильтруем объекты ``Blog`` с каждым "
+"вызовом ``filter()``, а не объекты ``Entry``."
 
 # e0c354100c6a4f72b5ed282f90ac2cf3
 #: ../../topics/db/queries.txt:540
@@ -943,11 +973,14 @@ msgid ""
 "subsequent ``filter()`` or ``exclude()`` calls that refer to the same "
 "relation may end up filtering on different linked objects."
 msgstr ""
+"Все эти правила так же распространяются и на ``exclude()``: все условия в "
+"одном ``exclude()`` применяются к одному объекту (если это условия для "
+"множественной связи)."
 
 # d03542d8cfc94a68be7678d4fc5c16c3
 #: ../../topics/db/queries.txt:549
 msgid "Filters can reference fields on the model"
-msgstr ""
+msgstr "Фильтры могут ссылаться на поля на модели"
 
 # daf680ef5b7b4c1dae58f9d4d4715432
 #: ../../topics/db/queries.txt:551
@@ -956,6 +989,9 @@ msgid ""
 "value of a model field with a constant. But what if you want to compare the "
 "value of a model field with another field on the same model?"
 msgstr ""
+"В примерах выше мы использовали фильтры, которые приравнивали поля к "
+"определенным значениям(константам). Но что, если вы хотите сравнить одно "
+"поле с другим полем одной модели?"
 
 # 96c2498aa253463899e504d5e5696d0a
 #: ../../topics/db/queries.txt:555
@@ -965,14 +1001,21 @@ msgid ""
 "can then be used in query filters to compare the values of two different "
 "fields on the same model instance."
 msgstr ""
+"Django предоставляет объект ``F()`` для таких сравнений. Экземпляр ``F()`` "
+"рассматривается как ссылка на другое поле модели. Эти ссылки могут быть "
+"использованы для сравнения значений двух разных полей одного объекта модели."
 
 # 5dbba97bfd8d46feb6b62def596a66b8
 #: ../../topics/db/queries.txt:560
+#, fuzzy
 msgid ""
 "For example, to find a list of all blog entries that have had more comments "
 "than pingbacks, we construct an ``F()`` object to reference the pingback "
 "count, and use that ``F()`` object in the query::"
 msgstr ""
+"Например, что бы выбрать все записи, у которых количество комментариев "
+"больше, чем pingbacks, мы создаем объект ``F()`` с ссылкой на поле pingback, "
+"и использовать этот объект ``F()`` в запросе::"
 
 # 38a8b48e80b240bd876eb2daf7ebd84b
 #: ../../topics/db/queries.txt:567
@@ -985,10 +1028,13 @@ msgstr ""
 
 # 1b4656c76a914e7c989975855b270f2d
 #: ../../topics/db/queries.txt:574
+#, fuzzy
 msgid ""
 "To find all the entries where the rating of the entry is less than the sum "
 "of the pingback count and comment count, we would issue the query::"
 msgstr ""
+"Что бы найти все записи с рейтингом ниже суммы pingback count и количества "
+"комментариев, необходимо выполнить такой запрос::"
 
 # 7640beb6287741be8fb1e3b627883152
 #: ../../topics/db/queries.txt:580
@@ -999,6 +1045,11 @@ msgid ""
 "the entries where the author's name is the same as the blog name, we could "
 "issue the query::"
 msgstr ""
+"Вы можете использовать два нижних подчеркивания для использования полей "
+"связанных объектов в ``F()``. Объект ``F()`` с двойным нижним подчеркиванием "
+"обеспечит все необходимые ``JOIN`` для получения необходимых связанных "
+"объектов. Например, что бы получить все записи, у которых имя автора "
+"совпадает с названием блога, нужно выполнить такой запрос::"
 
 # 33f2bb6676324a2ab398a74705af9cfa
 #: ../../topics/db/queries.txt:590
@@ -1007,6 +1058,9 @@ msgid ""
 "timedelta`` object.  The following would return all entries that were "
 "modified more than 3 days after they were published::"
 msgstr ""
+"Для полей даты и времени вы можете использовать сумму или разницу объектов "
+"``datetime.timedelta``.  Этот код вернет все записи, которые были "
+"отредактированы через 3 дня после публикации::"
 
 # 747410fa45a143589fc635ec7d748c00
 #: ../../topics/db/queries.txt:598
@@ -1026,6 +1080,8 @@ msgid ""
 "In the example ``Blog`` model, the primary key is the ``id`` field, so these "
 "three statements are equivalent::"
 msgstr ""
+"Например, первичный ключ модели ``Blog`` -- поле ``id``. Эти три запроса "
+"идентичны::"
 
 # bd8f98e87fe64fb5b741d19900b4d293
 #: ../../topics/db/queries.txt:610
@@ -1033,6 +1089,8 @@ msgid ""
 "The use of ``pk`` isn't limited to ``__exact`` queries -- any query term can "
 "be combined with ``pk`` to perform a query on the primary key of a model::"
 msgstr ""
+"Использование ``pk`` не ограничено только фильтром ``__exact`` -- любой "
+"фильтр может быть использован с ``pk``::"
 
 # 440e5e390e324d54a6a24936e7a08982
 #: ../../topics/db/queries.txt:619
@@ -1040,14 +1098,17 @@ msgid ""
 "``pk`` lookups also work across joins. For example, these three statements "
 "are equivalent::"
 msgstr ""
+"``pk`` работает так же и для связей. Например, эти три запроса идентичны::"
 
 # 2734ae7f3b434e19bf4dc2c193c3f548
 #: ../../topics/db/queries.txt:627
 msgid "Escaping percent signs and underscores in LIKE statements"
 msgstr ""
+"Экранирование знака процента и нижнего подчеркивания для оператора LIKE"
 
 # 6b8f4c6a30084ef9aea95d40f8316362
 #: ../../topics/db/queries.txt:629
+#, fuzzy
 msgid ""
 "The field lookups that equate to ``LIKE`` SQL statements (``iexact``, "
 "``contains``, ``icontains``, ``startswith``, ``istartswith``, ``endswith`` "
@@ -1056,6 +1117,12 @@ msgid ""
 "``LIKE`` statement, the percent sign signifies a multiple-character wildcard "
 "and the underscore signifies a single-character wildcard.)"
 msgstr ""
+"Фильтры, эквиваленты оператору ``LIKE`` в SQL(``iexact``, ``contains``, "
+"``icontains``, ``startswith``, ``istartswith``, ``endswith`` и "
+"``iendswith``), автоматически экранируют два символа используемых оператором "
+"``LIKE`` -- знак процента и нижнего подчеркивания. (В операторе ``LIKE``, "
+"знак процента означает a multiple-character \"wildcard\", нижнего "
+"подчеркивания - a single-character wildcard.)"
 
 # 3f68ccdad09a4628adaf0417bb4b9e02
 #: ../../topics/db/queries.txt:636
@@ -1071,6 +1138,8 @@ msgid ""
 "Django takes care of the quoting for you; the resulting SQL will look "
 "something like this:"
 msgstr ""
+"Django самостоятельно позаботится об экранировании; полученный SQL будет "
+"выглядеть приблизительно вот так:"
 
 # d7edc2b172e44cdab998ca5284b7346a
 #: ../../topics/db/queries.txt:649
@@ -1082,7 +1151,7 @@ msgstr ""
 # f968d2f6665c47a0854ca91731525e61
 #: ../../topics/db/queries.txt:655
 msgid "Caching and QuerySets"
-msgstr ""
+msgstr "Кеширование и QuerySets"
 
 # 4410cb11d332487280399ced7fbba0d0
 #: ../../topics/db/queries.txt:657
@@ -1091,9 +1160,12 @@ msgid ""
 "important to understand how it works, in order to write the most efficient "
 "code."
 msgstr ""
+"Каждый ``QuerySet`` содержит кеш, для уменьшения количества запросов. Очень "
+"важно знать как он работает, для эффективного использования Django."
 
 # 5212b8430b004737973f06edf4697629
 #: ../../topics/db/queries.txt:660
+#, fuzzy
 msgid ""
 "In a newly created ``QuerySet``, the cache is empty. The first time a "
 "``QuerySet`` is evaluated -- and, hence, a database query happens -- Django "
@@ -1102,6 +1174,11 @@ msgid ""
 "``QuerySet`` is being iterated over). Subsequent evaluations of the "
 "``QuerySet`` reuse the cached results."
 msgstr ""
+"В только что созданном ``QuerySet``, кеш пустой. После вычисления "
+"``QuerySet`` -- и будет выполнен запрос к базе данных -- Django сохраняет "
+"результат запроса в кеше ``QuerySet`` и возвращает необходимый результат "
+"(например, следующий элемент при итерации по ``QuerySet``). Subsequent "
+"evaluations of the ``QuerySet`` reuse the cached results."
 
 # 485d2b9560224de6b2e96c47e41c0c9a
 #: ../../topics/db/queries.txt:667
@@ -1110,6 +1187,8 @@ msgid ""
 "your ``QuerySet``\\s correctly. For example, the following will create two "
 "``QuerySet``\\s, evaluate them, and throw them away::"
 msgstr ""
+"Помните о кешировании, что бы использовать ``QuerySet`` правильно. Например, "
+"этот код создаст два экземпляра ``QuerySet`` и вычислит их не сохраняя::"
 
 # 17a35f3adc8d43928f2e476a2e1a30ef
 #: ../../topics/db/queries.txt:674
@@ -1119,6 +1198,10 @@ msgid ""
 "not include the same database records, because an ``Entry`` may have been "
 "added or deleted in the split second between the two requests."
 msgstr ""
+"Это означает, что один и тот же запрос будет выполнен дважды, удваивая "
+"нагрузку на базу данных. Также, есть вероятность, что списки могут содержать "
+"разные результаты, потому что запись ``Entry`` может быть добавлена или "
+"удалена в доли секунды между запросами."
 
 # 32a73dc57b404d8a85eef07fc6ceb410
 #: ../../topics/db/queries.txt:679
@@ -1128,7 +1211,7 @@ msgstr ""
 # 223d8b76d30d4f8b8c5539dc89d26e90
 #: ../../topics/db/queries.txt:688
 msgid "Complex lookups with Q objects"
-msgstr ""
+msgstr "Сложные запросы с помощью объектов Q"
 
 # 875b5fab606e49688631a843c5dc1bed
 #: ../../topics/db/queries.txt:690
@@ -1137,6 +1220,9 @@ msgid ""
 "If you need to execute more complex queries (for example, queries with "
 "``OR`` statements), you can use ``Q`` objects."
 msgstr ""
+"Именованные аргументы функции ``filter()`` и др. -- объединяются оператором "
+"\"AND\". Если вам нужны более сложные запросы (например, запросы с "
+"оператором ``OR``), вы можете использовать объекты ``Q``."
 
 # 674127ebd747487089e469ba45fff1d4
 #: ../../topics/db/queries.txt:694
