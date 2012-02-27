@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated, 2012.
+# Automatically generated <>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2012-02-28 00:31+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 # 8c3574e0b9844bc2ab306e3fd9e3a480
 #: ../../ref/models/fields.txt:3
 msgid "Model field reference"
-msgstr ""
+msgstr "Справочник по полям модели"
 
 # bf5836b84ffa41dea84a87ed1603e8ad
 #: ../../ref/models/fields.txt:10
@@ -29,6 +29,9 @@ msgid ""
 "This document contains all the gory details about all the `field options`_ "
 "and `field types`_ Django's got to offer."
 msgstr ""
+"Этот раздел содержит все существующие подробности о всех :ref:`параметрах "
+"поля <common-model-field-options>` и :ref:`типах полей <model-field-types>` "
+"в Django."
 
 # 8db684042d98466aa16a0d154ee0faf0
 #: ../../ref/models/fields.txt:15
@@ -38,6 +41,11 @@ msgid ""
 "particular countries or cultures. Also, you can easily :doc:`write your own "
 "custom model fields </howto/custom-model-fields>`."
 msgstr ""
+"Если существующие поля не предоставляют необходимого функционала, вы можете "
+"поискать в :mod:`django.contrib.localflavor`, который содержит "
+"дополнительный функционал полезный для различных стран. Так же вы можете "
+"легко :doc:`создать собственное поле для модели </howto/custom-model-"
+"fields>`."
 
 # b1f19cc7b4d44b24bbcc23bdaf3ee60f
 #: ../../ref/models/fields.txt:22
@@ -47,22 +55,26 @@ msgid ""
 "convention is to use ``from django.db import models`` and refer to fields as "
 "``models.<Foo>Field``."
 msgstr ""
+"Технически, эти поля определенны в :mod:`django.db.models.fields`, но для "
+"удобства они испортированны в :mod:`django.db.models`; по неписанному "
+"соглашению принято использовать ``from django.db import models`` и "
+"обращаться к полям, как ``models.<Foo>Field``."
 
 # 949e35976cf4493d969fdcafdd398184
 #: ../../ref/models/fields.txt:30
 msgid "Field options"
-msgstr ""
+msgstr "Параметры поля"
 
 # 1f48e229206740f489037756eb045c48
 #: ../../ref/models/fields.txt:32
 msgid ""
 "The following arguments are available to all field types. All are optional."
-msgstr ""
+msgstr "Приведенные аргументы доступны для всех полей. Все они не обязательны."
 
 # a64b7d33d09d4249afe63ec8c430cb6c
 #: ../../ref/models/fields.txt:35
 msgid "``null``"
-msgstr ""
+msgstr "``null``"
 
 # 5edcb87a14ed4743a4bd25d9552d0291
 #: ../../ref/models/fields.txt:39
@@ -70,6 +82,8 @@ msgid ""
 "If ``True``, Django will store empty values as ``NULL`` in the database. "
 "Default is ``False``."
 msgstr ""
+"При ``True`` Django сохранит пустое значение как ``NULL`` в базе данных. "
+"Значение по-умолчанию -- ``False``."
 
 # 299c9454fa224fce9ffd2932e94b7ee0
 #: ../../ref/models/fields.txt:42
@@ -81,6 +95,12 @@ msgid ""
 "`~Field.null` parameter only affects database storage (see :attr:`~Field."
 "blank`)."
 msgstr ""
+"Заметим, что пустая строка всегда сохраняется как пустая строка, а не как "
+"``NULL``. Используйте ``null=True`` только для не строковых полей, таких как "
+"числовые, булевы и даты. Для всех типов полей, вы так же должны указать "
+"``blank=True`` если вы хотите разрешить пустые значения в формах, т.к. "
+"параметр :attr:`~Field.null` влияет только на сохранение в базе данных "
+"(смотрите :attr:`~Field.blank`)."
 
 # 746d1969e15243ac924113ffee5bfa3e
 #: ../../ref/models/fields.txt:49
@@ -92,6 +112,12 @@ msgid ""
 "redundant to have two possible values for \"no data;\" Django convention is "
 "to use the empty string, not ``NULL``."
 msgstr ""
+"Избегайте использования :attr:`~Field.null` для строковых полей таких, как :"
+"class:`CharField` и :class:`TextField`, если только у вас нет причин для "
+"этого. Если строковое поле содержит ``null=True``, это означает, что оно "
+"может содержать два возможных \"пустых\" значения: ``NULL`` и пустую строку. "
+"В большинстве случаев избыточно иметь два варианты \"пустых\" значений. "
+"Правило Django использовать пустую строку, вместо ``NULL``."
 
 # eac78538e7a943089aabb4f7e287fcfe
 #: ../../ref/models/fields.txt:58
@@ -100,6 +126,9 @@ msgid ""
 "coerced for string-based fields that have the empty string as a possible "
 "value, and the value ``NULL`` will be stored to denote the empty string."
 msgstr ""
+"Базу данных Oracle принуждает использовать параметр ``null=True`` для полей "
+"содержащих пустые строки, т.к. пустая строка в любом случае будет сохранена "
+"как ``NULL``."
 
 # 8f49544161974108b7bb7556c08adb53
 #: ../../ref/models/fields.txt:62
@@ -107,16 +136,20 @@ msgid ""
 "If you want to accept :attr:`~Field.null` values with :class:`BooleanField`, "
 "use :class:`NullBooleanField` instead."
 msgstr ""
+"Если хотите использовать :attr:`~Field.null` для :class:`BooleanField`, "
+"используйте :class:`NullBooleanField` вместо этого."
 
 # 21722edb888c48a3adb088c10c164695
 #: ../../ref/models/fields.txt:66
 msgid "``blank``"
-msgstr ""
+msgstr "``blank``"
 
 # 6b8cd9cf2523413cb14648f334c6a2b6
 #: ../../ref/models/fields.txt:70
 msgid "If ``True``, the field is allowed to be blank. Default is ``False``."
 msgstr ""
+"При ``True`` поле может быть хранить пустое значение. Значение по-умолчанию "
+"-- ``False``."
 
 # 15dc731b778542e3b2a7b42fb3efd545
 #: ../../ref/models/fields.txt:72
@@ -127,11 +160,16 @@ msgid ""
 "entry of an empty value. If a field has ``blank=False``, the field will be "
 "required."
 msgstr ""
+"Заметим что этот параметр отличается от :attr:`~Field.null`. :attr:`~Field."
+"null` указывается для базы данных, в то время как :attr:`~Field.blank` -- "
+"для проверки данных. При ``blank=True``, проверка данных в интерфейсе "
+"администратора Django позволит сохранять пустое значение в поле. При "
+"``blank=False`` поле будет обязательным."
 
 # 0932349bf5ae4d69ac2dd2c90ebedeeb
 #: ../../ref/models/fields.txt:80
 msgid "``choices``"
-msgstr ""
+msgstr "``choices``"
 
 # 3db863fff97b49298c864bb69172dfd0
 #: ../../ref/models/fields.txt:84
@@ -139,6 +177,8 @@ msgid ""
 "An iterable (e.g., a list or tuple) of 2-tuples to use as choices for this "
 "field."
 msgstr ""
+"Итератор (например, список или кортеж) двух элементных кортежей, который "
+"представляет возможные значения для поля."
 
 # a476634468b1440e933e3ffba538bad2
 #: ../../ref/models/fields.txt:87
@@ -146,11 +186,13 @@ msgid ""
 "If this is given, Django's admin will use a select box instead of the "
 "standard text field and will limit choices to the choices given."
 msgstr ""
+"Если этот параметр указан, Django будет использовать `select` вместо обычно "
+"поля ввода с указанными значениями."
 
 # 989256f596904c15896f92a0c36c274d
 #: ../../ref/models/fields.txt:90
 msgid "A choices list looks like this::"
-msgstr ""
+msgstr "Список выбора выглядит следующим образом::"
 
 # 06b3378ed2e84d00a25066994511c71f
 #: ../../ref/models/fields.txt:100
@@ -158,23 +200,25 @@ msgid ""
 "The first element in each tuple is the actual value to be stored. The second "
 "element is the human-readable name for the option."
 msgstr ""
+"Первый элемент -- это значение, которое будет сохранено в базе данных. "
+"Второй элемент -- название, которое будет отображаться для пользователей."
 
 # e8791684c6a141409f8d8562962d00a1
 #: ../../ref/models/fields.txt:103
 msgid "The choices list can be defined either as part of your model class::"
-msgstr ""
+msgstr "Список выбора может быть определен как часть класса модели::"
 
 # 56eeaf02a0d440959c9d14fb640fbfe6
 #: ../../ref/models/fields.txt:112
 msgid "or outside your model class altogether::"
-msgstr ""
+msgstr "или вне модели::"
 
 # 719553d08a9b404c98548b5bd2ec62cf
 #: ../../ref/models/fields.txt:121
 msgid ""
 "You can also collect your available choices into named groups that can be "
 "used for organizational purposes::"
-msgstr ""
+msgstr "Вы можете сгруппировать значения в именованные группы::"
 
 # 2c6993e86ae243979d2a220d5468b55f
 #: ../../ref/models/fields.txt:138
@@ -185,6 +229,10 @@ msgid ""
 "combined with ungrouped options within a single list (such as the `unknown` "
 "option in this example)."
 msgstr ""
+"Первый элемент каждого кортежа -- это название группы. Второй элемент -- "
+"итератор с двух-элементными кортежами содержащими значение и отображаемое "
+"название. Сгруппированные опции могут комбинироваться с не сгруппированными "
+"(как `unknown` в примере выше)."
 
 # 112c83d1f8e24ac29d752bf16d1b34de
 #: ../../ref/models/fields.txt:144
@@ -194,6 +242,10 @@ msgid ""
 "See :meth:`~django.db.models.Model.get_FOO_display` in the database API "
 "documentation."
 msgstr ""
+"Для каждой модели с полем содержащим :attr:`~Field.choices`, Django "
+"добавляет метод для получения названия текущего значения поля. Смотрите :"
+"meth:`~django.db.models.Model.get_FOO_display` в документации про API для "
+"работы с базой данных."
 
 # 1ac62f308271409fb2ccb1481d849071
 #: ../../ref/models/fields.txt:149
@@ -204,11 +256,17 @@ msgid ""
 "better off using a proper database table with a :class:`ForeignKey`. :attr:"
 "`~Field.choices` is meant for static data that doesn't change much, if ever."
 msgstr ""
+"Отметим что в качестве списка вариантов значений  может быть любой итератор "
+"-- не обязательно список или кортеж. Это позволяет определять варианты "
+"значений динамически. Но, если вам необходимо использовать динамический :"
+"attr:`~Field.choices`, возможно вам следует использовать правильную "
+"структуру таблицы базы данных с :class:`ForeignKey`. :attr:`~Field.choices` "
+"предназначен для статических данных, которые почти или вообще не изменяются."
 
 # 4c0fd3c3453b4abebfe2e64d1007a2e6
 #: ../../ref/models/fields.txt:156
 msgid "``db_column``"
-msgstr ""
+msgstr "``db_column``"
 
 # b47a9cc6ebe84c5a800278745e914956
 #: ../../ref/models/fields.txt:160
@@ -216,6 +274,8 @@ msgid ""
 "The name of the database column to use for this field. If this isn't given, "
 "Django will use the field's name."
 msgstr ""
+"Имя колонки в базе данных для хранения данных этого поля. Если этот параметр "
+"не указан, Django будет использовать название поля."
 
 # 31bef95c88c0488c90db54961c7e6d2d
 #: ../../ref/models/fields.txt:163
@@ -224,23 +284,26 @@ msgid ""
 "that aren't allowed in Python variable names -- notably, the hyphen -- "
 "that's OK. Django quotes column and table names behind the scenes."
 msgstr ""
+"Если имя колонки это зарезервированное SQL слово, или содержит символы "
+"запрещенные в названиях переменной  в Python -- в частности, дефис -- все "
+"нормально. Django автоматически экранирует название колонок и таблиц."
 
 # 5b0a481694314364b83c2b1cb19600be
 #: ../../ref/models/fields.txt:169
 msgid "``db_index``"
-msgstr ""
+msgstr "``db_index``"
 
 # e6bf60e4fa32443da614fd5f86355554
 #: ../../ref/models/fields.txt:173
 msgid ""
 "If ``True``, djadmin:`django-admin.py sqlindexes <sqlindexes>` will output a "
 "``CREATE INDEX`` statement for this field."
-msgstr ""
+msgstr "При ``True``, будет добавлен ``CREATE INDEX`` для этого поля."
 
 # 55032a4532e54bfea9e535058dc8e01a
 #: ../../ref/models/fields.txt:177
 msgid "``db_tablespace``"
-msgstr ""
+msgstr "``db_tablespace``"
 
 # 62481809a3694862bcc3cb0ff5b26b1f
 #: ../../ref/models/fields.txt:181
@@ -251,11 +314,16 @@ msgid ""
 "`~Options.db_tablespace` of the model, if any. If the backend doesn't "
 "support tablespaces for indexes, this option is ignored."
 msgstr ""
+"Имя :doc:`\"tablespace\" базы данных </topics/db/tablespaces>` используемое "
+"для индекса поля, если поле имеет индекс. По-умолчанию используется значение "
+"настройки :setting:`DEFAULT_INDEX_TABLESPACE` проекта, если оно указано, "
+"иначе :attr:`~Options.db_tablespace` модели. Если база данных не "
+"поддерживает \"tablespace\" для индексов, этот параметр будет проигнорирован."
 
 # 738893ac9a464bf587a73a8c34d12a11
 #: ../../ref/models/fields.txt:188
 msgid "``default``"
-msgstr ""
+msgstr "``default``"
 
 # 66cc0377f8d54c998b5efa6c0b63b349
 #: ../../ref/models/fields.txt:192
@@ -263,11 +331,14 @@ msgid ""
 "The default value for the field. This can be a value or a callable object. "
 "If callable it will be called every time a new object is created."
 msgstr ""
+"Значение по-умолчанию для поля. Это может быть значение или вызываемый"
+"(callable) объект. Если это вызываемый объект, он будет вызван при создании "
+"нового объекта."
 
 # 750eb18dc5034be3ac51a5db175f3c2b
 #: ../../ref/models/fields.txt:196
 msgid "``editable``"
-msgstr ""
+msgstr "``editable``"
 
 # 7c3627d3daaa459b8889099957a25618
 #: ../../ref/models/fields.txt:200
@@ -275,11 +346,13 @@ msgid ""
 "If ``False``, the field will not be editable in the admin or via forms "
 "automatically generated from the model class. Default is ``True``."
 msgstr ""
+"При ``False``, поле будет не редактируемое в интерфейсе администратора или "
+"форме автоматически созданной для модели. Значение по-умолчанию -- ``True``."
 
 # 6e65b2b6c34947a59d781de6605a92b4
 #: ../../ref/models/fields.txt:204
 msgid "``error_messages``"
-msgstr ""
+msgstr "``error_messages``"
 
 # 146706692c50405190649f6c8075250a
 #: ../../ref/models/fields.txt:210
@@ -288,6 +361,8 @@ msgid ""
 "the field will raise. Pass in a dictionary with keys matching the error "
 "messages you want to override."
 msgstr ""
+"``error_messages`` позволяет переопределить сообщения ошибок возвращаемых "
+"полем. Используйте словарь с ключами соответствующими необходимым ошибкам."
 
 # 39febea652b5492d9d74801ea19ee1a9
 #: ../../ref/models/fields.txt:214
@@ -296,11 +371,14 @@ msgid ""
 "``invalid_choice``, and ``unique``. Additional error message keys are "
 "specified for each field in the `Field types`_ section below."
 msgstr ""
+"Ключи ошибок такие: ``null``, ``blank``, ``invalid``, ``invalid_choice`` и "
+"``unique``. Дополнительные ошибки указаны для каждого :ref:`типа поля "
+"ниже<model-field-types>`."
 
 # e21a3bb0e16d454cb6229717eb7796e2
 #: ../../ref/models/fields.txt:219
 msgid "``help_text``"
-msgstr ""
+msgstr "``help_text``"
 
 # 7000d523df3846a78b92c5b0b63d58ce
 #: ../../ref/models/fields.txt:223
