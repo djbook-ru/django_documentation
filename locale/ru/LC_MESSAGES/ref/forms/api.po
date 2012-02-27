@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-24 11:24+0400\n"
+"PO-Revision-Date: 2012-02-27 10:37+0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -299,6 +299,11 @@ msgid ""
 "formats, ``DateField`` will always normalize it to a ``datetime.date`` "
 "object as long as it's valid."
 msgstr ""
+"Например, класс :class:`~django.forms.DateField` нормализует введённое "
+"значение к объекту ``datetime.date``. Независимо от того, передали ли вы "
+"строку в формате ``'1994-07-15'``, объект ``datetime.date`` или число в "
+"других форматах, ``DateField`` всегда преобразует его в объект ``datetime."
+"date``, если при этом не произойдёт ошибка."
 
 # 3f566e8f2ebb41f8be9134e3768d102c
 #: ../../ref/forms/api.txt:185
@@ -307,14 +312,20 @@ msgid ""
 "validated it, you can access the clean data via its ``cleaned_data`` "
 "attribute::"
 msgstr ""
+"После создания экземпляра :class:`~Form`, привязки данных и их проверки, вы "
+"можете обращаться к \"чистым\" данным через атрибут ``cleaned_data``::"
 
 # c745bda1d8c64625ad0d22e208273366
 #: ../../ref/forms/api.txt:198
+#, fuzzy
 msgid ""
 "Note that any text-based field -- such as ``CharField`` or ``EmailField`` -- "
 "always cleans the input into a Unicode string. We'll cover the encoding "
 "implications later in this document."
 msgstr ""
+"Следует отметить, что любое текстовое поле, такое как ``CharField`` или "
+"``EmailField``, всегда преобразует текст в юникодную строку. We'll cover the "
+"encoding implications later in this document."
 
 # dc22232a855a4f34803ffdd9539ed8fd
 #: ../../ref/forms/api.txt:202
@@ -322,6 +333,8 @@ msgid ""
 "If your data does *not* validate, your ``Form`` instance will not have a "
 "``cleaned_data`` attribute::"
 msgstr ""
+"Если данные *не прошли* проверку, то экземпляр ``Form`` не будет иметь "
+"атрибут ``cleaned_data``::"
 
 # e500e7ed1656470c973ba41d6c6e3f58
 #: ../../ref/forms/api.txt:217
@@ -331,6 +344,11 @@ msgid ""
 "example, we pass a bunch of extra fields to the ``ContactForm`` constructor, "
 "but ``cleaned_data`` contains only the form's fields::"
 msgstr ""
+"Атрибут ``cleaned_data`` всегда содержит *только* данные для полей, "
+"определённых в классе ``Form``, даже если вы передали дополнительные данные "
+"при определении ``Form``. В этом примере, мы передаём набор дополнительных "
+"полей в конструктор ``ContactForm``, но ``cleaned_data`` содержит только "
+"поля формы::"
 
 # 533bcbae10ae469497155044ded9785e
 #: ../../ref/forms/api.txt:235
@@ -341,6 +359,11 @@ msgid ""
 "for the ``nick_name`` field, but ``cleaned_data`` includes it, with an empty "
 "value::"
 msgstr ""
+"Атрибут ``cleaned_data`` всегда содержит ключ и значение для *всех* полей, "
+"определённых в ``Form``, даже если данные не содержат значения для поля, "
+"которое не является обязательным. В этом примере, словарь данных не содержит "
+"значение для поля ``nick_name``, но атрибут ``cleaned_data`` включает его в "
+"себя вместе с пустым значением::"
 
 # d5eef22300204f6e90d0fecf4e59ed8f
 #: ../../ref/forms/api.txt:251
@@ -353,6 +376,14 @@ msgid ""
 "the \"Empty value\" note for each field in the \"Built-in ``Field`` classes"
 "\" section below."
 msgstr ""
+"В приведённом выше примере, значением атрибута ``cleaned_data`` для поля "
+"``nick_name`` является пустая строка, так как ``nick_name`` -- это "
+"``CharField``, а ``CharField`` рассматривает пустые значения как пустые "
+"строки. Каждый тип поля знает, что такое \"пустое\" значение, т.е. для "
+"``DateField`` -- это ``None``, на не пустая строка. Для получения "
+"подробностей о поведении каждого типа поля обращайте внимание на заметку "
+"\"Пустое значение\" для каждого поля в разделе \"Встроенные поля\", которые "
+"приведён далее."
 
 # 0cad4c5453df47088e47f263f0d1d20e
 #: ../../ref/forms/api.txt:258
@@ -362,11 +393,15 @@ msgid ""
 "various fields). More information about this is in :doc:`/ref/forms/"
 "validation`."
 msgstr ""
+"Вы можете написать код для выполнения проверки определённых полей формы "
+"(используя их имена) или для проверки всей формы (рассматривая её как "
+"комбинацию полей). Подробная информация изложена в :doc:`/ref/forms/"
+"validation`."
 
 # 48af74b4cd614558a66ffcf29eb53776
 #: ../../ref/forms/api.txt:263
 msgid "Outputting forms as HTML"
-msgstr ""
+msgstr "Выдача формы в виде HTML"
 
 # 4ed23cfd3117484d9f8df9d9eda26a5a
 #: ../../ref/forms/api.txt:265
@@ -374,6 +409,8 @@ msgid ""
 "The second task of a ``Form`` object is to render itself as HTML. To do so, "
 "simply ``print`` it::"
 msgstr ""
+"Второй задачей объекта ``Form`` является представление себя в виде HTML "
+"кода. Для этого объект надо просто \"распечатать\"::"
 
 # cdab81b91b0a48d99e82651eab4940b9
 #: ../../ref/forms/api.txt:275
@@ -384,6 +421,11 @@ msgid ""
 "represented by an ``<input type=\"checkbox\">``, then that HTML will include "
 "``checked=\"checked\"`` if appropriate::"
 msgstr ""
+"Если форма заполнена данными, то полученный HTML код будет включать себя эти "
+"данные. Например, если поле представлено тагом ``<input type=\"text\">``, то "
+"его данные будут подставлены в атрибут ``value``. Если поле представлено "
+"тагом ``<input type=\"checkbox\">``, то HTML код будет содержать ``checked="
+"\"checked\"``::"
 
 # a234643592f0409393cd008712eb52b0
 #: ../../ref/forms/api.txt:292
@@ -391,6 +433,8 @@ msgid ""
 "This default output is a two-column HTML table, with a ``<tr>`` for each "
 "field. Notice the following:"
 msgstr ""
+"По умолчанию в HTML форма представляется в виде таблицы, т.е. каждое поле "
+"обёрнуто в ``<tr>``. Обратите внимание на:"
 
 # b2c084fbdf2c4044b79c0e177540b6a5
 #: ../../ref/forms/api.txt:295
@@ -399,6 +443,9 @@ msgid ""
 "table>`` tags, nor does it include the ``<form>`` and ``</form>`` tags or an "
 "``<input type=\"submit\">`` tag. It's your job to do that."
 msgstr ""
+"Для гибкости, выводимый код *не включает в себя* ни таги ``<table>`` и ``</"
+"table>``, ни таги ``<form>`` and ``</form>``, ни таг ``<input type=\"submit"
+"\">``. Не забывайте их добавлять."
 
 # 9cec1933373f406b919e4fcb9705f55e
 #: ../../ref/forms/api.txt:299
@@ -409,6 +456,11 @@ msgid ""
 "these are merely sensible defaults; you can specify which HTML to use for a "
 "given field by using widgets, which we'll explain shortly."
 msgstr ""
+"Каждый тип поля имеет стандартное HTML представление. Типы ``CharField`` и "
+"``EmailField`` представлены ``<input type=\"text\">``. Тип ``BooleanField`` "
+"представлен  ``<input type=\"checkbox\">``. Следует отметить, что эти "
+"представления достаточно гибкие, так как вы можете влиять на них, указав для "
+"поля виджет. Вскоре мы покажем как это делается."
 
 # 599bbd49673c413b8ddb18d5b9988ebb
 #: ../../ref/forms/api.txt:305
@@ -416,6 +468,8 @@ msgid ""
 "The HTML ``name`` for each tag is taken directly from its attribute name in "
 "the ``ContactForm`` class."
 msgstr ""
+"Атрибут ``name`` каждого тага совпадает напрямую с именем атрибута в классе "
+"``ContactForm``."
 
 # 16807210069f4c8a8edba554a0e7f1fc
 #: ../../ref/forms/api.txt:308
@@ -425,6 +479,10 @@ msgid ""
 "underscores to spaces and upper-casing the first letter. Again, note these "
 "are merely sensible defaults; you can also specify labels manually."
 msgstr ""
+"Текстовая метка каждого поля, т.е. ``'Subject:'``, ``'Message:'`` и ``'Cc "
+"myself:'``, генерируется из имени поля, конвертируя символы подчёркивания в "
+"пробелы и переводя первый символ в верхний регистр. Также, вы можете явно "
+"назначить текстовую метку для поля."
 
 # 15b6e77cb3524fe59bf5af8688e23fd7
 #: ../../ref/forms/api.txt:313
@@ -435,6 +493,11 @@ msgid ""
 "``<label>`` tags are included in the output by default, to follow best "
 "practices, but you can change that behavior."
 msgstr ""
+"Каждая текстовая метка выводится с помощью тага ``<label>``, который "
+"указывает на соответствующее поле формы с помощью атрибута ``id``. Атрибут "
+"``id`` генерируется путём добавления префикса ``'id_'`` к имени поля. "
+"Атрибуты ``id`` и таги ``<label>`` включаются в HTML представление формы по "
+"умолчанию, но можете изменить такое поведение формы."
 
 # 7ceae7856dc74cd280bf44d96623be8b
 #: ../../ref/forms/api.txt:319
@@ -443,11 +506,14 @@ msgid ""
 "form, other output styles are available. Each style is available as a method "
 "on a form object, and each rendering method returns a Unicode object."
 msgstr ""
+"Несмотря на то, что по умолчанию форма выводится в табличном виде, "
+"существует ряд других представлений. Каждое представление доступно через "
+"метод объекта формы, возвращая объект ``Unicode``."
 
 # d9701f053a174b76bed794f26446cde3
 #: ../../ref/forms/api.txt:324
 msgid "``as_p()``"
-msgstr ""
+msgstr "``as_p()``"
 
 # c630f65949184ebeb4ab63159c02cd6e
 #: ../../ref/forms/api.txt:328
@@ -455,11 +521,13 @@ msgid ""
 "``as_p()`` renders the form as a series of ``<p>`` tags, with each ``<p>`` "
 "containing one field::"
 msgstr ""
+"Метод ``as_p()`` представляет форму в виде последовательности тагов  "
+"``<p>``, по одному на каждое поле::"
 
 # ea8e2f09e85f4e5c9f1235c8f1fb15b6
 #: ../../ref/forms/api.txt:341
 msgid "``as_ul()``"
-msgstr ""
+msgstr "``as_ul()``"
 
 # fa1fe65fd1f54d3a918a311825a1e2b1
 #: ../../ref/forms/api.txt:345
@@ -469,11 +537,15 @@ msgid ""
 "ul>``, so that you can specify any HTML attributes on the ``<ul>`` for "
 "flexibility::"
 msgstr ""
+"Метод ``as_ul()`` представляет форму в виде последовательности тагов "
+"``<li>``, по одному на каждое поле. Представление *не включает в себя* таги "
+"``<ul>`` или ``</ul>``, таким образом вы можете указать любой атрибут для "
+"тага ``<ul>``::"
 
 # ed47171e80ec4a3c9b65ad4358f55a01
 #: ../../ref/forms/api.txt:360
 msgid "``as_table()``"
-msgstr ""
+msgstr "``as_table()``"
 
 # 7233b07df84441c7bcc1eeb921249cef
 #: ../../ref/forms/api.txt:364
@@ -482,11 +554,13 @@ msgid ""
 "exactly the same as ``print``. In fact, when you ``print`` a form object, it "
 "calls its ``as_table()`` method behind the scenes::"
 msgstr ""
+"Наконец, метод ``as_table()`` выводит форму в виде таблицы. Этот метод "
+"используется по умолчанию::"
 
 # d1f22e5dbf324aec80a9f1487689d543
 #: ../../ref/forms/api.txt:378
 msgid "Styling required or erroneous form rows"
-msgstr ""
+msgstr "Стилизация обязательных полей или полей с ошибкой"
 
 # 053e9eb1515d4120b6e8d4218df40284
 #: ../../ref/forms/api.txt:382
@@ -495,6 +569,9 @@ msgid ""
 "errors. For example, you might want to present required form rows in bold "
 "and highlight errors in red."
 msgstr ""
+"Стилизация полей формы, обязательных для заполнения или имеющих ошибку, "
+"является общей практикой. Например, вы можете выделять обязательные поля "
+"жирным шрифтом, а поля с ошибкой выводить на красном."
 
 # 9c78596fc8114ac2bee05bda1bf47437
 #: ../../ref/forms/api.txt:386
@@ -503,6 +580,10 @@ msgid ""
 "attributes to required rows or to rows with errors: simply set the :attr:"
 "`Form.error_css_class` and/or :attr:`Form.required_css_class` attributes::"
 msgstr ""
+"Класс :class:`Form` имеет ряд возможностей, которые вы можете использовать "
+"для добавления атрибутов ``class`` к обязательным полям и полям с ошибками: "
+"просто определите атрибут :attr:`Form.error_css_class` и/или :attr:`Form."
+"required_css_class` attributes::"
 
 # f81225acc6e140e2af26e3b9e59c09dd
 #: ../../ref/forms/api.txt:397
@@ -510,11 +591,13 @@ msgid ""
 "Once you've done that, rows will be given ``\"error\"`` and/or ``\"required"
 "\"`` classes, as needed. The HTML will look something like::"
 msgstr ""
+"После этого к полям будут добавлены классы ``\"error\"`` и/или ``\"required"
+"\"``. В результате HTML код будет выглядеть таким образом::"
 
 # d1433d4f88034e21bf03e0c4ca36df0d
 #: ../../ref/forms/api.txt:410
 msgid "Configuring HTML ``<label>`` tags"
-msgstr ""
+msgstr "Настройка тагов ``<label>``"
 
 # 5dd8d384015b4747a3f01031d2e6ef35
 #: ../../ref/forms/api.txt:412
@@ -524,6 +607,9 @@ msgid ""
 "accessible to assistive devices. It's always a good idea to use ``<label>`` "
 "tags."
 msgstr ""
+"Таг ``<label>`` определяет с каким элементом формы связана текущая текстовая "
+"метка. Это небольшое уточнение делает форму более открытой для устройств. "
+"Используйте, таги ``<label>``."
 
 # 22be033540ab4d82a67a561652618cce
 #: ../../ref/forms/api.txt:416
@@ -535,6 +621,11 @@ msgid ""
 "the ``id`` convention or remove HTML ``id`` attributes and ``<label>`` tags "
 "entirely."
 msgstr ""
+"По умолчанию, методы представления формы назначают элементам формы атрибуты "
+"``id`` и их текстовым меткам. Атрибуты ``id`` создаются с помощью добавления "
+"префикса ``id_`` к именам полей формы. Это поведение является изменяемым, "
+"таким образом вы можете изменить его или вообще удалить эти атрибуты и таг "
+"``<label>`` из формы."
 
 # ce67d93e132146a1bdc8466cf22c841d
 #: ../../ref/forms/api.txt:422
@@ -543,6 +634,9 @@ msgid ""
 "label and ``id`` behavior. This argument must be ``True``, ``False`` or a "
 "string."
 msgstr ""
+"Используйте аргумент ``auto_id`` конструктора ``Form`` для управления "
+"поведением меток и их идентификаторов. Этот аргумент может принимать "
+"значения ``True``, ``False`` или строку."
 
 # e61362d69fc2443887fd5c235627cd07
 #: ../../ref/forms/api.txt:425
@@ -550,6 +644,8 @@ msgid ""
 "If ``auto_id`` is ``False``, then the form output will not include "
 "``<label>`` tags nor ``id`` attributes::"
 msgstr ""
+"Если ``auto_id`` равен ``False``, тогда форма не содержит ни тагов "
+"``<label>``, ни атрибутов ``id``::"
 
 # afd5cb2148e347528bd0ebee778327d4
 #: ../../ref/forms/api.txt:445
@@ -558,6 +654,9 @@ msgid ""
 "``<label>`` tags and will simply use the field name as its ``id`` for each "
 "form field::"
 msgstr ""
+"Если ``auto_id`` равен ``True``, тогда форма *содержит* таги ``<label>`` и "
+"использует имена полей в качестве значений атрибутов tags and will simply "
+"use the field name as its ``id`` for each form field::"
 
 # 7cc21479afb140668b3ea328a170b21b
 #: ../../ref/forms/api.txt:466
