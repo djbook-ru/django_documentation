@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-28 13:41+0200\n"
+"PO-Revision-Date: 2012-02-28 18:35+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -587,6 +587,10 @@ msgid ""
 "field will automatically be added to your model if you don't specify "
 "otherwise. See :ref:`automatic-primary-key-fields`."
 msgstr ""
+"Автоинкрементное поле :class:`IntegerField`. Используется для хранения ID. "
+"Скорее всего вам не придется использовать это поле, первичный ключ будет "
+"автоматически добавлен к модели. Смотрите :ref:`automatic-primary-key-"
+"fields`."
 
 # 83d29df4fc8d46cd907838a39c49f99a
 #: ../../ref/models/fields.txt:332
@@ -712,7 +716,7 @@ msgid ""
 msgstr ""
 "Поле содержащее целые числа разделенные запятыми. Как и в :class:"
 "`CharField`, необходим параметр :attr:`~CharField.max_length`. Упомянутые "
-"особенности работы с различными типами данных так же актуальны."
+"особенности работы с различными типами баз данных так же актуальны."
 
 # 1a94384169c84ed7ab5888cd212442a6
 #: ../../ref/models/fields.txt:403
@@ -1254,6 +1258,9 @@ msgid ""
 "directory on the filesystem. Has three special arguments, of which the first "
 "is **required**:"
 msgstr ""
+"Поле :class:`CharField` значение которого ограничено именем файла из "
+"определенной папки. Принимает три дополнительных аргумента, первый из них "
+"**обязателен**:"
 
 # 87ebbe7c341b437da3babc01bf72b52c
 #: ../../ref/models/fields.txt:670
@@ -1261,6 +1268,8 @@ msgid ""
 "Required. The absolute filesystem path to a directory from which this :class:"
 "`FilePathField` should get its choices. Example: ``\"/home/images\"``."
 msgstr ""
+"Обязательно. Абсолютный путь к папке, из которой :class:`FilePathField` "
+"принимает значение. Например: ``\"/home/images\"``."
 
 # 07530c2dcfef4f08802d4940560059b5
 #: ../../ref/models/fields.txt:675
@@ -1270,6 +1279,10 @@ msgid ""
 "base filename, not the full path. Example: ``\"foo.*\\.txt$\"``, which will "
 "match a file called ``foo23.txt`` but not ``bar.txt`` or ``foo23.gif``."
 msgstr ""
+"Необязательный. Регулярное выражение как строка, которое :class:"
+"`FilePathField` использует как фильтр названий. Регулярное выражение "
+"применяется к названию файла, а не к полному пути. Например: ``\"foo.*\\.txt$"
+"\"``, пропустит ``foo23.txt`` но отфильтрует ``bar.txt`` или ``foo23.gif``."
 
 # 5421eb38402143589395bf27d57d672c
 #: ../../ref/models/fields.txt:682
@@ -1277,11 +1290,13 @@ msgid ""
 "Optional. Either ``True`` or ``False``. Default is ``False``. Specifies "
 "whether all subdirectories of :attr:`~FilePathField.path` should be included"
 msgstr ""
+"Необязательный. Принимает ``True`` или ``False``. По-умолчанию ``False``. "
+"Определяет дожны ли быть включены поддиректории :attr:`~FilePathField.path`."
 
 # f874b74b1b98491c86ceda74f32a799b
 #: ../../ref/models/fields.txt:685
 msgid "Of course, these arguments can be used together."
-msgstr ""
+msgstr "Конечно же можно использовать все три аргумента вместе."
 
 # 1f2f5a551ea44eb1a6f3e279a0b38fab
 #: ../../ref/models/fields.txt:687
@@ -1289,6 +1304,8 @@ msgid ""
 "The one potential gotcha is that :attr:`~FilePathField.match` applies to the "
 "base filename, not the full path. So, this example::"
 msgstr ""
+"Следует помнить, что :attr:`~FilePathField.match` применяется к имени файла, "
+"а не абсолютному пути. Таким образом::"
 
 # f17ceaa13f8f488185382de87d36d775
 #: ../../ref/models/fields.txt:692
@@ -1297,6 +1314,9 @@ msgid ""
 "because the :attr:`~FilePathField.match` applies to the base filename (``foo."
 "gif`` and ``bar.gif``)."
 msgstr ""
+"...пропустит ``/home/images/foo.gif`` но не ``/home/images/foo/bar.gif`` т."
+"к. :attr:`~FilePathField.match` применяется к имени файла (``foo.gif`` и "
+"``bar.gif``)."
 
 # 2262ca133bee441584b0eece2e4a35a2
 #: ../../ref/models/fields.txt:696
@@ -1305,16 +1325,19 @@ msgid ""
 "columns in your database. As with other fields, you can change the maximum "
 "length using the :attr:`~CharField.max_length` argument."
 msgstr ""
+"По-умолчанию, экземпляр :class:`FilePathField` создается как колонка "
+"``varchar(100)`` в базе данных. Как и с другими полями вы можете изменить "
+"максимальную длину используя аргумент :attr:`~CharField.max_length`."
 
 # 0d4b75c208d1453698b1f5da20114b1f
 #: ../../ref/models/fields.txt:701
 msgid "``FloatField``"
-msgstr ""
+msgstr "``FloatField``"
 
 # 0ff04ae1624148f0a2e3ca4e3f6cfa7e
 #: ../../ref/models/fields.txt:705
 msgid "A floating-point number represented in Python by a ``float`` instance."
-msgstr ""
+msgstr "Число с плавающей точкой представленное объектом ``float``."
 
 # 1a919f175dce4b58bae1e6ab899292b9
 #: ../../ref/models/fields.txt:713
@@ -1326,11 +1349,16 @@ msgid ""
 "information on the difference between the two, see Python's documentation "
 "for the :mod:`decimal` module."
 msgstr ""
+":class:`FloatField` иногда путают с :class:`DecimalField`. Хоть оба и "
+"представляют вещественные числа, они делают это по разному. ``FloatField`` "
+"использует тип ``float`` в Python, в то время как ``DecimalField`` "
+"использует тип ``Decimal``. Подробности смотрите в документации  Python "
+"модуля :mod:`decimal`."
 
 # 468c1c14b7904a12b113fc543eeb7ac1
 #: ../../ref/models/fields.txt:721
 msgid "``ImageField``"
-msgstr ""
+msgstr "``ImageField``"
 
 # 3ec80fb0e2db41f083e3b6b0e83057eb
 #: ../../ref/models/fields.txt:725
@@ -1338,6 +1366,8 @@ msgid ""
 "Inherits all attributes and methods from :class:`FileField`, but also "
 "validates that the uploaded object is a valid image."
 msgstr ""
+"Наследует все атрибуты и методы поля :class:`FileField`, но так же проверяет "
+"является ли загруженный файл изображением."
 
 # 9639abfecb544310851a7d1cdc2d0c6a
 #: ../../ref/models/fields.txt:728
@@ -1346,6 +1376,9 @@ msgid ""
 "`FileField`, an :class:`ImageField` also has :attr:`~django.core.files.File."
 "height` and :attr:`~django.core.files.File.width` attributes."
 msgstr ""
+"В дополнение к атрибутам поля :class:`FileField` :class:`ImageField` "
+"содержит так же :attr:`~django.core.files.File.height` и :attr:`~django.core."
+"files.File.width`."
 
 # 10b8eef0943a4a728b3c189dea293653
 #: ../../ref/models/fields.txt:732
@@ -1353,6 +1386,8 @@ msgid ""
 "To facilitate querying on those attributes, :class:`ImageField` has two "
 "extra optional arguments:"
 msgstr ""
+"Для определения этих аргументов :class:`ImageField` принимает дополнительные "
+"аргументы:"
 
 # 85ea5105c062407585681b79c585f52c
 #: ../../ref/models/fields.txt:737
@@ -1360,6 +1395,8 @@ msgid ""
 "Name of a model field which will be auto-populated with the height of the "
 "image each time the model instance is saved."
 msgstr ""
+"Имя поля, которому автоматически будет присвоено значение высоты изображения "
+"при каждом сохранении объекта."
 
 # c661f625e1ac4d8c8fac23c59cac1992
 #: ../../ref/models/fields.txt:742
@@ -1367,11 +1404,13 @@ msgid ""
 "Name of a model field which will be auto-populated with the width of the "
 "image each time the model instance is saved."
 msgstr ""
+"Имя поля, которому автоматически будет присвоено значение ширины изображения "
+"при каждом сохранении объекта."
 
 # 8f8a360c12304295a8be9d4c944007fb
 #: ../../ref/models/fields.txt:745
 msgid "Requires the `Python Imaging Library`_."
-msgstr ""
+msgstr "Требуется `Python Imaging Library`_."
 
 # 693103d12f804a60afad1589f7412835
 #: ../../ref/models/fields.txt:749
@@ -1380,11 +1419,14 @@ msgid ""
 "columns in your database. As with other fields, you can change the maximum "
 "length using the :attr:`~CharField.max_length` argument."
 msgstr ""
+"По-умолчанию, экземпляр :class:`ImageField` создается как колонка ``varchar"
+"(100)`` в базе данных. Как и с другими полями вы можете изменить "
+"максимальную длину используя аргумент :attr:`~CharField.max_length`."
 
 # bfd201dcf2f849ea938d4b5ed07c459f
 #: ../../ref/models/fields.txt:754
 msgid "``IntegerField``"
-msgstr ""
+msgstr "``IntegerField``"
 
 # 07aa3cc0412e4e659893012794c0f0a0
 #: ../../ref/models/fields.txt:758
@@ -1392,11 +1434,13 @@ msgid ""
 "An integer. The admin represents this as an ``<input type=\"text\">`` (a "
 "single-line input)."
 msgstr ""
+"Целое число. Интерфейс администратора отображает его как ``<input type=\"text"
+"\">``."
 
 # c7e236a1ca364e4cb5bed0841e9a4938
 #: ../../ref/models/fields.txt:762
 msgid "``IPAddressField``"
-msgstr ""
+msgstr "``IPAddressField``"
 
 # 6f5c0727235843fdbd8d5b19c45c167c
 #: ../../ref/models/fields.txt:766
@@ -1404,11 +1448,13 @@ msgid ""
 "An IP address, in string format (e.g. \"192.0.2.30\"). The admin represents "
 "this as an ``<input type=\"text\">`` (a single-line input)."
 msgstr ""
+"IP адрес в виде строки(например, \"192.0.2.30\"). Интерфейс администратора "
+"отображает его как ``<input type=\"text\">``."
 
 # 10efef2ebb6146259b432f82eea2a6ce
 #: ../../ref/models/fields.txt:770
 msgid "``GenericIPAddressField``"
-msgstr ""
+msgstr "``GenericIPAddressField``"
 
 # 9e28b938238a4ccbabfb06fd1019df22
 #: ../../ref/models/fields.txt:776
@@ -1417,6 +1463,9 @@ msgid ""
 "``2a02:42fe::4``). The admin represents this as an ``<input type=\"text\">`` "
 "(a single-line input)."
 msgstr ""
+"Адрес IPv4 или IPv6 в виде строки (например, ``192.0.2.30`` или "
+"``2a02:42fe::4``). Интерфейс администратора отображает его как ``<input type="
+"\"text\">``."
 
 # 8f11f506da0f4f1bacec1998c5c225a3
 #: ../../ref/models/fields.txt:780
@@ -1427,6 +1476,11 @@ msgid ""
 "to ``2001::1``, and ``::ffff:0a0a:0a0a`` to ``::ffff:10.10.10.10``. All "
 "characters are converted to lowercase."
 msgstr ""
+"Преобразование адреса IPv6 происходит в соответствии с :rfc:"
+"`4291#section-2.2` раздел 2.2, включая рекомендации по форматированию IPv4 в "
+"параграфа 3 этого раздела, таких как ``::ffff:192.0.2.0``. Например, "
+"``2001:0::0:01`` будет преобразован ``2001::1``, а ``::ffff:0a0a:0a0a`` в "
+"``::ffff:10.10.10.10``. Все символы будет преобразованы в нижний регистр."
 
 # 0083f498c8b8437ebd28a6d107af6468
 #: ../../ref/models/fields.txt:788
@@ -1434,6 +1488,8 @@ msgid ""
 "Limits valid inputs to the specified protocol. Accepted values are "
 "``'both'`` (default), ``'IPv4'`` or ``'IPv6'``. Matching is case insensitive."
 msgstr ""
+"Определяет формат IP адреса. Принимает значение ``'both'`` (по-умолчанию), "
+"``'IPv4'`` или ``'IPv6'``. Значение не чувствительно регистру."
 
 # 05daf697f56548e3a921c39c24c664a4
 #: ../../ref/models/fields.txt:794
@@ -1442,11 +1498,14 @@ msgid ""
 "enabled that address would be unpacked to ``192.0.2.1``. Default is "
 "disabled. Can only be used when ``protocol`` is set to ``'both'``."
 msgstr ""
+"Преобразует адрес IPv4. Если эта опция установлена, адрес ``::"
+"ffff::192.0.2.1`` будет преобразован в ``192.0.2.1``. По-умолчанию "
+"отключена. Может быть использовано если ``protocol`` установлен в ``'both'``."
 
 # 6606f41ad49146eaa1940d1640714d49
 #: ../../ref/models/fields.txt:800
 msgid "``NullBooleanField``"
-msgstr ""
+msgstr "``NullBooleanField``"
 
 # 7a370dcd7f804de19fa3cd2daf834398
 #: ../../ref/models/fields.txt:804
@@ -1456,11 +1515,15 @@ msgid ""
 "represents this as a ``<select>`` box with \"Unknown\", \"Yes\" and \"No\" "
 "choices."
 msgstr ""
+"Как и :class:`BooleanField`, но принимает значение ``NULL``. Используете его "
+"вместо :class:`BooleanField` с ``null=True``. Интерфейс администратора "
+"отображает его как ``<select>`` с вариантами выбора \"Неизвестное\", \"Да\" "
+"и \"Нет\"."
 
 # 230cf89377a14151bd8eeedfc5299dac
 #: ../../ref/models/fields.txt:809
 msgid "``PositiveIntegerField``"
-msgstr ""
+msgstr "``PositiveIntegerField``"
 
 # 4068d3aefae14d06afca8debfa591e7c
 #: ../../ref/models/fields.txt:813
@@ -1468,11 +1531,13 @@ msgid ""
 "Like an :class:`IntegerField`, but must be either positive or zero (`0`). "
 "The value `0` is accepted for backward compatibility reasons."
 msgstr ""
+"Как и поле :class:`IntegerField`, но значение должно быть больше или равно "
+"нулю (`0`). Значение `0` принимается для обратной совместимости."
 
 # 8aeb8e6539d3496fb8386a1d98e107be
 #: ../../ref/models/fields.txt:817
 msgid "``PositiveSmallIntegerField``"
-msgstr ""
+msgstr "``PositiveSmallIntegerField``"
 
 # 45c7cd2886f148ffa8bd561ab732e191
 #: ../../ref/models/fields.txt:821
@@ -1480,11 +1545,13 @@ msgid ""
 "Like a :class:`PositiveIntegerField`, but only allows values under a certain "
 "(database-dependent) point."
 msgstr ""
+"Как и поле :class:`PositiveIntegerField`, но принимает значения в "
+"определенном диапазоне(зависит от типа базы данных)."
 
 # 528a021487b44adba07404ac592151b9
 #: ../../ref/models/fields.txt:825
 msgid "``SlugField``"
-msgstr ""
+msgstr "``SlugField``"
 
 # 1614324341bc4c67b2bb5e4cde36f595
 #: ../../ref/models/fields.txt:829
@@ -1493,6 +1560,9 @@ msgid ""
 "containing only letters, numbers, underscores or hyphens. They're generally "
 "used in URLs."
 msgstr ""
+":term:`Slug` -- газетный термин. \"Slug\" -- это короткое название-метка, "
+"которое содержит только буквы, числа, нижнее подчеркивание или дефис. В "
+"основном используются в URL."
 
 # db6c0ab23a6e4de5acb87c5682e734ec
 #: ../../ref/models/fields.txt:833
@@ -1502,11 +1572,17 @@ msgid ""
 "section, too). If :attr:`~CharField.max_length` is not specified, Django "
 "will use a default length of 50."
 msgstr ""
+"Как и для ``CharField``, можно указать :attr:`~CharField.max_length` "
+"(упомянутые особенности работы с различными типами баз данных так же "
+"актуальны). Если :attr:`~CharField.max_length` не указан, Django будет "
+"использовать значение 50."
 
 # 8c5fbaf0c4b742e39ceb1cf2887dfb18
 #: ../../ref/models/fields.txt:838
 msgid "Implies setting :attr:`Field.db_index` to ``True``."
 msgstr ""
+"Устанавливает :attr:`Field.db_index` в ``True``, если аргумент явно не "
+"указан."
 
 # b38d4980701c47beaa8beabae7d8214a
 #: ../../ref/models/fields.txt:840
@@ -1515,11 +1591,15 @@ msgid ""
 "value of some other value.  You can do this automatically in the admin "
 "using :attr:`~django.contrib.admin.ModelAdmin.prepopulated_fields`."
 msgstr ""
+"Обычно значение SlugField создается основываясь на какому-то другом значении"
+"(например, название статьи). Это может работать автоматически в интерфейсе "
+"администрации благодаря параметру :attr:`~django.contrib.admin.ModelAdmin."
+"prepopulated_fields`."
 
 # c96a689127ac4b0aa63cccadb6f38ea2
 #: ../../ref/models/fields.txt:845
 msgid "``SmallIntegerField``"
-msgstr ""
+msgstr "``SmallIntegerField``"
 
 # 8f4d2afa4d564e20bac96947ab99aa55
 #: ../../ref/models/fields.txt:849
@@ -1527,11 +1607,13 @@ msgid ""
 "Like an :class:`IntegerField`, but only allows values under a certain "
 "(database-dependent) point."
 msgstr ""
+"Как и поле :class:`IntegerField`, но принимает значения в определенном "
+"диапазоне(зависит от типа базы данных)."
 
 # 7e9ffe6139cf4afb91b92e2de31373ab
 #: ../../ref/models/fields.txt:853
 msgid "``TextField``"
-msgstr ""
+msgstr "``TextField``"
 
 # b9b3d7b20a3244db8f4bd48a2350511b
 #: ../../ref/models/fields.txt:857
@@ -1539,6 +1621,8 @@ msgid ""
 "A large text field. The admin represents this as a ``<textarea>`` (a multi-"
 "line input)."
 msgstr ""
+"Большое текстовое поле. Интерфейс администратора отображает поле как "
+"``<textarea>``."
 
 # b0cfac2022804d58a432f9c0e98ff372
 #: ../../ref/models/fields.txt:862
@@ -1547,11 +1631,15 @@ msgid ""
 "collation (which is *not* the default), there are some issues to be aware "
 "of. Refer to the :ref:`MySQL database notes <mysql-collation>` for details."
 msgstr ""
+"Если вы используете это поле с MySQLdb 1.2.1p2 и ``utf8_bin`` \"collation"
+"\" (которое *не* является значением по-умолчанию), могут быть некоторые "
+"проблемы. Смотрите :ref:`советы при работе с MySQL <mysql-collation>` для "
+"подробностей."
 
 # 4c7cf6a35a414a7780a52d9b3c2739ef
 #: ../../ref/models/fields.txt:868
 msgid "``TimeField``"
-msgstr ""
+msgstr "``TimeField``"
 
 # ff4c3ad454724348a3a62310a8799add
 #: ../../ref/models/fields.txt:872
@@ -1559,6 +1647,8 @@ msgid ""
 "A time, represented in Python by a ``datetime.time`` instance. Accepts the "
 "same auto-population options as :class:`DateField`."
 msgstr ""
+"Время, представленное объектом ``datetime.time`` Python. Принимает те же "
+"аргументы что и :class:`DateField`."
 
 # 22ed7c19571c49ac8592c0da81372d9f
 #: ../../ref/models/fields.txt:875
@@ -1566,16 +1656,20 @@ msgid ""
 "The admin represents this as an ``<input type=\"text\">`` with some "
 "JavaScript shortcuts."
 msgstr ""
+"Интерфейс администратора отображает поле как ``<input type=\"text\">`` с "
+"JavaScript виджетом."
 
 # 74494961615e41c9989f9e307c7d82af
 #: ../../ref/models/fields.txt:879
 msgid "``URLField``"
-msgstr ""
+msgstr "``URLField``"
 
 # 2d93325aec6141b6a4743fda17f75170
 #: ../../ref/models/fields.txt:883
 msgid "A :class:`CharField` for a URL. Has one extra optional argument:"
 msgstr ""
+"Поле :class:`CharField` для URL. Принимает один дополнительный "
+"необязательный аргумент:"
 
 # c84f43a1f02e4edb82d6d38cdd620483
 #: ../../ref/models/fields.txt:891
@@ -1584,6 +1678,9 @@ msgid ""
 "actually loads and doesn't give a 404 response) using a ``HEAD`` request. "
 "Redirects are allowed, but will not be followed."
 msgstr ""
+"При ``True``, переданный URL будет проверен на доступность (то есть страница "
+"по этому адресу доступна для загрузки и не возарвщает ответ со статусом 404) "
+"используя ``HEAD`` запрос. Перенаправления разрешены, но не обрабатываются."
 
 # 37d4d8adde684a4283f682dc1d5fa26f
 #: ../../ref/models/fields.txt:895
@@ -1592,6 +1689,9 @@ msgid ""
 "validating a URL being served by the same server will hang. This should not "
 "be a problem for multithreaded servers."
 msgstr ""
+"Если вы используете одно-поточный сервер, и будет выполнена проверка адреса "
+"обрабатываемого этим же сервером, сервер зависнет. Это не должно быть "
+"проблемой для много-поточного сервера."
 
 # c068c988bff24970967a42210d75a0d7
 #: ../../ref/models/fields.txt:901
@@ -1600,11 +1700,14 @@ msgid ""
 "optional :attr:`~CharField.max_length`argument. If you don't specify :attr:"
 "`~CharField.max_length`, a default of 200 is used."
 msgstr ""
+"Как подкласс :class:`CharField` :class:`URLField` принимает аргумент :attr:"
+"`~CharField.max_length`. Если вы не укажите :attr:`~CharField.max_length`, "
+"будет использовано значение -- 200."
 
 # 8518ecdc360745deb178ad0e3980ddfd
 #: ../../ref/models/fields.txt:906
 msgid "``XMLField``"
-msgstr ""
+msgstr "``XMLField``"
 
 # 6266eac19ff849e2bce93e7e9bc87629
 #: ../../ref/models/fields.txt:913
@@ -1612,26 +1715,29 @@ msgid ""
 "A :class:`TextField` that stores XML data and a path to a schema. Takes one "
 "optional argument:"
 msgstr ""
+"Поле :class:`TextField`, которое хранит XML и пусть к XML Schema. Принимает "
+"один не обязательный аргумент:"
 
 # 277c1edc453b4107b94a03c170cd050a
 #: ../../ref/models/fields.txt:918
 msgid "The filesystem path to a schema for the field."
-msgstr ""
+msgstr "Путь в файловой системе к XML Schema."
 
 # b2d5ca194bdb4413a0fbd07f0c7a8e7a
 #: ../../ref/models/fields.txt:922
 msgid "Relationship fields"
-msgstr ""
+msgstr "Поля отношений"
 
 # d23c120ec8db4e33b3c52534445f0ed2
 #: ../../ref/models/fields.txt:929
 msgid "Django also defines a set of fields that represent relations."
 msgstr ""
+"Django предоставляет набор полей для определения связей между моделями."
 
 # ee73d6cc498c49ee95019db656bf6e07
 #: ../../ref/models/fields.txt:934
 msgid "``ForeignKey``"
-msgstr ""
+msgstr "``ForeignKey``"
 
 # d0089dc5c247434dbf435d7eae829b45
 #: ../../ref/models/fields.txt:938
