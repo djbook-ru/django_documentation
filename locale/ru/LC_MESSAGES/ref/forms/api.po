@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-27 10:37+0400\n"
+"PO-Revision-Date: 2012-02-28 14:23+0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,6 @@ msgstr ""
 
 # a4224b123d034d16ae143c82ee7bc231
 #: ../../ref/forms/api.txt:30
-#, fuzzy
 msgid ""
 "To create an unbound :class:`Form` instance, simply instantiate the class::"
 msgstr ""
@@ -192,7 +191,6 @@ msgstr ""
 
 # 62c73e38410a45adbe141852fb4ecd48
 #: ../../ref/forms/api.txt:118
-#, fuzzy
 msgid ""
 "The validation routines will only get called once, regardless of how many "
 "times you access :attr:`~Form.errors` or call :meth:`~Form.is_valid`. This "
@@ -201,8 +199,8 @@ msgid ""
 msgstr ""
 "Процедуры проверки выполняются один раз, независимо от количества обращений "
 "к атрибуту :attr:`~Form.errors` или вызова метода :meth:`~Form.is_valid`. "
-"Это означает, что если валидация имеет сайдэффекты, то они проявятся только "
-"один раз."
+"Это означает, что если проверка данных имеет побочное влияние на состояние "
+"формы, то оно проявится только один раз."
 
 # 4208058aeffa40d8b998a2f76456e8b1
 #: ../../ref/forms/api.txt:123
@@ -317,15 +315,14 @@ msgstr ""
 
 # c745bda1d8c64625ad0d22e208273366
 #: ../../ref/forms/api.txt:198
-#, fuzzy
 msgid ""
 "Note that any text-based field -- such as ``CharField`` or ``EmailField`` -- "
 "always cleans the input into a Unicode string. We'll cover the encoding "
 "implications later in this document."
 msgstr ""
 "Следует отметить, что любое текстовое поле, такое как ``CharField`` или "
-"``EmailField``, всегда преобразует текст в юникодную строку. We'll cover the "
-"encoding implications later in this document."
+"``EmailField``, всегда преобразует текст в юникодную строку. Мы рассмотрим "
+"применения кодировок далее."
 
 # dc22232a855a4f34803ffdd9539ed8fd
 #: ../../ref/forms/api.txt:202
@@ -667,6 +664,11 @@ msgid ""
 "``'field_%s'``, a field named ``subject`` will get the ``id`` value "
 "``'field_subject'``. Continuing our example::"
 msgstr ""
+"Если ``auto_id`` является строкой, которая содержит символ форматирования "
+"``'%s'``, тогда форма будет содержать таги ``<label>`` и будет генерировать "
+"``id`` атрибуты, используя эту строку. Например, для строки ``'field_%s'``, "
+"поле с именем ``subject`` для атрибута ``id`` получит значение "
+"``'field_subject'``. Вернёмся к нашему примеру::"
 
 # ab31baad54b245efaee280baa67a3d88
 #: ../../ref/forms/api.txt:489
@@ -675,11 +677,14 @@ msgid ""
 "doesn't include ``%s`` -- then the library will act as if ``auto_id`` is "
 "``True``."
 msgstr ""
+"Если ``auto_id`` равно любому другому значимому значению (например, строка, "
+"которая не содержит символа форматирования), тогда библиотека будет "
+"рассматривать это значение как ``True``."
 
 # e19fc6c0ca7747478061b28ec47cda10
 #: ../../ref/forms/api.txt:492
 msgid "By default, ``auto_id`` is set to the string ``'id_%s'``."
-msgstr ""
+msgstr "По умолчанию, ``auto_id`` имеет значение ``'id_%s'``."
 
 # 217177bfd7464e58a139fbdd6ea94387
 #: ../../ref/forms/api.txt:494
@@ -688,6 +693,9 @@ msgid ""
 "is rendered. It's possible to change the colon to another character, or omit "
 "it entirely, using the ``label_suffix`` parameter::"
 msgstr ""
+"Обычно при отображении после имён меток добавляется двоеточие (``:``). Есть "
+"возможность заменить это двоеточие на другой символ или вообще убрать его. "
+"Для этого надо воспользоваться параметром ``label_suffix``::"
 
 # 5d44008ae7fe4c55984554080c527e07
 #: ../../ref/forms/api.txt:511
@@ -695,11 +703,14 @@ msgid ""
 "Note that the label suffix is added only if the last character of the label "
 "isn't a punctuation character (``.``, ``!``, ``?`` or ``:``)"
 msgstr ""
+"Следует отметить, что суффикс добавляется к метке только в том случае, когда "
+"последний символ метки не является пунктуационным, т.е. не принадлежит "
+"списку (``.``, ``!``, ``?`` or ``:``)."
 
 # 5dd165a536e14f89946c2d4f9fdcb4ee
 #: ../../ref/forms/api.txt:515
 msgid "Notes on field ordering"
-msgstr ""
+msgstr "Порядок полей"
 
 # ea6edb43ae2f44e9b664f2dfcba42111
 #: ../../ref/forms/api.txt:517
@@ -710,11 +721,16 @@ msgid ""
 "``subject``, ``message``, ``sender``, ``cc_myself``. To reorder the HTML "
 "output, just change the order in which those fields are listed in the class."
 msgstr ""
+"При использовании методов ``as_p()``, ``as_ul()`` и ``as_table()`` поля "
+"отображаются в порядке их определения в классе формы. Например, в нашей "
+"форме ``ContactForm`` поля определены в порядке ``subject``, ``message``, "
+"``sender``, ``cc_myself``. Для изменения их порядка на форме, просто "
+"поменяйте их местами в классе."
 
 # 95d38c9a65874fc6ae6c4f74b9858dd9
 #: ../../ref/forms/api.txt:524
 msgid "How errors are displayed"
-msgstr ""
+msgstr "Отображение ошибок"
 
 # 4e6b97ac9e424fa091198207e2f71e39
 #: ../../ref/forms/api.txt:526
@@ -725,11 +741,17 @@ msgid ""
 "\"errorlist\">`` near the field. The particular positioning of the error "
 "messages depends on the output method you're using::"
 msgstr ""
+"При отображении заполненного объекта ``Form``, процесс генерации HTML кода "
+"автоматически выполняет проверку данных формы, если она ещё не была "
+"произведена. Если проверка выявила ошибки, то HTML код формы будет включать "
+"в себя список ошибок в виде списка ``<ul class=\"errorlist\">`` у "
+"соответствующего поля. Точная позиция списка сообщений с ошибками проверки "
+"зависит от метода, который вы используете::"
 
 # 9d00b339491d412f88063bea8fe1479c
 #: ../../ref/forms/api.txt:556
 msgid "Customizing the error list format"
-msgstr ""
+msgstr "Настройка формата списка ошибок"
 
 # 827ea633dae8413d903221f568455c4f
 #: ../../ref/forms/api.txt:558
@@ -738,11 +760,15 @@ msgid ""
 "errors. If you'd like to use an alternate class for displaying errors, you "
 "can pass that in at construction time::"
 msgstr ""
+"По умолчанию, формы используют ``django.forms.util.ErrorList`` для "
+"форматирования списка с ошибками проверки. Если вам требуется использовать "
+"другой класс для отображения ошибок, вы можете передать его во время "
+"создания объекта формы::"
 
 # 084f5b0c4bbf46f98c4e6e440ed57868
 #: ../../ref/forms/api.txt:579
 msgid "More granular output"
-msgstr ""
+msgstr "Точное управление выводом"
 
 # 11d64c7c3e8a4db5a28e78a05019edb4
 #: ../../ref/forms/api.txt:581
@@ -751,6 +777,8 @@ msgid ""
 "for lazy developers -- they're not the only way a form object can be "
 "displayed."
 msgstr ""
+"Методы ``as_p()``, ``as_ul()`` и ``as_table()`` являются общими методами для "
+"ленивых разработчиков. Это не единственные способы отображения формы."
 
 # 6f805632f3ff44ed868ec9ff52d216b5
 #: ../../ref/forms/api.txt:586
@@ -758,6 +786,8 @@ msgid ""
 "Used to display HTML or access attributes for a single field of a :class:"
 "`Form` instance."
 msgstr ""
+"Используется для отображения HTML или для доступа к атрибутам отдельного "
+"поля экземпляра :class:`Form`."
 
 # 05a6107507624dc89062ac6bde6d74c9
 #: ../../ref/forms/api.txt:589
@@ -765,6 +795,8 @@ msgid ""
 "The :meth:`__unicode__` and :meth:`__str__` methods of this object displays "
 "the HTML for this field."
 msgstr ""
+"Методы :meth:`__unicode__` и :meth:`__str__` этого объекта возвращают HTML "
+"код данного поля."
 
 # 8432d23b01e04a4786680ddbbdf7bf69
 #: ../../ref/forms/api.txt:592
@@ -772,22 +804,26 @@ msgid ""
 "To retrieve a single ``BoundField``, use dictionary lookup syntax on your "
 "form using the field's name as the key::"
 msgstr ""
+"Для получение одного ``BoundField`` используйте синтаксис поиска в словаре, "
+"применяя имя поля в качестве ключа::"
 
 # 9236e432dc6e4111bcd60c7e9dc7cdf3
 #: ../../ref/forms/api.txt:599
 msgid "To retrieve all ``BoundField`` objects, iterate the form::"
-msgstr ""
+msgstr "Для получения всех объектов ``BoundField``, пройдите циклом по форме::"
 
 # a090a4e99b53456eb3b4c3c61fc41c57
 #: ../../ref/forms/api.txt:608
 msgid ""
 "The field-specific output honors the form object's ``auto_id`` setting::"
-msgstr ""
+msgstr "Вывод указанного поля соответствует настройке ``auto_id``::"
 
 # 5caa028c5e434d34861c502dc0e56c8a
 #: ../../ref/forms/api.txt:617
 msgid "For a field's list of errors, access the field's ``errors`` attribute."
 msgstr ""
+"Для получения списка ошибок в полях формы следует использовать атрибут "
+"``errors``."
 
 # ef4a7196061340cba6ce398b1b5fde5a
 #: ../../ref/forms/api.txt:621
@@ -795,6 +831,8 @@ msgid ""
 "A list-like object that is displayed as an HTML ``<ul class=\"errorlist\">`` "
 "when printed::"
 msgstr ""
+"Объект со свойствами списка, который при отображении представляется в виде "
+"``<ul class=\"errorlist\">``::"
 
 # 45929f84c27341b5bb6b62e8d9c14cba
 #: ../../ref/forms/api.txt:643
@@ -804,6 +842,10 @@ msgid ""
 "rendering a form, you can access these CSS classes using the ``css_classes`` "
 "method::"
 msgstr ""
+"Когда вы применяете общие методы для отображения формы, для выделения "
+"обязательных полей формы или полей, которые содержат ошибки, используются "
+"CSS классы. Если вы вручную выводите форму, вы можете получить доступ к этим "
+"классам через метод ``css_classes``::"
 
 # 2c39d90cad344c9dbbe181e125fb8d7a
 #: ../../ref/forms/api.txt:652
@@ -812,6 +854,8 @@ msgid ""
 "required classes that may be required, you can provide those classes as an "
 "argument::"
 msgstr ""
+"Если потребуется предоставить дополнительные классы для ошибок и "
+"обязательных полей, вы можете указать эти классы в качестве аргумента::"
 
 # d434191be80b4da0a5d645b02de4082e
 #: ../../ref/forms/api.txt:664
@@ -819,11 +863,13 @@ msgid ""
 "Use this method to render the raw value of this field as it would be "
 "rendered by a ``Widget``::"
 msgstr ""
+"Используйте этот метод для выдачи \"сырого\" значения данного поля, как-"
+"будто бы оно было отображено через ``Widget``::"
 
 # 940d4068a9c54ee09a2189d497a6972e
 #: ../../ref/forms/api.txt:678
 msgid "Binding uploaded files to a form"
-msgstr ""
+msgstr "Привязка загруженных файлов к форме"
 
 # ac12629eaaf94d699a975c1cae1becb2
 #: ../../ref/forms/api.txt:680
@@ -831,6 +877,8 @@ msgid ""
 "Dealing with forms that have ``FileField`` and ``ImageField`` fields is a "
 "little more complicated than a normal form."
 msgstr ""
+"Работа с формами, которые содержат поля ``FileField`` и ``ImageField`` "
+"немного отличается от работы с обычными формами."
 
 # 8ef7d7b48865421680b7e7a967b87b18
 #: ../../ref/forms/api.txt:683
@@ -839,6 +887,8 @@ msgid ""
 "``<form>`` element correctly defines the ``enctype`` as ``\"multipart/form-"
 "data\"``::"
 msgstr ""
+"Сначала, для того, чтобы загружать файлы вам потребуется назначить форме "
+"атрибут ``enctype``::"
 
 # d55e769375574105b58f3ec3a0f850e4
 #: ../../ref/forms/api.txt:689
@@ -850,6 +900,11 @@ msgid ""
 "``ImageField`` called ``mugshot``, we need to bind the file data containing "
 "the mugshot image::"
 msgstr ""
+"Затем, при использовании формы следует привязывать данные к форме. Файлы "
+"обрабатываются отдельно от данных формы. Таким образом, если ваша форма "
+"содержит поля ``FileField`` и ``ImageField``, потребуется указать второй "
+"аргумент у конструктора. Если мы добавим в нашу ``ContactForm`` поле "
+"``ImageField`` с именем ``mugshot``, придётся сделать следующее::"
 
 # 02efa6ca406745a998cc753bd20347d8
 #: ../../ref/forms/api.txt:705
@@ -857,6 +912,9 @@ msgid ""
 "In practice, you will usually specify ``request.FILES`` as the source of "
 "file data (just like you use ``request.POST`` as the source of form data)::"
 msgstr ""
+"На практике вы будете просто указывать ``request.FILES`` в качестве "
+"источника данных файлов аналогично тому, как вы указываете ``request.POST`` "
+"в качестве источника данных формы::"
 
 # fbcc6ed5a1fd421e83dd326707d4a168
 #: ../../ref/forms/api.txt:712
@@ -864,11 +922,13 @@ msgid ""
 "Constructing an unbound form is the same as always -- just omit both form "
 "data *and* file data::"
 msgstr ""
+"Создание незаполненной формы аналогично обычной форме -- просто не "
+"указывайте *никаких* данных для неё::"
 
 # 8447519582e54aeebe99e90b441cf265
 #: ../../ref/forms/api.txt:719
 msgid "Testing for multipart forms"
-msgstr ""
+msgstr "Определение таких форм"
 
 # aa88b67eaad44eab8963d0529737e87f
 #: ../../ref/forms/api.txt:721
@@ -878,16 +938,20 @@ msgid ""
 "method tells you whether the form requires multipart encoding for "
 "submission::"
 msgstr ""
+"Если вы пишете представления и шаблоны в расчёте на их неоднократное "
+"использование в будущем, вы не можете знать будет ли ваша форма обычной или "
+"будет работать с файлами. В этом случае вам поможет метод ``is_multipart()"
+"``, который точно ответит на этот вопрос::"
 
 # 95ff906665d04d2d81b6aefe795fc0d6
 #: ../../ref/forms/api.txt:729
 msgid "Here's an example of how you might use this in a template::"
-msgstr ""
+msgstr "Покажем пример использования этого метода в шаблоне::"
 
 # 675c09ebeb6446b2aa9e0fed93f5a1ae
 #: ../../ref/forms/api.txt:740
 msgid "Subclassing forms"
-msgstr ""
+msgstr "Наследование форм"
 
 # 09725b38562c462a82bc82c51846bb6a
 #: ../../ref/forms/api.txt:742
@@ -895,6 +959,8 @@ msgid ""
 "If you have multiple ``Form`` classes that share fields, you can use "
 "subclassing to remove redundancy."
 msgstr ""
+"Если у вас есть несколько классов ``Form`` с одинаковыми полями, вы можете "
+"воспользоваться наследованием форм, чтобы убрать дублирование кода."
 
 # bbbb40ab93714ef18cf3a5766709acae
 #: ../../ref/forms/api.txt:745
@@ -903,6 +969,9 @@ msgid ""
 "include all fields of the parent class(es), followed by the fields you "
 "define in the subclass."
 msgstr ""
+"При наследовании определённого класса ``Form``, результирующий класс будет "
+"обладать всеми полями родительского класса (-ов), включая поля, которые "
+"определены в нём самом."
 
 # 3a31b64ccd0e453992a5385ab977d5da
 #: ../../ref/forms/api.txt:749
@@ -911,6 +980,9 @@ msgid ""
 "``ContactForm``, plus an additional field, ``priority``. The ``ContactForm`` "
 "fields are ordered first::"
 msgstr ""
+"В этом примере, ``ContactFormWithPriority`` содержит все поля из "
+"``ContactForm``, и собственное поле, ``priority``. Поля ``ContactForm`` "
+"выводятся первыми::"
 
 # ada416fd3d3445dcb02c316fb16a7025
 #: ../../ref/forms/api.txt:763
@@ -920,11 +992,15 @@ msgid ""
 "``InstrumentForm`` (in that order), and its field list includes the fields "
 "from the parent classes::"
 msgstr ""
+"Так же можно наследовать несколько форм, рассматривая формы как \"смесь\". В "
+"этом примере форма ``BeatleForm`` наследует формы ``PersonForm`` и "
+"``InstrumentForm`` (именно в этом порядке) и её список полей включает в себя "
+"поля из родительских классов::"
 
 # fe37bfc2bf584db6ae48529dc2541d81
 #: ../../ref/forms/api.txt:785
 msgid "Prefixes for forms"
-msgstr ""
+msgstr "Префиксы для форм"
 
 # f34fc70c319d453595c991f6ab6ba31c
 #: ../../ref/forms/api.txt:789
@@ -932,3 +1008,6 @@ msgid ""
 "You can put several Django forms inside one ``<form>`` tag. To give each "
 "``Form`` its own namespace, use the ``prefix`` keyword argument::"
 msgstr ""
+"Вы можете размещать несколько фокь в одном таге ``<form>``. Для размещения "
+"каждой формы в собственном пространстве имён следует использовать "
+"именованный аргумент ``prefix``::"
