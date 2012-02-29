@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-28 18:35+0200\n"
+"PO-Revision-Date: 2012-02-29 11:41+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1745,6 +1745,8 @@ msgid ""
 "A many-to-one relationship. Requires a positional argument: the class to "
 "which the model is related."
 msgstr ""
+"Связь многое-к-одному. Принимает позиционный аргумент: класс связанной "
+"модели."
 
 # e8c653b65641489986a454054ebbfc2a
 #: ../../ref/models/fields.txt:943
@@ -1752,6 +1754,8 @@ msgid ""
 "To create a recursive relationship -- an object that has a many-to-one "
 "relationship with itself -- use ``models.ForeignKey('self')``."
 msgstr ""
+"Для создания рекурсивной связи -- объект со связью многое-к-одному на себя "
+"-- используйте ``models.ForeignKey('self')``."
 
 # 9748ca87459c4f1282fbdd6c2a122cbd
 #: ../../ref/models/fields.txt:948
@@ -1760,6 +1764,8 @@ msgid ""
 "defined, you can use the name of the model, rather than the model object "
 "itself::"
 msgstr ""
+"Если вам необходимо добавить связь на модель, которая еще не определена, вы "
+"можете использовать имя модели вместо класса::"
 
 # 92f857e28da04bc9b798694cbc8002cc
 #: ../../ref/models/fields.txt:958
@@ -1769,6 +1775,9 @@ msgid ""
 "``Manufacturer`` model above is defined in another application called "
 "``production``, you'd need to use::"
 msgstr ""
+"Для связи на модель из другого приложения используйте название модели и "
+"приложения. Например, если модель ``Manufacturer`` находится в приложении "
+"``production``, используйте::"
 
 # 11f402d534ce46c893bec481886fcf74
 #: ../../ref/models/fields.txt:966
@@ -1776,12 +1785,14 @@ msgid ""
 "This sort of reference can be useful when resolving circular import "
 "dependencies between two applications."
 msgstr ""
+"Такой способ позволяет создать циклическую зависимость между моделями из "
+"разных приложений."
 
 # 02d578ada9c4485b98e2f47c12adc0ac
 # dcce012faebf4d0396e2b2a96dd8ec51
 #: ../../ref/models/fields.txt:970 ../../ref/models/fields.txt:1084
 msgid "Database Representation"
-msgstr ""
+msgstr "Представление в базе данных"
 
 # b474d05aa81e4e9487e6271a03138ee2
 #: ../../ref/models/fields.txt:972
@@ -1793,12 +1804,18 @@ msgid ""
 "never have to deal with the database column name, unless you write custom "
 "SQL. You'll always deal with the field names of your model object."
 msgstr ""
+"За кулисами, Django добавляет ``\"_id\"`` к названию поля для создания "
+"названия колонки. В примере выше, таблица для модели ``Car`` будет содержать "
+"колонку ``manufacturer_id``. (Такое поведение можно изменить указав "
+"аргумент :attr:`~Field.db_column`) Хотя, ваш код никогда не должен "
+"использовать названий колонок, если только вы не используете чистый SQL. Вы "
+"всегда будете использовать названия полей модели."
 
 # 4182db376f8a4f9484e745cb148b4499
 # 05c6b1fc246e43cb9664c3ec9be7e5fe
 #: ../../ref/models/fields.txt:982 ../../ref/models/fields.txt:1099
 msgid "Arguments"
-msgstr ""
+msgstr "Параметры"
 
 # 5556ec4080254de79724c440589044ee
 #: ../../ref/models/fields.txt:984
@@ -1806,6 +1823,8 @@ msgid ""
 ":class:`ForeignKey` accepts an extra set of arguments -- all optional -- "
 "that define the details of how the relation works."
 msgstr ""
+":class:`ForeignKey` принимает дополнительные аргументы -- все не обязательны "
+"-- которые определяют ка должна работать связь."
 
 # ce6c861277f94919b621092bfeaa6626
 #: ../../ref/models/fields.txt:989
@@ -1815,13 +1834,17 @@ msgid ""
 "functions from the Python ``datetime`` module to limit choices of objects by "
 "date. For example::"
 msgstr ""
+"Словарь параметров для фильтрации (смотрите :doc:`/topics/db/queries`), "
+"которые ограничивают множество связанных объектов, отображаемых в интерфейсе "
+"администратора для этого поля. Используйте функции модуля Python "
+"``datetime`` что бы ограничить множество по дате. Например::"
 
 # 2a489537c2c04f0a84cb70789a8cc31d
 #: ../../ref/models/fields.txt:996
 msgid ""
 "only allows the choice of related objects with a ``pub_date`` before the "
 "current date/time to be chosen."
-msgstr ""
+msgstr "позволяет выбирать связанные объекты с ``pub_date`` до текущей даты."
 
 # f2f109ca071141c79cd3d6e9527976b8
 #: ../../ref/models/fields.txt:999
@@ -1832,6 +1855,11 @@ msgid ""
 "only have an effect on the choices available in the admin when the field is "
 "not listed in ``raw_id_fields`` in the ``ModelAdmin`` for the model."
 msgstr ""
+"Вместо словаря можете использовать объект :class:`~django.db.models.Q` для :"
+"ref:`сложных запросов <complex-lookups-with-q>`. Однако, если "
+"``limit_choices_to`` объект :class:`~django.db.models.Q`, он будет "
+"использован в интерфейсе администратора только, если поле не находится в "
+"``raw_id_fields`` класса ``ModelAdmin`` для этой модели."
 
 # 55230a57e9df458e9ef33a0b029aa87c
 #: ../../ref/models/fields.txt:1007
@@ -1843,6 +1871,11 @@ msgid ""
 "when you do so :ref:`some special syntax <abstract-related-name>` is "
 "available."
 msgstr ""
+"Название, используемое для обратной связи от связанной модели. Ищите "
+"подробности и примеры :ref:`раздел о связанных объектах <backwards-related-"
+"objects>`. Заметим, что вы должны определить этот параметр для поля в :ref:"
+"`абстрактной модели <abstract-base-classes>`; при это можно использовать :"
+"ref:`некоторые дополнительные возможности <abstract-related-name>`."
 
 # 743fb6f6f76f46b68bad10893d0baf37
 #: ../../ref/models/fields.txt:1014
@@ -1851,6 +1884,9 @@ msgid ""
 "``related_name`` to ``'+'``. For example, this will ensure that the ``User`` "
 "model won't get a backwards relation to this model::"
 msgstr ""
+"Если вы не хотите что бы Django создавал обратную связь, установите "
+"``related_name`` в ``'+'``. Например, такой код создаст связь, но не "
+"добавить обратную связь в модель ``User``::"
 
 # 67aeaa8e376a4995b86f097e7174523c
 #: ../../ref/models/fields.txt:1022
@@ -1858,6 +1894,8 @@ msgid ""
 "The field on the related object that the relation is to. By default, Django "
 "uses the primary key of the related object."
 msgstr ""
+"Поле связанной модели, которое используется для создания связи между "
+"таблицами. По-умолчанию, Django использует первичный ключ."
 
 # 9f3747827cfa4f0f9a5c92df3a660289
 #: ../../ref/models/fields.txt:1029
@@ -1869,6 +1907,12 @@ msgid ""
 "you have a nullable :class:`ForeignKey` and you want it to be set null when "
 "the referenced object is deleted::"
 msgstr ""
+"Когда объект, на который ссылается :class:`ForeignKey`, удаляется, Django по-"
+"умолчанию повторяет поведение ограничения ``ON DELETE CASCADE`` в SQL и "
+"удаляет объекты содержащие ``ForeignKey``. Такое поведение может быть "
+"переопределено параметром :attr:`on_delete`. Например, если ваше поле :class:"
+"`ForeignKey` может содержать ``NULL`` и вы хотите, что бы оно "
+"устанавливалось в ``NULL``  после удаления связанного объекта::"
 
 # 3d652d7d0a674ee3a3e5644c4ccb622f
 #: ../../ref/models/fields.txt:1038
@@ -1876,11 +1920,13 @@ msgid ""
 "The possible values for :attr:`on_delete` are found in :mod:`django.db."
 "models`:"
 msgstr ""
+"Возможные значения для :attr:`on_delete` находятся в :mod:`django.db.models`:"
 
 # 718ffd92a1324a128bc588f9eaab0847
 #: ../../ref/models/fields.txt:1041
 msgid ":attr:`~django.db.models.CASCADE`: Cascade deletes; the default."
 msgstr ""
+":attr:`~django.db.models.CASCADE`: каскадное удаление, значение по-умолчанию."
 
 # 9c414319e02044d7bb5d1c6b84f5330c
 #: ../../ref/models/fields.txt:1043
@@ -1889,6 +1935,9 @@ msgid ""
 "by raising :exc:`django.db.models.ProtectedError`, a subclass of :exc:"
 "`django.db.IntegrityError`."
 msgstr ""
+":attr:`~django.db.models.PROTECT`: препятствует удалению связанного объекта "
+"вызывая исключение :exc:`django.db.models.ProtectedError`(подкласс :exc:"
+"`django.db.IntegrityError`)."
 
 # a6428fdb07584ab190ee6415f0aa35ac
 #: ../../ref/models/fields.txt:1047
@@ -1896,6 +1945,8 @@ msgid ""
 ":attr:`~django.db.models.SET_NULL`: Set the :class:`ForeignKey` null; this "
 "is only possible if :attr:`null` is ``True``."
 msgstr ""
+":attr:`~django.db.models.SET_NULL`: устанавливает :class:`ForeignKey` в "
+"``NULL``; возможно только если :attr:`null` равен ``True``."
 
 # 62a9d7a56451469480a62c4f0caff3d1
 #: ../../ref/models/fields.txt:1050
@@ -1903,6 +1954,9 @@ msgid ""
 ":attr:`~django.db.models.SET_DEFAULT`: Set the :class:`ForeignKey` to its "
 "default value; a default for the :class:`ForeignKey` must be set."
 msgstr ""
+":attr:`~django.db.models.SET_DEFAULT`: устанавливает :class:`ForeignKey` в "
+"значение по-умолчанию; значение по-умолчанию должно быть указано для :class:"
+"`ForeignKey`."
 
 # 2b16266adda24ffc835673f59757fa69
 #: ../../ref/models/fields.txt:1053
@@ -1912,6 +1966,10 @@ msgid ""
 "the result of calling it. In most cases, passing a callable will be "
 "necessary to avoid executing queries at the time your models.py is imported::"
 msgstr ""
+":func:`~django.db.models.SET()`: устанавливает :class:`ForeignKey` в "
+"значение указанное в :func:`~django.db.models.SET()`. Если указан "
+"выполняемый объект, результат его выполнения. Вызываемый объект можно "
+"использовать, что бы избежать запросов во время импорта models.py::"
 
 # ec245c0521ea4cd0b673d172b0019256
 #: ../../ref/models/fields.txt:1065
@@ -1921,11 +1979,16 @@ msgid ""
 "IntegrityError` unless you manually add a SQL ``ON DELETE`` constraint to "
 "the database field (perhaps using :ref:`initial sql<initial-sql>`)."
 msgstr ""
+":attr:`~django.db.models.DO_NOTHING`: ничего не делать. Если используемый "
+"тип базы данных следит за целостностью связей, будет вызвано исключение :exc:"
+"`~django.db.IntegrityError`, за исключением, когда вы самостоятельно "
+"добавите  SQL правило ``ON DELETE`` для поля таблицы (возможно используя :"
+"ref:`загрузочный sql<initial-sql>`)."
 
 # ea27a02a3b6c43f4bbd64075e142ad5f
 #: ../../ref/models/fields.txt:1074
 msgid "``ManyToManyField``"
-msgstr ""
+msgstr "``ManyToManyField``"
 
 # c3ebc38f2b4f4ea6b5c424b4c1912bd3
 #: ../../ref/models/fields.txt:1078
@@ -1936,6 +1999,9 @@ msgid ""
 "<recursive-relationships>` and :ref:`lazy <lazy-relationships>` "
 "relationships."
 msgstr ""
+"Связь многое-ко-многому. Принимает позиционный аргумент: класс связанной "
+"модели. Работает так же как и :class:`ForeignKey`, включая :ref:`рекурсивную "
+"<recursive-relationships>` и :ref:`\"ленивую\" <lazy-relationships>` связь."
 
 # a20b2447d01a493eb260a80cf11a1b00
 #: ../../ref/models/fields.txt:1086
@@ -1950,6 +2016,13 @@ msgid ""
 "the name of the join table using the :attr:`~ManyToManyField.db_table` "
 "option."
 msgstr ""
+"Django самостоятельно создаст промежуточную таблицу для хранения связи "
+"многое-ко-многим. По-умолчанию, название этой таблицы создается из названия "
+"поля и связанной модели. Так как некоторые базы данных не поддерживают "
+"длинные названия таблиц, оно будет обрезано до 64 символов и будет добавлен "
+"уникальный хэш. Это означает что вы можете увидеть такие названия таблиц "
+"``author_books_9cdf4``; это нормально. Вы можете указать название "
+"промежуточной таблицы используя параметр :attr:`~ManyToManyField.db_table`."
 
 # 0e254819a98c42cb8b969ecc2d13d268
 #: ../../ref/models/fields.txt:1101
@@ -1957,16 +2030,18 @@ msgid ""
 ":class:`ManyToManyField` accepts an extra set of arguments -- all optional "
 "-- that control how the relationship functions."
 msgstr ""
+":class:`ManyToManyField` принимает дополнительные аргументы -- все не "
+"обязательны -- которые определяют ка должна работать связь."
 
 # 331f6897a2a94821b03a0e671bc2fb0e
 #: ../../ref/models/fields.txt:1106
 msgid "Same as :attr:`ForeignKey.related_name`."
-msgstr ""
+msgstr "Аналогично :attr:`ForeignKey.related_name`."
 
 # 28a9ed874c5544099722db8de0cd60b4
 #: ../../ref/models/fields.txt:1110
 msgid "Same as :attr:`ForeignKey.limit_choices_to`."
-msgstr ""
+msgstr "Аналогично :attr:`ForeignKey.limit_choices_to`."
 
 # 386c14006cfe42008e9238ace5584383
 #: ../../ref/models/fields.txt:1112
@@ -1975,13 +2050,15 @@ msgid ""
 "custom intermediate table specified using the :attr:`~ManyToManyField."
 "through` parameter."
 msgstr ""
+"``limit_choices_to``не работает для ``ManyToManyField`` переопределенной "
+"через :attr:`~ManyToManyField.through` промежуточной моделью."
 
 # 5a21d4f19c8e4e88951c5900ddb81fa4
 #: ../../ref/models/fields.txt:1118
 msgid ""
 "Only used in the definition of ManyToManyFields on self. Consider the "
 "following model::"
-msgstr ""
+msgstr "Используется только при рекурсивной связи. Например, есть модель::"
 
 # f68ae1c4697d459c908fd5376ff44708
 #: ../../ref/models/fields.txt:1124
@@ -1992,6 +2069,10 @@ msgid ""
 "`ManyToManyField` is assumed to be symmetrical -- that is, if I am your "
 "friend, then you are my friend."
 msgstr ""
+"Загружая эту модель Django определяет, что она содержит :class:"
+"`ManyToManyField` указывающее на себя, и не добавляет атрибут ``person_set`` "
+"классу модели ``Person``. Вместо этого подразумевается, что :class:"
+"`ManyToManyField`симметрично  -- то есть, если я твой друг, то и ты мне друг."
 
 # 668954eee40f4282b0b11888c00c6afa
 #: ../../ref/models/fields.txt:1130
@@ -2001,6 +2082,10 @@ msgid ""
 "Django to add the descriptor for the reverse relationship, allowing :class:"
 "`ManyToManyField` relationships to be non-symmetrical."
 msgstr ""
+"Если вам не нужна симметричность для связи многое-ко-многим к ``self``, "
+"установите :attr:`~ManyToManyField.symmetrical` в ``False``. Это заставит "
+"Django добавить дескриптор для обратной связи позволяя :class:"
+"`ManyToManyField` быть не симетричным."
 
 # 9dc8fd04bc744848912b63d9b3632b1a
 #: ../../ref/models/fields.txt:1137
@@ -2010,6 +2095,10 @@ msgid ""
 "table, you can use the :attr:`~ManyToManyField.through` option to specify "
 "the Django model that represents the intermediate table that you want to use."
 msgstr ""
+"Django автоматически создает промежуточную таблицу для хранения связи. "
+"Однако, если вы хотите самостоятельно определить промежуточную таблицу, "
+"используйте параметр :attr:`~ManyToManyField.through` указав модель Django, "
+"которая будет хранить связь между моделями."
 
 # 0845754cb225453d86c8838da74774fc
 #: ../../ref/models/fields.txt:1143
@@ -2017,6 +2106,8 @@ msgid ""
 "The most common use for this option is when you want to associate :ref:"
 "`extra data with a many-to-many relationship <intermediary-manytomany>`."
 msgstr ""
+"Обычно используют для :ref:`хранения дополнительных данных <intermediary-"
+"manytomany>`."
 
 # 3fe1e19d86be4840a482c7d645842ccd
 #: ../../ref/models/fields.txt:1149
@@ -2025,11 +2116,14 @@ msgid ""
 "is not provided, Django will assume a default name based upon the names of "
 "the two tables being joined."
 msgstr ""
+"Имя промежуточной таблицы для хранения связей многое-ко-многим. Если не "
+"указан, Django самостоятельно создаст название по-умолчанию используя "
+"названия связанных таблиц."
 
 # 13a32ac5c4184542b884d2bb36eb12b1
 #: ../../ref/models/fields.txt:1156
 msgid "``OneToOneField``"
-msgstr ""
+msgstr "``OneToOneField``"
 
 # 3908cd10d0684bb4b068b1d79e67c23c
 #: ../../ref/models/fields.txt:1160
@@ -2038,6 +2132,8 @@ msgid ""
 "`ForeignKey` with :attr:`unique=True <Field.unique>`, but the \"reverse\" "
 "side of the relation will directly return a single object."
 msgstr ""
+"Связь один-к-одному. Работает так же, как и :class:`ForeignKey` с :attr:"
+"`unique=True <Field.unique>`, но \"обратная\" связь возвращает один объект."
 
 # a44a448d3b3c42b29b3e3ed60d91d96e
 #: ../../ref/models/fields.txt:1164
@@ -2047,6 +2143,9 @@ msgid ""
 "an implicit one-to-one relation from the child model to the parent model, "
 "for example."
 msgstr ""
+"В основном применяется как первичный ключ модели, которая \"расширяет\" "
+"другую модель. Например, :ref:`multi-table-inheritance` работает через "
+"неявное добавление связи один-к-одному от дочерней модели к родительской."
 
 # 3294d5281bf14f96887346600ffc2b6d
 #: ../../ref/models/fields.txt:1169
@@ -2056,6 +2155,9 @@ msgid ""
 "including all the options regarding :ref:`recursive <recursive-"
 "relationships>` and :ref:`lazy <lazy-relationships>` relationships."
 msgstr ""
+"Принимает обязательный позиционный аргумент: класс связанной модели. "
+"Работает так же как и :class:`ForeignKey`, включая :ref:`рекурсивную "
+"<recursive-relationships>` и :ref:`\"ленивую\" <lazy-relationships>` связь."
 
 # d6506538d1bc4daf9348d818541abf56
 #: ../../ref/models/fields.txt:1176
@@ -2063,6 +2165,8 @@ msgid ""
 "Additionally, ``OneToOneField`` accepts all of the extra arguments accepted "
 "by :class:`ForeignKey`, plus one extra argument:"
 msgstr ""
+"Так же ``OneToOneField`` принимает все дополнительные параметры принимаемые :"
+"class:`ForeignKey`, и еще один дополнительный:"
 
 # 0c2d3028dd88429d93ad8996b26e000f
 #: ../../ref/models/fields.txt:1181
@@ -2072,3 +2176,7 @@ msgid ""
 "parent class, rather than the extra ``OneToOneField`` which would normally "
 "be implicitly created by subclassing."
 msgstr ""
+"При ``True`` и связанной модели, которая наследуется от другой модели, "
+"определяет, что должна сохраняться связь на родительскую модель, а не поле "
+"``OneToOneField`` дочерней модели, которое используется для организации "
+"наследования моделей."
