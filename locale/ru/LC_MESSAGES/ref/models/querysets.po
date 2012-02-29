@@ -1,27 +1,27 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated, 2012.
+# Automatically generated <>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-15 15:13\n"
+"POT-Creation-Date: 2012-02-29 18:30\n"
+"PO-Revision-Date: 2012-02-29 18:32+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 # a4ddc79d3d4240fbaf014357723dd45c
 #: ../../ref/models/querysets.txt:3
 msgid "QuerySet API reference"
-msgstr ""
+msgstr "QuerySet API"
 
 # 93dca2c82f0c42dc9c97bbfb3a7a319a
 #: ../../ref/models/querysets.txt:7
@@ -31,6 +31,10 @@ msgid ""
 "`database query </topics/db/queries>` guides, so you'll probably want to "
 "read and understand those documents before reading this one."
 msgstr ""
+"Этот раздел описывает подробности ``QuerySet`` API. Изложенный материал "
+"опирается на материал, изложенный в разделах о :doc:`моделях </topics/db/"
+"models>` и :doc:`выполнении запросов </topics/db/queries>`, возможно вам "
+"следует прочитать их перед прочтением этого раздела."
 
 # f19e85b7e4874b628b1f97996cd04bd3
 #: ../../ref/models/querysets.txt:12
@@ -39,11 +43,14 @@ msgid ""
 "<queryset-model-example>` presented in the :doc:`database query guide </"
 "topics/db/queries>`."
 msgstr ""
+"В примерах будут использованы :ref:` примеры моделей web-блога <queryset-"
+"model-example>` представленные в разделе о :doc:`выполнении запросов </"
+"topics/db/queries>`."
 
 # ae28fbbf5a5c49d1ac0b40f966930aab
 #: ../../ref/models/querysets.txt:19
 msgid "When QuerySets are evaluated"
-msgstr ""
+msgstr "Когда вычисляется QuerySets"
 
 # 5dd5377703a945e4bcde2e5797e707bf
 #: ../../ref/models/querysets.txt:21
@@ -52,11 +59,14 @@ msgid ""
 "generally passed around without actually hitting the database. No database "
 "activity actually occurs until you do something to evaluate the queryset."
 msgstr ""
+"``QuerySet`` может быть создан, отфильтрован, ограничен и использован "
+"фактически без выполнения запросов к базе данных. База данных не будет "
+"затронута, пока вы не спровоцируете выполнение QuerySet."
 
 # ef3c207e9e724decb242d6fab6847a5c
 #: ../../ref/models/querysets.txt:25
 msgid "You can evaluate a ``QuerySet`` in the following ways:"
-msgstr ""
+msgstr "``QuerySet`` будет вычислен при таких действиях:"
 
 # e9bffa6ccc09496581d31d19a0e48c7c
 #: ../../ref/models/querysets.txt:27
@@ -65,41 +75,59 @@ msgid ""
 "query the first time you iterate over it. For example, this will print the "
 "headline of all entries in the database::"
 msgstr ""
+"**Итерация.** ``QuerySet`` -- это итератор, и при первом выполнении итерации "
+"будет произведен запрос к базе данных. Например, этот код выводи заголовки "
+"статей из базы данных::"
 
 # ea019d80409d44c082b23bd353e993ae
 #: ../../ref/models/querysets.txt:34
+#, fuzzy
 msgid ""
 "**Slicing.** As explained in :ref:`limiting-querysets`, a ``QuerySet`` can "
-"be sliced, using Python's array-slicing syntax. Usually slicing a "
-"``QuerySet`` returns another (unevaluated) ``QuerySet``, but Django will "
-"execute the database query if you use the \"step\" parameter of slice syntax."
+"be sliced, using Python's array-slicing syntax. Slicing an unevaluated "
+"``QuerySet`` usually returns another unevaluated ``QuerySet``, but Django "
+"will execute the database query if you use the \"step\" parameter of slice "
+"syntax, and will return a list. Slicing a ``QuerySet`` that has been "
+"evaluated (partially or fully) also returns a list."
 msgstr ""
+"**Ограничение выборки.** Как описано в :ref:`limiting-querysets`, выборка "
+"``QuerySet`` может быть ограничена, используя синтаксис срезов в Python. "
+"Срез ``QuerySet`` вернет новый(невыполненный) ``QuerySet``, но Django "
+"выполнит запрос, если будет указан шаг среза."
 
 # 99a34d84d70f4617ae3ff5339d628e09
-#: ../../ref/models/querysets.txt:40
+#: ../../ref/models/querysets.txt:41
 msgid ""
 "**Pickling/Caching.** See the following section for details of what is "
 "involved when `pickling QuerySets`_. The important thing for the purposes of "
 "this section is that the results are read from the database."
 msgstr ""
+"**Pickling/кэширование.** Смотрите соответствующий раздел о `pickling "
+"QuerySets`_. Основное замечание это то, что при этих операциях будет "
+"выполнен запрос к базе данных."
 
 # 872279b13af94aec98b1ca373cc0e01b
-#: ../../ref/models/querysets.txt:44
+#: ../../ref/models/querysets.txt:45
 msgid ""
 "**repr().** A ``QuerySet`` is evaluated when you call ``repr()`` on it. This "
 "is for convenience in the Python interactive interpreter, so you can "
 "immediately see your results when using the API interactively."
 msgstr ""
+"**repr().** ``QuerySet`` будет вычислен при вызове ``repr()``. Это сделано "
+"для удобства использования в консоли Python, вы можете сразу увидеть "
+"результат работая с ``QuerySet`` в консоли."
 
 # e36ca60edd4a42f8a1ae96714efea75f
-#: ../../ref/models/querysets.txt:48
+#: ../../ref/models/querysets.txt:49
 msgid ""
 "**len().** A ``QuerySet`` is evaluated when you call ``len()`` on it. This, "
 "as you might expect, returns the length of the result list."
 msgstr ""
+"**len().** ``QuerySet`` будет вычислен при выполнении ``len()`` над ним. Как "
+"вы и ожидаете будет возвращено количество объектов в результате выборки."
 
 # 4e7152e7b8a54da19602177972d20d79
-#: ../../ref/models/querysets.txt:51
+#: ../../ref/models/querysets.txt:52
 msgid ""
 "Note: *Don't* use ``len()`` on ``QuerySet``\\s if all you want to do is "
 "determine the number of records in the set. It's much more efficient to "
@@ -107,47 +135,65 @@ msgid ""
 "Django provides a ``count()`` method for precisely this reason. See ``count()"
 "`` below."
 msgstr ""
+"Заметка: *Не используйте* ``len()`` с ``QuerySet`` если вам нужно узнать "
+"только количество записей в выборке. Эффективнее использовать подсчет на "
+"уровне базы данных, используя оператор SQL ``SELECT COUNT(*)``, и Django "
+"предоставляет метод ``count()`` для этого. Смотрите ``count()`` ниже."
 
 # f2ee6259dad84d99beaf8af8932b6442
-#: ../../ref/models/querysets.txt:57
+#: ../../ref/models/querysets.txt:58
 msgid ""
 "**list().** Force evaluation of a ``QuerySet`` by calling ``list()`` on it. "
 "For example::"
 msgstr ""
+"**list().** ``QuerySet`` будет вычислен при использовании ``list()`` над "
+"ним. Например::"
 
 # 0528f3a870d4462abb105f30ba474788
-#: ../../ref/models/querysets.txt:62
+#: ../../ref/models/querysets.txt:63
 msgid ""
 "Be warned, though, that this could have a large memory overhead, because "
 "Django will load each element of the list into memory. In contrast, "
 "iterating over a ``QuerySet`` will take advantage of your database to load "
 "data and instantiate objects only as you need them."
 msgstr ""
+"Будьте осторожны, так как при этом может быть использовано большое "
+"количество памяти, т.к. Django загрузит каждый элемент списка в память. В "
+"отличии от итерации по ``QuerySet``, при которой будут получены данные из "
+"базы данных, но объекты будут созданы только при обращении к ним."
 
 # 3e3a9035098f45a3a55134c68417686e
-#: ../../ref/models/querysets.txt:67
+#: ../../ref/models/querysets.txt:68
 msgid ""
 "**bool().** Testing a ``QuerySet`` in a boolean context, such as using ``bool"
 "()``, ``or``, ``and`` or an ``if`` statement, will cause the query to be "
 "executed. If there is at least one result, the ``QuerySet`` is ``True``, "
 "otherwise ``False``. For example::"
 msgstr ""
+"**bool().** При вычислении булевого значения ``QuerySet``, например "
+"выполнении ``bool()``,  использовании с ``or``, ``and`` или ``if``. Если "
+"``QuerySet`` содержит хотя бы один элемент, результат будет ``True``, иначе "
+"-- ``False``. Например::"
 
 # 64e106da47db49398858e730d80ca97e
-#: ../../ref/models/querysets.txt:75
+#: ../../ref/models/querysets.txt:76
 msgid ""
 "Note: *Don't* use this if all you want to do is determine if at least one "
 "result exists, and don't need the actual objects. It's more efficient to "
 "use :meth:`exists() <QuerySet.exists>` (see below)."
 msgstr ""
+"Заметка: *не используйте* такой подходи, если необходимо всего лишь узнать "
+"содержит ли результат запроса хотя бы один объект, и вам не нужен сам "
+"результат. Эффективнее использовать метод :meth:`exists() <QuerySet.exists>` "
+"(смотрите ниже)."
 
 # 5b6bb2dcb2784b5cb020f75b74b30426
-#: ../../ref/models/querysets.txt:82
+#: ../../ref/models/querysets.txt:83
 msgid "Pickling QuerySets"
-msgstr ""
+msgstr "Сериализация QuerySets"
 
 # 0eed6a4a90c14a68ae30b17236be7a56
-#: ../../ref/models/querysets.txt:84
+#: ../../ref/models/querysets.txt:85
 msgid ""
 "If you :mod:`pickle` a ``QuerySet``, this will force all the results to be "
 "loaded into memory prior to pickling. Pickling is usually used as a "
@@ -157,77 +203,105 @@ msgid ""
 "you unpickle a ``QuerySet``, it contains the results at the moment it was "
 "pickled, rather than the results that are currently in the database."
 msgstr ""
+"Используя :mod:`pickle` для ``QuerySet``, будет выполнен запрос к базе "
+"данных что бы загрузить данные в память для сериализации. Сериализация "
+"обычно используется перед кешированием ``QuerySet`` или загрузкой из кеша, "
+"необходимо что бы результат был доступен для использования сразу после "
+"загрузки (чтение с базы данных занимает некоторое время, что свело бы всю "
+"пользу кеширования к нулю). Это означает что после востановления "
+"сериализованного ``QuerySet``, он будет содержать результат на момент "
+"сериализации, а не тот, который хранится в базе данных на текущий момент."
 
 # b306d47b2f0c4e4a89b8cc7e5977f198
-#: ../../ref/models/querysets.txt:92
+#: ../../ref/models/querysets.txt:93
 msgid ""
 "If you only want to pickle the necessary information to recreate the "
 "``QuerySet`` from the database at a later time, pickle the ``query`` "
 "attribute of the ``QuerySet``. You can then recreate the original "
 "``QuerySet`` (without any results loaded) using some code like this::"
 msgstr ""
+"Если вам необходимо сохранить запрос выполняемый ``QuerySet``, что бы "
+"получить данные позже, сериализируйте атрибут ``query`` ``QuerySet``. Позже "
+"вы можете воссоздать первоначальный ``QuerySet`` (без загрузки результата) "
+"используя такой код::"
 
 # a2e2110a529c4eaab208a5965f96bd47
-#: ../../ref/models/querysets.txt:102
+#: ../../ref/models/querysets.txt:103
 msgid ""
 "The ``query`` attribute is an opaque object. It represents the internals of "
 "the query construction and is not part of the public API. However, it is "
 "safe (and fully supported) to pickle and unpickle the attribute's contents "
 "as described here."
 msgstr ""
+"Атрибут ``query`` не является частью публичного API, и является частью "
+"внутреннего механизма создания запросов. Однако, поддерживает использование "
+"``pickle`` и ``unpickle`` как показано в примере выше."
 
 # 5138d41bc219471096f24197c2187b31
-#: ../../ref/models/querysets.txt:109
+#: ../../ref/models/querysets.txt:110
 msgid ""
 "Pickles of QuerySets are only valid for the version of Django that was used "
 "to generate them. If you generate a pickle using Django version N, there is "
 "no guarantee that pickle will be readable with Django version N+1. Pickles "
 "should not be used as part of a long-term archival strategy."
 msgstr ""
+"Сериализация QuerySets возможна только для версии Django, которая была "
+"использована при сохранении объекта. При сериализации объекта в версии "
+"Django N, нет гарантии что, его можно будет восстановить в версии Django N"
+"+1. Сериализация не должна быть использована для долговременного хранения "
+"данных."
 
 # 8908ae5fd52d421ca02f08f6bd313113
-#: ../../ref/models/querysets.txt:118
+#: ../../ref/models/querysets.txt:119
 msgid "QuerySet API"
-msgstr ""
+msgstr "QuerySet API"
 
 # e5857f02298d4e58bcdf7f6a439ff2c6
-#: ../../ref/models/querysets.txt:120
+#: ../../ref/models/querysets.txt:121
 msgid ""
 "Though you usually won't create one manually — you'll go through a :class:"
 "`~django.db.models.Manager` — here's the formal declaration of a "
 "``QuerySet``:"
 msgstr ""
+"Хоть вам и не нужно создавать экземпляр ``QuerySet`` самостоятельно — он "
+"создается через :class:`~django.db.models.Manager` — вот как это происходит:"
 
 # 53e27b9c3de54a2fbd32c666d6c04e4d
-#: ../../ref/models/querysets.txt:126
+#: ../../ref/models/querysets.txt:127
 msgid ""
 "Usually when you'll interact with a ``QuerySet`` you'll use it by :ref:"
 "`chaining filters <chaining-filters>`. To make this work, most ``QuerySet`` "
 "methods return new querysets. These methods are covered in detail later in "
 "this section."
 msgstr ""
+"Обычно работа с ``QuerySet`` состоит в использовании :ref:`цепочек фильтров "
+"<chaining-filters>`. Для этого большинство методов ``QuerySet`` возвращает "
+"новый \"queryset\". Эти методы описаны далее."
 
 # 018b3bc308034a708b2a93706cdd4981
-#: ../../ref/models/querysets.txt:131
+#: ../../ref/models/querysets.txt:132
 msgid ""
 "The ``QuerySet`` class has two public attributes you can use for "
 "introspection:"
-msgstr ""
+msgstr "Класс ``QuerySet`` имеет два публичных атрибута:"
 
 # 1158362f2a7041c090f146c7b5ce2225
-#: ../../ref/models/querysets.txt:136
+#: ../../ref/models/querysets.txt:137
 msgid ""
 "``True`` if the ``QuerySet`` is ordered — i.e. has an :meth:`order_by()` "
 "clause or a default ordering on the model. ``False`` otherwise."
 msgstr ""
+"``True`` если ``QuerySet`` использует сортировку — то есть использован "
+"метод :meth:`order_by()` или модель содержит сортировку по-умолчанию. Иначе "
+"``False``."
 
 # d6fda43d8834411c9ce1bc9945085409
-#: ../../ref/models/querysets.txt:142
+#: ../../ref/models/querysets.txt:143
 msgid "The database that will be used if this query is executed now."
-msgstr ""
+msgstr "База данных, которая будет использована для выполнения запроса."
 
 # 8395b9df63654ec483d35040b7b08ab0
-#: ../../ref/models/querysets.txt:146
+#: ../../ref/models/querysets.txt:147
 msgid ""
 "The ``query`` parameter to :class:`QuerySet` exists so that specialized "
 "query subclasses such as :class:`~django.contrib.gis.db.models.GeoQuerySet` "
@@ -235,92 +309,116 @@ msgid ""
 "opaque representation of that query state and is not part of a public API. "
 "To put it simply: if you need to ask, you don't need to use it."
 msgstr ""
+"Так же присутствует атрибут ``query`` класса :class:`QuerySet`. Подклассы :"
+"class:`QuerySet`, такие как :class:`~django.contrib.gis.db.models."
+"GeoQuerySet` могут переопределить структуру запроса используя этот аргумент. "
+"Значение атрибута является скрытым представлением состояния запроса и не "
+"является частью публичного API. Проще говоря, если вам нужно рассказывать о "
+"нем, значит вам не стоит его использовать."
 
 # cc754084a78646b4aed2e7a7dac0209e
-#: ../../ref/models/querysets.txt:156
+#: ../../ref/models/querysets.txt:157
 msgid "Methods that return new QuerySets"
-msgstr ""
+msgstr "Методы, которые возвращают новый QuerySets"
 
 # 8da92a93adba4090a21bda07d305cf9e
-#: ../../ref/models/querysets.txt:158
+#: ../../ref/models/querysets.txt:159
 msgid ""
 "Django provides a range of ``QuerySet`` refinement methods that modify "
 "either the types of results returned by the ``QuerySet`` or the way its SQL "
 "query is executed."
 msgstr ""
+"Django предоставляет набор методов ``QuerySet``, которые изменяют "
+"возвращаемый результат или выполнение SQL запроса."
 
 # 19a92a74d013406e9d778a85e53da6a8
-#: ../../ref/models/querysets.txt:163
+#: ../../ref/models/querysets.txt:164
 msgid "filter"
-msgstr ""
+msgstr "filter"
 
 # 19caf98180104d82850aba702557d77d
-#: ../../ref/models/querysets.txt:167
+#: ../../ref/models/querysets.txt:168
 msgid ""
 "Returns a new ``QuerySet`` containing objects that match the given lookup "
 "parameters."
 msgstr ""
+"Возвращает новый ``QuerySet`` содержащий объекты отвечающие параметрам "
+"фильтрации."
 
 # 3c339c8df1204cfb9765ef08fa9589d9
-#: ../../ref/models/querysets.txt:170
+#: ../../ref/models/querysets.txt:171
 msgid ""
 "The lookup parameters (``**kwargs``) should be in the format described in "
 "`Field lookups`_ below. Multiple parameters are joined via ``AND`` in the "
 "underlying SQL statement."
 msgstr ""
+"Параметры фильтрации (``**kwargs``) должны отвечать формату описанному в :"
+"ref:`соответствующем разделе <field-lookups>`. Несколько параметров "
+"объединяются оператором SQL ``AND``."
 
 # 28aa203a3e1a435c96eb81c24c2e689c
-#: ../../ref/models/querysets.txt:175
+#: ../../ref/models/querysets.txt:176
 msgid "exclude"
-msgstr ""
+msgstr "exclude"
 
 # 5f4da46a6bdc421a8b7e893cd9da1d9b
-#: ../../ref/models/querysets.txt:179
+#: ../../ref/models/querysets.txt:180
 msgid ""
 "Returns a new ``QuerySet`` containing objects that do *not* match the given "
 "lookup parameters."
 msgstr ""
+"Возвращает новый ``QuerySet`` содержащий объекты *не* отвечающие параметрам "
+"фильтрации."
 
 # 6b1617a52446469eac978adbd18f4ead
-#: ../../ref/models/querysets.txt:182
+#: ../../ref/models/querysets.txt:183
 msgid ""
 "The lookup parameters (``**kwargs``) should be in the format described in "
 "`Field lookups`_ below. Multiple parameters are joined via ``AND`` in the "
 "underlying SQL statement, and the whole thing is enclosed in a ``NOT()``."
 msgstr ""
+"Параметры фильтрации (``**kwargs``) должны отвечать формату описанному в :"
+"ref:`соответствующем разделе <field-lookups>`. Несколько параметров "
+"объединяются оператором SQL ``AND`` и все это замыкается оператором ``NOT()"
+"``."
 
 # 4cd38f0d4a4e4ed99da118a46297684f
-#: ../../ref/models/querysets.txt:186
+#: ../../ref/models/querysets.txt:187
 msgid ""
 "This example excludes all entries whose ``pub_date`` is later than 2005-1-3 "
 "AND whose ``headline`` is \"Hello\"::"
 msgstr ""
+"Этот пример исключает все записи с ``pub_date`` раньше 3.01.2005 И с "
+"``headline`` равным \"Hello\"::"
 
 # 89b7076d784e406bb11a99a9952fe728
 # 0ad334998d0a41a7bb92d33376bc41eb
-#: ../../ref/models/querysets.txt:191 ../../ref/models/querysets.txt:201
+#: ../../ref/models/querysets.txt:192 ../../ref/models/querysets.txt:202
 msgid "In SQL terms, that evaluates to::"
-msgstr ""
+msgstr "Это эквивалентно запросу SQL::"
 
 # 48b1915862b34bb89734a35d07fc6dc9
-#: ../../ref/models/querysets.txt:196
+#: ../../ref/models/querysets.txt:197
 msgid ""
 "This example excludes all entries whose ``pub_date`` is later than 2005-1-3 "
 "OR whose headline is \"Hello\"::"
 msgstr ""
+"Этот пример исключает все записи с ``pub_date``  раньше 3.01.2005 ИЛИ с "
+"``headline`` равным \"Hello\"::"
 
 # fef8b484158d43c09d30be0e0d5c42dd
-#: ../../ref/models/querysets.txt:207
+#: ../../ref/models/querysets.txt:208
 msgid "Note the second example is more restrictive."
 msgstr ""
+"Обратите внимание на второй пример, который больше ограничивает выборку."
 
 # a2293c04f4024a0a9cb06fd346095b62
-#: ../../ref/models/querysets.txt:210
+#: ../../ref/models/querysets.txt:211
 msgid "annotate"
-msgstr ""
+msgstr "annotate"
 
 # 864b816187e342588c274fee7e4b1a21
-#: ../../ref/models/querysets.txt:214
+#: ../../ref/models/querysets.txt:215
 msgid ""
 "Annotates each object in the ``QuerySet`` with the provided list of "
 "aggregate values (averages, sums, etc) that have been computed over the "
@@ -328,59 +426,79 @@ msgid ""
 "to ``annotate()`` is an annotation that will be added to each object in the "
 "``QuerySet`` that is returned."
 msgstr ""
+"\"Аннотирует\" каждый объект в ``QuerySet`` агрегированным значением "
+"(среднее, суииа и др.), которое будет вычислено из данных связанных "
+"объектов, которые связанны с объектами из``QuerySet``. Аргументы ``annotate()"
+"`` это \"аннотация\", которая будет добавлена для каждого объекта "
+"возвращаемого ``QuerySet``."
 
 # 26a461f5b7274dc4a735bbb9fce4ba5a
 # 4fe4f86b68b6440db1d38c51360ca1b7
-#: ../../ref/models/querysets.txt:220 ../../ref/models/querysets.txt:1459
+#: ../../ref/models/querysets.txt:221 ../../ref/models/querysets.txt:1472
 msgid ""
 "The aggregation functions that are provided by Django are described in "
 "`Aggregation Functions`_ below."
 msgstr ""
+"Функции агрегации описаны в :ref:`соответствующем разделе <aggregation-"
+"functions>` ниже."
 
 # 1294149d7e0f4999b399e546ea71cba2
-#: ../../ref/models/querysets.txt:223
+#: ../../ref/models/querysets.txt:224
 msgid ""
 "Annotations specified using keyword arguments will use the keyword as the "
 "alias for the annotation. Anonymous arguments will have an alias generated "
 "for them based upon the name of the aggregate function and the model field "
 "that is being aggregated."
 msgstr ""
+"Аннотация определенная именованными аргументами будет использовать имя "
+"аргумента как название аннотации. Для позиционного аргумента будет "
+"использовано имя созданное с названия функции агрегации и используемого поля "
+"модели."
 
 # bc4c877ba3e64badbbd94b6f46f45600
-#: ../../ref/models/querysets.txt:228
+#: ../../ref/models/querysets.txt:229
 msgid ""
 "For example, if you were manipulating a list of blogs, you may want to "
 "determine how many entries have been made in each blog::"
 msgstr ""
+"Например, получая список блогов, вы захотите получить так же и количество "
+"записей в каждом блоге::"
 
 # ccaaae1b195c44628f3315859b9bb718
-#: ../../ref/models/querysets.txt:239
+#: ../../ref/models/querysets.txt:240
 msgid ""
 "The ``Blog`` model doesn't define an ``entry__count`` attribute by itself, "
 "but by using a keyword argument to specify the aggregate function, you can "
 "control the name of the annotation::"
 msgstr ""
+"Модель ``Blog`` не определяет атрибут ``entry__count``, используя "
+"именованный аргументы вы можете переопределить название этого атрибута::"
 
 # 06fa46ba1eb442a985458a09dd622220
 # ab78c4ab8814417ba4e5cfdfb7472acc
-#: ../../ref/models/querysets.txt:248 ../../ref/models/querysets.txt:1479
+#: ../../ref/models/querysets.txt:249 ../../ref/models/querysets.txt:1492
 msgid ""
 "For an in-depth discussion of aggregation, see :doc:`the topic guide on "
 "Aggregation </topics/db/aggregation>`."
 msgstr ""
+"Для углубленного изучения агрегации смотрите :doc:`раздел про агрегацию </"
+"topics/db/aggregation>`."
 
 # 8389c0aa80de40d7823b3188341d69d1
-#: ../../ref/models/querysets.txt:252
+#: ../../ref/models/querysets.txt:253
 msgid "order_by"
-msgstr ""
+msgstr "order_by"
 
 # 4ce6382747e147e6b4c2c894014e9fdd
-#: ../../ref/models/querysets.txt:256
+#: ../../ref/models/querysets.txt:257
 msgid ""
 "By default, results returned by a ``QuerySet`` are ordered by the ordering "
 "tuple given by the ``ordering`` option in the model's ``Meta``. You can "
 "override this on a per-``QuerySet`` basis by using the ``order_by`` method."
 msgstr ""
+"По-умолчанию, результат возвращаемый ``QuerySet``, отсортирован по полям "
+"указанным в аргументе ``ordering`` класса ``Meta`` модели. Вы можете "
+"переопределить сортировку используя метод ``order_by``."
 
 # 9d69c8c34bb94cfb9f72158f427d9875
 # 281b9774fa0d46529ee6c3c477956ff0
@@ -407,40 +525,46 @@ msgstr ""
 # 5c2e58ba392c495cb905b93975f4f58f
 # b2988e279ef34f8a8639ab324df8bc0e
 # e033341134a04405a431b26b35ed31c1
-#: ../../ref/models/querysets.txt:260 ../../ref/models/querysets.txt:442
-#: ../../ref/models/querysets.txt:890 ../../ref/models/querysets.txt:959
-#: ../../ref/models/querysets.txt:1017 ../../ref/models/querysets.txt:1372
-#: ../../ref/models/querysets.txt:1398 ../../ref/models/querysets.txt:1655
-#: ../../ref/models/querysets.txt:1680 ../../ref/models/querysets.txt:1705
-#: ../../ref/models/querysets.txt:1726 ../../ref/models/querysets.txt:1799
-#: ../../ref/models/querysets.txt:1835 ../../ref/models/querysets.txt:1853
-#: ../../ref/models/querysets.txt:1874 ../../ref/models/querysets.txt:1895
-#: ../../ref/models/querysets.txt:1916 ../../ref/models/querysets.txt:1936
-#: ../../ref/models/querysets.txt:1954 ../../ref/models/querysets.txt:1971
-#: ../../ref/models/querysets.txt:1994 ../../ref/models/querysets.txt:2020
-#: ../../ref/models/querysets.txt:2036 ../../ref/models/querysets.txt:2063
-#: ../../ref/models/querysets.txt:2087
+#: ../../ref/models/querysets.txt:261 ../../ref/models/querysets.txt:449
+#: ../../ref/models/querysets.txt:900 ../../ref/models/querysets.txt:969
+#: ../../ref/models/querysets.txt:1027 ../../ref/models/querysets.txt:1382
+#: ../../ref/models/querysets.txt:1408 ../../ref/models/querysets.txt:1668
+#: ../../ref/models/querysets.txt:1693 ../../ref/models/querysets.txt:1718
+#: ../../ref/models/querysets.txt:1739 ../../ref/models/querysets.txt:1812
+#: ../../ref/models/querysets.txt:1848 ../../ref/models/querysets.txt:1866
+#: ../../ref/models/querysets.txt:1887 ../../ref/models/querysets.txt:1908
+#: ../../ref/models/querysets.txt:1929 ../../ref/models/querysets.txt:1949
+#: ../../ref/models/querysets.txt:1967 ../../ref/models/querysets.txt:1984
+#: ../../ref/models/querysets.txt:2007 ../../ref/models/querysets.txt:2033
+#: ../../ref/models/querysets.txt:2049 ../../ref/models/querysets.txt:2076
+#: ../../ref/models/querysets.txt:2100
 msgid "Example::"
-msgstr ""
+msgstr "Например::"
 
 # 388c881a8f9746d4ae76faba940c86d3
-#: ../../ref/models/querysets.txt:264
+#: ../../ref/models/querysets.txt:265
 msgid ""
 "The result above will be ordered by ``pub_date`` descending, then by "
 "``headline`` ascending. The negative sign in front of ``\"-pub_date\"`` "
 "indicates *descending* order. Ascending order is implied. To order randomly, "
 "use ``\"?\"``, like so::"
 msgstr ""
+"Результат выше будет отсортирован в обратном порядке по полю ``pub_date``, "
+"далее по полю ``headline``. Знак \"минус\" в ``\"-pub_date\"`` указывает на "
+"\"нисходящую\" сортировку. Сортировка по возрастанию подразумевается по-"
+"умолчанию. Что бы отсортировать случайно используйте ``\"?\"``, например::"
 
 # c941f625bb1945f18e21bfb4770ddf97
-#: ../../ref/models/querysets.txt:271
+#: ../../ref/models/querysets.txt:272
 msgid ""
 "Note: ``order_by('?')`` queries may be expensive and slow, depending on the "
 "database backend you're using."
 msgstr ""
+"Заметка: запрос с ``order_by('?')`` может быть медленным и сильно нагружать "
+"базу данных, зависит от типа базы данных, которую вы используете."
 
 # 0feb041843864550815406170d7b62c2
-#: ../../ref/models/querysets.txt:274
+#: ../../ref/models/querysets.txt:275
 msgid ""
 "To order by a field in a different model, use the same syntax as when you "
 "are querying across model relations. That is, the name of the field, "
@@ -448,36 +572,47 @@ msgid ""
 "in the new model, and so on for as many models as you want to join. For "
 "example::"
 msgstr ""
+"Для сортировки по полю из другой модели, используйте синтаксис аналогичный "
+"тому, который используется при фильтрации по полям связанной модели. То "
+"есть, название поля, далее два нижних подчеркивания (``__``), и имя поля в "
+"новой модели, и так далее. Например::"
 
 # ca5d43c386634e059a7d177dc4a37ca4
-#: ../../ref/models/querysets.txt:281
+#: ../../ref/models/querysets.txt:282
 msgid ""
 "If you try to order by a field that is a relation to another model, Django "
 "will use the default ordering on the related model (or order by the related "
 "model's primary key if there is no :attr:`Meta.ordering <django.db.models."
 "Options.ordering>` specified. For example::"
 msgstr ""
+"Если вы пытаетесь отсортировать по полю, которое является связью на другую "
+"модель, Django будет использовать сортировку по-умолчанию связанной модели "
+"(или же сортировку по первичному ключу связанной модели если :attr:`Meta."
+"ordering <django.db.models.Options.ordering>` не указан). Например::"
 
 # 1e58dbcf06c84eeba4053165e5509788
-#: ../../ref/models/querysets.txt:288
+#: ../../ref/models/querysets.txt:289
 msgid "...is identical to::"
-msgstr ""
+msgstr "...идентично::"
 
 # de174d006189426bb977b1724a79c2b4
-#: ../../ref/models/querysets.txt:292
+#: ../../ref/models/querysets.txt:293
 msgid "...since the ``Blog`` model has no default ordering specified."
-msgstr ""
+msgstr "...т.к. модель ``Blog`` не содержит сортировки по-умолчанию."
 
 # 0b0c59c51c0841ac9e6768b430ecd9ee
-#: ../../ref/models/querysets.txt:294
+#: ../../ref/models/querysets.txt:295
 msgid ""
 "Be cautious when ordering by fields in related models if you are also using :"
 "meth:`distinct()`. See the note in :meth:`distinct` for an explanation of "
 "how related model ordering can change the expected results."
 msgstr ""
+"Будьте осторожны используя по полю из связанной модели и метод :meth:"
+"`distinct()`. Смотрите описание метода :meth:`distinct` для информации как "
+"сортировка по связанной модели может повлиять на ожидаемый результат."
 
 # e8c07900458743418c31612eda81153e
-#: ../../ref/models/querysets.txt:298
+#: ../../ref/models/querysets.txt:299
 msgid ""
 "It is permissible to specify a multi-valued field to order the results by "
 "(for example, a :class:`~django.db.models.ManyToManyField` field). Normally "
@@ -488,50 +623,68 @@ msgid ""
 "want to do. Use ordering on multi-valued fields with care and make sure the "
 "results are what you expect."
 msgstr ""
+"Для сортировки можно указать поле с множеством значений (например, :class:"
+"`~django.db.models.ManyToManyField` field). Как правильно, это не очень "
+"разумно и является функционалом для продвинутых пользователей. Однако, если "
+"вы уверены что фильтры \"queryset\" или существующие данные подразумеваю, "
+"что для каждого объекта существует только одно значение, используемое для "
+"сортировки -- вполне вероятно что в результате вы получите то, что и ожидали "
+"получить. Используйте такую сортировку с осторожность и убедитесь что "
+"результат отвечает вашим требованиям."
 
 # dcef496eed3240d8b7da2df94461eddb
-#: ../../ref/models/querysets.txt:307
+#: ../../ref/models/querysets.txt:308
 msgid ""
 "There's no way to specify whether ordering should be case sensitive. With "
 "respect to case-sensitivity, Django will order results however your database "
 "backend normally orders them."
 msgstr ""
+"Нет способа указать должна ли сортировка учитывать регистр. По этому Django "
+"возвращает результат в таком порядке, в каком его вернула используемая база "
+"данных."
 
 # d072c96416f2478aa9c3ef185dc17d86
-#: ../../ref/models/querysets.txt:311
+#: ../../ref/models/querysets.txt:312
 msgid ""
 "If you don't want any ordering to be applied to a query, not even the "
 "default ordering, call :meth:`order_by()` with no parameters."
 msgstr ""
+"Если вы не хотите использовать сортировку, даже указанную по-умолчанию, "
+"выполните метод :meth:`order_by()` без аргументов."
 
 # 4272697bbb1f4191ac30eb51e396b2b1
-#: ../../ref/models/querysets.txt:314
+#: ../../ref/models/querysets.txt:315
 msgid ""
 "You can tell if a query is ordered or not by checking the :attr:`.QuerySet."
 "ordered` attribute, which will be ``True`` if the ``QuerySet`` has been "
 "ordered in any way."
 msgstr ""
+"Вы можете определить используется сортировка или нет проверив атрибут :attr:"
+"`.QuerySet.ordered`, который будет равен ``True``, если сортировка была "
+"применена для ``QuerySet`` каким-либо образом."
 
 # 7d4492b3420a46a3ba839688362008f5
-#: ../../ref/models/querysets.txt:319
+#: ../../ref/models/querysets.txt:320
 msgid "reverse"
-msgstr ""
+msgstr "reverse"
 
 # db69345ef8f94265988237ef355b596c
-#: ../../ref/models/querysets.txt:323
+#: ../../ref/models/querysets.txt:324
 msgid ""
 "Use the ``reverse()`` method to reverse the order in which a queryset's "
 "elements are returned. Calling ``reverse()`` a second time restores the "
 "ordering back to the normal direction."
 msgstr ""
+"Используйте метод ``reverse()`` что бы изменить порядок сортировки на "
+"обратный. Вызов ``reverse()`` повторно восстановит изначальную сортировку."
 
 # 62d776aa895846de9f16c2f531915fe5
-#: ../../ref/models/querysets.txt:327
+#: ../../ref/models/querysets.txt:328
 msgid "To retrieve the ''last'' five items in a queryset, you could do this::"
-msgstr ""
+msgstr "Что бы получить \"последние\" пять объектов выполните::"
 
 # 55474eae90b641b8937651614d331aa1
-#: ../../ref/models/querysets.txt:331
+#: ../../ref/models/querysets.txt:332
 msgid ""
 "Note that this is not quite the same as slicing from the end of a sequence "
 "in Python. The above example will return the last item first, then the "
@@ -540,9 +693,14 @@ msgid ""
 "mode of access (slicing from the end), because it's not possible to do it "
 "efficiently in SQL."
 msgstr ""
+"Обратите внимание, что это не совсем аналог среза Python с конца. Этот "
+"пример вернет сначала последний элемент, потом предпоследний и так далее. "
+"Используя список Python и сделав срез ``seq[-5:]``, мы увидим пятый элемент "
+"с конца первым. Django не поддерживает подобное (срез с конца), т.к. нет "
+"способа интерпретировать это в эфективный SQL."
 
 # 1a84791f3be9472b8ccb5dbf8582be18
-#: ../../ref/models/querysets.txt:338
+#: ../../ref/models/querysets.txt:339
 msgid ""
 "Also, note that ``reverse()`` should generally only be called on a "
 "``QuerySet`` which has a defined ordering (e.g., when querying against a "
@@ -551,21 +709,27 @@ msgid ""
 "`` on it has no real effect (the ordering was undefined prior to calling "
 "``reverse()``, and will remain undefined afterward)."
 msgstr ""
+"Метод ``reverse()`` должен быть вызван для ``QuerySet`` с определенной "
+"сортировкой (например, при запросе модели с сортировкой по-умолчанию или "
+"после использования метода :meth:`order_by()`). Если сортировка не "
+"определена , вызов ``reverse()`` не будет иметь никакого эффекта."
 
 # 57e6d48e5bd743858191f3211a9d3569
-#: ../../ref/models/querysets.txt:346
+#: ../../ref/models/querysets.txt:347
 msgid "distinct"
-msgstr ""
+msgstr "distinct"
 
 # f780c96158b04c1080f955a673f86a88
-#: ../../ref/models/querysets.txt:350
+#: ../../ref/models/querysets.txt:351
 msgid ""
 "Returns a new ``QuerySet`` that uses ``SELECT DISTINCT`` in its SQL query. "
 "This eliminates duplicate rows from the query results."
 msgstr ""
+"Возвращает ``QuerySet`` с добавленным ``SELECT DISTINCT`` в SQL запрос.  "
+"Повторяющиеся записи будут исключены из результатов запроса."
 
 # 72d0db17e03a42fcae1ab2c942ccd8d7
-#: ../../ref/models/querysets.txt:353
+#: ../../ref/models/querysets.txt:354
 msgid ""
 "By default, a ``QuerySet`` will not eliminate duplicate rows. In practice, "
 "this is rarely a problem, because simple queries such as ``Blog.objects.all()"
@@ -573,9 +737,14 @@ msgid ""
 "your query spans multiple tables, it's possible to get duplicate results "
 "when a ``QuerySet`` is evaluated. That's when you'd use ``distinct()``."
 msgstr ""
+"По-умолчанию, ``QuerySet`` не исключает повторяющиеся записи. На практике, "
+"это редко является проблемой, простые запросы вроде ``Blog.objects.all()`` "
+"не создают повторяющиеся записи. Однако, если запрос использует несколько "
+"таблиц, возможно что ``QuerySet`` вернет повторяющиеся записи. И здесь вам "
+"пригодится ``distinct()``."
 
 # 85c89befa0194d3a905a5addc20971b9
-#: ../../ref/models/querysets.txt:360
+#: ../../ref/models/querysets.txt:361
 msgid ""
 "Any fields used in an :meth:`order_by` call are included in the SQL "
 "``SELECT`` columns. This can sometimes lead to unexpected results when used "
@@ -585,87 +754,120 @@ msgid ""
 "don't appear in the returned results (they are only there to support "
 "ordering), it sometimes looks like non-distinct results are being returned."
 msgstr ""
+"Любое поле используемое в :meth:`order_by` будет добавлено в список "
+"выбираемых колонок в части ``SELECT`` SQL запроса. Это может привести к "
+"непредвиденным результатам если вы используете ``distinct()``. При "
+"сортировке по колонке из связанной таблицы, эти колонки будет включены в "
+"список выбираемых колонок, что может сделать одинаковые строки результата "
+"уникальными. Т.к. эти дополнительные колонки не будет включены в результат"
+"(они используются только для определения сортировки), будет выглядеть так, "
+"вроде бы ``distinct()`` возвращает не уникальные элементы результатов."
 
 # 27904ac42d8f4813ba4c11520f61cf48
-#: ../../ref/models/querysets.txt:368
+#: ../../ref/models/querysets.txt:369
 msgid ""
 "Similarly, if you use a :meth:`values()` query to restrict the columns "
 "selected, the columns used in any :meth:`order_by()` (or default model "
 "ordering) will still be involved and may affect uniqueness of the results."
 msgstr ""
+"Так же, если вы используете метод :meth:`values()` что бы ограничить "
+"выбираемые поля, поля из :meth:`order_by()` (или сортировки по-умолчанию "
+"модели) так же будут включены и могут повлиять на уникальность результатов."
 
 # b6960fd26547439c90f298d3376f6055
-#: ../../ref/models/querysets.txt:372
+#: ../../ref/models/querysets.txt:373
 msgid ""
 "The moral here is that if you are using ``distinct()`` be careful about "
 "ordering by related models. Similarly, when using ``distinct()`` and :meth:"
 "`values()` together, be careful when ordering by fields not in the :meth:"
 "`values()` call."
 msgstr ""
+"Мораль всего этого -- будьте осторожны при использовании ``distinct()`` и "
+"сортировки по полям из связанных моделей. Так же, при использовании "
+"``distinct()`` и :meth:`values()` вместе, будьте осторожны сортируя по полям "
+"не включенным в :meth:`values()`."
 
-# fc5196ce8570450aa80b165a0c6b0d75
-#: ../../ref/models/querysets.txt:379
+# 2c62b3d966954c679352032d48778072
+#: ../../ref/models/querysets.txt:380
 msgid ""
-"The possibility to pass positional arguments (``*fields``) is new in Django "
-"1.4. They are names of fields to which the ``DISTINCT`` should be limited. "
-"This translates to a ``SELECT DISTINCT ON`` SQL query. A ``DISTINCT ON`` "
-"query eliminates duplicate rows not by comparing all fields in a row, but by "
-"comparing only the given fields."
+"As of Django 1.4, you can pass positional arguments (``*fields``) in order "
+"to specify the names of fields to which the ``DISTINCT`` should apply. This "
+"translates to a ``SELECT DISTINCT ON`` SQL query."
+msgstr ""
+
+# 34765e81d5274c3f8b717f2d80f1ffbb
+#: ../../ref/models/querysets.txt:384
+msgid ""
+"Here's the difference. For a normal ``distinct()`` call, the database "
+"compares *each* field in each row when determining which rows are distinct. "
+"For a ``distinct()`` call with specified field names, the database will only "
+"compare the specified field names."
 msgstr ""
 
 # a39ab3008bfc4a6b8235716f206b45cd
-#: ../../ref/models/querysets.txt:386
+#: ../../ref/models/querysets.txt:390
+msgid "This ability to specify field names is only available in PostgreSQL."
+msgstr "Возможность указывать поля доступна только в PostgreSQL."
+
+# 9eb9408232844162b66ce5cef3025bc0
+#: ../../ref/models/querysets.txt:393
 msgid ""
-"Note that the ability to specify field names is only available in PostgreSQL."
+"When you specify field names, you *must* provide an ``order_by()`` in the "
+"QuerySet, and the fields in ``order_by()`` must start with the fields in "
+"``distinct()``, in the same order."
 msgstr ""
 
-# 7eaed97a9668455fa2c1b5e9ee5bf6ed
-#: ../../ref/models/querysets.txt:389
+# 468448fbce544d7c9d8fbea48c3d1025
+#: ../../ref/models/querysets.txt:397
 msgid ""
-"When using the ``DISTINCT ON`` functionality it is required that the columns "
-"given to :meth:`distinct` match the first :meth:`order_by` columns. For "
-"example ``SELECT DISTINCT ON (a)`` gives you the first row for each value in "
-"column ``a``. If you don't specify an order, then you'll get some arbitrary "
-"row."
+"For example, ``SELECT DISTINCT ON (a)`` gives you the first row for each "
+"value in column ``a``. If you don't specify an order, you'll get some "
+"arbitrary row."
 msgstr ""
 
 # 12ffb7971cd54ddb86243f6be88eba97
 # a1594fb3f3764aa29bb1251fe9792b80
 # 23387ea901374de5b1c31ae9b2f22556
 # b327b9678e274966b4d91cac79c5d6e1
-#: ../../ref/models/querysets.txt:394 ../../ref/models/querysets.txt:573
-#: ../../ref/models/querysets.txt:602 ../../ref/models/querysets.txt:1629
+#: ../../ref/models/querysets.txt:401 ../../ref/models/querysets.txt:580
+#: ../../ref/models/querysets.txt:609 ../../ref/models/querysets.txt:1642
 msgid "Examples::"
-msgstr ""
+msgstr "Например::"
 
 # af5851511053417684d907a9326d9023
-#: ../../ref/models/querysets.txt:415
+#: ../../ref/models/querysets.txt:422
 msgid "values"
-msgstr ""
+msgstr "values"
 
 # 49fb7386a28047a38968129991eba91f
-#: ../../ref/models/querysets.txt:419
+#: ../../ref/models/querysets.txt:426
 msgid ""
 "Returns a ``ValuesQuerySet`` — a ``QuerySet`` subclass that returns "
 "dictionaries when used as an iterable, rather than model-instance objects."
 msgstr ""
+"Возвращает ``ValuesQuerySet`` — подкласс ``QuerySet``, который возвращает "
+"словари с результатом вместо объектов моделей."
 
 # cb5947d3cddb4e288c8bcaf10bd28e35
-#: ../../ref/models/querysets.txt:422
+#: ../../ref/models/querysets.txt:429
 msgid ""
 "Each of those dictionaries represents an object, with the keys corresponding "
 "to the attribute names of model objects."
 msgstr ""
+"Каждый словарь представляет объект, ключи которого соответствуют полям "
+"модели."
 
 # ac94864efe7e413881125d12d960d3f1
-#: ../../ref/models/querysets.txt:425
+#: ../../ref/models/querysets.txt:432
 msgid ""
 "This example compares the dictionaries of ``values()`` with the normal model "
 "objects::"
 msgstr ""
+"Этот пример показывает разницу между результатом возвращаемым ``values()`` и "
+"объектами модели::"
 
 # 6a895173a763438790f5974f0d8306a9
-#: ../../ref/models/querysets.txt:436
+#: ../../ref/models/querysets.txt:443
 msgid ""
 "The ``values()`` method takes optional positional arguments, ``*fields``, "
 "which specify field names to which the ``SELECT`` should be limited. If you "
@@ -673,14 +875,18 @@ msgid ""
 "for the fields you specify. If you don't specify the fields, each dictionary "
 "will contain a key and value for every field in the database table."
 msgstr ""
+"Метод ``values()`` принимает дополнительные позиционные аргументы, "
+"``*fields``, которые определяют какие поля будут получены через ``SELECT``. "
+"Каждый словарь будет содержать только указанные поля. Если поля не указаны, "
+"каждый словарь будет содержать все данные из таблицы в базе данных."
 
 # e78f74bf322a45fbb3d7aadac36bf87a
-#: ../../ref/models/querysets.txt:449
+#: ../../ref/models/querysets.txt:456
 msgid "A few subtleties that are worth mentioning:"
-msgstr ""
+msgstr "Следует упомянуть несколько тонкостей:"
 
 # e4db51fd4b5e405383e764d1d9ea1047
-#: ../../ref/models/querysets.txt:451
+#: ../../ref/models/querysets.txt:458
 msgid ""
 "If you have a field called ``foo`` that is a :class:`~django.db.models."
 "ForeignKey`, the default ``values()`` call will return a dictionary key "
@@ -695,13 +901,13 @@ msgstr ""
 # c5738a85fd984c2fa84d5a69a91a2452
 # d9dec8adfce64fdcb8581558ebfde631
 # c1089638b0ad4386bd46c32864e5fcac
-#: ../../ref/models/querysets.txt:460 ../../ref/models/querysets.txt:998
-#: ../../ref/models/querysets.txt:1156 ../../ref/models/querysets.txt:1174
+#: ../../ref/models/querysets.txt:467 ../../ref/models/querysets.txt:1008
+#: ../../ref/models/querysets.txt:1166 ../../ref/models/querysets.txt:1184
 msgid "For example::"
 msgstr ""
 
 # 51b23e8160934f9c82dda9f6b81f91a3
-#: ../../ref/models/querysets.txt:471
+#: ../../ref/models/querysets.txt:478
 msgid ""
 "When using ``values()`` together with :meth:`distinct()`, be aware that "
 "ordering can affect the results. See the note in :meth:`distinct` for "
@@ -709,7 +915,7 @@ msgid ""
 msgstr ""
 
 # 1708b68a0b5d4d5b870cc5907d019f08
-#: ../../ref/models/querysets.txt:475
+#: ../../ref/models/querysets.txt:482
 msgid ""
 "If you use a ``values()`` clause after an :meth:`extra()` call, any fields "
 "defined by a ``select`` argument in the :meth:`extra()` must be explicitly "
@@ -718,7 +924,7 @@ msgid ""
 msgstr ""
 
 # 1015bea283fc4547a2248e39469a320e
-#: ../../ref/models/querysets.txt:481
+#: ../../ref/models/querysets.txt:488
 msgid ""
 "A ``ValuesQuerySet`` is useful when you know you're only going to need "
 "values from a small number of the available fields and you won't need the "
@@ -727,7 +933,7 @@ msgid ""
 msgstr ""
 
 # e0be586998f34c22a49475475a9f6309
-#: ../../ref/models/querysets.txt:486
+#: ../../ref/models/querysets.txt:493
 msgid ""
 "Finally, note a ``ValuesQuerySet`` is a subclass of ``QuerySet``, so it has "
 "all methods of ``QuerySet``. You can call ``filter()`` on it, or ``order_by()"
@@ -735,7 +941,7 @@ msgid ""
 msgstr ""
 
 # d65a646eb811447a9b6958db3e21d60b
-#: ../../ref/models/querysets.txt:493
+#: ../../ref/models/querysets.txt:500
 msgid ""
 "The people who made Django prefer to put all the SQL-affecting methods "
 "first, followed (optionally) by any output-affecting methods (such as "
@@ -744,7 +950,7 @@ msgid ""
 msgstr ""
 
 # 5ea1881a0c8f40babf116cb2396a30ee
-#: ../../ref/models/querysets.txt:500
+#: ../../ref/models/querysets.txt:507
 msgid ""
 "The ``values()`` method previously did not return anything for :class:"
 "`~django.db.models.ManyToManyField` attributes and would raise an error if "
@@ -752,7 +958,7 @@ msgid ""
 msgstr ""
 
 # f5eb1490873243d494cb93a58ebf85e9
-#: ../../ref/models/querysets.txt:504
+#: ../../ref/models/querysets.txt:511
 msgid ""
 "This restriction has been lifted, and you can now also refer to fields on "
 "related models with reverse relations through ``OneToOneField``, "
@@ -760,7 +966,7 @@ msgid ""
 msgstr ""
 
 # 7557f8612db24cc198d2c6484189d537
-#: ../../ref/models/querysets.txt:514
+#: ../../ref/models/querysets.txt:521
 msgid ""
 "Because :class:`~django.db.models.ManyToManyField` attributes and reverse "
 "relations can have multiple related rows, including these can have a "
@@ -770,12 +976,12 @@ msgid ""
 msgstr ""
 
 # 579aab5752cb438d80b3c2f226e36cb8
-#: ../../ref/models/querysets.txt:521
+#: ../../ref/models/querysets.txt:528
 msgid "values_list"
 msgstr ""
 
 # 97303ab27631499da3fc7e3e9328ecf6
-#: ../../ref/models/querysets.txt:525
+#: ../../ref/models/querysets.txt:532
 msgid ""
 "This is similar to ``values()`` except that instead of returning "
 "dictionaries, it returns tuples when iterated over. Each tuple contains the "
@@ -784,7 +990,7 @@ msgid ""
 msgstr ""
 
 # ccb1350a9f4141cfa5cad5c849fdb5d5
-#: ../../ref/models/querysets.txt:533
+#: ../../ref/models/querysets.txt:540
 msgid ""
 "If you only pass in a single field, you can also pass in the ``flat`` "
 "parameter. If ``True``, this will mean the returned results are single "
@@ -793,24 +999,24 @@ msgid ""
 msgstr ""
 
 # 0b0afc3c5ba6418da21a36cf1b7de005
-#: ../../ref/models/querysets.txt:543
+#: ../../ref/models/querysets.txt:550
 msgid "It is an error to pass in ``flat`` when there is more than one field."
 msgstr ""
 
 # a90ae6bd840642f39a79a2a6b105be21
-#: ../../ref/models/querysets.txt:545
+#: ../../ref/models/querysets.txt:552
 msgid ""
 "If you don't pass any values to ``values_list()``, it will return all the "
 "fields in the model, in the order they were declared."
 msgstr ""
 
 # 357b1daa9bcd4dea9ec83499a76f89d3
-#: ../../ref/models/querysets.txt:549
+#: ../../ref/models/querysets.txt:556
 msgid "dates"
 msgstr ""
 
 # 39c9d32ce13e4247960fb10a992f4943
-#: ../../ref/models/querysets.txt:553
+#: ../../ref/models/querysets.txt:560
 msgid ""
 "Returns a ``DateQuerySet`` — a ``QuerySet`` that evaluates to a list of "
 "``datetime.datetime`` objects representing all available dates of a "
@@ -818,14 +1024,14 @@ msgid ""
 msgstr ""
 
 # 4c676dfb14b54e969e866cc4eb76811d
-#: ../../ref/models/querysets.txt:557
+#: ../../ref/models/querysets.txt:564
 msgid ""
 "``field`` should be the name of a ``DateField`` or ``DateTimeField`` of your "
 "model."
 msgstr ""
 
 # 7a8b45479ff14c29a5adbde580e97125
-#: ../../ref/models/querysets.txt:560
+#: ../../ref/models/querysets.txt:567
 msgid ""
 "``kind`` should be either ``\"year\"``, ``\"month\"`` or ``\"day\"``. Each "
 "``datetime.datetime`` object in the result list is \"truncated\" to the "
@@ -833,32 +1039,32 @@ msgid ""
 msgstr ""
 
 # af481c348edd403dbe26e806860a8cc2
-#: ../../ref/models/querysets.txt:564
+#: ../../ref/models/querysets.txt:571
 msgid "``\"year\"`` returns a list of all distinct year values for the field."
 msgstr ""
 
 # 4045d630ba0d47af887dd450631e3549
-#: ../../ref/models/querysets.txt:565
+#: ../../ref/models/querysets.txt:572
 msgid ""
 "``\"month\"`` returns a list of all distinct year/month values for the field."
 msgstr ""
 
 # b3c5624dc54c4b8fa4ba0682ea138ef7
-#: ../../ref/models/querysets.txt:567
+#: ../../ref/models/querysets.txt:574
 msgid ""
 "``\"day\"`` returns a list of all distinct year/month/day values for the "
 "field."
 msgstr ""
 
 # 500c765dc01140819e5dd68e8ac42e59
-#: ../../ref/models/querysets.txt:570
+#: ../../ref/models/querysets.txt:577
 msgid ""
 "``order``, which defaults to ``'ASC'``, should be either ``'ASC'`` or "
 "``'DESC'``. This specifies how to order the results."
 msgstr ""
 
 # 83a5dbf9c43e4918b590f89ffd646df3
-#: ../../ref/models/querysets.txt:588
+#: ../../ref/models/querysets.txt:595
 msgid ""
 "When :doc:`time zone support </topics/i18n/timezones>` is enabled, Django "
 "uses UTC in the database connection, which means the aggregation is "
@@ -866,12 +1072,12 @@ msgid ""
 msgstr ""
 
 # 11d5eb8529f54db2a837985ac116e865
-#: ../../ref/models/querysets.txt:593
+#: ../../ref/models/querysets.txt:600
 msgid "none"
 msgstr ""
 
 # 671567eab87f48ef92ef488392402340
-#: ../../ref/models/querysets.txt:597
+#: ../../ref/models/querysets.txt:604
 msgid ""
 "Returns an ``EmptyQuerySet`` — a ``QuerySet`` subclass that always evaluates "
 "to an empty list. This can be used in cases where you know that you should "
@@ -880,12 +1086,12 @@ msgid ""
 msgstr ""
 
 # a2890d41c32d43eb9432fc98eb1227b8
-#: ../../ref/models/querysets.txt:608
+#: ../../ref/models/querysets.txt:615
 msgid "all"
 msgstr ""
 
 # 572293992d5a4f12b4507aaa97e801e3
-#: ../../ref/models/querysets.txt:612
+#: ../../ref/models/querysets.txt:619
 msgid ""
 "Returns a *copy* of the current ``QuerySet`` (or ``QuerySet`` subclass).  "
 "This can be useful in situations where you might want to pass in either a "
@@ -895,12 +1101,12 @@ msgid ""
 msgstr ""
 
 # c49b527e87f04a66adda31c1a3327a74
-#: ../../ref/models/querysets.txt:618
+#: ../../ref/models/querysets.txt:625
 msgid "select_related"
 msgstr ""
 
 # 2dbb0260148b4133baccddfbf37f18eb
-#: ../../ref/models/querysets.txt:622
+#: ../../ref/models/querysets.txt:629
 msgid ""
 "Returns a ``QuerySet`` that will automatically \"follow\" foreign-key "
 "relationships, selecting that additional related-object data when it "
@@ -910,40 +1116,40 @@ msgid ""
 msgstr ""
 
 # f4caa3922bd7491d99841d4199f56b42
-#: ../../ref/models/querysets.txt:628
+#: ../../ref/models/querysets.txt:635
 msgid ""
 "The following examples illustrate the difference between plain lookups and "
 "``select_related()`` lookups. Here's standard lookup::"
 msgstr ""
 
 # b563008653c34aee865d8f3f69ed0969
-#: ../../ref/models/querysets.txt:637
+#: ../../ref/models/querysets.txt:644
 msgid "And here's ``select_related`` lookup::"
 msgstr ""
 
 # e3f6354104e0493a9a828ef9334fdeea
-#: ../../ref/models/querysets.txt:646
+#: ../../ref/models/querysets.txt:653
 msgid ""
 "``select_related()`` follows foreign keys as far as possible. If you have "
 "the following models::"
 msgstr ""
 
 # 26ababe5af374ddab78c493810a3d259
-#: ../../ref/models/querysets.txt:661
+#: ../../ref/models/querysets.txt:668
 msgid ""
 "...then a call to ``Book.objects.select_related().get(id=4)`` will cache the "
 "related ``Person`` *and* the related ``City``::"
 msgstr ""
 
 # c42207566e5848fea57f695f19c1ce3c
-#: ../../ref/models/querysets.txt:672
+#: ../../ref/models/querysets.txt:679
 msgid ""
 "Note that, by default, ``select_related()`` does not follow foreign keys "
 "that have ``null=True``."
 msgstr ""
 
 # 1f46130a9ade4bb688f2110f4ee5aa5c
-#: ../../ref/models/querysets.txt:675
+#: ../../ref/models/querysets.txt:682
 msgid ""
 "Usually, using ``select_related()`` can vastly improve performance because "
 "your app can avoid many database calls. However, in situations with deeply "
@@ -953,7 +1159,7 @@ msgid ""
 msgstr ""
 
 # 7a34ea2b05974bf9be483f2e7478a54c
-#: ../../ref/models/querysets.txt:680
+#: ../../ref/models/querysets.txt:687
 msgid ""
 "In these situations, you can use the ``depth`` argument to ``select_related()"
 "`` to control how many \"levels\" of relations ``select_related()`` will "
@@ -961,7 +1167,7 @@ msgid ""
 msgstr ""
 
 # 79ff5ffc434c4030ab8a94299c91e338
-#: ../../ref/models/querysets.txt:688
+#: ../../ref/models/querysets.txt:695
 msgid ""
 "Sometimes you only want to access specific models that are related to your "
 "root model, not all of the related models. In these cases, you can pass the "
@@ -972,24 +1178,24 @@ msgid ""
 msgstr ""
 
 # ec74245305334c98ab756c026129189b
-#: ../../ref/models/querysets.txt:705
+#: ../../ref/models/querysets.txt:712
 msgid ""
 "...and you only needed to work with the ``room`` and ``subject`` attributes, "
 "you could write this::"
 msgstr ""
 
 # 6e7d6366f5524863bcfd865a431a0256
-#: ../../ref/models/querysets.txt:710
+#: ../../ref/models/querysets.txt:717
 msgid "This is also valid::"
 msgstr ""
 
 # 840699198ee1475c9ffdf250ab771ac7
-#: ../../ref/models/querysets.txt:714
+#: ../../ref/models/querysets.txt:721
 msgid "...and would also pull in the ``building`` relation."
 msgstr ""
 
 # 62befa03faea415d880cf52741f205fe
-#: ../../ref/models/querysets.txt:716
+#: ../../ref/models/querysets.txt:723
 msgid ""
 "You can refer to any :class:`~django.db.models.ForeignKey` or :class:"
 "`~django.db.models.OneToOneField` relation in the list of fields passed to "
@@ -1000,7 +1206,7 @@ msgid ""
 msgstr ""
 
 # f0695e8976554521ad36bd94ee905e2b
-#: ../../ref/models/querysets.txt:725
+#: ../../ref/models/querysets.txt:732
 msgid ""
 "You can also refer to the reverse direction of a :class:`~django.db.models."
 "OneToOneField` in the list of fields passed to ``select_related`` — that is, "
@@ -1011,26 +1217,26 @@ msgid ""
 msgstr ""
 
 # 0cd784213a2c4dafad8091eada5a4bc7
-#: ../../ref/models/querysets.txt:732
+#: ../../ref/models/querysets.txt:739
 msgid ""
 "A :class:`~django.db.models.OneToOneField` is not traversed in the reverse "
 "direction if you are performing a depth-based ``select_related()`` call."
 msgstr ""
 
 # c88e911f60014854a17560028894701a
-#: ../../ref/models/querysets.txt:736
+#: ../../ref/models/querysets.txt:743
 msgid "prefetch_related"
 msgstr ""
 
 # 549d0360b83f45e5b22af301ab7d707c
-#: ../../ref/models/querysets.txt:742
+#: ../../ref/models/querysets.txt:749
 msgid ""
 "Returns a ``QuerySet`` that will automatically retrieve, in a single batch, "
 "related objects for each of the specified lookups."
 msgstr ""
 
 # 9f0ccc75a72444f0afeb9cd747791de4
-#: ../../ref/models/querysets.txt:745
+#: ../../ref/models/querysets.txt:752
 msgid ""
 "This has a similar purpose to ``select_related``, in that both are designed "
 "to stop the deluge of database queries that is caused by accessing related "
@@ -1038,7 +1244,7 @@ msgid ""
 msgstr ""
 
 # 9c1bd26fc3c1409caeb9d73b158aec1a
-#: ../../ref/models/querysets.txt:749
+#: ../../ref/models/querysets.txt:756
 msgid ""
 "``select_related`` works by creating a SQL join and including the fields of "
 "the related object in the SELECT statement. For this reason, "
@@ -1049,7 +1255,7 @@ msgid ""
 msgstr ""
 
 # d3ca3301d5f04a74adc64b849150dec0
-#: ../../ref/models/querysets.txt:756
+#: ../../ref/models/querysets.txt:763
 msgid ""
 "``prefetch_related``, on the other hand, does a separate lookup for each "
 "relationship, and does the 'joining' in Python. This allows it to prefetch "
@@ -1061,17 +1267,17 @@ msgid ""
 msgstr ""
 
 # 008a1928e12d487aa0ede700f59f8cb2
-#: ../../ref/models/querysets.txt:764
+#: ../../ref/models/querysets.txt:771
 msgid "For example, suppose you have these models::"
 msgstr ""
 
 # 35465e7b81454c2e9e1e6418666353d8
-#: ../../ref/models/querysets.txt:777
+#: ../../ref/models/querysets.txt:784
 msgid "and run this code::"
 msgstr ""
 
 # 89f80a351e3e47c7a308985aa0797fbb
-#: ../../ref/models/querysets.txt:782
+#: ../../ref/models/querysets.txt:789
 msgid ""
 "The problem with this code is that it will run a query on the Toppings table "
 "for **every** item in the Pizza ``QuerySet``.  Using ``prefetch_related``, "
@@ -1079,7 +1285,7 @@ msgid ""
 msgstr ""
 
 # 4d10c7e6aa5f4733bcee31330f527481
-#: ../../ref/models/querysets.txt:788
+#: ../../ref/models/querysets.txt:795
 msgid ""
 "All the relevant toppings will be fetched in a single query, and used to "
 "make ``QuerySets`` that have a pre-filled cache of the relevant results. "
@@ -1087,7 +1293,7 @@ msgid ""
 msgstr ""
 
 # 76e875e80bfd48e7b2cde3ab9b8111ef
-#: ../../ref/models/querysets.txt:792
+#: ../../ref/models/querysets.txt:799
 msgid ""
 "The additional queries are executed after the QuerySet has begun to be "
 "evaluated and the primary query has been executed. Note that the result "
@@ -1099,7 +1305,7 @@ msgid ""
 msgstr ""
 
 # 3a4a1d81d12140e09e5217ecdbe41461
-#: ../../ref/models/querysets.txt:800
+#: ../../ref/models/querysets.txt:807
 msgid ""
 "Also remember that, as always with QuerySets, any subsequent chained methods "
 "which imply a different database query will ignore previously cached "
@@ -1108,7 +1314,7 @@ msgid ""
 msgstr ""
 
 # cc5a38e36ca249b498d95ff562f0a09b
-#: ../../ref/models/querysets.txt:807
+#: ../../ref/models/querysets.txt:814
 msgid ""
 "...then the fact that ``pizza.toppings.all()`` has been prefetched will not "
 "help you - in fact it hurts performance, since you have done a database "
@@ -1116,19 +1322,19 @@ msgid ""
 msgstr ""
 
 # 30ec294f1d1b45ef9d561c09d8fbebe9
-#: ../../ref/models/querysets.txt:811
+#: ../../ref/models/querysets.txt:818
 msgid ""
 "You can also use the normal join syntax to do related fields of related "
 "fields. Suppose we have an additional model to the example above::"
 msgstr ""
 
 # aa3de7da48e74729858e02c95fdab3ed
-#: ../../ref/models/querysets.txt:818
+#: ../../ref/models/querysets.txt:825
 msgid "The following are all legal:"
 msgstr ""
 
 # 0765ed76370c4aac8b32b94a346d58d1
-#: ../../ref/models/querysets.txt:822
+#: ../../ref/models/querysets.txt:829
 msgid ""
 "This will prefetch all pizzas belonging to restaurants, and all toppings "
 "belonging to those pizzas. This will result in a total of 3 database queries "
@@ -1136,7 +1342,7 @@ msgid ""
 msgstr ""
 
 # 1bc723b8cd1e47a69ebf5503049d2624
-#: ../../ref/models/querysets.txt:828
+#: ../../ref/models/querysets.txt:835
 msgid ""
 "This will fetch the best pizza and all the toppings for the best pizza for "
 "each restaurant. This will be done in 3 database queries - one for the "
@@ -1144,14 +1350,14 @@ msgid ""
 msgstr ""
 
 # 233b470234a044dea1c1a4dc463043f8
-#: ../../ref/models/querysets.txt:832
+#: ../../ref/models/querysets.txt:839
 msgid ""
 "Of course, the ``best_pizza`` relationship could also be fetched using "
 "``select_related`` to reduce the query count to 2:"
 msgstr ""
 
 # deae4b56bee74a058123faf94d41f183
-#: ../../ref/models/querysets.txt:837
+#: ../../ref/models/querysets.txt:844
 msgid ""
 "Since the prefetch is executed after the main query (which includes the "
 "joins needed by ``select_related``), it is able to detect that the "
@@ -1160,7 +1366,7 @@ msgid ""
 msgstr ""
 
 # 89590e17c2a44ebd8b013ceaf3c4d642
-#: ../../ref/models/querysets.txt:841
+#: ../../ref/models/querysets.txt:848
 msgid ""
 "Chaining ``prefetch_related`` calls will accumulate the lookups that are "
 "prefetched. To clear any ``prefetch_related`` behavior, pass `None` as a "
@@ -1168,7 +1374,7 @@ msgid ""
 msgstr ""
 
 # 46a774303a8e4a7fa40a14a9936f9a7b
-#: ../../ref/models/querysets.txt:847
+#: ../../ref/models/querysets.txt:854
 msgid ""
 "One difference to note when using ``prefetch_related`` is that objects "
 "created by a query can be shared between the different objects that they are "
@@ -1179,7 +1385,7 @@ msgid ""
 msgstr ""
 
 # 0224fa29d695415f9fb9841e6691546c
-#: ../../ref/models/querysets.txt:854
+#: ../../ref/models/querysets.txt:861
 msgid ""
 "While ``prefetch_related`` supports prefetching ``GenericForeignKey`` "
 "relationships, the number of queries will depend on the data. Since a "
@@ -1190,7 +1396,7 @@ msgid ""
 msgstr ""
 
 # 3738fd126f124d05a43e190ffd4e7d1c
-#: ../../ref/models/querysets.txt:861
+#: ../../ref/models/querysets.txt:868
 msgid ""
 "``prefetch_related`` in most cases will be implemented using a SQL query "
 "that uses the 'IN' operator. This means that for a large QuerySet a large "
@@ -1199,13 +1405,21 @@ msgid ""
 "SQL query. Always profile for your use case!"
 msgstr ""
 
+# fb07b22e96bf4735aab0e4f4ebac9843
+#: ../../ref/models/querysets.txt:874
+msgid ""
+"Note that if you use ``iterator()`` to run the query, ``prefetch_related()`` "
+"calls will be ignored since these two optimizations do not make sense "
+"together."
+msgstr ""
+
 # 3de60b9d93e9467288b16597a3aeafd4
-#: ../../ref/models/querysets.txt:868
+#: ../../ref/models/querysets.txt:878
 msgid "extra"
 msgstr ""
 
 # d259661cdd444f0e8c4d38c129301258
-#: ../../ref/models/querysets.txt:872
+#: ../../ref/models/querysets.txt:882
 msgid ""
 "Sometimes, the Django query syntax by itself can't easily express a complex "
 "``WHERE`` clause. For these edge cases, Django provides the ``extra()`` "
@@ -1214,7 +1428,7 @@ msgid ""
 msgstr ""
 
 # 06b847bf877049b8b0e89f52e3b22595
-#: ../../ref/models/querysets.txt:877
+#: ../../ref/models/querysets.txt:887
 msgid ""
 "By definition, these extra lookups may not be portable to different database "
 "engines (because you're explicitly writing SQL code) and violate the DRY "
@@ -1222,19 +1436,19 @@ msgid ""
 msgstr ""
 
 # c4b07a1884d34cadb7a66854fbe8015d
-#: ../../ref/models/querysets.txt:881
+#: ../../ref/models/querysets.txt:891
 msgid ""
 "Specify one or more of ``params``, ``select``, ``where`` or ``tables``. None "
 "of the arguments is required, but you should use at least one of them."
 msgstr ""
 
 # d477098199c549dea385dbc618304381
-#: ../../ref/models/querysets.txt:884
+#: ../../ref/models/querysets.txt:894
 msgid "``select``"
 msgstr ""
 
 # e2677340436845e38f1c1eeadc0f6b3f
-#: ../../ref/models/querysets.txt:886
+#: ../../ref/models/querysets.txt:896
 msgid ""
 "The ``select`` argument lets you put extra fields in the ``SELECT`` clause.  "
 "It should be a dictionary mapping attribute names to SQL clauses to use to "
@@ -1242,7 +1456,7 @@ msgid ""
 msgstr ""
 
 # fafc90c64c654582b9d9e27bf6a470e9
-#: ../../ref/models/querysets.txt:894
+#: ../../ref/models/querysets.txt:904
 msgid ""
 "As a result, each ``Entry`` object will have an extra attribute, "
 "``is_recent``, a boolean representing whether the entry's ``pub_date`` is "
@@ -1250,14 +1464,14 @@ msgid ""
 msgstr ""
 
 # f74fe8ea7ff94428a66e466b3fca6b38
-#: ../../ref/models/querysets.txt:898
+#: ../../ref/models/querysets.txt:908
 msgid ""
 "Django inserts the given SQL snippet directly into the ``SELECT`` statement, "
 "so the resulting SQL of the above example would be something like::"
 msgstr ""
 
 # 311cf9d3932c448a9198013546ec6801
-#: ../../ref/models/querysets.txt:906
+#: ../../ref/models/querysets.txt:916
 msgid ""
 "The next example is more advanced; it does a subquery to give each resulting "
 "``Blog`` object an ``entry_count`` attribute, an integer count of associated "
@@ -1265,19 +1479,19 @@ msgid ""
 msgstr ""
 
 # 963282dfaebf4a4d90d8ffed765150a2
-#: ../../ref/models/querysets.txt:916
+#: ../../ref/models/querysets.txt:926
 msgid ""
 "In this particular case, we're exploiting the fact that the query will "
 "already contain the ``blog_blog`` table in its ``FROM`` clause."
 msgstr ""
 
 # dd1c35b12b744f459c6310f3c405b46a
-#: ../../ref/models/querysets.txt:919
+#: ../../ref/models/querysets.txt:929
 msgid "The resulting SQL of the above example would be::"
 msgstr ""
 
 # d833e4e577c646539ca26fafe4303729
-#: ../../ref/models/querysets.txt:924
+#: ../../ref/models/querysets.txt:934
 msgid ""
 "Note that the parentheses required by most database engines around "
 "subqueries are not required in Django's ``select`` clauses. Also note that "
@@ -1286,7 +1500,7 @@ msgid ""
 msgstr ""
 
 # c8f82a29773e419780c274f05434651e
-#: ../../ref/models/querysets.txt:929
+#: ../../ref/models/querysets.txt:939
 msgid ""
 "In some rare cases, you might wish to pass parameters to the SQL fragments "
 "in ``extra(select=...)``. For this purpose, use the ``select_params`` "
@@ -1298,12 +1512,12 @@ msgid ""
 msgstr ""
 
 # 1923cc211ba8437b90a6ca5321cef560
-#: ../../ref/models/querysets.txt:938
+#: ../../ref/models/querysets.txt:948
 msgid "This will work, for example::"
 msgstr ""
 
 # 28a4898245f3431383d4f394c9cbb7bb
-#: ../../ref/models/querysets.txt:944
+#: ../../ref/models/querysets.txt:954
 msgid ""
 "The only thing to be careful about when using select parameters in ``extra()"
 "`` is to avoid using the substring ``\"%%s\"`` (that's *two* percent "
@@ -1313,12 +1527,12 @@ msgid ""
 msgstr ""
 
 # c89f9dbedbe2441c8c70b5ba0f33f091
-#: ../../ref/models/querysets.txt:950
+#: ../../ref/models/querysets.txt:960
 msgid "``where`` / ``tables``"
 msgstr ""
 
 # 8ff13dbb2f414cd0b147bb464f97f439
-#: ../../ref/models/querysets.txt:952
+#: ../../ref/models/querysets.txt:962
 msgid ""
 "You can define explicit SQL ``WHERE`` clauses — perhaps to perform non-"
 "explicit joins — by using ``where``. You can manually add tables to the SQL "
@@ -1326,19 +1540,19 @@ msgid ""
 msgstr ""
 
 # 15c331c702b043e68d0e634bb76a0727
-#: ../../ref/models/querysets.txt:956
+#: ../../ref/models/querysets.txt:966
 msgid ""
 "``where`` and ``tables`` both take a list of strings. All ``where`` "
 "parameters are \"AND\"ed to any other search criteria."
 msgstr ""
 
 # e1286287c0154eb1b785dcebbcdec4e8
-#: ../../ref/models/querysets.txt:963
+#: ../../ref/models/querysets.txt:973
 msgid "...translates (roughly) into the following SQL::"
 msgstr ""
 
 # 713d4dbee21f487bb2fa345c5d1f24b9
-#: ../../ref/models/querysets.txt:967
+#: ../../ref/models/querysets.txt:977
 msgid ""
 "Be careful when using the ``tables`` parameter if you're specifying tables "
 "that are already used in the query. When you add extra tables via the "
@@ -1351,7 +1565,7 @@ msgid ""
 msgstr ""
 
 # 842b9a6d4fac4b8d8ab926eefa4f72ac
-#: ../../ref/models/querysets.txt:977
+#: ../../ref/models/querysets.txt:987
 msgid ""
 "Normally you'll only be adding extra tables that don't already appear in the "
 "query. However, if the case outlined above does occur, there are a few "
@@ -1366,12 +1580,12 @@ msgid ""
 msgstr ""
 
 # 1a5e940cb73b484ca39666c8fa38f4df
-#: ../../ref/models/querysets.txt:988
+#: ../../ref/models/querysets.txt:998
 msgid "``order_by``"
 msgstr ""
 
 # 65361163de7e445db05dc6a18d46b3e5
-#: ../../ref/models/querysets.txt:990
+#: ../../ref/models/querysets.txt:1000
 msgid ""
 "If you need to order the resulting queryset using some of the new fields or "
 "tables you have included via ``extra()`` use the ``order_by`` parameter to "
@@ -1382,26 +1596,26 @@ msgid ""
 msgstr ""
 
 # b7ff1c442c394f2182b9b9bd354ac00d
-#: ../../ref/models/querysets.txt:1003
+#: ../../ref/models/querysets.txt:1013
 msgid ""
 "This would sort all the items for which ``is_recent`` is true to the front "
 "of the result set (``True`` sorts before ``False`` in a descending ordering)."
 msgstr ""
 
 # f03db6ccfc0f4194a54586b94ab8477a
-#: ../../ref/models/querysets.txt:1007
+#: ../../ref/models/querysets.txt:1017
 msgid ""
 "This shows, by the way, that you can make multiple calls to ``extra()`` and "
 "it will behave as you expect (adding new constraints each time)."
 msgstr ""
 
 # 9e193718998d4537860ecf5b0b8cba65
-#: ../../ref/models/querysets.txt:1010
+#: ../../ref/models/querysets.txt:1020
 msgid "``params``"
 msgstr ""
 
 # bb4b27c71c0f4cc2a4146feaa9e1b6be
-#: ../../ref/models/querysets.txt:1012
+#: ../../ref/models/querysets.txt:1022
 msgid ""
 "The ``where`` parameter described above may use standard Python database "
 "string placeholders — ``'%s'`` to indicate parameters the database engine "
@@ -1410,7 +1624,7 @@ msgid ""
 msgstr ""
 
 # 7d12b53fac8047c6bb0e88e741a2b18b
-#: ../../ref/models/querysets.txt:1021
+#: ../../ref/models/querysets.txt:1031
 msgid ""
 "Always use ``params`` instead of embedding values directly into ``where`` "
 "because ``params`` will ensure values are quoted correctly according to your "
@@ -1418,22 +1632,22 @@ msgid ""
 msgstr ""
 
 # 20cd30fc891c435583d2d1a75a857de9
-#: ../../ref/models/querysets.txt:1026
+#: ../../ref/models/querysets.txt:1036
 msgid "Bad::"
 msgstr ""
 
 # 2cada5cb69334006baed723e8a319829
-#: ../../ref/models/querysets.txt:1030
+#: ../../ref/models/querysets.txt:1040
 msgid "Good::"
 msgstr ""
 
 # 3afdacafdbad455b9e1e7a53ec7b6031
-#: ../../ref/models/querysets.txt:1035
+#: ../../ref/models/querysets.txt:1045
 msgid "defer"
 msgstr ""
 
 # 5fb61d8241314a7d8629423a425a203d
-#: ../../ref/models/querysets.txt:1039
+#: ../../ref/models/querysets.txt:1049
 msgid ""
 "In some complex data-modeling situations, your models might contain a lot of "
 "fields, some of which could contain a lot of data (for example, text "
@@ -1444,13 +1658,13 @@ msgid ""
 msgstr ""
 
 # 8a7ee38eda6e48f5a857685809cadd15
-#: ../../ref/models/querysets.txt:1046
+#: ../../ref/models/querysets.txt:1056
 msgid ""
 "This is done by passing the names of the fields to not load to ``defer()``::"
 msgstr ""
 
 # 5043e37328554995a7a9d3bef5998780
-#: ../../ref/models/querysets.txt:1050
+#: ../../ref/models/querysets.txt:1060
 msgid ""
 "A queryset that has deferred fields will still return model instances. Each "
 "deferred field will be retrieved from the database if you access that field "
@@ -1458,14 +1672,14 @@ msgid ""
 msgstr ""
 
 # 2414a9daaa19429ea819d61b4dcac085
-#: ../../ref/models/querysets.txt:1054
+#: ../../ref/models/querysets.txt:1064
 msgid ""
 "You can make multiple calls to ``defer()``. Each call adds new fields to the "
 "deferred set::"
 msgstr ""
 
 # 9b26c911e7364b98a3df1e2144bf0fee
-#: ../../ref/models/querysets.txt:1060
+#: ../../ref/models/querysets.txt:1070
 msgid ""
 "The order in which fields are added to the deferred set does not matter. "
 "Calling ``defer()`` with a field name that has already been deferred is "
@@ -1473,7 +1687,7 @@ msgid ""
 msgstr ""
 
 # e3730cc7e91a4db8947ac048149bbce2
-#: ../../ref/models/querysets.txt:1064
+#: ../../ref/models/querysets.txt:1074
 msgid ""
 "You can defer loading of fields in related models (if the related models are "
 "loading via :meth:`select_related()`) by using the standard double-"
@@ -1481,14 +1695,14 @@ msgid ""
 msgstr ""
 
 # 4d3acc1cb7244585844db63a13fa8a8b
-#: ../../ref/models/querysets.txt:1070
+#: ../../ref/models/querysets.txt:1080
 msgid ""
 "If you want to clear the set of deferred fields, pass ``None`` as a "
 "parameter to ``defer()``::"
 msgstr ""
 
 # 679b9e44b8f3487ba32aa4f4ba9a4f3c
-#: ../../ref/models/querysets.txt:1076
+#: ../../ref/models/querysets.txt:1086
 msgid ""
 "Some fields in a model won't be deferred, even if you ask for them. You can "
 "never defer the loading of the primary key. If you are using :meth:"
@@ -1498,7 +1712,7 @@ msgid ""
 msgstr ""
 
 # 8c60db197c4d46d29ef25f0c8e5ffed7
-#: ../../ref/models/querysets.txt:1084
+#: ../../ref/models/querysets.txt:1094
 msgid ""
 "The ``defer()`` method (and its cousin, :meth:`only()`, below) are only for "
 "advanced use-cases. They provide an optimization for when you have analyzed "
@@ -1508,7 +1722,7 @@ msgid ""
 msgstr ""
 
 # 86de8b7daf0c424ebf32ea779c4f9355
-#: ../../ref/models/querysets.txt:1090
+#: ../../ref/models/querysets.txt:1100
 msgid ""
 "Even if you think you are in the advanced use-case situation, **only use "
 "defer() when you cannot, at queryset load time, determine if you will need "
@@ -1524,12 +1738,12 @@ msgid ""
 msgstr ""
 
 # 9f71a64c63c64187aaff40d5dd2b2bf9
-#: ../../ref/models/querysets.txt:1105
+#: ../../ref/models/querysets.txt:1115
 msgid "only"
 msgstr ""
 
 # 9c86c8cdfbd645e2986802c35fcd31ce
-#: ../../ref/models/querysets.txt:1109
+#: ../../ref/models/querysets.txt:1119
 msgid ""
 "The ``only()`` method is more or less the opposite of :meth:`defer()`. You "
 "call it with the fields that should *not* be deferred when retrieving a "
@@ -1539,14 +1753,14 @@ msgid ""
 msgstr ""
 
 # 3609e904db4c4df0b4bcfe0dcb3c6e62
-#: ../../ref/models/querysets.txt:1115
+#: ../../ref/models/querysets.txt:1125
 msgid ""
 "Suppose you have a model with fields ``name``, ``age`` and ``biography``. "
 "The following two querysets are the same, in terms of deferred fields::"
 msgstr ""
 
 # 08006732a6df4c2f826a7c5677070617
-#: ../../ref/models/querysets.txt:1121
+#: ../../ref/models/querysets.txt:1131
 msgid ""
 "Whenever you call ``only()`` it *replaces* the set of fields to load "
 "immediately. The method's name is mnemonic: **only** those fields are loaded "
@@ -1555,7 +1769,7 @@ msgid ""
 msgstr ""
 
 # 289793a330b14607b189dae4cfb8c2f5
-#: ../../ref/models/querysets.txt:1129
+#: ../../ref/models/querysets.txt:1139
 msgid ""
 "Since ``defer()`` acts incrementally (adding fields to the deferred list), "
 "you can combine calls to ``only()`` and ``defer()`` and things will behave "
@@ -1563,7 +1777,7 @@ msgid ""
 msgstr ""
 
 # dee05b337045471ca43bce707de47a2a
-#: ../../ref/models/querysets.txt:1140
+#: ../../ref/models/querysets.txt:1150
 msgid ""
 "All of the cautions in the note for the :meth:`defer` documentation apply to "
 "``only()`` as well. Use it cautiously and only after exhausting your other "
@@ -1571,12 +1785,12 @@ msgid ""
 msgstr ""
 
 # be693002305d4620b81f6195a5f605e7
-#: ../../ref/models/querysets.txt:1145
+#: ../../ref/models/querysets.txt:1155
 msgid "using"
 msgstr ""
 
 # 095673642a8347009402505bb8f4a742
-#: ../../ref/models/querysets.txt:1151
+#: ../../ref/models/querysets.txt:1161
 msgid ""
 "This method is for controlling which database the ``QuerySet`` will be "
 "evaluated against if you are using more than one database.  The only "
@@ -1585,19 +1799,19 @@ msgid ""
 msgstr ""
 
 # a20c8197c2c240d6a5dfa723b62c89b9
-#: ../../ref/models/querysets.txt:1165
+#: ../../ref/models/querysets.txt:1175
 msgid "select_for_update"
 msgstr ""
 
 # 0e55c2aba7894748bc2d007c5f1ad3ab
-#: ../../ref/models/querysets.txt:1171
+#: ../../ref/models/querysets.txt:1181
 msgid ""
 "Returns a queryset that will lock rows until the end of the transaction, "
 "generating a ``SELECT ... FOR UPDATE`` SQL statement on supported databases."
 msgstr ""
 
 # 0792902df92a4a47812cba16662d35a0
-#: ../../ref/models/querysets.txt:1178
+#: ../../ref/models/querysets.txt:1188
 msgid ""
 "All matched entries will be locked until the end of the transaction block, "
 "meaning that other transactions will be prevented from changing or acquiring "
@@ -1605,7 +1819,7 @@ msgid ""
 msgstr ""
 
 # 95d7fbe01a0446028ce3ab946096fc9a
-#: ../../ref/models/querysets.txt:1182
+#: ../../ref/models/querysets.txt:1192
 msgid ""
 "Usually, if another transaction has already acquired a lock on one of the "
 "selected rows, the query will block until the lock is released. If this is "
@@ -1616,7 +1830,7 @@ msgid ""
 msgstr ""
 
 # 9792df60230541faab024b6366fe7928
-#: ../../ref/models/querysets.txt:1189
+#: ../../ref/models/querysets.txt:1199
 msgid ""
 "Note that using ``select_for_update()`` will cause the current transaction "
 "to be considered dirty, if under transaction management. This is to ensure "
@@ -1625,7 +1839,7 @@ msgid ""
 msgstr ""
 
 # 8e0acd3a01d64552a267b44d229abd28
-#: ../../ref/models/querysets.txt:1194
+#: ../../ref/models/querysets.txt:1204
 msgid ""
 "Currently, the ``postgresql_psycopg2``, ``oracle``, and ``mysql`` database "
 "backends support ``select_for_update()``. However, MySQL has no support for "
@@ -1634,7 +1848,7 @@ msgid ""
 msgstr ""
 
 # 07555036d70443c1abefc233b4f6a63e
-#: ../../ref/models/querysets.txt:1199
+#: ../../ref/models/querysets.txt:1209
 msgid ""
 "Passing ``nowait=True`` to ``select_for_update`` using database backends "
 "that do not support ``nowait``, such as MySQL, will cause a :exc:`~django.db."
@@ -1643,45 +1857,45 @@ msgid ""
 msgstr ""
 
 # 468b0dff8e6147dbafa260f11136e211
-#: ../../ref/models/querysets.txt:1204
+#: ../../ref/models/querysets.txt:1214
 msgid ""
 "Using ``select_for_update`` on backends which do not support ``SELECT ... "
 "FOR UPDATE`` (such as SQLite) will have no effect."
 msgstr ""
 
 # cf54942aad72476b975aeab0c6d46b05
-#: ../../ref/models/querysets.txt:1208
+#: ../../ref/models/querysets.txt:1218
 msgid "Methods that do not return QuerySets"
 msgstr ""
 
 # e2cc8170101f4de6a8d642df4f66c0ba
-#: ../../ref/models/querysets.txt:1210
+#: ../../ref/models/querysets.txt:1220
 msgid ""
 "The following ``QuerySet`` methods evaluate the ``QuerySet`` and return "
 "something *other than* a ``QuerySet``."
 msgstr ""
 
 # 5e5113f0ef414577825e47219fb7d53e
-#: ../../ref/models/querysets.txt:1213
+#: ../../ref/models/querysets.txt:1223
 msgid ""
 "These methods do not use a cache (see :ref:`caching-and-querysets`). Rather, "
 "they query the database each time they're called."
 msgstr ""
 
 # 215fe858f64a4e35b05940589525f55c
-#: ../../ref/models/querysets.txt:1217
+#: ../../ref/models/querysets.txt:1227
 msgid "get"
 msgstr ""
 
 # a4c76c594925430f9360797d2ed288fd
-#: ../../ref/models/querysets.txt:1221
+#: ../../ref/models/querysets.txt:1231
 msgid ""
 "Returns the object matching the given lookup parameters, which should be in "
 "the format described in `Field lookups`_."
 msgstr ""
 
 # ceedda62705e4961aa2713b4025293b3
-#: ../../ref/models/querysets.txt:1224
+#: ../../ref/models/querysets.txt:1234
 msgid ""
 "``get()`` raises :exc:`~django.core.exceptions.MultipleObjectsReturned` if "
 "more than one object was found. The :exc:`~django.core.excpetions."
@@ -1689,7 +1903,7 @@ msgid ""
 msgstr ""
 
 # 8b9d9fa4a3d84d18af471fd705e7b7fd
-#: ../../ref/models/querysets.txt:1229
+#: ../../ref/models/querysets.txt:1239
 msgid ""
 "``get()`` raises a :exc:`~django.core.exceptions.DoesNotExist` exception if "
 "an object wasn't found for the given parameters. This exception is also an "
@@ -1697,7 +1911,7 @@ msgid ""
 msgstr ""
 
 # 1de14e70fc794c9fb9d8de5acbc06d5e
-#: ../../ref/models/querysets.txt:1235
+#: ../../ref/models/querysets.txt:1245
 msgid ""
 "The :exc:`~django.core.exceptions.DoesNotExist` exception inherits from :exc:"
 "`django.core.exceptions.ObjectDoesNotExist`, so you can target multiple :exc:"
@@ -1705,29 +1919,29 @@ msgid ""
 msgstr ""
 
 # 48c322aa8440460f81b4545e4404fcae
-#: ../../ref/models/querysets.txt:1247
+#: ../../ref/models/querysets.txt:1257
 msgid "create"
 msgstr ""
 
 # dc1f60acc08941bf90036eec5558cfcc
-#: ../../ref/models/querysets.txt:1251
+#: ../../ref/models/querysets.txt:1261
 msgid ""
 "A convenience method for creating an object and saving it all in one step.  "
 "Thus::"
 msgstr ""
 
 # 6e7c183bfa21425aab2a2e428662ae84
-#: ../../ref/models/querysets.txt:1255
+#: ../../ref/models/querysets.txt:1265
 msgid "and::"
 msgstr ""
 
 # 76da19f0fec2474ea112e705f5b05126
-#: ../../ref/models/querysets.txt:1260
+#: ../../ref/models/querysets.txt:1270
 msgid "are equivalent."
 msgstr ""
 
 # 1213699156fb41af9b4150ec19cb1b60
-#: ../../ref/models/querysets.txt:1262
+#: ../../ref/models/querysets.txt:1272
 msgid ""
 "The :ref:`force_insert <ref-models-force-insert>` parameter is documented "
 "elsewhere, but all it means is that a new object will always be created. "
@@ -1739,19 +1953,19 @@ msgid ""
 msgstr ""
 
 # 733254dc1264496dbe4cb36d871b2d9b
-#: ../../ref/models/querysets.txt:1271
+#: ../../ref/models/querysets.txt:1281
 msgid "get_or_create"
 msgstr ""
 
 # e3c560b3981d4cfcbf09766623b6825e
-#: ../../ref/models/querysets.txt:1275
+#: ../../ref/models/querysets.txt:1285
 msgid ""
 "A convenience method for looking up an object with the given kwargs, "
 "creating one if necessary."
 msgstr ""
 
 # 0b3c276a1737474fa728a52a3e7d52f1
-#: ../../ref/models/querysets.txt:1278
+#: ../../ref/models/querysets.txt:1288
 msgid ""
 "Returns a tuple of ``(object, created)``, where ``object`` is the retrieved "
 "or created object and ``created`` is a boolean specifying whether a new "
@@ -1759,21 +1973,21 @@ msgid ""
 msgstr ""
 
 # 10b4d4b11a0f4074ad32685049291aca
-#: ../../ref/models/querysets.txt:1282
+#: ../../ref/models/querysets.txt:1292
 msgid ""
 "This is meant as a shortcut to boilerplatish code and is mostly useful for "
 "data-import scripts. For example::"
 msgstr ""
 
 # 69f33df6b87b42b1850c128fb7f06ed9
-#: ../../ref/models/querysets.txt:1291
+#: ../../ref/models/querysets.txt:1301
 msgid ""
 "This pattern gets quite unwieldy as the number of fields in a model goes up. "
 "The above example can be rewritten using ``get_or_create()`` like so::"
 msgstr ""
 
 # f45bcfa02f864a63bc20bd2a9c6eac1a
-#: ../../ref/models/querysets.txt:1297
+#: ../../ref/models/querysets.txt:1307
 msgid ""
 "Any keyword arguments passed to ``get_or_create()`` — *except* an optional "
 "one called ``defaults`` — will be used in a :meth:`get()` call. If an object "
@@ -1784,7 +1998,7 @@ msgid ""
 msgstr ""
 
 # ad18a6924b624c0096c7101f2630df89
-#: ../../ref/models/querysets.txt:1310
+#: ../../ref/models/querysets.txt:1320
 msgid ""
 "In English, that means start with any non-``'defaults'`` keyword argument "
 "that doesn't contain a double underscore (which would indicate a non-exact "
@@ -1797,14 +2011,14 @@ msgid ""
 msgstr ""
 
 # fc2b1c12110e425ca3dcf375800ef326
-#: ../../ref/models/querysets.txt:1319
+#: ../../ref/models/querysets.txt:1329
 msgid ""
 "If you have a field named ``defaults`` and want to use it as an exact lookup "
 "in ``get_or_create()``, just use ``'defaults__exact'``, like so::"
 msgstr ""
 
 # ac3893de8cff4a62aab3cafad3e10525
-#: ../../ref/models/querysets.txt:1324
+#: ../../ref/models/querysets.txt:1334
 msgid ""
 "The ``get_or_create()`` method has similar error behavior to :meth:`create()"
 "` when you're using manually specified primary keys. If an object needs to "
@@ -1813,7 +2027,7 @@ msgid ""
 msgstr ""
 
 # 5ac92a346afa45b5b51f2c59c4dd87e3
-#: ../../ref/models/querysets.txt:1329
+#: ../../ref/models/querysets.txt:1339
 msgid ""
 "Finally, a word on using ``get_or_create()`` in Django views. As mentioned "
 "earlier, ``get_or_create()`` is mostly useful in scripts that need to parse "
@@ -1826,12 +2040,12 @@ msgid ""
 msgstr ""
 
 # d429abc1e645455c940147c50ab985cd
-#: ../../ref/models/querysets.txt:1340
+#: ../../ref/models/querysets.txt:1350
 msgid "bulk_create"
 msgstr ""
 
 # f38d91295c744ec9b91676653ab7f82c
-#: ../../ref/models/querysets.txt:1346
+#: ../../ref/models/querysets.txt:1356
 msgid ""
 "This method inserts the provided list of objects into the database in an "
 "efficient manner (generally only 1 query, no matter how many objects there "
@@ -1839,44 +2053,44 @@ msgid ""
 msgstr ""
 
 # e38565913b9b42f8944e3422063eb7e6
-#: ../../ref/models/querysets.txt:1356
+#: ../../ref/models/querysets.txt:1366
 msgid "This has a number of caveats though:"
 msgstr ""
 
 # 76a81c0ef9c947488487d43a52de6cc3
-#: ../../ref/models/querysets.txt:1358
+#: ../../ref/models/querysets.txt:1368
 msgid ""
 "The model's ``save()`` method will not be called, and the ``pre_save`` and "
 "``post_save`` signals will not be sent."
 msgstr ""
 
 # 6924420c93264545b050302f9f9ecf4e
-#: ../../ref/models/querysets.txt:1360
+#: ../../ref/models/querysets.txt:1370
 msgid ""
 "It does not work with child models in a multi-table inheritance scenario."
 msgstr ""
 
 # 3727e407fafa4d8da290c49ca51ba764
-#: ../../ref/models/querysets.txt:1361
+#: ../../ref/models/querysets.txt:1371
 msgid ""
 "If the model's primary key is an :class:`~django.db.models.AutoField` it "
 "does not retrieve and set the primary key attribute, as ``save()`` does."
 msgstr ""
 
 # c7683f03673446c6ab62a0b58ab6ef2d
-#: ../../ref/models/querysets.txt:1365
+#: ../../ref/models/querysets.txt:1375
 msgid "count"
 msgstr ""
 
 # 17a96d7d87224a1a9905cafe37f0f8cb
-#: ../../ref/models/querysets.txt:1369
+#: ../../ref/models/querysets.txt:1379
 msgid ""
 "Returns an integer representing the number of objects in the database "
 "matching the ``QuerySet``. The ``count()`` method never raises exceptions."
 msgstr ""
 
 # b15795049d074d11a35c29d720e38b37
-#: ../../ref/models/querysets.txt:1380
+#: ../../ref/models/querysets.txt:1390
 msgid ""
 "A ``count()`` call performs a ``SELECT COUNT(*)`` behind the scenes, so you "
 "should always use ``count()`` rather than loading all of the record into "
@@ -1885,7 +2099,7 @@ msgid ""
 msgstr ""
 
 # df807c3d6a114491b303f2ce04458f9a
-#: ../../ref/models/querysets.txt:1385
+#: ../../ref/models/querysets.txt:1395
 msgid ""
 "Depending on which database you're using (e.g. PostgreSQL vs. MySQL), ``count"
 "()`` may return a long integer instead of a normal Python integer. This is "
@@ -1894,30 +2108,30 @@ msgid ""
 msgstr ""
 
 # b86d2ab4185543909ae12e93061bb1cf
-#: ../../ref/models/querysets.txt:1391
+#: ../../ref/models/querysets.txt:1401
 msgid "in_bulk"
 msgstr ""
 
 # 6edb6624b7a342d08938636439c7f192
-#: ../../ref/models/querysets.txt:1395
+#: ../../ref/models/querysets.txt:1405
 msgid ""
 "Takes a list of primary-key values and returns a dictionary mapping each "
 "primary-key value to an instance of the object with the given ID."
 msgstr ""
 
 # 86a3793113f4425ca7ebd768234eca7b
-#: ../../ref/models/querysets.txt:1407
+#: ../../ref/models/querysets.txt:1417
 msgid ""
 "If you pass ``in_bulk()`` an empty list, you'll get an empty dictionary."
 msgstr ""
 
 # acc6068123c54c2f849ad58f62cbb6ad
-#: ../../ref/models/querysets.txt:1410
+#: ../../ref/models/querysets.txt:1420
 msgid "iterator"
 msgstr ""
 
 # 73dba9f3e0154b9aa03243a0476e444f
-#: ../../ref/models/querysets.txt:1414
+#: ../../ref/models/querysets.txt:1424
 msgid ""
 "Evaluates the ``QuerySet`` (by performing the query) and returns an iterator "
 "(see :pep:`234`) over the results. A ``QuerySet`` typically caches its "
@@ -1931,33 +2145,40 @@ msgid ""
 msgstr ""
 
 # 6ddbfbdde0b0433fb919283bab10857c
-#: ../../ref/models/querysets.txt:1423
+#: ../../ref/models/querysets.txt:1433
 msgid ""
 "Note that using ``iterator()`` on a ``QuerySet`` which has already been "
 "evaluated will force it to evaluate again, repeating the query."
 msgstr ""
 
+# b35756d3cd9a4ee49466a724284c48c4
+#: ../../ref/models/querysets.txt:1436
+msgid ""
+"Also, use of ``iterator()`` causes previous ``prefetch_related()`` calls to "
+"be ignored since these two optimizations do not make sense together."
+msgstr ""
+
 # 208b177164b04f64889b2348092a7a6a
-#: ../../ref/models/querysets.txt:1427
+#: ../../ref/models/querysets.txt:1440
 msgid "latest"
 msgstr ""
 
 # a59d25c8101d4318aa291b3de3ce78cc
-#: ../../ref/models/querysets.txt:1431
+#: ../../ref/models/querysets.txt:1444
 msgid ""
 "Returns the latest object in the table, by date, using the ``field_name`` "
 "provided as the date field."
 msgstr ""
 
 # 92c95fe7b6414491820ddf5d34908e1c
-#: ../../ref/models/querysets.txt:1434
+#: ../../ref/models/querysets.txt:1447
 msgid ""
 "This example returns the latest ``Entry`` in the table, according to the "
 "``pub_date`` field::"
 msgstr ""
 
 # 46e53a048abe4842ab1948a410ac7ea9
-#: ../../ref/models/querysets.txt:1439
+#: ../../ref/models/querysets.txt:1452
 msgid ""
 "If your model's :ref:`Meta <meta-options>` specifies :attr:`~django.db."
 "models.Options.get_latest_by`, you can leave off the ``field_name`` argument "
@@ -1966,24 +2187,24 @@ msgid ""
 msgstr ""
 
 # 12ca2adda00e4890a443adaeb6769fb1
-#: ../../ref/models/querysets.txt:1444
+#: ../../ref/models/querysets.txt:1457
 msgid ""
 "Like :meth:`get()`, ``latest()`` raises :exc:`~django.core.exceptions."
 "DoesNotExist` if there is no object with the given parameters."
 msgstr ""
 
 # 4b363776d5f14c71ab312253808eb6c2
-#: ../../ref/models/querysets.txt:1448
+#: ../../ref/models/querysets.txt:1461
 msgid "Note ``latest()`` exists purely for convenience and readability."
 msgstr ""
 
 # bfeeeab3484b4fcc918460675ff3ef05
-#: ../../ref/models/querysets.txt:1451
+#: ../../ref/models/querysets.txt:1464
 msgid "aggregate"
 msgstr ""
 
 # d55f4538662444eba46ec70f6ff639f3
-#: ../../ref/models/querysets.txt:1455
+#: ../../ref/models/querysets.txt:1468
 msgid ""
 "Returns a dictionary of aggregate values (averages, sums, etc) calculated "
 "over the ``QuerySet``. Each argument to ``aggregate()`` specifies a value "
@@ -1991,7 +2212,7 @@ msgid ""
 msgstr ""
 
 # c51b80cd24bd4d82a249065668c34bdd
-#: ../../ref/models/querysets.txt:1462
+#: ../../ref/models/querysets.txt:1475
 msgid ""
 "Aggregates specified using keyword arguments will use the keyword as the "
 "name for the annotation. Anonymous arguments will have a name generated for "
@@ -2000,26 +2221,26 @@ msgid ""
 msgstr ""
 
 # 1913362ad43347b2a98db63df08b4bff
-#: ../../ref/models/querysets.txt:1467
+#: ../../ref/models/querysets.txt:1480
 msgid ""
 "For example, when you are working with blog entries, you may want to know "
 "the number of authors that have contributed blog entries::"
 msgstr ""
 
 # b61aba939cdb4885a8631a6545bbadb7
-#: ../../ref/models/querysets.txt:1473
+#: ../../ref/models/querysets.txt:1486
 msgid ""
 "By using a keyword argument to specify the aggregate function, you can "
 "control the name of the aggregation value that is returned::"
 msgstr ""
 
 # 21912a482abc4405ba8a73d2c249d1f5
-#: ../../ref/models/querysets.txt:1483
+#: ../../ref/models/querysets.txt:1496
 msgid "exists"
 msgstr ""
 
 # 3f644a7cf9d44244b98391c7769cf49f
-#: ../../ref/models/querysets.txt:1489
+#: ../../ref/models/querysets.txt:1502
 msgid ""
 "Returns ``True`` if the :class:`.QuerySet` contains any results, and "
 "``False`` if not. This tries to perform the query in the simplest and "
@@ -2034,40 +2255,40 @@ msgid ""
 msgstr ""
 
 # 2572fda74ca44d289833cc0cba802033
-#: ../../ref/models/querysets.txt:1500
+#: ../../ref/models/querysets.txt:1513
 msgid "update"
 msgstr ""
 
 # a4c91155b1dd41c88ec0db1a173a3b46
-#: ../../ref/models/querysets.txt:1504
+#: ../../ref/models/querysets.txt:1517
 msgid ""
 "Performs an SQL update query for the specified fields, and returns the "
 "number of rows affected."
 msgstr ""
 
 # 7e03b96273aa49a58c2db0cb2894a390
-#: ../../ref/models/querysets.txt:1507
+#: ../../ref/models/querysets.txt:1520
 msgid ""
 "For example, to turn comments off for all blog entries published in 2010, "
 "you could do this::"
 msgstr ""
 
 # 22cf494cf25d42b0929e99b30ec9f3e9
-#: ../../ref/models/querysets.txt:1512
+#: ../../ref/models/querysets.txt:1525
 msgid ""
 "(This assumes your ``Entry`` model has fields ``pub_date`` and "
 "``comments_on``.)"
 msgstr ""
 
 # faf468726ffc4ef5a6b9160a2a9b0a9c
-#: ../../ref/models/querysets.txt:1514
+#: ../../ref/models/querysets.txt:1527
 msgid ""
 "You can update multiple fields — there's no limit on how many. For example, "
 "here we update the ``comments_on`` and ``headline`` fields::"
 msgstr ""
 
 # d5effcc09c334221bc79a2fc6dc3569a
-#: ../../ref/models/querysets.txt:1519
+#: ../../ref/models/querysets.txt:1532
 msgid ""
 "The ``update()`` method is applied instantly, and the only restriction on "
 "the :class:`.QuerySet` that is updated is that it can only update columns in "
@@ -2076,24 +2297,24 @@ msgid ""
 msgstr ""
 
 # 3a55314724fb4f5d8a6c460c9898300b
-#: ../../ref/models/querysets.txt:1525
+#: ../../ref/models/querysets.txt:1538
 msgid "Filtering based on related fields is still possible, though::"
 msgstr ""
 
 # 30e646114e6c458fb47e302c6b7911df
-#: ../../ref/models/querysets.txt:1529
+#: ../../ref/models/querysets.txt:1542
 msgid ""
 "You cannot call ``update()`` on a :class:`.QuerySet` that has had a slice "
 "taken or can otherwise no longer be filtered."
 msgstr ""
 
 # c685709233f040009860bd95b74cc47c
-#: ../../ref/models/querysets.txt:1532
+#: ../../ref/models/querysets.txt:1545
 msgid "The ``update()`` method returns the number of affected rows::"
 msgstr ""
 
 # 13882289825d4bdd8a6e8498e59f6c97
-#: ../../ref/models/querysets.txt:1543
+#: ../../ref/models/querysets.txt:1556
 msgid ""
 "If you're just updating a record and don't need to do anything with the "
 "model object, the most efficient approach is to call ``update()``, rather "
@@ -2102,12 +2323,12 @@ msgid ""
 msgstr ""
 
 # dd5ce4a1ef454fba9c4043eb63f68545
-#: ../../ref/models/querysets.txt:1551
+#: ../../ref/models/querysets.txt:1564
 msgid "...do this::"
 msgstr ""
 
 # ca0d678b2a9e4e418c2b1aa668532a32
-#: ../../ref/models/querysets.txt:1555
+#: ../../ref/models/querysets.txt:1568
 msgid ""
 "Using ``update()`` also prevents a race condition wherein something might "
 "change in your database in the short period of time between loading the "
@@ -2115,7 +2336,7 @@ msgid ""
 msgstr ""
 
 # e0ebad2b134c44c79b449bc990b41f33
-#: ../../ref/models/querysets.txt:1559
+#: ../../ref/models/querysets.txt:1572
 msgid ""
 "Finally, realize that ``update()`` does an update at the SQL level and, "
 "thus, does not call any ``save()`` methods on your models, nor does it emit "
@@ -2128,12 +2349,12 @@ msgid ""
 msgstr ""
 
 # 4b8f43a4018a42c0a1a66605ecbb75e3
-#: ../../ref/models/querysets.txt:1573
+#: ../../ref/models/querysets.txt:1586
 msgid "delete"
 msgstr ""
 
 # 53f0a6c8591d4972bdf8ba341367186e
-#: ../../ref/models/querysets.txt:1577
+#: ../../ref/models/querysets.txt:1590
 msgid ""
 "Performs an SQL delete query on all rows in the :class:`.QuerySet`. The "
 "``delete()`` is applied instantly. You cannot call ``delete()`` on a :class:"
@@ -2142,12 +2363,12 @@ msgid ""
 msgstr ""
 
 # c625ae58e6e74f64ae4700d54defa837
-#: ../../ref/models/querysets.txt:1582
+#: ../../ref/models/querysets.txt:1595
 msgid "For example, to delete all the entries in a particular blog::"
 msgstr ""
 
 # 8846a1b9b7c34df0b9d4d3395ce93ab6
-#: ../../ref/models/querysets.txt:1589
+#: ../../ref/models/querysets.txt:1602
 msgid ""
 "By default, Django's :class:`~django.db.models.ForeignKey` emulates the SQL "
 "constraint ``ON DELETE CASCADE`` — in other words, any objects with foreign "
@@ -2156,7 +2377,7 @@ msgid ""
 msgstr ""
 
 # 84906fc72d9a421d9671ed99afe8aafb
-#: ../../ref/models/querysets.txt:1603
+#: ../../ref/models/querysets.txt:1616
 msgid ""
 "The ``delete()`` method does a bulk delete and does not call any ``delete()"
 "`` methods on your models. It does, however, emit the :data:`~django.db."
@@ -2165,12 +2386,12 @@ msgid ""
 msgstr ""
 
 # 6f7c8ae944d44149a7f4ff47bcd9d252
-#: ../../ref/models/querysets.txt:1612
+#: ../../ref/models/querysets.txt:1625
 msgid "Field lookups"
 msgstr ""
 
 # 51a52e84582f4171938ee8b0bfc913cf
-#: ../../ref/models/querysets.txt:1614
+#: ../../ref/models/querysets.txt:1627
 msgid ""
 "Field lookups are how you specify the meat of an SQL ``WHERE`` clause. "
 "They're specified as keyword arguments to the ``QuerySet`` methods :meth:"
@@ -2178,19 +2399,19 @@ msgid ""
 msgstr ""
 
 # ae6ddfe541a64124b34b96b3977286e6
-#: ../../ref/models/querysets.txt:1618
+#: ../../ref/models/querysets.txt:1631
 msgid ""
 "For an introduction, see :ref:`models and database queries documentation "
 "<field-lookups-intro>`."
 msgstr ""
 
 # bca209d42092487e9964c7652b9a211b
-#: ../../ref/models/querysets.txt:1624
+#: ../../ref/models/querysets.txt:1637
 msgid "exact"
 msgstr ""
 
 # a9234d56d6b84edbbf3b8d8794028b17
-#: ../../ref/models/querysets.txt:1626
+#: ../../ref/models/querysets.txt:1639
 msgid ""
 "Exact match. If the value provided for comparison is ``None``, it will be "
 "interpreted as an SQL ``NULL`` (see :lookup:`isnull` for more details)."
@@ -2199,13 +2420,13 @@ msgstr ""
 # d332fc1c658a4492ae9b562a479dfdab
 # 24d5295c790c46f9a975fcd88f1e3ba7
 # 86bd9402d19f48fe82b1bf3e6b1ee382
-#: ../../ref/models/querysets.txt:1634 ../../ref/models/querysets.txt:2067
-#: ../../ref/models/querysets.txt:2091
+#: ../../ref/models/querysets.txt:1647 ../../ref/models/querysets.txt:2080
+#: ../../ref/models/querysets.txt:2104
 msgid "SQL equivalents::"
 msgstr ""
 
 # 56ead27abcc8461283aa4cf1d6797f50
-#: ../../ref/models/querysets.txt:1641
+#: ../../ref/models/querysets.txt:1654
 msgid ""
 "In MySQL, a database table's \"collation\" setting determines whether "
 "``exact`` comparisons are case-sensitive. This is a database setting, *not* "
@@ -2216,12 +2437,12 @@ msgid ""
 msgstr ""
 
 # ecfdd7bed2094711a71275393092098b
-#: ../../ref/models/querysets.txt:1651
+#: ../../ref/models/querysets.txt:1664
 msgid "iexact"
 msgstr ""
 
 # c790d016148f48d9bbcf0b0cf507598b
-#: ../../ref/models/querysets.txt:1653
+#: ../../ref/models/querysets.txt:1666
 msgid "Case-insensitive exact match."
 msgstr ""
 
@@ -2240,26 +2461,26 @@ msgstr ""
 # 7951d6720d58440a904b19337aac5c5c
 # 8379281c0c194dfe8d56ed8b7c2dd56f
 # c28ee383e69e4fc2bf54dfbf03ea8dcb
-#: ../../ref/models/querysets.txt:1659 ../../ref/models/querysets.txt:1684
-#: ../../ref/models/querysets.txt:1709 ../../ref/models/querysets.txt:1730
-#: ../../ref/models/querysets.txt:1803 ../../ref/models/querysets.txt:1839
-#: ../../ref/models/querysets.txt:1857 ../../ref/models/querysets.txt:1878
-#: ../../ref/models/querysets.txt:1899 ../../ref/models/querysets.txt:1922
-#: ../../ref/models/querysets.txt:1940 ../../ref/models/querysets.txt:1958
-#: ../../ref/models/querysets.txt:1975 ../../ref/models/querysets.txt:2024
-#: ../../ref/models/querysets.txt:2040
+#: ../../ref/models/querysets.txt:1672 ../../ref/models/querysets.txt:1697
+#: ../../ref/models/querysets.txt:1722 ../../ref/models/querysets.txt:1743
+#: ../../ref/models/querysets.txt:1816 ../../ref/models/querysets.txt:1852
+#: ../../ref/models/querysets.txt:1870 ../../ref/models/querysets.txt:1891
+#: ../../ref/models/querysets.txt:1912 ../../ref/models/querysets.txt:1935
+#: ../../ref/models/querysets.txt:1953 ../../ref/models/querysets.txt:1971
+#: ../../ref/models/querysets.txt:1988 ../../ref/models/querysets.txt:2037
+#: ../../ref/models/querysets.txt:2053
 msgid "SQL equivalent::"
 msgstr ""
 
 # 24fc5adf9f7c4fafab99fa1468e29d2b
-#: ../../ref/models/querysets.txt:1663
+#: ../../ref/models/querysets.txt:1676
 msgid ""
 "Note this will match ``'Beatles Blog'``, ``'beatles blog'``, ``'BeAtLes "
 "BLoG'``, etc."
 msgstr ""
 
 # 31922d4f9efd46af950059bc8e326b70
-#: ../../ref/models/querysets.txt:1668
+#: ../../ref/models/querysets.txt:1681
 msgid ""
 "When using the SQLite backend and Unicode (non-ASCII) strings, bear in mind "
 "the :ref:`database note <sqlite-string-matching>` about string comparisons. "
@@ -2267,24 +2488,24 @@ msgid ""
 msgstr ""
 
 # dbbc4737795e4a4885885819f055ddb6
-#: ../../ref/models/querysets.txt:1676
+#: ../../ref/models/querysets.txt:1689
 msgid "contains"
 msgstr ""
 
 # 67343a542c2b4215be9327d0e4f1f55b
-#: ../../ref/models/querysets.txt:1678
+#: ../../ref/models/querysets.txt:1691
 msgid "Case-sensitive containment test."
 msgstr ""
 
 # e5d327a989cb4a898992968cc8489424
-#: ../../ref/models/querysets.txt:1688
+#: ../../ref/models/querysets.txt:1701
 msgid ""
 "Note this will match the headline ``'Lennon honored today'`` but not "
 "``'lennon honored today'``."
 msgstr ""
 
 # d7808b395aa945fa9d064e4b5430a13c
-#: ../../ref/models/querysets.txt:1693
+#: ../../ref/models/querysets.txt:1706
 msgid ""
 "SQLite doesn't support case-sensitive ``LIKE`` statements; ``contains`` acts "
 "like ``icontains`` for SQLite. See the :ref:`database note <sqlite-string-"
@@ -2292,54 +2513,62 @@ msgid ""
 msgstr ""
 
 # 3fd1c8a55daf4573977c0a7222291e88
-#: ../../ref/models/querysets.txt:1701
+#: ../../ref/models/querysets.txt:1714
 msgid "icontains"
 msgstr ""
 
 # 77b1dc9d5c064180abdc64a1ca07f124
-#: ../../ref/models/querysets.txt:1703
+#: ../../ref/models/querysets.txt:1716
 msgid "Case-insensitive containment test."
 msgstr ""
 
 # 3a8bf3be9bb64a409e14445f8ec03060
 # e63d0675b70646bd88a85572c3fafc4e
 # 19daad0c85bd4d89953acee3b9f59a77
-#: ../../ref/models/querysets.txt:1715 ../../ref/models/querysets.txt:1863
-#: ../../ref/models/querysets.txt:1905
+#: ../../ref/models/querysets.txt:1728 ../../ref/models/querysets.txt:1876
+#: ../../ref/models/querysets.txt:1918
 msgid ""
 "When using the SQLite backend and Unicode (non-ASCII) strings, bear in mind "
 "the :ref:`database note <sqlite-string-matching>` about string comparisons."
 msgstr ""
 
 # fcb2730a5a3e4b8597ae9319634d8f27
-#: ../../ref/models/querysets.txt:1722
+#: ../../ref/models/querysets.txt:1735
 msgid "in"
 msgstr ""
 
 # 87ea959d64274072873bb0c8167796b4
-#: ../../ref/models/querysets.txt:1724
+#: ../../ref/models/querysets.txt:1737
 msgid "In a given list."
 msgstr ""
 
 # 060a14ce774b4558bbe7f4a1d5be3445
-#: ../../ref/models/querysets.txt:1734
+#: ../../ref/models/querysets.txt:1747
 msgid ""
 "You can also use a queryset to dynamically evaluate the list of values "
 "instead of providing a list of literal values::"
 msgstr ""
 
 # 09549617c55b4da0be0d7c80bd940757
-#: ../../ref/models/querysets.txt:1740
+#: ../../ref/models/querysets.txt:1753
 msgid "This queryset will be evaluated as subselect statement::"
 msgstr ""
 
 # 0b7fc4a3228c42aabf3aa94d106113a8
-#: ../../ref/models/querysets.txt:1744
+#: ../../ref/models/querysets.txt:1757
 msgid "The above code fragment could also be written as follows::"
 msgstr ""
 
+# 9ae624ee61424a079d1c098af52c0b07
+#: ../../ref/models/querysets.txt:1764
+msgid ""
+"This ``query`` attribute should be considered an opaque internal attribute. "
+"It's fine to use it like above, but its API may change between Django "
+"versions."
+msgstr ""
+
 # bd583955c9b54d38b2f0aa18316c83d2
-#: ../../ref/models/querysets.txt:1749
+#: ../../ref/models/querysets.txt:1768
 msgid ""
 "This second form is a bit less readable and unnatural to write, since it "
 "accesses the internal ``query`` attribute and requires a ``ValuesQuerySet``. "
@@ -2348,7 +2577,7 @@ msgid ""
 msgstr ""
 
 # 4a105d294b9e4eefa408d733720bc6a7
-#: ../../ref/models/querysets.txt:1754
+#: ../../ref/models/querysets.txt:1773
 msgid ""
 "If you pass in a ``ValuesQuerySet`` or ``ValuesListQuerySet`` (the result of "
 "calling ``values()`` or ``values_list()`` on a queryset) as the value to an "
@@ -2357,22 +2586,14 @@ msgid ""
 msgstr ""
 
 # 6e61d91c22c44361af2c75b994c0cdc2
-#: ../../ref/models/querysets.txt:1762
+#: ../../ref/models/querysets.txt:1781
 msgid ""
 "This example will raise an exception, since the inner query is trying to "
 "extract two field values, where only one is expected::"
 msgstr ""
 
-# 9ae624ee61424a079d1c098af52c0b07
-#: ../../ref/models/querysets.txt:1771
-msgid ""
-"This ``query`` attribute should be considered an opaque internal attribute. "
-"It's fine to use it like above, but its API may change between Django "
-"versions."
-msgstr ""
-
 # 1894acc1d7c04b8da51f2a490e298bef
-#: ../../ref/models/querysets.txt:1777
+#: ../../ref/models/querysets.txt:1790
 msgid ""
 "Be cautious about using nested queries and understand your database server's "
 "performance characteristics (if in doubt, benchmark!). Some database "
@@ -2382,7 +2603,7 @@ msgid ""
 msgstr ""
 
 # 3dffaf2d368b41228ba28d3674580965
-#: ../../ref/models/querysets.txt:1788
+#: ../../ref/models/querysets.txt:1801
 msgid ""
 "Note the ``list()`` call around the Blog ``QuerySet`` to force execution of "
 "the first query. Without it, a nested query would be executed, because :ref:"
@@ -2390,84 +2611,84 @@ msgid ""
 msgstr ""
 
 # efdcfa281a21404fb26fcb8bb34bdef5
-#: ../../ref/models/querysets.txt:1795
+#: ../../ref/models/querysets.txt:1808
 msgid "gt"
 msgstr ""
 
 # 298b78972f8445dcb2ac8f0f189e6096
-#: ../../ref/models/querysets.txt:1797
+#: ../../ref/models/querysets.txt:1810
 msgid "Greater than."
 msgstr ""
 
 # 93226a1d19bc4775a46b54ad66c3a196
-#: ../../ref/models/querysets.txt:1810
+#: ../../ref/models/querysets.txt:1823
 msgid "gte"
 msgstr ""
 
 # 700d1b4529a247b08eb6d54ec431bc0d
-#: ../../ref/models/querysets.txt:1812
+#: ../../ref/models/querysets.txt:1825
 msgid "Greater than or equal to."
 msgstr ""
 
 # 2c2ab2f71bb84b9fa62774f8804dd5b1
-#: ../../ref/models/querysets.txt:1817
+#: ../../ref/models/querysets.txt:1830
 msgid "lt"
 msgstr ""
 
 # 5f12fe0149774a9b86f7c8c583d35b65
-#: ../../ref/models/querysets.txt:1819
+#: ../../ref/models/querysets.txt:1832
 msgid "Less than."
 msgstr ""
 
 # 634baf15353246e7a3262c1daa6772ba
-#: ../../ref/models/querysets.txt:1824
+#: ../../ref/models/querysets.txt:1837
 msgid "lte"
 msgstr ""
 
 # e99ffbafead64b74b48a32b9d67edc85
-#: ../../ref/models/querysets.txt:1826
+#: ../../ref/models/querysets.txt:1839
 msgid "Less than or equal to."
 msgstr ""
 
 # 7ff40223fac34ad18eba45a83140a83b
-#: ../../ref/models/querysets.txt:1831
+#: ../../ref/models/querysets.txt:1844
 msgid "startswith"
 msgstr ""
 
 # 88cbfd11577c4dd183bf087d0899bef9
-#: ../../ref/models/querysets.txt:1833
+#: ../../ref/models/querysets.txt:1846
 msgid "Case-sensitive starts-with."
 msgstr ""
 
 # 92612c5066fb4c5ca34d09c691000470
-#: ../../ref/models/querysets.txt:1843
+#: ../../ref/models/querysets.txt:1856
 msgid ""
 "SQLite doesn't support case-sensitive ``LIKE`` statements; ``startswith`` "
 "acts like ``istartswith`` for SQLite."
 msgstr ""
 
 # 111d6588245743338bc6865cffd6b528
-#: ../../ref/models/querysets.txt:1849
+#: ../../ref/models/querysets.txt:1862
 msgid "istartswith"
 msgstr ""
 
 # ff564778fbed4940ad6ca9079a6afb00
-#: ../../ref/models/querysets.txt:1851
+#: ../../ref/models/querysets.txt:1864
 msgid "Case-insensitive starts-with."
 msgstr ""
 
 # 4c98a20fb2914c2c86251bb55eb9e77c
-#: ../../ref/models/querysets.txt:1870
+#: ../../ref/models/querysets.txt:1883
 msgid "endswith"
 msgstr ""
 
 # a000eade0e104eeb869237a1a2221e86
-#: ../../ref/models/querysets.txt:1872
+#: ../../ref/models/querysets.txt:1885
 msgid "Case-sensitive ends-with."
 msgstr ""
 
 # ed826e4d9d2e44c9bf4517ef099b194f
-#: ../../ref/models/querysets.txt:1884
+#: ../../ref/models/querysets.txt:1897
 msgid ""
 "SQLite doesn't support case-sensitive ``LIKE`` statements; ``endswith`` acts "
 "like ``iendswith`` for SQLite. Refer to the :ref:`database note <sqlite-"
@@ -2475,98 +2696,98 @@ msgid ""
 msgstr ""
 
 # 1922221732f14962b994fd2ea4ba7f0d
-#: ../../ref/models/querysets.txt:1891
+#: ../../ref/models/querysets.txt:1904
 msgid "iendswith"
 msgstr ""
 
 # 071c72167d2043aca090635e4060f292
-#: ../../ref/models/querysets.txt:1893
+#: ../../ref/models/querysets.txt:1906
 msgid "Case-insensitive ends-with."
 msgstr ""
 
 # 9ed5736e60ef43b8a31f2631034d5f8c
-#: ../../ref/models/querysets.txt:1912
+#: ../../ref/models/querysets.txt:1925
 msgid "range"
 msgstr ""
 
 # d4da44bd202649b08723993ca9536afc
-#: ../../ref/models/querysets.txt:1914
+#: ../../ref/models/querysets.txt:1927
 msgid "Range test (inclusive)."
 msgstr ""
 
 # 5b0e615a17dc44aa88d03060f4da36fa
-#: ../../ref/models/querysets.txt:1926
+#: ../../ref/models/querysets.txt:1939
 msgid ""
 "You can use ``range`` anywhere you can use ``BETWEEN`` in SQL — for dates, "
 "numbers and even characters."
 msgstr ""
 
 # f4d814190b4344149dbc839518920ac4
-#: ../../ref/models/querysets.txt:1932
+#: ../../ref/models/querysets.txt:1945
 msgid "year"
 msgstr ""
 
 # fd13d794f2a2494689122c5fc066e0cd
-#: ../../ref/models/querysets.txt:1934
+#: ../../ref/models/querysets.txt:1947
 msgid "For date/datetime fields, exact year match. Takes a four-digit year."
 msgstr ""
 
 # 29083d0d847d4a7e8bff552fb33ec6c8
 # 56fee1cc131943e1922b92d0ce10e52e
 # 8c63272bae8e4af4b3187a69dae74c62
-#: ../../ref/models/querysets.txt:1944 ../../ref/models/querysets.txt:1962
-#: ../../ref/models/querysets.txt:1979
+#: ../../ref/models/querysets.txt:1957 ../../ref/models/querysets.txt:1975
+#: ../../ref/models/querysets.txt:1992
 msgid "(The exact SQL syntax varies for each database engine.)"
 msgstr ""
 
 # 003f2b547be24a74b2a8ffcb2f3a0d8a
-#: ../../ref/models/querysets.txt:1949
+#: ../../ref/models/querysets.txt:1962
 msgid "month"
 msgstr ""
 
 # 8ab04c7938334d4cb1b2571c04614547
-#: ../../ref/models/querysets.txt:1951
+#: ../../ref/models/querysets.txt:1964
 msgid ""
 "For date and datetime fields, an exact month match. Takes an integer 1 "
 "(January) through 12 (December)."
 msgstr ""
 
 # 3a7fa46732934635ba5767f67a5aaa83
-#: ../../ref/models/querysets.txt:1967
+#: ../../ref/models/querysets.txt:1980
 msgid "day"
 msgstr ""
 
 # 774d8c63fc154b85a91ae9aba6b60abd
-#: ../../ref/models/querysets.txt:1969
+#: ../../ref/models/querysets.txt:1982
 msgid "For date and datetime fields, an exact day match."
 msgstr ""
 
 # 86d6c940d9aa427d822aae2f525b374c
-#: ../../ref/models/querysets.txt:1981
+#: ../../ref/models/querysets.txt:1994
 msgid ""
 "Note this will match any record with a pub_date on the third day of the "
 "month, such as January 3, July 3, etc."
 msgstr ""
 
 # 431be0498e904a54ad9c34278ca3bbb4
-#: ../../ref/models/querysets.txt:1987
+#: ../../ref/models/querysets.txt:2000
 msgid "week_day"
 msgstr ""
 
 # 92392f5c054441589284b93eadbeef2e
-#: ../../ref/models/querysets.txt:1989
+#: ../../ref/models/querysets.txt:2002
 msgid "For date and datetime fields, a 'day of the week' match."
 msgstr ""
 
 # 3b6f9608043a48feb7b8fedd160c34c3
-#: ../../ref/models/querysets.txt:1991
+#: ../../ref/models/querysets.txt:2004
 msgid ""
 "Takes an integer value representing the day of week from 1 (Sunday) to 7 "
 "(Saturday)."
 msgstr ""
 
 # 9c3d1a50ec6e4c268855f16ee1bf6b13
-#: ../../ref/models/querysets.txt:1998
+#: ../../ref/models/querysets.txt:2011
 msgid ""
 "(No equivalent SQL code fragment is included for this lookup because "
 "implementation of the relevant query varies among different database "
@@ -2574,7 +2795,7 @@ msgid ""
 msgstr ""
 
 # 567c6d131a684d7a8d1019ac60c9749f
-#: ../../ref/models/querysets.txt:2001
+#: ../../ref/models/querysets.txt:2014
 msgid ""
 "Note this will match any record with a ``pub_date`` that falls on a Monday "
 "(day 2 of the week), regardless of the month or year in which it occurs. "
@@ -2582,7 +2803,7 @@ msgid ""
 msgstr ""
 
 # 2c9d52cc99be446aacd1620c56e67d2b
-#: ../../ref/models/querysets.txt:2007
+#: ../../ref/models/querysets.txt:2020
 msgid ""
 "When :doc:`time zone support </topics/i18n/timezones>` is enabled, Django "
 "uses UTC in the database connection, which means the ``year``, ``month``, "
@@ -2591,24 +2812,24 @@ msgid ""
 msgstr ""
 
 # 0f8c1aba3b344712a47b748a97f71791
-#: ../../ref/models/querysets.txt:2015
+#: ../../ref/models/querysets.txt:2028
 msgid "isnull"
 msgstr ""
 
 # b960054304bd41fb8c7ecfedc385b26b
-#: ../../ref/models/querysets.txt:2017
+#: ../../ref/models/querysets.txt:2030
 msgid ""
 "Takes either ``True`` or ``False``, which correspond to SQL queries of ``IS "
 "NULL`` and ``IS NOT NULL``, respectively."
 msgstr ""
 
 # db6edd7fde1c4b9486c42146373b906c
-#: ../../ref/models/querysets.txt:2031
+#: ../../ref/models/querysets.txt:2044
 msgid "search"
 msgstr ""
 
 # 4a83426ab742406da796b34e4fd38ca5
-#: ../../ref/models/querysets.txt:2033
+#: ../../ref/models/querysets.txt:2046
 msgid ""
 "A boolean full-text search, taking advantage of full-text indexing. This is "
 "like :lookup:`contains` but is significantly faster due to full-text "
@@ -2616,7 +2837,7 @@ msgid ""
 msgstr ""
 
 # 0332f758885746daa36ec358647475b5
-#: ../../ref/models/querysets.txt:2044
+#: ../../ref/models/querysets.txt:2057
 msgid ""
 "Note this is only available in MySQL and requires direct manipulation of the "
 "database to add the full-text index. By default Django uses BOOLEAN MODE for "
@@ -2624,17 +2845,17 @@ msgid ""
 msgstr ""
 
 # 6e9ccec583714105bfd48647f2903e39
-#: ../../ref/models/querysets.txt:2054
+#: ../../ref/models/querysets.txt:2067
 msgid "regex"
 msgstr ""
 
 # 227495836b474b5986622a6c1950ac2b
-#: ../../ref/models/querysets.txt:2056
+#: ../../ref/models/querysets.txt:2069
 msgid "Case-sensitive regular expression match."
 msgstr ""
 
 # 740fd2774c72493b9c8e212ef912da36
-#: ../../ref/models/querysets.txt:2058
+#: ../../ref/models/querysets.txt:2071
 msgid ""
 "The regular expression syntax is that of the database backend in use. In the "
 "case of SQLite, which has no built in regular expression support, this "
@@ -2643,29 +2864,29 @@ msgid ""
 msgstr ""
 
 # 9b3fc2d9a56548c3ba11e0247a34b673
-#: ../../ref/models/querysets.txt:2077
+#: ../../ref/models/querysets.txt:2090
 msgid ""
 "Using raw strings (e.g., ``r'foo'`` instead of ``'foo'``) for passing in the "
 "regular expression syntax is recommended."
 msgstr ""
 
 # 2d839032a9214965a439641605172826
-#: ../../ref/models/querysets.txt:2083
+#: ../../ref/models/querysets.txt:2096
 msgid "iregex"
 msgstr ""
 
 # 05e579fa80194fe0a677ec04c254126a
-#: ../../ref/models/querysets.txt:2085
+#: ../../ref/models/querysets.txt:2098
 msgid "Case-insensitive regular expression match."
 msgstr ""
 
 # 729b14fd249648b9b31bb0ef98f94119
-#: ../../ref/models/querysets.txt:2104
+#: ../../ref/models/querysets.txt:2117
 msgid "Aggregation functions"
 msgstr ""
 
 # 0db7cc5369fc410abe92d4b71fce6968
-#: ../../ref/models/querysets.txt:2108
+#: ../../ref/models/querysets.txt:2121
 msgid ""
 "Django provides the following aggregation functions in the ``django.db."
 "models`` module. For details on how to use these aggregate functions, see :"
@@ -2673,171 +2894,172 @@ msgid ""
 msgstr ""
 
 # b62b96d46a654d3491ba4da2641de110
-#: ../../ref/models/querysets.txt:2114
+#: ../../ref/models/querysets.txt:2127
 msgid "Avg"
 msgstr ""
 
-# fcaaf71aa2e74314b1fb581e97e828a5
-#: ../../ref/models/querysets.txt:2118
-msgid "Returns the mean value of the given field."
+# 4f087bf53f1846879bddb58150ef6abd
+#: ../../ref/models/querysets.txt:2131
+msgid "Returns the mean value of the given field, which must be numeric."
 msgstr ""
 
 # 6690fc6440444e229991c12a0bad51d7
-#: ../../ref/models/querysets.txt:2120
+#: ../../ref/models/querysets.txt:2133
 msgid "Default alias: ``<field>__avg``"
 msgstr ""
 
-# fbfd639b1cd24b8583389537bb0d5e2d
-# 76ecee6035224afeaff9ab013fbfcfe4
-# a6bf49880dd64c7f9ce8de4a4de6de14
-#: ../../ref/models/querysets.txt:2121 ../../ref/models/querysets.txt:2168
-#: ../../ref/models/querysets.txt:2201
-msgid "Return type: float"
+# e9374dd835b64a0796f49cafb63d2793
+# dc35896edcc54a28b706b32c314569ec
+# 8af88572fb7043c295515783d6a8f2bf
+#: ../../ref/models/querysets.txt:2134 ../../ref/models/querysets.txt:2182
+#: ../../ref/models/querysets.txt:2216
+msgid "Return type: ``float``"
 msgstr ""
 
 # 0c409d1475354def93edde29830f7ac4
-#: ../../ref/models/querysets.txt:2124
+#: ../../ref/models/querysets.txt:2137
 msgid "Count"
 msgstr ""
 
 # 7620ea9ffc0648bf96b86af00b52b4f3
-#: ../../ref/models/querysets.txt:2128
+#: ../../ref/models/querysets.txt:2141
 msgid ""
 "Returns the number of objects that are related through the provided field."
 msgstr ""
 
 # ebcbab5dfc8948ac9da204f618439c2b
-#: ../../ref/models/querysets.txt:2130
+#: ../../ref/models/querysets.txt:2143
 msgid "Default alias: ``<field>__count``"
 msgstr ""
 
-# 29519fcf4aa14a068a56e342baaa10d9
-#: ../../ref/models/querysets.txt:2131
-msgid "Return type: integer"
+# 8f27a0c018b8479f89cb3436efa6200e
+#: ../../ref/models/querysets.txt:2144
+msgid "Return type: ``int``"
 msgstr ""
 
 # 7b78afaeef4f4c68a747e09ad5aa3808
 # 965c986ae74645b68ccd5fd615dc7890
 # 79693bc662c34ffab94db87939cbf07a
-#: ../../ref/models/querysets.txt:2133 ../../ref/models/querysets.txt:2170
-#: ../../ref/models/querysets.txt:2203
+#: ../../ref/models/querysets.txt:2146 ../../ref/models/querysets.txt:2184
+#: ../../ref/models/querysets.txt:2218
 msgid "Has one optional argument:"
 msgstr ""
 
-# 1df67fefcbc24544ab96f6641127d816
-#: ../../ref/models/querysets.txt:2137
+# 475af4945fa7432ea3c6ccb205836fd7
+#: ../../ref/models/querysets.txt:2150
 msgid ""
-"If distinct=True, the count will only include unique instances. This has the "
-"SQL equivalent of ``COUNT(DISTINCT field)``. Default value is ``False``."
+"If ``distinct=True``, the count will only include unique instances. This is "
+"the SQL equivalent of ``COUNT(DISTINCT <field>)``. The default value is "
+"``False``."
 msgstr ""
 
 # ada47e189ee6457db1dfe81a771f62ba
-#: ../../ref/models/querysets.txt:2141
+#: ../../ref/models/querysets.txt:2155
 msgid "Max"
 msgstr ""
 
 # c39eab0e29cc4c9e8f5c4906ffd2e0bd
-#: ../../ref/models/querysets.txt:2145
+#: ../../ref/models/querysets.txt:2159
 msgid "Returns the maximum value of the given field."
 msgstr ""
 
 # ced5a09597d44654940ee0335d460243
-#: ../../ref/models/querysets.txt:2147
+#: ../../ref/models/querysets.txt:2161
 msgid "Default alias: ``<field>__max``"
 msgstr ""
 
 # 3697fdcfb61d47f48026e21adf8a69dc
 # 731b2c19d6d74c118da15e41828e0958
 # f11f6e6ff69a493e8ea9e58573a648c5
-#: ../../ref/models/querysets.txt:2148 ../../ref/models/querysets.txt:2158
-#: ../../ref/models/querysets.txt:2191
+#: ../../ref/models/querysets.txt:2162 ../../ref/models/querysets.txt:2172
+#: ../../ref/models/querysets.txt:2206
 msgid "Return type: same as input field"
 msgstr ""
 
 # 005622d3bbfa4271956016793ade610f
-#: ../../ref/models/querysets.txt:2151
+#: ../../ref/models/querysets.txt:2165
 msgid "Min"
 msgstr ""
 
 # 961c01be2a224222b5d329b06bee39e3
-#: ../../ref/models/querysets.txt:2155
+#: ../../ref/models/querysets.txt:2169
 msgid "Returns the minimum value of the given field."
 msgstr ""
 
 # e32617a3373d412782bdfc2d70347a5e
-#: ../../ref/models/querysets.txt:2157
+#: ../../ref/models/querysets.txt:2171
 msgid "Default alias: ``<field>__min``"
 msgstr ""
 
 # 6a9353ad6067426e9973c9e219303ad3
-#: ../../ref/models/querysets.txt:2161
+#: ../../ref/models/querysets.txt:2175
 msgid "StdDev"
 msgstr ""
 
 # 0c05bca7d1314a0c967070c0b345f71d
-#: ../../ref/models/querysets.txt:2165
+#: ../../ref/models/querysets.txt:2179
 msgid "Returns the standard deviation of the data in the provided field."
 msgstr ""
 
 # b52735b21eac46eb9a5d41d9ff8489cd
-#: ../../ref/models/querysets.txt:2167
+#: ../../ref/models/querysets.txt:2181
 msgid "Default alias: ``<field>__stddev``"
 msgstr ""
 
 # 24195ce6426e45c38ee7918f58c49587
-#: ../../ref/models/querysets.txt:2174
+#: ../../ref/models/querysets.txt:2188
 msgid ""
 "By default, ``StdDev`` returns the population standard deviation. However, "
 "if ``sample=True``, the return value will be the sample standard deviation."
 msgstr ""
 
-# 29c80f5a5ee44c42aa3d99f28c4f30da
-#: ../../ref/models/querysets.txt:2179
+# 3e965735e1444d8885183edd5981400c
+#: ../../ref/models/querysets.txt:2193
 msgid ""
 "SQLite doesn't provide ``StdDev`` out of the box. An implementation is "
-"available as an extension module for SQLite. Consult the SQlite "
-"documentation for instructions on obtaining and installing this extension."
+"available as an extension module for SQLite. Consult the `SQlite "
+"documentation`_ for instructions on obtaining and installing this extension."
 msgstr ""
 
 # c15dfc1c05a14212bb0fc4be6550fc31
-#: ../../ref/models/querysets.txt:2184
+#: ../../ref/models/querysets.txt:2199
 msgid "Sum"
 msgstr ""
 
 # 3d3652bb66364c77a828d2e0197165ac
-#: ../../ref/models/querysets.txt:2188
+#: ../../ref/models/querysets.txt:2203
 msgid "Computes the sum of all values of the given field."
 msgstr ""
 
 # 28ecdfc98f5e42a5a0bc42c286d93393
-#: ../../ref/models/querysets.txt:2190
+#: ../../ref/models/querysets.txt:2205
 msgid "Default alias: ``<field>__sum``"
 msgstr ""
 
 # 3a32fc4286914984813cde2c218131c2
-#: ../../ref/models/querysets.txt:2194
+#: ../../ref/models/querysets.txt:2209
 msgid "Variance"
 msgstr ""
 
 # 783e403140ed4b3bbbec4334b291bc5f
-#: ../../ref/models/querysets.txt:2198
+#: ../../ref/models/querysets.txt:2213
 msgid "Returns the variance of the data in the provided field."
 msgstr ""
 
 # 36da04f912d944988d28bedf8f989068
-#: ../../ref/models/querysets.txt:2200
+#: ../../ref/models/querysets.txt:2215
 msgid "Default alias: ``<field>__variance``"
 msgstr ""
 
 # 10d003b4052e43a0ba85413ce4eae0b5
-#: ../../ref/models/querysets.txt:2207
+#: ../../ref/models/querysets.txt:2222
 msgid ""
 "By default, ``Variance`` returns the population variance. However, if "
 "``sample=True``, the return value will be the sample variance."
 msgstr ""
 
 # 7bab55b99e094dd299f28af98b427972
-#: ../../ref/models/querysets.txt:2212
+#: ../../ref/models/querysets.txt:2227
 msgid ""
 "SQLite doesn't provide ``Variance`` out of the box. An implementation is "
 "available as an extension module for SQLite. Consult the `SQlite "
