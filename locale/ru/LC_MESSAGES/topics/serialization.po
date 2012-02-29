@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-15 15:13\n"
+"POT-Creation-Date: 2012-02-29 18:30\n"
 "PO-Revision-Date: 2012-02-15 15:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -308,30 +308,42 @@ msgstr ""
 msgid "Natural keys"
 msgstr ""
 
-# 6cbc390b735e4c6d9c1bc01adfe35e48
-#: ../../topics/serialization.txt:204
+# 8488aef23215450fa97f524ac42e1385
+#: ../../topics/serialization.txt:205
 msgid ""
 "The default serialization strategy for foreign keys and many-to-many "
 "relations is to serialize the value of the primary key(s) of the objects in "
-"the relation. This strategy works well for most types of object, but it can "
-"cause difficulty in some circumstances."
+"the relation. This strategy works well for most objects, but it can cause "
+"difficulty in some circumstances."
 msgstr ""
 
-# f762071786264d6ea25f70f6e2c1fbb4
-#: ../../topics/serialization.txt:209
+# 0498878ff7ea4a93b0e041d95d04b9a4
+#: ../../topics/serialization.txt:210
 msgid ""
-"Consider the case of a list of objects that have foreign key on :class:"
-"`ContentType`. If you're going to serialize an object that refers to a "
-"content type, you need to have a way to refer to that content type. Content "
-"Types are automatically created by Django as part of the database "
-"synchronization process, so you don't need to include content types in a "
-"fixture or other serialized data. As a result, the primary key of any given "
-"content type isn't easy to predict - it will depend on how and when :djadmin:"
-"`syncdb` was executed to create the content types."
+"Consider the case of a list of objects that have a foreign key referencing :"
+"class:`~django.contrib.conttenttypes.models.ContentType`. If you're going to "
+"serialize an object that refers to a content type, then you need to have a "
+"way to refer to that content type to begin with. Since ``ContentType`` "
+"objects are automatically created by Django during the database "
+"synchronization process, the primary key of a given content type isn't easy "
+"to predict; it will depend on how and when :djadmin:`syncdb` was executed. "
+"This is true for all models which automatically generate objects, notably "
+"including :class:`~django.contrib.auth.models.Permission`, :class:`~django."
+"contrib.auth.models.Group`, and :class:`~django.contrib.auth.models.User`."
+msgstr ""
+
+# 6bf64397ee114d10b4bb9d7d4804f69a
+#: ../../topics/serialization.txt:224
+msgid ""
+"You should never include automatically generated objects in a fixture or "
+"other serialized data. By chance, the primary keys in the fixture may match "
+"those in the database and loading the fixture will have no effect. In the "
+"more likely case that they don't match, the fixture loading will fail with "
+"an :class:`~django.db.IntegrityError`."
 msgstr ""
 
 # 23534447895f4c3c96ea3e53e4e61250
-#: ../../topics/serialization.txt:219
+#: ../../topics/serialization.txt:230
 msgid ""
 "There is also the matter of convenience. An integer id isn't always the most "
 "convenient way to refer to an object; sometimes, a more natural reference "
@@ -339,7 +351,7 @@ msgid ""
 msgstr ""
 
 # 613d5d14371a4446bd97f4e4bff5463b
-#: ../../topics/serialization.txt:223
+#: ../../topics/serialization.txt:234
 msgid ""
 "It is for these reasons that Django provides *natural keys*. A natural key "
 "is a tuple of values that can be used to uniquely identify an object "
@@ -347,24 +359,24 @@ msgid ""
 msgstr ""
 
 # 18a5a8388674425684614e3e8cddd95d
-#: ../../topics/serialization.txt:228
+#: ../../topics/serialization.txt:239
 msgid "Deserialization of natural keys"
 msgstr ""
 
 # 5ef0d3fc4e6444488c486c2821216ba3
-#: ../../topics/serialization.txt:230
+#: ../../topics/serialization.txt:241
 msgid "Consider the following two models::"
 msgstr ""
 
 # f07cabce99af4e0b8ec717444eab6617
-#: ../../topics/serialization.txt:247
+#: ../../topics/serialization.txt:258
 msgid ""
 "Ordinarily, serialized data for ``Book`` would use an integer to refer to "
 "the author. For example, in JSON, a Book might be serialized as::"
 msgstr ""
 
 # e0f5c4db9f8241d2adda5d3fc0624cfb
-#: ../../topics/serialization.txt:261
+#: ../../topics/serialization.txt:272
 msgid ""
 "This isn't a particularly natural way to refer to an author. It requires "
 "that you know the primary key value for the author; it also requires that "
@@ -372,7 +384,7 @@ msgid ""
 msgstr ""
 
 # 496d9fb9656644cab4770d15f428bb8c
-#: ../../topics/serialization.txt:265
+#: ../../topics/serialization.txt:276
 msgid ""
 "However, if we add natural key handling to Person, the fixture becomes much "
 "more humane. To add natural key handling, you define a default Manager for "
@@ -381,12 +393,12 @@ msgid ""
 msgstr ""
 
 # 9646cb764e5a45a0b39945f8e81cd0d8
-#: ../../topics/serialization.txt:288
+#: ../../topics/serialization.txt:299
 msgid "Now books can use that natural key to refer to ``Person`` objects::"
 msgstr ""
 
 # 516dcd27af1d4240b30edbba073eb1e3
-#: ../../topics/serialization.txt:301
+#: ../../topics/serialization.txt:312
 msgid ""
 "When you try to load this serialized data, Django will use the "
 "``get_by_natural_key()`` method to resolve ``[\"Douglas\", \"Adams\"]`` into "
@@ -394,7 +406,7 @@ msgid ""
 msgstr ""
 
 # 6f8c4b869a114d45a27477a3594201a6
-#: ../../topics/serialization.txt:307
+#: ../../topics/serialization.txt:318
 msgid ""
 "Whatever fields you use for a natural key must be able to uniquely identify "
 "an object. This will usually mean that your model will have a uniqueness "
@@ -406,19 +418,19 @@ msgid ""
 msgstr ""
 
 # 32ab1c1564144b00a5ec7ffc78bd7d8c
-#: ../../topics/serialization.txt:317
+#: ../../topics/serialization.txt:328
 msgid "Serialization of natural keys"
 msgstr ""
 
 # 7ce6dcc36bf2421c91bc3b9c2c6bc00b
-#: ../../topics/serialization.txt:319
+#: ../../topics/serialization.txt:330
 msgid ""
 "So how do you get Django to emit a natural key when serializing an object? "
 "Firstly, you need to add another method -- this time to the model itself::"
 msgstr ""
 
 # dcd44a2d69e34551a53b64eb0e37cd98
-#: ../../topics/serialization.txt:336
+#: ../../topics/serialization.txt:347
 msgid ""
 "That method should always return a natural key tuple -- in this example, ``"
 "(first name, last name)``. Then, when you call ``serializers.serialize()``, "
@@ -426,7 +438,7 @@ msgid ""
 msgstr ""
 
 # e50f295a7cbd4e5d9cc687e07ea75d21
-#: ../../topics/serialization.txt:343
+#: ../../topics/serialization.txt:354
 msgid ""
 "When ``use_natural_keys=True`` is specified, Django will use the "
 "``natural_key()`` method to serialize any reference to objects of the type "
@@ -434,14 +446,14 @@ msgid ""
 msgstr ""
 
 # 88984d04d5a841ecbecf01e16c1a9a9d
-#: ../../topics/serialization.txt:347
+#: ../../topics/serialization.txt:358
 msgid ""
 "If you are using :djadmin:`dumpdata` to generate serialized data, you use "
 "the `--natural` command line flag to generate natural keys."
 msgstr ""
 
 # 93fd6d461cfb45aca10394bc7eff5cb4
-#: ../../topics/serialization.txt:352
+#: ../../topics/serialization.txt:363
 msgid ""
 "You don't need to define both ``natural_key()`` and ``get_by_natural_key()"
 "``. If you don't want Django to output natural keys during serialization, "
@@ -450,7 +462,7 @@ msgid ""
 msgstr ""
 
 # 1d639729f75440ecad22007eb81dc2b9
-#: ../../topics/serialization.txt:358
+#: ../../topics/serialization.txt:369
 msgid ""
 "Conversely, if (for some strange reason) you want Django to output natural "
 "keys during serialization, but *not* be able to load those key values, just "
@@ -458,29 +470,29 @@ msgid ""
 msgstr ""
 
 # 7da9e775a04d45bd8e619f48cad6d7bd
-#: ../../topics/serialization.txt:363
+#: ../../topics/serialization.txt:374
 msgid "Dependencies during serialization"
 msgstr ""
 
-# 2d296db512094f30920b2fc5bf819386
-#: ../../topics/serialization.txt:365
+# 37fee3d85245479ca091163ddd63f044
+#: ../../topics/serialization.txt:376
 msgid ""
 "Since natural keys rely on database lookups to resolve references, it is "
-"important that data exists before it is referenced. You can't make a "
-"`forward reference` with natural keys - the data you are referencing must "
+"important that the data exists before it is referenced. You can't make a "
+"`forward reference` with natural keys -- the data you're referencing must "
 "exist before you include a natural key reference to that data."
 msgstr ""
 
-# f2159af068904127a361d76c55cc60e3
-#: ../../topics/serialization.txt:370
+# 0f5c649304844ac4ab07b6ff8afe3cba
+#: ../../topics/serialization.txt:381
 msgid ""
 "To accommodate this limitation, calls to :djadmin:`dumpdata` that use the :"
 "djadminopt:`--natural` option will serialize any model with a ``natural_key()"
-"`` method before it serializes normal key objects."
+"`` method before serializing standard primary key objects."
 msgstr ""
 
 # 8f72f724f3194da596c5c7160c536265
-#: ../../topics/serialization.txt:374
+#: ../../topics/serialization.txt:385
 msgid ""
 "However, this may not always be enough. If your natural key refers to "
 "another object (by using a foreign key or natural key to another object as "
@@ -490,33 +502,32 @@ msgid ""
 msgstr ""
 
 # d6f4bba335404a87af802c483cc4e2b7
-#: ../../topics/serialization.txt:380
+#: ../../topics/serialization.txt:391
 msgid ""
 "To control this ordering, you can define dependencies on your ``natural_key()"
 "`` methods. You do this by setting a ``dependencies`` attribute on the "
 "``natural_key()`` method itself."
 msgstr ""
 
-# 3cbe65b32b554d199d8db439add251e5
-#: ../../topics/serialization.txt:384
-msgid ""
-"For example, consider the ``Permission`` model in ``contrib.auth``. The "
-"following is a simplified version of the ``Permission`` model::"
-msgstr ""
-
-# db17e4849cd6474baa0e862d2f2386cb
+# 519ddb02429541faa4262392c13df2f3
 #: ../../topics/serialization.txt:395
 msgid ""
-"The natural key for a ``Permission`` is a combination of the codename for "
-"the ``Permission``, and the ``ContentType`` to which the ``Permission`` "
-"applies. This means that ``ContentType`` must be serialized before "
-"``Permission``. To define this dependency, we add one extra line::"
+"For example, let's add a natural key to the ``Book`` model from the example "
+"above::"
 msgstr ""
 
-# 9b57d61769e6481b9c6035abd9760056
-#: ../../topics/serialization.txt:406
+# bbc5ff6504fc459b8f77963a1c6309c3
+#: ../../topics/serialization.txt:405
 msgid ""
-"This definition ensures that ``ContentType`` models are serialized before "
-"``Permission`` models. In turn, any object referencing ``Permission`` will "
-"be serialized after both ``ContentType`` and ``Permission``."
+"The natural key for a ``Book`` is a combination of its name and its author. "
+"This means that ``Person`` must be serialized before ``Book``. To define "
+"this dependency, we add one extra line::"
+msgstr ""
+
+# a32677f58f93420aaaabf9930545061b
+#: ../../topics/serialization.txt:413
+msgid ""
+"This definition ensures that all ``Person`` objects are serialized before "
+"any ``Book`` objects. In turn, any object referencing ``Book`` will be "
+"serialized after both ``Person`` and ``Book`` have been serialized."
 msgstr ""
