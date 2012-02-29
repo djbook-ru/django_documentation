@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated, 2012.
+# Automatically generated <>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2012-02-29 23:01+0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 # 4cc932d9ef744290bc400ca2a669cae6
 #: ../../topics/db/transactions.txt:3
 msgid "Managing database transactions"
-msgstr ""
+msgstr "Управление транзакциями"
 
 # de779103b58c4774a85e4bc9d4924241
 #: ../../topics/db/transactions.txt:7
@@ -29,11 +29,13 @@ msgid ""
 "Django gives you a few ways to control how database transactions are "
 "managed, if you're using a database that supports transactions."
 msgstr ""
+"Django предоставляет несколько способов использования механизма транзакций, "
+"который может предоставлять база данных."
 
 # 367327ff4acb4fca87958fa26c0eae7a
 #: ../../topics/db/transactions.txt:11
 msgid "Django's default transaction behavior"
-msgstr ""
+msgstr "Стандартное поведение Django"
 
 # 671fdefd331e4b37b4a41f471bec31cb
 #: ../../topics/db/transactions.txt:13
@@ -43,6 +45,10 @@ msgid ""
 "called. For example, if you call ``model.save()`` or ``model.delete()``, the "
 "change will be committed immediately."
 msgstr ""
+"Обычно Django выполняет создаёт транзакцию и фиксирует её автоматически "
+"после выполнения любой встроенной, изменяющей данный функции модели. "
+"Например, если вызвать ``model.save()`` или ``model.delete()``, то изменения "
+"будут немедленно зафиксированы в базе данных."
 
 # 4e34ed2db647461f92745f91ef77298c
 #: ../../topics/db/transactions.txt:18
@@ -52,11 +58,16 @@ msgid ""
 "``INSERT``/``UPDATE``/``DELETE`` statements and then does the ``COMMIT``. "
 "There's no implicit ``ROLLBACK``."
 msgstr ""
+"Такое поведение аналогично автоматической фиксации (``auto-commit``), "
+"которая предоставляется большинством баз данных. Как только вы выполняете "
+"действие, которое требует записи в базу данных, Django выполняет ``INSERT``/"
+"``UPDATE``/``DELETE`` операторы и затем фиксирует изменения с помощью "
+"``COMMIT``."
 
 # 4b68e0d22c4b4a3d909c42db7413da70
 #: ../../topics/db/transactions.txt:24
 msgid "Tying transactions to HTTP requests"
-msgstr ""
+msgstr "Привязка транзакций к HTTP запросам"
 
 # 3c3660b3f0b74509a6ffcce5689d93a2
 #: ../../topics/db/transactions.txt:26
@@ -64,6 +75,9 @@ msgid ""
 "The recommended way to handle transactions in Web requests is to tie them to "
 "the request and response phases via Django's ``TransactionMiddleware``."
 msgstr ""
+"Рекомендованным способом использования транзакций в веб запросах является их "
+"привязка к фазам запроса и ответа с помощью прослойки (middleware) Django "
+"``TransactionMiddleware``."
 
 # 8cf50f314cb5478bb0cedc7bc21718cc
 #: ../../topics/db/transactions.txt:29
@@ -73,6 +87,10 @@ msgid ""
 "transactions. If the view function produces an exception, Django rolls back "
 "any pending transactions."
 msgstr ""
+"Это работает следующим образом: При получении запроса Django начинает "
+"транзакцию. Если отклик был создан без возникновения ошибок, Django "
+"фиксирует все ожидающие транзакции. Если функция представления вызывает "
+"исключение, Django откатывает все ожидающие транзакции."
 
 # 7f8eb095ff1d49269075e5bb0b172180
 #: ../../topics/db/transactions.txt:34
@@ -80,6 +98,8 @@ msgid ""
 "To activate this feature, just add the ``TransactionMiddleware`` middleware "
 "to your :setting:`MIDDLEWARE_CLASSES` setting::"
 msgstr ""
+"Для активации этой возможности, просто добавьте прослойку "
+"``TransactionMiddleware`` в настройку :setting:`MIDDLEWARE_CLASSES`::"
 
 # 1ed9e60e2d5d4673bbe1f25afc4621c1
 #: ../../topics/db/transactions.txt:45
@@ -89,6 +109,10 @@ msgid ""
 "if you use the session middleware after the transaction middleware, session "
 "creation will be part of the transaction."
 msgstr ""
+"Порядок указания прослоек в списке имеет большое значение. Прослойка "
+"транзакций влияет не только на функции представления, но и на все вложенные "
+"прослойки. Таким образом, если прослойка сессий указана после прослойки "
+"транзакций, то создание сессии будет частью транзакции."
 
 # e4076c0602d84aca8f357970353c6d79
 #: ../../topics/db/transactions.txt:50
@@ -100,11 +124,16 @@ msgid ""
 "caching, Django's cache backend uses its own database cursor (which is "
 "mapped to its own database connection internally)."
 msgstr ""
+"Различные кэширующие прослойки не попадают под это правило: :class:`~django."
+"middleware.cache.CacheMiddleware`, :class:`~django.middleware.cache."
+"UpdateCacheMiddleware`, и :class:`~django.middleware.cache."
+"FetchFromCacheMiddleware`. Даже при использовании кэширования в базу данных, "
+"бэкэнд кэша использует для своей работы отдельный курсор БД."
 
 # 9ec15ad440d54d4eb2d525aa91049116
 #: ../../topics/db/transactions.txt:60
 msgid "Controlling transaction management in views"
-msgstr ""
+msgstr "Управление транзакциями в представлениях"
 
 # 6fa9bbeb71e8433ebd1c321b2ae0efa0
 #: ../../topics/db/transactions.txt:65
@@ -114,6 +143,10 @@ msgid ""
 "managed, you can use a set of functions in ``django.db.transaction`` to "
 "control transactions on a per-function or per-code-block basis."
 msgstr ""
+"Для большинства людей неявные автоматические транзакции работают отлично. "
+"Тем не менее, если вам требуется более тонкий контроль над управлением, вы "
+"можете воспользоваться рядом функций из ``django.db.transaction`` на уровне "
+"функции или блока кода."
 
 # fcaf422700ff40eeb1acf584346984f5
 #: ../../topics/db/transactions.txt:70
@@ -121,16 +154,19 @@ msgid ""
 "These functions, described in detail below, can be used in two different "
 "ways:"
 msgstr ""
+"Эти функции, рассмотренные подробно далее, могут быть использованы двумя "
+"способами:"
 
 # 956a913338bd480aaf53ed48593ce0e8
 #: ../../topics/db/transactions.txt:72
 msgid "As a decorator_ on a particular function. For example::"
-msgstr ""
+msgstr "В качестве `декоратора <decorator>`_ функции. Например::"
 
 # e0991ef5370844ec9a1c1c19307e6e8f
 #: ../../topics/db/transactions.txt:82
 msgid "As a `context manager`_ around a particular block of code::"
 msgstr ""
+"В качестве `менеджера контекста <context manager>`_ вокруг блока кода::"
 
 # c74309bbc90b4823b8a7f7f4cfeba124
 #: ../../topics/db/transactions.txt:96
@@ -139,6 +175,10 @@ msgid ""
 "Python 2.5, you must add ``from __future__ import with_statement`` at the "
 "beginning of your module if you are using the ``with`` statement."
 msgstr ""
+"Обе методики работают со всеми поддерживаемыми версиями Python. Тем не "
+"менее, в Python 2.5, вы должны добавить инструкцию ``from __future__ import "
+"with_statement`` в начало вашего модуля, чтобы иметь возможность "
+"использовать оператор ``with``."
 
 # fbeb45f0ed8a4f9e9ee5f00a1fa514d2
 #: ../../topics/db/transactions.txt:103
@@ -147,6 +187,9 @@ msgid ""
 "the decorator syntax, but all of the follow functions may be used as context "
 "managers, too."
 msgstr ""
+"Для наибольшей совместимости, все приведённые далее примеры показывают "
+"использование декоратора для управления транзакциями. Но все эти функции "
+"могут быть использованы и с контекстным менеджером."
 
 # 30a4cc289b1344cc9f01fbea3a11c5e1
 #: ../../topics/db/transactions.txt:109
@@ -155,6 +198,9 @@ msgid ""
 "and context managers can be used anywhere in your code that you need to deal "
 "with transactions."
 msgstr ""
+"Несмотря на то, что приведённые далее примеры используют функции "
+"представления, эти декораторы и контекстные менеджеры могут быть "
+"использованы в любом месте вашего кода, в котором их применение имеет смысл."
 
 # 554998e77c6c4d238e32b30f8fa632cd
 #: ../../topics/db/transactions.txt:117
@@ -162,11 +208,14 @@ msgid ""
 "Use the ``autocommit`` decorator to switch a view function to Django's "
 "default commit behavior, regardless of the global transaction setting."
 msgstr ""
+"Используйте декоратор ``autocommit`` для принудительного использования "
+"стандартного механизма Django для автоматической фиксации изменений, вне "
+"зависимости от глобальной настройки управления транзакциями."
 
 # 02b9ea05a5884266b1056bc112afad58
 #: ../../topics/db/transactions.txt:120
 msgid "Example::"
-msgstr ""
+msgstr "Пример::"
 
 # 553416575631465eaea8928ac1729e63
 #: ../../topics/db/transactions.txt:132
@@ -176,6 +225,10 @@ msgid ""
 "the database.  ``viewfunc2()`` will have this same behavior, but for the ``"
 "\"my_other_database\"`` connection."
 msgstr ""
+"В функции ``viewfunc()`` транзакции будут зафиксированы как только вы "
+"вызовете ``model.save()``, ``model.delete()`` или любую другую функцию, "
+"которая приводит к записи в базу данных. Функция ``viewfunc2()`` работает "
+"аналогично, но использует соединение ``\"my_other_database\"``."
 
 # 5a69201a42a243549c1f0649919f77e7
 #: ../../topics/db/transactions.txt:139
@@ -183,6 +236,8 @@ msgid ""
 "Use the ``commit_on_success`` decorator to use a single transaction for all "
 "the work done in a function::"
 msgstr ""
+"Используйте декоратор ``commit_on_success`` для объединения всех действий "
+"функции в единственную транзакцию::"
 
 # 215db948f3324d6b96ffb4311d23c1b3
 #: ../../topics/db/transactions.txt:152
@@ -191,6 +246,9 @@ msgid ""
 "within the function at that point. If the function raises an exception, "
 "though, Django will roll back the transaction."
 msgstr ""
+"Если функция отрабатывает без ошибок, то Django фиксирует все изменения, "
+"которые она создала. Если функция вызывает исключение, то Django откатывает "
+"изменения, созданные в транзакции."
 
 # c7502285d1e74815ac3435ca2b551d1d
 #: ../../topics/db/transactions.txt:158
@@ -198,6 +256,9 @@ msgid ""
 "Use the ``commit_manually`` decorator if you need full control over "
 "transactions. It tells Django you'll be managing the transaction on your own."
 msgstr ""
+"Используйте декорматор ``commit_manually``, если вам требуется полный "
+"контроль над транзакциями. Этот декоратор указывает Django, что транзакцией "
+"управляете вы сами."
 
 # 1ceba0051107442393fc304c38001f30
 #: ../../topics/db/transactions.txt:162
@@ -205,16 +266,19 @@ msgid ""
 "If your view changes data and doesn't ``commit()`` or ``rollback()``, Django "
 "will raise a ``TransactionManagementError`` exception."
 msgstr ""
+"Если ваше представление изменяет данные и не завершает свою работу вызовом "
+"``commit()`` или ``rollback()``, то Django вызывает исключение "
+"``TransactionManagementError``."
 
 # 875b4bb15d9c400f90883a692d45ae79
 #: ../../topics/db/transactions.txt:165
 msgid "Manual transaction management looks like this::"
-msgstr ""
+msgstr "Ручное управление транзакцией выглядит следующим образом::"
 
 # daab8651e38c4f809413e27bc665b0b2
 #: ../../topics/db/transactions.txt:191
 msgid "Requirements for transaction handling"
-msgstr ""
+msgstr "Требования для обработки транзакций"
 
 # 23bfdb776e1d4ff694f9accb01a6f307
 #: ../../topics/db/transactions.txt:195
@@ -226,6 +290,12 @@ msgid ""
 "the :func:`commit_manually` decorator), you must ensure that the transaction "
 "is either committed or rolled back before a request is completed."
 msgstr ""
+"Django требует, чтобы каждая открытая транзакция была закрыта до завершения "
+"обработки запроса. Если вы используете :func:`autocommit` (стандартный режим "
+"фиксации) или :func:`commit_on_success`, то фиксация будет произведена "
+"автоматически. При ручном управлении транзакциями (при использовании "
+"декоратора :func:`commit_manually`), вы должны обеспечить фиксацию или откат "
+"изменений до завершения обработки запроса."
 
 # 115a27fb63934eaab4679941a172f7ae
 #: ../../topics/db/transactions.txt:203
@@ -234,11 +304,14 @@ msgid ""
 "your transaction only reads from the database, the transaction must be "
 "committed or rolled back before you complete a request."
 msgstr ""
+"Эти требования обязательны для всех операций с базой данных, не только для "
+"записи. Даже если ваша транзакция лишь читает из базы данных, транзакция "
+"должна быть зафиксирована или отменена до завершения обработки запроса."
 
 # 9803f47b47444902b7c3ea61078bbab1
 #: ../../topics/db/transactions.txt:208
 msgid "How to globally deactivate transaction management"
-msgstr ""
+msgstr "Как глобально деактивировать управление транзакциями"
 
 # b5534b84eb6c400ca700808a34e28db3
 #: ../../topics/db/transactions.txt:210
@@ -246,6 +319,9 @@ msgid ""
 "Control freaks can totally disable all transaction management by setting "
 "``DISABLE_TRANSACTION_MANAGEMENT`` to ``True`` in the Django settings file."
 msgstr ""
+"Сторонники параноидального контроля могут полностью отключить всё управление "
+"транзакциями, установив параметр ``DISABLE_TRANSACTION_MANAGEMENT`` равным "
+"``True`` в файле конфигурации Django."
 
 # ef1857570d224ef286cb9dbf58fe958f
 #: ../../topics/db/transactions.txt:213
@@ -255,6 +331,10 @@ msgid ""
 "you'll need to roll management yourself. This even requires you to commit "
 "changes done by middleware somewhere else."
 msgstr ""
+"Если вы это сделаете, Django не будет обеспечивать автоматическое управление "
+"транзакциями. Прослойка не будет неявно фиксировать транзакции и вам "
+"потребуется взять эту работу на себя. Также потребуется взять на себя "
+"фиксацию изменений, которые сделаны чужим кодом."
 
 # 15fdde51e90c4dab81c228c636a7f32d
 #: ../../topics/db/transactions.txt:218
@@ -264,11 +344,16 @@ msgid ""
 "all situations, you'll be better off using the default behavior, or the "
 "transaction middleware, and only modify selected functions as needed."
 msgstr ""
+"Следовательно, делать так лучше в ситуации, когда есть неукротимое желание "
+"использовать собственную мидлварь для управления транзакциями или что-то "
+"эмоционально подобное. В подавляющем большинстве ситуаций лучше продолжать "
+"использовать стандартный функционал Django, лишь в особых случаях беря "
+"ситуацию под свой контроль."
 
 # e5353a7c8bb648d6971c583a6fcb7b0a
 #: ../../topics/db/transactions.txt:226
 msgid "Savepoints"
-msgstr ""
+msgstr "Промежуточные точки"
 
 # 60e18029c7e545b4a6ab9c37e7644609
 #: ../../topics/db/transactions.txt:228
@@ -279,6 +364,11 @@ msgid ""
 "provide the savepoint functions, but they are empty operations - they won't "
 "actually do anything."
 msgstr ""
+"Промежуточной точкой называют маркер внутри транзации, который позволяет вам "
+"откатить лишь часть транзакции, а не всю. Промежуточные точки доступны при "
+"использовании PostgreSQL 8 и Oracle. В остальных случаях их использование не "
+"имеет смысла, так как функции работать будут без ошибок, но и реальных "
+"действий производить не будут."
 
 # c9eac2da1e1d465b91038a8bd092777e
 #: ../../topics/db/transactions.txt:234
@@ -291,6 +381,14 @@ msgid ""
 "provide the ability to perform a fine-grained rollback, rather than the full "
 "rollback that would be performed by ``transaction.rollback()``."
 msgstr ""
+"Промежуточные точки бесполезны, если вы используете стандартное поведение "
+"транзакций (т.е. автоматическую фиксацию изменений). Тем не менее, при "
+"использовании ``commit_on_success`` или ``commit_manually``, каждая открытая "
+"транзакция выполняет ряд операций в базе данных, ожидая фиксации или отката "
+"транзакции. Если вы выполните откат транзакции, то будет выполнен откат всей "
+"транзакции. Промежуточные точки предоставляют возможность выполнять "
+"частичный откат, вместо выполнения полного отката, который делается с "
+"помощью ``transaction.rollback()``."
 
 # b5761afe39df4f1880ca5a1d2fd66c1b
 #: ../../topics/db/transactions.txt:242
@@ -299,11 +397,14 @@ msgid ""
 "of a database for which the behavior applies.  If no ``using`` argument is "
 "provided then the ``\"default\"`` database is used."
 msgstr ""
+"Каждая из этих функция принимает аргумент ``using``, который обозначает имя "
+"базы данных с которой производится работа. Если этот аргумент не указан, то "
+"все действия идут относительно стандартной (``\"default\"``) базы данных."
 
 # b6ba6236c63c4374a8a9c9a71fa4578a
 #: ../../topics/db/transactions.txt:246
 msgid "Savepoints are controlled by three methods on the transaction object:"
-msgstr ""
+msgstr "Промежуточные точки управляются тремя методами объекта транзакции:"
 
 # 9bcb1bc5d14549e2a097ee02ccabb141
 #: ../../topics/db/transactions.txt:250
@@ -311,11 +412,13 @@ msgid ""
 "Creates a new savepoint. This marks a point in the transaction that is known "
 "to be in a \"good\" state."
 msgstr ""
+"Создаёт новую промежуточную точку, обозначая точку в транзакции, отмечающую "
+"\"хорошее\" состояние."
 
 # a80c88fe20ea456aabbf62945921842c
 #: ../../topics/db/transactions.txt:253
 msgid "Returns the savepoint ID (sid)."
-msgstr ""
+msgstr "Возвращает идентификатор промежуточной точки (``sid``)."
 
 # 08d265cb723b4015ad586c4143251921
 #: ../../topics/db/transactions.txt:257
@@ -323,23 +426,25 @@ msgid ""
 "Updates the savepoint to include any operations that have been performed "
 "since the savepoint was created, or since the last commit."
 msgstr ""
+"Обновляет промежуточную точку информацией о всех операциях, которые были "
+"выполнены с момента её создания или с момента последней фиксации."
 
 # 2240b980574b4bf588bca9f3d8ddc57b
 #: ../../topics/db/transactions.txt:262
 msgid ""
 "Rolls the transaction back to the last point at which the savepoint was "
 "committed."
-msgstr ""
+msgstr "Откатывает транзакцию до последней точки."
 
 # ed997682e0fa4bc9a900c6edb5ab64d0
 #: ../../topics/db/transactions.txt:265
 msgid "The following example demonstrates the use of savepoints::"
-msgstr ""
+msgstr "Следующие примеры демонстрируют использование промежуточных точек::"
 
 # 1cd9d1e6b3e74602a5909fa7b987370b
 #: ../../topics/db/transactions.txt:289
 msgid "Transactions in MySQL"
-msgstr ""
+msgstr "Транзакции в MySQL"
 
 # 51bd28f8f81e43c7b112007f204d5076
 #: ../../topics/db/transactions.txt:291
@@ -350,6 +455,11 @@ msgid ""
 "peculiarities are outside the scope of this article, but the MySQL site has "
 "`information on MySQL transactions`_."
 msgstr ""
+"При использовании MySQL поддержка трензакция зависит от версии движка базы "
+"данных и от используемого типа таблиц. (Под \"типом таблицы\" мы "
+"подразумеваем \"InnoDB\" или \"MyISAM\".) Особенности транзакций MySQL "
+"выходят за рамки данной статьи, но сайт MySQL содержит `информацию о "
+"транзакциях <information on MySQL transactions>`_."
 
 # 86c00e13de144dfb86bc00ae45ac780e
 #: ../../topics/db/transactions.txt:297
@@ -359,11 +469,15 @@ msgid ""
 "soon as they're called. If your MySQL setup *does* support transactions, "
 "Django will handle transactions as explained in this document."
 msgstr ""
+"Если ваша настройка MySQL *не поддерживает* транзакции, тогда Django будет "
+"работать в режиме автоматической фиксации: Операторы будут выполняться и "
+"сразу же фиксироваться. Если же ваша настройка MySQL *поддерживает* "
+"транзакции, Django будет обрабатывать транзакции, как это описано выше."
 
 # 1235948529204a689b68d888fbd47cfa
 #: ../../topics/db/transactions.txt:305
 msgid "Handling exceptions within PostgreSQL transactions"
-msgstr ""
+msgstr "Обработка исключений в транзакциях PostgreSQL"
 
 # 0d63e1677b8f4b1791dc358247514adb
 #: ../../topics/db/transactions.txt:307
@@ -376,21 +490,29 @@ msgid ""
 "might, such as saving objects with unique fields, saving using the "
 "force_insert/force_update flag, or invoking custom SQL."
 msgstr ""
+"Когда вызов к курсору PostgreSQL вызывает исключение (обычно "
+"`IntegrityError``), все последующие SQL запросы в той же транзакции будут "
+"заблокированы с ошибкой \"текущая транзакция прервана, запросы "
+"проигнорированы до конца транзакционного блока\". Хотя обычное использование "
+"``save()`` вряд ли вызовет исключение в PostgreSQL, существуют более сложные "
+"шаблоны использования, которые могут вызвать исключение: сохранение объектов "
+"с уникальными полями, сохранение с использованием флага ``force_insert``/"
+"``force_update`` или вызов собственного SQL."
 
 # 41c03d7594854df4bb16214fa841e61c
 #: ../../topics/db/transactions.txt:315
 msgid "There are several ways to recover from this sort of error."
-msgstr ""
+msgstr "Существует несколько способов выхода из этого вида ошибок."
 
 # 84f83f8b04894213abd824dbfe043ab5
 #: ../../topics/db/transactions.txt:318
 msgid "Transaction rollback"
-msgstr ""
+msgstr "Откат транзакции"
 
 # 43a06ad2083a4674b0c28d089fbe1270
 #: ../../topics/db/transactions.txt:320
 msgid "The first option is to roll back the entire transaction. For example::"
-msgstr ""
+msgstr "Позволяет выполнить полный откат транзакции. Например::"
 
 # 5bbb7fec588b4173ba34cd29b42f567e
 #: ../../topics/db/transactions.txt:329
@@ -400,11 +522,15 @@ msgid ""
 "made by ``a.save()`` would be lost, even though that operation raised no "
 "error itself."
 msgstr ""
+"Вызов ``transaction.rollback()`` откатывает всю транзакцию. Все "
+"незафиксированные в базе данных операции будут потеряны. В этом примере "
+"изменения, сделанные с помощью ``a.save()`` будут потеряны, несмотря на то, "
+"что эта операция прошла без ошибок."
 
 # a0f73197843a4f25b5c3ce9c5babb344
 #: ../../topics/db/transactions.txt:335
 msgid "Savepoint rollback"
-msgstr ""
+msgstr "Откат до промежуточной точки"
 
 # ea79025d957e4bd7981e474804dc2228
 #: ../../topics/db/transactions.txt:337
@@ -415,6 +541,13 @@ msgid ""
 "savepoint; that way, if the operation fails, you can roll back the single "
 "offending operation, rather than the entire transaction. For example::"
 msgstr ""
+"При использовании PostgreSQL 8+ вы можете использовать :ref:`промежуточные "
+"точки <topics-db-transactions-savepoints>` для управления глубиной отката. "
+"Перед выполнением действия над базой данных, которое может завершиться "
+"ошибкой, вы можете установить или обновить промежуточную точку. "
+"Впоследствии, если выполняемое действие завершится ошибкой, вы можете "
+"откатить только изменения, созданные этим действием, не оказывая влияние на "
+"всю транзакцию в целом. Например::"
 
 # 44fee65141514961b0deaad96a63b382
 #: ../../topics/db/transactions.txt:352
@@ -422,11 +555,13 @@ msgid ""
 "In this example, ``a.save()`` will not be undone in the case where ``b.save()"
 "`` raises an exception."
 msgstr ""
+"В этом примере ``a.save()`` не будет отменён, если ``b.save()`` вызовет "
+"исключение."
 
 # 6160f11265e64702998045b02ef423f3
 #: ../../topics/db/transactions.txt:356
 msgid "Database-level autocommit"
-msgstr ""
+msgstr "Автоматическая фиксация на уровне базы данных"
 
 # f94077f8ae154c63aad010d88df177f5
 #: ../../topics/db/transactions.txt:358
@@ -436,6 +571,10 @@ msgid ""
 "option, there is no constantly open transaction, so it is always possible to "
 "continue after catching an exception. For example::"
 msgstr ""
+"Начиная с PostgreSQL 8.2 появилась возможность использовать :doc:"
+"`автоматическую фиксацию на уровне базы данных </ref/databases>`. Если вы "
+"используете эту опцию, то для вам нет постоянно открытой транзакции, таким "
+"образом всегда можно продолжить работу после обработки исключения. Например::"
 
 # 9e5ea91594774d028f49958b72e3ab20
 #: ../../topics/db/transactions.txt:372
@@ -446,3 +585,8 @@ msgid ""
 "transactions, automatically committing each transaction when a database "
 "modifying operation occurs."
 msgstr ""
+"Эта опция не аналогична :ref:`декоратору автоматической фиксации <topics-db-"
+"transactions-autocommit>`. При использовании автоматической фиксации на "
+"уровне базы данных транзакций как бы вообще не существует. Декоратор "
+"``autocommit`` использует транзакции, автоматически фиксируя каждую из них "
+"при изменениях в базе данных."
