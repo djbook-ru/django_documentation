@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated, 2012.
+# Automatically generated <>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-15 15:13\n"
-"PO-Revision-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2012-02-29 17:51+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 # a4ddc79d3d4240fbaf014357723dd45c
 #: ../../ref/models/querysets.txt:3
 msgid "QuerySet API reference"
-msgstr ""
+msgstr "QuerySet API"
 
 # 93dca2c82f0c42dc9c97bbfb3a7a319a
 #: ../../ref/models/querysets.txt:7
@@ -31,6 +31,10 @@ msgid ""
 "`database query </topics/db/queries>` guides, so you'll probably want to "
 "read and understand those documents before reading this one."
 msgstr ""
+"Этот раздел описывает подробности ``QuerySet`` API. Изложенный материал "
+"опирается на материал, изложенный в разделах о :doc:`моделях </topics/db/"
+"models>` и :doc:`выполнении запросов </topics/db/queries>`, возможно вам "
+"следует прочитать их перед прочтением этого раздела."
 
 # f19e85b7e4874b628b1f97996cd04bd3
 #: ../../ref/models/querysets.txt:12
@@ -39,11 +43,14 @@ msgid ""
 "<queryset-model-example>` presented in the :doc:`database query guide </"
 "topics/db/queries>`."
 msgstr ""
+"В примерах будут использованы :ref:` примеры моделей web-блога <queryset-"
+"model-example>` представленные в разделе о :doc:`выполнении запросов </"
+"topics/db/queries>`."
 
 # ae28fbbf5a5c49d1ac0b40f966930aab
 #: ../../ref/models/querysets.txt:19
 msgid "When QuerySets are evaluated"
-msgstr ""
+msgstr "Когда вычисляется QuerySets"
 
 # 5dd5377703a945e4bcde2e5797e707bf
 #: ../../ref/models/querysets.txt:21
@@ -52,11 +59,14 @@ msgid ""
 "generally passed around without actually hitting the database. No database "
 "activity actually occurs until you do something to evaluate the queryset."
 msgstr ""
+"``QuerySet`` может быть создан, отфильтрован, ограничен и использован "
+"фактически без выполнения запросов к базе данных. База данных не будет "
+"затронута, пока вы не спровоцируете выполнение QuerySet."
 
 # ef3c207e9e724decb242d6fab6847a5c
 #: ../../ref/models/querysets.txt:25
 msgid "You can evaluate a ``QuerySet`` in the following ways:"
-msgstr ""
+msgstr "``QuerySet`` будет вычислен при таких действиях:"
 
 # e9bffa6ccc09496581d31d19a0e48c7c
 #: ../../ref/models/querysets.txt:27
@@ -65,6 +75,9 @@ msgid ""
 "query the first time you iterate over it. For example, this will print the "
 "headline of all entries in the database::"
 msgstr ""
+"**Итерация.** ``QuerySet`` -- это итератор, и при первом выполнении итерации "
+"будет произведен запрос к базе данных. Например, этот код выводи заголовки "
+"статей из базы данных::"
 
 # ea019d80409d44c082b23bd353e993ae
 #: ../../ref/models/querysets.txt:34
@@ -74,6 +87,10 @@ msgid ""
 "``QuerySet`` returns another (unevaluated) ``QuerySet``, but Django will "
 "execute the database query if you use the \"step\" parameter of slice syntax."
 msgstr ""
+"**Ограничение выборки.** Как описано в :ref:`limiting-querysets`, выборка "
+"``QuerySet`` может быть ограничена, используя синтаксис срезов в Python. "
+"Срез ``QuerySet`` вернет новый(невыполненный) ``QuerySet``, но Django "
+"выполнит запрос, если будет указан шаг среза."
 
 # 99a34d84d70f4617ae3ff5339d628e09
 #: ../../ref/models/querysets.txt:40
@@ -82,6 +99,9 @@ msgid ""
 "involved when `pickling QuerySets`_. The important thing for the purposes of "
 "this section is that the results are read from the database."
 msgstr ""
+"**Pickling/кэширование.** Смотрите соответствующий раздел о `pickling "
+"QuerySets`_. Основное замечание это то, что при этих операциях будет "
+"выполнен запрос к базе данных."
 
 # 872279b13af94aec98b1ca373cc0e01b
 #: ../../ref/models/querysets.txt:44
@@ -90,6 +110,9 @@ msgid ""
 "is for convenience in the Python interactive interpreter, so you can "
 "immediately see your results when using the API interactively."
 msgstr ""
+"**repr().** ``QuerySet`` будет вычислен при вызове ``repr()``. Это сделано "
+"для удобства использования в консоли Python, вы можете сразу увидеть "
+"результат работая с ``QuerySet`` в консоли."
 
 # e36ca60edd4a42f8a1ae96714efea75f
 #: ../../ref/models/querysets.txt:48
@@ -97,6 +120,8 @@ msgid ""
 "**len().** A ``QuerySet`` is evaluated when you call ``len()`` on it. This, "
 "as you might expect, returns the length of the result list."
 msgstr ""
+"**len().** ``QuerySet`` будет вычислен при выполнении ``len()`` над ним. Как "
+"вы и ожидаете будет возвращено количество объектов в результате выборки."
 
 # 4e7152e7b8a54da19602177972d20d79
 #: ../../ref/models/querysets.txt:51
@@ -107,6 +132,10 @@ msgid ""
 "Django provides a ``count()`` method for precisely this reason. See ``count()"
 "`` below."
 msgstr ""
+"Заметка: *Не используйте* ``len()`` с ``QuerySet`` если вам нужно узнать "
+"только количество записей в выборке. Эффективнее использовать подсчет на "
+"уровне базы данных, используя оператор SQL ``SELECT COUNT(*)``, и Django "
+"предоставляет метод ``count()`` для этого. Смотрите ``count()`` ниже."
 
 # f2ee6259dad84d99beaf8af8932b6442
 #: ../../ref/models/querysets.txt:57
@@ -114,6 +143,8 @@ msgid ""
 "**list().** Force evaluation of a ``QuerySet`` by calling ``list()`` on it. "
 "For example::"
 msgstr ""
+"**list().** ``QuerySet`` будет вычислен при использовании ``list()`` над "
+"ним. Например::"
 
 # 0528f3a870d4462abb105f30ba474788
 #: ../../ref/models/querysets.txt:62
@@ -123,6 +154,10 @@ msgid ""
 "iterating over a ``QuerySet`` will take advantage of your database to load "
 "data and instantiate objects only as you need them."
 msgstr ""
+"Будьте осторожны, так как при этом может быть использовано большое "
+"количество памяти, т.к. Django загрузит каждый элемент списка в память. В "
+"отличии от итерации по ``QuerySet``, при которой будут получены данные из "
+"базы данных, но объекты будут созданы только при обращении к ним."
 
 # 3e3a9035098f45a3a55134c68417686e
 #: ../../ref/models/querysets.txt:67
@@ -132,6 +167,10 @@ msgid ""
 "executed. If there is at least one result, the ``QuerySet`` is ``True``, "
 "otherwise ``False``. For example::"
 msgstr ""
+"**bool().** При вычислении булевого значения ``QuerySet``, например "
+"выполнении ``bool()``,  использовании с ``or``, ``and`` или ``if``. Если "
+"``QuerySet`` содержит хотя бы один элемент, результат будет ``True``, иначе "
+"-- ``False``. Например::"
 
 # 64e106da47db49398858e730d80ca97e
 #: ../../ref/models/querysets.txt:75
@@ -140,11 +179,15 @@ msgid ""
 "result exists, and don't need the actual objects. It's more efficient to "
 "use :meth:`exists() <QuerySet.exists>` (see below)."
 msgstr ""
+"Заметка: *не используйте* такой подходи, если необходимо всего лишь узнать "
+"содержит ли результат запроса хотя бы один объект, и вам не нужен сам "
+"результат. Эффективнее использовать метод :meth:`exists() <QuerySet.exists>` "
+"(смотрите ниже)."
 
 # 5b6bb2dcb2784b5cb020f75b74b30426
 #: ../../ref/models/querysets.txt:82
 msgid "Pickling QuerySets"
-msgstr ""
+msgstr "Сериализация QuerySets"
 
 # 0eed6a4a90c14a68ae30b17236be7a56
 #: ../../ref/models/querysets.txt:84
@@ -157,6 +200,14 @@ msgid ""
 "you unpickle a ``QuerySet``, it contains the results at the moment it was "
 "pickled, rather than the results that are currently in the database."
 msgstr ""
+"Используя :mod:`pickle` для ``QuerySet``, будет выполнен запрос к базе "
+"данных что бы загрузить данные в память для сериализации. Сериализация "
+"обычно используется перед кешированием ``QuerySet`` или загрузкой из кеша, "
+"необходимо что бы результат был доступен для использования сразу после "
+"загрузки (чтение с базы данных занимает некоторое время, что свело бы всю "
+"пользу кеширования к нулю). Это означает что после востановления "
+"сериализованного ``QuerySet``, он будет содержать результат на момент "
+"сериализации, а не тот, который хранится в базе данных на текущий момент."
 
 # b306d47b2f0c4e4a89b8cc7e5977f198
 #: ../../ref/models/querysets.txt:92
@@ -166,6 +217,10 @@ msgid ""
 "attribute of the ``QuerySet``. You can then recreate the original "
 "``QuerySet`` (without any results loaded) using some code like this::"
 msgstr ""
+"Если вам необходимо сохранить запрос выполняемый ``QuerySet``, что бы "
+"получить данные позже, сериализируйте атрибут ``query`` ``QuerySet``. Позже "
+"вы можете воссоздать первоначальный ``QuerySet`` (без загрузки результата) "
+"используя такой код::"
 
 # a2e2110a529c4eaab208a5965f96bd47
 #: ../../ref/models/querysets.txt:102
@@ -175,6 +230,9 @@ msgid ""
 "safe (and fully supported) to pickle and unpickle the attribute's contents "
 "as described here."
 msgstr ""
+"Атрибут ``query`` не является частью публичного API, и является частью "
+"внутреннего механизма создания запросов. Однако, поддерживает использование "
+"``pickle`` и ``unpickle`` как показано в примере выше."
 
 # 5138d41bc219471096f24197c2187b31
 #: ../../ref/models/querysets.txt:109
@@ -184,11 +242,16 @@ msgid ""
 "no guarantee that pickle will be readable with Django version N+1. Pickles "
 "should not be used as part of a long-term archival strategy."
 msgstr ""
+"Сериализация QuerySets возможна только для версии Django, которая была "
+"использована при сохранении объекта. При сериализации объекта в версии "
+"Django N, нет гарантии что, его можно будет восстановить в версии Django N"
+"+1. Сериализация не должна быть использована для долговременного хранения "
+"данных."
 
 # 8908ae5fd52d421ca02f08f6bd313113
 #: ../../ref/models/querysets.txt:118
 msgid "QuerySet API"
-msgstr ""
+msgstr "QuerySet API"
 
 # e5857f02298d4e58bcdf7f6a439ff2c6
 #: ../../ref/models/querysets.txt:120
@@ -197,6 +260,8 @@ msgid ""
 "`~django.db.models.Manager` — here's the formal declaration of a "
 "``QuerySet``:"
 msgstr ""
+"Хоть вам и не нужно создавать экземпляр ``QuerySet`` самостоятельно — он "
+"создается через :class:`~django.db.models.Manager` — вот как это происходит:"
 
 # 53e27b9c3de54a2fbd32c666d6c04e4d
 #: ../../ref/models/querysets.txt:126
@@ -206,13 +271,16 @@ msgid ""
 "methods return new querysets. These methods are covered in detail later in "
 "this section."
 msgstr ""
+"Обычно работа с ``QuerySet`` состоит в использовании :ref:`цепочек фильтров "
+"<chaining-filters>`. Для этого большинство методов ``QuerySet`` возвращает "
+"новый \"queryset\". Эти методы описаны далее."
 
 # 018b3bc308034a708b2a93706cdd4981
 #: ../../ref/models/querysets.txt:131
 msgid ""
 "The ``QuerySet`` class has two public attributes you can use for "
 "introspection:"
-msgstr ""
+msgstr "Класс ``QuerySet`` имеет два публичных атрибута:"
 
 # 1158362f2a7041c090f146c7b5ce2225
 #: ../../ref/models/querysets.txt:136
@@ -220,11 +288,14 @@ msgid ""
 "``True`` if the ``QuerySet`` is ordered — i.e. has an :meth:`order_by()` "
 "clause or a default ordering on the model. ``False`` otherwise."
 msgstr ""
+"``True`` если ``QuerySet`` использует сортировку — то есть использован "
+"метод :meth:`order_by()` или модель содержит сортировку по-умолчанию. Иначе "
+"``False``."
 
 # d6fda43d8834411c9ce1bc9945085409
 #: ../../ref/models/querysets.txt:142
 msgid "The database that will be used if this query is executed now."
-msgstr ""
+msgstr "База данных, которая будет использована для выполнения запроса."
 
 # 8395b9df63654ec483d35040b7b08ab0
 #: ../../ref/models/querysets.txt:146
@@ -235,11 +306,17 @@ msgid ""
 "opaque representation of that query state and is not part of a public API. "
 "To put it simply: if you need to ask, you don't need to use it."
 msgstr ""
+"Так же присутствует атрибут ``query`` класса :class:`QuerySet`. Подклассы :"
+"class:`QuerySet`, такие как :class:`~django.contrib.gis.db.models."
+"GeoQuerySet` могут переопределить структуру запроса используя этот аргумент. "
+"Значение атрибута является скрытым представлением состояния запроса и не "
+"является частью публичного API. Проще говоря, если вам нужно рассказывать о "
+"нем, значит вам не стоит его использовать."
 
 # cc754084a78646b4aed2e7a7dac0209e
 #: ../../ref/models/querysets.txt:156
 msgid "Methods that return new QuerySets"
-msgstr ""
+msgstr "Методы, которые возвращают новый QuerySets"
 
 # 8da92a93adba4090a21bda07d305cf9e
 #: ../../ref/models/querysets.txt:158
@@ -248,11 +325,13 @@ msgid ""
 "either the types of results returned by the ``QuerySet`` or the way its SQL "
 "query is executed."
 msgstr ""
+"Django предоставляет набор методов ``QuerySet``, которые изменяют "
+"возвращаемый результат или выполнение SQL запроса."
 
 # 19a92a74d013406e9d778a85e53da6a8
 #: ../../ref/models/querysets.txt:163
 msgid "filter"
-msgstr ""
+msgstr "filter"
 
 # 19caf98180104d82850aba702557d77d
 #: ../../ref/models/querysets.txt:167
@@ -260,6 +339,8 @@ msgid ""
 "Returns a new ``QuerySet`` containing objects that match the given lookup "
 "parameters."
 msgstr ""
+"Возвращает новый ``QuerySet`` содержащий объекты отвечающие параметрам "
+"фильтрации."
 
 # 3c339c8df1204cfb9765ef08fa9589d9
 #: ../../ref/models/querysets.txt:170
@@ -268,11 +349,14 @@ msgid ""
 "`Field lookups`_ below. Multiple parameters are joined via ``AND`` in the "
 "underlying SQL statement."
 msgstr ""
+"Параметры фильтрации (``**kwargs``) должны отвечать формату описанному в :"
+"ref:`соответствующем разделе <field-lookups>`. Несколько параметров "
+"объединяются оператором SQL ``AND``."
 
 # 28aa203a3e1a435c96eb81c24c2e689c
 #: ../../ref/models/querysets.txt:175
 msgid "exclude"
-msgstr ""
+msgstr "exclude"
 
 # 5f4da46a6bdc421a8b7e893cd9da1d9b
 #: ../../ref/models/querysets.txt:179
@@ -280,6 +364,8 @@ msgid ""
 "Returns a new ``QuerySet`` containing objects that do *not* match the given "
 "lookup parameters."
 msgstr ""
+"Возвращает новый ``QuerySet`` содержащий объекты *не* отвечающие параметрам "
+"фильтрации."
 
 # 6b1617a52446469eac978adbd18f4ead
 #: ../../ref/models/querysets.txt:182
@@ -288,6 +374,10 @@ msgid ""
 "`Field lookups`_ below. Multiple parameters are joined via ``AND`` in the "
 "underlying SQL statement, and the whole thing is enclosed in a ``NOT()``."
 msgstr ""
+"Параметры фильтрации (``**kwargs``) должны отвечать формату описанному в :"
+"ref:`соответствующем разделе <field-lookups>`. Несколько параметров "
+"объединяются оператором SQL ``AND`` и все это замыкается оператором ``NOT()"
+"``."
 
 # 4cd38f0d4a4e4ed99da118a46297684f
 #: ../../ref/models/querysets.txt:186
@@ -295,12 +385,14 @@ msgid ""
 "This example excludes all entries whose ``pub_date`` is later than 2005-1-3 "
 "AND whose ``headline`` is \"Hello\"::"
 msgstr ""
+"Этот пример исключает все записи с ``pub_date`` раньше 3.01.2005 И с "
+"``headline`` равным \"Hello\"::"
 
 # 89b7076d784e406bb11a99a9952fe728
 # 0ad334998d0a41a7bb92d33376bc41eb
 #: ../../ref/models/querysets.txt:191 ../../ref/models/querysets.txt:201
 msgid "In SQL terms, that evaluates to::"
-msgstr ""
+msgstr "Это эквивалентно запросу SQL::"
 
 # 48b1915862b34bb89734a35d07fc6dc9
 #: ../../ref/models/querysets.txt:196
@@ -308,16 +400,19 @@ msgid ""
 "This example excludes all entries whose ``pub_date`` is later than 2005-1-3 "
 "OR whose headline is \"Hello\"::"
 msgstr ""
+"Этот пример исключает все записи с ``pub_date``  раньше 3.01.2005 ИЛИ с "
+"``headline`` равным \"Hello\"::"
 
 # fef8b484158d43c09d30be0e0d5c42dd
 #: ../../ref/models/querysets.txt:207
 msgid "Note the second example is more restrictive."
 msgstr ""
+"Обратите внимание на второй пример, который больше ограничивает выборку."
 
 # a2293c04f4024a0a9cb06fd346095b62
 #: ../../ref/models/querysets.txt:210
 msgid "annotate"
-msgstr ""
+msgstr "annotate"
 
 # 864b816187e342588c274fee7e4b1a21
 #: ../../ref/models/querysets.txt:214
@@ -328,6 +423,11 @@ msgid ""
 "to ``annotate()`` is an annotation that will be added to each object in the "
 "``QuerySet`` that is returned."
 msgstr ""
+"\"Аннотирует\" каждый объект в ``QuerySet`` агрегированным значением "
+"(среднее, суииа и др.), которое будет вычислено из данных связанных "
+"объектов, которые связанны с объектами из``QuerySet``. Аргументы ``annotate()"
+"`` это \"аннотация\", которая будет добавлена для каждого объекта "
+"возвращаемого ``QuerySet``."
 
 # 26a461f5b7274dc4a735bbb9fce4ba5a
 # 4fe4f86b68b6440db1d38c51360ca1b7
@@ -336,6 +436,8 @@ msgid ""
 "The aggregation functions that are provided by Django are described in "
 "`Aggregation Functions`_ below."
 msgstr ""
+"Функции агрегации описаны в :ref:`соответствующем разделе <aggregation-"
+"functions>` ниже."
 
 # 1294149d7e0f4999b399e546ea71cba2
 #: ../../ref/models/querysets.txt:223
@@ -345,6 +447,10 @@ msgid ""
 "for them based upon the name of the aggregate function and the model field "
 "that is being aggregated."
 msgstr ""
+"Аннотация определенная именованными аргументами будет использовать имя "
+"аргумента как название аннотации. Для позиционного аргумента будет "
+"использовано имя созданное с названия функции агрегации и используемого поля "
+"модели."
 
 # bc4c877ba3e64badbbd94b6f46f45600
 #: ../../ref/models/querysets.txt:228
@@ -352,6 +458,8 @@ msgid ""
 "For example, if you were manipulating a list of blogs, you may want to "
 "determine how many entries have been made in each blog::"
 msgstr ""
+"Например, получая список блогов, вы захотите получить так же и количество "
+"записей в каждом блоге::"
 
 # ccaaae1b195c44628f3315859b9bb718
 #: ../../ref/models/querysets.txt:239
@@ -360,6 +468,8 @@ msgid ""
 "but by using a keyword argument to specify the aggregate function, you can "
 "control the name of the annotation::"
 msgstr ""
+"Модель ``Blog`` не определяет атрибут ``entry__count``, используя "
+"именованный аргументы вы можете переопределить название этого атрибута::"
 
 # 06fa46ba1eb442a985458a09dd622220
 # ab78c4ab8814417ba4e5cfdfb7472acc
@@ -368,11 +478,13 @@ msgid ""
 "For an in-depth discussion of aggregation, see :doc:`the topic guide on "
 "Aggregation </topics/db/aggregation>`."
 msgstr ""
+"Для углубленного изучения агрегации смотрите :doc:`раздел про агрегацию </"
+"topics/db/aggregation>`."
 
 # 8389c0aa80de40d7823b3188341d69d1
 #: ../../ref/models/querysets.txt:252
 msgid "order_by"
-msgstr ""
+msgstr "order_by"
 
 # 4ce6382747e147e6b4c2c894014e9fdd
 #: ../../ref/models/querysets.txt:256
@@ -381,6 +493,9 @@ msgid ""
 "tuple given by the ``ordering`` option in the model's ``Meta``. You can "
 "override this on a per-``QuerySet`` basis by using the ``order_by`` method."
 msgstr ""
+"По-умолчанию, результат возвращаемый ``QuerySet``, отсортирован по полям "
+"указанным в аргументе ``ordering`` класса ``Meta`` модели. Вы можете "
+"переопределить сортировку используя метод ``order_by``."
 
 # 9d69c8c34bb94cfb9f72158f427d9875
 # 281b9774fa0d46529ee6c3c477956ff0
@@ -421,7 +536,7 @@ msgstr ""
 #: ../../ref/models/querysets.txt:2036 ../../ref/models/querysets.txt:2063
 #: ../../ref/models/querysets.txt:2087
 msgid "Example::"
-msgstr ""
+msgstr "Например::"
 
 # 388c881a8f9746d4ae76faba940c86d3
 #: ../../ref/models/querysets.txt:264
@@ -431,6 +546,10 @@ msgid ""
 "indicates *descending* order. Ascending order is implied. To order randomly, "
 "use ``\"?\"``, like so::"
 msgstr ""
+"Результат выше будет отсортирован в обратном порядке по полю ``pub_date``, "
+"далее по полю ``headline``. Знак \"минус\" в ``\"-pub_date\"`` указывает на "
+"\"нисходящую\" сортировку. Сортировка по возрастанию подразумевается по-"
+"умолчанию. Что бы отсортировать случайно используйте ``\"?\"``, например::"
 
 # c941f625bb1945f18e21bfb4770ddf97
 #: ../../ref/models/querysets.txt:271
@@ -438,6 +557,8 @@ msgid ""
 "Note: ``order_by('?')`` queries may be expensive and slow, depending on the "
 "database backend you're using."
 msgstr ""
+"Заметка: запрос с ``order_by('?')`` может быть медленным и сильно нагружать "
+"базу данных, зависит от типа базы данных, которую вы используете."
 
 # 0feb041843864550815406170d7b62c2
 #: ../../ref/models/querysets.txt:274
@@ -448,6 +569,10 @@ msgid ""
 "in the new model, and so on for as many models as you want to join. For "
 "example::"
 msgstr ""
+"Для сортировки по полю из другой модели, используйте синтаксис аналогичный "
+"тому, который используется при фильтрации по полям связанной модели. То "
+"есть, название поля, далее два нижних подчеркивания (``__``), и имя поля в "
+"новой модели, и так далее. Например::"
 
 # ca5d43c386634e059a7d177dc4a37ca4
 #: ../../ref/models/querysets.txt:281
@@ -457,16 +582,20 @@ msgid ""
 "model's primary key if there is no :attr:`Meta.ordering <django.db.models."
 "Options.ordering>` specified. For example::"
 msgstr ""
+"Если вы пытаетесь отсортировать по полю, которое является связью на другую "
+"модель, Django будет использовать сортировку по-умолчанию связанной модели "
+"(или же сортировку по первичному ключу связанной модели если :attr:`Meta."
+"ordering <django.db.models.Options.ordering>` не указан). Например::"
 
 # 1e58dbcf06c84eeba4053165e5509788
 #: ../../ref/models/querysets.txt:288
 msgid "...is identical to::"
-msgstr ""
+msgstr "...идентично::"
 
 # de174d006189426bb977b1724a79c2b4
 #: ../../ref/models/querysets.txt:292
 msgid "...since the ``Blog`` model has no default ordering specified."
-msgstr ""
+msgstr "...т.к. модель ``Blog`` не содержит сортировки по-умолчанию."
 
 # 0b0c59c51c0841ac9e6768b430ecd9ee
 #: ../../ref/models/querysets.txt:294
@@ -475,6 +604,9 @@ msgid ""
 "meth:`distinct()`. See the note in :meth:`distinct` for an explanation of "
 "how related model ordering can change the expected results."
 msgstr ""
+"Будьте осторожны используя по полю из связанной модели и метод :meth:"
+"`distinct()`. Смотрите описание метода :meth:`distinct` для информации как "
+"сортировка по связанной модели может повлиять на ожидаемый результат."
 
 # e8c07900458743418c31612eda81153e
 #: ../../ref/models/querysets.txt:298
@@ -488,6 +620,14 @@ msgid ""
 "want to do. Use ordering on multi-valued fields with care and make sure the "
 "results are what you expect."
 msgstr ""
+"Для сортировки можно указать поле с множеством значений (например, :class:"
+"`~django.db.models.ManyToManyField` field). Как правильно, это не очень "
+"разумно и является функционалом для продвинутых пользователей. Однако, если "
+"вы уверены что фильтры \"queryset\" или существующие данные подразумеваю, "
+"что для каждого объекта существует только одно значение, используемое для "
+"сортировки -- вполне вероятно что в результате вы получите то, что и ожидали "
+"получить. Используйте такую сортировку с осторожность и убедитесь что "
+"результат отвечает вашим требованиям."
 
 # dcef496eed3240d8b7da2df94461eddb
 #: ../../ref/models/querysets.txt:307
@@ -496,6 +636,9 @@ msgid ""
 "respect to case-sensitivity, Django will order results however your database "
 "backend normally orders them."
 msgstr ""
+"Нет способа указать должна ли сортировка учитывать регистр. По этому Django "
+"возвращает результат в таком порядке, в каком его вернула используемая база "
+"данных."
 
 # d072c96416f2478aa9c3ef185dc17d86
 #: ../../ref/models/querysets.txt:311
@@ -503,6 +646,8 @@ msgid ""
 "If you don't want any ordering to be applied to a query, not even the "
 "default ordering, call :meth:`order_by()` with no parameters."
 msgstr ""
+"Если вы не хотите использовать сортировку, даже указанную по-умолчанию, "
+"выполните метод :meth:`order_by()` без аргументов."
 
 # 4272697bbb1f4191ac30eb51e396b2b1
 #: ../../ref/models/querysets.txt:314
@@ -511,11 +656,14 @@ msgid ""
 "ordered` attribute, which will be ``True`` if the ``QuerySet`` has been "
 "ordered in any way."
 msgstr ""
+"Вы можете определить используется сортировка или нет проверив атрибут :attr:"
+"`.QuerySet.ordered`, который будет равен ``True``, если сортировка была "
+"применена для ``QuerySet`` каким-либо образом."
 
 # 7d4492b3420a46a3ba839688362008f5
 #: ../../ref/models/querysets.txt:319
 msgid "reverse"
-msgstr ""
+msgstr "reverse"
 
 # db69345ef8f94265988237ef355b596c
 #: ../../ref/models/querysets.txt:323
@@ -524,11 +672,13 @@ msgid ""
 "elements are returned. Calling ``reverse()`` a second time restores the "
 "ordering back to the normal direction."
 msgstr ""
+"Используйте метод ``reverse()`` что бы изменить порядок сортировки на "
+"обратный. Вызов ``reverse()`` повторно восстановит изначальную сортировку."
 
 # 62d776aa895846de9f16c2f531915fe5
 #: ../../ref/models/querysets.txt:327
 msgid "To retrieve the ''last'' five items in a queryset, you could do this::"
-msgstr ""
+msgstr "Что бы получить \"последние\" пять объектов выполните::"
 
 # 55474eae90b641b8937651614d331aa1
 #: ../../ref/models/querysets.txt:331
@@ -540,6 +690,11 @@ msgid ""
 "mode of access (slicing from the end), because it's not possible to do it "
 "efficiently in SQL."
 msgstr ""
+"Обратите внимание, что это не совсем аналог среза Python с конца. Этот "
+"пример вернет сначала последний элемент, потом предпоследний и так далее. "
+"Используя список Python и сделав срез ``seq[-5:]``, мы увидим пятый элемент "
+"с конца первым. Django не поддерживает подобное (срез с конца), т.к. нет "
+"способа интерпретировать это в эфективный SQL."
 
 # 1a84791f3be9472b8ccb5dbf8582be18
 #: ../../ref/models/querysets.txt:338
@@ -551,11 +706,15 @@ msgid ""
 "`` on it has no real effect (the ordering was undefined prior to calling "
 "``reverse()``, and will remain undefined afterward)."
 msgstr ""
+"Метод ``reverse()`` должен быть вызван для ``QuerySet`` с определенной "
+"сортировкой (например, при запросе модели с сортировкой по-умолчанию или "
+"после использования метода :meth:`order_by()`). Если сортировка не "
+"определена , вызов ``reverse()`` не будет иметь никакого эффекта."
 
 # 57e6d48e5bd743858191f3211a9d3569
 #: ../../ref/models/querysets.txt:346
 msgid "distinct"
-msgstr ""
+msgstr "distinct"
 
 # f780c96158b04c1080f955a673f86a88
 #: ../../ref/models/querysets.txt:350
@@ -563,6 +722,8 @@ msgid ""
 "Returns a new ``QuerySet`` that uses ``SELECT DISTINCT`` in its SQL query. "
 "This eliminates duplicate rows from the query results."
 msgstr ""
+"Возвращает ``QuerySet`` с добавленным ``SELECT DISTINCT`` в SQL запрос.  "
+"Повторяющиеся записи будут исключены из результатов запроса."
 
 # 72d0db17e03a42fcae1ab2c942ccd8d7
 #: ../../ref/models/querysets.txt:353
@@ -573,6 +734,11 @@ msgid ""
 "your query spans multiple tables, it's possible to get duplicate results "
 "when a ``QuerySet`` is evaluated. That's when you'd use ``distinct()``."
 msgstr ""
+"По-умолчанию, ``QuerySet`` не исключает повторяющиеся записи. На практике, "
+"это редко является проблемой, простые запросы вроде ``Blog.objects.all()`` "
+"не создают повторяющиеся записи. Однако, если запрос использует несколько "
+"таблиц, возможно что ``QuerySet`` вернет повторяющиеся записи. И здесь вам "
+"пригодится ``distinct()``."
 
 # 85c89befa0194d3a905a5addc20971b9
 #: ../../ref/models/querysets.txt:360
@@ -585,6 +751,14 @@ msgid ""
 "don't appear in the returned results (they are only there to support "
 "ordering), it sometimes looks like non-distinct results are being returned."
 msgstr ""
+"Любое поле используемое в :meth:`order_by` будет добавлено в список "
+"выбираемых колонок в части ``SELECT`` SQL запроса. Это может привести к "
+"непредвиденным результатам если вы используете ``distinct()``. При "
+"сортировке по колонке из связанной таблицы, эти колонки будет включены в "
+"список выбираемых колонок, что может сделать одинаковые строки результата "
+"уникальными. Т.к. эти дополнительные колонки не будет включены в результат"
+"(они используются только для определения сортировки), будет выглядеть так, "
+"вроде бы ``distinct()`` возвращает не уникальные элементы результатов."
 
 # 27904ac42d8f4813ba4c11520f61cf48
 #: ../../ref/models/querysets.txt:368
@@ -593,6 +767,9 @@ msgid ""
 "selected, the columns used in any :meth:`order_by()` (or default model "
 "ordering) will still be involved and may affect uniqueness of the results."
 msgstr ""
+"Так же, если вы используете метод :meth:`values()` что бы ограничить "
+"выбираемые поля, поля из :meth:`order_by()` (или сортировки по-умолчанию "
+"модели) так же будут включены и могут повлиять на уникальность результатов."
 
 # b6960fd26547439c90f298d3376f6055
 #: ../../ref/models/querysets.txt:372
@@ -602,6 +779,10 @@ msgid ""
 "`values()` together, be careful when ordering by fields not in the :meth:"
 "`values()` call."
 msgstr ""
+"Мораль всего этого -- будьте осторожны при использовании ``distinct()`` и "
+"сортировки по полям из связанных моделей. Так же, при использовании "
+"``distinct()`` и :meth:`values()` вместе, будьте осторожны сортируя по полям "
+"не включенным в :meth:`values()`."
 
 # fc5196ce8570450aa80b165a0c6b0d75
 #: ../../ref/models/querysets.txt:379
