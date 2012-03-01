@@ -4,5 +4,5 @@ language = 'ru'
 locale_dirs = ['./locale/']
 gettext_compact = False
 
-#html_theme_path = ["_theme", "djbook/_theme"]
-#html_theme = "djbook"
+html_theme_path = ["_theme", "djbook/_theme"]
+html_theme = "djbook"

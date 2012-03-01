@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Состояние перевода</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+        .progress {
+            margin-bottom: 0px;
+        }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+        <h1>Состояние перевода</h1>
+        <div class="row">
+            <div class="span3">Всего:</div>
+            <div class="span9">
+                <div class="progress progress-danger progress-striped">
+                    <div class="bar" style="width: {{ total }}%;">{{ total }}%</div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        {% for row in statistic|batch(2, ()) %}
+            <div class="row">
+                {% for name, perc in row %}
+                    <div class="span3">{{ name }}</div>
+                    <div class="span3">
+                        <div class="progress">
+                            <div class="bar" style="width: {{ perc }}%;">{{ perc }}%</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div> <!-- /container -->
+  </body>
+</html>
