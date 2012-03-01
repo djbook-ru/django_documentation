@@ -32,7 +32,7 @@ def create_statistic():
 
     save_to_file({
         'statistic': statistic,
-        'total': int((100.00 / float(total)) * translated)
+        'total': '%.02f' % ((100.00 / float(total)) * translated)
     })
 
 if __name__ == '__main__':
