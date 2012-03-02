@@ -18,21 +18,35 @@ def create_statistic():
     total = 0
     translated = 0
 
+    main = ['/intro/', '/howto/', '/ref/', '/faq/', '/topics/']
+    main_total = 0
+    main_translated = 0
+
     for path, dirs, files in os.walk(LOCALE_PATH):
         for f in files:
             if f.endswith('.po'):
                 po_path = os.path.join(path, f)
                 po = pofile(po_path)
 
-                total += len([e for e in po if not e.obsolete])
-                translated += len(po.translated_entries())
-
                 name = po_path[len(LOCALE_PATH):]
                 statistic.append((unicode(name),  po.percent_translated()))
 
+                msg_total = len([e for e in po if not e.obsolete])
+                msg_translated = len(po.translated_entries())
+                total += msg_total
+                translated += msg_translated
+
+                for item in main:
+                    if name.startswith(item):
+                        print name
+                        main_total += msg_total
+                        main_translated += msg_translated
+                        break
+
     save_to_file({
         'statistic': statistic,
-        'total': '%.02f' % ((100.00 / float(total)) * translated)
+        'total': '%.02f' % ((100.00 / float(total)) * translated),
+        'main_total': '%.02f' % ((100.00 / float(main_total)) * main_translated)
     })
 
 if __name__ == '__main__':
