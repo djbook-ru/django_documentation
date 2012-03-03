@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-29 18:30\n"
-"PO-Revision-Date: 2012-03-02 10:56+0200\n"
+"PO-Revision-Date: 2012-03-03 11:37+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -2133,11 +2133,15 @@ msgid ""
 "argument this method takes is the alias of a database, as defined in :"
 "setting:`DATABASES`."
 msgstr ""
+"Этот метод контролирует какую базу данных будет использовать ``QuerySet`` "
+"для запроса, если вы используете несколько баз данных.  Единственный "
+"аргумент это псевдоним базы данных указанный в настройке проекта :setting:"
+"`DATABASES`."
 
 # a20c8197c2c240d6a5dfa723b62c89b9
 #: ../../ref/models/querysets.txt:1175
 msgid "select_for_update"
-msgstr ""
+msgstr "select_for_update"
 
 # 0e55c2aba7894748bc2d007c5f1ad3ab
 #: ../../ref/models/querysets.txt:1181
@@ -2145,6 +2149,8 @@ msgid ""
 "Returns a queryset that will lock rows until the end of the transaction, "
 "generating a ``SELECT ... FOR UPDATE`` SQL statement on supported databases."
 msgstr ""
+"Возвращает ``QuerySet`` блокирующий записи до завершения транзакции, "
+"используя оператор SQL ``SELECT ... FOR UPDATE`` используемой базы данных."
 
 # 0792902df92a4a47812cba16662d35a0
 #: ../../ref/models/querysets.txt:1188
@@ -2153,6 +2159,9 @@ msgid ""
 "meaning that other transactions will be prevented from changing or acquiring "
 "locks on them."
 msgstr ""
+"Все, удовлетворяющие фильтрам, строки будут заблокированы до завершения "
+"транзакции, то есть другие транзакции не смогут изменить или заблокировать "
+"это строки."
 
 # 95d7fbe01a0446028ce3ab946096fc9a
 #: ../../ref/models/querysets.txt:1192
@@ -2164,6 +2173,11 @@ msgid ""
 "by another transaction, :exc:`~django.db.DatabaseError` will be raised when "
 "the queryset is evaluated."
 msgstr ""
+"Обычно, если другая транзакция заблокировала одну из выбранных записей, "
+"запрос будет заблокирован до снятия блокировки. Если вы не желаете этого, "
+"используйте ``select_for_update(nowait=True)``. Вызов будет не "
+"блокированным, если записи уже заблокированы, будет вызвано исключение :exc:"
+"`~django.db.DatabaseError` при вычислении ``QuerySet``."
 
 # 9792df60230541faab024b6366fe7928
 #: ../../ref/models/querysets.txt:1199
@@ -2173,6 +2187,12 @@ msgid ""
 "that Django issues a ``COMMIT`` or ``ROLLBACK``, releasing any locks held by "
 "the ``SELECT FOR UPDATE``."
 msgstr ""
+"Следует отметить, что использование ``select_for_update()`` приводит к тому, "
+"что текущая транзакция считается \"грязной\" (если используется управление "
+"транзакциями). Это происходит, потому что Django блокирует указанные записи "
+"в БД и держит их до выполнения фиксации(``COMMIT``) или отката(``ROLLBACK``) "
+"произведённых изменений, освобождая поставленные ранее блокировки в базе "
+"данных."
 
 # 8e0acd3a01d64552a267b44d229abd28
 #: ../../ref/models/querysets.txt:1204
@@ -2182,6 +2202,10 @@ msgid ""
 "the ``nowait`` argument. Obviously, users of external third-party backends "
 "should check with their backend's documentation for specifics in those cases."
 msgstr ""
+"На данный момент, ``postgresql_psycopg2``, ``oracle``, и ``mysql`` \"бэкэнды"
+"\" базы данных поддерживают ``select_for_update()``. Однако, MySQL не "
+"поддерживает аргумент ``nowait``. Пользователи других баз данных должны "
+"уточнить эту информацию в документации используемой базы данных."
 
 # 07555036d70443c1abefc233b4f6a63e
 #: ../../ref/models/querysets.txt:1209
@@ -2191,6 +2215,10 @@ msgid ""
 "DatabaseError` to be raised. This is in order to prevent code unexpectedly "
 "blocking."
 msgstr ""
+"Использование ``nowait=True`` в ``select_for_update`` для базы данных, "
+"которая не поддерживает ``nowait``, такой как MySQL, вызовет исключение :exc:"
+"`~django.db.DatabaseError`. Это делается чтобы предотвратить непредвиденную "
+"блокировку кода."
 
 # 468b0dff8e6147dbafa260f11136e211
 #: ../../ref/models/querysets.txt:1214
@@ -2198,11 +2226,13 @@ msgid ""
 "Using ``select_for_update`` on backends which do not support ``SELECT ... "
 "FOR UPDATE`` (such as SQLite) will have no effect."
 msgstr ""
+"Использование ``select_for_update`` с базой данных, которая не поддерживает "
+"``SELECT ... FOR UPDATE`` (например, SQLite) не будет иметь никакого эфекта."
 
 # cf54942aad72476b975aeab0c6d46b05
 #: ../../ref/models/querysets.txt:1218
 msgid "Methods that do not return QuerySets"
-msgstr ""
+msgstr "Методы, которые не возвращают QuerySets"
 
 # e2cc8170101f4de6a8d642df4f66c0ba
 #: ../../ref/models/querysets.txt:1220
@@ -2210,6 +2240,7 @@ msgid ""
 "The following ``QuerySet`` methods evaluate the ``QuerySet`` and return "
 "something *other than* a ``QuerySet``."
 msgstr ""
+"Следующие методы выполняют ``QuerySet`` и возвращают *не* ``QuerySet``."
 
 # 5e5113f0ef414577825e47219fb7d53e
 #: ../../ref/models/querysets.txt:1223
@@ -2217,6 +2248,8 @@ msgid ""
 "These methods do not use a cache (see :ref:`caching-and-querysets`). Rather, "
 "they query the database each time they're called."
 msgstr ""
+"Эти методы не используют кэш (смотрите :ref:`caching-and-querysets`) и "
+"выполняют запрос к базе данных при каждом вызове."
 
 # 215fe858f64a4e35b05940589525f55c
 #: ../../ref/models/querysets.txt:1227
@@ -2229,6 +2262,9 @@ msgid ""
 "Returns the object matching the given lookup parameters, which should be in "
 "the format described in `Field lookups`_."
 msgstr ""
+"Возвращает объект соответствующий параметрам поиска, которые должны быть "
+"указанны в формате описаном в :ref:`разделе о параметрах поиска <field-"
+"lookups>`"
 
 # ceedda62705e4961aa2713b4025293b3
 #: ../../ref/models/querysets.txt:1234
@@ -2237,6 +2273,9 @@ msgid ""
 "more than one object was found. The :exc:`~django.core.excpetions."
 "MultipleObjectsReturned` exception is an attribute of the model class."
 msgstr ""
+"``get()`` вызывает исключение :exc:`~django.core.exceptions."
+"MultipleObjectsReturned`, если найдено более одно объекта. :exc:`~django."
+"core.excpetions.MultipleObjectsReturned` -- атрибут класса модели."
 
 # 8b9d9fa4a3d84d18af471fd705e7b7fd
 #: ../../ref/models/querysets.txt:1239
@@ -2245,6 +2284,9 @@ msgid ""
 "an object wasn't found for the given parameters. This exception is also an "
 "attribute of the model class. Example::"
 msgstr ""
+"``get()`` вызывает исключение :exc:`~django.core.exceptions.DoesNotExist`, "
+"ни один объект не был найден. Это исключение так же атрибут класса модели. "
+"Например::"
 
 # 1de14e70fc794c9fb9d8de5acbc06d5e
 #: ../../ref/models/querysets.txt:1245
@@ -2253,6 +2295,9 @@ msgid ""
 "`django.core.exceptions.ObjectDoesNotExist`, so you can target multiple :exc:"
 "`~django.core.exceptions.DoesNotExist` exceptions. Example::"
 msgstr ""
+"Исключение :exc:`~django.core.exceptions.DoesNotExist` унаследовано от :exc:"
+"`django.core.exceptions.ObjectDoesNotExist`,таким образом можно обработать "
+"несколько исключений :exc:`~django.core.exceptions.DoesNotExist`. Например::"
 
 # 48c322aa8440460f81b4545e4404fcae
 #: ../../ref/models/querysets.txt:1257
@@ -2264,17 +2309,17 @@ msgstr "create"
 msgid ""
 "A convenience method for creating an object and saving it all in one step.  "
 "Thus::"
-msgstr ""
+msgstr "Удобный метод создать и сохранить объект. Таким образом::"
 
 # 6e7c183bfa21425aab2a2e428662ae84
 #: ../../ref/models/querysets.txt:1265
 msgid "and::"
-msgstr ""
+msgstr "и::"
 
 # 76da19f0fec2474ea112e705f5b05126
 #: ../../ref/models/querysets.txt:1270
 msgid "are equivalent."
-msgstr ""
+msgstr "эквивалентны."
 
 # 1213699156fb41af9b4150ec19cb1b60
 #: ../../ref/models/querysets.txt:1272
@@ -2287,6 +2332,13 @@ msgid ""
 "IntegrityError` since primary keys must be unique. Be prepared to handle the "
 "exception if you are using manual primary keys."
 msgstr ""
+"Параметр :ref:`force_insert <ref-models-force-insert>` описан в другом "
+"разделе, он означает, что всегда будет  создаваться новый объект. Обычно вам "
+"не нужно беспокоиться об этом. Однако, если ваш объект содержит значение "
+"первичного ключа и этот ключ уже существует в базе данных, метод ``create()"
+"`` вызовет исключение :exc:`~django.db.IntegrityError` т.к. первичный ключ "
+"должен быть уникальным. Будьте готовы обработать исключение, если вы "
+"самостоятельно указываете первичный ключ."
 
 # 733254dc1264496dbe4cb36d871b2d9b
 #: ../../ref/models/querysets.txt:1281
@@ -2299,6 +2351,8 @@ msgid ""
 "A convenience method for looking up an object with the given kwargs, "
 "creating one if necessary."
 msgstr ""
+"Удобный метод для поиска объекта по заданным параметрам поиска ``kwargs``, и "
+"создания нового при необходимости."
 
 # 0b3c276a1737474fa728a52a3e7d52f1
 #: ../../ref/models/querysets.txt:1288
@@ -2307,13 +2361,16 @@ msgid ""
 "or created object and ``created`` is a boolean specifying whether a new "
 "object was created."
 msgstr ""
+"Возвращает кортеж ``(object, created)``, где ``object`` полученный или "
+"созданный объект и ``created`` -- булево значение, указывающее был ли создан "
+"объект."
 
 # 10b4d4b11a0f4074ad32685049291aca
 #: ../../ref/models/querysets.txt:1292
 msgid ""
 "This is meant as a shortcut to boilerplatish code and is mostly useful for "
 "data-import scripts. For example::"
-msgstr ""
+msgstr "Этот метод удобно использовать для скриптов импорта данных. Например::"
 
 # 69f33df6b87b42b1850c128fb7f06ed9
 #: ../../ref/models/querysets.txt:1301
@@ -2321,6 +2378,9 @@ msgid ""
 "This pattern gets quite unwieldy as the number of fields in a model goes up. "
 "The above example can be rewritten using ``get_or_create()`` like so::"
 msgstr ""
+"Такой способ становится весьма громоздким при увеличении количества полей "
+"модели. Пример выше может быть переписан с использованием метода "
+"``get_or_create()``::"
 
 # f45bcfa02f864a63bc20bd2a9c6eac1a
 #: ../../ref/models/querysets.txt:1307
@@ -2332,6 +2392,12 @@ msgid ""
 "new object, returning a tuple of the new object and ``True``. The new object "
 "will be created roughly according to this algorithm::"
 msgstr ""
+"Все именованные аргументы переданные в ``get_or_create()`` — *кроме* одного "
+"не обязательного ``defaults`` — будут использованы при вызове :meth:`get()`. "
+"Если объект найден, ``get_or_create()`` вернет этот объект и ``False``. Если "
+"объект *не* найден, ``get_or_create()`` создаст и сохранит новый объект, "
+"возвращая новый объект и ``True``. Новый объект будет создан примерно за "
+"таким алгоритмом::"
 
 # ad18a6924b624c0096c7101f2630df89
 #: ../../ref/models/querysets.txt:1320
@@ -2345,6 +2411,13 @@ msgid ""
 "some more error-checking than this and handles some extra edge-conditions; "
 "if you're interested, read the code."
 msgstr ""
+"Это означает, что будут выбраны именованные аргументы кроме ``'defaults'`` и "
+"не содержащие двойное нижнее подчеркивание (которые указывают на не-точный "
+"поиск). Затем добавляются значения из ``defaults``, перезаписывая ключи при "
+"необходимости, полученные данные используются как аргументы для конструктора "
+"класса модели. Как уже указывалось выше, это упрощенный алгоритм, но все "
+"важные детали указаны. Внутренняя реализация одержит больше проверок ошибок "
+"и различных условий; если вам интересно, можете посмотреть исходный код."
 
 # fc2b1c12110e425ca3dcf375800ef326
 #: ../../ref/models/querysets.txt:1329
@@ -2352,6 +2425,9 @@ msgid ""
 "If you have a field named ``defaults`` and want to use it as an exact lookup "
 "in ``get_or_create()``, just use ``'defaults__exact'``, like so::"
 msgstr ""
+"Если модель содержит поле ``defaults`` и вы хотите использовать его в "
+"параметрах поиска в ``get_or_create()``, просто используйте "
+"``'defaults__exact'``::"
 
 # ac3893de8cff4a62aab3cafad3e10525
 #: ../../ref/models/querysets.txt:1334
@@ -2361,6 +2437,11 @@ msgid ""
 "be created and the key already exists in the database, an :exc:`~django.db."
 "IntegrityError` will be raised."
 msgstr ""
+"Метод ``get_or_create()`` использует аналогичное поведение с ошибками что и "
+"метод :meth:`create()`, если вы самостоятельно определяете значение "
+"первичного ключа. Если объект должен быть создан и значение первичного ключа "
+"уже существует в базе данных, будет вызвано исключение :exc:`~django.db."
+"IntegrityError`."
 
 # 5ac92a346afa45b5b51f2c59c4dd87e3
 #: ../../ref/models/querysets.txt:1339
@@ -2374,6 +2455,15 @@ msgid ""
 "has a side effect on your data. For more, see `Safe methods`_ in the HTTP "
 "spec."
 msgstr ""
+"Наконец, несколько слов об использовании``get_or_create()`` в представлениях "
+"Django. Как упоминалось выше, ``get_or_create()`` полезен в скриптах, "
+"которые парсят данные и создают новые объекты при необходимости. Но если вам "
+"нужно использовать ``get_or_create()`` в представлении, пожалуйста "
+"используйте его только для ``POST`` запросов, если только у вас нет "
+"основательных причин не делать этого. Запросы ``GET`` не должны влиять на "
+"данные; используйте запрос ``POST`` для изменения данных. Подробнее смотрите "
+"раздел о `безопасных методах <http://www.w3.org/Protocols/rfc2616/rfc2616-"
+"sec9.html#sec9.1.1>`_ в спецификации HTTP."
 
 # d429abc1e645455c940147c50ab985cd
 #: ../../ref/models/querysets.txt:1350
@@ -2387,11 +2477,13 @@ msgid ""
 "efficient manner (generally only 1 query, no matter how many objects there "
 "are)::"
 msgstr ""
+"Этот метод позволяет сохранить в базе данных множество объектов одним "
+"запросом::"
 
 # e38565913b9b42f8944e3422063eb7e6
 #: ../../ref/models/querysets.txt:1366
 msgid "This has a number of caveats though:"
-msgstr ""
+msgstr "Следует упомянуть ряд оговорок:"
 
 # 76a81c0ef9c947488487d43a52de6cc3
 #: ../../ref/models/querysets.txt:1368
@@ -2399,12 +2491,14 @@ msgid ""
 "The model's ``save()`` method will not be called, and the ``pre_save`` and "
 "``post_save`` signals will not be sent."
 msgstr ""
+"Метод модели ``save()`` не будет вызван, и сигналы ``pre_save`` и "
+"``post_save`` не будут вызваны."
 
 # 6924420c93264545b050302f9f9ecf4e
 #: ../../ref/models/querysets.txt:1370
 msgid ""
 "It does not work with child models in a multi-table inheritance scenario."
-msgstr ""
+msgstr "Не работает с дочерними моделями при multi-table наследовании."
 
 # 3727e407fafa4d8da290c49ca51ba764
 #: ../../ref/models/querysets.txt:1371
@@ -2412,6 +2506,9 @@ msgid ""
 "If the model's primary key is an :class:`~django.db.models.AutoField` it "
 "does not retrieve and set the primary key attribute, as ``save()`` does."
 msgstr ""
+"Если первичный ключ модели это :class:`~django.db.models.AutoField`, его "
+"значение не будет получено и атрибут первичного ключа не будет установлен "
+"как это делает метод ``save()`` ."
 
 # c7683f03673446c6ab62a0b58ab6ef2d
 #: ../../ref/models/querysets.txt:1375

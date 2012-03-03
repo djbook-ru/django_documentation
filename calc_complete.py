@@ -38,7 +38,6 @@ def create_statistic():
 
                 for item in main:
                     if name.startswith(item):
-                        print name
                         main_total += msg_total
                         main_translated += msg_translated
                         break
