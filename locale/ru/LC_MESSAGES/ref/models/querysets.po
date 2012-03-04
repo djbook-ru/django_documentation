@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-29 18:30\n"
-"PO-Revision-Date: 2012-03-03 11:37+0200\n"
+"PO-Revision-Date: 2012-03-04 18:57+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -2521,6 +2521,8 @@ msgid ""
 "Returns an integer representing the number of objects in the database "
 "matching the ``QuerySet``. The ``count()`` method never raises exceptions."
 msgstr ""
+"Возвращает количество записей в базе данных отвечающем запросу ``QuerySet``. "
+"Метод ``count()`` никогда не вызывает исключение."
 
 # b15795049d074d11a35c29d720e38b37
 #: ../../ref/models/querysets.txt:1390
@@ -2530,6 +2532,10 @@ msgid ""
 "Python objects and calling ``len()`` on the result (unless you need to load "
 "the objects into memory anyway, in which case ``len()`` will be faster)."
 msgstr ""
+"Метод ``count()`` использует ``SELECT COUNT(*)``, так что всегда используйте "
+"метод ``count()`` вместо загрузки всех записей в объекты Python и вызов ``len"
+"()`` над результатом (если вам кончено в любом случае не понадобится "
+"загружать их далее, в таком случае ``len()`` будет быстрее)."
 
 # df807c3d6a114491b303f2ce04458f9a
 #: ../../ref/models/querysets.txt:1395
@@ -2539,6 +2545,9 @@ msgid ""
 "an underlying implementation quirk that shouldn't pose any real-world "
 "problems."
 msgstr ""
+"В зависимости от типа базы данных (например, PostgreSQL vs. MySQL), ``count()"
+"`` может вернуть long integer вместо обычно целого Python. Это особенности "
+"реализации, которые не должны создавать проблем."
 
 # b86d2ab4185543909ae12e93061bb1cf
 #: ../../ref/models/querysets.txt:1401
@@ -2551,12 +2560,15 @@ msgid ""
 "Takes a list of primary-key values and returns a dictionary mapping each "
 "primary-key value to an instance of the object with the given ID."
 msgstr ""
+"Получает список первичных ключей и возвращает словарь ассоциирующий объекты "
+"с передаными ID."
 
 # 86a3793113f4425ca7ebd768234eca7b
 #: ../../ref/models/querysets.txt:1417
 msgid ""
 "If you pass ``in_bulk()`` an empty list, you'll get an empty dictionary."
 msgstr ""
+"При передаче в ``in_bulk()`` пустого списка будет получен пустой словарь."
 
 # acc6068123c54c2f849ad58f62cbb6ad
 #: ../../ref/models/querysets.txt:1420
@@ -2576,6 +2588,15 @@ msgid ""
 "access once, this can results in better performance and a significant "
 "reduction in memory."
 msgstr ""
+"Вычисляет ``QuerySet`` (выполняя запрос) и возвращает итератор (смотрите :"
+"pep:`234`) по результату. ``QuerySet`` обычно кэширует результат и повторное "
+"обращение не вызывает повторное выполнение запросов. Метод ``iterator()`` "
+"читает результаты непосредственно из базы данных, без кэширования на уровне "
+"``QuerySet`` (итератор по-умолчанию вызывает ``iterator()`` и кэширует "
+"возвращенное значение). Для ``QuerySet``, который возвращает большое "
+"количество объектов и который будет использован всего лишь один раз, "
+"использование этого метода может увеличить производительность и значительно "
+"уменьшить потребление памяти."
 
 # 6ddbfbdde0b0433fb919283bab10857c
 #: ../../ref/models/querysets.txt:1433
@@ -2583,6 +2604,9 @@ msgid ""
 "Note that using ``iterator()`` on a ``QuerySet`` which has already been "
 "evaluated will force it to evaluate again, repeating the query."
 msgstr ""
+"Заметим, что использование ``iterator()`` для ``QuerySet``, который уже был "
+"вычислен, приведет к повторному вычислению и выполнению запроса к базе "
+"данных."
 
 # b35756d3cd9a4ee49466a724284c48c4
 #: ../../ref/models/querysets.txt:1436
@@ -2590,6 +2614,9 @@ msgid ""
 "Also, use of ``iterator()`` causes previous ``prefetch_related()`` calls to "
 "be ignored since these two optimizations do not make sense together."
 msgstr ""
+"Заметим, если вы используете ``iterator()`` для выполнения запроса, вызов "
+"``prefetch_related()`` будет проигнорирован т.к. использование этих двух "
+"оптимизаций вместе не имеет смысла."
 
 # 208b177164b04f64889b2348092a7a6a
 #: ../../ref/models/querysets.txt:1440
@@ -2602,6 +2629,8 @@ msgid ""
 "Returns the latest object in the table, by date, using the ``field_name`` "
 "provided as the date field."
 msgstr ""
+"Возвращает последний объект, используя значение из поля даты указанного "
+"параметром ``field_name``."
 
 # 92c95fe7b6414491820ddf5d34908e1c
 #: ../../ref/models/querysets.txt:1447
@@ -2609,6 +2638,8 @@ msgid ""
 "This example returns the latest ``Entry`` in the table, according to the "
 "``pub_date`` field::"
 msgstr ""
+"Этот пример возвращает последний объект ``Entry`` в таблице по полю "
+"``pub_date``::"
 
 # 46e53a048abe4842ab1948a410ac7ea9
 #: ../../ref/models/querysets.txt:1452
@@ -2618,6 +2649,10 @@ msgid ""
 "to ``latest()``. Django will use the field specified in :attr:`~django.db."
 "models.Options.get_latest_by` by default."
 msgstr ""
+"Если в :ref:`Meta <meta-options>` модели определен :attr:`~django.db.models."
+"Options.get_latest_by`, вы можете не указывать параметр ``field_name``. "
+"Django будет использовать поле указанное в :attr:`~django.db.models.Options."
+"get_latest_by` как значение по-умолчанию."
 
 # 12ca2adda00e4890a443adaeb6769fb1
 #: ../../ref/models/querysets.txt:1457
@@ -2625,11 +2660,14 @@ msgid ""
 "Like :meth:`get()`, ``latest()`` raises :exc:`~django.core.exceptions."
 "DoesNotExist` if there is no object with the given parameters."
 msgstr ""
+"Как и :meth:`get()`, ``latest()`` вызывает исключение :exc:`~django.core."
+"exceptions.DoesNotExist`, если объект не найден."
 
 # 4b363776d5f14c71ab312253808eb6c2
 #: ../../ref/models/querysets.txt:1461
 msgid "Note ``latest()`` exists purely for convenience and readability."
 msgstr ""
+"Заметим что ``latest()`` существует исключительно для удобства и читаемости."
 
 # bfeeeab3484b4fcc918460675ff3ef05
 #: ../../ref/models/querysets.txt:1464
@@ -2643,6 +2681,9 @@ msgid ""
 "over the ``QuerySet``. Each argument to ``aggregate()`` specifies a value "
 "that will be included in the dictionary that is returned."
 msgstr ""
+"Возвращает словарь агрегированных значений (среднее значение, сума и др.) "
+"вычисленных для ``QuerySet``. Каждый аргумент ``aggregate()`` определяет "
+"значение, которые будет включено в возвращаемый словарь."
 
 # c51b80cd24bd4d82a249065668c34bdd
 #: ../../ref/models/querysets.txt:1475
@@ -2652,6 +2693,10 @@ msgid ""
 "them based upon the name of the aggregate function and the model field that "
 "is being aggregated."
 msgstr ""
+"Агрегация, указанная с помощью именованного аргумента, использует имя "
+"аргумента как название ключа в возвращаемом словаре. Для анонимных "
+"аргументов названия ключей будут созданы из названия функции агрегации и "
+"названия поля модели используемого в агрегации данных. "
 
 # 1913362ad43347b2a98db63df08b4bff
 #: ../../ref/models/querysets.txt:1480
@@ -2659,6 +2704,8 @@ msgid ""
 "For example, when you are working with blog entries, you may want to know "
 "the number of authors that have contributed blog entries::"
 msgstr ""
+"Например, работая с записями блога, вы возможно захотите узнать сколько "
+"записей в выбранных через ``QuerySet`` блогах::"
 
 # b61aba939cdb4885a8631a6545bbadb7
 #: ../../ref/models/querysets.txt:1486
@@ -2666,6 +2713,8 @@ msgid ""
 "By using a keyword argument to specify the aggregate function, you can "
 "control the name of the aggregation value that is returned::"
 msgstr ""
+"Используя именованный аргумент для определения функции агрегации, вы можете "
+"указать название возвращаемого значения::"
 
 # 21912a482abc4405ba8a73d2c249d1f5
 #: ../../ref/models/querysets.txt:1496
@@ -2686,6 +2735,16 @@ msgid ""
 "using ``bool(some_query_set)``, which retrieves the results and then checks "
 "if any were returned."
 msgstr ""
+"Возвращает ``True`` если :class:`.QuerySet` содержит какой-либо результат, и "
+"``False``, если не содержит. Этот метод выполняет на столько простой и "
+"быстрый запрос, на сколько это возможно, но запрос будет почти аналогичным "
+"запросу, который выбирает данные. Это означает что :meth:`.QuerySet.exists` "
+"быстрее чем ``bool(some_query_set)``, но не на много. Если "
+"``some_query_set`` не был еще вычислен, но вы точно знаете что будет "
+"вычислен в любом случае, тогда вызов ``some_query_set.exists()`` выполнит "
+"больше работы (один запрос для проверки наличия данных и один для получения "
+"данных) чем просто ``bool(some_query_set)``, который получит результат и "
+"проверит не пустой ли он."
 
 # 2572fda74ca44d289833cc0cba802033
 #: ../../ref/models/querysets.txt:1513
@@ -2698,6 +2757,8 @@ msgid ""
 "Performs an SQL update query for the specified fields, and returns the "
 "number of rows affected."
 msgstr ""
+"Выполняет SQL запрос обновляющий данные указанных полей и возвращает "
+"количество измененных записей."
 
 # 7e03b96273aa49a58c2db0cb2894a390
 #: ../../ref/models/querysets.txt:1520
@@ -2705,6 +2766,8 @@ msgid ""
 "For example, to turn comments off for all blog entries published in 2010, "
 "you could do this::"
 msgstr ""
+"Например, что бы отключить комментарии для всех записей опубликованных в "
+"2010 годы, нужно выполнить такой запрос::"
 
 # 22cf494cf25d42b0929e99b30ec9f3e9
 #: ../../ref/models/querysets.txt:1525
@@ -2712,6 +2775,8 @@ msgid ""
 "(This assumes your ``Entry`` model has fields ``pub_date`` and "
 "``comments_on``.)"
 msgstr ""
+"(Пример подразумевает что модель ``Entry`` содержит поля ``pub_date`` и "
+"``comments_on``.)"
 
 # faf468726ffc4ef5a6b9160a2a9b0a9c
 #: ../../ref/models/querysets.txt:1527
@@ -2719,6 +2784,8 @@ msgid ""
 "You can update multiple fields — there's no limit on how many. For example, "
 "here we update the ``comments_on`` and ``headline`` fields::"
 msgstr ""
+"Вы можете изменить несколько полей — нет ограничения на количество полей. "
+"Например, изменим поля ``comments_on`` и ``headline``::"
 
 # d5effcc09c334221bc79a2fc6dc3569a
 #: ../../ref/models/querysets.txt:1532
@@ -2728,11 +2795,14 @@ msgid ""
 "the model's main table, not on related models. You can't do this, for "
 "example::"
 msgstr ""
+"Метод ``update()`` выполняет запрос сразу после вызова метода. Единственное "
+"ограничение для :class:`.QuerySet` это то, что могут быть изменены поля "
+"только главной модели, а не связанной. Вы не можете сделать такое::"
 
 # 3a55314724fb4f5d8a6c460c9898300b
 #: ../../ref/models/querysets.txt:1538
 msgid "Filtering based on related fields is still possible, though::"
-msgstr ""
+msgstr "Однако вы можете использовать фильтры по полям связанной модели::"
 
 # 30e646114e6c458fb47e302c6b7911df
 #: ../../ref/models/querysets.txt:1542
@@ -2740,11 +2810,13 @@ msgid ""
 "You cannot call ``update()`` on a :class:`.QuerySet` that has had a slice "
 "taken or can otherwise no longer be filtered."
 msgstr ""
+"Метод ``update()`` не может быть вызван для :class:`.QuerySet` с примененным "
+"срезом или который не может быть отфильтрован по какой-либо другой причине."
 
 # c685709233f040009860bd95b74cc47c
 #: ../../ref/models/querysets.txt:1545
 msgid "The ``update()`` method returns the number of affected rows::"
-msgstr ""
+msgstr "Метод ``update()`` возвращает количество измененных записей::"
 
 # 13882289825d4bdd8a6e8498e59f6c97
 #: ../../ref/models/querysets.txt:1556
@@ -2754,11 +2826,14 @@ msgid ""
 "than loading the model object into memory. For example, instead of doing "
 "this::"
 msgstr ""
+"Если вам нужно всего лишь изменить запись и не нужно ничего делать с "
+"объектом модели, более эффективно использовать метод ``update()``, чем "
+"загружать объект в память. Например, вместо этого::"
 
 # dd5ce4a1ef454fba9c4043eb63f68545
 #: ../../ref/models/querysets.txt:1564
 msgid "...do this::"
-msgstr ""
+msgstr "...делайте так::"
 
 # ca0d678b2a9e4e418c2b1aa668532a32
 #: ../../ref/models/querysets.txt:1568
@@ -2767,6 +2842,9 @@ msgid ""
 "change in your database in the short period of time between loading the "
 "object and calling ``save()``."
 msgstr ""
+"Использование ``update()`` так же предотвращает ситуации, когда что-то может "
+"быть изменено в базе данных в тот короткий период времени между загрузкой "
+"данных и вызовом ``save()``."
 
 # e0ebad2b134c44c79b449bc990b41f33
 #: ../../ref/models/querysets.txt:1572
@@ -2780,6 +2858,13 @@ msgid ""
 "`` method, loop over them and call :meth:`~django.db.models.Model.save()`, "
 "like this::"
 msgstr ""
+"Учтите, что метод ``update()`` использует непосредственно SQL запрос. Метод "
+"``save()`` модели не будет вызван, сигналы :attr:`~django.db.models.signals."
+"pre_save` или :attr:`~django.db.models.signals.post_save` не будут вызваны "
+"(которые являются следствием вызова :meth:`Model.save() <~django.db.models."
+"Model.save()>`). Если вы хотите сохранить каждый объект в ``QuerySet`` и "
+"удостовериться что метод ``save()`` вызван для каждого объекта, просто "
+"используйте цикл и вызовите метод ``save()``::"
 
 # 4b8f43a4018a42c0a1a66605ecbb75e3
 #: ../../ref/models/querysets.txt:1586
@@ -2794,11 +2879,15 @@ msgid ""
 "`.QuerySet` that has had a slice taken or can otherwise no longer be "
 "filtered."
 msgstr ""
+"Выполняет SQL запрос для удаления записей в :class:`.QuerySet`. Метод "
+"``delete()`` выполняют запрос сразу после вызова метода. Метод ``delete()`` "
+"не может быть выполнен для :class:`.QuerySet`, к которому был применен срез "
+"или который не может быть отфильтрован по любой другой причине."
 
 # c625ae58e6e74f64ae4700d54defa837
 #: ../../ref/models/querysets.txt:1595
 msgid "For example, to delete all the entries in a particular blog::"
-msgstr ""
+msgstr "Например, удалим все записи для определенного блога::"
 
 # 8846a1b9b7c34df0b9d4d3395ce93ab6
 #: ../../ref/models/querysets.txt:1602
@@ -2808,6 +2897,9 @@ msgid ""
 "keys pointing at the objects to be deleted will be deleted along with them. "
 "For example::"
 msgstr ""
+"По-умолчанию, Django для :class:`~django.db.models.ForeignKey` эмулирует "
+"поведение ``ON DELETE CASCADE`` в SQL — другими словами, объекты, имеющие "
+"внешние ключи на удаляемый объект, будут так же удалены. Например::"
 
 # 84906fc72d9a421d9671ed99afe8aafb
 #: ../../ref/models/querysets.txt:1616
@@ -2817,11 +2909,15 @@ msgid ""
 "models.signals.pre_delete` and :data:`~django.db.models.signals.post_delete` "
 "signals for all deleted objects (including cascaded deletions)."
 msgstr ""
+"Метод ``delete()`` выполняет массовое удаление и не вызывает метод ``delete()"
+"`` модели. Однако, будут вызваны сигналы :data:`~django.db.models.signals."
+"pre_delete` и :data:`~django.db.models.signals.post_delete` для всех "
+"удаленных объектов (включая объекты удаленные каскадным удалением)."
 
 # 6f7c8ae944d44149a7f4ff47bcd9d252
 #: ../../ref/models/querysets.txt:1625
 msgid "Field lookups"
-msgstr ""
+msgstr "Операторы фильтрации"
 
 # 51a52e84582f4171938ee8b0bfc913cf
 #: ../../ref/models/querysets.txt:1627
@@ -2830,6 +2926,9 @@ msgid ""
 "They're specified as keyword arguments to the ``QuerySet`` methods :meth:"
 "`filter()`, :meth:`exclude()` and :meth:`get()`."
 msgstr ""
+"Операторы фильтрации используются для создания оператора ``WHERE`` в SQL. "
+"Они используются как именованные аргументы для методов ``QuerySet``: :meth:"
+"`filter()`, :meth:`exclude()` и :meth:`get()`."
 
 # ae6ddfe541a64124b34b96b3977286e6
 #: ../../ref/models/querysets.txt:1631
@@ -2837,6 +2936,8 @@ msgid ""
 "For an introduction, see :ref:`models and database queries documentation "
 "<field-lookups-intro>`."
 msgstr ""
+"Введение смотрите в разделе о :ref:`моделях и выполнении запросов к базе "
+"данных <field-lookups-intro>`."
 
 # bca209d42092487e9964c7652b9a211b
 #: ../../ref/models/querysets.txt:1637
@@ -2849,6 +2950,9 @@ msgid ""
 "Exact match. If the value provided for comparison is ``None``, it will be "
 "interpreted as an SQL ``NULL`` (see :lookup:`isnull` for more details)."
 msgstr ""
+"Точное совпадение. Если передано значение ``None``, оно будет "
+"интерпретировано как SQL ``NULL`` (смотрите подробности в описании :lookup:"
+"`isnull`)."
 
 # d332fc1c658a4492ae9b562a479dfdab
 # 24d5295c790c46f9a975fcd88f1e3ba7
@@ -2856,7 +2960,7 @@ msgstr ""
 #: ../../ref/models/querysets.txt:1647 ../../ref/models/querysets.txt:2080
 #: ../../ref/models/querysets.txt:2104
 msgid "SQL equivalents::"
-msgstr ""
+msgstr "Аналог SQL::"
 
 # 56ead27abcc8461283aa4cf1d6797f50
 #: ../../ref/models/querysets.txt:1654
@@ -2868,6 +2972,11 @@ msgid ""
 "information about this, see the :ref:`collation section <mysql-collation>` "
 "in the :doc:`databases </ref/databases>` documentation."
 msgstr ""
+"В MySQL, настройка \"collation\" таблицы базы данных определяет будет ли "
+"использовано регистро-зависимое сравнение для ``exact``. Это настройка базы "
+"данных, *не* Django. Можно настроить регистро-зависимое сравнение для таблиц "
+"MySQL. Подробности смотрите в :ref:`разделе о сравнении <mysql-collation>` "
+"документации о :doc:`базах данных </ref/databases>`."
 
 # ecfdd7bed2094711a71275393092098b
 #: ../../ref/models/querysets.txt:1664
@@ -2877,7 +2986,7 @@ msgstr "iexact"
 # c790d016148f48d9bbcf0b0cf507598b
 #: ../../ref/models/querysets.txt:1666
 msgid "Case-insensitive exact match."
-msgstr ""
+msgstr "Регистро-независимое точное совпадение."
 
 # 46ea26d2a9f244268a100e9407d40d85
 # 92ad5423ba9541819e942c734c6e7666
@@ -2903,7 +3012,7 @@ msgstr ""
 #: ../../ref/models/querysets.txt:1988 ../../ref/models/querysets.txt:2037
 #: ../../ref/models/querysets.txt:2053
 msgid "SQL equivalent::"
-msgstr ""
+msgstr "Аналог SQL::"
 
 # 24fc5adf9f7c4fafab99fa1468e29d2b
 #: ../../ref/models/querysets.txt:1676
@@ -2911,6 +3020,8 @@ msgid ""
 "Note this will match ``'Beatles Blog'``, ``'beatles blog'``, ``'BeAtLes "
 "BLoG'``, etc."
 msgstr ""
+"Заметим что будет найден ``'Beatles Blog'``, ``'beatles blog'``, ``'BeAtLes "
+"BLoG'`` и тд."
 
 # 31922d4f9efd46af950059bc8e326b70
 #: ../../ref/models/querysets.txt:1681
@@ -2919,6 +3030,9 @@ msgid ""
 "the :ref:`database note <sqlite-string-matching>` about string comparisons. "
 "SQLite does not do case-insensitive matching for Unicode strings."
 msgstr ""
+"Используя SQLite и Unicode (не-ASCII) строки, помните :ref:`замечание о "
+"сравнении строк в SQLite <sqlite-string-matching>`. SQLite не выполняет "
+"регистро-независимое сравнение Unicode строк."
 
 # dbbc4737795e4a4885885819f055ddb6
 #: ../../ref/models/querysets.txt:1689
@@ -2928,7 +3042,7 @@ msgstr "contains"
 # 67343a542c2b4215be9327d0e4f1f55b
 #: ../../ref/models/querysets.txt:1691
 msgid "Case-sensitive containment test."
-msgstr ""
+msgstr "Регистро-зависимая проверка на вхождение."
 
 # e5d327a989cb4a898992968cc8489424
 #: ../../ref/models/querysets.txt:1701
@@ -2936,6 +3050,8 @@ msgid ""
 "Note this will match the headline ``'Lennon honored today'`` but not "
 "``'lennon honored today'``."
 msgstr ""
+"Заметим, что будет найдена строка ``'Lennon honored today'``, но не "
+"``'lennon honored today'``."
 
 # d7808b395aa945fa9d064e4b5430a13c
 #: ../../ref/models/querysets.txt:1706
@@ -2944,6 +3060,9 @@ msgid ""
 "like ``icontains`` for SQLite. See the :ref:`database note <sqlite-string-"
 "matching>` for more information."
 msgstr ""
+"SQLite не поддерживает регистро-зависимый оператор ``LIKE``; ``contains`` "
+"работает так же как и ``icontains`` для SQLite. Смотрите :ref:`замечание о "
+"сравнении строк в SQLite <sqlite-string-matching>`."
 
 # 3fd1c8a55daf4573977c0a7222291e88
 #: ../../ref/models/querysets.txt:1714
@@ -2953,7 +3072,7 @@ msgstr "icontains"
 # 77b1dc9d5c064180abdc64a1ca07f124
 #: ../../ref/models/querysets.txt:1716
 msgid "Case-insensitive containment test."
-msgstr ""
+msgstr "Регистро-независимая проверка на вхождение."
 
 # 3a8bf3be9bb64a409e14445f8ec03060
 # e63d0675b70646bd88a85572c3fafc4e
@@ -2964,6 +3083,8 @@ msgid ""
 "When using the SQLite backend and Unicode (non-ASCII) strings, bear in mind "
 "the :ref:`database note <sqlite-string-matching>` about string comparisons."
 msgstr ""
+"Используя SQLite и Unicode (не-ASCII) строки, помните :ref:`замечание о "
+"сравнении строк в SQLite <sqlite-string-matching>`."
 
 # fcb2730a5a3e4b8597ae9319634d8f27
 #: ../../ref/models/querysets.txt:1735
@@ -2973,24 +3094,24 @@ msgstr "in"
 # 87ea959d64274072873bb0c8167796b4
 #: ../../ref/models/querysets.txt:1737
 msgid "In a given list."
-msgstr ""
+msgstr "Проверяет на вхождение в список значений."
 
 # 060a14ce774b4558bbe7f4a1d5be3445
 #: ../../ref/models/querysets.txt:1747
 msgid ""
 "You can also use a queryset to dynamically evaluate the list of values "
 "instead of providing a list of literal values::"
-msgstr ""
+msgstr "Вы можете так же передать ``QuerySet`` для получения списка значений::"
 
 # 09549617c55b4da0be0d7c80bd940757
 #: ../../ref/models/querysets.txt:1753
 msgid "This queryset will be evaluated as subselect statement::"
-msgstr ""
+msgstr "Он будет использован как подзапрос::"
 
 # 0b7fc4a3228c42aabf3aa94d106113a8
 #: ../../ref/models/querysets.txt:1757
 msgid "The above code fragment could also be written as follows::"
-msgstr ""
+msgstr "Пример выше может быть записан таким образом::"
 
 # 9ae624ee61424a079d1c098af52c0b07
 #: ../../ref/models/querysets.txt:1764
@@ -2999,6 +3120,9 @@ msgid ""
 "It's fine to use it like above, but its API may change between Django "
 "versions."
 msgstr ""
+"Атрибут ``query`` используется внутренними механизмами и не является частью "
+"публичного API. Это нормально использовать его как в примере выше, но его "
+"API может быть изменен в последующих Django."
 
 # bd583955c9b54d38b2f0aa18316c83d2
 #: ../../ref/models/querysets.txt:1768
@@ -3008,6 +3132,10 @@ msgid ""
 "If your code doesn't require compatibility with Django 1.0, use the first "
 "form, passing in a queryset directly."
 msgstr ""
+"Второй способ не так \"красив\", т.к. использует внутренний атрибут "
+"``query`` и требует ``ValuesQuerySet``. Если ваш код не должен поддерживать "
+"Django 1.0, используйте первый вариант, передавайте непосредственно "
+"``QuerySet``."
 
 # 4a105d294b9e4eefa408d733720bc6a7
 #: ../../ref/models/querysets.txt:1773
@@ -3017,6 +3145,10 @@ msgid ""
 "``__in`` lookup, you need to ensure you are only extracting one field in the "
 "result. For example, this will work (filtering on the blog names)::"
 msgstr ""
+"Передавая ``ValuesQuerySet`` или ``ValuesListQuerySet`` (результат вызова "
+"``values()`` или ``values_list()``) как аргумент для фильтра ``__in``, вы "
+"должны быть уверенным, что результат содержит данные только одного поля. "
+"Например, этот код будет работать (фильтр по названиям блога)::"
 
 # 6e61d91c22c44361af2c75b994c0cdc2
 #: ../../ref/models/querysets.txt:1781
@@ -3024,6 +3156,8 @@ msgid ""
 "This example will raise an exception, since the inner query is trying to "
 "extract two field values, where only one is expected::"
 msgstr ""
+"Этот пример вызовет исключение т.к. подзапрос выбирает два поля в то время, "
+"как ожидается одно::"
 
 # 1894acc1d7c04b8da51f2a490e298bef
 #: ../../ref/models/querysets.txt:1790
@@ -3034,6 +3168,11 @@ msgid ""
 "more efficient, in those cases, to extract a list of values and then pass "
 "that into the second query. That is, execute two queries instead of one::"
 msgstr ""
+"Будьте осторожны при использовании вложенных запросов и учитывайте "
+"производительность вышей базы данных (если сомневаетесь, протестируйте "
+"его!). Некоторые типы баз данных, особенно MySQL, не очень хорошо "
+"оптимизируют вложенные запросы. В таком случае более эффективно получить "
+"список значений первым запросом и передать в другой::"
 
 # 3dffaf2d368b41228ba28d3674580965
 #: ../../ref/models/querysets.txt:1801
@@ -3042,6 +3181,9 @@ msgid ""
 "the first query. Without it, a nested query would be executed, because :ref:"
 "`querysets-are-lazy`."
 msgstr ""
+"Отметим использование ``list()`` с первым ``QuerySet`` что бы спровоцировать "
+"выполнение запроса. Без этого, он будет использован как подзапрос т.к. :ref:"
+"`querysets-are-lazy`."
 
 # efdcfa281a21404fb26fcb8bb34bdef5
 #: ../../ref/models/querysets.txt:1808
@@ -3051,7 +3193,7 @@ msgstr "gt"
 # 298b78972f8445dcb2ac8f0f189e6096
 #: ../../ref/models/querysets.txt:1810
 msgid "Greater than."
-msgstr ""
+msgstr "Больше чем."
 
 # 93226a1d19bc4775a46b54ad66c3a196
 #: ../../ref/models/querysets.txt:1823
@@ -3061,7 +3203,7 @@ msgstr "gte"
 # 700d1b4529a247b08eb6d54ec431bc0d
 #: ../../ref/models/querysets.txt:1825
 msgid "Greater than or equal to."
-msgstr ""
+msgstr "Больше чем или равно."
 
 # 2c2ab2f71bb84b9fa62774f8804dd5b1
 #: ../../ref/models/querysets.txt:1830
@@ -3071,7 +3213,7 @@ msgstr "lt"
 # 5f12fe0149774a9b86f7c8c583d35b65
 #: ../../ref/models/querysets.txt:1832
 msgid "Less than."
-msgstr ""
+msgstr "Меньше чем."
 
 # 634baf15353246e7a3262c1daa6772ba
 #: ../../ref/models/querysets.txt:1837
@@ -3081,7 +3223,7 @@ msgstr "lte"
 # e99ffbafead64b74b48a32b9d67edc85
 #: ../../ref/models/querysets.txt:1839
 msgid "Less than or equal to."
-msgstr ""
+msgstr "Меньше чем или равно."
 
 # 7ff40223fac34ad18eba45a83140a83b
 #: ../../ref/models/querysets.txt:1844
@@ -3091,7 +3233,7 @@ msgstr "startswith"
 # 88cbfd11577c4dd183bf087d0899bef9
 #: ../../ref/models/querysets.txt:1846
 msgid "Case-sensitive starts-with."
-msgstr ""
+msgstr "Регистро-зависимая проверка начинается ли поле с указанного значения."
 
 # 92612c5066fb4c5ca34d09c691000470
 #: ../../ref/models/querysets.txt:1856
@@ -3099,6 +3241,8 @@ msgid ""
 "SQLite doesn't support case-sensitive ``LIKE`` statements; ``startswith`` "
 "acts like ``istartswith`` for SQLite."
 msgstr ""
+"SQLite не поддерживает регистро-зависимый оператор ``LIKE``; ``startswith`` "
+"работает так же как и ``istartswith`` для SQLite."
 
 # 111d6588245743338bc6865cffd6b528
 #: ../../ref/models/querysets.txt:1862
@@ -3109,6 +3253,7 @@ msgstr "istartswith"
 #: ../../ref/models/querysets.txt:1864
 msgid "Case-insensitive starts-with."
 msgstr ""
+"Регистро-независимая проверка начинается ли поле с указанного значения."
 
 # 4c98a20fb2914c2c86251bb55eb9e77c
 #: ../../ref/models/querysets.txt:1883
@@ -3119,6 +3264,7 @@ msgstr "endswith"
 #: ../../ref/models/querysets.txt:1885
 msgid "Case-sensitive ends-with."
 msgstr ""
+"Регистро-зависимая проверка оканчивается ли поле с указанного значения."
 
 # ed826e4d9d2e44c9bf4517ef099b194f
 #: ../../ref/models/querysets.txt:1897
@@ -3127,6 +3273,9 @@ msgid ""
 "like ``iendswith`` for SQLite. Refer to the :ref:`database note <sqlite-"
 "string-matching>` documentation for more."
 msgstr ""
+"SQLite не поддерживает регистро-зависимый оператор ``LIKE``; ``endswith`` "
+"работает так же как и ``iendswith`` для SQLite. Смотрите :ref:`замечание о "
+"сравнении строк в SQLite <sqlite-string-matching>`."
 
 # 1922221732f14962b994fd2ea4ba7f0d
 #: ../../ref/models/querysets.txt:1904
@@ -3137,6 +3286,7 @@ msgstr "iendswith"
 #: ../../ref/models/querysets.txt:1906
 msgid "Case-insensitive ends-with."
 msgstr ""
+"Регистро-независимая проверка оканчивается ли поле с указанного значения."
 
 # 9ed5736e60ef43b8a31f2631034d5f8c
 #: ../../ref/models/querysets.txt:1925
@@ -3146,7 +3296,7 @@ msgstr "range"
 # d4da44bd202649b08723993ca9536afc
 #: ../../ref/models/querysets.txt:1927
 msgid "Range test (inclusive)."
-msgstr ""
+msgstr "Проверка на вхождение в диапазон (включающий)."
 
 # 5b0e615a17dc44aa88d03060f4da36fa
 #: ../../ref/models/querysets.txt:1939
@@ -3154,6 +3304,8 @@ msgid ""
 "You can use ``range`` anywhere you can use ``BETWEEN`` in SQL — for dates, "
 "numbers and even characters."
 msgstr ""
+"Вы можете использовать ``range`` там же, где можно использовать ``BETWEEN`` "
+"в SQL — для дат, чисел и даже строк."
 
 # f4d814190b4344149dbc839518920ac4
 #: ../../ref/models/querysets.txt:1945
@@ -3164,6 +3316,7 @@ msgstr "year"
 #: ../../ref/models/querysets.txt:1947
 msgid "For date/datetime fields, exact year match. Takes a four-digit year."
 msgstr ""
+"Проверка года для полей date/datetime. Принимает значение года из 4-х цифр."
 
 # 29083d0d847d4a7e8bff552fb33ec6c8
 # 56fee1cc131943e1922b92d0ce10e52e
@@ -3171,7 +3324,7 @@ msgstr ""
 #: ../../ref/models/querysets.txt:1957 ../../ref/models/querysets.txt:1975
 #: ../../ref/models/querysets.txt:1992
 msgid "(The exact SQL syntax varies for each database engine.)"
-msgstr ""
+msgstr "(Точный синтаксис SQL зависит от базы данных.)"
 
 # 003f2b547be24a74b2a8ffcb2f3a0d8a
 #: ../../ref/models/querysets.txt:1962
@@ -3184,6 +3337,8 @@ msgid ""
 "For date and datetime fields, an exact month match. Takes an integer 1 "
 "(January) through 12 (December)."
 msgstr ""
+"Проверка месяца для полей date/datetime. Принимает целое число от 1(январь) "
+"до 12(декабрь)."
 
 # 3a7fa46732934635ba5767f67a5aaa83
 #: ../../ref/models/querysets.txt:1980
@@ -3193,7 +3348,7 @@ msgstr "day"
 # 774d8c63fc154b85a91ae9aba6b60abd
 #: ../../ref/models/querysets.txt:1982
 msgid "For date and datetime fields, an exact day match."
-msgstr ""
+msgstr "Проверка дня месяца для полей date/datetime."
 
 # 86d6c940d9aa427d822aae2f525b374c
 #: ../../ref/models/querysets.txt:1994
@@ -3201,6 +3356,8 @@ msgid ""
 "Note this will match any record with a pub_date on the third day of the "
 "month, such as January 3, July 3, etc."
 msgstr ""
+"Заметим, что будут найдены записи, у которых значение ``pub_date`` это дата "
+"3-го числа любого месяца, такие как 3-го января, 3-го июля и тд."
 
 # 431be0498e904a54ad9c34278ca3bbb4
 #: ../../ref/models/querysets.txt:2000
@@ -3210,14 +3367,14 @@ msgstr "week_day"
 # 92392f5c054441589284b93eadbeef2e
 #: ../../ref/models/querysets.txt:2002
 msgid "For date and datetime fields, a 'day of the week' match."
-msgstr ""
+msgstr "Проверка дня недели для полей date/datetime."
 
 # 3b6f9608043a48feb7b8fedd160c34c3
 #: ../../ref/models/querysets.txt:2004
 msgid ""
 "Takes an integer value representing the day of week from 1 (Sunday) to 7 "
 "(Saturday)."
-msgstr ""
+msgstr "Принимает номер дня недели от 1 (воскресение) до 7 (суббота)."
 
 # 9c3d1a50ec6e4c268855f16ee1bf6b13
 #: ../../ref/models/querysets.txt:2011
@@ -3226,6 +3383,8 @@ msgid ""
 "implementation of the relevant query varies among different database "
 "engines.)"
 msgstr ""
+"(Аналог SQL не представлен т.к. реализация отличается для различных баз "
+"данных.)"
 
 # 567c6d131a684d7a8d1019ac60c9749f
 #: ../../ref/models/querysets.txt:2014
@@ -3234,6 +3393,9 @@ msgid ""
 "(day 2 of the week), regardless of the month or year in which it occurs. "
 "Week days are indexed with day 1 being Sunday and day 7 being Saturday."
 msgstr ""
+"Будут найдены записи, у которых дата в ``pub_date`` -- понедельник (второй "
+"день недели), независимо от месяца и года. Дни недели пронумерованы от 1"
+"(воскресение) до 7(суббота)."
 
 # 2c9d52cc99be446aacd1620c56e67d2b
 #: ../../ref/models/querysets.txt:2020
@@ -3243,6 +3405,10 @@ msgid ""
 "``day`` and ``week_day`` lookups are performed in UTC. This is a known "
 "limitation of the current implementation."
 msgstr ""
+"Если используются :doc:`временные зоны </topics/i18n/timezones>` , Django "
+"использует UTC при подключении к базе данных, это означает что фильтры "
+"``year``, ``month``, ``day`` и ``week_day`` будут выполнены в UTC. Это "
+"ограничение текущей реализации."
 
 # 0f8c1aba3b344712a47b748a97f71791
 #: ../../ref/models/querysets.txt:2028
@@ -3255,6 +3421,8 @@ msgid ""
 "Takes either ``True`` or ``False``, which correspond to SQL queries of ``IS "
 "NULL`` and ``IS NOT NULL``, respectively."
 msgstr ""
+"Принимает ``True`` или ``False``, что соответствует SQL запросу ``IS NULL`` "
+"и ``IS NOT NULL``, соответственно."
 
 # db6edd7fde1c4b9486c42146373b906c
 #: ../../ref/models/querysets.txt:2044
@@ -3268,6 +3436,9 @@ msgid ""
 "like :lookup:`contains` but is significantly faster due to full-text "
 "indexing."
 msgstr ""
+"Полнотекстовый поиск, который использует преимущества полнотекстового "
+"индекса. Работает как и :lookup:`contains` но значительно быстрее благодаря "
+"полнотекстовому индексу."
 
 # 0332f758885746daa36ec358647475b5
 #: ../../ref/models/querysets.txt:2057
@@ -3276,6 +3447,10 @@ msgid ""
 "database to add the full-text index. By default Django uses BOOLEAN MODE for "
 "full text searches. See the `MySQL documentation`_ for additional details."
 msgstr ""
+"Работает только в MySQL и требует самостоятельного добавления "
+"полнотекстового индекса. По-умолчанию Django использует BOOLEAN MODE для "
+"полнотекстового поиска. Подробности в `документации MySQL <http://dev.mysql."
+"com/doc/refman/5.1/en/fulltext-boolean.html>`_."
 
 # 6e9ccec583714105bfd48647f2903e39
 #: ../../ref/models/querysets.txt:2067
@@ -3285,7 +3460,7 @@ msgstr "regex"
 # 227495836b474b5986622a6c1950ac2b
 #: ../../ref/models/querysets.txt:2069
 msgid "Case-sensitive regular expression match."
-msgstr ""
+msgstr "Регистро-зависимая проверка регулярным выражением."
 
 # 740fd2774c72493b9c8e212ef912da36
 #: ../../ref/models/querysets.txt:2071
@@ -3295,6 +3470,9 @@ msgid ""
 "feature is provided by a (Python) user-defined REGEXP function, and the "
 "regular expression syntax is therefore that of Python's ``re`` module."
 msgstr ""
+"Синтаксис регулярных выражений зависит от базы данных. Для SQLite, который "
+"не поддерживает регулярные выражения, эта функция обеспечена на уровне "
+"Python, по-этому используется синтаксис модуля Python ``re``."
 
 # 9b3fc2d9a56548c3ba11e0247a34b673
 #: ../../ref/models/querysets.txt:2090
@@ -3302,6 +3480,8 @@ msgid ""
 "Using raw strings (e.g., ``r'foo'`` instead of ``'foo'``) for passing in the "
 "regular expression syntax is recommended."
 msgstr ""
+"Рекомендуется использовать \"raw\" строки (например, ``r'foo'`` вместо "
+"``'foo'``) для регулярных выражений."
 
 # 2d839032a9214965a439641605172826
 #: ../../ref/models/querysets.txt:2096
@@ -3311,12 +3491,12 @@ msgstr "iregex"
 # 05e579fa80194fe0a677ec04c254126a
 #: ../../ref/models/querysets.txt:2098
 msgid "Case-insensitive regular expression match."
-msgstr ""
+msgstr "Регистро-независимая проверка регулярным выражением."
 
 # 729b14fd249648b9b31bb0ef98f94119
 #: ../../ref/models/querysets.txt:2117
 msgid "Aggregation functions"
-msgstr ""
+msgstr "Функции агрегации"
 
 # 0db7cc5369fc410abe92d4b71fce6968
 #: ../../ref/models/querysets.txt:2121
@@ -3325,6 +3505,9 @@ msgid ""
 "models`` module. For details on how to use these aggregate functions, see :"
 "doc:`the topic guide on aggregation </topics/db/aggregation>`."
 msgstr ""
+"Django предоставляет ряд функций агрегации в модуле ``django.db.models``. "
+"Подробности, как использовать функции агрегации, смотрите в :doc:`разделе об "
+"агрегации </topics/db/aggregation>`."
 
 # b62b96d46a654d3491ba4da2641de110
 #: ../../ref/models/querysets.txt:2127
@@ -3335,11 +3518,12 @@ msgstr "Avg"
 #: ../../ref/models/querysets.txt:2131
 msgid "Returns the mean value of the given field, which must be numeric."
 msgstr ""
+"Возвращает среднее значение указанного поля, которое должно быть численным."
 
 # 6690fc6440444e229991c12a0bad51d7
 #: ../../ref/models/querysets.txt:2133
 msgid "Default alias: ``<field>__avg``"
-msgstr ""
+msgstr "Псевдоним по-умолчанию: ``<field>__avg``"
 
 # e9374dd835b64a0796f49cafb63d2793
 # dc35896edcc54a28b706b32c314569ec
@@ -3347,7 +3531,7 @@ msgstr ""
 #: ../../ref/models/querysets.txt:2134 ../../ref/models/querysets.txt:2182
 #: ../../ref/models/querysets.txt:2216
 msgid "Return type: ``float``"
-msgstr ""
+msgstr "Тип возвращаемого значения: ``float``"
 
 # 0c409d1475354def93edde29830f7ac4
 #: ../../ref/models/querysets.txt:2137
@@ -3358,17 +3542,17 @@ msgstr "Count"
 #: ../../ref/models/querysets.txt:2141
 msgid ""
 "Returns the number of objects that are related through the provided field."
-msgstr ""
+msgstr "Возвращает количество объектов связанных через указанное поле.."
 
 # ebcbab5dfc8948ac9da204f618439c2b
 #: ../../ref/models/querysets.txt:2143
 msgid "Default alias: ``<field>__count``"
-msgstr ""
+msgstr "Псевдоним по-умолчанию: ``<field>__count``"
 
 # 8f27a0c018b8479f89cb3436efa6200e
 #: ../../ref/models/querysets.txt:2144
 msgid "Return type: ``int``"
-msgstr ""
+msgstr "Тип возвращаемого значения: ``int``"
 
 # 7b78afaeef4f4c68a747e09ad5aa3808
 # 965c986ae74645b68ccd5fd615dc7890
@@ -3376,7 +3560,7 @@ msgstr ""
 #: ../../ref/models/querysets.txt:2146 ../../ref/models/querysets.txt:2184
 #: ../../ref/models/querysets.txt:2218
 msgid "Has one optional argument:"
-msgstr ""
+msgstr "Принимает один не обязательный параметр:"
 
 # 475af4945fa7432ea3c6ccb205836fd7
 #: ../../ref/models/querysets.txt:2150
@@ -3385,6 +3569,8 @@ msgid ""
 "the SQL equivalent of ``COUNT(DISTINCT <field>)``. The default value is "
 "``False``."
 msgstr ""
+"При ``distinct=True``, будут подсчитаны только уникальные объекты. SQL "
+"эквивалент -- ``COUNT(DISTINCT <field>)``. Значение по-умолчанию ``False``."
 
 # ada47e189ee6457db1dfe81a771f62ba
 #: ../../ref/models/querysets.txt:2155
@@ -3394,12 +3580,12 @@ msgstr "Max"
 # c39eab0e29cc4c9e8f5c4906ffd2e0bd
 #: ../../ref/models/querysets.txt:2159
 msgid "Returns the maximum value of the given field."
-msgstr ""
+msgstr "Возвращает максимальное значение указанного поля."
 
 # ced5a09597d44654940ee0335d460243
 #: ../../ref/models/querysets.txt:2161
 msgid "Default alias: ``<field>__max``"
-msgstr ""
+msgstr "Псевдоним по-умолчанию: ``<field>__max``"
 
 # 3697fdcfb61d47f48026e21adf8a69dc
 # 731b2c19d6d74c118da15e41828e0958
@@ -3407,7 +3593,7 @@ msgstr ""
 #: ../../ref/models/querysets.txt:2162 ../../ref/models/querysets.txt:2172
 #: ../../ref/models/querysets.txt:2206
 msgid "Return type: same as input field"
-msgstr ""
+msgstr "Тип возвращаемого значения: тип указанного поля."
 
 # 005622d3bbfa4271956016793ade610f
 #: ../../ref/models/querysets.txt:2165
@@ -3417,12 +3603,12 @@ msgstr "Min"
 # 961c01be2a224222b5d329b06bee39e3
 #: ../../ref/models/querysets.txt:2169
 msgid "Returns the minimum value of the given field."
-msgstr ""
+msgstr "Возвращает минимальное значение указанного поля."
 
 # e32617a3373d412782bdfc2d70347a5e
 #: ../../ref/models/querysets.txt:2171
 msgid "Default alias: ``<field>__min``"
-msgstr ""
+msgstr "Псевдоним по-умолчанию: ``<field>__min``"
 
 # 6a9353ad6067426e9973c9e219303ad3
 #: ../../ref/models/querysets.txt:2175
@@ -3432,12 +3618,12 @@ msgstr "StdDev"
 # 0c05bca7d1314a0c967070c0b345f71d
 #: ../../ref/models/querysets.txt:2179
 msgid "Returns the standard deviation of the data in the provided field."
-msgstr ""
+msgstr "Возвращает стандартное отклонение для данных указанного поля."
 
 # b52735b21eac46eb9a5d41d9ff8489cd
 #: ../../ref/models/querysets.txt:2181
 msgid "Default alias: ``<field>__stddev``"
-msgstr ""
+msgstr "Псевдоним по-умолчанию: ``<field>__stddev``"
 
 # 24195ce6426e45c38ee7918f58c49587
 #: ../../ref/models/querysets.txt:2188
@@ -3445,6 +3631,9 @@ msgid ""
 "By default, ``StdDev`` returns the population standard deviation. However, "
 "if ``sample=True``, the return value will be the sample standard deviation."
 msgstr ""
+"По-умолчанию, ``StdDev`` возвращает \"population\" стандартное отклонение. "
+"Однако, если использовать аргумент ``sample=True``, возвращаемое значение "
+"будет \"sample\" стандартное отклонение."
 
 # 3e965735e1444d8885183edd5981400c
 #: ../../ref/models/querysets.txt:2193
@@ -3453,6 +3642,9 @@ msgid ""
 "available as an extension module for SQLite. Consult the `SQlite "
 "documentation`_ for instructions on obtaining and installing this extension."
 msgstr ""
+"SQLite не поддерживает ``StdDev`` из коробки. Реализация доступна в качестве "
+"модуля расширения для SQLite. Смотрите инструкцию по установке в "
+"`документации SQlite <http://www.sqlite.org/contrib>`_."
 
 # c15dfc1c05a14212bb0fc4be6550fc31
 #: ../../ref/models/querysets.txt:2199
@@ -3462,12 +3654,12 @@ msgstr "Sum"
 # 3d3652bb66364c77a828d2e0197165ac
 #: ../../ref/models/querysets.txt:2203
 msgid "Computes the sum of all values of the given field."
-msgstr ""
+msgstr "Возвращает сумму всех значений указанного поля."
 
 # 28ecdfc98f5e42a5a0bc42c286d93393
 #: ../../ref/models/querysets.txt:2205
 msgid "Default alias: ``<field>__sum``"
-msgstr ""
+msgstr "Псевдоним по-умолчанию: ``<field>__sum``"
 
 # 3a32fc4286914984813cde2c218131c2
 #: ../../ref/models/querysets.txt:2209
@@ -3477,12 +3669,12 @@ msgstr "Variance"
 # 783e403140ed4b3bbbec4334b291bc5f
 #: ../../ref/models/querysets.txt:2213
 msgid "Returns the variance of the data in the provided field."
-msgstr ""
+msgstr "Возвращает дисперсию значений в указанном поле."
 
 # 36da04f912d944988d28bedf8f989068
 #: ../../ref/models/querysets.txt:2215
 msgid "Default alias: ``<field>__variance``"
-msgstr ""
+msgstr "Псевдоним по-умолчанию: ``<field>__variance``"
 
 # 10d003b4052e43a0ba85413ce4eae0b5
 #: ../../ref/models/querysets.txt:2222
@@ -3490,6 +3682,9 @@ msgid ""
 "By default, ``Variance`` returns the population variance. However, if "
 "``sample=True``, the return value will be the sample variance."
 msgstr ""
+"По-умолчанию, ``Variance`` возвращает \"population\" дисперсию. Однако, если "
+"использовать аргумент ``sample=True``, возвращаемое значение будет \"sample"
+"\" дисперсия."
 
 # 7bab55b99e094dd299f28af98b427972
 #: ../../ref/models/querysets.txt:2227
@@ -3498,3 +3693,6 @@ msgid ""
 "available as an extension module for SQLite. Consult the `SQlite "
 "documentation`_ for instructions on obtaining and installing this extension."
 msgstr ""
+"SQLite не поддерживает ``Variance`` из коробки. Реализация доступна в "
+"качестве модуля расширения для SQLite. Смотрите инструкцию по установке в "
+"`документации SQlite <http://www.sqlite.org/contrib>`_."
