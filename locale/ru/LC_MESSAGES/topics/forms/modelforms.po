@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-29 18:30\n"
-"PO-Revision-Date: 2012-03-06 15:31+0400\n"
+"PO-Revision-Date: 2012-03-10 21:42+0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -370,6 +370,13 @@ msgid ""
 "``blank=False`` and an explicit ``default`` value (the ``default`` value "
 "will be initially selected instead)."
 msgstr ""
+"Если для поля модели установлен атрибут ``choices``, тогда для поля формы "
+"будет использоваться виджет ``Select``, который будет отображать содержимое "
+"этого атрибута. Варианты выбора обычно содержат пустой вариант, который "
+"выбран по умолчанию. Если поле является обязательным, то оно требует от "
+"пользователя сделать выбор. Пустой вариант не отображается, если у поля "
+"модели есть атрибут ``blank=False`` и явное значение ``default`` (при этом, "
+"это значение будет выбрано по умолчанию)."
 
 # 7315215d4e56431781141d302086eeee
 #: ../../topics/forms/modelforms.txt:146
@@ -377,16 +384,19 @@ msgid ""
 "Finally, note that you can override the form field used for a given model "
 "field. See `Overriding the default field types or widgets`_ below."
 msgstr ""
+"В конце, следует отметить, что вы можете переопределить поле формы, "
+"используемое для определённого поля модели. Обратитесь к `Overriding the "
+"default field types or widgets`_ далее."
 
 # e272a3725f134aaa9a4679ee6da8d73d
 #: ../../topics/forms/modelforms.txt:150
 msgid "A full example"
-msgstr ""
+msgstr "Полный пример"
 
 # cdbaa262da3d40978bd5b84d15c70547
 #: ../../topics/forms/modelforms.txt:152
 msgid "Consider this set of models::"
-msgstr ""
+msgstr "Рассмотрим этот набор полей::"
 
 # 2ccb0a665b9845c2a0d462466018c4d3
 #: ../../topics/forms/modelforms.txt:183
@@ -395,11 +405,14 @@ msgid ""
 "equivalent to this (the only difference being the ``save()`` method, which "
 "we'll discuss in a moment.)::"
 msgstr ""
+"Для этих моделей показанные выше классы ``ModelForm`` будут аналогичны "
+"следующим формам (разница будет только в методе ``save()``, что мы вскоре "
+"рассмотрим.)::"
 
 # 8c8ad0976dcf460e8004f21a6c44f1c3
 #: ../../topics/forms/modelforms.txt:200
 msgid "The ``is_valid()`` method and ``errors``"
-msgstr ""
+msgstr "Метод ``is_valid()`` и список ``errors``"
 
 # 9cd6cee2c8654c8bb3399d01e9881721
 #: ../../topics/forms/modelforms.txt:202
@@ -411,11 +424,17 @@ msgid ""
 "on your form will convert any date fields on your model to actual date "
 "objects."
 msgstr ""
+"При первом вызове метода ``is_valid()`` или обращении к атрибуту ``errors`` "
+"форма ``ModelForm`` выполняет валидацию полученный данных, как это описано "
+"в :ref:`model validation <validating-objects>`. Побочным эффектом данного "
+"действия является очистка модели, которую вы передали в конструктор "
+"``ModelForm``. Например, вызов ``is_valid()`` для вашей формы преобразует "
+"все поля дат вашей модели в настоящие объекты даты."
 
 # f0ab2badb7ed4ef6bc676508638ed111
 #: ../../topics/forms/modelforms.txt:210
 msgid "The ``save()`` method"
-msgstr ""
+msgstr "Метод ``save()``"
 
 # 13c1a367f9c949719c6a94f1ab2719b6
 #: ../../topics/forms/modelforms.txt:212
@@ -427,6 +446,13 @@ msgid ""
 "that instance. If it's not supplied, ``save()`` will create a new instance "
 "of the specified model::"
 msgstr ""
+"Каждая форма, созданная с помощью ``ModelForm``, обладает методом ``save()"
+"``. Этот метод создаёт и сохраняет объект в базе данных, используя для этого "
+"данные, введённые в форму. Класс, унаследованный от ``ModelForm`` может "
+"принимать существующий экземпляр модели через именованный аргумент "
+"``instance``. Если такой аргумент указан, то ``save()`` обновит переданную "
+"модель. В противном случае, ``save()`` создаст новы экземпляр указанной "
+"модели::"
 
 # c95cf7a589724e9ab30ad82736ead9e1
 #: ../../topics/forms/modelforms.txt:236
@@ -434,6 +460,9 @@ msgid ""
 "Note that ``save()`` will raise a ``ValueError`` if the data in the form "
 "doesn't validate -- i.e., if form.errors evaluates to True."
 msgstr ""
+"Следует отметить, что метод ``save()`` вызывает исключение ``ValueError``, "
+"если данные формы не прошли проверку, т.е. атрибут ``errors`` формы "
+"вычисляется в ``True``."
 
 # eab5d8f0e2104cbca795c53005a5f316
 #: ../../topics/forms/modelforms.txt:239
@@ -447,6 +476,14 @@ msgid ""
 "specialized :ref:`model saving options <ref-models-force-insert>`. "
 "``commit`` is ``True`` by default."
 msgstr ""
+"Метод ``save()`` принимает необязательный именованный аргумент ``commit``, "
+"который может иметь значения ``True`` или ``False``. Если вы вызовите ``save"
+"()`` с ``commit=False``, то метод вернёт объект, который ещё не был сохранён "
+"в базе данных. В этом случае, вам самостоятельно придётся вызвать метод "
+"``save()`` у полученного объекта. Это полезно, когда требуется выполнить "
+"дополнительные действия над объектом до его сохранения или если вам "
+"требуется воспользоваться одной из :ref:`model опций сохранения <ref-models-"
+"force-insert>`. Атрибут ``commit`` по умолчанию имеет значение ``True``."
 
 # 9cdf2fd9050b4c52b246351f85e69704
 #: ../../topics/forms/modelforms.txt:248
@@ -458,6 +495,12 @@ msgid ""
 "because it isn't possible to save many-to-many data for an instance until "
 "the instance exists in the database."
 msgstr ""
+"Использование ``commit=False`` также полезно в случае, когда ваша модель "
+"имеет связь \"многие-ко-многим\" с другой моделью. Для такой модели, если "
+"метод ``save()`` вызван с аргументом ``commit=False``, то Django не может "
+"немедленно сохранить данные для такой связи. Это происходит так, потому что "
+"невозможно создать такую связь для экземпляра, пока он не сохранён в базе "
+"данных."
 
 # 2910adec46fd4d1fa2bd3c5bfda2b7ee
 #: ../../topics/forms/modelforms.txt:255
@@ -467,6 +510,11 @@ msgid ""
 "subclass. After you've manually saved the instance produced by the form, you "
 "can invoke ``save_m2m()`` to save the many-to-many form data. For example::"
 msgstr ""
+"Чтобы решить эту задачу, каждый раз когда вы сохраняете форму, указывая "
+"``commit=False``, Django добавляет метод ``save_m2m()`` к вашему классу "
+"``ModelForm``. После того, как вы вручную сохранили экземпляр формы, вы "
+"можете вызвать метод ``save_m2m()`` для сохранения данных, связанних через "
+"\"многие-ко-многим\". Например::"
 
 # 898a1e938a6e4287949d753d758cc13f
 #: ../../topics/forms/modelforms.txt:275
@@ -476,6 +524,10 @@ msgid ""
 "many data -- is saved without the need for any additional method calls. For "
 "example::"
 msgstr ""
+"Вызов метода ``save_m2m()`` требуется только в случае, если вы используете "
+"``save(commit=False)``. Если вы просто используете ``save()`` для формы, то "
+"все данные (включая связи \"многие-ко-многим\"), будут сохранены, не требуя "
+"для этого дополнительных действий. Например::"
 
 # 038eb052304d40ab898756132b1dea47
 #: ../../topics/forms/modelforms.txt:287
@@ -487,11 +539,17 @@ msgid ""
 "whether ``request.FILES`` must be passed to the form), etc. See :ref:"
 "`binding-uploaded-files` for more information."
 msgstr ""
+"Если не принимать во внимание методы ``save()`` и ``save_m2m()``, то "
+"``ModelForm`` работает аналогично обычной ``Form``. Например, метод "
+"``is_valid()`` используется для проверки данных, метод ``is_multipart()`` "
+"используется для определения загрузки файла (в этом случае ``request.FILES`` "
+"должен быть передан форме) и так далее. Обратитесь к :ref:`binding-uploaded-"
+"files` для получения подробностей."
 
 # 3e19e93afd224658bc0c30e6b943bbc2
 #: ../../topics/forms/modelforms.txt:295
 msgid "Using a subset of fields on the form"
-msgstr ""
+msgstr "Использование части полей на форме"
 
 # 081d4ece79d34db98892784f68ebb801
 #: ../../topics/forms/modelforms.txt:297
@@ -500,6 +558,9 @@ msgid ""
 "generated form. There are three ways of telling ``ModelForm`` to use only a "
 "subset of the model fields:"
 msgstr ""
+"В некоторых случаях может потребоваться выводить лишь часть полей модели на "
+"форме. Существует три способа указать ``ModelForm``, какие именно поля "
+"модели надо использовать:"
 
 # 6ab6a0e1d09b49f3ab49f08f2f8f3140
 #: ../../topics/forms/modelforms.txt:301
@@ -507,6 +568,9 @@ msgid ""
 "Set ``editable=False`` on the model field. As a result, *any* form created "
 "from the model via ``ModelForm`` will not include that field."
 msgstr ""
+"Установите ``editable=False`` для поля модели. В результате, *каждая* форма, "
+"созданная по модели с помощью ``ModelForm`` не будет включать в себя это "
+"поле."
 
 # 5dd89b097aa547639cd261216330302a
 #: ../../topics/forms/modelforms.txt:305
@@ -516,6 +580,10 @@ msgid ""
 "form. The order in which the fields names are specified in that list is "
 "respected when the form renders them."
 msgstr ""
+"Используйте атрибут ``fields`` внутреннего класса ``ModelForm.Meta``. Этот "
+"атрибут, если он указан, должен содержать список имён полей, которые должны "
+"отображаться на форме. Порядок определения полей в этом списке влияет на "
+"порядок полей на форме."
 
 # 98d3e8ed99a64c71aed78c134b8e0716
 #: ../../topics/forms/modelforms.txt:310
@@ -524,6 +592,9 @@ msgid ""
 "This attribute, if given, should be a list of field names to exclude from "
 "the form."
 msgstr ""
+"Используйте атрибут ``exclude`` внутреннего класса ``ModelForm.Meta``. Этот "
+"атрибут, если он указан, должен содержать список имён полей, которые не "
+"должны отображаться на форме."
 
 # 3f877e0e0a134d8f8b0cc077f7380711
 #: ../../topics/forms/modelforms.txt:314
@@ -532,13 +603,16 @@ msgid ""
 "that includes only the ``name`` and ``title`` fields, you would specify "
 "``fields`` or ``exclude`` like this::"
 msgstr ""
+"Например, если требуется, чтобы форма для модели ``Author`` (определена "
+"выше) отображала только поля ``name`` и ``title``, укажите атрибуты "
+"``fields`` или ``exclude`` вот так::"
 
 # 6bacf02656f74343a4c19917c14b66fd
 #: ../../topics/forms/modelforms.txt:328
 msgid ""
 "Since the Author model has only 3 fields, 'name', 'title', and 'birth_date', "
 "the forms above will contain exactly the same fields."
-msgstr ""
+msgstr "Так как модель ``Author``"
 
 # 9315e8685d854d4d9bea2c4bdd273879
 #: ../../topics/forms/modelforms.txt:333
