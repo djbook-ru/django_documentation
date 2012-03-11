@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-29 18:30\n"
-"PO-Revision-Date: 2012-03-11 13:10+0200\n"
+"PO-Revision-Date: 2012-03-11 19:47+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -62,7 +62,7 @@ msgstr ""
 # dbb086d8d34d4c3ea8903f61ad6e1220
 #: ../../ref/request-response.txt:22
 msgid "HttpRequest objects"
-msgstr "Объекты HttpRequest"
+msgstr "Объект HttpRequest"
 
 # 9b4dcb0a8ed34e46b0c5bfe8474fe5ba
 # 9d903a8efd6b433f89a4010f994d4a82
@@ -452,11 +452,16 @@ msgid ""
 "method uses a combination of ``SERVER_NAME`` and ``SERVER_PORT`` as detailed "
 "in :pep:`3333`."
 msgstr ""
+"Возвращает оригинальное имя хоста используя информацию из "
+"``HTTP_X_FORWARDED_HOST`` (если включена настройка :setting:"
+"`USE_X_FORWARDED_HOST`) и ``HTTP_HOST`` заголовков, в соответствующем "
+"порядке. Если эти значения не определенны, метод использует комбинацию "
+"``SERVER_NAME`` и ``SERVER_PORT`` как описано в :pep:`3333`."
 
 # e5a14caede72494c8ba98ccec988a5ea
 #: ../../ref/request-response.txt:207
 msgid "Example: ``\"127.0.0.1:8000\"``"
-msgstr ""
+msgstr "Например: ``\"127.0.0.1:8000\"``"
 
 # 19529ff87bb44d018c815e8559d64e1f
 #: ../../ref/request-response.txt:209
@@ -465,6 +470,9 @@ msgid ""
 "multiple proxies. One solution is to use middleware to rewrite the proxy "
 "headers, as in the following example::"
 msgstr ""
+"Метод :meth:`~HttpRequest.get_host()` вернет ошибку если сервер находится за "
+"несколькими proxy. Одно из решений -- создать функциональный слой"
+"(middleware), который переопределить заголовки proxy таким образом::"
 
 # d664439c26354ac9ac2db4ec76e947c9
 #: ../../ref/request-response.txt:231
@@ -474,16 +482,20 @@ msgid ""
 "`~django.middleware.common.CommonMiddleware` or :class:`~django.middleware."
 "csrf.CsrfViewMiddleware`."
 msgstr ""
+"Этот функциональный слой должен находиться перед любый другим, который может "
+"использовать :meth:`~HttpRequest.get_host()`, например, :class:`~django."
+"middleware.common.CommonMiddleware` или :class:`~django.middleware.csrf."
+"CsrfViewMiddleware`."
 
 # a73e20a339eb4f188e60dab4dca03a5e
 #: ../../ref/request-response.txt:238
 msgid "Returns the ``path``, plus an appended query string, if applicable."
-msgstr ""
+msgstr "Возвращает ``path``, со строкой запроса, если она присутствует."
 
 # b81d1d3bcd1f4eff91f0801937f0faa5
 #: ../../ref/request-response.txt:240
 msgid "Example: ``\"/music/bands/the_beatles/?print=true\"``"
-msgstr ""
+msgstr "Например: ``\"/music/bands/the_beatles/?print=true\"``"
 
 # 91b7e69ebcc34151841720ea0856082e
 #: ../../ref/request-response.txt:244
@@ -491,6 +503,8 @@ msgid ""
 "Returns the absolute URI form of ``location``. If no location is provided, "
 "the location will be set to ``request.get_full_path()``."
 msgstr ""
+"Возвращает абсолютный URI для аргумента ``location``. Если ``location`` не "
+"указан, будет использовано значение ``request.get_full_path()``."
 
 # 1a7e0003eed44a43a4c5f43e78a31dbb
 #: ../../ref/request-response.txt:247
@@ -499,11 +513,15 @@ msgid ""
 "Otherwise the absolute URI is built using the server variables available in "
 "this request."
 msgstr ""
+"Если ``location`` уже является абсолютным URI, значение останется не "
+"измененным. В другом случае абсолютный URI будет создан с использованием "
+"данных запроса."
 
 # cf14c0a45c4c40e4ab5e36c7e4a4605c
 #: ../../ref/request-response.txt:251
 msgid "Example: ``\"http://example.com/music/bands/the_beatles/?print=true\"``"
 msgstr ""
+"Например: ``\"http://example.com/music/bands/the_beatles/?print=true\"``"
 
 # 33430fc679cf40bd9c4a2bbd75e49f59
 #: ../../ref/request-response.txt:257
@@ -513,6 +531,10 @@ msgid ""
 "provide the ``default`` argument the exception will be suppressed and that "
 "default value will be returned instead."
 msgstr ""
+"Возвращает значение подписанных(signed) cookie, или вызывает исключение :"
+"class:`~django.core.signing.BadSignature` если подпись не верна. При "
+"передаче аргумента ``default`` исключение не будет вызвано и функция вернет "
+"значение по-умолчанию."
 
 # 05fec99492df41f7b27c8c53727bee69
 #: ../../ref/request-response.txt:262
@@ -522,17 +544,23 @@ msgid ""
 "argument will be checked against the signed timestamp attached to the cookie "
 "value to ensure the cookie is not older than ``max_age`` seconds."
 msgstr ""
+"Необязательный аргумент ``salt`` может быть использован для дополнительной "
+"защиты от \" brute force\" атак. Если передан аргумент ``max_age``, время "
+"подписи cookie будет проверяться, чтобы убедиться, что cookie не старше "
+"``max_age`` секунд."
 
 # 0731a5162f9e4a0289121355c35fc7f4
 #: ../../ref/request-response.txt:268
 msgid "For example::"
-msgstr ""
+msgstr "Например::"
 
 # a27dd73c22054249a7b092fcc9b79d0c
 #: ../../ref/request-response.txt:288
 msgid ""
 "See :doc:`cryptographic signing </topics/signing>` for more information."
 msgstr ""
+"Подробности смотрите в разделе о :doc:`криптографической подписи </topics/"
+"signing>`."
 
 # 4b36043dc082468da1a2f2c74196b016
 #: ../../ref/request-response.txt:292
@@ -540,6 +568,8 @@ msgid ""
 "Returns ``True`` if the request is secure; that is, if it was made with "
 "HTTPS."
 msgstr ""
+"Возвращает ``True`` если запрос безопасный; то есть, если он был выполнен "
+"через HTTPS."
 
 # 74cb2ede9a2f427f9783256918ca10be
 #: ../../ref/request-response.txt:297
@@ -550,6 +580,12 @@ msgid ""
 "you write your own XMLHttpRequest call (on the browser side), you'll have to "
 "set this header manually if you want ``is_ajax()`` to work."
 msgstr ""
+"Возвращает ``True``, если запрос был выполнен через ``XMLHttpRequest``, "
+"проверяя равен ли заголовок ``HTTP_X_REQUESTED_WITH`` значению "
+"``'XMLHttpRequest'``. Большинство современных JavaScript библиотек "
+"используют этот заголовок. Если вы самостоятельно выполняете XMLHttpRequest "
+"запрос (в браузере), необходимо установить этот заголовок, иначе метод "
+"``is_ajax()`` не будет работать."
 
 # 6a50c3808c924e42bf88ff9625b3157a
 #: ../../ref/request-response.txt:311
@@ -559,6 +595,10 @@ msgid ""
 "streaming fashion. A common use-case would be to process a big XML payload "
 "with iterative parser without constructing a whole XML tree in memory."
 msgstr ""
+"Методы предоставляющие интерфейс файла для чтения данных из объекта "
+"``HttpRequest``. Это дает возможность читать содержимое запроса в потоке. "
+"Один из вариантов использования -- это обработка большого XML-документа "
+"\"парсером\", без создания всего XML-дерева в памяти."
 
 # 911c8fac86da453cadd9bd3149caf49d
 #: ../../ref/request-response.txt:317
@@ -566,36 +606,39 @@ msgid ""
 "Given this standard interface, an HttpRequest instance can be passed "
 "directly to an XML parser such as ElementTree::"
 msgstr ""
+"Предоставляя стандартный интерфейс, объект ``HttpRequest`` можно передавать "
+"непосредственно в XML-\"парсер\" такой как ElementTree::"
 
 # f0ce286b8f3349ba9a4465dfdc80b8e4
 #: ../../ref/request-response.txt:326
 msgid "UploadedFile objects"
-msgstr ""
+msgstr "Объект UploadedFile"
 
 # 3a52638271d44bdd947c6365fdc0c235
 #: ../../ref/request-response.txt:336
 msgid "The name of the uploaded file."
-msgstr ""
+msgstr "Название загруженного файла."
 
 # 55a840a681114075a66694a90a7b1b22
 #: ../../ref/request-response.txt:340
 msgid "The size, in bytes, of the uploaded file."
-msgstr ""
+msgstr "Размер, в байтах, загруженного файла."
 
 # 5ff7216988ad478ca56a2758346b661e
 #: ../../ref/request-response.txt:347
 msgid "Returns a generator that yields sequential chunks of data."
 msgstr ""
+"Возвращает генератор, который последовательно выдает блоками данные файла."
 
 # c150daa85bd64fca96ad9cfd4c2fe7d4
 #: ../../ref/request-response.txt:351
 msgid "Read a number of bytes from the file."
-msgstr ""
+msgstr "Читает определенное количество байтов из файла."
 
 # 711a1e61babe47c3a5decdb904700425
 #: ../../ref/request-response.txt:356
 msgid "QueryDict objects"
-msgstr ""
+msgstr "Объект QueryDict"
 
 # 01f8070f0f3740b0b4d04c63bda6bcb0
 #: ../../ref/request-response.txt:360
@@ -606,6 +649,12 @@ msgid ""
 "necessary because some HTML form elements, notably ``<select multiple="
 "\"multiple\">``, pass multiple values for the same key."
 msgstr ""
+"В объекте :class:`HttpRequest`, атрибуты ``GET`` и ``POST`` являются "
+"экземплярами класса ``django.http.QueryDict``. :class:`QueryDict` -- это "
+"класс с интерфейсом словаря, который дополнительной хранить несколько "
+"значений для одного ключа. Это необходимо так как определенные элементы HTML-"
+"форм(например, ``<select multiple=\"multiple\">``) передают несколько "
+"значений для одного ключа."
 
 # d31fbf1f884641a18b755604f31a8421
 #: ../../ref/request-response.txt:366
@@ -614,6 +663,9 @@ msgid ""
 "them. That means you can't change attributes of ``request.POST`` and "
 "``request.GET`` directly."
 msgstr ""
+"Экземпляр ``QueryDict`` неизменяемый, если только вы не создадите его копию "
+"используя ``copy()``. Это означает, что вы не можете непосредственно "
+"изменить атрибуты ``request.POST`` и ``request.GET``."
 
 # 3db2c973524a4f9ea4d46a6e42127d01
 #: ../../ref/request-response.txt:373
@@ -621,6 +673,8 @@ msgid ""
 ":class:`QueryDict` implements all the standard dictionary methods, because "
 "it's a subclass of dictionary. Exceptions are outlined here:"
 msgstr ""
+"Класс :class:`QueryDict` представляет все стандартные методы словаря, так "
+"как является его подклассом. Исключения описаны здесь:"
 
 # 29b98e1eb67a46749f0b9fee7c9e7986
 #: ../../ref/request-response.txt:378
@@ -631,6 +685,11 @@ msgid ""
 "a subclass of Python's standard ``KeyError``, so you can stick to catching "
 "``KeyError``.)"
 msgstr ""
+"Возвращает значение для переданного ключа. Если ключа содержит несколько "
+"значений, ``__getitem__()`` возвращает последнее значение. Вызывает "
+"исключение ``django.utils.datastructures.MultiValueDictKeyError`` если ключ "
+"не существует. (Это подкласс стандартного исключения Python ``KeyError``, "
+"так что вы как обычно можете обрабатывать исключение ``KeyError``.)"
 
 # d3a84bfec551487997934e2312e364b9
 #: ../../ref/request-response.txt:386
@@ -640,6 +699,10 @@ msgid ""
 "effects, can only be called on a mutable ``QueryDict`` (one that was created "
 "via ``copy()``)."
 msgstr ""
+"Устанавливает значения ключа в ``[value]`` (список Python с единственным "
+"элементом ``value``). Заметим, что этот метод, так же как и другие методы "
+"словаря изменяющие значения, могут быть вызваны только для изменяемого "
+"объекта ``QueryDict`` (который был создан через ``copy()``)."
 
 # 3e3c0675969541f2b4c9a1858c80af95
 #: ../../ref/request-response.txt:393
@@ -647,6 +710,8 @@ msgid ""
 "Returns ``True`` if the given key is set. This lets you do, e.g., ``if \"foo"
 "\" in request.GET``."
 msgstr ""
+"Возвращает ``True`` если переданный ключ существует. Это позволяет вам "
+"использовать ``if \"foo\" in request.GET``."
 
 # 4eabfed063d54473977fa650b9b062c8
 #: ../../ref/request-response.txt:398
@@ -654,6 +719,8 @@ msgid ""
 "Uses the same logic as ``__getitem__()`` above, with a hook for returning a "
 "default value if the key doesn't exist."
 msgstr ""
+"Аналогичен методу ``__getitem__()``, но возвращает значение по-умолчанию "
+"вместо исключения, если ключ не существует."
 
 # de47346398824c4f91d0b92b480f27cf
 #: ../../ref/request-response.txt:403
@@ -661,6 +728,8 @@ msgid ""
 "Just like the standard dictionary ``setdefault()`` method, except it uses "
 "``__setitem__()`` internally."
 msgstr ""
+"Аналогичен методу ``setdefault()`` словаря, но использует метод ``__setitem__"
+"()``."
 
 # 954503e9efd24ea989dd9e200127b36e
 #: ../../ref/request-response.txt:408
@@ -669,6 +738,9 @@ msgid ""
 "dictionary ``update()`` method, except it *appends* to the current "
 "dictionary items rather than replacing them. For example::"
 msgstr ""
+"Принимает ``QueryDict`` или обычный словарь. Аналогичен методу ``update()`` "
+"словаря, но *добавляет* значения к текущему словарю, а не заменяет их. "
+"Например::"
 
 # a83424ed41e6423c9b9775dea32ceae7
 #: ../../ref/request-response.txt:422
@@ -676,6 +748,8 @@ msgid ""
 "Just like the standard dictionary ``items()`` method, except this uses the "
 "same last-value logic as ``__getitem__()``. For example::"
 msgstr ""
+"Аналогичен методу ``items()`` словаря, но получает значения аналогично "
+"методу ``__getitem__()``. Например::"
 
 # 189a8cf639dc44d4987643268e653107
 #: ../../ref/request-response.txt:431
@@ -684,6 +758,8 @@ msgid ""
 "`QueryDict.items()` this uses the same last-value logic as :meth:`QueryDict."
 "__getitem__()`."
 msgstr ""
+"Аналогичен методу ``iteritems()`` словаря. Как и метод :meth:`QueryDict.items"
+"()`, получает значения способом описанным в :meth:`QueryDict.__getitem__()`."
 
 # 03f3ed58510e44989b39773dde603161
 #: ../../ref/request-response.txt:437
@@ -691,6 +767,8 @@ msgid ""
 "Like :meth:`QueryDict.iteritems()` except it includes all values, as a list, "
 "for each member of the dictionary."
 msgstr ""
+"Аналогичен методу :meth:`QueryDict.iteritems()`, но возвращает все значения, "
+"списком, для ключа."
 
 # 3881692539024a2cb7b1d2be8acfbaee
 #: ../../ref/request-response.txt:442
@@ -698,16 +776,18 @@ msgid ""
 "Just like the standard dictionary ``values()`` method, except this uses the "
 "same last-value logic as ``__getitem__()``. For example::"
 msgstr ""
+"Аналогичен методу ``values()`` словаря, но получает данные аналогично методу "
+"``__getitem__()``. Например::"
 
 # f7e53e42cda7442e8d3790c5393c7b83
 #: ../../ref/request-response.txt:451
 msgid "Just like :meth:`QueryDict.values()`, except an iterator."
-msgstr ""
+msgstr "Аналогичен методу :meth:`QueryDict.values()`, но является генератором."
 
 # 139bba7521c64487b4dfce7bf843a573
 #: ../../ref/request-response.txt:453
 msgid "In addition, ``QueryDict`` has the following methods:"
-msgstr ""
+msgstr "В дополнение, ``QueryDict`` содержит такие методы:"
 
 # 9c8fe7907ae1458ba3fa810a33a18065
 #: ../../ref/request-response.txt:457
@@ -716,6 +796,9 @@ msgid ""
 "standard library. The copy will be mutable -- that is, you can change its "
 "values."
 msgstr ""
+"Возвращает копию объекта, используя ``copy.deepcopy()`` из стандартных "
+"библиотек Python. Копия будет изменяемая -- то есть, вы можете изменять ее "
+"значения."
 
 # 1fcd4aaa1f624352a28fa4c6abd2f1b8
 #: ../../ref/request-response.txt:463
@@ -725,16 +808,21 @@ msgid ""
 "guaranteed to return a list of some sort unless the default value was no "
 "list."
 msgstr ""
+"Возвращает данные для ключа в виде списка. Возвращает пустой список, если "
+"ключ не существует и не указанно значение по-умолчанию. Этот метод всегда "
+"возвращает список, если не указанно значение по-умолчанию."
 
 # 82a9458843c446c28a0970d9c4b03f15
 #: ../../ref/request-response.txt:473
 msgid "Sets the given key to ``list_`` (unlike ``__setitem__()``)."
 msgstr ""
+"Устанавливает значение ключа в список ``list_`` (в отличии от ``__setitem__()"
+"``)."
 
 # d1b833d807c849f4912fad7bb8d9dd03
 #: ../../ref/request-response.txt:477
 msgid "Appends an item to the internal list associated with key."
-msgstr ""
+msgstr "Добавляет элемент во внутренний список значений ключа."
 
 # 80758a8897cc403a9f39618aa6f364ba
 #: ../../ref/request-response.txt:481
@@ -742,6 +830,7 @@ msgid ""
 "Just like ``setdefault``, except it takes a list of values instead of a "
 "single value."
 msgstr ""
+"Аналогичен ``setdefault``, но принимает список значений, а не одно значение."
 
 # dcede540b2a44fe599ae95dce55579b3
 #: ../../ref/request-response.txt:486
@@ -749,6 +838,8 @@ msgid ""
 "Like :meth:`items()`, except it includes all values, as a list, for each "
 "member of the dictionary. For example::"
 msgstr ""
+"Аналогичен методу :meth:`items()`, но включает все значения списком для "
+"каждого элемента словаря. Например::"
 
 # f9ccddba5f6c4a53ba8caadfe429d90c
 #: ../../ref/request-response.txt:497
@@ -757,11 +848,15 @@ msgid ""
 "in ``QueryDict``, ``dict`` will have (key, item), where item is one element "
 "of the list, using same logic as :meth:`QueryDict.__getitem__()`::"
 msgstr ""
+"Возвращает ``dict``-представление объекта ``QueryDict``. Для каждой пары "
+"(ключ, список) в ``QueryDict``, возвращаемый словарь будет содержать ключ и "
+"значение, значением будет последнее значение из списка аналогично методу :"
+"meth:`QueryDict.__getitem__()`::"
 
 # 6668660d68694aada31165873281d3da
 #: ../../ref/request-response.txt:507
 msgid "Returns a string of the data in query-string format. Example::"
-msgstr ""
+msgstr "Возвращает строку данных в формате запроса. Например::"
 
 # e4d8c84724014880bb72d9057e101b05
 #: ../../ref/request-response.txt:516
@@ -769,11 +864,13 @@ msgid ""
 "Optionally, urlencode can be passed characters which do not require "
 "encoding. For example::"
 msgstr ""
+"Используя аргумент ``safe``, можно указать безопасные символы, которые не "
+"будут закодированы. Например::"
 
 # a8f9e457bc3b4e8383b67a8564d7310c
 #: ../../ref/request-response.txt:525
 msgid "HttpResponse objects"
-msgstr ""
+msgstr "Объект HttpResponse"
 
 # 2dba81b7c8ab418c951765943956e25b
 #: ../../ref/request-response.txt:529
@@ -783,21 +880,24 @@ msgid ""
 "you write is responsible for instantiating, populating and returning an :"
 "class:`HttpResponse`."
 msgstr ""
+"В отличии от объекта :class:`HttpRequest`, который создается Django, объект :"
+"class:`HttpResponse` создаете вы. Каждое представление должно создать и "
+"вернуть объект :class:`HttpResponse`."
 
 # 76944b68077f4e0e8f17065e62509d3b
 #: ../../ref/request-response.txt:534
 msgid "The :class:`HttpResponse` class lives in the :mod:`django.http` module."
-msgstr ""
+msgstr "Класс :class:`HttpResponse` находится в модуле :mod:`django.http`."
 
 # 8f1215b4cfe74a7691edf0011c33cc02
 #: ../../ref/request-response.txt:537
 msgid "Usage"
-msgstr ""
+msgstr "Использование"
 
 # 74239950ef1e4eeea95506cb065afd05
 #: ../../ref/request-response.txt:540
 msgid "Passing strings"
-msgstr ""
+msgstr "Передача строки"
 
 # 3f0f6972182240e889127ff48dcc4b7e
 #: ../../ref/request-response.txt:542
@@ -805,6 +905,8 @@ msgid ""
 "Typical usage is to pass the contents of the page, as a string, to the :"
 "class:`HttpResponse` constructor::"
 msgstr ""
+"Типичное использование заключается в передаче содержимого страницы в виде "
+"строке в конструктор :class:`HttpResponse`::"
 
 # 18c7278ed41945c2bd77ee2e1aa340ad
 #: ../../ref/request-response.txt:549
@@ -812,11 +914,13 @@ msgid ""
 "But if you want to add content incrementally, you can use ``response`` as a "
 "file-like object::"
 msgstr ""
+"Но если вам необходимо добавлять содержимое постепенно, вы можете "
+"использовать объект ``response`` как объект файла::"
 
 # 968060a8485f42dcaac8bf67178ebedf
 #: ../../ref/request-response.txt:557
 msgid "Passing iterators"
-msgstr ""
+msgstr "Передача итератора"
 
 # 9bc135c1788e4fe490939b8c2b38bc98
 #: ../../ref/request-response.txt:559
@@ -824,11 +928,13 @@ msgid ""
 "Finally, you can pass ``HttpResponse`` an iterator rather than passing it "
 "hard-coded strings. If you use this technique, follow these guidelines:"
 msgstr ""
+"Вы можете передать итератор в конструктор ``HttpResponse`` вместо строки. "
+"Если вы используете такой подход, следуйте нескольким правилам:"
 
 # 9a2519818cda4f87b9d034d1bd908995
 #: ../../ref/request-response.txt:562
 msgid "The iterator should return strings."
-msgstr ""
+msgstr "Итератор должен возвращать строки."
 
 # 00e3d91a3dbe4870a20241a0ddfd8f05
 #: ../../ref/request-response.txt:563
@@ -837,17 +943,22 @@ msgid ""
 "content, you can't use the :class:`HttpResponse` instance as a file-like "
 "object. Doing so will raise ``Exception``."
 msgstr ""
+"Если вы передали итератор в конструктор :class:`HttpResponse`вы не можете "
+"использовать экземпляр :class:`HttpResponse` как объект файла. Будет вызвано "
+"исключение ``Exception``."
 
 # 24256c8432e043ac9f8283f9c273f8f8
 #: ../../ref/request-response.txt:568
 msgid "Setting headers"
-msgstr ""
+msgstr "Установка заголовков"
 
 # aec1512d314045b0aeb97b8b3d0f25fa
 #: ../../ref/request-response.txt:570
 msgid ""
 "To set or remove a header in your response, treat it like a dictionary::"
 msgstr ""
+"При установке или удалении заголовка в объекте ответа, рассматривайте его "
+"как словарь:"
 
 # 6e172d16d3a74fed8185828c5e9b856c
 #: ../../ref/request-response.txt:576
@@ -855,6 +966,8 @@ msgid ""
 "Note that unlike a dictionary, ``del`` doesn't raise ``KeyError`` if the "
 "header doesn't exist."
 msgstr ""
+"Заметим, что в отличии от словаря, ``del`` не вызовет исключение "
+"``KeyError`` если заголовок не определен."
 
 # 2c7a4d3b9d1a43aab0bc4b9e7047550f
 #: ../../ref/request-response.txt:579
@@ -862,11 +975,14 @@ msgid ""
 "HTTP headers cannot contain newlines. An attempt to set a header containing "
 "a newline character (CR or LF) will raise ``BadHeaderError``"
 msgstr ""
+"HTTP заголовки не могут содержать перенос строки. При попытке добавить "
+"заголовок содержащий символ переноса строки (CR или LF) будет вызвано "
+"исключение ``BadHeaderError``"
 
 # f73b0241d62040288bcb23f7227db450
 #: ../../ref/request-response.txt:583
 msgid "Telling the browser to treat the response as a file attachment"
-msgstr ""
+msgstr "Указываем браузеру воспринимать ответ как вложенный файл"
 
 # cccb7c730a0a481c8ac3b92956bbad91
 #: ../../ref/request-response.txt:585
@@ -875,6 +991,9 @@ msgid ""
 "``content_type`` argument and set the ``Content-Disposition`` header. For "
 "example, this is how you might return a Microsoft Excel spreadsheet::"
 msgstr ""
+"Для этого используйте аргумент ``content_type`` и установите заголовок "
+"``Content-Disposition``. Например, вот так вы можете вернуть таблицу "
+"Microsoft Excel::"
 
 # b34f45beac1c478f878054fc36df1ae9
 #: ../../ref/request-response.txt:592
@@ -882,6 +1001,8 @@ msgid ""
 "There's nothing Django-specific about the ``Content-Disposition`` header, "
 "but it's easy to forget the syntax, so we've included it here."
 msgstr ""
+"Заголовок ``Content-Disposition`` никак не относится к Django, но очень "
+"легко забыть синтаксис, поэтому мы добавили пример."
 
 # f1b9be8204af4403bddd047548ac6eb5
 #: ../../ref/request-response.txt:600
@@ -889,11 +1010,15 @@ msgid ""
 "A string representing the content, encoded from a Unicode object if "
 "necessary."
 msgstr ""
+"Строковое представление содержимого, закодированное с объекта Unicode при "
+"необходимости."
 
 # ed04331429e54e9995058732b65b9a6b
 #: ../../ref/request-response.txt:605
 msgid "The `HTTP Status code`_ for the response."
 msgstr ""
+"`Код HTTP состояния <http://www.w3.org/Protocols/rfc2616/rfc2616-sec10."
+"html#sec10>`_ ответа."
 
 # 6cc7098661804a12ab60f6b9f276386c
 #: ../../ref/request-response.txt:612
@@ -902,6 +1027,9 @@ msgid ""
 "string) and MIME type. The :setting:`DEFAULT_CONTENT_TYPE` is ``'text/"
 "html'``."
 msgstr ""
+"Создает экземпляр ``HttpResponse`` с переданным содержимым и MIME-типом. Для "
+"MIME-типа используется значение настройки :setting:`DEFAULT_CONTENT_TYPE`, "
+"равное по-умолчанию ``'text/html'``."
 
 # c97e391f23d245e88381547b7fe8a733
 #: ../../ref/request-response.txt:616
@@ -911,11 +1039,17 @@ msgid ""
 "content of the response. If it is not an iterator or a string, it will be "
 "converted to a string when accessed."
 msgstr ""
+"``content`` должен быть строкой или итератором. Если это итератор, он должен "
+"возвращать строки, которые будут объединены для формирования содержимого "
+"ответа. Если это не итератор и не строка, значение будет конвертировано в "
+"строковое представление."
 
 # 0f62f3e25a4f4deb8426026dd1a87a83
 #: ../../ref/request-response.txt:622
 msgid "``status`` is the `HTTP Status code`_ for the response."
 msgstr ""
+"``status`` -- это `Код HTTP состояния <http://www.w3.org/Protocols/rfc2616/"
+"rfc2616-sec10.html#sec10>`_ ответа."
 
 # 1f9c10b573204cc2843b67dec037d6f3
 #: ../../ref/request-response.txt:624
@@ -928,6 +1062,13 @@ msgid ""
 "``content_type`` is used. If neither is given, the :setting:"
 "`DEFAULT_CONTENT_TYPE` setting is used."
 msgstr ""
+"``content_type`` это название для ``mimetype``. Исторически, это параметр "
+"включал только ``mimetype``, но так как фактически используется как значение "
+"HTTP заголовка ``Content-Type``, он может содержать кодировку ответа, что "
+"делает его больше чем просто MIME-тип. Если указан ``mimetype``(не "
+"``None``), будет использовано его значение. Иначе -- значение "
+"``content_type``. Если оба аргумента не указанны, используется значение "
+"настройки :setting:`DEFAULT_CONTENT_TYPE`."
 
 # 1bf8ae2461954fbc9a1cddff88ab47cc
 #: ../../ref/request-response.txt:634
@@ -935,6 +1076,7 @@ msgid ""
 "Sets the given header name to the given value. Both ``header`` and ``value`` "
 "should be strings."
 msgstr ""
+"Устанавливает заголовок ответа. ``header`` и ``value`` должны быть строками."
 
 # 148380a175954a019420735cb2e734f4
 #: ../../ref/request-response.txt:639
@@ -942,11 +1084,13 @@ msgid ""
 "Deletes the header with the given name. Fails silently if the header doesn't "
 "exist. Case-insensitive."
 msgstr ""
+"Удаляет заголовок ответа. Не вызывает исключения, если заголовок не "
+"существует. Регистронезависимый."
 
 # 3ae9d0f629d64aa29a87692fbcd5ceb3
 #: ../../ref/request-response.txt:644
 msgid "Returns the value for the given header name. Case-insensitive."
-msgstr ""
+msgstr "Возвращает значение заголовка. Регистрозависимый."
 
 # f74deca2d03f43b88cac9da641fa4c68
 #: ../../ref/request-response.txt:648
@@ -954,6 +1098,8 @@ msgid ""
 "Returns ``True`` or ``False`` based on a case-insensitive check for a header "
 "with the given name."
 msgstr ""
+"Возвращает ``True`` или ``False`` в результате регистронезависимого поиска "
+"заголовка по указанному названию."
 
 # 65686736d62c4be7bc5a2f4fda2f26c5
 #: ../../ref/request-response.txt:655
@@ -962,6 +1108,9 @@ msgid ""
 "and the auto-calculation of ``max_age`` in such case was added. The "
 "``httponly`` argument was also added."
 msgstr ""
+"Была добавлена возможность использовать объект ``datetime.datetime`` для "
+"объекта ``expires``, и автоматическое вычисление ``max_age`` в таком случае. "
+"Был добавлен аргумент ``httponly``."
 
 # 52d17aee609e40b1aeb5daec79a362c0
 #: ../../ref/request-response.txt:661
