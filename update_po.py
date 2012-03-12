@@ -14,4 +14,7 @@ for path, dirs, files in os.walk(TRANSLATION_PATH):
             if not os.path.exists(os.path.dirname(po_path)):
                 os.makedirs(os.path.dirname(po_path))
 
+            if not os.path.exists(po_path):
+                os.system('msginit -i %s -o %s -l ru --no-translator' % (pot_path, po_path))
+
             os.system('msgmerge %s %s -U' % (po_path, pot_path))

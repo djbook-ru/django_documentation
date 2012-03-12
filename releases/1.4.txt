@@ -479,22 +479,23 @@ Reasons for using this feature include:
 
 Time zone support is enabled by default in new projects created with
 :djadmin:`startproject`. If you want to use this feature in an existing
-project, read the :ref:`migration guide <time-zones-migration-guide>`.
+project, read the :ref:`migration guide <time-zones-migration-guide>`. If you
+encounter problems, there's a helpful :ref:`FAQ <time-zones-faq>`.
 
 HTML comparisons in tests
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :class:`~django.test.testcase.TestCase` base class now has some helpers to
+The base classes in :mod:`django.test` now have some helpers to
 compare HTML without tripping over irrelevant differences in whitespace,
 argument quoting/ordering and closing of self-closing tags. You can either
 compare HTML directly with the new
-:meth:`~django.test.testcase.TestCase.assertHTMLEqual` and
-:meth:`~django.test.testcase.TestCase.assertHTMLNotEqual` assertions, or use
+:meth:`~django.test.SimpleTestCase.assertHTMLEqual` and
+:meth:`~django.test.SimpleTestCase.assertHTMLNotEqual` assertions, or use
 the ``html=True`` flag with
-:meth:`~django.test.testcase.TestCase.assertContains` and
-:meth:`~django.test.testcase.TestCase.assertNotContains` to test whether the
-client's response contains a given HTML fragment. See the :ref:`assertion
-documentation<assertions>` for more.
+:meth:`~django.test.TestCase.assertContains` and
+:meth:`~django.test.TestCase.assertNotContains` to test whether the
+client's response contains a given HTML fragment. See the :ref:`assertions
+documentation <assertions>` for more.
 
 Two new date format strings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -536,7 +537,7 @@ Django 1.4 also includes several smaller improvements worth noting:
   page.
 
 * The :func:`django.contrib.auth.models.check_password` function has been moved
-  to the :mod:`django.contrib.auth.utils` module. Importing it from the old
+  to the :mod:`django.contrib.auth.hashers` module. Importing it from the old
   location will still work, but you should update your imports.
 
 * The :djadmin:`collectstatic` management command now has a ``--clear`` option
@@ -614,8 +615,28 @@ Django 1.4 also includes several smaller improvements worth noting:
   :attr:`Sitemap.protocol <django.contrib.sitemaps.Sitemap.protocol>` class
   attribute.
 
+* A new :class:`django.test.SimpleTestCase` subclass of
+  :class:`unittest.TestCase`
+  that is comparatively lighter than :class:`django.test.TestCase` and
+  company. It can be useful in testing scenarios where e.g. no database
+  interaction is needed. See :ref:`testcase_hierarchy_diagram`.
+
 Backwards incompatible changes in 1.4
 =====================================
+
+SECRET_KEY setting is required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Running Django with an empty or known :setting:`SECRET_KEY` disables many of
+Django's security protections and can lead to remote-code-execution
+vulnerabilities. No Django site should ever be run without a
+:setting:`SECRET_KEY`.
+
+In Django 1.4, starting Django with an empty :setting:`SECRET_KEY` will raise a
+`DeprecationWarning`. In Django 1.5, it will raise an exception and Django will
+refuse to start. This is slightly accelerated from the usual deprecation path
+due to the severity of the consequences of running Django with no
+:setting:`SECRET_KEY`.
 
 django.contrib.admin
 ~~~~~~~~~~~~~~~~~~~~
@@ -755,6 +776,7 @@ instance:
 
   * Time period: The amount of time you expect user to take filling out
     such forms.
+
 
 django.contrib.flatpages
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -982,8 +1004,11 @@ Session cookies now have the ``httponly`` flag by default
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Session cookies now include the ``httponly`` attribute by default to
-help reduce the impact of potential XSS attacks. For strict backwards
-compatibility, use ``SESSION_COOKIE_HTTPONLY = False`` in your settings file.
+help reduce the impact of potential XSS attacks. As a consequence of
+this change, session cookie data, including sessionid, is no longer
+accessible from JavaScript in many browsers. For strict backwards
+compatibility, use ``SESSION_COOKIE_HTTPONLY = False`` in your
+settings file.
 
 The :tfilter:`urlize` filter no longer escapes every URL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -998,8 +1023,8 @@ wild, because they would confuse browsers too.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It's now possible to check whether a template was used within a block of
-code with :meth:`~django.test.testcase.TestCase.assertTemplateUsed` and
-:meth:`~django.test.testcase.TestCase.assertTemplateNotUsed`. And they
+code with :meth:`~django.test.test.TestCase.assertTemplateUsed` and
+:meth:`~django.test.test.TestCase.assertTemplateNotUsed`. And they
 can be used as a context manager::
 
     with self.assertTemplateUsed('index.html'):
@@ -1036,11 +1061,11 @@ management commands in a script, use
 
 Previously, the :ttag:`extends` tag used a buggy method of parsing arguments,
 which could lead to it erroneously considering an argument as a string literal
-when it wasn't.  It now utilises ``parser.compile_filter`` like other tags.
+when it wasn't. It now uses ``parser.compile_filter``, like other tags.
 
 The internals of the tag aren't part of the official stable API, but in the
 interests of full disclosure, the ``ExtendsNode.__init__`` definition has
-changed which may break any custom tags that use this node class.
+changed, which may break any custom tags that use this class.
 
 Features deprecated in 1.4
 ==========================
