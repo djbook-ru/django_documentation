@@ -42,15 +42,17 @@
             </div>
         </div>
         <br/>
-        {% for row in statistic|batch(2, ()) %}
+        {% for row in statistic|batch(2, ('', 0)) %}
             <div class="row">
                 {% for name, perc in row %}
+                    {% if name %}
                     <div class="span3">{{ name }}</div>
                     <div class="span3">
                         <div class="progress {% if perc != 100 %}progress-danger{% endif %}">
                             <div class="bar" style="width: {{ perc }}%;">{{ perc }}%</div>
                         </div>
                     </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         {% endfor %}
