@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-29 18:30\n"
-"PO-Revision-Date: 2012-03-17 16:51+0200\n"
+"PO-Revision-Date: 2012-03-22 16:56+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -364,6 +364,9 @@ msgid ""
 "``<fieldset>`` on the admin form page. (A ``<fieldset>`` is a \"section\" of "
 "the form.)"
 msgstr ""
+"``fieldsets`` -- это список двух-элементных кортежей, каждый представляет "
+"``<fieldset>`` в форме редактирования объекта. (``<fieldset>`` -- группа "
+"полей в форме.)"
 
 # 7c66fedc32b64caebdf3eb90fbd7cb23
 #: ../../ref/contrib/admin/index.txt:216
@@ -373,18 +376,21 @@ msgid ""
 "a dictionary of information about the fieldset, including a list of fields "
 "to be displayed in it."
 msgstr ""
+"Кортеж должен быть в формате ``(name, options полей)``, где ``name`` это "
+"название группы полей, а ``field_options`` -- словарь с информацией о группе "
+"полей, включая список полей для отображения."
 
 # efd333c7082641b2af5d3f1fabfcdc1d
 #: ../../ref/contrib/admin/index.txt:221
 msgid ""
 "A full example, taken from the :class:`django.contrib.flatpages.FlatPage` "
 "model::"
-msgstr ""
+msgstr "Полный пример для модели :class:`django.contrib.flatpages.FlatPage`::"
 
 # 9500f7b639f64f5381181a8189a2fbf3
 #: ../../ref/contrib/admin/index.txt:235
 msgid "This results in an admin page that looks like:"
-msgstr ""
+msgstr "Этот пример будет выглядеть следующим образом:"
 
 # 77fd12ae0c284c18accec3cc3417e62a
 #: ../../ref/contrib/admin/index.txt:239
@@ -394,17 +400,20 @@ msgid ""
 "has ``editable=True``, in a single fieldset, in the same order as the fields "
 "are defined in the model."
 msgstr ""
+"Если не определен ни атрибут ``fields``, ни :attr:`~ModelAdmin.fieldsets`, "
+"Django покажет все поля с ``editable=True`` кроме ``AutoField``, в одном "
+"наборе полей в порядке, в котором они указанные в модели."
 
 # c41afbd17a5b4847a3689f27be27511f
 #: ../../ref/contrib/admin/index.txt:244
 msgid "The ``field_options`` dictionary can have the following keys:"
-msgstr ""
+msgstr "Словарь ``field_options`` может содержать следующие ключи:"
 
 # 8d5f428475244f019736ca8d22b284ac
 #: ../../ref/contrib/admin/index.txt:247
 msgid ""
 "A tuple of field names to display in this fieldset. This key is required."
-msgstr ""
+msgstr "Кортеж с названиями полей. Этот ключ обязателен."
 
 # bcad527bba3e4e5bb5700a9ee4851ee8
 #: ../../ref/contrib/admin/index.txt:256
@@ -414,6 +423,9 @@ msgid ""
 "example, the ``first_name`` and ``last_name`` fields will display on the "
 "same line::"
 msgstr ""
+"Как и в атрибуте :attr:`~ModelAdmin.fields`, что бы отобразить поля в одной "
+"строке, добавьте их в один кортеж. В этом примере, поля ``first_name`` и "
+"``last_name`` будут показаны в одной строке::"
 
 # b4658952998248959cd13480b4658851
 #: ../../ref/contrib/admin/index.txt:267
@@ -421,11 +433,13 @@ msgid ""
 "``fields`` can contain values defined in :attr:`~ModelAdmin.readonly_fields` "
 "to be displayed as read-only."
 msgstr ""
+"``fields`` может содержать значения из :attr:`ModelAdmin.readonly_fields`, "
+"чтобы отображать поля без возможности их редактирования."
 
 # 9955661adae745558aba9cfa2744c160
 #: ../../ref/contrib/admin/index.txt:271
 msgid "A list containing extra CSS classes to apply to the fieldset."
-msgstr ""
+msgstr "Список содержащий CSS классы, которые будут добавлены в группу полей."
 
 # 2a06d528ae704c6d83fb015cffc3c60f
 #: ../../ref/contrib/admin/index.txt:279
@@ -436,6 +450,9 @@ msgid ""
 "\" link. Fieldsets with the ``wide`` style will be given extra horizontal "
 "space."
 msgstr ""
+"Django предоставляет два класса для использования: ``collapse`` и ``wide``. "
+"Группа полей с классом ``collapse`` будет показа в свернутом виде с кнопкой "
+"\"развернуть\". Группа полей с классом ``wide`` будет шире по горизонтали."
 
 # b4e46c6702924386bf7b1f50d63079f8
 #: ../../ref/contrib/admin/index.txt:286
@@ -443,6 +460,7 @@ msgid ""
 "A string of optional extra text to be displayed at the top of each fieldset, "
 "under the heading of the fieldset."
 msgstr ""
+"Необязательный текст, который будет отображаться под названием группы полей."
 
 # eb4e894a4f7d4848a0c262c8d054d180
 #: ../../ref/contrib/admin/index.txt:289
@@ -452,6 +470,9 @@ msgid ""
 "can use plain text and ``django.utils.html.escape()`` to escape any HTML "
 "special characters."
 msgstr ""
+"Заметим, что этот текст *не* будет экранирован. Это позволяет добавить вам "
+"HTML на страницу. Вы можете использовать обычный текст экранировав его "
+"функцией ``django.utils.html.escape()``."
 
 # ea9078fca58d459bb51f0c64ff926335
 #: ../../ref/contrib/admin/index.txt:297
@@ -464,6 +485,12 @@ msgid ""
 "The unselected and selected options appear in two boxes side by side. See :"
 "attr:`~ModelAdmin.filter_vertical` to use a vertical interface."
 msgstr ""
+"По умолчанию, поле :class:`~django.db.models.ManyToManyField` отображается "
+"как ``<select multiple>``. Однако, это поле тяжело использовать при большом "
+"количестве объектов. Добавив :class:`~django.db.models.ManyToManyField` в "
+"этот атрибут, будет использоваться \"виджет\" с JavaScript фильтром для "
+"поиска. Смотрите описание :attr:`~ModelAdmin.filter_vertical` про "
+"использование вертикального \"виджета\"."
 
 # 28809e524fd54b849bd1fe30483d3237
 #: ../../ref/contrib/admin/index.txt:308
@@ -472,6 +499,8 @@ msgid ""
 "of the filter interface with the box of unselected options appearing above "
 "the box of selected options."
 msgstr ""
+"Аналогичен :attr:`~ModelAdmin.filter_horizontal`, но использует вертикальный "
+"\"виджет\"."
 
 # 218fd556e1d94d71bac4b17dc97318f4
 #: ../../ref/contrib/admin/index.txt:314
@@ -481,12 +510,16 @@ msgid ""
 "provide your own ``ModelForm`` to override any default form behavior on the "
 "add/change pages."
 msgstr ""
+"По умолчанию ``ModelForm`` создается динамически для модели. Этот атрибут "
+"используется для определения формы на страницах добавления и редактирования. "
+"Вы можете указать собственный подкласс ``ModelForm`` для переопределения "
+"этих страниц."
 
 # 7262249cc4774bd09f5be891a755a8dd
 #: ../../ref/contrib/admin/index.txt:319
 msgid ""
 "For an example see the section `Adding custom validation to the admin`_."
-msgstr ""
+msgstr "Пример смотрите в разделе `Adding custom validation to the admin`_."
 
 # c6bf049c43ea4e8898940229a0785cb8
 #: ../../ref/contrib/admin/index.txt:323
@@ -494,6 +527,8 @@ msgid ""
 "If your ``ModelForm`` and ``ModelAdmin`` both define an ``exclude`` option "
 "then ``ModelAdmin`` takes precedence::"
 msgstr ""
+"Если и ``ModelForm`` и ``ModelAdmin`` определяют опцию ``exclude``,  "
+"``ModelAdmin`` будет иметь больший приоритет::"
 
 # c6d8aa02a7b849a6996ea85605a102b0
 #: ../../ref/contrib/admin/index.txt:336
@@ -501,6 +536,8 @@ msgid ""
 "In the above example, the \"age\" field will be excluded but the \"name\" "
 "field will be included in the generated form."
 msgstr ""
+"В этом примере, поле \"age\" не будет добавлено в форму в отличии от поля "
+"\"name\"."
 
 # 391f86f38c7d425ab95de50524df3c86
 #: ../../ref/contrib/admin/index.txt:341
@@ -510,6 +547,10 @@ msgid ""
 "dictionary mapping a field class to a dict of arguments to pass to the field "
 "at construction time."
 msgstr ""
+"Позволяет быстро изменить настройки отображения различных типов :class:"
+"`~django.forms.Field` в интерфейсе администратора. ``formfield_overrides`` "
+"-- словарь указывающий параметры для классов полей, которые будут "
+"передаваться в конструкторы указанных полей."
 
 # 66ad040fdfc941c285c4b0661d93a9fb
 #: ../../ref/contrib/admin/index.txt:346
@@ -520,6 +561,11 @@ msgid ""
 "that we'd like to use for large text fields instead of the default "
 "``<textarea>``. Here's how we'd do that::"
 msgstr ""
+"Все это звучит немного абстрактно, так что давайте рассмотрим пример. Самое "
+"распространенное применение  ``formfield_overrides`` это переопределить "
+"\"виджет\" поля формы. Предположим у нас есть ``RichTextEditorWidget``, "
+"который использует расширенное поля редактирования вместо ``<textarea>``. "
+"Вот как мы может использовать его::"
 
 # 63e89bd143ae4530ab319151e4b9cab9
 #: ../../ref/contrib/admin/index.txt:364
@@ -528,6 +574,9 @@ msgid ""
 "string. The value is another dictionary; these arguments will be passed to :"
 "meth:`~django.forms.Field.__init__`. See :doc:`/ref/forms/api` for details."
 msgstr ""
+"Заметим что ключ словаря класс поля, а *не* строка. Значение это словарь с "
+"аргументами. Это аргументы будут переданы в :meth:`~django.forms.Field."
+"__init__`. Подробности смотрите в разделе :doc:`/ref/forms/api`."
 
 # 9b31e0ff6d614928a274f061c8274d85
 #: ../../ref/contrib/admin/index.txt:371
@@ -537,6 +586,10 @@ msgid ""
 "ManyToManyField`), make sure you haven't included that field's name in "
 "``raw_id_fields`` or ``radio_fields``."
 msgstr ""
+"Если вы хотите использовать собственный \"виджет\" для полей внешних ключей "
+"(например, :class:`~django.db.models.ForeignKey` или :class:`~django.db."
+"models.ManyToManyField`), убедитесь что поле не добавлено в  "
+"``raw_id_fields`` или ``radio_fields``."
 
 # 556b4f1e5d5d40a4a38cfd6413f8baa6
 #: ../../ref/contrib/admin/index.txt:376
@@ -545,6 +598,9 @@ msgid ""
 "that have ``raw_id_fields`` or ``radio_fields`` set. That's because "
 "``raw_id_fields`` and ``radio_fields`` imply custom widgets of their own."
 msgstr ""
+"``formfield_overrides`` не позволяет переопределить \"виджет\" для полей из "
+"``raw_id_fields`` или ``radio_fields``, потому что ``raw_id_fields`` и "
+"``radio_fields`` переопределяют виджет."
 
 # f2997151d2a3405aabe17058729b6d6c
 #: ../../ref/contrib/admin/index.txt:385
@@ -553,11 +609,15 @@ msgid ""
 "contrib.admin.views.main.ChangeList`` is used. By inheriting this class you "
 "can change the behavior of the listing."
 msgstr ""
+"Возвращает класс ``Changelist``, который используется для отображения списка "
+"объекта. По умолчанию, используется ``django.contrib.admin.views.main."
+"ChangeList``. Унаследовав этот класс вы можете переопределить поведение этой "
+"страницы."
 
 # 89cae539b19f44b5a8bbaec5287a55fe
 #: ../../ref/contrib/admin/index.txt:391
 msgid "See :class:`InlineModelAdmin` objects below."
-msgstr ""
+msgstr "Смотрите описание ниже :class:`InlineModelAdmin`."
 
 # 3be56666954e44d5bccd01eb79c0270a
 #: ../../ref/contrib/admin/index.txt:395
@@ -565,6 +625,7 @@ msgid ""
 "Set ``list_display`` to control which fields are displayed on the change "
 "list page of the admin."
 msgstr ""
+"``list_display`` указывает какие поля отображать на странице списка объектов."
 
 # 232115e256c046e080eab08772da2f19
 #: ../../ref/contrib/admin/index.txt:402
@@ -572,22 +633,24 @@ msgid ""
 "If you don't set ``list_display``, the admin site will display a single "
 "column that displays the ``__unicode__()`` representation of each object."
 msgstr ""
+"Если ``list_display`` не указан, Django отобразить только результат "
+"``__unicode__()`` объекта."
 
 # 0929f05c35284a50a7790f61c236aee4
 #: ../../ref/contrib/admin/index.txt:405
 msgid "You have four possible values that can be used in ``list_display``:"
-msgstr ""
+msgstr "Вы можете указать четыре варианта значений в ``list_display``:"
 
 # 9d82b68a9f0e47759c375e518f929f5c
 #: ../../ref/contrib/admin/index.txt:407
 msgid "A field of the model. For example::"
-msgstr ""
+msgstr "Поле модели. Например::"
 
 # 91cfba545f2241abb65349d9c3eb0a6e
 #: ../../ref/contrib/admin/index.txt:412
 msgid ""
 "A callable that accepts one parameter for the model instance. For example::"
-msgstr ""
+msgstr "Функция, которая принимает один аргумент - объект модели. Например::"
 
 # ef8ef2a452e24add8533a515abc303d4
 #: ../../ref/contrib/admin/index.txt:422
@@ -595,6 +658,7 @@ msgid ""
 "A string representing an attribute on the ``ModelAdmin``. This behaves same "
 "as the callable. For example::"
 msgstr ""
+"Название атрибута ``ModelAdmin``. Работает так же как и функция. Например::"
 
 # acb5997c894e4de0909c335183860a73
 #: ../../ref/contrib/admin/index.txt:432
@@ -603,11 +667,13 @@ msgid ""
 "same as the callable, but ``self`` in this context is the model instance. "
 "Here's a full model example::"
 msgstr ""
+"Название атрибута модели. Работает так же как и функция, но ``self`` в этом "
+"контексте объект модели. Например::"
 
 # 6e00fde306144b0388829d0dbd128c0f
 #: ../../ref/contrib/admin/index.txt:447
 msgid "A few special cases to note about ``list_display``:"
-msgstr ""
+msgstr "Несколько особенностей ``list_display``:"
 
 # e0e89baecd5e483580e1d2a3723ed4d0
 #: ../../ref/contrib/admin/index.txt:449
@@ -615,6 +681,8 @@ msgid ""
 "If the field is a ``ForeignKey``, Django will display the ``__unicode__()`` "
 "of the related object."
 msgstr ""
+"Если указано поле ``ForeignKey``, Django покажет результат ``__unicode__()`` "
+"связанного объекта."
 
 # e123a7cd75f9431f8b7d93fdf94ee9c5
 #: ../../ref/contrib/admin/index.txt:452
@@ -625,6 +693,10 @@ msgid ""
 "name to ``list_display``. (See below for more on custom methods in "
 "``list_display``.)"
 msgstr ""
+"``ManyToManyField`` не поддерживается, так как это влечет к созданию SQL "
+"запроса для каждого объекта. Если вам необходимо сделать это в любом случае, "
+"создайте метод модели и используйте его в ``list_display``. (Смотрите ниже "
+"подробности про использование методов в ``list_display``.)"
 
 # d5e24591e0184b428e6623392932f12e
 #: ../../ref/contrib/admin/index.txt:458
@@ -632,6 +704,8 @@ msgid ""
 "If the field is a ``BooleanField`` or ``NullBooleanField``, Django will "
 "display a pretty \"on\" or \"off\" icon instead of ``True`` or ``False``."
 msgstr ""
+"Если поле ``BooleanField`` или ``NullBooleanField``, Django покажет красивую "
+"\"on\" или \"off\" иконку вместо ``True`` или ``False``."
 
 # 88a69833effb47d49eb8dd08c0a5e3cb
 #: ../../ref/contrib/admin/index.txt:462
@@ -641,12 +715,15 @@ msgid ""
 "the output of the method, give the method an ``allow_tags`` attribute whose "
 "value is ``True``."
 msgstr ""
+"Если используется метод модели, ``ModelAdmin`` или функция, Django по "
+"умолчанию экранирует результат. Если вам не нужно экранировать результат, "
+"добавьте атрибут ``allow_tags`` методу или функции со значением ``True``."
 
 # 5315e21f98574a8d913d6954a48b163f
 # 546a271edc95488a8cbe1cae00cd61c5
 #: ../../ref/contrib/admin/index.txt:467 ../../ref/contrib/admin/index.txt:486
 msgid "Here's a full example model::"
-msgstr ""
+msgstr "Пример::"
 
 # d661f24b7f2541cf9aece4a581100b3e
 #: ../../ref/contrib/admin/index.txt:481
@@ -655,13 +732,16 @@ msgid ""
 "that returns True or False Django will display a pretty \"on\" or \"off\" "
 "icon if you give the method a ``boolean`` attribute whose value is ``True``."
 msgstr ""
+"Если используется метод модели, ``ModelAdmin`` или функция, которая "
+"возвращает True или False, Django покажет \"on\" или \"off\" иконки, если вы "
+"добавите атрибут ``boolean`` методу или функции со значением ``True``."
 
 # 1e259732b18e415fac5fc0eb2f11ed3b
 #: ../../ref/contrib/admin/index.txt:500
 msgid ""
 "The ``__str__()`` and ``__unicode__()`` methods are just as valid in "
 "``list_display`` as any other model method, so it's perfectly OK to do this::"
-msgstr ""
+msgstr "Вы можете использовать методы ``__str__()`` и ``__unicode__()`::"
 
 # 0c9cd12c11854d099e2b26c410c15d23
 #: ../../ref/contrib/admin/index.txt:506
@@ -670,6 +750,9 @@ msgid ""
 "can't be used in sorting (because Django does all the sorting at the "
 "database level)."
 msgstr ""
+"Обычно элементы ``list_display``, которые не являются полями модели, не могу "
+"быть использованы при сортировке (так как Django выполняет сортировку на "
+"уровне базы данных)."
 
 # e0e47599fdd242b5ab0c8ee2fe7fb27b
 #: ../../ref/contrib/admin/index.txt:510
@@ -678,11 +761,14 @@ msgid ""
 "field, you can indicate this fact by setting the ``admin_order_field`` "
 "attribute of the item."
 msgstr ""
+"Однако, если элемент ``list_display`` представляет определенное поле в базе "
+"данных, вы можете указать это добавив атрибут ``admin_order_field`` к "
+"элементу."
 
 # 62ca7f73d77f437a98976cffb9f1b3a0
 #: ../../ref/contrib/admin/index.txt:514
 msgid "For example::"
-msgstr ""
+msgstr "Например::"
 
 # 30120993458b42f593b19845aed80e31
 #: ../../ref/contrib/admin/index.txt:528
@@ -690,6 +776,8 @@ msgid ""
 "The above will tell Django to order by the ``first_name`` field when trying "
 "to sort by ``colored_first_name`` in the admin."
 msgstr ""
+"В этом примере Django будет использовать поле ``first_name`` при сортировке "
+"по ``colored_first_name``."
 
 # 82f63b9678be42138a9acba5a4e75d2e
 #: ../../ref/contrib/admin/index.txt:533
@@ -697,6 +785,8 @@ msgid ""
 "Set ``list_display_links`` to control which fields in ``list_display`` "
 "should be linked to the \"change\" page for an object."
 msgstr ""
+"Используйте ``list_display_links`` что бы указать какие поля в "
+"``list_display`` будут ссылками на страницу редактирования объекта."
 
 # b224518110a649af8811bb3204bac993
 #: ../../ref/contrib/admin/index.txt:536
@@ -707,6 +797,10 @@ msgid ""
 "``list_display_links`` to a list or tuple of fields (in the same format as "
 "``list_display``) to link."
 msgstr ""
+"По умолчанию, на страницу редактирования объекта будет вести ссылка в первой "
+"колонке. Но ``list_display_links`` позволяет изменить это поведение. "
+"Установите ``list_display_links`` в список или кортеж полей (аналогично "
+"``list_display``)."
 
 # 3c824fc136b543a8b58b7c73705b5781
 #: ../../ref/contrib/admin/index.txt:542
@@ -716,6 +810,10 @@ msgid ""
 "are linked. The only requirement is: If you want to use "
 "``list_display_links``, you must define ``list_display``."
 msgstr ""
+"``list_display_links`` может указывать одно или несколько полей. Пока "
+"указанные поля входят в ``list_display``, Django безразлично сколько их. "
+"Единственное требование: для использования ``list_display_links`` вы должны "
+"указать ``list_display``."
 
 # ff011992f61e4eac90f09584a549442c
 #: ../../ref/contrib/admin/index.txt:547
@@ -723,6 +821,8 @@ msgid ""
 "In this example, the ``first_name`` and ``last_name`` fields will be linked "
 "on the change list page::"
 msgstr ""
+"В этом примере поля ``first_name`` и ``last_name`` будут отображаться как "
+"ссылки на страницу редактирования объекта::"
 
 # e139ec3809ff49aea8605564ea9477e1
 #: ../../ref/contrib/admin/index.txt:558
@@ -732,6 +832,10 @@ msgid ""
 "will be displayed as form widgets on the change list page, allowing users to "
 "edit and save multiple rows at once."
 msgstr ""
+"Укажите в ``list_editable`` список полей, которые можно будет редактировать "
+"на странице списка объектов. То есть, поля из ``list_editable`` будут "
+"отображаться как поля формы позволяя пользователям изменять значения и "
+"сохранять изменения для всех строк сразу."
 
 # 7f349f5a6d774a7d96e4468d21722191
 #: ../../ref/contrib/admin/index.txt:565
@@ -739,6 +843,7 @@ msgid ""
 "``list_editable`` interacts with a couple of other options in particular "
 "ways; you should note the following rules:"
 msgstr ""
+"``list_editable`` взаимодействует с другими настройками следующим образом:"
 
 # 783f4214fb7e41eaaa7db0268e98c426
 #: ../../ref/contrib/admin/index.txt:568
@@ -746,6 +851,8 @@ msgid ""
 "Any field in ``list_editable`` must also be in ``list_display``. You can't "
 "edit a field that's not displayed!"
 msgstr ""
+"Поле из ``list_editable`` должно входить в ``list_display``. Вы мне можете "
+"редактировать поле, которое не отображается!"
 
 # fee1e5cd05bc4df4a75abd836628b468
 #: ../../ref/contrib/admin/index.txt:571
@@ -753,11 +860,13 @@ msgid ""
 "The same field can't be listed in both ``list_editable`` and "
 "``list_display_links`` -- a field can't be both a form and a link."
 msgstr ""
+"Поле не может быть в ``list_editable`` и ``list_display_links`` вместе -- "
+"поле не может быть ссылкой и полем формы."
 
 # 3a6b53061ad445e8a680df7d0bfc4c08
 #: ../../ref/contrib/admin/index.txt:575
 msgid "You'll get a validation error if either of these rules are broken."
-msgstr ""
+msgstr "Вы получите ошибку проверки если нарушите эти правила."
 
 # ce2e78d8f148479eb6c7392247188aa6
 #: ../../ref/contrib/admin/index.txt:581
@@ -765,13 +874,15 @@ msgid ""
 "Set ``list_filter`` to activate filters in the right sidebar of the change "
 "list page of the admin, as illustrated in the following screenshot:"
 msgstr ""
+"Укажите ``list_filter`` что бы определить фильтры данных в правой панели "
+"страницы списка объектов, как показано на изображении:"
 
 # 3fb3c13827754ee7aee795f5524de903
 #: ../../ref/contrib/admin/index.txt:586
 msgid ""
 "``list_filter`` should be a list of elements, where each element should be "
 "of one of the following types:"
-msgstr ""
+msgstr "``list_filter`` - это список элементов, которые могу быть:"
 
 # c2c5834885f447718fcb44c399915a01
 #: ../../ref/contrib/admin/index.txt:589
@@ -780,6 +891,9 @@ msgid ""
 "``CharField``, ``DateField``, ``DateTimeField``, ``IntegerField``, "
 "``ForeignKey`` or ``ManyToManyField``, for example::"
 msgstr ""
+"название поля следующего типа: ``BooleanField``, ``CharField``, "
+"``DateField``, ``DateTimeField``, ``IntegerField``, ``ForeignKey`` или "
+"``ManyToManyField``. Например::"
 
 # bcfd8bc23c17485b8a1a87456146db5b
 #: ../../ref/contrib/admin/index.txt:598
@@ -787,6 +901,8 @@ msgid ""
 "Field names in ``list_filter`` can also span relations using the ``__`` "
 "lookup, for example::"
 msgstr ""
+"Поле в ``list_filter`` может указывать и на связанный объект используя "
+"``__``, например::"
 
 # 227963a5af384e9cb9d2948bbfb6cf35
 #: ../../ref/contrib/admin/index.txt:604
@@ -795,6 +911,9 @@ msgid ""
 "you need to provide the ``title`` and ``parameter_name`` attributes to and "
 "override the ``lookups`` and ``queryset`` methods, e.g.::"
 msgstr ""
+"подкласс :mod:`django.contrib.admin.SimpleListFilter`, в котором необходимо "
+"определить атрибуты ``title`` и ``parameter_name`` и переопределить методы "
+"``lookups`` и ``queryset``, например::"
 
 # 005c3267db5544c6a15e3e171df7693f
 #: ../../ref/contrib/admin/index.txt:653
@@ -802,6 +921,8 @@ msgid ""
 "As a convenience, the ``HttpRequest`` object is passed to the ``lookups`` "
 "and ``queryset`` methods, for example::"
 msgstr ""
+"Для удобства объект ``HttpRequest`` передается в методы ``lookups`` и "
+"``queryset``, например::"
 
 # 8ee7a72d926f4151bba0ab76e278c134
 #: ../../ref/contrib/admin/index.txt:668
@@ -810,6 +931,8 @@ msgid ""
 "``lookups`` method, for example if you want to base the lookups on the "
 "available data::"
 msgstr ""
+"Так же объект ``ModelAdmin`` передается в метод ``lookups``. Например, вы "
+"можете использовать существующие данные при создании фильтра::"
 
 # 2171bf8ada7e453e8eb50b89df3cad48
 #: ../../ref/contrib/admin/index.txt:687
@@ -818,18 +941,20 @@ msgid ""
 "class inheriting from :mod:`django.contrib.admin.FieldListFilter`, for "
 "example::"
 msgstr ""
+"кортеж, где первый элемент название поля, а второй - подкласс :mod:`django."
+"contrib.admin.FieldListFilter`, например::"
 
 # 67c3565a834f4e2794f98d4a11de130f
 #: ../../ref/contrib/admin/index.txt:700
 msgid ""
 "The ``FieldListFilter`` API is considered internal and might be changed."
-msgstr ""
+msgstr "API ``FieldListFilter`` считается внутренним и может быть изменено."
 
 # 1e256cc6ee454ea1b41a6de3dd6e867c
 #: ../../ref/contrib/admin/index.txt:705
 msgid ""
 "It is possible to specify a custom template for rendering a list filter::"
-msgstr ""
+msgstr "Вы можете указать собственный шаблон для отображения фильтра::"
 
 # 4da1ea6823c84f938cbd8a7106a89094
 #: ../../ref/contrib/admin/index.txt:710
@@ -837,6 +962,8 @@ msgid ""
 "See the default template provided by django (``admin/filter.html``) for a "
 "concrete example."
 msgstr ""
+"Конкретный пример можно найти в шаблоне приложения интерфейса "
+"администратора, который использует Django (``admin/filter.html``)."
 
 # 9ff9ac3f3b3b4980be5168b9c2e44e6e
 #: ../../ref/contrib/admin/index.txt:717
@@ -846,6 +973,10 @@ msgid ""
 "the change list only if the total result count is less than or equal to this "
 "setting. By default, this is set to ``200``."
 msgstr ""
+"Используйте ``list_max_show_all`` что бы указать количество объектов на "
+"странице списка объектов при выборе \"Показать все\". Интерфейс "
+"администратора покажет ссылку \"Показать все\" только если общее количество "
+"объектов меньше или равно этому значению. По умолчанию равно ``200``."
 
 # 9f8ebdd8d5c547f8b33727043567a4ac
 #: ../../ref/contrib/admin/index.txt:724
@@ -853,6 +984,8 @@ msgid ""
 "Set ``list_per_page`` to control how many items appear on each paginated "
 "admin change list page. By default, this is set to ``100``."
 msgstr ""
+"Используйте ``list_per_page`` что бы определить количество объектов на одной "
+"странице при отображении списка объектов. По умолчанию равно ``100``."
 
 # 51feaf568bc84515b4fcc579c8676393
 #: ../../ref/contrib/admin/index.txt:729
@@ -861,11 +994,16 @@ msgid ""
 "query.QuerySet.select_related` in retrieving the list of objects on the "
 "admin change list page. This can save you a bunch of database queries."
 msgstr ""
+"Используйте ``list_select_related`` что бы указать Django использовать :meth:"
+"`~django.db.models.query.QuerySet.select_related` при выборе объектов для "
+"страницы отображения объектов. Это может сократить количество запросов на "
+"этой странице."
 
 # 4eb5bb6829514d7ba4e9b3d42733e51b
 #: ../../ref/contrib/admin/index.txt:734
 msgid "The value should be either ``True`` or ``False``. Default is ``False``."
 msgstr ""
+"Значение должно быть ``True`` или ``False``. По умолчанию равно ``False``."
 
 # 960761936520499ca5a79fcf74972669
 #: ../../ref/contrib/admin/index.txt:736
@@ -874,6 +1012,9 @@ msgid ""
 "select_related`, regardless of this setting if one of the ``list_display`` "
 "fields is a ``ForeignKey``."
 msgstr ""
+"Заметим, Django будет использовать :meth:`~django.db.models.query.QuerySet."
+"select_related` не зависимо от этой настройки, если хотя бы одно поле в "
+"``list_display`` является ``ForeignKey``."
 
 # 5d19de131acc40eca1392c2c68de4f9c
 #: ../../ref/contrib/admin/index.txt:743
@@ -882,6 +1023,9 @@ msgid ""
 "Django admin views. This should be a list or tuple in the same format as a "
 "model's :attr:`~django.db.models.Options.ordering` parameter."
 msgstr ""
+"``ordering`` позволяет определить сортировку на странице списка объектов. "
+"Это должен быть список или кортеж в формате аналогичном параметру :attr:"
+"`~django.db.models.Options.ordering`."
 
 # 6718dc2bc53449909a33b0589c5d68ed
 #: ../../ref/contrib/admin/index.txt:747
@@ -889,6 +1033,8 @@ msgid ""
 "If this isn't provided, the Django admin will use the model's default "
 "ordering."
 msgstr ""
+"Если атрибут не указана, Django будет использовать сортировку по умолчанию "
+"модели."
 
 # f30c949592e44519b7a89143e54b5c4f
 #: ../../ref/contrib/admin/index.txt:752
@@ -896,6 +1042,9 @@ msgid ""
 "If you need to specify a dynamic order (for example depending on user or "
 "language) you can implement a :meth:`~ModelAdmin.get_ordering` method."
 msgstr ""
+"Если вам необходима динамическая сортировка (например, в зависимости от "
+"пользователя или текущего языка) вы можете определить метод :meth:"
+"`~ModelAdmin.get_ordering`."
 
 # 02bdcc8d6c5e4508a7067e267866aac9
 #: ../../ref/contrib/admin/index.txt:757
@@ -903,6 +1052,8 @@ msgid ""
 "Django honors all elements in the list/tuple; before 1.4, only the first was "
 "respected."
 msgstr ""
+"Django учитывает все элементы в списке/кортеже, до 1.4 использовался только "
+"первый."
 
 # 11fdfb11298f4a4d9da4ef551cafac00
 #: ../../ref/contrib/admin/index.txt:764
@@ -913,6 +1064,11 @@ msgid ""
 "Paginator`, you will also need to provide an implementation for :meth:"
 "`ModelAdmin.get_paginator`."
 msgstr ""
+"Класс используемый для создания постраничного отображения. По умолчанию "
+"используется :class:`django.core.paginator.Paginator`. Если конструктор "
+"вашего класса принимает параметры отличные от :class:`django.core.paginator."
+"Paginator`, вам необходимо так же переопределить метод :meth:`ModelAdmin."
+"get_paginator`."
 
 # ac1851c9ed884393b11c174b83a31f72
 #: ../../ref/contrib/admin/index.txt:772
@@ -920,6 +1076,8 @@ msgid ""
 "Set ``prepopulated_fields`` to a dictionary mapping field names to the "
 "fields it should prepopulate from::"
 msgstr ""
+"``prepopulated_fields`` позволяет определить поля, которые получают значение "
+"основываясь на значениях других полей::"
 
 # f365a4b966e94bb6902f21f7b3a90cbd
 #: ../../ref/contrib/admin/index.txt:778
@@ -931,6 +1089,12 @@ msgid ""
 "fields, and then by transforming that result into a valid slug (e.g. "
 "substituting dashes for spaces)."
 msgstr ""
+"Указанные поля будут использовать код JavaScript для заполнения поля "
+"значением на основе значений полей-источников. Основное применение - это "
+"генерировать значение для полей ``SlugField`` из значений другого поля или "
+"полей. Процесс генерирования состоит в объединении значений полей-источников "
+"и преобразованию результата в правильный \"slug\" (например, заменой "
+"пробелов на дефисы)."
 
 # b870ff79451343cdb0d24d0958f442d8
 #: ../../ref/contrib/admin/index.txt:785
@@ -938,6 +1102,8 @@ msgid ""
 "``prepopulated_fields`` doesn't accept ``DateTimeField``, ``ForeignKey``, "
 "nor ``ManyToManyField`` fields."
 msgstr ""
+"``prepopulated_fields`` не принимает поля ``DateTimeField``, ``ForeignKey`` "
+"или ``ManyToManyField``."
 
 # 71d8333206084f21925a03679f1613ca
 #: ../../ref/contrib/admin/index.txt:790
@@ -947,6 +1113,10 @@ msgid ""
 "``radio_fields``, Django will use a radio-button interface instead. Assuming "
 "``group`` is a ``ForeignKey`` on the ``Person`` model::"
 msgstr ""
+"По умолчанию Django использует <select> для полей ``ForeignKey`` или тех, "
+"которые содержат ``choices``. Ели поле указанно в ``radio_fields``, Django "
+"будет использовать радио кнопки. Предположим что ``group`` поле "
+"``ForeignKey`` в модели ``Person``::"
 
 # 420f00867b68457b8b805312931f2d21
 #: ../../ref/contrib/admin/index.txt:798
@@ -954,6 +1124,8 @@ msgid ""
 "You have the choice of using ``HORIZONTAL`` or ``VERTICAL`` from the "
 "``django.contrib.admin`` module."
 msgstr ""
+"Вы можете использовать ``HORIZONTAL`` или ``VERTICAL`` из модуля ``django."
+"contrib.admin``."
 
 # 29fde17f54874e3e9428d9104c977d92
 #: ../../ref/contrib/admin/index.txt:801
@@ -961,6 +1133,8 @@ msgid ""
 "Don't include a field in ``radio_fields`` unless it's a ``ForeignKey`` or "
 "has ``choices`` set."
 msgstr ""
+"Не добавляйте в ``radio_fields`` поля, которые не являются ``ForeignKey`` "
+"или не содержат ``choices``."
 
 # e3d7ead25dfc400a9cc2b1a97fad67f7
 # dc490269f5784354b693b7fd9ba33647
@@ -971,6 +1145,9 @@ msgid ""
 "that are ``ForeignKey``. Sometimes you don't want to incur the overhead of "
 "having to select all the related instances to display in the drop-down."
 msgstr ""
+"По умолчанию Django использует <select> для полей ``ForeignKey``. Если "
+"связанных объектов очень много, создание <select> может быть очень затратным "
+"процессом."
 
 # 12a55fe0620843c691995c080079b021
 #: ../../ref/contrib/admin/index.txt:811
@@ -978,6 +1155,8 @@ msgid ""
 "``raw_id_fields`` is a list of fields you would like to change into an "
 "``Input`` widget for either a ``ForeignKey`` or ``ManyToManyField``::"
 msgstr ""
+"``raw_id_fields`` содержит список полей, которые будут использовать поле "
+"``Input`` для ``ForeignKey`` или ``ManyToManyField``::"
 
 # 05c4e6d9f168447d952107941e9ffa0b
 #: ../../ref/contrib/admin/index.txt:822
@@ -989,6 +1168,13 @@ msgid ""
 "`ModelAdmin.fields` or :attr:`ModelAdmin.fieldsets` the read-only fields "
 "must be present to be shown (they are ignored otherwise)."
 msgstr ""
+"По умолчанию интерфейс администратора отображает все поля как редактируемые. "
+"Поля указанные в этой настройке (которая является ``list`` или ``tuple``) "
+"будут отображаться значение без возможности редактировать. Эта настройка "
+"работает почти аналогично :attr:`ModelAdmin.list_display`. Однако, если вы "
+"определяете аргумент :attr:`ModelAdmin.fields` или :attr:`ModelAdmin."
+"fieldsets` поля для чтения должны быть в них указаны (иначе они будут "
+"проигнорированы)."
 
 # 316d511e874b45c391296a3a755ae1e1
 #: ../../ref/contrib/admin/index.txt:829
@@ -997,11 +1183,16 @@ msgid ""
 "attr:`ModelAdmin.fields` or :attr:`ModelAdmin.fieldsets` they will be added "
 "last after all editable fields."
 msgstr ""
+"Если ``readonly_fields`` используется без определения порядка полей через "
+"атрибуты :attr:`ModelAdmin.fields` или :attr:`ModelAdmin.fieldsets`, поля из "
+"этой настройки будут отображаться после редактируемых полей."
 
 # 2869b96c111848dab3426d62e705a09a
 #: ../../ref/contrib/admin/index.txt:835
 msgid "Set ``save_as`` to enable a \"save as\" feature on admin change forms."
 msgstr ""
+"Укажите ``save_as`` что бы включить возможность \"сохранять как\" на "
+"странице редактирования объекта."
 
 # fc4be01514f049c8b00497ecfa5ddedd
 #: ../../ref/contrib/admin/index.txt:837
@@ -1010,18 +1201,22 @@ msgid ""
 "editing\" and \"Save and add another\". If ``save_as`` is ``True``, \"Save "
 "and add another\" will be replaced by a \"Save as\" button."
 msgstr ""
+"По умолчанию страница содержит три кнопки: \"Сохранить\", \"Сохранить и "
+"продолжить редактирование\" и \"Сохранить и добавить новый\". Если "
+"``save_as`` равен ``True``, \"Сохранить и добавить новый\" будет заменена "
+"кнопкой \"Сохранить как\"."
 
 # 7c91574328a34c8ca6077b3e2a376ec6
 #: ../../ref/contrib/admin/index.txt:841
 msgid ""
 "\"Save as\" means the object will be saved as a new object (with a new ID), "
 "rather than the old object."
-msgstr ""
+msgstr "\"Сохранить как\" сохранит объект как новый (с новым ID)."
 
 # 6042eee3a5e7499181b4ca22cf70ccce
 #: ../../ref/contrib/admin/index.txt:844
 msgid "By default, ``save_as`` is set to ``False``."
-msgstr ""
+msgstr "По умолчанию ``save_as`` равен ``False``."
 
 # 6db438e0b67b4022a5be400f7dcabb0a
 #: ../../ref/contrib/admin/index.txt:848
@@ -1029,6 +1224,8 @@ msgid ""
 "Set ``save_on_top`` to add save buttons across the top of your admin change "
 "forms."
 msgstr ""
+"Укажите ``save_on_top`` что бы добавить кнопки сохранения в верхней части "
+"страницы редактирования объекта."
 
 # 47ef3911cf454551afb563e1fabcac63
 #: ../../ref/contrib/admin/index.txt:851
@@ -1036,11 +1233,13 @@ msgid ""
 "Normally, the save buttons appear only at the bottom of the forms. If you "
 "set ``save_on_top``, the buttons will appear both on the top and the bottom."
 msgstr ""
+"По умолчанию кнопки сохранения отображаются под формой. Если указать "
+"``save_on_top``, кнопки будут отображаться и сверху и снизу."
 
 # 76ccee221d8d482aa915047c7c04e644
 #: ../../ref/contrib/admin/index.txt:855
 msgid "By default, ``save_on_top`` is set to ``False``."
-msgstr ""
+msgstr "По умолчанию ``save_on_top`` равен ``False``."
 
 # 06dea4abdbe34c1a9fc1fc0e01d4382c
 #: ../../ref/contrib/admin/index.txt:859
@@ -1049,6 +1248,9 @@ msgid ""
 "This should be set to a list of field names that will be searched whenever "
 "somebody submits a search query in that text box."
 msgstr ""
+"``search_fields`` позволяет добавить поиск на страницу списка объектов. Этот "
+"атрибут должен содержать список полей, которые будут использоваться при "
+"поиске."
 
 # d040d49bab784a7fa68d42c63bce2a8f
 #: ../../ref/contrib/admin/index.txt:863
@@ -1057,6 +1259,8 @@ msgid ""
 "``TextField``. You can also perform a related lookup on a ``ForeignKey`` or "
 "``ManyToManyField`` with the lookup API \"follow\" notation::"
 msgstr ""
+"Эти поля должны быть текстовыми, таким как ``CharField`` или ``TextField``. "
+"Вы можете указать поля из связанных объектов используя ``__``::"
 
 # 8c834b31921f4019b155235bb0f6fd5d
 #: ../../ref/contrib/admin/index.txt:869
@@ -1065,6 +1269,8 @@ msgid ""
 "definition would enable search blog entries by the email address of the "
 "author::"
 msgstr ""
+"Например, у нас есть модель записи в блоге с полем автора. Следующая "
+"настройка позволит искать записи по email адресу автора::"
 
 # 542809d6d2b84173a23c585daf833902
 #: ../../ref/contrib/admin/index.txt:875
@@ -1076,6 +1282,11 @@ msgid ""
 "['first_name', 'last_name']`` and a user searches for ``john lennon``, "
 "Django will do the equivalent of this SQL ``WHERE`` clause::"
 msgstr ""
+"При поиске Django разбивает поисковый запрос на слова и возвращает объекты, "
+"которые содержат эти слова в одном из указанных в ``search_fields`` полей. "
+"Поиск регистро-независимый. Например, если ``search_fields`` равен ``"
+"['first_name', 'last_name']`` и пользователь выполняет поиск по ``john "
+"lennon``, Django создаст такое SQL условие ``WHERE``::"
 
 # f85233335e1140d0839cfb24c8bff579
 #: ../../ref/contrib/admin/index.txt:885
@@ -1083,6 +1294,8 @@ msgid ""
 "For faster and/or more restrictive searches, prefix the field name with an "
 "operator:"
 msgstr ""
+"Для определения более конкретных условий поиска используйте следующие "
+"префиксы:"
 
 # 3ddc446099a64708a35d40705e2a491e
 #: ../../ref/contrib/admin/index.txt:889
@@ -1091,6 +1304,9 @@ msgid ""
 "to ``['^first_name', '^last_name']`` and a user searches for ``john "
 "lennon``, Django will do the equivalent of this SQL ``WHERE`` clause::"
 msgstr ""
+"Указывает на начало строки. Например, если ``search_fields`` установить в ``"
+"['^first_name', '^last_name']`` и пользователь ищет ``john lennon``, Django "
+"создаст следующее SQL условие ``WHERE``::"
 
 # 89188e0642eb48dc9cdac834d0109d63
 #: ../../ref/contrib/admin/index.txt:897
@@ -1101,6 +1317,10 @@ msgid ""
 "on it, some databases may be able to use the index for this query, even "
 "though it's a ``LIKE`` query."
 msgstr ""
+"Этот запрос более эффективный чем ``'%john%'``, так как база данных будет "
+"проверять только начало значения поля. К тому же, если поле содержит индекс, "
+"некоторые базы данных могут использовать его при поиске, даже для поиска "
+"через ``LIKE``."
 
 # efec6bde461e45508706a79a86ab764a
 #: ../../ref/contrib/admin/index.txt:904
@@ -1109,6 +1329,9 @@ msgid ""
 "to ``['=first_name', '=last_name']`` and a user searches for ``john "
 "lennon``, Django will do the equivalent of this SQL ``WHERE`` clause::"
 msgstr ""
+"Полное совпадение, регистро-независимое. Например, если ``search_fields`` "
+"равно ``['=first_name', '=last_name']`` и пользователь ищет ``john lennon``, "
+"Django создаст следующее SQL условие ``WHERE``::"
 
 # 6cade857d4994410a19b64d345214eb2
 #: ../../ref/contrib/admin/index.txt:912
@@ -1117,6 +1340,9 @@ msgid ""
 "it's currently not possible to search for all records in which "
 "``first_name`` is exactly ``'john winston'`` (containing a space)."
 msgstr ""
+"Поисковый запрос разбивается по пробелам, по этому, исходя из примера выше, "
+"нельзя найти записи с полем ``first_name`` равным ``'john winston'``"
+"(содержащим пробел)."
 
 # ea83e4f3a42d4056bfa5fff1258e7b5d
 #: ../../ref/contrib/admin/index.txt:917
@@ -1124,11 +1350,13 @@ msgid ""
 "Performs a full-text match. This is like the default search method but uses "
 "an index. Currently this is only available for MySQL."
 msgstr ""
+"Выполняет полнотекстовый поиск. Работает как и обычный поиск, но использует "
+"индекс. На данный момент это работает только в MySQL."
 
 # 51ba9c8cd4f64348bbced470447b9006
 #: ../../ref/contrib/admin/index.txt:921
 msgid "Custom template options"
-msgstr ""
+msgstr "Настройки шаблонов"
 
 # c12dec27993642da998b5e9e628fd661
 #: ../../ref/contrib/admin/index.txt:923
@@ -1137,21 +1365,25 @@ msgid ""
 "extend the default admin templates.  Use the following options to override "
 "the default templates used by the :class:`ModelAdmin` views:"
 msgstr ""
+"Раздел `Overriding Admin Templates`_ описывает как переопределить или "
+"расширить шаблоны интерфейса администратора.  Используйте следующие "
+"настройки что бы переопределить шаблоны, которые используются "
+"представлениями :class:`ModelAdmin`:"
 
 # b175857c7bc1431884a4c5a1588e2bc5
 #: ../../ref/contrib/admin/index.txt:931
 msgid "Path to a custom template, used by :meth:`add_view`."
-msgstr ""
+msgstr "Путь к шаблону, который используется :meth:`add_view`."
 
 # 1f808b101c514eceaa2576b3d4777886
 #: ../../ref/contrib/admin/index.txt:935
 msgid "Path to a custom template, used by :meth:`change_view`."
-msgstr ""
+msgstr "Путь к шаблону, который используется :meth:`change_view`."
 
 # 84064ef4bbbf464d894f5d1de308e2b0
 #: ../../ref/contrib/admin/index.txt:939
 msgid "Path to a custom template, used by :meth:`changelist_view`."
-msgstr ""
+msgstr "Путь к шаблону, который используется :meth:`changelist_view`."
 
 # c1cb2d319304433c912d0b63c62aa68a
 #: ../../ref/contrib/admin/index.txt:943
@@ -1159,6 +1391,8 @@ msgid ""
 "Path to a custom template, used by :meth:`delete_view` for displaying a "
 "confirmation page when deleting one or more objects."
 msgstr ""
+"Путь к шаблону, который используется :meth:`delete_view` для отображения "
+"страницы подтверждения удаления одного или нескольких объектов."
 
 # d0b9dda2d3374f07b056adf56d7a311d
 #: ../../ref/contrib/admin/index.txt:950
@@ -1167,16 +1401,20 @@ msgid ""
 "for displaying a confirmation page when deleting one or more objects. See "
 "the :doc:`actions documentation</ref/contrib/admin/actions>`."
 msgstr ""
+"Путь к шаблону, который используется :meth:`delete_selected` для отображения "
+"страницы подтверждения удаления одного или нескольких объектов. Подробности "
+"смотрите в разделе о :doc:`действиях в интерфейсе администратора </ref/"
+"contrib/admin/actions>`."
 
 # a01b755d270442488f1c1ae7f8f65510
 #: ../../ref/contrib/admin/index.txt:957
 msgid "Path to a custom template, used by :meth:`history_view`."
-msgstr ""
+msgstr "Путь к шаблону, который используется :meth:`history_view`."
 
 # 5c51404f4e064efa86ad97e9fa446ca1
 #: ../../ref/contrib/admin/index.txt:963
 msgid "``ModelAdmin`` methods"
-msgstr ""
+msgstr "Методы ``ModelAdmin``"
 
 # e687c6dac0b740da8d98170eb85d7f39
 #: ../../ref/contrib/admin/index.txt:967
@@ -1185,6 +1423,9 @@ msgid ""
 "delete the object, they are not for veto purposes, rather they allow you to "
 "perform extra operations."
 msgstr ""
+"Методы :meth:`ModelAdmin.save_model` и :meth:`ModelAdmin.delete_model` "
+"должны сохранять/удалять объект. Их задача выполнять дополнительные "
+"операции, а не разрешать/запрещать операции удаления/сохранения."
 
 # 124640a2d1914f549ebd677fdaa6b357
 #: ../../ref/contrib/admin/index.txt:973
@@ -1193,11 +1434,16 @@ msgid ""
 "``ModelForm`` instance and a boolean value based on whether it is adding or "
 "changing the object. Here you can do any pre- or post-save operations."
 msgstr ""
+"Метод ``save_model`` принимает объект ``HttpRequest``, экземпляр модели, "
+"экземпляр ``ModelForm`` и булево значение указывающее создан объект или "
+"изменяется. В этом методе вы может выполнить дополнительные операции до или "
+"после сохранения."
 
 # 64a9bf81894d40a389b7d16ba267be7b
 #: ../../ref/contrib/admin/index.txt:977
 msgid "For example to attach ``request.user`` to the object prior to saving::"
 msgstr ""
+"Например, добавление ``request.user`` к объекту перед сохранением объекта::"
 
 # a4cdf8556b3d4e77960cb9ec3e1d81ad
 #: ../../ref/contrib/admin/index.txt:988
@@ -1205,6 +1451,9 @@ msgid ""
 "The ``delete_model`` method is given the ``HttpRequest`` and a model "
 "instance. Use this method to do pre- or post-delete operations."
 msgstr ""
+"Метод ``delete_model`` принимает объект ``HttpRequest`` и экземпляр модели, "
+"который удаляется. В этом методе вы может выполнить дополнительные операции "
+"до или после удаления."
 
 # 8ec73ef4f8464ffe900fc18a2b2d4568
 #: ../../ref/contrib/admin/index.txt:993
