@@ -81,7 +81,7 @@ class VersionDirective(Directive):
         ret.append(node)
         if not is_nextversion:
             if len(self.arguments) == 1:
-                linktext = 'Please see the release notes </releases/%s>' % (arg0)
+                linktext = 'Пожалуйста, обратитесь к описанию релиза </releases/%s>' % (arg0)
                 xrefs = roles.XRefRole()('doc', linktext, linktext, self.lineno, self.state)
                 node.extend(xrefs[0])
             node['version'] = arg0
@@ -139,9 +139,9 @@ class DjangoHTMLTranslator(SmartyPantsHTMLTranslator):
     # that work.
     #
     version_text = {
-        'deprecated':       'Deprecated in Django %s',
-        'versionchanged':   'Changed in Django %s',
-        'versionadded':     'New in Django %s',
+        'deprecated':       'Устарело с Django %s',
+        'versionchanged':   'Изменено в Django %s',
+        'versionadded':     'Добавлено в Django %s',
     }
 
     def visit_versionmodified(self, node):
