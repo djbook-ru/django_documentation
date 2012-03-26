@@ -2,7 +2,7 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated, 2012.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
@@ -15,13 +15,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 # 04c114de81524d788c49310caff69d5a
 #: ../../ref/forms/validation.txt:2
 msgid "Form and field validation"
-msgstr ""
+msgstr "Проверка форм и полей формы"
 
 # ac1b690f74b042c298278dda10323430
 #: ../../ref/forms/validation.txt:6
@@ -34,6 +34,14 @@ msgid ""
 "validation (accessing the ``errors`` attribute or calling ``full_clean()`` "
 "directly), but normally they won't be needed."
 msgstr ""
+"Проверка формы происходит при нормализации её данных. При возникновении "
+"необходимости вмешаться в этот процесс, есть много мест, где можно это "
+"сделать и которые влияют на разные этапы проверки. Во время обработки формы "
+"вызываются три типа метода для нормализации данных. Процесс проверки "
+"запускается при вызове метода ``is_valid()`` формы. Существуют ситуации, "
+"которые запускают нормализацию и проверку данных (обращение к свойству "
+"``errors`` или прямой вызов метода ``full_clean()``), но они возникают "
+"достаточно редко."
 
 # 7877226f14874d9cbf55f6796d321cdf
 #: ../../ref/forms/validation.txt:14
@@ -43,6 +51,11 @@ msgid ""
 "to the ``ValidationError`` constructor. If no ``ValidationError`` is raised, "
 "the method should return the cleaned (normalized) data as a Python object."
 msgstr ""
+"В общем случае, любой нормализующий метод может вызвать исключение "
+"``ValidationError`` при наличии проблем с данными, передавая соответствующее "
+"сообщение об ошибке в конструктор исключения. Если проблем не выявлено, то "
+"метод должен возвращать нормализованное значение в виде объекта языка Python."
+""
 
 # 0d9c6e51f0564e22be26f2e3d75bbde9
 #: ../../ref/forms/validation.txt:19
@@ -51,6 +64,9 @@ msgid ""
 "all of them to the form submitter, it is possible to pass a list of errors "
 "to the ``ValidationError`` constructor."
 msgstr ""
+"При обнаружении нескольких ошибок в процессе нормализации поля и при наличии "
+"желания отобразить их одновременно на форме, следует передать их в виде "
+"списка в конструктор исключения."
 
 # cacdfe89b6d746ecb576f826a129b211
 #: ../../ref/forms/validation.txt:23
@@ -61,6 +77,12 @@ msgid ""
 "are run after the field's ``to_python`` and ``validate`` methods have been "
 "called."
 msgstr ""
+"Большая часть проверок может быть выполнена с помощью `validators`_, которые "
+"являются простыми в использовании вспомогательными объектами. Валидатор — "
+"это простая функция (или вызываемый объект, callable), которая принимает "
+"единственный аргумент и вызывает исключение ``ValidationError`` в случае "
+"проблем с полученным значением. Валидаторы запускаются после вызова методов "
+"поля: ``to_python`` и ``validate``."
 
 # 04298184d92a4633881ae2f50907ab83
 #: ../../ref/forms/validation.txt:28
@@ -68,6 +90,8 @@ msgid ""
 "Validation of a Form is split into several steps, which can be customized or "
 "overridden:"
 msgstr ""
+"Проверка формы состоит из нескольких этапов, каждый из которых может быть "
+"настроен или переопределён:"
 
 # bf72593d5dac40fb8e7663b66238a909
 #: ../../ref/forms/validation.txt:31
@@ -78,6 +102,12 @@ msgid ""
 "returns the converted value. For example, a FloatField will turn the data "
 "into a Python ``float`` or raise a ``ValidationError``."
 msgstr ""
+"Вызов метода поля ``to_python()`` является первым этапом каждой проверки. Он "
+"приводит значение к соответствующему типу данных или вызывает исключение "
+"``ValidationError``, если это невозможно. Метод принимает сырое значение от "
+"виджета и возвращает нормализованное значение. Например, поле типа "
+"``FloatField`` преобразовывает данные в тип ``float`` языка Python или "
+"вызывает исключение ``ValidationError``."
 
 # 7911286063994186b6f8e5b1241aebf2
 #: ../../ref/forms/validation.txt:38
@@ -89,6 +119,12 @@ msgid ""
 "it to handle validation logic that you can't or don't want to put in a "
 "validator."
 msgstr ""
+"Метод ``validate()`` поля выполняет стандартную проверку данных и приводит "
+"значение к правильному типу данных или вызывает исключение "
+"``ValidationError`` на любую ошибку. Этот метод не возвращает значение и не "
+"должен изменять проверяемые данные. Если вам надо обеспечить логику, которую "
+"невозможно или нежелательно выносить в валидатор, то вам следует "
+"переопределить этот метод."
 
 # fe6027ea91a847b49bc8b50ced749b74
 #: ../../ref/forms/validation.txt:45
@@ -97,6 +133,9 @@ msgid ""
 "validators and aggregates all the errors into a single ``ValidationError``. "
 "You shouldn't need to override this method."
 msgstr ""
+"Метод поля ``run_validators()`` запускает все валидаторы  и аккумулирует все "
+"возникающие ошибки в одно исключение ``ValidationError``. Вам не стоит "
+"переопределять этот метод."
 
 # f135d4480aca445093d1a22af064a12a
 #: ../../ref/forms/validation.txt:49
@@ -108,6 +147,12 @@ msgid ""
 "method returns the clean data, which is then inserted into the "
 "``cleaned_data`` dictionary of the form."
 msgstr ""
+"Метод ``clean()`` поля отвечает за вызов методов ``to_python``, ``validate`` "
+"и ``run_validators`` в правильном порядке и передачу их ошибок. Как только "
+"любой из этих методов вызовет исключение ``ValidationError``, процесс "
+"проверки прекращается и ошибка передаётся выше. Этот метод возвращает "
+"проверенные данные, которые затем помещаются в словарь ``cleaned_data`` "
+"формы."
 
 # 7ca929ced5d0428a9d4f5211dc0c98bc
 #: ../../ref/forms/validation.txt:56
@@ -122,6 +167,12 @@ msgid ""
 "``cleaned_data`` because the general field ``clean()`` method, above, has "
 "already cleaned the data once)."
 msgstr ""
+"Для проверки значения поля используется метод ``clean_<fieldname>()``, где "
+"``<fieldname>`` заменяется на имя поля. Этот метод выполняет проверку "
+"значения. Метод не принимает аргументы. Для получения значения поля "
+"обращайтесь к словарю\n"
+"``self.cleaned_data`` и помните, что там будет объект языка Python, а не "
+"строка, переданная формой."
 
 # 5745b3cc8fb841f8a831ff069fe4e987
 #: ../../ref/forms/validation.txt:66
@@ -132,6 +183,11 @@ msgid ""
 "``CharField``), but you want a formfield-specific piece of validation and, "
 "possibly, cleaning/normalizing the data."
 msgstr ""
+"Например, если требуется проверить, что содержимое ``CharField``поля с "
+"именем ``serialnumber`` является уникальным, то метод "
+"``clean_serialnumber()`` будет правильным местом для такого функционала. Вам "
+"не нужно специального поля (пусть будет ``CharField``), но требуется хитрая "
+"проверка данных и, возможно, очистка/нормализация данных."
 
 # 8593ee3099c347bb82a1ac587d42c7a1
 #: ../../ref/forms/validation.txt:73
@@ -139,6 +195,8 @@ msgid ""
 "Just like the general field ``clean()`` method, above, this method should "
 "return the cleaned data, regardless of whether it changed anything or not."
 msgstr ""
+"Подобно методу ``clean()``, описанному выше, этот метод должен возвращать "
+"проверенные данные, независимо от того изменялись они или нет."
 
 # c491ab54304a4a75ac6aa00f16e30d8f
 #: ../../ref/forms/validation.txt:77
@@ -152,13 +210,21 @@ msgid ""
 "override this method (by default, ``Form.clean()`` just returns ``self."
 "cleaned_data``)."
 msgstr ""
+"Метод ``clean()`` потомка формы. Этот метод может выполнять любую проверку, "
+"которая нуждается в одновременном доступе к данным нескольких полей. Именно "
+"здесь в можете проверять, что если поле ``A`` заполнено, то поле ``B`` "
+"должно содержать правильный адрес электронной почты и так далее. Данные, "
+"которые возвращает этот метод,The data that this method returns is the final "
+"``cleaned_data`` attribute for the form, so don't forget to return the full "
+"list of cleaned data if you override this method (by default, ``Form."
+"clean()`` just returns ``self.cleaned_data``)."
 
 # f0af9ad49bc14b6eb0892d21f55aecad
 #: ../../ref/forms/validation.txt:86
 msgid ""
 "Note that any errors raised by your ``Form.clean()`` override will not be "
-"associated with any field in particular. They go into a special \"field"
-"\" (called ``__all__``), which you can access via the ``non_field_errors()`` "
+"associated with any field in particular. They go into a special \"field\" "
+"(called ``__all__``), which you can access via the ``non_field_errors()`` "
 "method if you need to. If you want to attach errors to a specific field in "
 "the form, you will need to access the ``_errors`` attribute on the form, "
 "which is `described later`_."
@@ -167,8 +233,8 @@ msgstr ""
 # dad01054e9ec43bf9188aeadc139062f
 #: ../../ref/forms/validation.txt:93
 msgid ""
-"Also note that there are special considerations when overriding the ``clean()"
-"`` method of a ``ModelForm`` subclass. (see the :ref:`ModelForm "
+"Also note that there are special considerations when overriding the "
+"``clean()`` method of a ``ModelForm`` subclass. (see the :ref:`ModelForm "
 "documentation <overriding-modelform-clean-method>` for more information)"
 msgstr ""
 
@@ -365,10 +431,10 @@ msgstr ""
 # 9efe8c8dd2d348fda999e54c90b9f98e
 #: ../../ref/forms/validation.txt:247
 msgid ""
-"Simply use ``MultiEmailField`` like any other form field. When the ``is_valid"
-"()`` method is called on the form, the ``MultiEmailField.clean()`` method "
-"will be run as part of the cleaning process and it will, in turn, call the "
-"custom ``to_python()`` and ``validate()`` methods."
+"Simply use ``MultiEmailField`` like any other form field. When the "
+"``is_valid()`` method is called on the form, the ``MultiEmailField.clean()`` "
+"method will be run as part of the cleaning process and it will, in turn, "
+"call the custom ``to_python()`` and ``validate()`` methods."
 msgstr ""
 
 # 94e5e7859710405e9a6481e13a72ac7f
