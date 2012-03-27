@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-24 01:58\n"
-"PO-Revision-Date: 2012-03-23 20:21+0200\n"
+"PO-Revision-Date: 2012-03-27 16:16+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -1564,6 +1564,9 @@ msgid ""
 "that ModelAdmin in the same way as a URLconf.  Therefore you can extend them "
 "as documented in :doc:`/topics/http/urls`::"
 msgstr ""
+"Метод ``get_urls`` класса ``ModelAdmin`` возвращает URL-ы, которые "
+"используются для ModelAdmin в URLconf.  Вы можете дополнить их как описано "
+"в :doc:`/topics/http/urls`::"
 
 # a08587469995450eb7d221556efc0223
 #: ../../ref/contrib/admin/index.txt:1093
@@ -1573,6 +1576,9 @@ msgid ""
 "anything, so you'll usually want to prepend your custom URLs to the built-in "
 "ones."
 msgstr ""
+"Заметим, что собственные URL-шаблоны включаются *перед* URL-шаблонами "
+"интерфейса администратора, которые удовлетворяют почти всем URL-ам. По этому "
+"желательно добавлять собственные URL-шаблоны перед встроенными."
 
 # 211320b9659f439d912949158e53ed3b
 #: ../../ref/contrib/admin/index.txt:1098
@@ -1580,13 +1586,16 @@ msgid ""
 "In this example, ``my_view`` will be accessed at ``/admin/myapp/mymodel/"
 "my_view/`` (assuming the admin URLs are included at ``/admin/``.)"
 msgstr ""
+"В этом примере, представление ``my_view`` будет доступно по ссылке ``/admin/"
+"myapp/mymodel/my_view/`` (предполагается что вы добавили URL-ы интерфейса "
+"администратора к ``/admin/``.)"
 
 # 4a04265c870c4c61a3f0e8107daf172a
 #: ../../ref/contrib/admin/index.txt:1102
 msgid ""
 "However, the ``self.my_view`` function registered above suffers from two "
 "problems:"
-msgstr ""
+msgstr "Однако, есть несколько проблем связанных с функцией ``self.my_view``:"
 
 # 6afa8a9d55a44985a81cae72c70bfd49
 #: ../../ref/contrib/admin/index.txt:1105
@@ -1594,6 +1603,8 @@ msgid ""
 "It will *not* perform any permission checks, so it will be accessible to the "
 "general public."
 msgstr ""
+"*Не* выполняются никакие проверки прав, каждый может выполнить запрос к "
+"этому представлению."
 
 # 2113ba84535b49d5ab00ef527920dce6
 #: ../../ref/contrib/admin/index.txt:1107
@@ -1602,6 +1613,9 @@ msgid ""
 "the page retrieves data from the database, and caching middleware is active, "
 "the page could show outdated information."
 msgstr ""
+"*Не* отправляются заголовки управляющие кэшированием. Это означает, если "
+"включен кэширующий функциональный слой, данные из базы данных на странице "
+"могут быть неверными."
 
 # 6e0b147ad78940319fd9a87a779b0582
 #: ../../ref/contrib/admin/index.txt:1111
@@ -1611,11 +1625,15 @@ msgid ""
 "wrapper is :meth:`AdminSite.admin_view` (i.e. ``self.admin_site.admin_view`` "
 "inside a ``ModelAdmin`` instance); use it like so::"
 msgstr ""
+"Django предоставляет функцию-обертку для проверки прав и отключения "
+"кэширования. Эта функция -- :meth:`AdminSite.admin_view` (или ``self."
+"admin_site.admin_view`` в методе ``ModelAdmin``). Используйте ее следующим "
+"образом::"
 
 # 99ce0686e3e941709566570920083e15
 #: ../../ref/contrib/admin/index.txt:1125
 msgid "Notice the wrapped view in the fifth line above::"
-msgstr ""
+msgstr "Обратите внимание на следующую строку::"
 
 # 6f90737477c2461392bd8ecb2927a49d
 #: ../../ref/contrib/admin/index.txt:1129
@@ -1624,6 +1642,9 @@ msgid ""
 "will apply the ``django.views.decorators.cache.never_cache`` decorator to "
 "make sure it is not cached if the cache middleware is active."
 msgstr ""
+"Функция-обертка защищает ``self.my_view`` от несанкционированного доступа и "
+"применяет декоратор ``django.views.decorators.cache.never_cache`` для "
+"предотвращения кэширования."
 
 # cca32ff60612460ab764628496a5cd69
 #: ../../ref/contrib/admin/index.txt:1133
@@ -1632,6 +1653,9 @@ msgid ""
 "performed, you can pass a ``cacheable=True`` argument to :meth:`AdminSite."
 "admin_view`::"
 msgstr ""
+"Если страницу необходимо кэшировать, но необходимо проверять авторизацию, вы "
+"можете использовать аргумент ``cacheable=True`` для :meth:`AdminSite."
+"admin_view`::"
 
 # e6cbe1fbbcb542f3a7bd0dc2c25ac629
 #: ../../ref/contrib/admin/index.txt:1141
@@ -1640,6 +1664,9 @@ msgid ""
 "override the default formfield for a foreign keys field. For example, to "
 "return a subset of objects for this foreign key field based on the user::"
 msgstr ""
+"Метод ``formfield_for_foreignkey`` позволяет вам переопределить поле для "
+"внешнего ключа. Например, изменить выбор объектов в зависимости от "
+"пользователя::"
 
 # 61e3de570bd8472c9053d09821582c5e
 #: ../../ref/contrib/admin/index.txt:1151
@@ -1647,6 +1674,8 @@ msgid ""
 "This uses the ``HttpRequest`` instance to filter the ``Car`` foreign key "
 "field to only display the cars owned by the ``User`` instance."
 msgstr ""
+"Объект ``HttpRequest`` используется что бы отфильтровать для выбора объекты "
+"модели ``Car`` по текущему пользователю."
 
 # f8b6487a15f64d53b4595dd096b9c0c1
 #: ../../ref/contrib/admin/index.txt:1156
@@ -1658,6 +1687,11 @@ msgid ""
 "relationship -- you could filter the ``Car`` foreign key field to only "
 "display the cars owned by the ``User``::"
 msgstr ""
+"Как и метод ``formfield_for_foreignkey``, ``formfield_for_manytomany`` "
+"позволяет переопределить поле формы для связей многое-ко-многим. Например, "
+"если пользователь может владеть несколькими машинами и машина может "
+"принадлежать нескольким пользователям, вы можете отфильтровать модель "
+"``Car`` что бы отображать машины только текущего пользователя::"
 
 # 8866de84b8c14409bd1d61e102cd2b9a
 #: ../../ref/contrib/admin/index.txt:1171
@@ -1668,12 +1702,19 @@ msgid ""
 "example, if the choices available to a superuser should be different than "
 "those available to regular staff, you could proceed as follows::"
 msgstr ""
+"Как и методы ``formfield_for_foreignkey`` и ``formfield_for_manytomany``, "
+"``formfield_for_choice_field`` позволяет переопределить поле формы для поля "
+"модели, которое содержит ``choices``. Например, если главному администратору "
+"необходимо отображать варианты значений отличные от вариантов ответов для "
+"остальных пользователей::"
 
 # ffd7e91a65044e8290eff881b22dee15
 #: ../../ref/contrib/admin/index.txt:1190
 msgid ""
 "Should return ``True`` if adding an object is permitted, ``False`` otherwise."
 msgstr ""
+"Должен возвращать ``True``, если пользователю позволено добавлять новый "
+"объект, иначе ``False``."
 
 # b6ce197c95aa4384b5bfc590ca13fc65
 #: ../../ref/contrib/admin/index.txt:1195
@@ -1684,6 +1725,10 @@ msgid ""
 "will be interpreted as meaning that the current user is not permitted to "
 "edit any object of this type)."
 msgstr ""
+"Должен возвращать ``True``, если пользователю позволено изменять объект, "
+"иначе ``False``. Если ``obj`` равен  ``None``, должен вернуть ``True`` или "
+"``False``, указывая может ли пользователь изменить какой-либо объект данного "
+"типа."
 
 # 8933bffb328e444f9b02122049dab84b
 #: ../../ref/contrib/admin/index.txt:1203
@@ -1694,6 +1739,10 @@ msgid ""
 "be interpreted as meaning that the current user is not permitted to delete "
 "any object of this type)."
 msgstr ""
+"Должен вернуть ``True``, если пользователю позволено удалять объект, иначе "
+"``False``. Если ``obj`` равен  ``None``, должен вернуть ``True`` или "
+"``False``, указывая может ли пользователь удалить какой-либо объект данного "
+"типа."
 
 # 92b83983cc9b4753b0ee015c40454e68
 #: ../../ref/contrib/admin/index.txt:1211
@@ -1703,6 +1752,10 @@ msgid ""
 "admin site. One use case for overriding this method is to show objects owned "
 "by the logged-in user::"
 msgstr ""
+"Метод должен вернуть :class:`~django.db.models.query.QuerySet` всех объектов "
+"модели, которые можно редактировать в интерфейсе администратора. Этот метод "
+"можно использовать для отображения объектов принадлежащих текущему "
+"пользователю::"
 
 # 4298161b81b34778871105014434d376
 #: ../../ref/contrib/admin/index.txt:1225
@@ -1711,6 +1764,9 @@ msgid ""
 "using the :mod:`django.contrib.messages` backend. See the :ref:`custom "
 "ModelAdmin example <custom-admin-action>`."
 msgstr ""
+"Отправляет сообщение пользователю. Реализация по умолчанию использует :mod:"
+"`django.contrib.messages` для отправки сообщений. Смотрите :ref:`пример "
+"переопределения ModelAdmin <custom-admin-action>`."
 
 # 91da9cd03b164f02a8197cc6dc6f194c
 #: ../../ref/contrib/admin/index.txt:1233
@@ -1718,27 +1774,35 @@ msgid ""
 "Returns an instance of the paginator to use for this view. By default, "
 "instantiates an instance of :attr:`paginator`."
 msgstr ""
+"Возвращает объект для постраничного отображения. По умолчанию возвращает "
+"объект :attr:`paginator`."
 
 # 791f35b9299f482483b23a41e27a42a3
 #: ../../ref/contrib/admin/index.txt:1237
 msgid "Other methods"
-msgstr ""
+msgstr "Остальные методы"
 
 # 532a7727ef89432685858b9822038f36
 #: ../../ref/contrib/admin/index.txt:1241
 msgid "Django view for the model instance addition page. See note below."
 msgstr ""
+"Представление Django для страницы добавления объекта модели. Смотрите "
+"описание ниже."
 
 # 6253b6bb8ea749babe1febb29ec063f8
 #: ../../ref/contrib/admin/index.txt:1245
 msgid "Django view for the model instance edition page. See note below."
 msgstr ""
+"Представление Django для страницы редактирования объекта модели. Смотрите "
+"описание ниже."
 
 # 1c813bf8b27e4845b443aeff813ece90
 #: ../../ref/contrib/admin/index.txt:1249
 msgid ""
 "Django view for the model instances change list/actions page. See note below."
 msgstr ""
+"Представление Django для страницы отображения всех объектов модели. Смотрите "
+"описание ниже."
 
 # 138559bffa834401a4e79f7d10dd1fe8
 #: ../../ref/contrib/admin/index.txt:1254
@@ -1746,13 +1810,15 @@ msgid ""
 "Django view for the model instance(s) deletion confirmation page. See note "
 "below."
 msgstr ""
+"Представление Django для страницы подтверждения удаления объектов. Смотрите "
+"описание ниже."
 
 # 37764e4540a2400c87d84654216dc797
 #: ../../ref/contrib/admin/index.txt:1259
 msgid ""
 "Django view for the page that shows the modification history for a given "
 "model instance."
-msgstr ""
+msgstr "Представление Django для страницы истории изменений объекта модели."
 
 # 4bb69882c4704608b4c3e37ad83efe20
 #: ../../ref/contrib/admin/index.txt:1262
@@ -1764,6 +1830,11 @@ msgid ""
 "overriding these methods will significantly change the behavior of the admin "
 "application."
 msgstr ""
+"В отличии от методов ``ModelAdmin`` описанных выше, которые позволяют "
+"изменять поведение интерфейса администратора, эти пять методов используются "
+"как представления Django для выполнения CRUD-операций над объектами модели. "
+"В результате, полностью переопределив эти методы можно радикально изменить "
+"интерфейс администратора."
 
 # 3f8830dc13464970bf7cb02e882f0c0f
 #: ../../ref/contrib/admin/index.txt:1268
@@ -1774,6 +1845,9 @@ msgid ""
 "template is provided some extra mapping data that would not otherwise be "
 "available::"
 msgstr ""
+"Одна из причин переопределить эти методы -- добавить данные в контекст "
+"шаблона. В этом примере представление для изменения объекта добавляет "
+"дополнительные данные в контекст, что бы отобразить их в шаблоне::"
 
 # f7b3ff8d257849dbaa8a18925df2bc81
 #: ../../ref/contrib/admin/index.txt:1290
@@ -1783,11 +1857,15 @@ msgid ""
 "rendering. For more details, see the :doc:`TemplateResponse documentation </"
 "ref/template-response>`."
 msgstr ""
+"Эти методы теперь возвращают объект :class:`~django.template.response."
+"TemplateResponse`, что позволяет легко изменить данные ответа перед "
+"выполнением шаблона. Подробности смотрите в :doc:`разделе о TemplateResponse "
+"</ref/template-response>`."
 
 # 4b9d1747c7c348288e4888e9f0649878
 #: ../../ref/contrib/admin/index.txt:1296
 msgid "``ModelAdmin`` media definitions"
-msgstr ""
+msgstr "Добавление статических файлов в ``ModelAdmin``"
 
 # 80bd635b471343cd8825813ce05fa139
 #: ../../ref/contrib/admin/index.txt:1298
@@ -1796,6 +1874,9 @@ msgid ""
 "the add/change views. This can be accomplished by using a Media inner class "
 "on your ``ModelAdmin``::"
 msgstr ""
+"В некоторых ситуациях вам может понадобиться добавить CSS и/или JavaScript "
+"файлы в представления добавления или изменения объектов. Вы можете выполнить "
+"это добавив класс ``Media`` в ``ModelAdmin``::"
 
 # 44e9c1e1e28e459494100be859342779
 #: ../../ref/contrib/admin/index.txt:1311
@@ -1805,6 +1886,10 @@ msgid ""
 "to any media paths. The same rules apply as :ref:`regular media definitions "
 "on forms <form-media-paths>`."
 msgstr ""
+":doc:`Приложение staticfiles </ref/contrib/staticfiles>` добавляет :setting:"
+"`STATIC_URL` (или :setting:`MEDIA_URL` если :setting:`STATIC_URL` равно "
+"``None``) к указанным путям. Это же правильно применяется и к :ref:"
+"`определению статических файлов для форм <form-media-paths>`."
 
 # 31970ec8c4354d0e87a268e8cff39890
 #: ../../ref/contrib/admin/index.txt:1316
@@ -1815,6 +1900,12 @@ msgid ""
 "JavaScript without including a second copy, you can use the ``django."
 "jQuery`` object on changelist and add/edit views."
 msgstr ""
+"Интерфейс администратора Django использует Javascript библиотеку `jQuery`_. "
+"Что бы избежать конфликтов с библиотеками пользователя, jQuery в Django  "
+"используется пространство имен ``django.jQuery``. Если вы хотите "
+"использовать jQuery в собственных JavaScript файлах без добавления еще одной "
+"копии, вы можете использовать объект ``django.jQuery`` на страницах списка "
+"объектов и добавления/редактирования."
 
 # 9a8d721798504f7db5921538c5a1dd96
 #: ../../ref/contrib/admin/index.txt:1322
@@ -1823,11 +1914,14 @@ msgid ""
 "when using third-party jQuery plugins, or need a newer version of jQuery, "
 "you will have to include your own copy of jQuery."
 msgstr ""
+"Если вам необходима библиотека jQuery в глобальном пространстве имен, "
+"например при использовании плагинов jQuery, или более новая версия jQuery, "
+"вам необходимо добавить собственную копию jQuery."
 
 # 9e170dead42b430999aaac62654099bb
 #: ../../ref/contrib/admin/index.txt:1329
 msgid "Adding custom validation to the admin"
-msgstr ""
+msgstr "Дополнительная проверка данных в интерфейсе администратора"
 
 # c731747343b24c90bd7bd1462c0dcb07
 #: ../../ref/contrib/admin/index.txt:1331
@@ -1836,6 +1930,9 @@ msgid ""
 "admin interface reuses :mod:`django.forms`, and the ``ModelAdmin`` class "
 "gives you the ability define your own form::"
 msgstr ""
+"Добавить дополнительную проверку данных в интерфейсе администратора очень "
+"легко. Интерфейс администратора использует :mod:`django.forms`, и класс "
+"``ModelAdmin`` позволяет указать вашу собственную форму::"
 
 # c8ac751b97bb4f519a32dbd48164798c
 #: ../../ref/contrib/admin/index.txt:1338
@@ -1844,6 +1941,9 @@ msgid ""
 "needed. Now within your form you can add your own custom validation for any "
 "field::"
 msgstr ""
+"Вы можете определить форму ``MyArticleAdminForm`` где угодно, просто "
+"импортируйте ее. В собственной форме вы можете добавить дополнительную "
+"проверку данных для любого поля::"
 
 # 95422a339ffe43e78714c1a80a08af25
 #: ../../ref/contrib/admin/index.txt:1350
@@ -1853,11 +1953,16 @@ msgid ""
 "</ref/forms/validation>` and, more specifically, the :ref:`model form "
 "validation notes <overriding-modelform-clean-method>` for more information."
 msgstr ""
+"Важно использовать ``ModelForm`` что бы избежать проблем и ошибок. "
+"Подробности смотрите в документации о :doc:`формах </ref/forms/index>` "
+"раздел про :doc:`проверку полей </ref/forms/validation>` и, особенно, раздел "
+"о :ref:`переопределении метода clean() в ModelForm <overriding-modelform-"
+"clean-method>`."
 
 # 368a964fc8214107bfda18e7e5f429e5
 #: ../../ref/contrib/admin/index.txt:1359
 msgid "``InlineModelAdmin`` objects"
-msgstr ""
+msgstr "Объект ``InlineModelAdmin``"
 
 # 33b6469f8f5d4817a10efecf18af07b3
 #: ../../ref/contrib/admin/index.txt:1365
@@ -1865,6 +1970,9 @@ msgid ""
 "The admin interface has the ability to edit models on the same page as a "
 "parent model. These are called inlines. Suppose you have these two models::"
 msgstr ""
+"Интерфейс администратора позволяет редактировать связанные объекты на одной "
+"странице с родительским объектом. Это называется \"inlines\". Например, у "
+"нас есть две модели::"
 
 # 52d6af64213643a39dffcc67d6c2217b
 #: ../../ref/contrib/admin/index.txt:1375
@@ -1872,32 +1980,34 @@ msgid ""
 "You can edit the books authored by an author on the author page. You add "
 "inlines to a model by specifying them in a ``ModelAdmin.inlines``::"
 msgstr ""
+"Вы можете редактировать книги автора на странице редактирования автора. Вы "
+"добавляете \"inlines\" к модели добавив их в ``ModelAdmin.inlines``::"
 
 # 91532da68190474aabc61dce97ecbcd6
 #: ../../ref/contrib/admin/index.txt:1386
 msgid "Django provides two subclasses of ``InlineModelAdmin`` and they are:"
-msgstr ""
+msgstr "Django предоставляет два подкласса ``InlineModelAdmin``:"
 
 # 5832dfe50a65459f8282cee2dc207cb5
 #: ../../ref/contrib/admin/index.txt:1388
 msgid ":class:`~django.contrib.admin.TabularInline`"
-msgstr ""
+msgstr ":class:`~django.contrib.admin.TabularInline`"
 
 # f7458d00b90e4cbba93ad016951f734c
 #: ../../ref/contrib/admin/index.txt:1389
 msgid ":class:`~django.contrib.admin.StackedInline`"
-msgstr ""
+msgstr ":class:`~django.contrib.admin.StackedInline`"
 
 # 42b69db8a6d549998f065006b7ff7506
 #: ../../ref/contrib/admin/index.txt:1391
 msgid ""
 "The difference between these two is merely the template used to render them."
-msgstr ""
+msgstr "Разница между ними только в используемом шаблоне."
 
 # a0bc592ef4b443a392be47b51d165f5e
 #: ../../ref/contrib/admin/index.txt:1395
 msgid "``InlineModelAdmin`` options"
-msgstr ""
+msgstr "Параметры ``InlineModelAdmin``"
 
 # af522dfd85554595aac3b7143aa61083
 #: ../../ref/contrib/admin/index.txt:1397
@@ -1906,106 +2016,109 @@ msgid ""
 "adds some of its own (the shared features are actually defined in the "
 "``BaseModelAdmin`` superclass). The shared features are:"
 msgstr ""
+"``InlineModelAdmin`` содержит некоторые возможности ``ModelAdmin`` и "
+"собственные. Общие методы и атрибуты определены в классе ``BaseModelAdmin``, "
+"вот они:"
 
 # fbfea9e991c045af9253cd4139560e1d
 #: ../../ref/contrib/admin/index.txt:1401
 msgid ":attr:`~InlineModelAdmin.form`"
-msgstr ""
+msgstr ":attr:`~InlineModelAdmin.form`"
 
 # 4b2420d1015542b0a0a9bb2b642dab28
 #: ../../ref/contrib/admin/index.txt:1402
 msgid ":attr:`~ModelAdmin.fieldsets`"
-msgstr ""
+msgstr ":attr:`~ModelAdmin.fieldsets`"
 
 # e254780c22cf4eed8241da3d1ba7273d
 #: ../../ref/contrib/admin/index.txt:1403
 msgid ":attr:`~ModelAdmin.fields`"
-msgstr ""
+msgstr ":attr:`~ModelAdmin.fields`"
 
 # 4b3f8c4935164563b61b7c8d07051642
 #: ../../ref/contrib/admin/index.txt:1404
 msgid ":attr:`~ModelAdmin.exclude`"
-msgstr ""
+msgstr ":attr:`~ModelAdmin.exclude`"
 
 # fd7d21f046234895b00e96aa3d078b66
 #: ../../ref/contrib/admin/index.txt:1405
 msgid ":attr:`~ModelAdmin.filter_horizontal`"
-msgstr ""
+msgstr ":attr:`~ModelAdmin.filter_horizontal`"
 
 # a20d5064ce1242a4930b4c5cf3e2b7bd
 #: ../../ref/contrib/admin/index.txt:1406
 msgid ":attr:`~ModelAdmin.filter_vertical`"
-msgstr ""
+msgstr ":attr:`~ModelAdmin.filter_vertical`"
 
 # 8cee604aaa5c4a31a7e9802c815a8faf
 #: ../../ref/contrib/admin/index.txt:1407
 msgid ":attr:`~ModelAdmin.prepopulated_fields`"
-msgstr ""
+msgstr ":attr:`~ModelAdmin.prepopulated_fields`"
 
 # 3c0d1285fc3c421e8fe621810bcd91d8
 #: ../../ref/contrib/admin/index.txt:1408
 msgid ":attr:`~ModelAdmin.radio_fields`"
-msgstr ""
+msgstr ":attr:`~ModelAdmin.radio_fields`"
 
 # 19693478292b4c0b9958c2e83e6c9052
 #: ../../ref/contrib/admin/index.txt:1409
 msgid ":attr:`~InlineModelAdmin.raw_id_fields`"
-msgstr ""
+msgstr ":attr:`~InlineModelAdmin.raw_id_fields`"
 
 # 0c07af438628482eb83bb0afb6c0fa8a
 #: ../../ref/contrib/admin/index.txt:1410
 msgid ":meth:`~ModelAdmin.formfield_for_foreignkey`"
-msgstr ""
+msgstr ":meth:`~ModelAdmin.formfield_for_foreignkey`"
 
 # c4b9cac3b7d14548bcbe1fbe81668bd0
 #: ../../ref/contrib/admin/index.txt:1411
 msgid ":meth:`~ModelAdmin.formfield_for_manytomany`"
-msgstr ""
+msgstr ":meth:`~ModelAdmin.formfield_for_manytomany`"
 
 # f8e583e4befb4ace9b9b06a4f6b594b0
 #: ../../ref/contrib/admin/index.txt:1415
 msgid ":attr:`~ModelAdmin.readonly_fields`"
-msgstr ""
+msgstr ":attr:`~ModelAdmin.readonly_fields`"
 
 # 4891a659ed1a4f3eb1787ddfdf0f61a1
 #: ../../ref/contrib/admin/index.txt:1416
 msgid ":attr:`~ModelAdmin.formfield_overrides`"
-msgstr ""
+msgstr ":attr:`~ModelAdmin.formfield_overrides`"
 
 # bb832b47ee034a47bdfec260b2586631
 #: ../../ref/contrib/admin/index.txt:1420
 msgid ":attr:`~ModelAdmin.ordering`"
-msgstr ""
+msgstr ":attr:`~ModelAdmin.ordering`"
 
 # 11a113764c36494e8ffb3f5dda16468c
 #: ../../ref/contrib/admin/index.txt:1421
 msgid ":meth:`~ModelAdmin.queryset`"
-msgstr ""
+msgstr ":meth:`~ModelAdmin.queryset`"
 
 # c3a484a1e3dd4fee880048c8fb13f2e1
 #: ../../ref/contrib/admin/index.txt:1425
 msgid ":meth:`~ModelAdmin.has_add_permission`"
-msgstr ""
+msgstr ":meth:`~ModelAdmin.has_add_permission`"
 
 # 2af67f9dbf3e473daa38bf0255401962
 #: ../../ref/contrib/admin/index.txt:1426
 msgid ":meth:`~ModelAdmin.has_change_permission`"
-msgstr ""
+msgstr ":meth:`~ModelAdmin.has_change_permission`"
 
 # 92422a80357540b08bdd0dd229cc17de
 #: ../../ref/contrib/admin/index.txt:1427
 msgid ":meth:`~ModelAdmin.has_delete_permission`"
-msgstr ""
+msgstr ":meth:`~ModelAdmin.has_delete_permission`"
 
 # 18835f3705414ec6bf2f242bb28f4662
 #: ../../ref/contrib/admin/index.txt:1429
 msgid "The ``InlineModelAdmin`` class adds:"
-msgstr ""
+msgstr "Параметры класса ``InlineModelAdmin``:"
 
 # 4499feccd1f04139a33243157e3f7d23
 #: ../../ref/contrib/admin/index.txt:1433
 msgid "The model which the inline is using. This is required."
-msgstr ""
+msgstr "Модель используемая в \"inline\". Обязательный параметр."
 
 # 61fb4474a93741bb868aec4fb1de655c
 #: ../../ref/contrib/admin/index.txt:1437
@@ -2014,6 +2127,9 @@ msgid ""
 "with automatically, but ``fk_name`` must be specified explicitly if there "
 "are more than one foreign key to the same parent model."
 msgstr ""
+"Название внешнего ключа модели. В большинстве случаев он определяется "
+"автоматически, но вы должны указать ``fk_name``, если модель содержит "
+"несколько внешних ключей к родительской модели."
 
 # fc7328439c0a499bacbf4c3672156c33
 #: ../../ref/contrib/admin/index.txt:1443
@@ -2022,6 +2138,9 @@ msgid ""
 "many possibilities of customization. Inlines are built around :ref:`model "
 "formsets <model-formsets>`."
 msgstr ""
+"По умолчанию -- ``BaseInlineFormSet``. Использование собственного класса "
+"предоставляет большие возможности для переопределения поведения по "
+"умолчанию. Смотрите раздел о :ref:`наборах модельных форм <model-formsets>`."
 
 # 458b2abcc79d491fa8e442284f642ed9
 #: ../../ref/contrib/admin/index.txt:1449
@@ -2030,6 +2149,8 @@ msgid ""
 "through to ``inlineformset_factory`` when creating the formset for this "
 "inline."
 msgstr ""
+"Значение по умолчанию -- ``ModelForm``. Это значение передается в "
+"``inlineformset_factory`` при создании набора форм."
 
 # 1802c14c66554f4b854eed8e92dcbe94
 #: ../../ref/contrib/admin/index.txt:1457
@@ -2038,6 +2159,8 @@ msgid ""
 "to the initial forms. See the :doc:`formsets documentation </topics/forms/"
 "formsets>` for more information."
 msgstr ""
+"Указывает количество пустых форм для добавления объектов в наборе форм. "
+"Подробности смотрите в :doc:`разделе о наборе форм </topics/forms/formsets>`."
 
 # c81327308cc246039ab64b6abe9a9578
 #: ../../ref/contrib/admin/index.txt:1464
@@ -2046,6 +2169,8 @@ msgid ""
 "provided to enable any number of additional inlines to be added in addition "
 "to those provided as a result of the ``extra`` argument."
 msgstr ""
+"Если JavaScript включен в браузере, ссылка \"Add another\" позволит добавить "
+"новую пустую форму в дополнение к формам указанным параметром ``extra``."
 
 # 91f15dadb44a4a4d8e214295fa7dcdd1
 #: ../../ref/contrib/admin/index.txt:1468
@@ -2053,6 +2178,8 @@ msgid ""
 "The dynamic link will not appear if the number of currently displayed forms "
 "exceeds ``max_num``, or if the user does not have JavaScript enabled."
 msgstr ""
+"Ссылка не появится если количество отображаемых форм превышает значение в "
+"параметре ``max_num``, или если у пользователя отключен JavaScript."
 
 # b3006ebbb68e41ee8801beb0bfcc7890
 #: ../../ref/contrib/admin/index.txt:1475
@@ -2061,6 +2188,9 @@ msgid ""
 "doesn't directly correlate to the number of objects, but can if the value is "
 "small enough. See :ref:`model-formsets-max-num` for more information."
 msgstr ""
+"Указывает максимальное количество форм. Этот параметр не определяет "
+"количество связанных объектов. Подробности смотрите в разделе :ref:`model-"
+"formsets-max-num`."
 
 # b03f8dfa1cfa4031b00bab51e6740644
 #: ../../ref/contrib/admin/index.txt:1486
@@ -2068,11 +2198,13 @@ msgid ""
 "``raw_id_fields`` is a list of fields you would like to change into a "
 "``Input`` widget for either a ``ForeignKey`` or ``ManyToManyField``::"
 msgstr ""
+"``raw_id_fields`` -- список полей которые должны использовать ``Input`` "
+"виджет для полей ``ForeignKey`` или ``ManyToManyField``::"
 
 # 8f8e197e9ce44780ab8c4feab9c0eb17
 #: ../../ref/contrib/admin/index.txt:1496
 msgid "The template used to render the inline on the page."
-msgstr ""
+msgstr "Шаблон для отображения."
 
 # c08331d413cf481eb5a651ea299a1a03
 #: ../../ref/contrib/admin/index.txt:1500
@@ -2080,6 +2212,7 @@ msgid ""
 "An override to the ``verbose_name`` found in the model's inner ``Meta`` "
 "class."
 msgstr ""
+"Позволяет переопределить значение ``verbose_name`` класса ``Meta`` модели."
 
 # 50eb8222d809476ba8364e39f42ef9e6
 #: ../../ref/contrib/admin/index.txt:1505
@@ -2087,6 +2220,8 @@ msgid ""
 "An override to the ``verbose_name_plural`` found in the model's inner "
 "``Meta`` class."
 msgstr ""
+"Позволяет переопределить значение ``verbose_name_plural`` класса ``Meta`` "
+"модели."
 
 # 83fdf32aa1ff4f7d9b2e895332aad801
 #: ../../ref/contrib/admin/index.txt:1510
@@ -2094,12 +2229,13 @@ msgid ""
 "Specifies whether or not inline objects can be deleted in the inline. "
 "Defaults to ``True``."
 msgstr ""
+"Определяет можно ли удалять связанные объекты. По умолчанию равно ``True``."
 
 # 00842b663c53452ab0401a21e32afe0c
 #: ../../ref/contrib/admin/index.txt:1515
 msgid ""
 "Working with a model with two or more foreign keys to the same parent model"
-msgstr ""
+msgstr "Работа с моделью с несколькими внешними ключами к одной модели"
 
 # 47aa6e08dd324484a68befd652e4169c
 #: ../../ref/contrib/admin/index.txt:1517
@@ -2107,6 +2243,7 @@ msgid ""
 "It is sometimes possible to have more than one foreign key to the same "
 "model. Take this model for instance::"
 msgstr ""
+"Модель может содержать несколько внешних ключей к одной модели, например::"
 
 # b927bc00d82c47828d8a325dc39858b3
 #: ../../ref/contrib/admin/index.txt:1524
@@ -2115,11 +2252,14 @@ msgid ""
 "you need to explicitly define the foreign key since it is unable to do so "
 "automatically::"
 msgstr ""
+"Если вы хотите использовать \"inline\" для этой модели на странице "
+"редактирования/добавления объектов ``Person``, вам необходимо указать какой "
+"внешний ключ использовать::"
 
 # 33a84d0e7b724e529d405d39291b71c0
 #: ../../ref/contrib/admin/index.txt:1538
 msgid "Working with many-to-many models"
-msgstr ""
+msgstr "Работа со связями много-ко-многим"
 
 # 7b9e31c8cf504f0f89cd2c8d8a0dd189
 #: ../../ref/contrib/admin/index.txt:1542
@@ -2132,11 +2272,16 @@ msgid ""
 "``raw_id_admin`` widget. However, it is also possible to replace these "
 "widgets with inlines."
 msgstr ""
+"По умолчанию, для полей :class:`~django.db.models.ManyToManyField` "
+"используется виджет определенный интерфейсом администратора. В зависимости "
+"от параметров ``ModelAdmin``может использоваться стандартное HTML поле "
+"``<select multiple>``, горизонтальный или вертикальный фильтр, или виджет "
+"``raw_id_admin``. Однако вместо этого можно использовать \"inline\"."
 
 # 09236f74df8d4f61917824a562311f49
 #: ../../ref/contrib/admin/index.txt:1550
 msgid "Suppose we have the following models::"
-msgstr ""
+msgstr "Предположим у нас есть следующие модели::"
 
 # d05344ce9ed2497fa8816901d60bfa39
 #: ../../ref/contrib/admin/index.txt:1559
@@ -2144,11 +2289,13 @@ msgid ""
 "If you want to display many-to-many relations using an inline, you can do so "
 "by defining an ``InlineModelAdmin`` object for the relationship::"
 msgstr ""
+"Необходимо определить объект ``InlineModelAdmin`` для связи многое-ко-"
+"многим::"
 
 # f9b3ebd4cd344a2fb9a0dab630859bcb
 #: ../../ref/contrib/admin/index.txt:1576
 msgid "There are two features worth noting in this example."
-msgstr ""
+msgstr "Есть два вещи в этом примере, которые следует отметить."
 
 # 91571059057b4f9c9cd7710ae404ca77
 #: ../../ref/contrib/admin/index.txt:1578
@@ -2158,6 +2305,9 @@ msgid ""
 "manages the many-to-many relation. This model is automatically created by "
 "Django when you define a many-to-many field."
 msgstr ""
+"Первая - класс ``MembershipInline`` ссылается на ``Group.members.through``. "
+"Атрибут ``through`` указывает на модель управляющую связью многое-ко-многим. "
+"Эта модель автоматически создается Django при определении связи."
 
 # 41ca34c2f2684adfaec4cd1d1166144f
 #: ../../ref/contrib/admin/index.txt:1583
@@ -2169,6 +2319,11 @@ msgid ""
 "admin to *not* display this widget - otherwise you will end up with two "
 "widgets on your admin page for managing the relation."
 msgstr ""
+"Вторая -- класс ``GroupAdmin`` должен явно исключить поле ``members``. "
+"Django отображает поле для связи многое-ко-многим (в нашем случае с моделью "
+"``Group``). Если вы хотите использовать \"inline\", необходимо указать "
+"Django, что поле *не* нужно отображать - иначе мы получим два виджета для "
+"редактирования связи."
 
 # af448172a1df46d0aa164ae921b1c5e1
 #: ../../ref/contrib/admin/index.txt:1590
@@ -2177,11 +2332,13 @@ msgid ""
 "other. You can customize the appearance using any of the normal "
 "``ModelAdmin`` properties."
 msgstr ""
+"Во всем остальном ``InlineModelAdmin`` работает так же как и всегда. Вы "
+"можете управлять отображением используя параметры ``ModelAdmin``."
 
 # e4df5177a6ed4893a1ae6b36344907e3
 #: ../../ref/contrib/admin/index.txt:1595
 msgid "Working with many-to-many intermediary models"
-msgstr ""
+msgstr "Работа с промежуточной моделью связи многое-ко-многим"
 
 # 1907c34e02f64806af0d8f639c80ad96
 #: ../../ref/contrib/admin/index.txt:1597
@@ -2193,6 +2350,10 @@ msgid ""
 "the layout required for multiple widgets will vary depending on the "
 "intermediate model."
 msgstr ""
+"Если указать аргумент ``through`` для поля :class:`~django.db.models."
+"ManyToManyField`, интерфейс администратора не отобразит поле для "
+"редактирования. Это связано с тем, что промежуточная модель требует больше "
+"данных, чем позволяет ввести стандартное поле."
 
 # 0b8dee900aa3473fb054f213ce56ddac
 #: ../../ref/contrib/admin/index.txt:1604
@@ -2201,6 +2362,9 @@ msgid ""
 "Fortunately, this is easy to do with inline admin models. Suppose we have "
 "the following models::"
 msgstr ""
+"Однако, нам необходимо редактировать информацию промежуточной модели. К "
+"счастью это можно сделать используя \"inline\" в интерфейсе администратора. "
+"Предположим у нас есть следующие модели::"
 
 # 3a4a6042ac5840b1bb8b0f4a4a26717b
 #: ../../ref/contrib/admin/index.txt:1621
@@ -2208,6 +2372,8 @@ msgid ""
 "The first step in displaying this intermediate model in the admin is to "
 "define an inline class for the ``Membership`` model::"
 msgstr ""
+"Для начала определим отображение модели ``Membership`` в интерфейсе "
+"администратора::"
 
 # 9d5df188968441b08aaea7ae7a176481
 #: ../../ref/contrib/admin/index.txt:1628
@@ -2217,17 +2383,22 @@ msgid ""
 "customized using any of the options available to ``InlineModelAdmin`` "
 "classes."
 msgstr ""
+"В этом простом примере используются стандартные значения параметров "
+"``InlineModelAdmin``, кроме количества дополнительных форм. Вы можете "
+"изменить любые параметры класса ``InlineModelAdmin``."
 
 # f8545df2ff174039ad40029cf079e360
 #: ../../ref/contrib/admin/index.txt:1632
 msgid "Now create admin views for the ``Person`` and ``Group`` models::"
-msgstr ""
+msgstr "Теперь определим отображение моделей ``Person`` и ``Group``::"
 
 # d8f183e7a2f740c0b3512fa6e3f2ba54
 #: ../../ref/contrib/admin/index.txt:1640
 msgid ""
 "Finally, register your ``Person`` and ``Group`` models with the admin site::"
 msgstr ""
+"Теперь зарегистрируем модели ``Person`` и ``Group`` в интерфейсе "
+"администратора::"
 
 # 6a452f74f6ac40ae9398a8c267900504
 #: ../../ref/contrib/admin/index.txt:1645
@@ -2235,11 +2406,13 @@ msgid ""
 "Now your admin site is set up to edit ``Membership`` objects inline from "
 "either the ``Person`` or the ``Group`` detail pages."
 msgstr ""
+"Теперь вы можете редактировать объекты ``Membership`` на странице объектов "
+"``Person`` и ``Group``."
 
 # 0ece22580d164193844468bb39ef6dda
 #: ../../ref/contrib/admin/index.txt:1651
 msgid "Using generic relations as an inline"
-msgstr ""
+msgstr "Использование связи к несколькими моделями в интерфейсе администратора"
 
 # 39994070127b477eadc6a7ed8ff8fcbe
 #: ../../ref/contrib/admin/index.txt:1653
@@ -2247,6 +2420,8 @@ msgid ""
 "It is possible to use an inline with generically related objects. Let's say "
 "you have the following models::"
 msgstr ""
+"Вы можете использовать \"inline\" для связей с несколькими моделями(generic "
+"relations). Предположим у вас есть следующие модели::"
 
 # 5a05459b866f4ce3891808ec70a1aafd
 #: ../../ref/contrib/admin/index.txt:1665
@@ -2259,6 +2434,13 @@ msgid ""
 "respectively just like their non-generic counterparts and behave just like "
 "any other inline. In your ``admin.py`` for this example app::"
 msgstr ""
+"Если вы хотите редактировать и добавлять объекты ``Image`` на странице "
+"добавления/редактирования объектов ``Product``, вы можете использовать "
+"``GenericTabularInline`` или ``GenericStackedInline`` (подклассы "
+"``GenericInlineModelAdmin``) из модуля ``django.contrib.contenttypes."
+"generic``. Они отображают группы форм для добавления и редактирования "
+"связанных объектов, как и аналогичные классы из приложения интерфейса "
+"администратора.  Пример ``admin.py`` для наших моделей::"
 
 # 920d69d9f33045bfbca20618f7c42405
 #: ../../ref/contrib/admin/index.txt:1688
@@ -2266,11 +2448,13 @@ msgid ""
 "See the :doc:`contenttypes documentation </ref/contrib/contenttypes>` for "
 "more specific information."
 msgstr ""
+"Подробности смотрите в :doc:`разделе о contenttypes </ref/contrib/"
+"contenttypes>`."
 
 # 6d7af367a9b644ab9ea8a7b6c3434d9a
 #: ../../ref/contrib/admin/index.txt:1692
 msgid "Overriding admin templates"
-msgstr ""
+msgstr "Переопределение шаблонов в интерфейсе администратора"
 
 # fb7d3f7ed66941d7a399faaeeb1a12c3
 #: ../../ref/contrib/admin/index.txt:1694
@@ -2279,11 +2463,13 @@ msgid ""
 "module uses to generate the various pages of an admin site. You can even "
 "override a few of these templates for a specific app, or a specific model."
 msgstr ""
+"Переопределить шаблоны, которые использует интерфейс администратора, очень "
+"легко. Вы можете переопределить шаблон для конкретного приложения или модели."
 
 # 88c2748e1cff4a239dcb3233d58244e4
 #: ../../ref/contrib/admin/index.txt:1699
 msgid "Set up your projects admin template directories"
-msgstr ""
+msgstr "Настройка каталогов в шаблонами"
 
 # 6942ea34f69a41ff8614573419dfa27d
 #: ../../ref/contrib/admin/index.txt:1701
@@ -2291,6 +2477,8 @@ msgid ""
 "The admin template files are located in the ``contrib/admin/templates/"
 "admin`` directory."
 msgstr ""
+"Шаблоны интерфейса администратора находятся в каталоге ``contrib/admin/"
+"templates/admin``."
 
 # f44048143ac94a9c984c94f04839ec22
 #: ../../ref/contrib/admin/index.txt:1704
@@ -2299,6 +2487,9 @@ msgid ""
 "directory in your project's ``templates`` directory. This can be any of the "
 "directories you specified in :setting:`TEMPLATE_DIRS`."
 msgstr ""
+"Что бы переопределить их, создайте каталог ``admin`` в каталоге "
+"``templates`` вашего проекта. Это может любой другой каталог указанный в "
+"настройке :setting:`TEMPLATE_DIRS`."
 
 # a48c95c6dc0d4fe38ff8ffdab1693711
 #: ../../ref/contrib/admin/index.txt:1708
@@ -2309,6 +2500,11 @@ msgid ""
 "for the directory, so make sure you name the directory in all lowercase if "
 "you are going to run your app on a case-sensitive filesystem."
 msgstr ""
+"В каталоге ``admin`` создайте подкаталоги с названием приложений. В этих "
+"подкаталогах создайте подкаталоги для моделей. Заметим, что интерфейс "
+"администратора преобразует название модели в нижний регистр, так что "
+"убедитесь что название каталогов в нижнем регистре, если вы использует "
+"файловую систему учитывающую регистр названий каталог."
 
 # f3b35b4cd9794260afe64627757af581
 #: ../../ref/contrib/admin/index.txt:1714
@@ -2317,6 +2513,9 @@ msgid ""
 "from the ``django/contrib/admin/templates/admin`` directory, and save it to "
 "one of the directories you just created."
 msgstr ""
+"Что бы переопределить шаблон для определенного приложения,  скопируйте и "
+"отредактируйте необходимый шаблон из каталога ``django/contrib/admin/"
+"templates/admin`` и сохраните его в созданном подкаталоге."
 
 # 6279dec4d5384a949d05d9d407911c02
 #: ../../ref/contrib/admin/index.txt:1718
@@ -2326,6 +2525,10 @@ msgid ""
 "admin/change_list.html`` to the ``templates/admin/my_app/`` directory of our "
 "project, and make any necessary changes."
 msgstr ""
+"Например, если необходимо изменить шаблон для представления списка объектов "
+"для всех моделей в приложении ``my_app``, скопируйте ``contrib/admin/"
+"templates/admin/change_list.html`` в каталог ``templates/admin/my_app/`` "
+"проекта и выполните необходимые изменения."
 
 # e15042412feb4e51a9942bfb9dd35373
 #: ../../ref/contrib/admin/index.txt:1724
@@ -2334,11 +2537,13 @@ msgid ""
 "named 'Page', we would copy that same file to the ``templates/admin/my_app/"
 "page`` directory of our project."
 msgstr ""
+"Если необходимо изменить шаблон только для модели 'Page', скопируйте тот же "
+"файл в каталог ``templates/admin/my_app/page`` проекта."
 
 # d398f852a315499f911930659106c75a
 #: ../../ref/contrib/admin/index.txt:1729
 msgid "Overriding vs. replacing an admin template"
-msgstr ""
+msgstr "Переопределение или замена шаблона в интерфейсе администратора"
 
 # 631c4b454b0247d4b1df1b98ad09772a
 #: ../../ref/contrib/admin/index.txt:1731
@@ -2347,6 +2552,9 @@ msgid ""
 "necessary nor advisable to replace an entire template. It is almost always "
 "better to override only the section of the template which you need to change."
 msgstr ""
+"Учитывая модульную структуру шаблонов в интерфейсе администратора, как "
+"правило нет необходимости заменять весь шаблон. Целесообразней "
+"переопределить только необходимый блок шаблона."
 
 # 2bb2402ef89b4463a9977243d1a344b5
 #: ../../ref/contrib/admin/index.txt:1735
@@ -2356,6 +2564,10 @@ msgid ""
 "html`` we determine that we only need to override the ``object-tools`` "
 "block. Therefore here is our new ``change_form.html`` :"
 msgstr ""
+"Продолжим пример выше. Например, необходимо добавить ссылку после ссылки "
+"``History`` для модели ``Page``. Изучив ``change_form.html`` можно увидеть, "
+"что нам необходимо переопределить только блок ``object-tools``. Вот наш "
+"новый шаблон ``change_form.html`` :"
 
 # b5aea2837da44488bb7311eaa985ef8d
 #: ../../ref/contrib/admin/index.txt:1758
@@ -2363,11 +2575,13 @@ msgid ""
 "And that's it! If we placed this file in the ``templates/admin/my_app`` "
 "directory, our link would appear on every model's change form."
 msgstr ""
+"Вот и все! Добавим шаблон в каталог ``templates/admin/my_app`` и ссылка "
+"появится на странице редактирования объекта."
 
 # de3f28ce1dbd43889511584bb761c629
 #: ../../ref/contrib/admin/index.txt:1762
 msgid "Templates which may be overridden per app or model"
-msgstr ""
+msgstr "Шаблоны, которые можно переопределить для приложения или модели"
 
 # eae7ba0fdea44f849352171fbde485c3
 #: ../../ref/contrib/admin/index.txt:1764
@@ -2375,31 +2589,33 @@ msgid ""
 "Not every template in ``contrib/admin/templates/admin`` may be overridden "
 "per app or per model. The following can:"
 msgstr ""
+"Не каждый шаблон в ``contrib/admin/templates/admin`` можно переопределить "
+"для приложения или модели. Вот список переопределяемых шаблонов:"
 
 # 298b598ab1b24c01be5074831980d410
 #: ../../ref/contrib/admin/index.txt:1767
 msgid "``app_index.html``"
-msgstr ""
+msgstr "``app_index.html``"
 
 # e9b49dc449234c788c5adfd4fca881db
 #: ../../ref/contrib/admin/index.txt:1768
 msgid "``change_form.html``"
-msgstr ""
+msgstr "``change_form.html``"
 
 # 471b3afb578b4ed0a879046eb573caf1
 #: ../../ref/contrib/admin/index.txt:1769
 msgid "``change_list.html``"
-msgstr ""
+msgstr "``change_list.html``"
 
 # 2163ef04c8b5474fa1d3dd345685d285
 #: ../../ref/contrib/admin/index.txt:1770
 msgid "``delete_confirmation.html``"
-msgstr ""
+msgstr "``delete_confirmation.html``"
 
 # 8a18a4d3c8d64424b9437060266fd41a
 #: ../../ref/contrib/admin/index.txt:1771
 msgid "``object_history.html``"
-msgstr ""
+msgstr "``object_history.html``"
 
 # b901fa8168c74116a1eaa54c024521c6
 #: ../../ref/contrib/admin/index.txt:1773
@@ -2409,6 +2625,9 @@ msgid ""
 "``templates/admin`` directory. This is particularly useful to create custom "
 "404 and 500 pages."
 msgstr ""
+"Остальные шаблоны вы можете все еще переопределить для всего проекта. Просто "
+"добавьте новую версию шаблона в каталог ``templates/admin``. Это особенно "
+"полезно для переопределения страниц для 404 и 500 ошибки."
 
 # 0800f50ff3db40ab8be4c921bf6981e3
 #: ../../ref/contrib/admin/index.txt:1780
@@ -2418,11 +2637,15 @@ msgid ""
 "you are probably better off creating your own version of the tag in question "
 "and giving it a different name. That way you can use it selectively."
 msgstr ""
+"Некоторые шаблоны, такие как ``change_list_request.html`` используются для "
+"отображения включаемых тегов(inclusion tags). Вы можете переопределить их, "
+"но лучше создать собственную версию тега, которая будет использовать новый "
+"шаблон. В этом случае вы сможете использовать оба шаблона."
 
 # 8c85b1724a924081986df28239ef0b20
 #: ../../ref/contrib/admin/index.txt:1787
 msgid "Root and login templates"
-msgstr ""
+msgstr "Главный шаблон и шаблон страницы входа"
 
 # b0e661da51a147d28807f1ebfdded87a
 #: ../../ref/contrib/admin/index.txt:1789
@@ -2432,11 +2655,15 @@ msgid ""
 "attr:`AdminSite.index_template` , :attr:`AdminSite.login_template` or :attr:"
 "`AdminSite.logout_template` properties."
 msgstr ""
+"Что бы переопределить шаблоны главной страницы и страниц входа/выхода, лучше "
+"создать собственный экземпляр ``AdminSite``(смотрите ниже), и изменить "
+"свойства :attr:`AdminSite.index_template` , :attr:`AdminSite.login_template` "
+"и :attr:`AdminSite.logout_template`."
 
 # e90eccbb9c98451f9a378bb2ff598d1a
 #: ../../ref/contrib/admin/index.txt:1795
 msgid "``AdminSite`` objects"
-msgstr ""
+msgstr "Объект ``AdminSite``"
 
 # 68889b75e99649eb9a1352f240ca9152
 #: ../../ref/contrib/admin/index.txt:1799
@@ -2446,6 +2673,10 @@ msgid ""
 "created as ``django.contrib.admin.site`` and you can register your models "
 "and ``ModelAdmin`` instances with it."
 msgstr ""
+"Интерфейс администратора Django представлен экземпляром ``django.contrib."
+"admin.sites.AdminSite``. По умолчанию, экземпляр этого класса находится в "
+"``django.contrib.admin.site`` и вы можете зарегистрировать модели с "
+"подклассами ``ModelAdmin`` в нем."
 
 # 7ec99d9cb2ca468e9913181500f1b718
 #: ../../ref/contrib/admin/index.txt:1804
@@ -2456,6 +2687,10 @@ msgid ""
 "(the same way you'd instantiate any other Python class), and register your "
 "models and ``ModelAdmin`` subclasses with it instead of using the default."
 msgstr ""
+"Если вам необходимо изменить поведение интерфейса администратора, вы можете "
+"создать подкласс ``AdminSite`` и переопределить все что вам нужно. Затем "
+"создайте экземпляр вашего подкласса ``AdminSite`` (как и любого другого "
+"класса Python), и зарегистрируйте в нем ваши модели."
 
 # 112de096487b4ec99d71ac5ad93cfd1a
 #: ../../ref/contrib/admin/index.txt:1811
@@ -2466,11 +2701,16 @@ msgid ""
 "`reversing admin URLs <admin-reverse-urls>`. If no instance name is "
 "provided, a default instance name of ``admin`` will be used."
 msgstr ""
+"При создании экземпляра ``AdminSite``, вы можете указать уникальное название "
+"экземпляра приложения передав аргумент ``name`` в конструктор. Это название "
+"используется для идентификации экземпляра что важно при :ref:`поиске URL-ов "
+"интерфейса администратора <admin-reverse-urls>`. Если этот аргумент не "
+"указан, будет использовано значение по умолчанию ``admin``."
 
 # 2453b2911ee047378c3b5f54b369b1b4
 #: ../../ref/contrib/admin/index.txt:1818
 msgid "``AdminSite`` attributes"
-msgstr ""
+msgstr "Атрибуты ``AdminSite``"
 
 # f57840ba07d9451e9906977c818f237c
 #: ../../ref/contrib/admin/index.txt:1820
@@ -2478,19 +2718,21 @@ msgid ""
 "Templates can override or extend base admin templates as described in "
 "`Overriding Admin Templates`_."
 msgstr ""
+"Можно переопределить или заменить основные шаблоны в интерфейсе "
+"администратора как это описано в разделе `Overriding Admin Templates`_."
 
 # 23765b58bc024d02a994d52db7474471
 #: ../../ref/contrib/admin/index.txt:1825
 msgid ""
 "Path to a custom template that will be used by the admin site main index "
 "view."
-msgstr ""
+msgstr "Шаблон, который будет использоваться для главной страницы."
 
 # e9c23e0592d74926a249dba50d399cd0
 #: ../../ref/contrib/admin/index.txt:1830
 msgid ""
 "Path to a custom template that will be used by the admin site login view."
-msgstr ""
+msgstr "Шаблон, который будет использоваться для страницы входа."
 
 # a91f50c2c53d405dbd85cd85e7c9de7b
 #: ../../ref/contrib/admin/index.txt:1836
@@ -2498,19 +2740,21 @@ msgid ""
 "Subclass of :class:`~django.contrib.auth.forms.AuthenticationForm` that will "
 "be used by the admin site login view."
 msgstr ""
+"Подкласс :class:`~django.contrib.auth.forms.AuthenticationForm` который "
+"будет использовать для представления авторизации в интерфейсе администратора."
 
 # af0b80612ae747c0a3b387da3c4787bb
 #: ../../ref/contrib/admin/index.txt:1843
 msgid ""
 "Path to a custom template that will be used by the admin site logout view."
-msgstr ""
+msgstr "Шаблон, который будет использоваться для страницы выхода."
 
 # 733847b54e9342008b33a489f8a8a672
 #: ../../ref/contrib/admin/index.txt:1849
 msgid ""
 "Path to a custom template that will be used by the admin site password "
 "change view."
-msgstr ""
+msgstr "Шаблон, который будет использоваться для страницы смены пароля."
 
 # 920d551146ef4d29b5b2f5b2448a06ea
 #: ../../ref/contrib/admin/index.txt:1856
@@ -2518,11 +2762,12 @@ msgid ""
 "Path to a custom template that will be used by the admin site password "
 "change done view."
 msgstr ""
+"Шаблон, который будет использоваться для страницы завершения смены пароля."
 
 # 4ddaf3feb80f4602bfb7d1632deccb1c
 #: ../../ref/contrib/admin/index.txt:1860
 msgid "Hooking ``AdminSite`` instances into your URLconf"
-msgstr ""
+msgstr "Добавление экземпляра ``AdminSite`` в URLconf"
 
 # cb0fbe38bae54ab982ec40ee852c4ad8
 #: ../../ref/contrib/admin/index.txt:1862
@@ -2531,6 +2776,8 @@ msgid ""
 "instance into your URLconf. Do this by pointing a given URL at the "
 "``AdminSite.urls`` method."
 msgstr ""
+"Последний шаг это добавить ваш экземпляр ``AdminSite`` в URLconf. Выполните "
+"это добавив в URLconf свойство ``AdminSite.urls``."
 
 # 6ed86d20b7934ea99b852140d28fcb6b
 #: ../../ref/contrib/admin/index.txt:1866
@@ -2538,6 +2785,8 @@ msgid ""
 "In this example, we register the default ``AdminSite`` instance ``django."
 "contrib.admin.site`` at the URL ``/admin/`` ::"
 msgstr ""
+"В этом примере мы добавляем экземпляр по умолчанию ``AdminSite``, который "
+"находится в  ``django.contrib.admin.site``, для URL ``/admin/`` ::"
 
 # 38029ee9669f470fbc01c77899908dd5
 #: ../../ref/contrib/admin/index.txt:1879
@@ -2545,6 +2794,8 @@ msgid ""
 "Above we used ``admin.autodiscover()`` to automatically load the :setting:"
 "`INSTALLED_APPS` admin.py modules."
 msgstr ""
+"Перед этим мы используем ``admin.autodiscover()`` для загрузки модулей admin."
+"py для приложений в :setting:`INSTALLED_APPS`."
 
 # df8aa686f1ed44fd930677460ef18289
 #: ../../ref/contrib/admin/index.txt:1882
@@ -2552,6 +2803,8 @@ msgid ""
 "In this example, we register the ``AdminSite`` instance ``myproject.admin."
 "admin_site`` at the URL ``/myadmin/`` ::"
 msgstr ""
+"В этом примере мы добавляем собственный экземпляр ``AdminSite``, который "
+"находится в  ``myproject.admin.admin_site`` для URL ``/myadmin/`` ::"
 
 # e31bb8d3af614a97b1385722648af5b8
 #: ../../ref/contrib/admin/index.txt:1893
@@ -2560,11 +2813,13 @@ msgid ""
 "``AdminSite`` instance since you will likely be importing all the per-app "
 "admin.py modules in your ``myproject.admin`` module."
 msgstr ""
+"Нет необходимости использовать ``autodiscover`` если вы импортируете все "
+"модули admin.py в ``myproject.admin`` для регистрации моделей."
 
 # 5102be3ce9f643fa95086f33260002b5
 #: ../../ref/contrib/admin/index.txt:1898
 msgid "Multiple admin sites in the same URLconf"
-msgstr ""
+msgstr "Несколько интерфейсов администратора в одном URLconf"
 
 # 53fd1d51b4ce4ee9adceee103ef1331c
 #: ../../ref/contrib/admin/index.txt:1900
@@ -2573,6 +2828,9 @@ msgid ""
 "powered Web site. Just create multiple instances of ``AdminSite`` and root "
 "each one at a different URL."
 msgstr ""
+"Django позволяет легко создать несколько интерфейсов администратора для "
+"одного сайта. Просто создайте несколько экземпляров ``AdminSite`` и добавьте "
+"его к различным URL-ам."
 
 # 0bd22c00b8814a218ab51c793cbf1793
 #: ../../ref/contrib/admin/index.txt:1904
@@ -2582,6 +2840,9 @@ msgid ""
 "``myproject.admin.basic_site`` and ``myproject.admin.advanced_site``, "
 "respectively::"
 msgstr ""
+"В этом примере, URL-ы ``/basic-admin/`` и ``/advanced-admin/`` ведут к "
+"различным экземплярам ``AdminSite`` -- ``myproject.admin.basic_site`` и "
+"``myproject.admin.advanced_site`` соответственно::"
 
 # b723c3ac7bdf4503a5c8bb3f0fb93a01
 #: ../../ref/contrib/admin/index.txt:1918
@@ -2591,11 +2852,15 @@ msgid ""
 "the URL names for the purposes of :ref:`reversing them<admin-reverse-urls>`. "
 "This is only necessary if you are using more than one ``AdminSite``."
 msgstr ""
+"Конструктор ``AdminSite`` принимает единственный аргумент -- название "
+"экземпляра, которое может быть любым. Это значение будет использоваться как "
+"префикс для названий URL при их :ref:`поиске<admin-reverse-urls>`. Это "
+"необходимо если вы используете несколько экземпляров ``AdminSite``."
 
 # f8e0fc2d082f40a7858e9ab14492c4e3
 #: ../../ref/contrib/admin/index.txt:1924
 msgid "Adding views to admin sites"
-msgstr ""
+msgstr "Добавление представлений в интерфейс администратора"
 
 # ed79d0d127b949e8aaf7e95762385ef6
 #: ../../ref/contrib/admin/index.txt:1926
@@ -2606,6 +2871,11 @@ msgid ""
 "the base :meth:`~django.contrib.admin.ModelAdmin.get_urls()` method to "
 "include a pattern for your new view."
 msgstr ""
+"Как и :class:`ModelAdmin` :class:`AdminSite` содержит метод :meth:`~django."
+"contrib.admin.ModelAdmin.get_urls()`, который можно переопределить и "
+"добавить собственные представления в интерфейс администратора. "
+"Переопределите метод :meth:`~django.contrib.admin.ModelAdmin.get_urls()` и "
+"добавьте URL-шаблоны с вашими представлениями."
 
 # 8398f4c114b9407c863d845c56f82d57
 #: ../../ref/contrib/admin/index.txt:1935
@@ -2617,11 +2887,17 @@ msgid ""
 "an ``AdminSite`` or ``self.admin_site.name`` if your view is on a "
 "``ModelAdmin``."
 msgstr ""
+"Каждое представление, которое использует шаблоны интерфейса администратора "
+"или унаследованные шаблоны, должно указать аргумент ``current_app`` для "
+"конструктора :class:`~django.template.RequestContext` или :class:`~django."
+"template.Context` при выполнении шаблона. Он должен быть равен ``self."
+"name``, если представление определенно в ``AdminSite``, или ``self."
+"admin_site.name``, если определено в ``ModelAdmin``."
 
 # 4ddc68a6b09248daaded0e55eace8ad4
 #: ../../ref/contrib/admin/index.txt:1945
 msgid "Adding a password-reset feature"
-msgstr ""
+msgstr "Добавление возможности сброса пароля"
 
 # e919a7c33d15488d887ef3b81cc23a01
 #: ../../ref/contrib/admin/index.txt:1947
@@ -2629,6 +2905,8 @@ msgid ""
 "You can add a password-reset feature to the admin site by adding a few lines "
 "to your URLconf. Specifically, add these four patterns:"
 msgstr ""
+"Вы можете определить возможно сбросить пароль добавив несколько строк в "
+"URLconf. А точнее добавьте эти четыре URL-шаблона:"
 
 # 42e1cd642a2b4f1a8e49a1c1e7bedf78
 #: ../../ref/contrib/admin/index.txt:1957
@@ -2637,6 +2915,9 @@ msgid ""
 "the URLs starting with ``^admin/`` before the line that includes the admin "
 "app itself)."
 msgstr ""
+"(Предполагается что вы уже добавили приложения интерфейса администратора к "
+"``admin/`` и что оно указано после всех URL-шаблонов начинающихся с ``^admin/"
+"`` )."
 
 # 8eb367eaf9ea4192a91717919df6039a
 #: ../../ref/contrib/admin/index.txt:1963
@@ -2645,11 +2926,14 @@ msgid ""
 "\"forgotten your password?\" link to appear on the default admin log-in page "
 "under the password box."
 msgstr ""
+"Наличие URL-шаблона с названием ``admin_password_reset`` приведет к "
+"появлению ссылки \"забыли ваш пароль?\" на странице входа в интерфейсе "
+"администратора."
 
 # 992abc52a7c84b83b41f2974bb713315
 #: ../../ref/contrib/admin/index.txt:1970
 msgid "Reversing admin URLs"
-msgstr ""
+msgstr "Поиск URL-ов интерфейса администратора"
 
 # 6e74ca96e5bc4590a18cd9d943c69605
 #: ../../ref/contrib/admin/index.txt:1972
@@ -2657,133 +2941,138 @@ msgid ""
 "When an :class:`AdminSite` is deployed, the views provided by that site are "
 "accessible using Django's :ref:`URL reversing system <naming-url-patterns>`."
 msgstr ""
+"После установки :class:`AdminSite` можно указывать ссылки к представлениям "
+"интерфейса администратора используя :ref:`систему поиска URL-ов <naming-url-"
+"patterns>`."
 
 # 33ab7fa924e0455e9c2379a922574e8f
 #: ../../ref/contrib/admin/index.txt:1975
 msgid "The :class:`AdminSite` provides the following named URL patterns:"
-msgstr ""
+msgstr ":class:`AdminSite` предоставляет следующие именованные URL-шаблоны:"
 
 # 3ced1cc8c3244b32915e399346afe5f1
 # 812707e2c846421b9579d72e539e9200
 #: ../../ref/contrib/admin/index.txt:1978
 #: ../../ref/contrib/admin/index.txt:1991
 msgid "Page"
-msgstr ""
+msgstr "Страница"
 
 # e273dfdccd624e78a24037e43cc1aabf
 # 579782199c6f4f25a1d656800dda8621
 #: ../../ref/contrib/admin/index.txt:1978
 #: ../../ref/contrib/admin/index.txt:1991
 msgid "URL name"
-msgstr ""
+msgstr "Название URL-а"
 
 # 4871257cd8d04f98857aaa950b4f540e
 # f6a7b22d8bcf42cc9ce90c67f71553d0
 #: ../../ref/contrib/admin/index.txt:1978
 #: ../../ref/contrib/admin/index.txt:1991
 msgid "Parameters"
-msgstr ""
+msgstr "Параметры"
 
 # c3136cee13bd4fe9bc43ebfb8b5d8c5a
 #: ../../ref/contrib/admin/index.txt:1980
 msgid "Index"
-msgstr ""
+msgstr "Главная"
 
 # fc7d00fbb1d04fa3a4b906680f6a87ac
 #: ../../ref/contrib/admin/index.txt:1980
 msgid "``index``"
-msgstr ""
+msgstr "``index``"
 
 # 691ae7c9c9c344fbb96a990145e61a0f
 #: ../../ref/contrib/admin/index.txt:1981
 msgid "Logout"
-msgstr ""
+msgstr "Выхода"
 
 # 04a6673c96364f2193151d69c527ee55
 #: ../../ref/contrib/admin/index.txt:1981
 msgid "``logout``"
-msgstr ""
+msgstr "``logout``"
 
 # 012a5976a543450abd363e67a70c021c
 #: ../../ref/contrib/admin/index.txt:1982
 msgid "Password change"
-msgstr ""
+msgstr "Смена пароля"
 
 # 7c053428f2b948148d0d157d3cb1e7a5
 #: ../../ref/contrib/admin/index.txt:1982
 msgid "``password_change``"
-msgstr ""
+msgstr "``password_change``"
 
 # 4049107105b94546bc4d5c2b57e2a85d
 #: ../../ref/contrib/admin/index.txt:1983
 msgid "Password change done"
-msgstr ""
+msgstr "Завершения смены пароля"
 
 # 22bae5794d8c47d39b9b841368c5c0ca
 #: ../../ref/contrib/admin/index.txt:1983
 msgid "``password_change_done``"
-msgstr ""
+msgstr "``password_change_done``"
 
 # 7a6cedda712b4056a865cfd5699b2187
 #: ../../ref/contrib/admin/index.txt:1984
 msgid "i18n javascript"
-msgstr ""
+msgstr "i18n javascript"
 
 # d95136ee607b47d8a8fe99a165fcd1f1
 #: ../../ref/contrib/admin/index.txt:1984
 msgid "``jsi18n``"
-msgstr ""
+msgstr "``jsi18n``"
 
 # 4599eabb28a54ab98d7d755887985046
 #: ../../ref/contrib/admin/index.txt:1985
 msgid "Application index page"
-msgstr ""
+msgstr "Главная страница приложения"
 
 # c15c338c38f245b5a76c6c71581b6f5b
 #: ../../ref/contrib/admin/index.txt:1985
 msgid "``app_list``"
-msgstr ""
+msgstr "``app_list``"
 
 # 31c05c88f9fc420c83a8877dda132a85
 #: ../../ref/contrib/admin/index.txt:1985
 msgid "``app_label``"
-msgstr ""
+msgstr "``app_label``"
 
 # 1e3a5db3d6a64388ac7a8e2167fd9672
 #: ../../ref/contrib/admin/index.txt:1988
 msgid ""
 "Each :class:`ModelAdmin` instance provides an additional set of named URLs:"
 msgstr ""
+"Каждый экземпляр :class:`ModelAdmin` предоставляет дополнительные "
+"именованные URL-шаблоны:"
 
 # 90129ced45eb42018dcab715b040df99
 #: ../../ref/contrib/admin/index.txt:1993
 msgid "Changelist"
-msgstr ""
+msgstr "Список объектов"
 
 # fc366ed8ea254a599c81443388e2692a
 #: ../../ref/contrib/admin/index.txt:1993
 msgid "``{{ app_label }}_{{ model_name }}_changelist``"
-msgstr ""
+msgstr "``{{ app_label }}_{{ model_name }}_changelist``"
 
 # 2479430b9f7f426ea0f4f9e4216d6195
 #: ../../ref/contrib/admin/index.txt:1994
 msgid "Add"
-msgstr ""
+msgstr "Добавления объекта"
 
 # a7465f9b456549f3bf5e2d3451c0b477
 #: ../../ref/contrib/admin/index.txt:1994
 msgid "``{{ app_label }}_{{ model_name }}_add``"
-msgstr ""
+msgstr "``{{ app_label }}_{{ model_name }}_add``"
 
 # 2462c0dc0c244cb08b796a0fc08ad153
 #: ../../ref/contrib/admin/index.txt:1995
 msgid "History"
-msgstr ""
+msgstr "Истории"
 
 # fba1deaab92149cbae8aab88e3990a6f
 #: ../../ref/contrib/admin/index.txt:1995
 msgid "``{{ app_label }}_{{ model_name }}_history``"
-msgstr ""
+msgstr "``{{ app_label }}_{{ model_name }}_history``"
 
 # d17822be6c044b838899e439ea154340
 # 47ad3898d85048e9a3b2e7dfdcbf874f
@@ -2792,27 +3081,27 @@ msgstr ""
 #: ../../ref/contrib/admin/index.txt:1996
 #: ../../ref/contrib/admin/index.txt:1997
 msgid "``object_id``"
-msgstr ""
+msgstr "``object_id``"
 
 # 9c0c3e0cccc246c08b558844200ca714
 #: ../../ref/contrib/admin/index.txt:1996
 msgid "Delete"
-msgstr ""
+msgstr "Удаления объекта"
 
 # a1ddcdddfb8542bf928f4220f4544685
 #: ../../ref/contrib/admin/index.txt:1996
 msgid "``{{ app_label }}_{{ model_name }}_delete``"
-msgstr ""
+msgstr "``{{ app_label }}_{{ model_name }}_delete``"
 
 # be885226616b44419149f704bae1b055
 #: ../../ref/contrib/admin/index.txt:1997
 msgid "Change"
-msgstr ""
+msgstr "Изменения объекта"
 
 # e599e1ae4bfd4c21a6ebebaa015533fb
 #: ../../ref/contrib/admin/index.txt:1997
 msgid "``{{ app_label }}_{{ model_name }}_change``"
-msgstr ""
+msgstr "``{{ app_label }}_{{ model_name }}_change``"
 
 # c70c5138baf4471f894454ec971f380b
 #: ../../ref/contrib/admin/index.txt:2000
@@ -2821,6 +3110,9 @@ msgid ""
 "and with an instance namespace corresponding to the name of the Site "
 "instance."
 msgstr ""
+"Эти именованные URL-шаблоны зарегистрированы с названием экземпляра "
+"приложения ``admin`` и названием экземпляра приложения, указанным при "
+"создании ``AdminSite``."
 
 # 0b07c656824a40aa879514bf47133ba8
 #: ../../ref/contrib/admin/index.txt:2003
@@ -2829,6 +3121,9 @@ msgid ""
 "``Choice`` object (from the polls application) in the default admin, you "
 "would call::"
 msgstr ""
+"Например, нам необходимо получить ссылку на страницу изменения объекта "
+"модели ``Choice`` (из приложения ``polls``) в стандартном интерфейсе "
+"администратора. Для этого необходимо выполнить следующий код::"
 
 # 6ee0fe5f82ad4504b3c64d218b3649f1
 #: ../../ref/contrib/admin/index.txt:2011
@@ -2837,6 +3132,9 @@ msgid ""
 "(whatever the instance name), and resolve to the view for changing ``poll."
 "Choice`` instances in that instance."
 msgstr ""
+"Этот код найдет первый зарегистрированный экземпляр приложения ``admin``(не "
+"зависимо от определенного названия экземпляра) и найдет ссылку на "
+"представление для редактирования объекта ``poll.Choice``."
 
 # a3695edcae5b465ba8235ed96a15f361
 #: ../../ref/contrib/admin/index.txt:2015
@@ -2846,6 +3144,10 @@ msgid ""
 "you specifically wanted the admin view from the admin instance named "
 "``custom``, you would need to call::"
 msgstr ""
+"Если необходимо найти URL в определенном экземпляре приложения, укажите "
+"значение ``current_app``. Например, если необходимо получить ссылку на "
+"представление в экземпляре приложения с названием ``custom``, выполните "
+"следующий код::"
 
 # e350c512e849410c8a367848b751cb84
 #: ../../ref/contrib/admin/index.txt:2022
@@ -2853,6 +3155,8 @@ msgid ""
 "For more details, see the documentation on :ref:`reversing namespaced URLs "
 "<topics-http-reversing-url-namespaces>`."
 msgstr ""
+"Подробности смотрите в разделе о :ref:`пространстве имен в конфигурации URL-"
+"ов <topics-http-reversing-url-namespaces>`."
 
 # 47bd960d1df745feb3e88d4c9e0209bc
 #: ../../ref/contrib/admin/index.txt:2027
@@ -2860,6 +3164,8 @@ msgid ""
 "To allow easier reversing of the admin urls in templates, Django provides an "
 "``admin_urlname`` filter which takes an action as argument:"
 msgstr ""
+"Для более удобного поиска URL-ов в шаблонах, Django предоставляет фильтр "
+"``admin_urlname``, который принимает название действия в качестве аргумента:"
 
 # 34488de17f8a4be18fb8cef50e643239
 #: ../../ref/contrib/admin/index.txt:2037
@@ -2869,3 +3175,7 @@ msgid ""
 "any object which has an ``app_label`` and ``module_name`` and is usually "
 "supplied by the admin views for the current model."
 msgstr ""
+"Название действия совпадает с последней частью названия URL-шаблона в :class:"
+"`ModelAdmin`, которые описаны выше. Значение ``opts`` может быть любым "
+"объектом содержащим ``app_label`` и ``module_name``, эта переменная обычно "
+"указывается представлением в интерфейсе администратора для текущей модели."
