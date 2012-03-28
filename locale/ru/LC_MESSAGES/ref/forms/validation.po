@@ -229,6 +229,12 @@ msgid ""
 "the form, you will need to access the ``_errors`` attribute on the form, "
 "which is `described later`_."
 msgstr ""
+"Следует отметить, что любая ошибка, выданная методом ``clean()``формы, не "
+"будет ассоциирована ни с каким полем. Такие ошибки привязываются к «особому» "
+"полю (``__all__``), доступ к которому можно получить через метод "
+"``non_field_errors()``. Если вам потребуется добавить ошибки к определённому "
+"полю формы, вам потребуется атрибут ``_errors`` формы, который `описан далее "
+"<described later>`_."
 
 # dad01054e9ec43bf9188aeadc139062f
 #: ../../ref/forms/validation.txt:93
@@ -237,6 +243,10 @@ msgid ""
 "``clean()`` method of a ``ModelForm`` subclass. (see the :ref:`ModelForm "
 "documentation <overriding-modelform-clean-method>` for more information)"
 msgstr ""
+"Также следует отметить, что существует ряд соглашений, которым необходимо "
+"следовать при переопределении метода ``clean()`` в вашем классе "
+"``ModelForm``. (Обратитесь к :ref:`документации на ModelForm <overriding-"
+"modelform-clean-method>` для получения подробностей.)"
 
 # 2d7bcf40aa684081b3f96da43e19d235
 #: ../../ref/forms/validation.txt:98
@@ -247,11 +257,16 @@ msgid ""
 "``clean_<fieldname>()``. Finally, once those two methods are run for every "
 "field, the ``Form.clean()`` method, or its override, is executed."
 msgstr ""
+"Эти методы вызываются в порядке, указанном выше, по одному полю за раз. Для "
+"каждого поля формы (в порядке их определения в классе формы) вызывается "
+"сначала метод ``clean()`` поля, затем вызывается метод "
+"``clean_<fieldname>()``. После того, как пара этих методов будет вызвана для "
+"каждого поля формы, наступает очередь метода ``clean()`` формы."
 
 # 580c5538caf143b3a0b26acebba6213e
 #: ../../ref/forms/validation.txt:104
 msgid "Examples of each of these methods are provided below."
-msgstr ""
+msgstr "Примеры для каждого из этих методов показаны ниже."
 
 # cc6769750d454e0393389789e1b3966f
 #: ../../ref/forms/validation.txt:106
@@ -261,6 +276,11 @@ msgid ""
 "field-specific cleaning method is not called. However, the cleaning methods "
 "for all remaining fields are still executed."
 msgstr ""
+"Как упоминалось ранее, любой из этих методов может вызвать исключение  "
+"``ValidationError``. Для любого поля, если его метод ``clean()`` вызвал "
+"исключение ``ValidationError``, то следующий метод для этого поля не "
+"вызывается. Тем не менее, методы для остальных полей отрабатывают в штатном "
+"режиме."
 
 # 0dba0b7d427046a59ca3057c0c3df5ae
 #: ../../ref/forms/validation.txt:111
@@ -269,6 +289,9 @@ msgid ""
 "that method raises a ``ValidationError``, ``cleaned_data`` will be an empty "
 "dictionary."
 msgstr ""
+"Метод ``clean()`` формы вызывается в любом случае. Если этот метод вызывает "
+"исключение ``ValidationError``, то атрибут ``cleaned_data`` формы будет "
+"содержать пустой словарь."
 
 # f6b441d267c34719a36d900d6ef675d9
 #: ../../ref/forms/validation.txt:115
@@ -279,11 +302,15 @@ msgid ""
 "this way, you will already know which fields have passed their individual "
 "validation requirements."
 msgstr ""
+"Предыдущий параграф говорит , что если вы переопределили у формы метод "
+"``clean()``, то вы должны пройтись по ``self.cleaned_data.items()``, "
+"возможно проверив словарь в атрибуте ``_errors`` формы. В этом случае вы "
+"будете всегда знать, какое именно поле сгенерировало ошибку."
 
 # 7671a61ccaa9442abb1755168487579c
 #: ../../ref/forms/validation.txt:123
 msgid "Form subclasses and modifying field errors"
-msgstr ""
+msgstr "Наследование форм и изменение ошибок полей"
 
 # b04913281bf64c99a81214fbba169465
 #: ../../ref/forms/validation.txt:125
@@ -294,6 +321,11 @@ msgid ""
 "clean()``, which is turned into a form-wide error that is available through "
 "the ``Form.non_field_errors()`` method."
 msgstr ""
+"Временами, в методе ``clean()`` формы, может потребоваться добавить "
+"сообщение об ошибке к определённому полю. Это не совсем обычная ситуация, "
+"правильнее было бы вызвать исключение ``ValidationError`` в "
+"методе``clean()`` формы, которое бы превратилось в ошибку самой формы и было "
+"бы доступно через метод формы ``non_field_errors()``."
 
 # 8420abdd0c134ddaa82b9defce4e3824
 #: ../../ref/forms/validation.txt:131
@@ -307,6 +339,16 @@ msgid ""
 "that knows how to display itself in different ways. So you can treat "
 "``_errors`` as a dictionary mapping field names to lists."
 msgstr ""
+"Когда вам действительно потребуется добавить сообщение об ошибке к "
+"определённому полю, то следует добавить или дополнить значение словаря в "
+"атрибуте формы ``_errors``. Ключом будет имя поля. Этот атрибут является "
+"экземпляром класса ``django.forms.util.ErrorDict``. В любом случае, это "
+"просто словарь. Для каждого поля формы, в котором есть ошибка, в этом "
+"словаре будет храниться значение. Каждое значение этого словаря является "
+"экземпляром класса ``django.forms.util.ErrorList``, т.е. списком, который "
+"знает как отображать себя в разных ситуациях. Таким образом, вы можете "
+"рассматривать атрибут ``_errors`` как словарь, связывающий имена полей со "
+"списками ошибок."
 
 # 300a9b40cbd74306bd38aabaa718c94d
 #: ../../ref/forms/validation.txt:140
@@ -317,6 +359,12 @@ msgid ""
 "either case, you can then append your error message to the list for the "
 "field name in question and it will be displayed when the form is displayed."
 msgstr ""
+"При добавлении ошибки для определённого поля, следует проверить наличие "
+"соответствующего ключа в атрибуте формы ``_errors``. Если такого ключа нет,  "
+"If not, create a new entry for the given key, holding an empty ``ErrorList`` "
+"instance. In either case, you can then append your error message to the list "
+"for the field name in question and it will be displayed when the form is "
+"displayed."
 
 # 7238bc8bbc9d4b1eaed9cd393af9faee
 #: ../../ref/forms/validation.txt:146
