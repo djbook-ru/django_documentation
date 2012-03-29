@@ -37,7 +37,7 @@ msgstr ""
 "Проверка формы происходит при нормализации её данных. При возникновении "
 "необходимости вмешаться в этот процесс, есть много мест, где можно это "
 "сделать и которые влияют на разные этапы проверки. Во время обработки формы "
-"вызываются три типа метода для нормализации данных. Процесс проверки "
+"вызываются три типа методов для нормализации данных. Процесс проверки "
 "запускается при вызове метода ``is_valid()`` формы. Существуют ситуации, "
 "которые запускают нормализацию и проверку данных (обращение к свойству "
 "``errors`` или прямой вызов метода ``full_clean()``), но они возникают "
@@ -186,7 +186,7 @@ msgstr ""
 "Например, если требуется проверить, что содержимое ``CharField``поля с "
 "именем ``serialnumber`` является уникальным, то метод "
 "``clean_serialnumber()`` будет правильным местом для такого функционала. Вам "
-"не нужно специального поля (пусть будет ``CharField``), но требуется хитрая "
+"не нужно специальное поле (пусть будет ``CharField``), но требуется хитрая "
 "проверка данных и, возможно, очистка/нормализация данных."
 
 # 8593ee3099c347bb82a1ac587d42c7a1
@@ -196,7 +196,7 @@ msgid ""
 "return the cleaned data, regardless of whether it changed anything or not."
 msgstr ""
 "Подобно методу ``clean()``, описанному выше, этот метод должен возвращать "
-"проверенные данные, независимо от того изменялись они или нет."
+"проверенные данные, независимо от того изменились они или нет."
 
 # c491ab54304a4a75ac6aa00f16e30d8f
 #: ../../ref/forms/validation.txt:77
@@ -212,12 +212,12 @@ msgid ""
 msgstr ""
 "Метод ``clean()`` потомка формы. Этот метод может выполнять любую проверку, "
 "которая нуждается в одновременном доступе к данным нескольких полей. Именно "
-"здесь в можете проверять, что если поле ``A`` заполнено, то поле ``B`` "
+"здесь вы можете проверять, что если поле ``A`` заполнено, то поле ``B`` "
 "должно содержать правильный адрес электронной почты и так далее. Данные, "
-"которые возвращает этот метод,The data that this method returns is the final "
-"``cleaned_data`` attribute for the form, so don't forget to return the full "
-"list of cleaned data if you override this method (by default, ``Form."
-"clean()`` just returns ``self.cleaned_data``)."
+"которые возвращает этот метод, помещаются в свойство ``cleaned_data`` формы. "
+"Не забудьте вернуть полный список данных, если вы переопределяете этот метод "
+"(по умолчанию метод ``Form.clean()`` просто возвращает содержимое свойства "
+"``self.cleaned_data``)."
 
 # f0af9ad49bc14b6eb0892d21f55aecad
 #: ../../ref/forms/validation.txt:86
@@ -361,16 +361,15 @@ msgid ""
 msgstr ""
 "При добавлении ошибки для определённого поля, следует проверить наличие "
 "соответствующего ключа в атрибуте формы ``_errors``. Если такого ключа нет,  "
-"If not, create a new entry for the given key, holding an empty ``ErrorList`` "
-"instance. In either case, you can then append your error message to the list "
-"for the field name in question and it will be displayed when the form is "
-"displayed."
+"то создайте для него новую запись, содержащую пустой экземпляр ``ErrorList``."
+" В противном случае, вы можете добавить своё сообщение об ошибке в список "
+"ошибок поля и оно будет отображено на форме."
 
 # 7238bc8bbc9d4b1eaed9cd393af9faee
 #: ../../ref/forms/validation.txt:146
 msgid ""
 "There is an example of modifying ``self._errors`` in the following section."
-msgstr ""
+msgstr "Пример внесения изменений в ``self._errors`` приведён далее."
 
 # c53096b6444146ae8564b50d09ce4eac
 #: ../../ref/forms/validation.txt:150
@@ -381,6 +380,12 @@ msgid ""
 "class, so you are essentially writing new internals. In effect, you are "
 "given permission to access some of the internals of ``Form``."
 msgstr ""
+"Вас может заинтересовать, почему этот атрибут назван ``_errors``, а не "
+"``errors``. По традиции, в Python с символа подчеркивания начинаются имена "
+"объектов, которые предназначены для внутреннего использования. В данном "
+"случае, наследуясь от класса ``Form``, по существу, вы его реализуете заново."
+" Следовательно, вам предоставляется право доступа к внутренним объектам "
+"класса ``Form``."
 
 # a7b90913a8f449b398d689573be3eb87
 #: ../../ref/forms/validation.txt:156
@@ -389,6 +394,9 @@ msgid ""
 "directly. The data is available to external code through the ``errors`` "
 "property, which populates ``_errors`` before returning it)."
 msgstr ""
+"Конечно, любой код вне вашей формы не должен обращаться к ``_errors`` "
+"напрямую. Содержимое этого атрибута доступно через свойство ``errors``, "
+"которое заполняет ``_errors`` перед тем как вернуть его."
 
 # 80aa2fac45da469bb657a9ebd3c84652
 #: ../../ref/forms/validation.txt:160
@@ -399,11 +407,16 @@ msgid ""
 "would be inconvenient for a number of reasons. You can use whichever "
 "explanation makes you feel more comfortable. The result is the same."
 msgstr ""
+"Другая причина чисто историческая: атрибут получил имя ``_errors`` с момента "
+"появления модуля форм и изменять его сейчас (особенно с момента, как имя "
+"``errors`` начало использоваться свойством, из которого можно только "
+"получать данные) было бы неразумно по ряду причин. Вы можете выбрать "
+"понравившееся объяснение. Результат будет неизменен."
 
 # 9eeb0e676da741d69ec679b7d9eae1f7
 #: ../../ref/forms/validation.txt:167
 msgid "Using validation in practice"
-msgstr ""
+msgstr "Использование проверки на практике"
 
 # aac8d8efc6ad410e942a270410f8ffac
 #: ../../ref/forms/validation.txt:169
@@ -413,11 +426,15 @@ msgid ""
 "feature in use, here are a series of small examples that use each of the "
 "previous features."
 msgstr ""
+"Выше мы рассмотрели как осуществляется проверка форм в целом. Так как "
+"временами бывает проще разобраться с функционалом, просмотрев его в "
+"действии, далее показан ряд небольших примеров, которые используют описанные "
+"возможности."
 
 # e3494411f62d4b848fb04b8bc19deea2
 #: ../../ref/forms/validation.txt:177
 msgid "Using validators"
-msgstr ""
+msgstr "Использование валидаторов"
 
 # 946d47fb191c428facd354abd58f4575
 #: ../../ref/forms/validation.txt:180
@@ -427,6 +444,10 @@ msgid ""
 "via the field's ``validators`` argument, or defined on the Field class "
 "itself with the ``default_validators`` attribute."
 msgstr ""
+"Поля форм (и моделей) Django поддерживают использование простых функций и "
+"классов, которые известны как валидаторы. Они могут быть переданы в "
+"конструктор поля через аргумент ``validators`` или определены в самом классе "
+"формы с помощью атрибута ``default_validators``."
 
 # 4e55c7fa49f94cac97beca8b7d366923
 #: ../../ref/forms/validation.txt:185
@@ -434,6 +455,8 @@ msgid ""
 "Simple validators can be used to validate values inside the field, let's "
 "have a look at Django's ``EmailField``::"
 msgstr ""
+"Простые валидаторы могут использоваться для проверки значений внутри полей. "
+"Давайте рассмотрим ``EmailField``::"
 
 # 98b0ab38cbd94fb9b1289ef4a28b87b5
 #: ../../ref/forms/validation.txt:194
@@ -442,16 +465,19 @@ msgid ""
 "message and a validator that validates email addresses. This can also be "
 "done on field definition so::"
 msgstr ""
+"Как можно увидеть ``EmailField`` — это обычное поле ``CharField``, которое "
+"имеет собственное сообщение об ошибке и валидатор для проверки введённого "
+"адреса электронной почты. Определение поля для ввода электронной почты::"
 
 # e9518ba34ed24aeea7da467e702f290d
 #: ../../ref/forms/validation.txt:200
 msgid "is equivalent to::"
-msgstr ""
+msgstr "эквивалентно::"
 
 # 48e48689c74948cfaf388d10f122f9bd
 #: ../../ref/forms/validation.txt:207
 msgid "Form field default cleaning"
-msgstr ""
+msgstr "Встроенная проверка поля формы"
 
 # c6d6e0cf5d7f41ed9971e303f8b037e9
 #: ../../ref/forms/validation.txt:209
@@ -460,6 +486,9 @@ msgid ""
 "string containing comma-separated email addresses. The full class looks like "
 "this::"
 msgstr ""
+"Давайте сначала создадим собственное поле формы, которое проверяет, что "
+"переданные ему данные — это строка, содержащая адреса электронной почты, "
+"разделенные запятыми. Класс такого поля будет выглядеть следующим образом::"
 
 # 196f4110608a459680329ea10642076e
 #: ../../ref/forms/validation.txt:233
@@ -468,6 +497,9 @@ msgid ""
 "else can be done with the field's data. This is cleaning that is specific to "
 "this type of field, regardless of how it is subsequently used."
 msgstr ""
+"Каждая форма, использующая такое поле, будет вызывать эти методы до "
+"выполнения всех остальных действий с данными поля. Такая проверка привязана "
+"к этому типу поля и не зависит от дальнейшего его использования."
 
 # 8a9acc8446b5414598973cba372301e9
 #: ../../ref/forms/validation.txt:237
@@ -475,6 +507,8 @@ msgid ""
 "Let's create a simple ``ContactForm`` to demonstrate how you'd use this "
 "field::"
 msgstr ""
+"Давайте создадим простую форму ``ContactForm``, чтобы показать как можно "
+"использовать это поле::"
 
 # 9efe8c8dd2d348fda999e54c90b9f98e
 #: ../../ref/forms/validation.txt:247
@@ -484,11 +518,15 @@ msgid ""
 "method will be run as part of the cleaning process and it will, in turn, "
 "call the custom ``to_python()`` and ``validate()`` methods."
 msgstr ""
+"Просто используем ``MultiEmailField`` как и любое другое поле. При вызове "
+"метода формы ``is_valid()`` происходит вызов метода ``MultiEmailField."
+"clean()``, который в свою очередь вызовет собственные методы ``to_python()`` "
+"и ``validate()``."
 
 # 94e5e7859710405e9a6481e13a72ac7f
 #: ../../ref/forms/validation.txt:253
 msgid "Cleaning a specific field attribute"
-msgstr ""
+msgstr "Проверка атрибута определённого поля"
 
 # 0c3a50620e144ba98f9ed3b06b96cc66
 #: ../../ref/forms/validation.txt:255
@@ -500,11 +538,17 @@ msgid ""
 "``MultiEmailField`` class. Instead, we write a cleaning method that operates "
 "on the ``recipients`` field, like so::"
 msgstr ""
+"Продолжая работать над нашим примером, предположим, что на форме "
+"``ContactForm`` поле электронной почты ``recipients`` всегда должно "
+"содержать адрес ``\"fred@example.com\"``. Эта проверка будет особенностью "
+"нашей формы, следовательно, нам не надо её помещать в класс "
+"``MultiEmailField``. Вместо этого мы напишем метод, который будет проверять "
+"поле ``recipients``::"
 
 # 7ea73683891249818a6524d9ce98cdee
 #: ../../ref/forms/validation.txt:275
 msgid "Cleaning and validating fields that depend on each other"
-msgstr ""
+msgstr "Очистка и проверка полей, которые зависят друг от друга"
 
 # 5a4cc6ba283949699964219f535b253c
 #: ../../ref/forms/validation.txt:277
@@ -518,6 +562,13 @@ msgid ""
 "and form difference clear when working out where to validate things. Fields "
 "are single data points, forms are a collection of fields."
 msgstr ""
+"Допустим, что мы добавили ещё одно требование для нашей формы: если отмечено "
+"поле ``cc_myself``, то поле ``subject`` должно содержать слово ``\"help\"``. "
+"Раз мы выполняем проверку нескольких полей, то метод формы ``clean()`` будет "
+"правильным местом для нашего кода. Обратите внимание, мы сейчас говорим о "
+"методе ``clean()`` формы, а раньше говорили о методе ``clean()`` поля. Важно "
+"понимать разницу между ними при реализации алгоритма проверки данных. Поля "
+"содержат один источник данных, а формы — это коллекции полей."
 
 # 8d2d52f32bdd448f9d638eb31e04649a
 #: ../../ref/forms/validation.txt:286
@@ -529,6 +580,11 @@ msgid ""
 "are wanting to validate might not have survived the initial individual field "
 "checks."
 msgstr ""
+"К моменту вызова метода формы ``clean()``  все ``clean()`` методы полей уже "
+"отработали.  Таким образом, свойство формы ``self.cleaned_data`` будет "
+"заполнено данными, прошедшими проверку. Следовательно, надо принять во "
+"внимание возможность того, что данные некоторых полей не прошли начальную "
+"поверку."
 
 # 0999d493c3384cf086dc10e8ea23d8c5
 #: ../../ref/forms/validation.txt:293
@@ -538,6 +594,9 @@ msgid ""
 "an error, you can raise a ``ValidationError`` from the ``clean()`` method. "
 "For example::"
 msgstr ""
+"Существует два способа сообщить об ошибках на этом этапе. Обычно ошибку "
+"отображают сверху формы. Для этого достаточно вызвать исключение "
+"``ValidationError`` в методе формы ``clean()``. Например::"
 
 # 2b7112a898ec4633b8096d14ea42ed33
 #: ../../ref/forms/validation.txt:316
@@ -545,6 +604,8 @@ msgid ""
 "In this code, if the validation error is raised, the form will display an "
 "error message at the top of the form (normally) describing the problem."
 msgstr ""
+"В данном коде, при возникновении ошибки во время проверки данных, форма "
+"отобразит сообщение об ошибке сверху (обычное поведение), описывая проблему."
 
 # 553a06c427fe4694811d910072acce02
 #: ../../ref/forms/validation.txt:319
@@ -552,6 +613,9 @@ msgid ""
 "Note that the call to ``super(ContactForm, self).clean()`` in the example "
 "code ensures that any validation logic in parent classes is maintained."
 msgstr ""
+"Следует отметить, что вызов ``super(ContactForm, self).clean()`` в "
+"приведенном коде обеспечивает выполнение дополнительной проверки средствами "
+"базового класса."
 
 # 6c8bf7860b554c998fe30cfcfdc88874
 #: ../../ref/forms/validation.txt:322
@@ -564,6 +628,12 @@ msgid ""
 "works effectively in your particular situation. Our new code (replacing the "
 "previous sample) looks like this::"
 msgstr ""
+"Второй способ подразумевает назначение ошибки одному из полей. В нашем "
+"случае, давайте назначим сообщение об ошибке обоим полям («subject» и "
+"«cc_myself») при отображении формы. Использовать этот способ надо аккуратно, "
+"так как он может запутать пользователя. Мы лишь показываем возможные "
+"варианты, оставляя решение конкретной задачи вам и вашим дизайнерам. Наш "
+"новый код (заменяющий предыдущий пример) выглядит так::"
 
 # 9c6bc23b5a1d4252bd45996291467e05
 #: ../../ref/forms/validation.txt:354
@@ -576,6 +646,14 @@ msgid ""
 "must have been valid when cleaned as individual fields, so there will be no "
 "corresponding entries in ``_errors``."
 msgstr ""
+"Как видно из кода, этот подход требует некоторых усилий, не требуя "
+"дополнительного дизайна, для создания удобных форм. Тем не менее, "
+"остановимся на деталях. Во-первых, мы отметили ранее, что может "
+"потребоваться проверка наличия ключа для поля в свойстве ``_errors`` формы. "
+"В нашем случае, поскольку мы знаем, что раз поля присутствуют в ``self."
+"cleaned_data``, значит они смогли пройти проверку на уровне полей. "
+"Следовательно, для них не будет соответствующих значений в свойстве формы "
+"``_errors``."
 
 # 8e2b04590ed74edd90f133cb516849c7
 #: ../../ref/forms/validation.txt:362
@@ -584,6 +662,8 @@ msgid ""
 "are considering aren't valid, we must remember to remove them from the "
 "``cleaned_data``."
 msgstr ""
+"Во-вторых, как только мы решили, что связанные данные двух полей не прошли "
+"проверку, то следует убрать их значения из свойства ``cleaned_data``."
 
 # 8eb58e1e2e4844038e984d68864a2633
 #: ../../ref/forms/validation.txt:366
@@ -593,3 +673,7 @@ msgid ""
 "change in the future, so it's not a bad idea to clean up after yourself in "
 "the first place."
 msgstr ""
+"На самом деле, в настоящее время Django полностью очищает свойство "
+"``cleaned_data`` при возникновении любой ошибки на форме. Тем не менее, "
+"такое поведение может быть изменено в будущем, так что лучше явно делать "
+"необходимую очистку."
