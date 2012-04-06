@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-24 01:58\n"
-"PO-Revision-Date: 2012-04-04 11:19+0400\n"
+"PO-Revision-Date: 2012-04-06 10:47+0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -601,6 +601,15 @@ msgid ""
 "to get details on the failures without waiting for the full test run to "
 "complete."
 msgstr ""
+"Если вы нажмёте ``Ctrl-C`` во время работы тестов, то раннер дождётся "
+"завершения работы текущего теста и аккуратно завершит свою работу. При "
+"завершении своей работы раннер выведет всю информацию о найденных ошибках, "
+"укажет сколько тестов было выполнено и как много ошибок и сбоев было "
+"обнаружено. Как обычно, в конце раннер удалит все тестовые базы данных. "
+"Таким образом, нажатие ``Ctrl-C`` может быть очень полезным, если вы забыли "
+"передать аргумент :djadminopt:`--failfast`. Следует отметить, что некоторые "
+"тесты могут падать и это комбинация клавиш позволяет получить информацию от "
+"тестов, не дожидаясь завершения всего набора."
 
 # 57b7af9690ac4a6ab5d18b0ab383b380
 #: ../../topics/testing.txt:326
@@ -610,6 +619,10 @@ msgid ""
 "not gracefully. No details of the tests run before the interruption will be "
 "reported, and any test databases created by the run will not be destroyed."
 msgstr ""
+"Если вам не надо дожидаться окончания работы текущего теста, вы можете "
+"нажать ``Ctrl-C`` во второй раз и тест будет прерван немедленно, без "
+"очистки. Никакой информации о пройденных тестах не будет выведено. Тестовые "
+"базы данных останутся нетронутыми."
 
 # c4138478c9d44de984aa5cb6314b0667
 #: ../../topics/testing.txt:333
@@ -621,11 +634,18 @@ msgid ""
 "your code that aren't strictly wrong but could benefit from a better "
 "implementation."
 msgstr ""
+"Хорошей идеей будет запуск ваших тестов с включенным функционалом "
+"уведомлений языка Python: ``python -Wall manage.py test``. Флаг ``-Wall`` "
+"указывает Python, что надо отображать напоминаний при использовании "
+"устаревшего функционала. Django, как и многие другие библиотеки языка "
+"Python, используют такие напоминания, чтобы уведомить пользователей об "
+"устаревшем функционале. Также этот механизм может помечать части вашего "
+"кода, которые не то, чтобы неправильные, но могли бы стать лучше."
 
 # fb4eb1a7d75c439eb6e630e3309dd97d
 #: ../../topics/testing.txt:341
 msgid "Running tests outside the test runner"
-msgstr ""
+msgstr "Выполнение тестов без тест раннера"
 
 # d8c9bd5383fd4cf4b86bcaf72c6c3bde
 #: ../../topics/testing.txt:343
@@ -634,6 +654,9 @@ msgid ""
 "from a shell prompt -- you will need to set up the test environment first. "
 "Django provides a convenience method to do this::"
 msgstr ""
+"Если вам надо выполнять тесты без запуска ``./manage.py test`` (например, из "
+"консоли), вам надо настроить тестовое окружение. Django предоставляет для "
+"этого удобный метод::"
 
 # 772302b30c724165be0460a7baa7872f
 #: ../../topics/testing.txt:350
@@ -641,6 +664,8 @@ msgid ""
 "This convenience method sets up the test database, and puts other Django "
 "features into modes that allow for repeatable testing."
 msgstr ""
+"Этот метод создаёт тестовую базу данных и переводит функционал Django в "
+"режимы, которые позволяют проводить повторяемое тестирование."
 
 # 6b744c6137e644c39d1a8ca8839a80ee
 #: ../../topics/testing.txt:353
@@ -650,11 +675,14 @@ msgid ""
 "manually invoke this method if you're not using running your tests via "
 "Django's test runner."
 msgstr ""
+"Вызов метода :meth:`~django.test.utils.setup_test_environment` выполняется "
+"автоматически во время работы `./manage.py test`. Без использования тест "
+"раннера вам придётся вызывать этот метод вручную."
 
 # ac7f53c73f084ed5b08c714ef4bda8d8
 #: ../../topics/testing.txt:359
 msgid "The test database"
-msgstr ""
+msgstr "Тестовая база данных"
 
 # 18ad3029836f48e19f50db57ea1b76d8
 #: ../../topics/testing.txt:361
@@ -663,6 +691,9 @@ msgid ""
 "\" (production) database. Separate, blank databases are created for the "
 "tests."
 msgstr ""
+"Тесты, которым необходима база данных (так называемые модельные тесты), не "
+"используют вашу \"реальную\" (продакшн) базу данных. Для тестов создаётся "
+"отдельная база данных."
 
 # 40f85d1ec1a04b4ebc7cfa4714100477
 #: ../../topics/testing.txt:364
@@ -670,6 +701,8 @@ msgid ""
 "Regardless of whether the tests pass or fail, the test databases are "
 "destroyed when all the tests have been executed."
 msgstr ""
+"Независимо от того, прошли тесты успешно или нет, тестовая база данных "
+"уничтожается в конце процесса тестирования"
 
 # 287d0d8d3cdf4631972ec988c79e6d9d
 #: ../../topics/testing.txt:367
@@ -682,6 +715,14 @@ msgid ""
 "name, specify :setting:`TEST_NAME` in the dictionary for any given database "
 "in :setting:`DATABASES`."
 msgstr ""
+"По умолчанию, тестовые базы данных получают свои имена, добавляя префикс "
+"``test_`` к значению параметра :setting:`NAME` баз данных, который определён "
+"в параметре конфигурации :setting:`DATABASES`. При использовании SQLite "
+"тесты по умолчанию будут использовать оперативную базу данных (т.е., база "
+"данных будет создана в оперативной памяти, диск вообще не используется!) "
+"Если вам надо использовать собственное имя для тестовой базы данных, "
+"определите :setting:`TEST_NAME` для нужной базы данных в параметре "
+"конфигурации :setting:`DATABASES`."
 
 # 3cb15dfe6ab34d068fdafc10c41184f2
 #: ../../topics/testing.txt:376
@@ -693,6 +734,11 @@ msgid ""
 "sure that the given user account has sufficient privileges to create a new "
 "database on the system."
 msgstr ""
+"Во остальном, тест раннер будет использовать оригинальные настройки для базы "
+"данных: :setting:`ENGINE`, :setting:`USER`, :setting:`HOST` и так далее. "
+"Тестовая база данных создаётся от имени пользователя, который определён в :"
+"setting:`USER`, так чтовам потребуется дать ему соответствующие права, чтобы "
+"он мог это сделать."
 
 # b747e85d52ef46b6b56f8da74f4b0f7e
 #: ../../topics/testing.txt:383
@@ -703,11 +749,17 @@ msgid ""
 "used by the test database. See the :doc:`settings documentation </ref/"
 "settings>` for details of these advanced settings."
 msgstr ""
+"Для точного контроля кодировкой символов в вашей тестовой базе данных, "
+"используйте параметр :setting:`TEST_CHARSET`. При использовании MySQL вы "
+"можете также использовать параметр :setting:`TEST_COLLATION` для управления "
+"сопоставлениями, используемыми базой данных. Обратитесь к документации по :"
+"doc:`параметрам конфигурации проекта </ref/settings>` для получения "
+"информации по этим дополнительным параметрам."
 
 # 850b460149924879a84bc4641a05a85a
 #: ../../topics/testing.txt:393
 msgid "Testing master/slave configurations"
-msgstr ""
+msgstr "Тестирование конфигураций мастер/ведомый"
 
 # 613754a7506546c5b84a2d31aa499b00
 #: ../../topics/testing.txt:397
@@ -717,6 +769,11 @@ msgid ""
 "the test databases are created, there won't be any replication, and as a "
 "result, data created on the master won't be seen on the slave."
 msgstr ""
+"При тестировании конфигураций со множество баз данных с репликацией вида "
+"мастер/ведомый, такая стратегия создания тестовых баз данных приводит к "
+"проблеме. После создания тестовых баз данных никакой репликации выполнено не "
+"будет, соответственно, данные, созданные на мастере, не появятся на ведомой "
+"базе."
 
 # 212d7a8c834f476c804e425b4ec49344
 #: ../../topics/testing.txt:403
@@ -725,6 +782,9 @@ msgid ""
 "*test mirror*. Consider the following (simplified) example database "
 "configuration::"
 msgstr ""
+"Для решения этой задачи Django позволяет вам определить, что база данных "
+"является *тестовым зеркалом*. Рассмотрим следующий (упрощённый) пример "
+"конфигурации базы данных::"
 
 # 6cbed713244e48f49fa730c459c0cab7
 #: ../../topics/testing.txt:423
@@ -735,6 +795,11 @@ msgid ""
 "database administrator as a read slave of ``dbmaster``, so in normal "
 "activity, any write to ``default`` will appear on ``slave``."
 msgstr ""
+"В такой конфигурации у нас есть два сервера баз данных: ``dbmaster``, "
+"имеющий псевдоним ``default``, и ``dbslave`` с псевдонимом ``slave``. Как вы "
+"могли ожидать, ``dbslave`` настроен администратором баз данных как копия "
+"``dbmaster``. Таким образом, любая запись данных в ``default`` приведёт к их "
+"появлению на ``slave``."
 
 # beb0453f77ab4a1cab78b9a5de6c83ca
 #: ../../topics/testing.txt:429
@@ -745,6 +810,11 @@ msgid ""
 "indicating that under testing, ``slave`` should be treated as a mirror of "
 "``default``."
 msgstr ""
+"Если Django создаст две независимые тестовые базы данных, это приведёт к "
+"сбою любых тестов, которые ожидают проведения репликации. Однако, база "
+"данных ``slave`` настрена как тестовое зеркало (с помощью параметра "
+"конфигурации :setting:`TEST_MIRROR`), т.е., во время тестирования ``slave`` "
+"должен рассматриваться как зеркало ``default``."
 
 # 58213e8763304853b14522ba2558eb6a
 #: ../../topics/testing.txt:435
@@ -755,11 +825,16 @@ msgid ""
 "``slave`` -- but because they are actually the same database, not because "
 "there is data replication between the two databases."
 msgstr ""
+"При настройке тестового окружения, тестовая версия ``slave`` *не будет* "
+"создана. Вместо этого, соединение к ``slave`` будет перенаправлено на "
+"``default``. В результате, запись в ``default`` будет приводить к появлению "
+"данных на ``slave``. Но лишь потому что это одна и та же база данных, а не "
+"из-за репликации между двумя базами данных."
 
 # 1b55a9c999a74a50ab2732dc91e21277
 #: ../../topics/testing.txt:445
 msgid "Controlling creation order for test databases"
-msgstr ""
+msgstr "Управление порядком создания тестовых баз данных"
 
 # faad77ee24044e1f96d78dabe10a1643
 #: ../../topics/testing.txt:449
@@ -768,6 +843,9 @@ msgid ""
 "However, no guarantees are made on the creation order of any other databases "
 "in your test setup."
 msgstr ""
+"По умолчанию, Django всегда создаёт базу данных ``default`` первой. Однако "
+"никак не гарантирует порядок создания остальных баз данных вашей "
+"конфигурации."
 
 # a405c5f76c56440691590104df3a84a7
 #: ../../topics/testing.txt:453
@@ -776,6 +854,10 @@ msgid ""
 "specify the dependencies that exist using the :setting:`TEST_DEPENDENCIES` "
 "setting. Consider the following (simplified) example database configuration::"
 msgstr ""
+"Если конфигурация ваших баз данных требует определённого порядка создания "
+"баз данных, вы можете указать эти зависимости с помощью параметра "
+"конфигурации :setting:`TEST_DEPENDENCIES`. Рассмотрим следующий (упрощенный) "
+"пример конфигурации баз данных::"
 
 # 94f4574b502f48c0b66cd7983e73b480
 #: ../../topics/testing.txt:480
@@ -785,6 +867,10 @@ msgid ""
 "``clubs`` alias will be created next (although the order of creation of this "
 "pair is not guaranteed); then ``hearts``; and finally ``spades``."
 msgstr ""
+"Используя эту конфигурацию, база данных ``diamonds`` будет создана первой, "
+"так как только у неё нет зависимостей. Базы данных ``default`` и ``clubs`` "
+"будут созданы далее (хотя порядок создания этой пары случаен). Затем будет "
+"создана ``hearts`` и в конце ``spades`` базы данных."
 
 # 48f25f102e9d4517a8314323f9d6528f
 #: ../../topics/testing.txt:485
@@ -792,11 +878,13 @@ msgid ""
 "If there are any circular dependencies in the :setting:`TEST_DEPENDENCIES` "
 "definition, an ``ImproperlyConfigured`` exception will be raised."
 msgstr ""
+"Если в параметре :setting:`TEST_DEPENDENCIES` будет определена циклическая "
+"зависимость, то будет вызвано исключение ``ImproperlyConfigured``."
 
 # 7bb896f011274c3497d1de950d6ef2ec
 #: ../../topics/testing.txt:490
 msgid "Other test conditions"
-msgstr ""
+msgstr "Другие условия тестирования"
 
 # aa2079382aee44d4a39bf45b7915bf69
 #: ../../topics/testing.txt:492
@@ -806,11 +894,14 @@ msgid ""
 "is to ensure that the observed output of your code matches what will be seen "
 "in a production setting."
 msgstr ""
+"Независимо от значения параметра конфигурации :setting:`DEBUG`, Django "
+"выполняет все тесты, устанавливая :setting:`DEBUG`\\=False. Так делается для "
+"того, чтобы проверять код в условиях, аналогичных боевым."
 
 # eb0996dafc254d7e8f5746d9cb3dc080
 #: ../../topics/testing.txt:498
 msgid "Understanding the test output"
-msgstr ""
+msgstr "Изучение вывода тестов"
 
 # 4f5c4d02c6d24db394c918a301da7378
 #: ../../topics/testing.txt:500
@@ -819,6 +910,9 @@ msgid ""
 "prepares itself. You can control the level of detail of these messages with "
 "the ``verbosity`` option on the command line::"
 msgstr ""
+"При запуске тестов, вы увидите ряд сообщений тест раннера. Вы можете "
+"управлять уровнем детализации этих сообщений с помощью аргумента "
+"``verbosity`` командной строки::"
 
 # b2e328d71eee40ee866bc5c35860f35c
 #: ../../topics/testing.txt:510
@@ -826,6 +920,8 @@ msgid ""
 "This tells you that the test runner is creating a test database, as "
 "described in the previous section."
 msgstr ""
+"Это показывает вам, что тест раннер создал тестовую базу данных, как мы об "
+"этом рассказали в предыдущем разделе."
 
 # 0a6c7bfc022343e0ad02a2ae9df42abc
 #: ../../topics/testing.txt:513
@@ -833,6 +929,8 @@ msgid ""
 "Once the test database has been created, Django will run your tests. If "
 "everything goes well, you'll see something like this::"
 msgstr ""
+"После создания тестовой базы данных, Django запускает ваши тесты. Если всё "
+"идёт без ошибок, то вы увидите подобный вывод::"
 
 # f4000ff4ccc1432780549ba335903852
 #: ../../topics/testing.txt:521
@@ -840,6 +938,8 @@ msgid ""
 "If there are test failures, however, you'll see full details about which "
 "tests failed::"
 msgstr ""
+"Если во время выполнения тестов произошли ошибки, то вы увидите полную "
+"информацию по непройденным тестам::"
 
 # 04716acdd5c54537b06729671b64a1d0
 #: ../../topics/testing.txt:547
@@ -848,6 +948,10 @@ msgid ""
 "document, but it's pretty intuitive. You can consult the documentation of "
 "Python's :mod:`unittest` library for details."
 msgstr ""
+"Полный разбор этого вывода ошибки находится вне данного документа, но тест "
+"ошибки говорит сам за себя. Вы можете обрати:mod:`unittestться к "
+"документации на библиотеку :mod:`unittest` языка Python для получения "
+"подробной информации."
 
 # 741216820db24330b5b4df9f4c485d45
 #: ../../topics/testing.txt:551
