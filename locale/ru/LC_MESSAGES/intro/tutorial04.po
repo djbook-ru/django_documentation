@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-29 18:30\n"
-"PO-Revision-Date: 2012-04-16 15:46+0300\n"
+"PO-Revision-Date: 2012-04-16 16:37+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -100,6 +100,10 @@ msgid ""
 "at internal URLs should use the :ttag:`{% csrf_token %}<csrf_token>` "
 "template tag."
 msgstr ""
+"Так как мы создаем POST форму (которая может привести к изменениям данных), "
+"нам следует побеспокоится о Cross Site Request Forgeries. Благодаря Django "
+"это очень просто. В общем, все POST формы, которые отправляются на "
+"внутренний URL, должны использовать тег :ttag:`{% csrf_token %}<csrf_token>`."
 
 # 0821410060ab470cb783eda1377934f5
 #: ../../intro/tutorial04.txt:55
@@ -109,6 +113,9 @@ msgid ""
 "context. To fix this, a small adjustment needs to be made to the ``detail`` "
 "view, so that it looks like the following::"
 msgstr ""
+"Тег :ttag:`{% csrf_token %}<csrf_token>` требует информацию из объекта "
+"запроса, которая обычно не находится в контексте шаблона. Что бы это "
+"исправить следует внести кое какие изменения в представление ``detail``::"
 
 # c8e5c69b54fc4524873fa602766e6e7d
 #: ../../intro/tutorial04.txt:67
@@ -116,6 +123,8 @@ msgid ""
 "The details of how this works are explained in the documentation for :ref:"
 "`RequestContext <subclassing-context-requestcontext>`."
 msgstr ""
+"Подробности о том, как это работает, смотрите в описании :ref:"
+"`RequestContext <subclassing-context-requestcontext>`."
 
 # 3f4c94b3ab5f4988841f6396d16fa524
 #: ../../intro/tutorial04.txt:70
@@ -124,6 +133,9 @@ msgid ""
 "something with it. Remember, in :doc:`Tutorial 3 </intro/tutorial03>`, we "
 "created a URLconf for the polls application that includes this line::"
 msgstr ""
+"Теперь создадим представление Django, которые принимает данные отправленные "
+"формой и обрабатывает их. Вспомним, в :doc:`Части 3 </intro/tutorial03>` мы "
+"создали URLconf который содержит следующую строку::"
 
 # 363438c66cb740daaec01da9666eba04
 #: ../../intro/tutorial04.txt:76
@@ -131,12 +143,14 @@ msgid ""
 "We also created a dummy implementation of the ``vote()`` function. Let's "
 "create a real version. Add the following to ``polls/views.py``::"
 msgstr ""
+"Мы так же создали функцию-\"заглушку\" ``vote()``. Давайте создадим "
+"настоящую функцию представления. Добавьте следующее в ``polls/views.py``::"
 
 # a827f3bcd0f94c00b8490ebef44e3d60
 #: ../../intro/tutorial04.txt:103
 msgid ""
 "This code includes a few things we haven't covered yet in this tutorial:"
-msgstr ""
+msgstr "Этот код содержит вещи, которые еще не объяснялись в учебнике:"
 
 # dc74606852204f788d27b508d177b95e
 #: ../../intro/tutorial04.txt:105
@@ -147,6 +161,11 @@ msgid ""
 "string. :attr:`request.POST <django.http.HttpRequest.POST>` values are "
 "always strings."
 msgstr ""
+":attr:`request.POST <django.http.HttpRequest.POST>` -- это объект с "
+"интерфейсом словаря, который позволяет получить отправленные данные через "
+"название ключа. В нашем случае ``request.POST['choice']`` вернет ID "
+"выбранного варианта ответа в виде строки. :attr:`request.POST <django.http."
+"HttpRequest.POST>` всегда содержит строки."
 
 # a6fbf0e60c5844309e8594d835e7464d
 #: ../../intro/tutorial04.txt:111
@@ -156,6 +175,10 @@ msgid ""
 "attr:`request.POST <django.http.HttpRequest.POST>` in our code, to ensure "
 "that data is only altered via a POST call."
 msgstr ""
+"Заметим что Django так же предоставляет :attr:`request.GET <django.http."
+"HttpRequest.GET>` для аналогичного доступа к GET данным -- но мы используем :"
+"attr:`request.POST <django.http.HttpRequest.POST>` что бы быть уверенным, "
+"что данные передаются только при POST запросе."
 
 # c9968424f2d349aabcdb7de469ceb363
 #: ../../intro/tutorial04.txt:117
@@ -164,6 +187,9 @@ msgid ""
 "provided in POST data. The above code checks for :exc:`KeyError` and "
 "redisplays the poll form with an error message if ``choice`` isn't given."
 msgstr ""
+"``request.POST['choice']`` вызовет исключение :exc:`KeyError`, если "
+"``choice`` не находится в POST. Код обрабатывает исключение :exc:`KeyError` "
+"и показывает страницу опроса с ошибкой, если не был выбран вариант ответа."
 
 # 38c7dcc4ea184c16816db8df60b2d1b0
 #: ../../intro/tutorial04.txt:121
