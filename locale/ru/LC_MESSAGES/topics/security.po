@@ -166,6 +166,16 @@ msgid ""
 "unwittingly submit that form. The malicious user would have to know the "
 "nonce, which is user specific (using a cookie)."
 msgstr ""
+":ref:`CSRF защита работает <how-csrf-works>`, проверяя метку с текущим "
+"временем в каждом POST запросе. Она не позволяет злоумышленнику просто "
+"сформировать POST запрос формы к вашему сайту и создать возможность другому "
+"авторизованному пользователю нечаянно отправить эту форму. Злоумышленнику "
+"потребуется знать содержимое метки, которое сильно зависит от пользователя "
+"(используются куки).\n"
+"\n"
+"to your Web site and have another logged in user unwittingly submit that "
+"form. The malicious user would have to know the nonce, which is user "
+"specific (using a cookie)."
 
 # 7b6fa66f0059442e97ef545950dd92a4
 #: ../../topics/security.txt:71
@@ -173,11 +183,13 @@ msgid ""
 "Be very careful with marking views with the ``csrf_exempt`` decorator unless "
 "it is absolutely necessary."
 msgstr ""
+"Будьте очень внимательны, декорируя представления с помощью ``csrf_exempt``, "
+"когда в этом нет явной необходимости."
 
 # 930b664e2d2b4655beecbe8c0e4baf52
 #: ../../topics/security.txt:75
 msgid "SQL injection protection"
-msgstr ""
+msgstr "Защита от внедрения SQL"
 
 # 52be30f499864f6c915547a92261066a
 #: ../../topics/security.txt:77
@@ -186,6 +198,9 @@ msgid ""
 "arbitrary SQL code on a database. This can result in records being deleted "
 "or data leakage."
 msgstr ""
+"Внедрение SQL — это тип атаки, когда недобросовестный пользователь имеет "
+"возможность выполнить в базе данных определённый SQL запрос. Результатом "
+"выполнения такого запроса может быть удаление или даже утечка данных."
 
 # 2dd6df27ec224b1ca473109377fd4978
 #: ../../topics/security.txt:81
@@ -198,11 +213,19 @@ msgid ""
 "can control. In addition, you should exercise caution when using :meth:"
 "`extra() <django.db.models.query.QuerySet.extra>`."
 msgstr ""
+"При использовании Django ORM созданный SQL запрос будет правильно "
+"экранирован соответствующим драйвером базы данных. Однако, Django "
+"предоставляет разработчикам возможность писать :ref:`запросы напрямую "
+"<executing-raw-queries>` или выполнять :ref:`собственные запросы <executing-"
+"custom-sql>`. Эти возможности следует использовать умеренно и всегда "
+"обращать пристальное внимание на экранирование всех параметров, которые "
+"предоставлены пользователем. Такое следует проявлять осторожность при "
+"использовании :meth:`extra() <django.db.models.query.QuerySet.extra>`."
 
 # d5387e5907b94c07a09c0cbcb2e118e9
 #: ../../topics/security.txt:90
 msgid "Clickjacking protection"
-msgstr ""
+msgstr "Защита от скликивания"
 
 # f421de120c924fc1a339f3763f7170ff
 #: ../../topics/security.txt:92
@@ -211,6 +234,10 @@ msgid ""
 "in a frame. This attack can result in an unsuspecting user being tricked "
 "into performing unintended actions on the target site."
 msgstr ""
+" Скликивание — это атака, при которой вредоносный сайт подменяет другой сайт "
+"используя <iframe>.  В результате этой атаки ничего не подозревающий "
+"пользователь принуждается к выполнению определённых действий на целевом "
+"сайте."
 
 # 7ad760b278ae4002a38746d241a7ae47
 #: ../../topics/security.txt:96
@@ -222,6 +249,12 @@ msgid ""
 "the protection on a per view basis or to configure the exact header value "
 "sent."
 msgstr ""
+"Django предоставляет :ref:`защиту от этой атаки <clickjacking-prevention>` в "
+"виде модуля :mod:`X-Frame-Options <django.middleware.clickjacking."
+"XFrameOptionsMiddleware>`, который, при использовании соответствующего "
+"браузера, может предотвратить отображение сайта внутри фрейма. Есть "
+"возможность отключить данную защиту для выбранных представлений или "
+"настроить значение отправляемого заголовка."
 
 # b4751e045054492ca0df3a342f431786
 #: ../../topics/security.txt:103
@@ -230,11 +263,14 @@ msgid ""
 "have its pages wrapped in a frame by third party sites, or only needs to "
 "allow that for a small section of the site."
 msgstr ""
+"Этот функциональный слой настоятельно рекомендуется использовать на любом "
+"сайте, страницы которого не должны отображаться внутри другого сайта. Можно "
+"позволить такое отображение для простых страниц."
 
 # 12b46a70479840a9b3133fd2ccd2a7c3
 #: ../../topics/security.txt:108
 msgid "SSL/HTTPS"
-msgstr ""
+msgstr "SSL/HTTPS"
 
 # 3c89d32871294676a6d1c654d1620afc
 #: ../../topics/security.txt:110
@@ -245,6 +281,11 @@ msgid ""
 "transferred between client and server, and in some cases -- **active** "
 "network attackers -- to alter data that is sent in either direction."
 msgstr ""
+"Применение этой защиты хорошо отражается на безопасности, хотя и не всегда "
+"уместно с практической точки зрения. При отсутствии HTTPS злоумышленник "
+"имеет возможность перехватывать аутентификационные данные или любую другую "
+"информацию, передаваемую между клиентом и сервером. А в случае **активной** "
+"атаки — может даже изменять данные, передаваемые в любом направлении."
 
 # 29f6d898a5d64b9295cf2e8237d3416a
 #: ../../topics/security.txt:116
@@ -253,11 +294,14 @@ msgid ""
 "server, there are some additional steps to consider to ensure that sensitive "
 "information is not leaked:"
 msgstr ""
+"Если вам нужна защита, предоставляемая HTTPS, и на сервере произведена "
+"соответствующая настройка ПО,  то надо выполнить ещё несколько шагов, чтобы "
+"быть уверенным в защите своей информации:"
 
 # 56c1fedc6e434e5c84e9f884db899584
 #: ../../topics/security.txt:120
 msgid "Set up redirection so that requests over HTTP are redirected to HTTPS."
-msgstr ""
+msgstr "Настройте перенаправление HTTP запросов на HTTPS."
 
 # 1339cf6edcdb4600b30826797af83a0b
 #: ../../topics/security.txt:122
@@ -270,6 +314,13 @@ msgid ""
 "However, this method usually cannot be relied on, as a client, or a "
 "malicious active network attacker, could also set this header."
 msgstr ""
+"Это можно сделать с помощью функционального слоя Django. Тем не менее, "
+"проблема проявляется  когда приложение работает за обратным прокси. Часто, "
+"обратный прокси настроен на установку заголовка ``X-Forwarded-SSL`` (или "
+"аналогичного), если входящее соединение шло через HTTPS. Отсутствие такого "
+"заголовка может использоваться для определения того, что запрос пришёл через "
+"HTTP. Однако, не следует доверять этому заголовку, так как клиент или "
+"злоумышленник могут установить этот заголовок самостоятельно."
 
 # fe7e13e7c7554a92bd4d59ad6914be8d
 #: ../../topics/security.txt:130
@@ -278,11 +329,14 @@ msgid ""
 "server should be configured to do the redirect to HTTPS, or configured to "
 "send HTTP requests to an app that unconditionally redirects to HTTPS."
 msgstr ""
+"Таким образом, для обратного прокси рекомендуется настроить перенаправление "
+"на HTTPS на главном веб сервере или перенаправление HTTP запросов на "
+"приложение, которое будет безусловно отправлять их на HTTPS."
 
 # 247d2dbbc5e04fe6b095c75f579ca71a
 #: ../../topics/security.txt:134
 msgid "Use 'secure' cookies."
-msgstr ""
+msgstr "Использование 'безопасных' куки."
 
 # 6ee97d8f690a4921939062ac0362a5f1
 #: ../../topics/security.txt:136
@@ -296,11 +350,19 @@ msgid ""
 "any POST data being accepted over HTTP (which will be fine if you are "
 "redirecting all HTTP traffic to HTTPS)."
 msgstr ""
+"Если браузер изначально подключается через HTTP, что характерно для "
+"большинства браузеров, есть возможность утечки существующих кук. По этой "
+"причине вам сделать установить параметры :setting:`SESSION_COOKIE_SECURE` и :"
+"setting:`CSRF_COOKIE_SECURE` в ``True``. Это заставить браузер отправлять "
+"такие куки только через HTTPS. Следует отметить, это сделает невозможным "
+"работу сессий через HTTP, а CSRF защита не будет принимать POST данные, "
+"полученные через HTTP (это решается с помощью перенаправления HTTP трафика "
+"через HTTPS)."
 
 # 18e68e9c25e64111a99118d65cb1b2e3
 #: ../../topics/security.txt:148
 msgid "Host headers and virtual hosting"
-msgstr ""
+msgstr "Заголовки хоста и виртуальный хостинг"
 
 # 9db85548f445459c97273708b1f9f5df
 #: ../../topics/security.txt:150
@@ -311,6 +373,11 @@ msgid ""
 "poisoning attacks in some circumstances. We recommend you ensure your Web "
 "server is configured such that:"
 msgstr ""
+"Django использует заголовок ``Host``, предоставляемый клиентом, для создания "
+"URL в определённых случаях. Несмотря на то, что эти данные безопасны с точки "
+"зрения Cross Site Scripting атак, они могут быть использованы атак CSRF  и "
+"кэша при определённых условиях. Мы рекомендуем удостовериться, что ваш веб "
+"сервер настроен следующим образом:"
 
 # 99602bb5724f42799eddfb02cbb765c1
 #: ../../topics/security.txt:156
@@ -318,11 +385,13 @@ msgid ""
 "It always validates incoming HTTP ``Host`` headers against the expected host "
 "name."
 msgstr ""
+"Он всегда проверяет присылаемые заголовки ``Host`` относительно ожидаемого "
+"имени хоста."
 
 # 7c2beab1af8c4784aa510cd67b202ccc
 #: ../../topics/security.txt:158
 msgid "Disallows requests with no ``Host`` header."
-msgstr ""
+msgstr "Не позволяет запросы без установленного заголовка ``Host``."
 
 # 3247171707de4e5ca6f3a0e1a63a1c8d
 #: ../../topics/security.txt:159
@@ -330,6 +399,8 @@ msgid ""
 "Is *not* configured with a catch-all virtual host that forwards requests to "
 "a Django application."
 msgstr ""
+"*Не* настроено перенаправление всех запросов к виртуальным хостам на "
+"приложение Django."
 
 # e29bd8a87c184967bf95e925fe38dee8
 #: ../../topics/security.txt:162
@@ -337,11 +408,13 @@ msgid ""
 "Additionally, as of 1.3.1, Django requires you to explicitly enable support "
 "for the ``X-Forwarded-Host`` header if your configuration requires it."
 msgstr ""
+"Дополнительно, начиная с 1.3.1, Django требует явную активацию поддержки "
+"заголовка ``X-Forwarded-Host``, если ваша конфигурация в нём нуждается."
 
 # 4b86731ffeb045a8b9e9fbff35703764
 #: ../../topics/security.txt:166
 msgid "Additional security topics"
-msgstr ""
+msgstr "Дополнительные вопросы безопасности"
 
 # c7d617a71f98424c9fdea729d970d12d
 #: ../../topics/security.txt:168
@@ -351,6 +424,9 @@ msgid ""
 "security protection of the Web server, operating system and other components."
 ""
 msgstr ""
+"Несмотря на то, что Django предоставляет защиту прямо из коробки, правильная "
+"установка вашего приложения всё ещё имеет значение. Также важно иметь "
+"правильно настроенный веб сервер, операционную систему и другие компоненты."
 
 # 36167d243dc042a5b6eeaaa9c246c3ed
 #: ../../topics/security.txt:172
@@ -359,11 +435,15 @@ msgid ""
 "will ensure that your Python code is not accidentally served as plain text "
 "(or accidentally executed)."
 msgstr ""
+"Код вашего приложения должен находиться вне корня веб сервера. Это не "
+"позволит случайно отобразить его в виде текста или выполнить его."
 
 # aae5bf9cdd424f7b940d02a36639c208
 #: ../../topics/security.txt:175
 msgid "Take care with any :ref:`user uploaded files <file-upload-security>`."
 msgstr ""
+"Будьте осторожны с любыми файлами, которые :ref:`загружены пользователями "
+"<file-upload-security>`."
 
 # 31412de1cb9943d2bb101dc5dddd2d2e
 #: ../../topics/security.txt:176
@@ -372,6 +452,10 @@ msgid ""
 "brute-force attacks against the authentication system, you may consider "
 "deploying a Django plugin or Web server module to throttle these requests."
 msgstr ""
+"Django не ограничивает количество запросов при аутентификации пользователей. "
+"Для того, чтобы защититься от перебора логина/пароля, вы можете поставить "
+"дополнительное приложение для Django или модуль для веб сервера, чтобы "
+"ограничивать такие запросы."
 
 # 271807741fae4ffe97fc0a3f4658bddf
 #: ../../topics/security.txt:179
@@ -381,11 +465,15 @@ msgid ""
 "to prevent denial of service (DOS) attacks. In Apache, this can be easily "
 "set using the LimitRequestBody_ directive."
 msgstr ""
+"Если ваш сайт принимает файлы, настоятельно советуем ограничить размер таких "
+"загрузок в конфигурации веб сервера для предотвращения атак на отказ сервиса "
+"(DOS). В случае Apache это легко можно сделать с помощью директивы "
+"LimitRequestBody_."
 
 # 949ca73bcfbf450fa649d489aef1fec0
 #: ../../topics/security.txt:183
 msgid "Keep your :setting:`SECRET_KEY` a secret."
-msgstr ""
+msgstr "Храните содержимое параметра :setting:`SECRET_KEY` в секрете."
 
 # 6a22091ac28548af8e2f40e3ff29ac91
 #: ../../topics/security.txt:184
@@ -393,3 +481,5 @@ msgid ""
 "It is a good idea to limit the accessibility of your caching system and "
 "database using a firewall."
 msgstr ""
+"Хорошей идеей будет ограничить доступ к вашей системе кэширования и к базе "
+"данных с помощью фаервола."
