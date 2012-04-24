@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-29 18:30\n"
-"PO-Revision-Date: 2012-04-16 16:37+0300\n"
+"PO-Revision-Date: 2012-04-24 17:41+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -200,6 +200,10 @@ msgid ""
 "argument: the URL to which the user will be redirected (see the following "
 "point for how we construct the URL in this case)."
 msgstr ""
+"После увеличения счетчика ответов, представление возвращает :class:`~django."
+"http.HttpResponseRedirect` вместо :class:`~django.http.HttpResponse`. :class:"
+"`~django.http.HttpResponseRedirect` принимает один аргумент: URL, на который "
+"необходимо перенаправить пользователя (обратите внимание как мы создаем URL)."
 
 # cf64a778f4c442b19088927a02445679
 #: ../../intro/tutorial04.txt:128
@@ -209,6 +213,9 @@ msgid ""
 "data. This tip isn't specific to Django; it's just good Web development "
 "practice."
 msgstr ""
+"После успешной обработки POST запроса, вы должны возвращать :class:`~django."
+"http.HttpResponseRedirect`. Это не относится конкретно к Django, это просто "
+"хорошая практика при разработке Web-приложений."
 
 # aaa758eea18440b4bbb94055be4e1c57
 #: ../../intro/tutorial04.txt:133
@@ -221,6 +228,12 @@ msgid ""
 "URLconf we set up in Tutorial 3, this :func:`~django.core.urlresolvers."
 "reverse` call will return a string like ::"
 msgstr ""
+"Мы используем функцию :func:`~django.core.urlresolvers.reverse` при "
+"создании :class:`~django.http.HttpResponseRedirect`. Это функция помогает "
+"избегать \"хардкодинга\" URL-ов в коде. Она принимает название URL-шаблона и "
+"необходимые аргументы для создания URL-а. В этом примере используется "
+"конфигурация URL-ов из Части 3 и :func:`~django.core.urlresolvers.reverse` "
+"вернет::"
 
 # 0ca0f322652349d6abcf1f9313246c1c
 #: ../../intro/tutorial04.txt:144
@@ -229,6 +242,10 @@ msgid ""
 "call the ``'results'`` view to display the final page. Note that you need to "
 "use the full name of the view here (including the prefix)."
 msgstr ""
+"... где ``3`` значение ``p.id``. При запросе к этому URL-у вызовется "
+"представление ``'results'`` для отображения результатов опроса. Обратите "
+"внимание, вы должны использовать полное название к представлению (включая "
+"префикс)."
 
 # afb83a6905f541e187d4c965e740ee14
 #: ../../intro/tutorial04.txt:148
@@ -237,6 +254,10 @@ msgid ""
 "HttpRequest` object. For more on :class:`~django.http.HttpRequest` objects, "
 "see the :doc:`request and response documentation </ref/request-response>`."
 msgstr ""
+"Как упоминалось в Части 3, ``request`` является экземпляром :class:`~django."
+"http.HttpRequest`. Подробности о классе :class:`~django.http.HttpRequest` "
+"смотрите в разделе о :doc:`объектах запроса и ответа </ref/request-"
+"response>`."
 
 # c3c0e9df20f04353ac6aa1067a81fa78
 #: ../../intro/tutorial04.txt:152
@@ -244,6 +265,8 @@ msgid ""
 "After somebody votes in a poll, the ``vote()`` view redirects to the results "
 "page for the poll. Let's write that view::"
 msgstr ""
+"После ответа на опрос, представление ``vote()`` перенаправит пользователя на "
+"страницу с результатами. Давайте создадим представление для этой страницы::"
 
 # e060e4c524144a219ecb0782d586eca7
 #: ../../intro/tutorial04.txt:159
@@ -252,11 +275,14 @@ msgid ""
 "3 </intro/tutorial03>`. The only difference is the template name. We'll fix "
 "this redundancy later."
 msgstr ""
+"Это представление аналогично представлению ``detail()`` из :doc:`Части 3 </"
+"intro/tutorial03>`. Единственная разница - используемый шаблон. Повторение "
+"кода мы исправим позже."
 
 # 93570294d152458ca17d6b06ea75e08b
 #: ../../intro/tutorial04.txt:163
 msgid "Now, create a ``results.html`` template:"
-msgstr ""
+msgstr "Теперь создадим шаблон ``results.html``:"
 
 # 5f71be59e19a43129801126fd9251513
 #: ../../intro/tutorial04.txt:177
@@ -265,11 +291,15 @@ msgid ""
 "see a results page that gets updated each time you vote. If you submit the "
 "form without having chosen a choice, you should see the error message."
 msgstr ""
+"Теперь откройте страницу ``/polls/1/`` в браузере и ответьте на опрос. Вы "
+"должны увидеть страницу с результатами, которые обновляются после каждого "
+"ответа на опрос. Если вы отправите форму не ответив на вопрос, вы должны "
+"увидеть сообщение про ошибку."
 
 # c2ad364fa360473d87aa1e2091cbb8c7
 #: ../../intro/tutorial04.txt:182
 msgid "Use generic views: Less code is better"
-msgstr ""
+msgstr "Общие представления: меньше кода - меньше проблем"
 
 # ea77830ee87f4481882507ba01454658
 #: ../../intro/tutorial04.txt:184
@@ -279,6 +309,9 @@ msgid ""
 "``index()`` view (also from Tutorial 3), which displays a list of polls, is "
 "similar."
 msgstr ""
+"Представления ``detail()`` (из :doc:`Части 3 </intro/tutorial03>`) и "
+"``results()`` до глупости просты -- и, как упоминалось выше, избыточны. "
+"Представление ``index()`` (также из Части 3), так же довольно стандартное."
 
 # 91518ac31d29456fa1b209cf46861080
 #: ../../intro/tutorial04.txt:188
@@ -288,6 +321,10 @@ msgid ""
 "template and returning the rendered template. Because this is so common, "
 "Django provides a shortcut, called the \"generic views\" system."
 msgstr ""
+"Эти представления выполняют стандартные операции Веб-приложений: получение "
+"данных из базы данных в соответствии с параметрами из URL, загрузка шаблона "
+"и возвращение результата выполнения шаблона. Так как это обычные операции "
+"Django представляет систему \"общих представлений(generic views)\"."
 
 # 1ee21f042b6f4438a4466fa65545fa48
 #: ../../intro/tutorial04.txt:193
@@ -295,6 +332,8 @@ msgid ""
 "Generic views abstract common patterns to the point where you don't even "
 "need to write Python code to write an app."
 msgstr ""
+"Общие представления позволяют создавать приложения практически не написав ни "
+"строчки кода Python."
 
 # 5ce0a732500a4e0e8985d50a056720c6
 #: ../../intro/tutorial04.txt:196
@@ -303,26 +342,28 @@ msgid ""
 "a bunch of our own code. We'll just have to take a few steps to make the "
 "conversion. We will:"
 msgstr ""
+"Давайте используем их в нашем приложении. Необходимо выполнить следующие "
+"действия:"
 
 # 1d4eb4a80f924273b26080f373349584
 #: ../../intro/tutorial04.txt:200
 msgid "Convert the URLconf."
-msgstr ""
+msgstr "Изменить URLconf."
 
 # dbe0bc41513e4e8eb3f7a0dcb899e801
 #: ../../intro/tutorial04.txt:202
 msgid "Delete some of the old, unneeded views."
-msgstr ""
+msgstr "Удалить старые и ненужные представления."
 
 # 766b23ef335e474fbeb606bfd0974c57
 #: ../../intro/tutorial04.txt:204
 msgid "Fix up URL handling for the new views."
-msgstr ""
+msgstr "Изменить URL-ы для новых представлений."
 
 # ec8daf216aa44543a7b0b3893ea634ff
 #: ../../intro/tutorial04.txt:206
 msgid "Read on for details."
-msgstr ""
+msgstr "Подробности читайте далее."
 
 # be8d00b818f64c278ad04b3adb37dcbd
 #: ../../intro/tutorial04.txt:210
@@ -333,23 +374,26 @@ msgid ""
 "intentionally has focused on writing the views \"the hard way\" until now, "
 "to focus on core concepts."
 msgstr ""
+"Скорее всего вы будете использовать общие представления с самого начала без "
+"необходимости рефакторить проект. Этот учебник специально описывает создание "
+"представлений что бы описать основные концепции."
 
 # 4dce644a4ca54873a833a53c75dc2a05
 #: ../../intro/tutorial04.txt:216
 msgid "You should know basic math before you start using a calculator."
-msgstr ""
+msgstr "Вы должны знать основы математики для использования калькулятора."
 
 # 1b52698f2b064fbea2072dd17ad3d00a
 #: ../../intro/tutorial04.txt:218
 msgid ""
 "First, open the ``polls/urls.py`` URLconf. It looks like this, according to "
 "the tutorial so far::"
-msgstr ""
+msgstr "Первым делом откройте ``polls/urls.py``. Вы должны увидеть следующее::"
 
 # a9ab58cd176a456582e241e9c0ef772c
 #: ../../intro/tutorial04.txt:230
 msgid "Change it like so::"
-msgstr ""
+msgstr "Отредактируйте этот файл::"
 
 # 196ba0a78ced49a9aca8f75521f307b3
 #: ../../intro/tutorial04.txt:254
@@ -359,6 +403,10 @@ msgid ""
 "Respectively, those two views abstract the concepts of \"display a list of "
 "objects\" and \"display a detail page for a particular type of object.\""
 msgstr ""
+"Мы используем здесь два общих представления: :class:`~django.views.generic."
+"list.ListView` и :class:`~django.views.generic.detail.DetailView`. Эти два "
+"типа представлений отображают две концепции: \"отображение списка объектов\" "
+"и \"отображение подробностей о конкретном объекте\"."
 
 # edf329d39eb643aab24425b3c86b7062
 #: ../../intro/tutorial04.txt:260
@@ -366,6 +414,8 @@ msgid ""
 "Each generic view needs to know what model it will be acting upon. This is "
 "provided using the ``model`` parameter."
 msgstr ""
+"Каждое общее представление должно знать с какой моделью работать. Ее можно "
+"указать с помощью параметра ``model``."
 
 # d58b50396e614b5aab573f9b26780784
 #: ../../intro/tutorial04.txt:263
@@ -374,6 +424,9 @@ msgid ""
 "primary key value captured from the URL to be called ``\"pk\"``, so we've "
 "changed ``poll_id`` to ``pk`` for the generic views."
 msgstr ""
+"Представление :class:`~django.views.generic.list.DetailView` принимает "
+"значение первичного ключа из URL с названием ``\"pk\"``, по этому мы "
+"изменили название параметра с ``poll_id`` на ``pk``."
 
 # d72bd374164b42958b583f697a3fb51c
 #: ../../intro/tutorial04.txt:268
@@ -385,6 +438,12 @@ msgid ""
 "It's a good habit to use :func:`~django.conf.urls.url` when you are "
 "providing a pattern name like this."
 msgstr ""
+"Мы добавили название, ``poll_results``, для представления, которое "
+"отображает страницу с опросом, что бы мы могли обратиться к этому URL-у "
+"позже (подробности смотрите в разделе о :ref:`именованных URL-шаблонах "
+"<naming-url-patterns>`). Мы так же используем функцию :func:`~django.conf."
+"urls.url` из :mod:`django.conf.urls`. Использовать :func:`~django.conf.urls."
+"url` - хорошая привычка при указании названия URL-шаблона."
 
 # 0bc163e3dfc04196a99d7f939aef68d9
 #: ../../intro/tutorial04.txt:277
@@ -399,6 +458,10 @@ msgid ""
 "even though they're both a :class:`~django.views.generic.list.DetailView` "
 "behind the scenes."
 msgstr ""
+"По умолчанию представление :class:`~django.views.generic.list.DetailView` "
+"использует шаблон ``<app name>/<model name>_detail.html``. В нашем случае "
+"будет использоваться ``\"polls/poll_detail.html\"``. Параметр "
+"``template_name`` позволяет указать Django какой шаблон использовать."
 
 # e1ad09d67b2f40299d4d017a0be6d05f
 #: ../../intro/tutorial04.txt:287
@@ -408,6 +471,9 @@ msgid ""
 "``template_name`` to tell :class:`~django.views.generic.list.ListView` to "
 "use our existing ``\"polls/index.html\"`` template."
 msgstr ""
+"Аналогично :class:`~django.views.generic.list.ListView` использует шаблон "
+"``<app name>/<model name>_list.html``, мы использовали ``template_name`` что "
+"бы определить другой шаблон - ``\"polls/index.html\"``."
 
 # eee64f5cfbf247aeb1ba84e440bd4d24
 #: ../../intro/tutorial04.txt:293
@@ -423,6 +489,14 @@ msgid ""
 "change your templates to match the new default context variables -- but it's "
 "a lot easier to just tell Django to use the variable you want."
 msgstr ""
+"В предыдущей части учебника в шаблоне использовался контекст с переменными "
+"``poll`` и ``latest_poll_list``. Для DetailView переменная ``poll`` "
+"добавляется автоматически -- так как мы используем модель ``Poll``, Django "
+"автоматически генерирует подходящее название для переменной контекста. Для "
+"ListView переменная будет называться ``poll_list``. Что бы переопределить "
+"это название мы использовали параметр ``context_object_name`` указав "
+"``latest_poll_list``. Как вариант, вы можете изменить шаблон и использовать "
+"``poll_list``."
 
 # bf602c7ba00e48d99c5aaa0b7a820f40
 #: ../../intro/tutorial04.txt:305
@@ -431,6 +505,8 @@ msgid ""
 "from ``polls/views.py``. We don't need them anymore -- they have been "
 "replaced by generic views."
 msgstr ""
+"Теперь вы можете удалить функции ``index()``, ``detail()`` и ``results()`` "
+"из ``polls/views.py``. Они нам больше не нужны."
 
 # 7b13b7ef31c44800afd4f93d10c8b8f6
 #: ../../intro/tutorial04.txt:309
@@ -443,11 +519,17 @@ msgid ""
 "simply use the view function anymore -- generic views can be (and are) used "
 "multiple times -- but we can use the name we've given::"
 msgstr ""
+"В представлении для голосования мы использовали функцию :func:`~django.core."
+"urlresolvers.reverse` что бы избежать \"хардкодинга\" URL-а. Теперь нам "
+"необходимо чтобы :func:`~django.core.urlresolvers.reverse` возвращал URL на "
+"наше новое представление. Мы не можем использовать функцию представления -- "
+"общее представление может использоваться для разных URL-ов -- но мы можем "
+"использовать указанное название::"
 
 # a8fa3c528de441689f32c4431c7a4d07
 #: ../../intro/tutorial04.txt:320
 msgid "Run the server, and use your new polling app based on generic views."
-msgstr ""
+msgstr "Запустите сервер и протестируйте наше приложение."
 
 # 029b43ae7f1245e683b8730554c65fba
 #: ../../intro/tutorial04.txt:322
@@ -455,52 +537,54 @@ msgid ""
 "For full details on generic views, see the :doc:`generic views documentation "
 "</topics/http/generic-views>`."
 msgstr ""
+"Подробности об общих представлениях смотрите в :doc:`соответствующем разделе "
+"</topics/http/generic-views>`."
 
 # eaf7420cb82d46ca9c69450227507621
 #: ../../intro/tutorial04.txt:326
 msgid "Coming soon"
-msgstr ""
+msgstr "Скоро будет"
 
 # 1f61851119be4135b908169e9513d15a
 #: ../../intro/tutorial04.txt:328
 msgid ""
 "The tutorial ends here for the time being. Future installments of the "
 "tutorial will cover:"
-msgstr ""
+msgstr "В будущем учебник планируется расширить следующими разделами:"
 
 # 7b3e4b331a4740348974c6032a82b6db
 #: ../../intro/tutorial04.txt:331
 msgid "Advanced form processing"
-msgstr ""
+msgstr "Продвинутая обработка форм"
 
 # 8c33dee69aa94795bed7391da008eceb
 #: ../../intro/tutorial04.txt:332
 msgid "Using the RSS framework"
-msgstr ""
+msgstr "Использование RSS"
 
 # 6c2bf12ceb6e4518bef997d8965b7560
 #: ../../intro/tutorial04.txt:333
 msgid "Using the cache framework"
-msgstr ""
+msgstr "Использование кеширования"
 
 # cba721d2595d485f84d971ac78467df5
 #: ../../intro/tutorial04.txt:334
 msgid "Using the comments framework"
-msgstr ""
+msgstr "Использование комментариев"
 
 # d24ee5855c454ec89fae6394b31f152c
 #: ../../intro/tutorial04.txt:335
 msgid "Advanced admin features: Permissions"
-msgstr ""
+msgstr "Использование прав в интерфейсе администратора"
 
 # cb7fc25b704845238714cac9ceec2865
 #: ../../intro/tutorial04.txt:336
 msgid "Advanced admin features: Custom JavaScript"
-msgstr ""
+msgstr "Использование JavaScript скриптов в интерфейсе администратора"
 
 # be558e283ab74bddacf4ccf66f8239b0
 #: ../../intro/tutorial04.txt:338
 msgid ""
 "In the meantime, you might want to check out some pointers on :doc:`where to "
 "go from here </intro/whatsnext>`"
-msgstr ""
+msgstr "Советуем прочитать :doc:`\"Куда двигаться далее\" </intro/whatsnext>`"
