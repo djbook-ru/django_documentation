@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-24 01:58\n"
-"PO-Revision-Date: 2012-04-25 16:01+0300\n"
+"PO-Revision-Date: 2012-04-26 10:50+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -649,6 +649,11 @@ msgid ""
 "will be printed to the console; ``ERROR`` and ``CRITICAL`` messages will "
 "also be output via email."
 msgstr ""
+"``myproject.custom``, который передает все сообщения уровня ``INFO`` и выше "
+"прошедшие фильтр ``special`` в два обработчика -- ``console`` и "
+"``mail_admins``. Это означает что все сообщения уровня ``INFO`` (или выше) "
+"будут отправлены в консоль, сообщения ``ERROR`` и ``CRITICAL`` будут "
+"отосланы через e-mail."
 
 # e89ca1c00302430891372e1ecdc36f03
 #: ../../topics/logging.txt:351
@@ -657,6 +662,8 @@ msgid ""
 "defining that class also imports ``settings.py`` a circular import will "
 "occur."
 msgstr ""
+"Если в ``settings.py`` указан обработчик, модуль которого импортирует "
+"``settings.py``, вы получите циклический импорт."
 
 # 464f6843dea448129b4b8bb86f9d2d14
 #: ../../topics/logging.txt:355
@@ -664,6 +671,8 @@ msgid ""
 "For example, if ``settings.py`` contains the following config for :setting:"
 "`LOGGING`::"
 msgstr ""
+"Например, если ``settings.py`` содержит следующие настройки для :setting:"
+"`LOGGING`::"
 
 # b86ea9686ac04d18ad068ced920d32d1
 #: ../../topics/logging.txt:368
@@ -671,17 +680,19 @@ msgid ""
 "and ``myproject/logconfig.py`` has the following line before the "
 "``MyHandler`` definition::"
 msgstr ""
+"и ``myproject/logconfig.py`` содержит следующие строки перед определением "
+"``MyHandler``::"
 
 # 52627a7f699f4b9282b4db9d3e3248ac
 #: ../../topics/logging.txt:373
 msgid ""
 "then the ``dictconfig`` module will raise an exception like the following::"
-msgstr ""
+msgstr "модуль ``dictconfig`` вызовет исключение::"
 
 # a402b4563ca34cee826a736f405e4a1e
 #: ../../topics/logging.txt:382
 msgid "Custom logging configuration"
-msgstr ""
+msgstr "Собственная конфигурация логирования"
 
 # 78aa8eaa031b4aac915eb3ffcb99db15
 #: ../../topics/logging.txt:384
@@ -689,6 +700,8 @@ msgid ""
 "If you don't want to use Python's dictConfig format to configure your "
 "logger, you can specify your own configuration scheme."
 msgstr ""
+"Если вы не хотите использовать формат dictConfig для настройки логирования, "
+"вы можете определить собственный формат."
 
 # 0ffc023cf87942d089988e359189f561
 #: ../../topics/logging.txt:387
@@ -700,11 +713,16 @@ msgid ""
 "argument. The contents of :setting:`LOGGING` will be provided as the value "
 "of that argument when logging is configured."
 msgstr ""
+"Настройка :setting:`LOGGING_CONFIG` определяет функцию, которая настраивает "
+"логирование в Django. По умолчанию равна :meth:`logging.dictConfig()`. "
+"Однако, если вы хотите переопределить настройку логирования, укажите "
+"функцию, которая принимает один аргумент. Содержимое :setting:`LOGGING` "
+"будет передано в функцию при настройке логирования."
 
 # 026eeee598a2443b9cb390eeda05a086
 #: ../../topics/logging.txt:395
 msgid "Disabling logging configuration"
-msgstr ""
+msgstr "Отключение настройки логирования"
 
 # c799f20624d44f559ad618d4d9f85ae3
 #: ../../topics/logging.txt:397
@@ -713,6 +731,9 @@ msgid ""
 "configure logging using your own approach), you can set :setting:"
 "`LOGGING_CONFIG` to ``None``. This will disable the configuration process."
 msgstr ""
+"Если вы не хотите настраивать логирование (или самостоятельно настроить "
+"логирование используя собсвенный механизм), вы можете установить :setting:"
+"`LOGGING_CONFIG` в ``None``. Это отключит процесс настройки логирования."
 
 # 1d4f1721204b4c979ec072960657d3d9
 #: ../../topics/logging.txt:403
@@ -722,11 +743,14 @@ msgid ""
 "configuration process, Django will still make logging calls, falling back to "
 "whatever default logging behavior is defined."
 msgstr ""
+"Установка :setting:`LOGGING_CONFIG` в ``None`` отключает процесс "
+"конфигурации, а не логирование. Если вы отключите процесс конфигурации, "
+"Django все равно будет вызывать методы логирования."
 
 # 9c22f2889abd4d3087566cc0f35d0312
 #: ../../topics/logging.txt:410
 msgid "Django's logging extensions"
-msgstr ""
+msgstr "Расширения для логирования в Django"
 
 # 23b712158d1e43e68635fcd939427699
 #: ../../topics/logging.txt:412
@@ -734,16 +758,18 @@ msgid ""
 "Django provides a number of utilities to handle the unique requirements of "
 "logging in Web server environment."
 msgstr ""
+"Django предоставляет набор утилит для решения стандартных задач логирования "
+"в Web-приложениях."
 
 # e2642501f7fc46c69b077f8d0e203774
 #: ../../topics/logging.txt:418
 msgid "Django provides three built-in loggers."
-msgstr ""
+msgstr "Django использует три логера."
 
 # a06ad725020d467e9f9d12b644f7fe6e
 #: ../../topics/logging.txt:421
 msgid "``django``"
-msgstr ""
+msgstr "``django``"
 
 # 751fd4ce2edb4268936135812c9333a6
 #: ../../topics/logging.txt:423
@@ -751,11 +777,13 @@ msgid ""
 "``django`` is the catch-all logger. No messages are posted directly to this "
 "logger."
 msgstr ""
+"``django`` -- логер принимающий все сообщения. Сообщения не записываются "
+"непосредственно в этот логер."
 
 # f60292956d9d4bfead17ed180d416652
 #: ../../topics/logging.txt:427
 msgid "``django.request``"
-msgstr ""
+msgstr "``django.request``"
 
 # ce47aac3c8834f6dbbca79b8e25cfd56
 #: ../../topics/logging.txt:429
@@ -763,27 +791,29 @@ msgid ""
 "Log messages related to the handling of requests. 5XX responses are raised "
 "as ``ERROR`` messages; 4XX responses are raised as ``WARNING`` messages."
 msgstr ""
+"Принимает сообщения связанные с процессом обработки запросов. 5XX ответы "
+"отправляют ``ERROR`` сообщения, 4XX ответы -- ``WARNING`` сообщения."
 
 # ada9a4f225624f8aa40d600cbaea49a1
 # 03861da84cca4b099d6e394c6c128b89
 #: ../../topics/logging.txt:433 ../../topics/logging.txt:448
 msgid "Messages to this logger have the following extra context:"
-msgstr ""
+msgstr "Сообщения этого логера содержат дополнительные данные:"
 
 # 6bdbd7de7f0e4bd0b5a5f4aa88539d06
 #: ../../topics/logging.txt:435
 msgid "``status_code``: The HTTP response code associated with the request."
-msgstr ""
+msgstr "``status_code``:  HTTP код ответа."
 
 # 1ed63dd9126247ff872910b3e027926a
 #: ../../topics/logging.txt:438
 msgid "``request``: The request object that generated the logging message."
-msgstr ""
+msgstr "``request``: объект запроса, который спровоцировал сообщение."
 
 # 6926e2a1990b404abad4bf05207f3489
 #: ../../topics/logging.txt:442
 msgid "``django.db.backends``"
-msgstr ""
+msgstr "``django.db.backends``"
 
 # 2a6e2337955743c2b397008a52a1edd3
 #: ../../topics/logging.txt:444
@@ -792,21 +822,23 @@ msgid ""
 "every SQL statement executed by a request is logged at the ``DEBUG`` level "
 "to this logger."
 msgstr ""
+"Сообщения связанные с взаимодействием кода с базой данной. Например, каждый "
+"SQL запрос создает ``DEBUG`` сообщение в этот логер."
 
 # 12be06cb27524ebd8e013473f6c2fee7
 #: ../../topics/logging.txt:450
 msgid "``duration``: The time taken to execute the SQL statement."
-msgstr ""
+msgstr "``duration``: Время выполнения SQL запроса."
 
 # 7d52ac968f074a629c630e889aef98a9
 #: ../../topics/logging.txt:451
 msgid "``sql``: The SQL statement that was executed."
-msgstr ""
+msgstr "``sql``: SQL запрос."
 
 # 16941d6614e1470ab6dace2dd51a7f28
 #: ../../topics/logging.txt:452
 msgid "``params``: The parameters that were used in the SQL call."
-msgstr ""
+msgstr "``params``: Параметры используемые при выполнении SQL запроса."
 
 # c7b56d41d56b4d47a7c7d82600ff5471
 #: ../../topics/logging.txt:454
@@ -815,13 +847,16 @@ msgid ""
 "is set to ``True``, regardless of the logging level or handlers that are "
 "installed."
 msgstr ""
+"Для повышения производительности логирование SQL запросов включено только "
+"при ``settings.DEBUG`` равном ``True``, независимо от уровня логирования и "
+"назначенных обработчиков."
 
 # 7d4811f19e914dcc8f1812fbe4c9cf9b
 #: ../../topics/logging.txt:461
 msgid ""
 "Django provides one log handler in addition to those provided by the Python "
 "logging module."
-msgstr ""
+msgstr "Django предоставляет один дополнительный обработчик."
 
 # 5138c8a4fc8a495fb00677af7f7ec459
 #: ../../topics/logging.txt:466
@@ -829,6 +864,7 @@ msgid ""
 "This handler sends an email to the site admins for each log message it "
 "receives."
 msgstr ""
+"Этот логер отсылает e-mail администраторам сайта с принятый сообщением."
 
 # 79e724a1e16347788acd9e22c00335a6
 #: ../../topics/logging.txt:469
@@ -836,6 +872,8 @@ msgid ""
 "If the log record contains a ``request`` attribute, the full details of the "
 "request will be included in the email."
 msgstr ""
+"Если сообщение содержит атрибут ``request``, полная информация о запросе "
+"будет включена в e-mail."
 
 # dbbbb0a35c3246239c1a65fb0fda0138
 #: ../../topics/logging.txt:472
@@ -843,6 +881,8 @@ msgid ""
 "If the log record contains stack trace information, that stack trace will be "
 "included in the email."
 msgstr ""
+"Если сообщение содержит стек трассировки(*пер.* stack trace information), он "
+"будет включен в e-mail."
 
 # d08aa86684004f64a9739163e4fe849e
 #: ../../topics/logging.txt:475
@@ -854,6 +894,11 @@ msgid ""
 "in the handler definition for ``django.utils.log.AdminEmailHandler``, like "
 "this::"
 msgstr ""
+"Параметр ``include_html`` в ``AdminEmailHandler`` указывает будет ли e-mail "
+"содержать HTML содержимое debug-страницы, которая была бы создана при :"
+"setting:`DEBUG` равном ``True``. Что бы установить этот параметр, укажите "
+"его в словаре конфигурации ``django.utils.log.AdminEmailHandler``, например "
+"так::"
 
 # ea9ee78bbb294e10af101076f15a5ef5
 #: ../../topics/logging.txt:490
@@ -868,13 +913,22 @@ msgid ""
 "information to be filtered out of error reports -- learn more on :ref:"
 "`Filtering error reports<filtering-error-reports>`."
 msgstr ""
+"Заметим что HTML версия письма содержит полный трейсбек с названиями и "
+"значениями локальных переменных на каждом уровне стека, а так же значения "
+"настроек Django. Эта информация потенциально очень важна и возможно вы не "
+"захотите отправлять её через e-mail. Рекомендуется использовать что-то вроде "
+"`django-sentry <http://pypi.python.org/pypi/django-sentry>`_ что бы получить "
+"все преимущества -- полная информация про трейсбек и *отсутствие* отправки "
+"важной информации через e-mail. Вы можете так же явно указать фильтрацию "
+"важной информации -- подробнее в разделе :ref:`Фильтрация отчетов об ошибке "
+"<filtering-error-reports>`."
 
 # 9cccde6ebf714f6780212807a815422f
 #: ../../topics/logging.txt:506
 msgid ""
 "Django provides two log filters in addition to those provided by the Python "
 "logging module."
-msgstr ""
+msgstr "Django предоставляет два дополнительных фильтра."
 
 # c145ec0718cc45f7b04f21c2fda1d438
 #: ../../topics/logging.txt:513
@@ -884,11 +938,15 @@ msgid ""
 "through the filter. Handling of that record will not proceed if the callback "
 "returns False."
 msgstr ""
+"Этот фильтр принимает функцию (которая должна принимать один аргумент - "
+"логированное сообщение), и вызывает ее для каждого переданного сообщения. "
+"Сообщение не будет обработано если функция вернет False."
 
 # 37168fffb3a64bfc88c32c74393cb634
 #: ../../topics/logging.txt:522
 msgid "This filter will only pass on records when settings.DEBUG is False."
 msgstr ""
+"Этот фильтр работает только если настройка :setting:`DEBUG` равна False."
 
 # d75ac888d5e34ceaae43f025f0ec835a
 #: ../../topics/logging.txt:524
@@ -897,3 +955,6 @@ msgid ""
 "configuration to ensure that the :class:`AdminEmailHandler` only sends error "
 "emails to admins when :setting:`DEBUG` is `False`::"
 msgstr ""
+"Этот фильтр используется в конфигурации :setting:`LOGGING` по умолчанию, "
+"чтобы предотвратить отсылку писем обработчиком :class:`AdminEmailHandler` "
+"если настройка :setting:`DEBUG` не равна `False`::"
