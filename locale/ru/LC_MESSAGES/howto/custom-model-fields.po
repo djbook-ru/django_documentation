@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated, 2012.
+# Automatically generated <>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-29 18:30\n"
-"PO-Revision-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2012-06-04 16:33+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -21,12 +21,12 @@ msgstr ""
 # eabd345927e84a968480dbd99090574a
 #: ../../howto/custom-model-fields.txt:3
 msgid "Writing custom model fields"
-msgstr ""
+msgstr "Создание собственных полей для модели"
 
 # a007a94b8b6f49b29bfa4c14850a7c43
 #: ../../howto/custom-model-fields.txt:8
 msgid "Introduction"
-msgstr ""
+msgstr "Предисловие"
 
 # 522b5aafe8194b0b8e2f4e7b9fc58254
 #: ../../howto/custom-model-fields.txt:10
@@ -38,6 +38,11 @@ msgid ""
 "won't meet your precise requirements, or you'll want to use a field that is "
 "entirely different from those shipped with Django."
 msgstr ""
+":doc:`Раздел о моделях </topics/db/models>` описывает как использовать "
+"стандартные поля модели Django -- :class:`~django.db.models.CharField`, :"
+"class:`~django.db.models.DateField`, и тд. В большинстве случаев эти классы "
+"- все что вам будет нужно. Однако в некоторых случаях предоставленные Django "
+"поля модели не предоставляют необходимый функционал."
 
 # 99520afcb0e24d82bf90b6bfe22654ab
 #: ../../howto/custom-model-fields.txt:17
@@ -48,6 +53,11 @@ msgid ""
 "such as `PostgreSQL custom types`_, you can define your own Django ``Field`` "
 "subclasses."
 msgstr ""
+"Встроенные поля не покрывают все возможные типы полей базы данных -- только "
+"стандартные типы, такие как ``VARCHAR`` и ``INTEGER``. Для остальных типов "
+"полей, такие как хранящие географические полигоны или  `собственные типы "
+"полей в PostgreSQL <http://www.postgresql.org/docs/8.2/interactive/sql-"
+"createtype.html>`_, вы можете создать собственный подкласс для ``Field``."
 
 # 24e1f6beda054a7b8f5f9cefeb859451
 #: ../../howto/custom-model-fields.txt:24
@@ -56,11 +66,14 @@ msgid ""
 "serialized to fit into a standard database column type. This is another case "
 "where a ``Field`` subclass will help you use your object with your models."
 msgstr ""
+"Так же вы можете создать поле для хранения сложного Python объекта в "
+"стандартном поле. Это другая проблема, которую помогает решит собственный "
+"подкласс ``Field``."
 
 # 5f96e84cae69475ca5768a1b5c928cf0
 #: ../../howto/custom-model-fields.txt:29
 msgid "Our example object"
-msgstr ""
+msgstr "Описание примера"
 
 # 6b2d150c06fb4be7809dcc29f333c510
 #: ../../howto/custom-model-fields.txt:31
@@ -73,6 +86,13 @@ msgid ""
 "players, who are traditionally called *north*, *east*, *south* and *west*.  "
 "Our class looks something like this::"
 msgstr ""
+"Создание собственного поля требует внимания к деталям. Для простоты "
+"понимания мы будем использовать один и тот же пример в этом разделе: объект, "
+"который содержит состояние карт на руках для карточной игры  `Бридж <http://"
+"ru.wikipedia.org/wiki/%D0%91%D1%80%D0%B8%D0%B4%D0%B6>`_. Не беспокойтесь, "
+"вам не обязательно знать правила этой игры. Все что вам необходимо знать -- "
+"52 делятся поровну между четырьмя игроками, которых традиционно называют "
+"*north*, *east*, *south* и *west*.  Наш класс выглядит следующим образом::"
 
 # d4b7ec96594d443796183251974adef8
 #: ../../howto/custom-model-fields.txt:53
@@ -81,6 +101,9 @@ msgid ""
 "it. We'd like to be able to do things like this in our models (we assume the "
 "``hand`` attribute on the model is an instance of ``Hand``)::"
 msgstr ""
+"Это простой класс Python, ничего Django-специфического. Мы ходим "
+"использовать нашу модель следующим образом (предполагается что атрибут "
+"модели ``hand`` это объект ``Hand``)::"
 
 # 4080e601506345e697dc023e2c40fc28
 #: ../../howto/custom-model-fields.txt:64
@@ -89,6 +112,9 @@ msgid ""
 "any other Python class. The trick is to tell Django how to handle saving and "
 "loading such an object."
 msgstr ""
+"Получение и назначение значений атрибута ``hand`` нашей модели аналогично "
+"любому другому классу в Python. Хитрость заключается в том, что бы научить "
+"Django сохранять и загружать наш объект."
 
 # 8e4f20ee1fb04de9b38aee4a333fec78
 #: ../../howto/custom-model-fields.txt:68
@@ -98,6 +124,9 @@ msgid ""
 "write model support for existing classes where you cannot change the source "
 "code."
 msgstr ""
+"Для использования класса ``Hand`` в наших моделях, мы **не должны** изменять "
+"этот класс. Таким образом можно использовать в моделях существующие классы, "
+"которые мы не можем изменить."
 
 # 79e09c752a5d4b1f8f2c56f49b2b2d04
 #: ../../howto/custom-model-fields.txt:73
@@ -107,16 +136,20 @@ msgid ""
 "floats, for example. This case is similar to our ``Hand`` example and we'll "
 "note any differences as we go along."
 msgstr ""
+"В некоторых случаях вы захотите использовать возможности определенных типов "
+"полей базы данных, но использовать стандартные типы Python: строки, числа и "
+"др. Этот случай похож на наш пример с классом ``Hand`` и мы укажем на все "
+"отличия."
 
 # 20907799496f4c058f13944e9a03e4ad
 #: ../../howto/custom-model-fields.txt:79
 msgid "Background theory"
-msgstr ""
+msgstr "Теория"
 
 # aa87348cf30245d98dcb5ac5144a078d
 #: ../../howto/custom-model-fields.txt:82
 msgid "Database storage"
-msgstr ""
+msgstr "Хранение в базе данных"
 
 # a48e085a8a704b8ea8f267b621c4dffb
 #: ../../howto/custom-model-fields.txt:84
@@ -128,6 +161,11 @@ msgid ""
 "that falls out fairly naturally once you have the database side under "
 "control)."
 msgstr ""
+"Основное предназначение поля модели -- это преобразование объекта Python "
+"(строка, булево значение, ``datetime``, или что-либо более сложное, как "
+"``Hand``) в формат удобный для хранения в базе данных и обратно (и "
+"сериализация, но, как мы увидим далее,  это решается естественным способом "
+"при решении проблем преобразования данных для базы данных)."
 
 # a17543dc40ec4166adcbf74d9536b2f9
 #: ../../howto/custom-model-fields.txt:90
@@ -138,6 +176,11 @@ msgid ""
 "work with. Anything you want to store in the database must fit into one of "
 "those types."
 msgstr ""
+"Значение поля модели должно быть преобразовано в один из доступных тип полей "
+"базы данных. Различные базы данных предоставляют различные типы полей, но "
+"правило остается одно: вы можете работать только с этими типами. Все, что вы "
+"хотите сохранить в базе данных, должно быть преобразовано в один из "
+"доступных типов данных."
 
 # 8e1b0d8de7284f20b4e41774ead788fc
 #: ../../howto/custom-model-fields.txt:96
@@ -146,6 +189,8 @@ msgid ""
 "database column type, or there's a fairly straightforward way to convert "
 "your data to, say, a string."
 msgstr ""
+"Скорее всего, вы создаете поле модели для использования типа поля конкретной "
+"базы данных, или же преобразуете данные, предположим, в строку."
 
 # d7ac1d9af268401195b01445d57875b3
 #: ../../howto/custom-model-fields.txt:100
@@ -156,11 +201,15 @@ msgid ""
 "cards. So ``Hand`` objects can be saved to text or character columns in the "
 "database."
 msgstr ""
+"Для нашего примера с ``Hand``, мы можем преобразовать данные о картах в "
+"строку из 104 символов соединив все карты вместе в определенном порядке -- "
+"скажем, сначала все карты *north*, затем карты *east*, *south* и *west*. "
+"Таким образом объект ``Hand`` будет сохранен в текстовом поле базы данных."
 
 # 4a39936217ea4e5683f3f6a457e3a128
 #: ../../howto/custom-model-fields.txt:106
 msgid "What does a field class do?"
-msgstr ""
+msgstr "Что делает класс поля?"
 
 # 8877ca589a4040ba8406976e5a819967
 #: ../../howto/custom-model-fields.txt:110
