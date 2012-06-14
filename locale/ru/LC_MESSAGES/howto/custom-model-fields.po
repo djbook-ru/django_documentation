@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-29 18:30\n"
-"PO-Revision-Date: 2012-06-04 16:33+0300\n"
+"PO-Revision-Date: 2012-06-14 11:46+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -223,6 +223,13 @@ msgid ""
 "on; for now, suffice it to say that everything descends from ``Field`` and "
 "then customizes key pieces of the class behavior."
 msgstr ""
+"Все поля в Django(и когда мы говорим *поля* в этом разделе, мы всегда "
+"подразумеваем поля модели а не :doc:`поля формы </ref/forms/fields>`) "
+"являются подклассами :class:`django.db.models.Field`. Большинство информации "
+"о поле, которую хранит Django, общая для всех типов полей -- название, "
+"описание, уникальность и др. Вся эта информация хранится в ``Field``. Мы "
+"рассмотрим возможности ``Field`` чуть позже, сейчас же запомним, что все "
+"поля наследуются от ``Field`` и переопределяют поведение этого класса."
 
 # c5434e0868214f88a525fe840d5473ad
 #: ../../howto/custom-model-fields.txt:119
@@ -237,6 +244,13 @@ msgid ""
 "stored in the database or sent to the :doc:`serializer </topics/"
 "serialization>`."
 msgstr ""
+"Важно понять, что класс поля это не то, что хранится в атрибуте модели. "
+"Атрибуты модели содержат объекты Python. Классы полей, которые вы указали в "
+"модели, на самом деле сохраняются в классе ``Meta`` при создании класса "
+"модели. Вот почему мы не используем классы полей при редактировании "
+"атрибутов экземпляра модели, их задача преобразовывать значение атрибутов в "
+"данные сохраняемые в базе данных или передаваемые в :doc:`сериализатор </"
+"topics/serialization>`."
 
 # d3c008f1816a4d0bb2868882de18ef60
 #: ../../howto/custom-model-fields.txt:128
@@ -249,6 +263,12 @@ msgid ""
 "in the examples below. Just remember that you will often end up creating two "
 "classes when you want a custom field:"
 msgstr ""
+"Будьте внимательны при создании собственного поля. Подкласс ``Field``  "
+"несколько способов преобразования объектов Python в значение для базы/"
+"сериализаци (например, сохраняемое значение и значение для фильтра по полю "
+"отличаются). Не волнуйтесь если звучит слишком сложно -- мы во всем "
+"разберемся на примере чуть ниже. Просто запомните что скорее всего вам "
+"придется создавать два класса:"
 
 # 6a5e465e308d49a8b8a223984b3b070a
 #: ../../howto/custom-model-fields.txt:136
@@ -257,6 +277,9 @@ msgid ""
 "will assign it to the model attribute, they will read from it for displaying "
 "purposes, things like that. This is the ``Hand`` class in our example."
 msgstr ""
+"Первый класс будет использоваться пользователями. Экземпляр этого класса "
+"будет использоваться для отображения, работы с данными, при изменении "
+"значения поля модели. В нашем примере это класс ``Hand``."
 
 # 823328d62eff49c5946f07821a5421e4
 #: ../../howto/custom-model-fields.txt:141
@@ -265,11 +288,14 @@ msgid ""
 "to convert your first class back and forth between its permanent storage "
 "form and the Python form."
 msgstr ""
+"Второй класс -- это подкласс ``Field``. Это класс, который отвечает за "
+"преобразование вашего первого класса в значение для хранения в базе данных и "
+"обратно в объект Python."
 
 # 1399371549a64822a0c17804b5b6a1e7
 #: ../../howto/custom-model-fields.txt:146
 msgid "Writing a field subclass"
-msgstr ""
+msgstr "Создание подкласса поля"
 
 # 0a5b595071ce4e279b9c07db82b6180f
 #: ../../howto/custom-model-fields.txt:148
@@ -280,6 +306,10 @@ msgid ""
 "save yourself some work? If not, you should subclass the :class:`~django.db."
 "models.Field` class, from which everything is descended."
 msgstr ""
+"При создании подкласса :class:`~django.db.models.Field`, сначала подумайте "
+"не похож ли он на уже существующее поле. Можете ли унаследоваться от "
+"существующего поля Django и сэкономить этим свое время? Если нет, создавайте "
+"подкласс :class:`~django.db.models.Field`."
 
 # 633019c5cc4e4bb3817d22adf0987a45
 #: ../../howto/custom-model-fields.txt:154
@@ -289,6 +319,9 @@ msgid ""
 "to the :meth:`~django.db.models.Field.__init__` method of :class:`~django.db."
 "models.Field` (or your parent class)."
 msgstr ""
+"При создании конструктора важно разделить аргументы специфические для вашего "
+"поля и те, которые следует передать в метод :meth:`~django.db.models.Field."
+"__init__` родительского класса :class:`~django.db.models.Field`."
 
 # 60eaa5efcae74a40be5dedd056de124a
 #: ../../howto/custom-model-fields.txt:159
@@ -299,6 +332,11 @@ msgid ""
 "doesn't behave like any existing field, so we'll subclass directly from :"
 "class:`~django.db.models.Field`::"
 msgstr ""
+"Назовем наше поле ``HandField``. (Хорошая практика называть подклассы :class:"
+"`~django.db.models.Field` как ``<Something>Field``, таким образом легко "
+"определить какой класс является подклассом :class:`~django.db.models."
+"Field`.) Оно не похоже ни на одно встроенное в Django поле, по этому мы "
+"создаем подкласс :class:`~django.db.models.Field`::"
 
 # ee25de1a435d47b7a13fe7777294101a
 #: ../../howto/custom-model-fields.txt:175
@@ -307,6 +345,9 @@ msgid ""
 "below), but we ensure it has a fixed length, since it only needs to hold 52 "
 "card values plus their suits; 104 characters in total."
 msgstr ""
+"``HandField`` принимает большинство стандартных аргументов (смотрите список "
+"ниже), но мы явно указываем длинную поля так как нам необходимо хранить "
+"только значения 52 карт и их принадлежность, всего 104 символа."
 
 # 46e3867dbaa14b4994371029d5a610ae
 #: ../../howto/custom-model-fields.txt:181
@@ -318,6 +359,12 @@ msgid ""
 "Field.editable` parameter (:attr:`~django.db.models.Field.auto_now` being "
 "set implies ``editable=False``). No error is raised in this case."
 msgstr ""
+"Большинство полей модели в Django принимают параметры, которые они совсем не "
+"используют. Например, вы можете передать :attr:`~django.db.models.Field."
+"editable` и :attr:`~django.db.models.Field.auto_now` в :class:`django.db."
+"models.DateField`, аргумент :attr:`~django.db.models.Field.editable` будет "
+"проигнорирован (:attr:`~django.db.models.Field.auto_now`устанавливает  "
+"``editable=False``). Вы не получите ошибку."
 
 # 95d3dc3c7ca24d0c86ce1d51b0b60dc9
 #: ../../howto/custom-model-fields.txt:190
@@ -328,6 +375,11 @@ msgid ""
 "want your fields to be more strict about the options they select, or to use "
 "the simpler, more permissive behavior of the current fields."
 msgstr ""
+"Такое поведение упрощает классы полей, так как они не должны проверять все "
+"аргументы. Они просто передают их в родительский класс и больше не "
+"используют. Вы можете использовать более строгие правила и проверять все "
+"входящие аргументы или же использовать более простой и гибкий путь, как это "
+"делают встроенные классы."
 
 # 71ac7654819a4e2aa0a4d957d36d6956
 #: ../../howto/custom-model-fields.txt:198
@@ -335,46 +387,47 @@ msgid ""
 "The :meth:`~django.db.models.Field.__init__` method takes the following "
 "parameters:"
 msgstr ""
+"Метод :meth:`~django.db.models.Field.__init__` принимает следующие параметры:"
 
 # 62b668405af647f7ad7f00f2242b30a5
 #: ../../howto/custom-model-fields.txt:201
 msgid ":attr:`~django.db.models.Field.verbose_name`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.verbose_name`"
 
 # 5b1f7d84db614b4aabfbfc015c752985
 #: ../../howto/custom-model-fields.txt:202
 msgid ":attr:`~django.db.models.Field.name`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.name`"
 
 # e9a44d3f4a35471cbe34b22487476570
 #: ../../howto/custom-model-fields.txt:203
 msgid ":attr:`~django.db.models.Field.primary_key`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.primary_key`"
 
 # ffa8b81c5a65428b968bbd24ac211d71
 #: ../../howto/custom-model-fields.txt:204
 msgid ":attr:`~django.db.models.Field.max_length`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.max_length`"
 
 # cc91254f8c694e2e887c448c4d3cc527
 #: ../../howto/custom-model-fields.txt:205
 msgid ":attr:`~django.db.models.Field.unique`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.unique`"
 
 # b7cb2217a109413787f604fe98867b53
 #: ../../howto/custom-model-fields.txt:206
 msgid ":attr:`~django.db.models.Field.blank`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.blank`"
 
 # 37000e70038e49b49318b6cccb87f9e1
 #: ../../howto/custom-model-fields.txt:207
 msgid ":attr:`~django.db.models.Field.null`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.null`"
 
 # 52825cda20fa428dbef53aad36be706c
 #: ../../howto/custom-model-fields.txt:208
 msgid ":attr:`~django.db.models.Field.db_index`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.db_index`"
 
 # bc77cf2f14f348bebaf7a78040577433
 #: ../../howto/custom-model-fields.txt:209
@@ -382,16 +435,19 @@ msgid ""
 ":attr:`~django.db.models.Field.rel`: Used for related fields (like :class:"
 "`ForeignKey`). For advanced use only."
 msgstr ""
+":attr:`~django.db.models.Field.rel`: используется полям обрабатывающими "
+"связи между моделями (например :class:`ForeignKey`). Для опытных "
+"пользователей."
 
 # 5c341f7c1ac94d3c9a4ce32720845c54
 #: ../../howto/custom-model-fields.txt:211
 msgid ":attr:`~django.db.models.Field.default`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.default`"
 
 # 44c42789e6be4c9c9930e86ba87a3409
 #: ../../howto/custom-model-fields.txt:212
 msgid ":attr:`~django.db.models.Field.editable`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.editable`"
 
 # e1a38cdddc034e67bb7349c49db69a90
 #: ../../howto/custom-model-fields.txt:213
@@ -400,36 +456,39 @@ msgid ""
 "be serialized when the model is passed to Django's :doc:`serializers </"
 "topics/serialization>`. Defaults to ``True``."
 msgstr ""
+":attr:`~django.db.models.Field.serialize`: При ``False``, поле не будет "
+"сериализовано при передачи модели в :doc:`сериализатор Django </topics/"
+"serialization>`. По умолчанию ``True``."
 
 # 07708d78936d4fd88c2fef99fd801ef2
 #: ../../howto/custom-model-fields.txt:216
 msgid ":attr:`~django.db.models.Field.unique_for_date`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.unique_for_date`"
 
 # ce785aab0c5b4caeb41ec24915805102
 #: ../../howto/custom-model-fields.txt:217
 msgid ":attr:`~django.db.models.Field.unique_for_month`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.unique_for_month`"
 
 # c1b3801f44154635ac187f6d8211cff2
 #: ../../howto/custom-model-fields.txt:218
 msgid ":attr:`~django.db.models.Field.unique_for_year`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.unique_for_year`"
 
 # 7475f439af5549cbbd3a491be4327114
 #: ../../howto/custom-model-fields.txt:219
 msgid ":attr:`~django.db.models.Field.choices`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.choices`"
 
 # 4e611b44bb984267a5ff36afa056a5a0
 #: ../../howto/custom-model-fields.txt:220
 msgid ":attr:`~django.db.models.Field.help_text`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.help_text`"
 
 # dcd40b7bd3d243fda9eacf342b63ddbe
 #: ../../howto/custom-model-fields.txt:221
 msgid ":attr:`~django.db.models.Field.db_column`"
-msgstr ""
+msgstr ":attr:`~django.db.models.Field.db_column`"
 
 # 60193b76ff7c4cd8a6f2690375374003
 #: ../../howto/custom-model-fields.txt:222
@@ -438,6 +497,10 @@ msgid ""
 "the backend supports :doc:`tablespaces </topics/db/tablespaces>`. You can "
 "usually ignore this option."
 msgstr ""
+":attr:`~django.db.models.Field.db_tablespace`: Используется только при "
+"создании индекса, если база данных поддерживает :doc:`табличное пространство "
+"</topics/db/tablespaces>`. В большинстве случаев вы можете проигнорировать "
+"этот параметр."
 
 # 7df1821fed754b31bf12d77f0a477630
 #: ../../howto/custom-model-fields.txt:225
@@ -446,6 +509,9 @@ msgid ""
 "automatically created, as for the `OneToOneField` used by model inheritance. "
 "For advanced use only."
 msgstr ""
+":attr:`~django.db.models.Field.auto_created`: True, если поле создается "
+"автоматически, например, используется полем `OneToOneField`. Для опытных "
+"пользователей."
 
 # 506f24cd21c441a3a3ada5bce901bc72
 #: ../../howto/custom-model-fields.txt:229
@@ -454,11 +520,14 @@ msgid ""
 "meaning they do for normal Django fields. See the :doc:`field documentation "
 "</ref/models/fields>` for examples and details."
 msgstr ""
+"Аргументы без описания аналогичны соответствующим аргументам стандартных "
+"полей, смотрите :doc:`раздел о полях модели </ref/models/fields>` for "
+"examples and details."
 
 # ccdf18966b884e47b527e53527b87219
 #: ../../howto/custom-model-fields.txt:234
 msgid "The ``SubfieldBase`` metaclass"
-msgstr ""
+msgstr "Метакласс ``SubfieldBase``"
 
 # a511197a6d0547c1915e9f8c17de1ac4
 #: ../../howto/custom-model-fields.txt:238
@@ -470,6 +539,11 @@ msgid ""
 "model fields appear in Python as standard Python types direct from the "
 "database backend, you don't need to worry about this section."
 msgstr ""
+"Как уже упоминалось в Предисловии, собственные поля используются в двух "
+"случаях: для использования типа поля для определенной базы данных и для "
+"работы со сложными объектами Python. Если вам необходимо работать с "
+"определенным типом поля в базе данных и использовать встроенные типы данных "
+"Python, вы можете пропустить этот раздел."
 
 # bc5f8023a399477994fb27774ce3496b
 #: ../../howto/custom-model-fields.txt:245
