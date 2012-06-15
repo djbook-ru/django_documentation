@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-29 18:30\n"
-"PO-Revision-Date: 2012-06-14 11:46+0300\n"
+"PO-Revision-Date: 2012-06-14 16:26+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -556,6 +556,12 @@ msgid ""
 "``Field`` class is simple: make sure your field subclass uses a special "
 "metaclass:"
 msgstr ""
+"Если мы используем собственный тип Python, такой как наш класс ``Hand``, мы "
+"должны убедиться что Django, при создании экземпляра модели и добавления "
+"значения из базы данных в атрибут поля, преобразует значение в правильный "
+"объект Python. Полное описание этого процесса с легко сложное для понимания, "
+"но код, который вам необходимо написать в классе поля, простой: убедитесь, "
+"что вам подкласс использует специальный метакласс:"
 
 # 8aa51dada69c46d69cb5a430450ca4f8
 # 23f1c9910512473e852f8cd1d6ab5b98
@@ -566,7 +572,7 @@ msgstr ""
 #: ../../howto/custom-model-fields.txt:470
 #: ../../howto/custom-model-fields.txt:653
 msgid "For example::"
-msgstr ""
+msgstr "Например::"
 
 # 23c255f0a9414627a2360c9413f5f1a0
 #: ../../howto/custom-model-fields.txt:263
@@ -574,11 +580,13 @@ msgid ""
 "This ensures that the :meth:`.to_python` method, documented below, will "
 "always be called when the attribute is initialized."
 msgstr ""
+"Теперь мы можем быть уверенны, что метод :meth:`.to_python`, описанный ниже, "
+"будет всегда вызываться при инициализации атрибута."
 
 # d1121da5c6f141e6b07ea92e1b00e195
 #: ../../howto/custom-model-fields.txt:267
 msgid "ModelForms and custom fields"
-msgstr ""
+msgstr "ModelForms и собственные поля"
 
 # 32eeab5385cb41ffa87372d34f0dd262
 #: ../../howto/custom-model-fields.txt:269
@@ -588,6 +596,10 @@ msgid ""
 "means that whenever a value may be assigned to the field, you need to ensure "
 "that it will be of the correct datatype, or that you handle any exceptions."
 msgstr ""
+"Если вы используете :class:`~django.db.models.SubfieldBase`, :meth:`."
+"to_python` будет вызываться при добавления значения в поле. Это означает, "
+"что каждый раз при названии знании значения полю, вы может можете проверить "
+"правильного ли типа значение и обработать ошибки."
 
 # f1d872d8ba394232b1ae914b36962369
 #: ../../howto/custom-model-fields.txt:275
@@ -597,6 +609,11 @@ msgid ""
 "instantiate model instances. However, if the cleaned form data can't be used "
 "as valid input to the field, the normal form validation process will break."
 msgstr ""
+"Это особо важно при использовании :doc:`ModelForms </topics/forms/"
+"modelforms>`. При сохранении ModelForm, Django использует данные из формы "
+"при создании экземпляра модели. Если проверенные данные из формы не могут "
+"быть использовать в качестве значения для поля модели, стандартный процесс "
+"проверки данных в форме будет нарушен."
 
 # d47092e197634e85b7ca5d72a27454d1
 #: ../../howto/custom-model-fields.txt:281
@@ -608,11 +625,17 @@ msgid ""
 "the :meth:`.formfield` method on your field to return a form field class "
 "whose `to_python()` returns the correct datatype."
 msgstr ""
+"Поэтому вы должны убедиться, что поле формы, которое отображает ваше поле "
+"модели, выполняет все необходимые проверки данных и преобразует их в тип "
+"аналогичный используемыму методом `to_python()` вашего поля модели. Для "
+"этого, возможно, вам придется создать собственный класс поля формы и/или "
+"переопределить метод :meth:`.formfield` поля модели, что бы метод `to_python"
+"()` класса поля формы возвращал данные правильного типа."
 
 # a6d906ba2d50431ead5827cabd984ce1
 #: ../../howto/custom-model-fields.txt:290
 msgid "Documenting your custom field"
-msgstr ""
+msgstr "Документирование собственного поля"
 
 # d2981188b931450e8b0bc810eaeeda7b
 #: ../../howto/custom-model-fields.txt:294
@@ -626,11 +649,19 @@ msgid ""
 "example, the description displayed by the ``admindocs`` application for a "
 "``HandField`` will be 'A hand of cards (bridge style)'."
 msgstr ""
+"Конечно же вам необходимо задокументировать ваше поле, что бы пользователи "
+"знали как его использовать. В дополнение к docstring, который удобен для "
+"разработчиков, вы можете предоставить описание поля, которое будет "
+"отображаться в разделе документации в интерфейсе администратора, созданном "
+"с :doc:`django.contrib.admindocs </ref/contrib/admin/admindocs>`. Для этого "
+"укажите описание в атрибуте ``description`` класса поля. В нашем примере "
+"описание поля ``HandField`` в приложении ``admindocs`` будет - 'A hand of "
+"cards (bridge style)'."
 
 # 46ca5032629e464d9326ff01a97edd02
 #: ../../howto/custom-model-fields.txt:304
 msgid "Useful methods"
-msgstr ""
+msgstr "Полезные методы"
 
 # 427d3fabea8645bc87646e6b7cce2659
 #: ../../howto/custom-model-fields.txt:306
@@ -640,11 +671,15 @@ msgid ""
 "methods, depending on your field's behavior. The list of methods below is in "
 "approximately decreasing order of importance, so start from the top."
 msgstr ""
+"После того как вы создали свой подкласс :class:`~django.db.models.Field` и "
+"указали ``__metaclass__``, можно переходить к переопределению методов, "
+"которые определяют поведение вашего поля. Методы описанные ниже идут в "
+"порядке убывания важности."
 
 # 661e0b6c078f4db39535c2d48d48fe9d
 #: ../../howto/custom-model-fields.txt:312
 msgid "Custom database types"
-msgstr ""
+msgstr "Типы полей базы данных"
 
 # 49fd3ed7a29b4d80a9846e75e2b141d0
 #: ../../howto/custom-model-fields.txt:319
