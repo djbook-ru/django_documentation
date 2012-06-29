@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-24 01:58\n"
-"PO-Revision-Date: 2012-06-18 18:10+0300\n"
+"PO-Revision-Date: 2012-06-29 17:46+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -584,6 +584,14 @@ msgid ""
 "you to choose a username and password before allowing you to edit the rest "
 "of the user's fields."
 msgstr ""
+"Вы так же можете создать пользователя с помощью интерфейса администратора. "
+"Предположим что вы уже настроили его и подключили к URL-у ``/admin/``, "
+"Страница для добавления пользователя будет находиться по адресу ``/admin/"
+"auth/user/add/``. Вы так же должны видеть ссылку \"Users\" в разделе \"Auth"
+"\" на главной странице интерфейса администратора. Страница добавления "
+"пользователя отличается от стандартной страницы добавления в интерфейсе "
+"администратора, вы должны указать пароль и имя пользователя перед "
+"редактированием пользователя."
 
 # 68bf1992039940cda415c640f5c25247
 #: ../../topics/auth.txt:341
@@ -597,11 +605,19 @@ msgid ""
 "change other users. So Django requires add *and* change permissions as a "
 "slight security measure."
 msgstr ""
+"Так же помните: если вы хотите создавать пользователей используя интерфейс "
+"администратора, вам необходимо добавить своему аккаунту права добавления *и* "
+"редактирования пользователей (то есть, права \"Add user\" и \"Change user"
+"\"). Если ваш аккаунт имеет право добавлять но не редактировать "
+"пользователя, вы не сможете добавлять пользователей. Почему? Потому что если "
+"у вас есть права добавлять пользователя, вы можете создать суперпользователя "
+"и с его помощью редактировать других пользователей. По этому Django требует "
+"права добавлять *и* редактировать."
 
 # 16159b97c4e64729a788639948649969
 #: ../../topics/auth.txt:350
 msgid "Changing passwords"
-msgstr ""
+msgstr "Смена паролей"
 
 # ca358d96e9254dbb8f16b4dd83bf8b6b
 #: ../../topics/auth.txt:355
@@ -613,6 +629,12 @@ msgid ""
 "supply a user, the command will attempt to change the password whose "
 "username matches the current user."
 msgstr ""
+":djadmin:`manage.py changepassword *username* <changepassword>` позволяет "
+"изменить пароль пользователя через консоль. Эта команда предлагает ввести "
+"пароль для указанно пользователя, вы должны ввести пароль дважды. Если "
+"введенные пароли совпадают, он будет изменен. Если пользователь не указан, "
+"команда попытается изменить пароль пользователю чье имя совпадает с текущим "
+"пользователем."
 
 # 04d6ad756f4a483eb2560dc89dd3bb99
 #: ../../topics/auth.txt:362
@@ -620,6 +642,8 @@ msgid ""
 "You can also change a password programmatically, using :meth:`~django."
 "contrib.auth.models.User.set_password()`:"
 msgstr ""
+"Вы так же можете сменить пароль программно, используя :meth:`~django.contrib."
+"auth.models.User.set_password()`:"
 
 # cc3f2e5be6c24309bd1a8008106168f7
 #: ../../topics/auth.txt:372
@@ -628,11 +652,13 @@ msgid ""
 "directly unless you know what you're doing. This is explained in the next "
 "section."
 msgstr ""
+"Не изменяйте атрибут :attr:`~django.contrib.auth.models.User.password` явно, "
+"если вы не знаете что делаете. Это объясняется в следующем разделе."
 
 # aa02c0b73e5c4ce0b02577c9d48681d5
 #: ../../topics/auth.txt:379
 msgid "How Django stores passwords"
-msgstr ""
+msgstr "Как Django хранит пароли"
 
 # 63ae5966031a4bd9a398583f915fa57e
 #: ../../topics/auth.txt:386
@@ -640,6 +666,8 @@ msgid ""
 "The :attr:`~django.contrib.auth.models.User.password` attribute of a :class:"
 "`~django.contrib.auth.models.User` object is a string in this format::"
 msgstr ""
+"Атрибут :attr:`~django.contrib.auth.models.User.password` объекта :class:"
+"`~django.contrib.auth.models.User` содержит строку в формате::"
 
 # 77a799ec478f466881557863afdf9cd1
 #: ../../topics/auth.txt:391
@@ -649,6 +677,9 @@ msgid ""
 "storage algorithms Django can use; see below. The hash is the result of the "
 "one- way function."
 msgstr ""
+"Она состоит из алгоритма и хэша разделенных знаком доллара. Django "
+"поддерживает несколько алгоритмов, подробнее смотрите ниже. Хэш - результат "
+"выполнения алгоритма над паролем."
 
 # 08d59c65a4054385b29f023a747e1f28
 #: ../../topics/auth.txt:396
@@ -658,6 +689,10 @@ msgid ""
 "most users: it's quite secure, requiring massive amounts of computing time "
 "to break."
 msgstr ""
+"По умолчанию, Django использует алгоритм PBKDF2_ с SHA256 хэшом -- механизм "
+"рекомендованный NIST_. Этого должно быть достаточно для большинства "
+"пользователей: механизм достаточно защищен и требует больших вычислительных "
+"ресурсов для взлома."
 
 # 50d2eba8b6604cd6a6f4f0634fef794d
 #: ../../topics/auth.txt:401
@@ -667,6 +702,10 @@ msgid ""
 "situation. Again, most users shouldn't need to do this -- if you're not "
 "sure, you probably don't.  If you do, please read on:"
 msgstr ""
+"Одна, если это необходимо, вы можете выбрать другой алгоритм, или "
+"использовать собственный. Опять же, большинству пользователей не придется "
+"этого делать -- если вы не уверены, скорее всего вам не нужно что-либо "
+"менять."
 
 # 165e9454292c44dda8b9fa3366828e9f
 #: ../../topics/auth.txt:406
@@ -680,11 +719,18 @@ msgid ""
 "need to modify :setting:`PASSWORD_HASHERS` to list your prefered algorithm "
 "first in the list."
 msgstr ""
+"Django выбирает алгоритм в соответствии с настройкой :setting:"
+"`PASSWORD_HASHERS`. Настройка содержит список хэширующих алгоритмов, которые "
+"поддерживает проект. Первый элемент списка (то есть ``settings."
+"PASSWORD_HASHERS[0]``) будет использован для хранения паролей, и все "
+"остальные элементы могут быть использованы при проверке паролей. Это "
+"означает что если вы хотите использовать другой алгоритм, вам необходимо "
+"добавить его в начало списка :setting:`PASSWORD_HASHERS`."
 
 # f2994b08674d47c2b2973d4f4c940a18
 #: ../../topics/auth.txt:414
 msgid "The default for :setting:`PASSWORD_HASHERS` is::"
-msgstr ""
+msgstr "Значение по умолчанию для :setting:`PASSWORD_HASHERS`::"
 
 # 4c32bd87f6b745259cfac336da7df4cf
 #: ../../topics/auth.txt:425
@@ -694,11 +740,15 @@ msgid ""
 "next few sections describe a couple of common ways advanced users may want "
 "to modify this setting."
 msgstr ""
+"Это означает что Django будет использовать PBKDF2_ для хранения паролей, но "
+"для проверки сохраненных паролей использует PBKDF2SHA1, bcrypt_, SHA1_, и "
+"др. Следующие несколько разделов описывают как продвинутые пользователи "
+"могут поменять эту настройку."
 
 # 25a86ebbb1154582ac54f85cdbfb82d5
 #: ../../topics/auth.txt:431
 msgid "Using bcrypt with Django"
-msgstr ""
+msgstr "Использование bcrypt с Django"
 
 # e733b6ba2e41487e98a48b27f3e7c64a
 #: ../../topics/auth.txt:433
@@ -708,11 +758,16 @@ msgid ""
 "requires the use of third-party libraries, but since many people may want to "
 "use it Django supports bcrypt with minimal effort."
 msgstr ""
+"Bcrypt_ -- популярный алгоритм для шифрования паролей, специально создан для "
+"долговременного хранения паролей. Не используется Django по умолчанию так "
+"как требует использования сторонних библиотек, но так как он может "
+"пригодиться для большинства пользователей, Django позволяет использовать "
+"bcrypt с минимальными усилиями."
 
 # e9d418f2499949bca6315d2bfd7a94ab
 #: ../../topics/auth.txt:438
 msgid "To use Bcrypt as your default storage algorithm, do the following:"
-msgstr ""
+msgstr "Что бы использовать Bcrypt по умолчанию, выполните следующие действия:"
 
 # 899bd5c23bdd4cf48241b1c8c3cec2c4
 #: ../../topics/auth.txt:440
@@ -721,6 +776,9 @@ msgid ""
 "bcrypt``, or downloading the library and installing it with ``python setup."
 "py install``)."
 msgstr ""
+"Установите библиотеку `py-bcrypt`_  (выполнив ``sudo pip install py-"
+"bcrypt``, или скачав библиотеку и установив ее с помощью ``python setup.py "
+"install``)."
 
 # 36ab636f7fc04d438c89b87a8af6dc58
 #: ../../topics/auth.txt:444
@@ -728,6 +786,8 @@ msgid ""
 "Modify :setting:`PASSWORD_HASHERS` to list ``BCryptPasswordHasher`` first. "
 "That is, in your settings file, you'd put::"
 msgstr ""
+"Измените :setting:`PASSWORD_HASHERS` добавив в начало списка "
+"``BCryptPasswordHasher``. Вот что должно получиться::"
 
 # 45092d98ef6446f594e58a9dc1deb463
 #: ../../topics/auth.txt:456
@@ -735,6 +795,8 @@ msgid ""
 "(You need to keep the other entries in this list, or else Django won't be "
 "able to upgrade passwords; see below)."
 msgstr ""
+"(Необходимо сохранить остальные элементы списка, иначе Django не сможет "
+"обновить пароли, подробности смотрите ниже)."
 
 # 6f78eb335eb5484e88e01a1ef67ec1fd
 #: ../../topics/auth.txt:459
@@ -742,6 +804,8 @@ msgid ""
 "That's it -- now your Django install will use Bcrypt as the default storage "
 "algorithm."
 msgstr ""
+"Это все -- теперь Django будет использовать Bcrypt как алгоритм по умолчанию "
+"для хранения паролей."
 
 # 1b6e3be5ffa24013b8c450492804892d
 #: ../../topics/auth.txt:464
@@ -752,6 +816,11 @@ msgid ""
 "form `bcrypt$(raw bcrypt output)`. For example: `bcrypt$$2a"
 "$12$NT0I31Sa7ihGEWpka9ASYrEFkhuTNeBQ2xfZskIiiJeyFXhRgS.Sy`."
 msgstr ""
+"Существуют и другие реализации использования bcrypt с Django. Но они не "
+"совсем совместимы с текущей реализацией поддержки bcrypt. Для обновления вам "
+"необходимо изменить хэши в базе данных в формат `bcrypt$(результат алгоритма)"
+"`. Например: `bcrypt$$2a"
+"$12$NT0I31Sa7ihGEWpka9ASYrEFkhuTNeBQ2xfZskIiiJeyFXhRgS.Sy`."
 
 # 3221d458af744dcbba75fbcf9b03eaf2
 #: ../../topics/auth.txt:472
@@ -824,7 +893,7 @@ msgstr ""
 # 31063a7b4444476a9d486017c5c18ffa
 #: ../../topics/auth.txt:534
 msgid "Anonymous users"
-msgstr ""
+msgstr "Анонимные пользователи"
 
 # 2562acfeba6a4054bfacb021703825f0
 #: ../../topics/auth.txt:538
@@ -833,11 +902,14 @@ msgid ""
 "the :class:`django.contrib.auth.models.User` interface, with these "
 "differences:"
 msgstr ""
+":class:`django.contrib.auth.models.AnonymousUser` -- это класс, который "
+"реализует интерфейс класса :class:`django.contrib.auth.models.User`, с "
+"следующими отличиями:"
 
 # 332acc35b051471ebd98ac28dbee6006
 #: ../../topics/auth.txt:542
 msgid ":attr:`~django.contrib.auth.models.User.id` is always ``None``."
-msgstr ""
+msgstr ":attr:`~django.contrib.auth.models.User.id` всегда равен ``None``."
 
 # f99c4decd3ad4551ae7137250ca1d4cc
 #: ../../topics/auth.txt:543
@@ -845,11 +917,13 @@ msgid ""
 ":attr:`~django.contrib.auth.models.User.is_staff` and :attr:`~django.contrib."
 "auth.models.User.is_superuser` are always ``False``."
 msgstr ""
+":attr:`~django.contrib.auth.models.User.is_staff` и :attr:`~django.contrib."
+"auth.models.User.is_superuser` всегда равны ``False``."
 
 # 89f9047b1c6b4c2b9d1de50f5a26011a
 #: ../../topics/auth.txt:546
 msgid ":attr:`~django.contrib.auth.models.User.is_active` is always ``False``."
-msgstr ""
+msgstr ":attr:`~django.contrib.auth.models.User.is_active` всегда ``False``."
 
 # d5a5fd3fcb3c4709a7722095d4cf2ecb
 #: ../../topics/auth.txt:547
@@ -857,6 +931,8 @@ msgid ""
 ":attr:`~django.contrib.auth.models.User.groups` and :attr:`~django.contrib."
 "auth.models.User.user_permissions` are always empty."
 msgstr ""
+":attr:`~django.contrib.auth.models.User.groups` и :attr:`~django.contrib."
+"auth.models.User.user_permissions` всегда пустные."
 
 # fde133e9ab854716b605fa0e7b1dae68
 #: ../../topics/auth.txt:550
@@ -864,6 +940,8 @@ msgid ""
 ":meth:`~django.contrib.auth.models.User.is_anonymous()` returns ``True`` "
 "instead of ``False``."
 msgstr ""
+":meth:`~django.contrib.auth.models.User.is_anonymous()` возвращает ``True`` "
+"вместо ``False``."
 
 # 97874ec66dbf4fd5a2462ae8bc3f9fc4
 #: ../../topics/auth.txt:552
@@ -871,6 +949,8 @@ msgid ""
 ":meth:`~django.contrib.auth.models.User.is_authenticated()` returns "
 "``False`` instead of ``True``."
 msgstr ""
+":meth:`~django.contrib.auth.models.User.is_authenticated()` возвращает "
+"``False`` вместо ``True``."
 
 # fd62bf2fecbc43e281cbf23b40b2d398
 #: ../../topics/auth.txt:554
@@ -881,6 +961,12 @@ msgid ""
 "meth:`~django.contrib.auth.models.User.set_groups()` and :meth:`~django."
 "contrib.auth.models.User.set_permissions()` raise :exc:`NotImplementedError`."
 msgstr ""
+":meth:`~django.contrib.auth.models.User.set_password()`, :meth:`~django."
+"contrib.auth.models.User.check_password()`, :meth:`~django.contrib.auth."
+"models.User.save()`, :meth:`~django.contrib.auth.models.User.delete()`, :"
+"meth:`~django.contrib.auth.models.User.set_groups()` и :meth:`~django."
+"contrib.auth.models.User.set_permissions()` вызывают исключение :exc:"
+"`NotImplementedError`."
 
 # 8dfb54d01f174380934aeb5c57dc0e2b
 #: ../../topics/auth.txt:562
@@ -889,11 +975,14 @@ msgid ""
 "models.AnonymousUser` objects on your own, but they're used by Web requests, "
 "as explained in the next section."
 msgstr ""
+"На практике вам не придется использовать объект :class:`~django.contrib.auth."
+"models.AnonymousUser`, он используется объекте запроса, как будет описано в "
+"следующем разделе."
 
 # 1aec00cddd0f4a50b4141548cc57c47d
 #: ../../topics/auth.txt:569
 msgid "Creating superusers"
-msgstr ""
+msgstr "Создание суперпользователей"
 
 # d22f24f271024209886563f79dc3f2aa
 #: ../../topics/auth.txt:571
