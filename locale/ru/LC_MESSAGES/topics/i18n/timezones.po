@@ -2,7 +2,7 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
@@ -15,13 +15,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 # 4a2211a3526d4d7aaec49ae9293bba70
 #: ../../topics/i18n/timezones.txt:5
 msgid "Time zones"
-msgstr "Часовые пояса"
+msgstr "Временные зоны"
 
 # 7e46df56d21640148849f7fef584075c
 #: ../../topics/i18n/timezones.txt:12
@@ -59,11 +59,11 @@ msgid ""
 "Saving Time (DST). Many countries have a system of DST, where clocks are "
 "moved forward in spring and backward in autumn. If you're working in local "
 "time, you're likely to encounter errors twice a year, when the transitions "
-"happen. (The pytz_ documentation discusses `these issues`_ in greater "
-"detail.) This probably doesn't matter for your blog, but it's a problem if "
-"you over-bill or under-bill your customers by one hour, twice a year, every "
-"year. The solution to this problem is to use UTC in the code and use local "
-"time only when interacting with end users."
+"happen. (The pytz_ documentation discusses `these issues`_ in greater detail."
+") This probably doesn't matter for your blog, but it's a problem if you over-"
+"bill or under-bill your customers by one hour, twice a year, every year. The "
+"solution to this problem is to use UTC in the code and use local time only "
+"when interacting with end users."
 msgstr ""
 "Даже если ваш сайт используется в пределах одного часового пояса, хорошей "
 "привычкой будет хранение данных о времени в формате UTC. Основной причиной "
@@ -214,7 +214,7 @@ msgstr ""
 "Объекты класса :class:`datetime.time` также обладают атрибутом ``tzinfo``, а "
 "PostgreSQL имеет соответствующий тип ``time with time zone``. Тем не менее, "
 "как написано в документации на PostgreSQL, этот тип \"обладает свойствами, "
-"которые exhibits properties which lead to questionable usefulness\"."
+"которые имеют сомнительную полезность\"."
 
 # 21ef4bc096d749bfbb75697155324ae4
 #: ../../topics/i18n/timezones.txt:109
@@ -222,11 +222,13 @@ msgid ""
 "Django only supports naive time objects and will raise an exception if you "
 "attempt to save an aware time object."
 msgstr ""
+"Django поддерживает только объекты относительного времени и вызывает "
+"исключение, если вы попытаетесь сохранить объект абсолютного времени."
 
 # 100e6f2bd6664bc8b945642149edfb89
 #: ../../topics/i18n/timezones.txt:115
 msgid "Interpretation of naive datetime objects"
-msgstr ""
+msgstr "Интерпретация объектов относительного времени"
 
 # 99d40200c7ef49718177913029559a61
 #: ../../topics/i18n/timezones.txt:117
@@ -236,6 +238,12 @@ msgid ""
 "layer receives one, it attempts to make it aware by interpreting it in the :"
 "ref:`default time zone <default-current-time-zone>` and raises a warning."
 msgstr ""
+"Если параметр конфигурации :setting:`USE_TZ` установлен в ``True``, Django "
+"продолжает принимать объекты относительного времени, чтобы обеспечить "
+"обратную совместимость. Когда слой базы данных получает такой объект, он "
+"пытается преобразовать его в объект абсолютного времени, интерпретируя его в "
+":ref:`стандартной зоне времени <default-current-time-zone>` и выбрасывает "
+"предупреждение."
 
 # eb450feef9dc4f8f90faaaeec493aca5
 #: ../../topics/i18n/timezones.txt:122
@@ -247,6 +255,12 @@ msgid ""
 "inaccurate results. That's why you should always create aware datetime "
 "objects when time zone support is enabled."
 msgstr ""
+"К сожалению, из-за перехода на летнее время, некоторые объекты не могут быть "
+"преобразованы. В таких ситуациях, pytz_ вызывает исключение. Другие "
+"реализации :class:`~datetime.tzinfo`, такие как локальная зона времени "
+"используемая, если pytz_ не установлен, могут вызывать исключение или "
+"возвращать неточные результаты. Именно поэтому вы должны всегда создавать "
+"объекты абсолютного времени, если включена поддержка временных зон."
 
 # 6b798c04cbcf4588a4cf35cce567fd53
 #: ../../topics/i18n/timezones.txt:129
@@ -258,11 +272,16 @@ msgid ""
 "time, and :func:`timezone.now() <django.utils.timezone.now>` automatically "
 "does the right thing."
 msgstr ""
+"На практике это редко является проблемой. Django предоставляет вам объекты "
+"абсолютного времени в моделях и формах и чаще всего, новые объекты даты "
+"создаются из уже имеющихся с помощью :class:`~datetime.timedelta` арифметики."
+" Чаще всего в коде используется текущая дата и  функция :func:`timezone.now "
+"() <django.utils.timezone.now>` создаёт объект правильного типа."
 
 # 51f5d41b9cf444edb0d42d67257e40ec
 #: ../../topics/i18n/timezones.txt:139
 msgid "Default time zone and current time zone"
-msgstr ""
+msgstr "Стандартная и текущая зоны времени"
 
 # 7479643566f04e4981a122dab8de7383
 #: ../../topics/i18n/timezones.txt:141
@@ -270,19 +289,26 @@ msgid ""
 "The **default time zone** is the time zone defined by the :setting:"
 "`TIME_ZONE` setting."
 msgstr ""
+"**Стандартная зона времени** — это зона времени, заданная параметром "
+"конфигурации :setting:`TIME_ZONE`."
 
 # 943fab500b8d48b6adac4b444c42a98d
 #: ../../topics/i18n/timezones.txt:144
 msgid "The **current time zone** is the time zone that's used for rendering."
 msgstr ""
+"**Текущая зона времени** — зона времени для которой отображается страница "
+"сайта."
 
 # edd8cc1c5697405db3fcbe9d1ec79c12
 #: ../../topics/i18n/timezones.txt:146
 msgid ""
-"You should set the current time zone to the end user's actual time zone "
-"with :func:`~django.utils.timezone.activate`. Otherwise, the default time "
-"zone is used."
+"You should set the current time zone to the end user's actual time zone with "
+":func:`~django.utils.timezone.activate`. Otherwise, the default time zone is "
+"used."
 msgstr ""
+"Вы должны настраивать текущую зону времени на зону пользователя с помощью :"
+"func:`~django.utils.timezone.activate`. В противном случае будет "
+"использоваться стандартная зона времени."
 
 # ecb74e176f9548ee9e554b0ae2b56b1a
 #: ../../topics/i18n/timezones.txt:152
@@ -292,6 +318,10 @@ msgid ""
 "This happens regardless of the value of :setting:`USE_TZ` and of the current "
 "time zone."
 msgstr ""
+"Как указано в документации на параметр :setting:`TIME_ZONE`, Django "
+"устанавливает переменные окружения так, что она работает в стандартной зоне "
+"времени. Это происходит вне зависимости от значения переменой :setting:"
+"`USE_TZ` и текущей зоны времени."
 
 # f1c6e914b5b04e2496ed62e05360dcfe
 #: ../../topics/i18n/timezones.txt:157
@@ -304,11 +334,18 @@ msgid ""
 "`~datetime.datetime.fromtimestamp` -- and don't forget to set ``tzinfo`` to :"
 "data:`~django.utils.timezone.utc`."
 msgstr ""
+"Когда параметр :setting:`USE_TZ` установлен в ``True``, полезно сохранять "
+"обратную совместимость с приложениями, которые все ещё работают с локальным "
+"временем. Тем не менее, :ref:`как показано выше <naive-datetime-objects>`, "
+"это не совсем надёжно и вам следует всегда работать с величинами абсолютного "
+"времени (UTC) в вашем коде. Например, используйте :meth:`~datetime.datetime."
+"utcfromtimestamp` вместо :meth:`~datetime.datetime.fromtimestamp` и не "
+"забудьте установить ``tzinfo`` в :data:`~django.utils.timezone.utc`."
 
 # e9dfb3377eff49fdac96303887a1221d
 #: ../../topics/i18n/timezones.txt:167
 msgid "Selecting the current time zone"
-msgstr ""
+msgstr "Выбор текущей зоны времени"
 
 # dd0285ea6e284ea6b29a428905dd6e4f
 #: ../../topics/i18n/timezones.txt:169
@@ -320,6 +357,12 @@ msgid ""
 "functions <time-zone-selection-functions>`. Use them to build the time zone "
 "selection logic that makes sense for you."
 msgstr ""
+"Зона текущего времени аналогична текущей :term:`локали <locale name>` для "
+"переводов. Тем не менее, не существует аналога для HTTP заголовка ``Accept-"
+"Language``, который Django может использовать для автоматического "
+"определения пользовательской временной зоны. Вместо этого, Django "
+"предоставляет :ref:`функции выбора временной зоны <time-zone-selection-"
+"functions>`. Используйте их при построении логики выбора временной зоны."
 
 # b30f1462d81044b993624909c5b6802e
 #: ../../topics/i18n/timezones.txt:176
@@ -330,6 +373,12 @@ msgid ""
 "provides helpers_, like a list of time zones per country, that you can use "
 "to pre-select the most likely choices."
 msgstr ""
+"Большинство сайтов, которые заботятся о временных зонах, просто спрашивают "
+"пользователя о его зоне и сохраняют эту информацию в профайле. Для анонимных "
+"пользователей, такие сайты используют временную зону основной аудитории или "
+"UTC. Библиотека pytz_ предоставляет `шпаргалки <helpers>`, например списки "
+"временных зон для стран, которые можно использовать для начального "
+"наполнения интерфейса."
 
 # bdd788f7ca184b5ab1096993896f3f92
 #: ../../topics/i18n/timezones.txt:182
@@ -337,26 +386,31 @@ msgid ""
 "Here's an example that stores the current timezone in the session. (It skips "
 "error handling entirely for the sake of simplicity.)"
 msgstr ""
+"Ниже приведён пример сохранения текущей зоны времени в сессии. (Пример не "
+"использует обработку ошибок для простоты.)"
 
 # fd448587a8d047e581319d70da94a083
 #: ../../topics/i18n/timezones.txt:185
 msgid "Add the following middleware to :setting:`MIDDLEWARE_CLASSES`::"
-msgstr ""
+msgstr "Добавьте следующую строку в :setting:`MIDDLEWARE_CLASSES`::"
 
 # 85b829948ee0461cb80f90e94fe76f85
 #: ../../topics/i18n/timezones.txt:195
 msgid "Create a view that can set the current timezone::"
 msgstr ""
+"Создайте представление, которое может установить текущую зону времени::"
 
 # 1fc91b1d001b4acf8e10b0030847b38d
 #: ../../topics/i18n/timezones.txt:207
 msgid "Include a form in ``template.html`` that will ``POST`` to this view:"
 msgstr ""
+"Добавьте форму в ``template.html``, которая будет выполнять ``POST`` запрос "
+"к этому предоставлению:"
 
 # 30a6086abe38489085f859837bd052eb
 #: ../../topics/i18n/timezones.txt:226
 msgid "Time zone aware input in forms"
-msgstr ""
+msgstr "Ввод значений абсолютного времени в формы"
 
 # 7e8dd9dcf2da4edc88bd761b70214d37
 #: ../../topics/i18n/timezones.txt:228
@@ -365,6 +419,10 @@ msgid ""
 "forms in the :ref:`current time zone <default-current-time-zone>` and "
 "returns aware datetime objects in ``cleaned_data``."
 msgstr ""
+"После активации поддержки временных зон, Django интерпретирует значения "
+"времени, вводимые в формы относительно :ref:`текущей зоны времени <default-"
+"current-time-zone>`, и возвращает объекты абсолютного времени "
+"``cleaned_data``."
 
 # d661a3f027cd4420b5940848b0ee870f
 #: ../../topics/i18n/timezones.txt:232
@@ -374,11 +432,15 @@ msgid ""
 "provided by pytz_ do this), such datetimes will be reported as invalid "
 "values."
 msgstr ""
+"Если текущая зона времени выбрасывает исключение для значений времени, "
+"которые не существуют или не могут быть преобразованы из-за перехода на "
+"летнее время (временные зоны, предоставляемые через pytz_, так делают), то "
+"такие значения времени будут интерпретированы как неправильные."
 
 # 172ff31bc0c348ec89be3c5b79fba86b
 #: ../../topics/i18n/timezones.txt:239
 msgid "Time zone aware output in templates"
-msgstr ""
+msgstr "Вывод объектов абсолютного времени в шаблонах"
 
 # c90091171c7f4ad4a3ea7d241ad4a445
 #: ../../topics/i18n/timezones.txt:241
@@ -388,6 +450,10 @@ msgid ""
 "rendered in templates. This behaves very much like :doc:`format localization "
 "</topics/i18n/formatting>`."
 msgstr ""
+"После активации поддержки временных зон, Django преобразует объекты "
+"абсолютного времени в :ref:`текущую зону времени <default-current-time-"
+"zone>` при отображении в шаблоне. Процесс идёт аналогично :doc:`локализации "
+"форматирования </topics/i18n/formatting>`."
 
 # 8a3ddded995946088ee94c108c153638
 #: ../../topics/i18n/timezones.txt:248
@@ -397,6 +463,11 @@ msgid ""
 "time zone support is enabled. However, you can force conversion with the "
 "template filters described below."
 msgstr ""
+"Django не преобразует объекты относительного времени, так как они могут "
+"иметь двухсмысленное значение. Ваш код не должен создавать объекты "
+"относительного времени при включенной поддержке временных зон. Тем не менее, "
+"вы можете включить принудительную конвертацию с помощью шаблонных фильтров, "
+"описанных далее."
 
 # acb335d991fa4af7ba9884baf084c0f3
 #: ../../topics/i18n/timezones.txt:253
@@ -406,17 +477,21 @@ msgid ""
 "provided by the ``tz`` template tag library, allow you to control the time "
 "zone conversions."
 msgstr ""
+"Преобразование к локальному времени не всегда полезно, так как данные могут "
+"генерироваться для компьютеров, а не для людей. Следующие фильтры и теги, "
+"предоставляемые шаблонной библиотекой тегов ``tz``, позволяют вам управлять "
+"преобразованиями объектов времени."
 
 # 14d0d4ad41784ec09bb966df14409509
 #: ../../topics/i18n/timezones.txt:259
 msgid "Template tags"
-msgstr ""
+msgstr "Шаблонные теги"
 
 # 77c9466e291a4383a8d959f0f13da338
 # f4b94f3103cd4bbe860eaf80f28e702a
 #: ../../topics/i18n/timezones.txt:264 ../../topics/i18n/timezones.txt:341
 msgid "localtime"
-msgstr ""
+msgstr "localtime"
 
 # 897fe60be55d40f4bdebd6f282b30b4b
 #: ../../topics/i18n/timezones.txt:266
@@ -424,6 +499,8 @@ msgid ""
 "Enables or disables conversion of aware datetime objects to the current time "
 "zone in the contained block."
 msgstr ""
+"Включает и отключает преобразование объектов абсолютного времени в текущую "
+"зону времени в блоке."
 
 # 88d145a4fa3b43299a2ff0a24444d8fa
 #: ../../topics/i18n/timezones.txt:269
@@ -432,24 +509,31 @@ msgid ""
 "far as the template engine is concerned. It allows a more fine grained "
 "control of conversion."
 msgstr ""
+"Этот тег имеет точно такой же эффект как и параметр :setting:`USE_TZ`, "
+"только для шаблонного движка. Он позволяет обеспечить более тонкий контроль "
+"над преобразованиями."
 
 # b5d8c6f810fe45828b995016bea6339e
 #: ../../topics/i18n/timezones.txt:273
 msgid "To activate or deactivate conversion for a template block, use::"
 msgstr ""
+"Для активации или деактивации преобразований для шаблонного блока, "
+"используйте::"
 
 # f3df92e307a840519ea50a9ac8846c37
 #: ../../topics/i18n/timezones.txt:287
 msgid ""
-"The value of :setting:`USE_TZ` isn't respected inside of a ``{% localtime %}"
-"`` block."
+"The value of :setting:`USE_TZ` isn't respected inside of a ``{% localtime "
+"%}`` block."
 msgstr ""
+"Значение параметра :setting:`USE_TZ` не влияет на содержимое блока ``{% "
+"localtime %}``."
 
 # 55763c1c00c1472bb66bbbe1ea3dfaeb
 # 97db217a1245401d8a545e3dfa7ebf9b
 #: ../../topics/i18n/timezones.txt:293 ../../topics/i18n/timezones.txt:367
 msgid "timezone"
-msgstr ""
+msgstr "timezone"
 
 # 81be80c6796d462a8638af4a7ba86157
 #: ../../topics/i18n/timezones.txt:295
@@ -457,6 +541,8 @@ msgid ""
 "Sets or unsets the current time zone in the contained block. When the "
 "current time zone is unset, the default time zone applies."
 msgstr ""
+"Устанавливает или снимает текущую зону времени в блоке. Если зона текущего "
+"времени снята, то применяется стандартная зона времени."
 
 # 049a8f9d0822420b9c3539649783602d
 #: ../../topics/i18n/timezones.txt:312
@@ -465,11 +551,13 @@ msgid ""
 "it isn't defined in the template context, not because it's the string "
 "``None``."
 msgstr ""
+"Во втором блоке, ``None`` преобразуется в объект ``None``, так как он не "
+"определён в контексте шаблона, а не потому что это строка ``None``."
 
 # 65dcab58f52e42c6954900360fe0c292
 #: ../../topics/i18n/timezones.txt:319
 msgid "get_current_timezone"
-msgstr ""
+msgstr "get_current_timezone"
 
 # 596c19b3d417490495cd58a08472467f
 #: ../../topics/i18n/timezones.txt:321
@@ -479,6 +567,10 @@ msgid ""
 "RequestContext` contains a ``TIME_ZONE`` variable that provides the name of "
 "the current time zone."
 msgstr ""
+"При включенном контекстном процессоре  :func:`django.core.context_processors."
+"tz`, по умолчанию так и есть, каждый контекст запроса :class:`~django."
+"template.RequestContext` содержит переменную ``TIME_ZONE``, которая "
+"предоставляет имя для текущую зону времени."
 
 # 346d1fecc5fe4420a472583effcd7344
 #: ../../topics/i18n/timezones.txt:326
@@ -486,11 +578,13 @@ msgid ""
 "If you don't use a :class:`~django.template.RequestContext`, you can obtain "
 "this value with the ``get_current_timezone`` tag::"
 msgstr ""
+"Если вы не используете класс :class:`~django.template.RequestContext`, то вы "
+"можете получить это значение с помощью тега ``get_current_timezone``::"
 
 # f4feca13d3b04643aa1fe1612e718773
 #: ../../topics/i18n/timezones.txt:332
 msgid "Template filters"
-msgstr ""
+msgstr "Шаблонные фильтры"
 
 # 676912c9036f4a5daefaf572eaf35af6
 #: ../../topics/i18n/timezones.txt:334
@@ -499,11 +593,16 @@ msgid ""
 "purposes, they assume that naive datetimes are in the default time zone. "
 "They always return aware datetimes."
 msgstr ""
+"Эти фильтры работают с обоими типами объектов времени. Для обеспечения "
+"конвертации, они предполагают, что значения относительного времени "
+"представлены в текущей зоне времени. Эти фильтры всегда возвращают значения "
+"абсолютного времени."
 
 # 83d3e3564426499695d886cf7f3b2cf8
 #: ../../topics/i18n/timezones.txt:343
 msgid "Forces conversion of a single value to the current time zone."
 msgstr ""
+"Обеспечивает конвертацию единственного значения в текущую зону времени."
 
 # 19ef9ffc83234b89932cd979aec332ca
 # 876d7139c72a425e840ae513c41a4509
@@ -511,22 +610,22 @@ msgstr ""
 #: ../../topics/i18n/timezones.txt:345 ../../topics/i18n/timezones.txt:358
 #: ../../topics/i18n/timezones.txt:374
 msgid "For example::"
-msgstr ""
+msgstr "Например::"
 
 # a51fda8e133d4877997490787e0b08d7
 #: ../../topics/i18n/timezones.txt:354
 msgid "utc"
-msgstr ""
+msgstr "utc"
 
 # 539b2ad1914f40319cb2b63ccd1e0d31
 #: ../../topics/i18n/timezones.txt:356
 msgid "Forces conversion of a single value to UTC."
-msgstr ""
+msgstr "Преобразовывает единственное значение к UTC."
 
 # 70c4de77d7e74261b010a601ed74fe41
 #: ../../topics/i18n/timezones.txt:369
 msgid "Forces conversion of a single value to an arbitrary timezone."
-msgstr ""
+msgstr "Преобразовывает единственное значение к указанной зоне времени."
 
 # 3fb5639ec6614f689017419704144c9c
 #: ../../topics/i18n/timezones.txt:371
@@ -534,11 +633,13 @@ msgid ""
 "The argument must be an instance of a :class:`~datetime.tzinfo` subclass or "
 "a time zone name. If it is a time zone name, pytz_ is required."
 msgstr ""
+"Аргумент должен быть экземпляром потомка класса :class:`~datetime.tzinfo` "
+"или именем зоны времени. В последнем случае необходимо наличие pytz_."
 
 # 1ff79a41accd4b59a52cc470af7510a0
 #: ../../topics/i18n/timezones.txt:383
 msgid "Migration guide"
-msgstr ""
+msgstr "Руководство по миграции"
 
 # fbd692f94b754038807259a7701f66de
 #: ../../topics/i18n/timezones.txt:385
@@ -546,16 +647,18 @@ msgid ""
 "Here's how to migrate a project that was started before Django supported "
 "time zones."
 msgstr ""
+"Здесь описано как провести миграцию старого проекта для поддержки зон "
+"времени."
 
 # 54335d90fa1f443a94377acfb9a5f251
 #: ../../topics/i18n/timezones.txt:389
 msgid "Database"
-msgstr ""
+msgstr "База данных"
 
 # a3f1e527d0b04b6e9a1dbc294ee06a98
 #: ../../topics/i18n/timezones.txt:392
 msgid "PostgreSQL"
-msgstr ""
+msgstr "PostgreSQL"
 
 # 68dc0e0ca9bb4291832ccc670066db1c
 #: ../../topics/i18n/timezones.txt:394
@@ -564,6 +667,9 @@ msgid ""
 "practice, this means it converts datetimes from the connection's time zone "
 "to UTC on storage, and from UTC to the connection's time zone on retrieval."
 msgstr ""
+"Бэкенд PostgreSQL сохраняет значения времени как ``timestamp with time "
+"zone``. Это означает, что он преобразовывает значение в UTC при сохранении и "
+"обратно при чтении."
 
 # d3e717a1f7804c4195ba9cc8a26a9bec
 #: ../../topics/i18n/timezones.txt:398
@@ -574,11 +680,16 @@ msgid ""
 "that Django obtains correct datetimes in all cases. You don't need to "
 "perform any data conversions."
 msgstr ""
+"Как следствие, при использовании PostgreSQL, вы можете свободно "
+"переключаться между ``USE_TZ = False`` и ``USE_TZ = True``. Зона времени "
+"базы данных будет установлена соответственно в :setting:`TIME_ZONE` или "
+"``UTC``, т.е. Django получает корректные значения времени в любом случае. "
+"Вам не требуется выполнять дополнительные преобразования."
 
 # 393b0993d78846378df16d7ac9ac496f
 #: ../../topics/i18n/timezones.txt:405
 msgid "Other databases"
-msgstr ""
+msgstr "Другие базы данных"
 
 # daf2486f59e34119bb561996a8f39727
 #: ../../topics/i18n/timezones.txt:407
@@ -588,11 +699,15 @@ msgid ""
 "from local time to UTC -- which isn't deterministic if your local time has "
 "DST."
 msgstr ""
+"Остальные бэкэнды сохраняют значения времени без информации о зоне. Если вы "
+"переключите с ``USE_TZ = False`` на ``USE_TZ = True``, вам придётся "
+"преобразовать значения из локального времени в UTC, что не слишком радует, "
+"если у вас используется летнее время."
 
 # be85825d755e4fbf9f5b77f85d221a0e
 #: ../../topics/i18n/timezones.txt:412
 msgid "Code"
-msgstr ""
+msgstr "Код"
 
 # c22790d5deda4784960b6317546782dc
 #: ../../topics/i18n/timezones.txt:414
@@ -602,6 +717,11 @@ msgid ""
 "work. If you create naive datetime objects in your code, Django makes them "
 "aware when necessary."
 msgstr ""
+"Первым шагом надо добавить :setting:`USE_TZ = True <USE_TZ>` в "
+"конфигурационный файл и установить pytz_ (по возможности). После этого почти "
+"всё должно заработать. Если вы создаёте объекты относительного времени в "
+"вашем коде, Django будет преобразовывать их в объекты абсолютного времени "
+"при необходимости."
 
 # 9f308493bc4c48139fdbfdcb7848ac9c
 #: ../../topics/i18n/timezones.txt:419
@@ -613,6 +733,13 @@ msgid ""
 "you'll get exceptions wherever you compare a datetime that comes from a "
 "model or a form with a naive datetime that you've created in your code."
 msgstr ""
+"Тем не менее, эти преобразования могут ошибаться при использовании летнего "
+"времени (DST), а значит, вы не получаете все преимущества поддержки часовых "
+"поясов. Кроме того, вы, вероятно, столкнётесь с некоторыми проблемами при "
+"сравнении абсолютных и относительных дат. Так как Django теперь "
+"предоставляет вам значения абсолютного времени, вы получите исключения "
+"везде, где вы сравниваете значения из моделей или форм со значениями "
+"относительного времени, которые вы создаёте в своем коде."
 
 # 280e308e23ba4452bdd238b777512b31
 #: ../../topics/i18n/timezones.txt:426
@@ -624,6 +751,13 @@ msgid ""
 "func:`~django.utils.timezone.is_naive`, :func:`~django.utils.timezone."
 "make_aware`, and :func:`~django.utils.timezone.make_naive`."
 msgstr ""
+"Вторым шагом будет рефакторинг вашего кода в местах, где вы создаёте "
+"значения времени, теперь они должны быть абсолютными. Это может быть сделано "
+"постепенно. В модуле :mod:`django.utils.timezone` определены несколько "
+"вспомогательных функций: :func:`~django.utils.timezone.now`, :func:`~django."
+"utils.timezone.is_aware`, :func:`~django.utils.timezone.is_naive`, :func:"
+"`~django.utils.timezone.make_aware` и :func:`~django.utils.timezone."
+"make_naive`."
 
 # bf41b698ad9e43d1849b94658e21af41
 #: ../../topics/i18n/timezones.txt:435
@@ -631,6 +765,9 @@ msgid ""
 "Finally, in order to help you locate code that needs upgrading, Django "
 "raises a warning when you attempt to save a naive datetime to the database::"
 msgstr ""
+"Наконец, для того, чтобы помочь вам найти код, который нуждается в "
+"модернизации, Django выдаёт предупреждение при попытке сохранить значение "
+"относительного времени в базу данных::"
 
 # 3314aee3861e407b8feae90ce4af8661
 #: ../../topics/i18n/timezones.txt:440
@@ -638,22 +775,26 @@ msgid ""
 "During development, you can turn such warnings into exceptions and get a "
 "traceback by adding the following to your settings file::"
 msgstr ""
+"На время разработки, вы можете превратить такие предупреждения в исключения "
+"и получить трассировки, добавив следующие строки в ваш файл настроек::"
 
 # 0043bc767b844973b6f07c0777b9cf75
 #: ../../topics/i18n/timezones.txt:449
 msgid "Fixtures"
-msgstr ""
+msgstr "Фикстуры"
 
 # 2f484ccb647645b981589745f4b83f4a
 #: ../../topics/i18n/timezones.txt:451
 msgid ""
 "When serializing an aware datetime, the UTC offset is included, like this::"
 msgstr ""
+"При сериализации значений абсолютного времени добавляется смещение "
+"относительно UTC, подобно этому::"
 
 # eea891e04b1a4ebeb135198f1cd997ed
 #: ../../topics/i18n/timezones.txt:455
 msgid "For a naive datetime, it obviously isn't::"
-msgstr ""
+msgstr "Для значений относительного времени такого не происходит::"
 
 # dfff3b2dbd8b4543ab58d4a931b6ba8f
 #: ../../topics/i18n/timezones.txt:459
@@ -662,6 +803,9 @@ msgid ""
 "difference makes it impossible to write a fixture that works both with and "
 "without time zone support."
 msgstr ""
+"Для моделей с полями :class:`~django.db.models.DateTimeField` такая разница "
+"в поведении делает невозможным создание фикстуры, которая может применяться "
+"в обоих режимах поддержки часовых поясов."
 
 # 7b6dae7480204dc98b21ecf56d3b7f0f
 #: ../../topics/i18n/timezones.txt:463
@@ -764,7 +908,8 @@ msgstr ""
 
 # 4f32cf664b9a435ca1bfc05b70279839
 #: ../../topics/i18n/timezones.txt:515
-msgid "Finally, our calendar system contains interesting traps for computers::"
+msgid ""
+"Finally, our calendar system contains interesting traps for computers::"
 msgstr ""
 
 # 0206ef7fe0714b5ea29c3854a5622b2b
@@ -819,7 +964,8 @@ msgstr ""
 
 # 82e590330b234d53a2059fc78b3a4c34
 #: ../../topics/i18n/timezones.txt:552
-msgid "Let's reproduce this error by comparing a naive and an aware datetime::"
+msgid ""
+"Let's reproduce this error by comparing a naive and an aware datetime::"
 msgstr ""
 
 # 28fa2f17a8b040d6aecdf6fb08f77cb2
@@ -954,9 +1100,9 @@ msgstr ""
 # b18ce2ca9ff2403e8e333ac435a95cf3
 #: ../../topics/i18n/timezones.txt:656
 msgid ""
-"**I have a string** ``\"2012-02-21 10:28:45\"`` **and I know it's in the** ``"
-"\"Europe/Helsinki\"`` **time zone. How do I turn that into an aware datetime?"
-"**"
+"**I have a string** ``\"2012-02-21 10:28:45\"`` **and I know it's in the** "
+"``\"Europe/Helsinki\"`` **time zone. How do I turn that into an aware "
+"datetime?**"
 msgstr ""
 
 # 4f0040303f1a4dd4bbf53ef78d96b807
@@ -1025,4 +1171,5 @@ msgstr ""
 msgid ""
 "pytz_ provides helpers_, including a list of current time zones and a list "
 "of all available time zones -- some of which are only of historical interest."
+""
 msgstr ""
