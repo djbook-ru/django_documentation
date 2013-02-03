@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-29 18:30\n"
-"PO-Revision-Date: 2012-06-14 16:26+0300\n"
+"PO-Revision-Date: 2012-10-01 12:51+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -688,6 +688,8 @@ msgid ""
 "Field`, taking into account the connection object, and the settings "
 "associated with it."
 msgstr ""
+"Возвращает типа поля в базе данных для :class:`~django.db.models.Field`, "
+"учитывая настройки подключения и параметры поля."
 
 # a79545d83fa941b5a944b4b34c0ac782
 #: ../../howto/custom-model-fields.txt:322
@@ -696,6 +698,9 @@ msgid ""
 "this field with Django by subclassing ``Field`` and implementing the :meth:`."
 "db_type` method, like so::"
 msgstr ""
+"Предположим вы создали собственный тип поля для PostgreSQL - ``mytype``. Вы "
+"можете использовать его в Django унаследовав ``Field`` и добавив следующий "
+"метод :meth:`.db_type`::"
 
 # bc30994495ae4f249496156af1b9feb7
 #: ../../howto/custom-model-fields.txt:332
@@ -703,6 +708,8 @@ msgid ""
 "Once you have ``MytypeField``, you can use it in any model, just like any "
 "other ``Field`` type::"
 msgstr ""
+"Создав ``MytypeField`` вы можете использовать его в моделях так же как и "
+"другие подтипы ``Field``::"
 
 # 25b06f62895f45bc9ba30b1e33e073d7
 #: ../../howto/custom-model-fields.txt:340
@@ -713,6 +720,11 @@ msgid ""
 "called ``datetime``. The simplest way to handle this in a :meth:`.db_type` "
 "method is to check the ``connection.settings_dict['ENGINE']`` attribute."
 msgstr ""
+"Если вы создаете приложение не зависимое от типа базы данных, учитывайте что "
+"разные базы данных используют различные типа полей. Например, поле даты/"
+"времени в PostgreSQL называется ``timestamp``, а в MySQL -- ``datetime``. "
+"Самый простой способ: проверять значнеие `connection.settings_dict['ENGINE']"
+"`` в методе :meth:`.db_type`."
 
 # 68182603cd4b47659e5b92c2e3cd09be
 #: ../../howto/custom-model-fields.txt:355
@@ -723,6 +735,11 @@ msgid ""
 "can afford to execute slightly complex code, such as the ``connection."
 "settings_dict`` check in the above example."
 msgstr ""
+"Метод :meth:`.db_type` используется Django только при создании ``CREATE "
+"TABLE`` запросов -- когда вы создаете таблицы в базе данных для приложения. "
+"Больше нигде этот метод не используется, по этому вы можете использовать "
+"достаточно сложный код, как проверка ``connection.settings_dict`` в примере "
+"выше."
 
 # e51328f1b23c4a03b2f85ab47aa36c6e
 #: ../../howto/custom-model-fields.txt:361
@@ -733,6 +750,10 @@ msgid ""
 "than being hard-coded in the ``db_type()`` method. For example, it wouldn't "
 "make much sense to have a ``CharMaxlength25Field``, shown here::"
 msgstr ""
+"Некоторые типы полей принимают параметры, например ``CHAR(25)``, где ``25`` "
+"указывают максимальный размер колонки. В этом случае лучше указывать "
+"параметр в модели, чем хардкодить в методе ``db_type()``. Например, глупо "
+"создавать поле ``CharMaxlength25Field``::"
 
 # 5b4ac47ef08a4dcb98ee538b4cb3a2eb
 #: ../../howto/custom-model-fields.txt:377
@@ -741,6 +762,9 @@ msgid ""
 "run time -- i.e., when the class is instantiated. To do that, just "
 "implement :meth:`django.db.models.Field.__init__`, like so::"
 msgstr ""
+"Лучше позволить указывать параметр при определении поля -- то есть при "
+"создании класса модели. Для этого переопределите метод :meth:`django.db."
+"models.Field.__init__`::"
 
 # 9b74368a917448a18e3eeed21c4e2c60
 #: ../../howto/custom-model-fields.txt:395
@@ -751,11 +775,15 @@ msgid ""
 "right table in some other way, of course, but this gives you a way to tell "
 "Django to get out of the way."
 msgstr ""
+"В конце концов, если поле требует действительно сложный SQL код при "
+"создании, верните ``None`` в методе :meth:`.db_type`. В этом случае Django "
+"пропустит создание этого поля в базе данных. Вам придется создать поле каким "
+"либо другим способом."
 
 # 392329bf4bf647d1a5766d2bb15082ae
 #: ../../howto/custom-model-fields.txt:402
 msgid "Converting database values to Python objects"
-msgstr ""
+msgstr "Преобразование значений базы данных в объекты Python"
 
 # a8e078688ed5477587db4f0b3f994d11
 #: ../../howto/custom-model-fields.txt:406
@@ -763,6 +791,8 @@ msgid ""
 "Converts a value as returned by your database (or a serializer) to a Python "
 "object."
 msgstr ""
+"Преобразует значение, которое вернула база данных (или сериалайзер), в "
+"объект Python."
 
 # b931e9c1d4bb49a6a5062d432647ec8e
 #: ../../howto/custom-model-fields.txt:409
@@ -771,6 +801,9 @@ msgid ""
 "which the database backend already returns data in the correct format (as a "
 "Python string, for example)."
 msgstr ""
+"Реализация по умолчанию возвращает ``value`` без изменений, так как в "
+"большинстве случаев бэкэнд базы данных возвращает значение в нужном формате "
+"(например, строка Python string)."
 
 # 62902371d5c047df8cb06b4caff4d195
 #: ../../howto/custom-model-fields.txt:413
@@ -780,22 +813,25 @@ msgid ""
 "then you'll need to override this method. As a general rule, the method "
 "should deal gracefully with any of the following arguments:"
 msgstr ""
+"Если ваш подкласс :class:`~django.db.models.Field` работает со структурами "
+"более сложными чем строка, дата и числа, вам следует переопределить этот "
+"метод. Метод должен корректно работать со следующими аргументами:"
 
 # fb1688a134a8429186ab2f5d6e19c39b
 #: ../../howto/custom-model-fields.txt:418
 msgid ""
 "An instance of the correct type (e.g., ``Hand`` in our ongoing example)."
-msgstr ""
+msgstr "Объект нужного типа (например, ``Hand`` в нашем примере)."
 
 # cca370d5dc4548d5b1338470d4e1d5a4
 #: ../../howto/custom-model-fields.txt:420
 msgid "A string (e.g., from a deserializer)."
-msgstr ""
+msgstr "Строка (например, при десериализации)."
 
 # 00f3339e4406498dbfe43b39dfff53c0
 #: ../../howto/custom-model-fields.txt:422
 msgid "Whatever the database returns for the column type you're using."
-msgstr ""
+msgstr "Все что возвращает база данных для используемого поля"
 
 # 128ac3c4ef9f4c509e5a97db8a6580dd
 #: ../../howto/custom-model-fields.txt:424
