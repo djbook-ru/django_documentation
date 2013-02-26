@@ -1,0 +1,2296 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-02-27 00:21\n"
+"PO-Revision-Date: 2013-02-27 00:21\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 557a78be36334075a351c1f33a31b278
+#: ../../topics/testing/overview.txt:3
+msgid "Testing Django applications"
+msgstr ""
+
+# b406cf9cbfdd49768641e1574903b763
+#: ../../topics/testing/overview.txt:10
+msgid ""
+"The :doc:`testing tutorial </intro/tutorial05>` and the :doc:`advanced "
+"testing topics </topics/testing/advanced>`."
+msgstr ""
+
+# 62dd554249b54d32b728dad6e1feabb8
+#: ../../topics/testing/overview.txt:13
+msgid ""
+"This document is split into two primary sections. First, we explain how to "
+"write tests with Django. Then, we explain how to run them."
+msgstr ""
+
+# 9f5875d060a74782abb3afc12035fd2c
+#: ../../topics/testing/overview.txt:17
+msgid "Writing tests"
+msgstr ""
+
+# 371d69edec444ec5b92b9d6eab0653a0
+#: ../../topics/testing/overview.txt:19
+msgid ""
+"Django's unit tests use a Python standard library module: :mod:`unittest`. "
+"This module defines tests in class-based approach."
+msgstr ""
+
+# 662c275bd3f14fb2a4ae9ab81b4f66f1
+#: ../../topics/testing/overview.txt:24
+msgid ""
+"Python 2.7 introduced some major changes to the unittest library, adding "
+"some extremely useful features. To ensure that every Django project can "
+"benefit from these new features, Django ships with a copy of unittest2_, a "
+"copy of the Python 2.7 unittest library, backported for Python 2.5 "
+"compatibility."
+msgstr ""
+
+# 9d31978dfd8c40c784d6c4106936c5d4
+#: ../../topics/testing/overview.txt:30
+msgid ""
+"To access this library, Django provides the ``django.utils.unittest`` module "
+"alias. If you are using Python 2.7, or you have installed unittest2 locally, "
+"Django will map the alias to the installed version of the unittest library. "
+"Otherwise, Django will use its own bundled version of unittest2."
+msgstr ""
+
+# 21db5dc66ee04b49bd041ad021de3568
+#: ../../topics/testing/overview.txt:36
+msgid "To use this alias, simply use::"
+msgstr ""
+
+# caf77bf882da4d6c8e31354500293a00
+#: ../../topics/testing/overview.txt:40
+msgid "wherever you would have historically used::"
+msgstr ""
+
+# 664e4e752bdb4b53968fdca74fc9c0bf
+#: ../../topics/testing/overview.txt:44
+msgid ""
+"If you want to continue to use the base unittest library, you can -- you "
+"just won't get any of the nice new unittest2 features."
+msgstr ""
+
+# f75e6e5f312b409588d56f77492b5f4b
+#: ../../topics/testing/overview.txt:49
+msgid ""
+"For a given Django application, the test runner looks for unit tests in two "
+"places:"
+msgstr ""
+
+# 2608f2668322459c8dad36c0611eef93
+#: ../../topics/testing/overview.txt:52
+msgid ""
+"The ``models.py`` file. The test runner looks for any subclass of :class:"
+"`unittest.TestCase` in this module."
+msgstr ""
+
+# 95f0c3d1bf1f42f7965fa1cb70f62bd9
+#: ../../topics/testing/overview.txt:55
+msgid ""
+"A file called ``tests.py`` in the application directory -- i.e., the "
+"directory that holds ``models.py``. Again, the test runner looks for any "
+"subclass of :class:`unittest.TestCase` in this module."
+msgstr ""
+
+# 458700b552c14ea9a73ac81dc0f910e3
+#: ../../topics/testing/overview.txt:59
+msgid "Here is an example :class:`unittest.TestCase` subclass::"
+msgstr ""
+
+# 29d54b183fdc425e894d157bef5f1a3a
+#: ../../topics/testing/overview.txt:74
+msgid ""
+"When you :ref:`run your tests <running-tests>`, the default behavior of the "
+"test utility is to find all the test cases (that is, subclasses of :class:"
+"`unittest.TestCase`) in ``models.py`` and ``tests.py``, automatically build "
+"a test suite out of those test cases, and run that suite."
+msgstr ""
+
+# fbacc4eee53b41f1b5cf77d250a9d6fc
+#: ../../topics/testing/overview.txt:79
+msgid ""
+"There is a second way to define the test suite for a module: if you define a "
+"function called ``suite()`` in either ``models.py`` or ``tests.py``, the "
+"Django test runner will use that function to construct the test suite for "
+"that module. This follows the `suggested organization`_ for unit tests. See "
+"the Python documentation for more details on how to construct a complex test "
+"suite."
+msgstr ""
+
+# f03cc872815d4eeea722c1af69642a33
+#: ../../topics/testing/overview.txt:86
+msgid "For more details about :mod:`unittest`, see the Python documentation."
+msgstr ""
+
+# 7c96234611d44e06b686509ba5e37b2c
+#: ../../topics/testing/overview.txt:92
+msgid ""
+"If your tests rely on database access such as creating or querying models, "
+"be sure to create your test classes as subclasses of :class:`django.test."
+"TestCase` rather than :class:`unittest.TestCase`."
+msgstr ""
+
+# 946d1a54deb54c6a818c5964b93d0370
+#: ../../topics/testing/overview.txt:96
+msgid ""
+"In the example above, we instantiate some models but do not save them to the "
+"database. Using :class:`unittest.TestCase` avoids the cost of running each "
+"test in a transaction and flushing the database, but for most applications "
+"the scope of tests you will be able to write this way will be fairly "
+"limited, so it's easiest to use :class:`django.test.TestCase`."
+msgstr ""
+
+# 0a86a5f18d1642b3b9e51bf882440819
+#: ../../topics/testing/overview.txt:105
+msgid "Running tests"
+msgstr ""
+
+# dcc92595a65947c7a223182015bd6088
+#: ../../topics/testing/overview.txt:107
+msgid ""
+"Once you've written tests, run them using the :djadmin:`test` command of "
+"your project's ``manage.py`` utility::"
+msgstr ""
+
+# e1b831a4e07f44efb3e2357aa1152add
+#: ../../topics/testing/overview.txt:112
+msgid ""
+"By default, this will run every test in every application in :setting:"
+"`INSTALLED_APPS`. If you only want to run tests for a particular "
+"application, add the application name to the command line. For example, if "
+"your :setting:`INSTALLED_APPS` contains ``'myproject.polls'`` and "
+"``'myproject.animals'``, you can run the ``myproject.animals`` unit tests "
+"alone with this command::"
+msgstr ""
+
+# 8cf21d98985442129d391fdafffaf178
+#: ../../topics/testing/overview.txt:121
+msgid "Note that we used ``animals``, not ``myproject.animals``."
+msgstr ""
+
+# 587fb26e81e24fbcbf85e34ae2a6ea09
+#: ../../topics/testing/overview.txt:123
+msgid ""
+"You can be even *more* specific by naming an individual test case. To run a "
+"single test case in an application (for example, the ``AnimalTestCase`` "
+"described in the \"Writing unit tests\" section), add the name of the test "
+"case to the label on the command line::"
+msgstr ""
+
+# 0077b9e671864c559e1176595ef3d2ce
+#: ../../topics/testing/overview.txt:130
+msgid ""
+"And it gets even more granular than that! To run a *single* test method "
+"inside a test case, add the name of the test method to the label::"
+msgstr ""
+
+# 1c1d7311c0384f10a3668a7705b7ffe7
+#: ../../topics/testing/overview.txt:136
+msgid ""
+"You can use the same rules if you're using doctests. Django will use the "
+"test label as a path to the test method or class that you want to run. If "
+"your ``models.py`` or ``tests.py`` has a function with a doctest, or class "
+"with a class-level doctest, you can invoke that test by appending the name "
+"of the test method or class to the label::"
+msgstr ""
+
+# 926c2f4fb6fb416fb5e2e492bb19b265
+#: ../../topics/testing/overview.txt:144
+msgid ""
+"If you want to run the doctest for a specific method in a class, add the "
+"name of the method to the label::"
+msgstr ""
+
+# 1c3f6bee7a9147d7b1e53e65a2f67695
+#: ../../topics/testing/overview.txt:149
+msgid ""
+"If you're using a ``__test__`` dictionary to specify doctests for a module, "
+"Django will use the label as a key in the ``__test__`` dictionary for "
+"defined in ``models.py`` and ``tests.py``."
+msgstr ""
+
+# 90b85a49c6b3404b9ffc82935ba2868a
+#: ../../topics/testing/overview.txt:153
+msgid ""
+"If you press ``Ctrl-C`` while the tests are running, the test runner will "
+"wait for the currently running test to complete and then exit gracefully. "
+"During a graceful exit the test runner will output details of any test "
+"failures, report on how many tests were run and how many errors and failures "
+"were encountered, and destroy any test databases as usual. Thus pressing "
+"``Ctrl-C`` can be very useful if you forget to pass the :djadminopt:`--"
+"failfast` option, notice that some tests are unexpectedly failing, and want "
+"to get details on the failures without waiting for the full test run to "
+"complete."
+msgstr ""
+
+# 797f5c1fb7774f4fbf6d7a6a13bb33ad
+#: ../../topics/testing/overview.txt:162
+msgid ""
+"If you do not want to wait for the currently running test to finish, you can "
+"press ``Ctrl-C`` a second time and the test run will halt immediately, but "
+"not gracefully. No details of the tests run before the interruption will be "
+"reported, and any test databases created by the run will not be destroyed."
+msgstr ""
+
+# e6dfe4745a614113b9d127f62f2ad338
+#: ../../topics/testing/overview.txt:169
+msgid ""
+"It's a good idea to run your tests with Python warnings enabled: ``python -"
+"Wall manage.py test``. The ``-Wall`` flag tells Python to display "
+"deprecation warnings. Django, like many other Python libraries, uses these "
+"warnings to flag when features are going away. It also might flag areas in "
+"your code that aren't strictly wrong but could benefit from a better "
+"implementation."
+msgstr ""
+
+# 3d3d574515cc4b73980fbb1c68a42708
+#: ../../topics/testing/overview.txt:179
+msgid "The test database"
+msgstr ""
+
+# 7b52813d752b43ab8b9b7f64deb43eaa
+#: ../../topics/testing/overview.txt:181
+msgid ""
+"Tests that require a database (namely, model tests) will not use your \"real"
+"\" (production) database. Separate, blank databases are created for the "
+"tests."
+msgstr ""
+
+# b82c76dd38e142908dd9bf7300234736
+#: ../../topics/testing/overview.txt:184
+msgid ""
+"Regardless of whether the tests pass or fail, the test databases are "
+"destroyed when all the tests have been executed."
+msgstr ""
+
+# 1bf20478629c4a58987260c8fb95f157
+#: ../../topics/testing/overview.txt:187
+msgid ""
+"By default the test databases get their names by prepending ``test_`` to the "
+"value of the :setting:`NAME` settings for the databases defined in :setting:"
+"`DATABASES`. When using the SQLite database engine the tests will by default "
+"use an in-memory database (i.e., the database will be created in memory, "
+"bypassing the filesystem entirely!). If you want to use a different database "
+"name, specify :setting:`TEST_NAME` in the dictionary for any given database "
+"in :setting:`DATABASES`."
+msgstr ""
+
+# 2eca4cfd2a214377bcdbc976704181c6
+#: ../../topics/testing/overview.txt:196
+msgid ""
+"Aside from using a separate database, the test runner will otherwise use all "
+"of the same database settings you have in your settings file: :setting:"
+"`ENGINE <DATABASE-ENGINE>`, :setting:`USER`, :setting:`HOST`, etc. The test "
+"database is created by the user specified by :setting:`USER`, so you'll need "
+"to make sure that the given user account has sufficient privileges to create "
+"a new database on the system."
+msgstr ""
+
+# 0f62d8aab2824ae9ae9425ae86587d3a
+#: ../../topics/testing/overview.txt:203
+msgid ""
+"For fine-grained control over the character encoding of your test database, "
+"use the :setting:`TEST_CHARSET` option. If you're using MySQL, you can also "
+"use the :setting:`TEST_COLLATION` option to control the particular collation "
+"used by the test database. See the :doc:`settings documentation </ref/"
+"settings>` for details of these advanced settings."
+msgstr ""
+
+# 50d0932429d642d2a7ea58b360f0fe2a
+#: ../../topics/testing/overview.txt:212
+msgid ""
+"If your code attempts to access the database when its modules are compiled, "
+"this will occur *before* the test database is set up, with potentially "
+"unexpected results. For example, if you have a database query in module-"
+"level code and a real database exists, production data could pollute your "
+"tests. *It is a bad idea to have such import-time database queries in your "
+"code* anyway - rewrite your code so that it doesn't do this."
+msgstr ""
+
+# 67e4a351b90847a3b0e4957a74bd17a0
+#: ../../topics/testing/overview.txt:221
+msgid ""
+"The :ref:`advanced multi-db testing topics <topics-testing-advanced-"
+"multidb>`."
+msgstr ""
+
+# 68f136d436e24f1a940fced8d9d6978c
+#: ../../topics/testing/overview.txt:224
+msgid "Order in which tests are executed"
+msgstr ""
+
+# 9fcd4b7c31554e3fadc3e4ce1636d483
+#: ../../topics/testing/overview.txt:226
+msgid ""
+"In order to guarantee that all ``TestCase`` code starts with a clean "
+"database, the Django test runner reorders tests in the following way:"
+msgstr ""
+
+# 7a98848600fd47dcb4fddc22e06c8885
+#: ../../topics/testing/overview.txt:229
+msgid ""
+"First, all unittests (including :class:`unittest.TestCase`, :class:`~django."
+"test.SimpleTestCase`, :class:`~django.test.TestCase` and :class:`~django."
+"test.TransactionTestCase`) are run with no particular ordering guaranteed "
+"nor enforced among them."
+msgstr ""
+
+# 1dec81476e114c63a60206f4f95ae4b0
+#: ../../topics/testing/overview.txt:234
+msgid ""
+"Then any other tests (e.g. doctests) that may alter the database without "
+"restoring it to its original state are run."
+msgstr ""
+
+# 4b723c3208004e4fa37baddf6f136b34
+#: ../../topics/testing/overview.txt:244
+msgid ""
+"The new ordering of tests may reveal unexpected dependencies on test case "
+"ordering. This is the case with doctests that relied on state left in the "
+"database by a given :class:`~django.test.TransactionTestCase` test, they "
+"must be updated to be able to run independently."
+msgstr ""
+
+# aed89693cb414352a34d81414d96c0f5
+#: ../../topics/testing/overview.txt:250
+msgid "Other test conditions"
+msgstr ""
+
+# 03e9e972af3f4f98aa439cf44f1f5e5c
+#: ../../topics/testing/overview.txt:252
+msgid ""
+"Regardless of the value of the :setting:`DEBUG` setting in your "
+"configuration file, all Django tests run with :setting:`DEBUG`\\=False. This "
+"is to ensure that the observed output of your code matches what will be seen "
+"in a production setting."
+msgstr ""
+
+# 176c789a0f6f4d3ca1c6851697d4fa84
+#: ../../topics/testing/overview.txt:257
+msgid ""
+"Caches are not cleared after each test, and running \"manage.py test fooapp"
+"\" can insert data from the tests into the cache of a live system if you run "
+"your tests in production because, unlike databases, a separate \"test cache"
+"\" is not used. This behavior `may change`_ in the future."
+msgstr ""
+
+# a9ea38b8c27f4b6e95728c5f62c7f9fd
+#: ../../topics/testing/overview.txt:265
+msgid "Understanding the test output"
+msgstr ""
+
+# 76a5322dbc594adf8844942ed86bafe6
+#: ../../topics/testing/overview.txt:267
+msgid ""
+"When you run your tests, you'll see a number of messages as the test runner "
+"prepares itself. You can control the level of detail of these messages with "
+"the ``verbosity`` option on the command line::"
+msgstr ""
+
+# 1745770b6a14433f89d3262b6d640109
+#: ../../topics/testing/overview.txt:277
+msgid ""
+"This tells you that the test runner is creating a test database, as "
+"described in the previous section."
+msgstr ""
+
+# 2a3e39f2ca4049258e8fd3dab0ab2b7f
+#: ../../topics/testing/overview.txt:280
+msgid ""
+"Once the test database has been created, Django will run your tests. If "
+"everything goes well, you'll see something like this::"
+msgstr ""
+
+# 1f72c54b22924a8096f7cfea19893fe7
+#: ../../topics/testing/overview.txt:288
+msgid ""
+"If there are test failures, however, you'll see full details about which "
+"tests failed::"
+msgstr ""
+
+# 1668885098ff44ad8be72ed84679d48e
+#: ../../topics/testing/overview.txt:314
+msgid ""
+"A full explanation of this error output is beyond the scope of this "
+"document, but it's pretty intuitive. You can consult the documentation of "
+"Python's :mod:`unittest` library for details."
+msgstr ""
+
+# 05e4a7d89bb843479206a3b0abef1f58
+#: ../../topics/testing/overview.txt:318
+msgid ""
+"Note that the return code for the test-runner script is 1 for any number of "
+"failed and erroneous tests. If all the tests pass, the return code is 0. "
+"This feature is useful if you're using the test-runner script in a shell "
+"script and need to test for success or failure at that level."
+msgstr ""
+
+# 3bf706d749bf4855a9edb9dce7bdf3c1
+#: ../../topics/testing/overview.txt:324
+msgid "Speeding up the tests"
+msgstr ""
+
+# cafa96f6a0fb4d16a536440a0d71b413
+#: ../../topics/testing/overview.txt:326
+msgid ""
+"In recent versions of Django, the default password hasher is rather slow by "
+"design. If during your tests you are authenticating many users, you may want "
+"to use a custom settings file and set the :setting:`PASSWORD_HASHERS` "
+"setting to a faster hashing algorithm::"
+msgstr ""
+
+# c86fa9c2f30445dc9b55afa77efd125c
+#: ../../topics/testing/overview.txt:335
+msgid ""
+"Don't forget to also include in :setting:`PASSWORD_HASHERS` any hashing "
+"algorithm used in fixtures, if any."
+msgstr ""
+
+# 3b01ca796e28473da3c66ff32864e4fa
+#: ../../topics/testing/overview.txt:339
+msgid "Testing tools"
+msgstr ""
+
+# 5f078def73594998814b3b64314b158a
+#: ../../topics/testing/overview.txt:341
+msgid ""
+"Django provides a small set of tools that come in handy when writing tests."
+msgstr ""
+
+# 6bab83f60e8e4fb2868ed890638aa07c
+#: ../../topics/testing/overview.txt:346
+msgid "The test client"
+msgstr ""
+
+# d6cc8a73feed4017ac6a878d2ff03827
+#: ../../topics/testing/overview.txt:351
+msgid ""
+"The test client is a Python class that acts as a dummy Web browser, allowing "
+"you to test your views and interact with your Django-powered application "
+"programmatically."
+msgstr ""
+
+# f71f4bf0b1104430bb077eead9beb21c
+#: ../../topics/testing/overview.txt:355
+msgid "Some of the things you can do with the test client are:"
+msgstr ""
+
+# 09b7a0cbfcde40edbafdedfd1bf0c14d
+#: ../../topics/testing/overview.txt:357
+msgid ""
+"Simulate GET and POST requests on a URL and observe the response -- "
+"everything from low-level HTTP (result headers and status codes) to page "
+"content."
+msgstr ""
+
+# ef0a22918a3847e689ddd0f5097b2793
+#: ../../topics/testing/overview.txt:361
+msgid "Test that the correct view is executed for a given URL."
+msgstr ""
+
+# 93b8742ed97647ea95c148b6f1b2805c
+#: ../../topics/testing/overview.txt:363
+msgid ""
+"Test that a given request is rendered by a given Django template, with a "
+"template context that contains certain values."
+msgstr ""
+
+# 6b9fc80f72114ee6a31acd58d98550a0
+#: ../../topics/testing/overview.txt:366
+msgid ""
+"Note that the test client is not intended to be a replacement for Selenium_ "
+"or other \"in-browser\" frameworks. Django's test client has a different "
+"focus. In short:"
+msgstr ""
+
+# d6cf3fa6b8424c41a264976a2690840f
+#: ../../topics/testing/overview.txt:370
+msgid ""
+"Use Django's test client to establish that the correct view is being called "
+"and that the view is collecting the correct context data."
+msgstr ""
+
+# af4f9471327e41b2a966278a48551941
+#: ../../topics/testing/overview.txt:373
+msgid ""
+"Use in-browser frameworks like Selenium_ to test *rendered* HTML and the "
+"*behavior* of Web pages, namely JavaScript functionality. Django also "
+"provides special support for those frameworks; see the section on :class:"
+"`~django.test.LiveServerTestCase` for more details."
+msgstr ""
+
+# 2dc198f739b24f6cab5315014326e602
+#: ../../topics/testing/overview.txt:378
+msgid "A comprehensive test suite should use a combination of both test types."
+msgstr ""
+
+# c8432dea264549cca2ef70d33ed6a482
+#: ../../topics/testing/overview.txt:381
+msgid "Overview and a quick example"
+msgstr ""
+
+# 9f30ed9bb71b45b1bcbcb76d64baa013
+#: ../../topics/testing/overview.txt:383
+msgid ""
+"To use the test client, instantiate ``django.test.client.Client`` and "
+"retrieve Web pages::"
+msgstr ""
+
+# a358a3a2ebaa4d45831c9c872a07f812
+#: ../../topics/testing/overview.txt:395
+msgid ""
+"As this example suggests, you can instantiate ``Client`` from within a "
+"session of the Python interactive interpreter."
+msgstr ""
+
+# ff7d80c6ca12426b82bbeb6445e1f80f
+#: ../../topics/testing/overview.txt:398
+msgid "Note a few important things about how the test client works:"
+msgstr ""
+
+# 0211a837a0b34bbf8e39063541e3f68a
+#: ../../topics/testing/overview.txt:400
+msgid ""
+"The test client does *not* require the Web server to be running. In fact, it "
+"will run just fine with no Web server running at all! That's because it "
+"avoids the overhead of HTTP and deals directly with the Django framework. "
+"This helps make the unit tests run quickly."
+msgstr ""
+
+# 82ec51b269614c13a1a35f142b4310ca
+#: ../../topics/testing/overview.txt:405
+msgid ""
+"When retrieving pages, remember to specify the *path* of the URL, not the "
+"whole domain. For example, this is correct::"
+msgstr ""
+
+# ec97a8c9782a4a44a5bc130c1ae120e2
+#: ../../topics/testing/overview.txt:410
+msgid "This is incorrect::"
+msgstr ""
+
+# 43b841d74b5f438393dc992fa5a3ae3c
+#: ../../topics/testing/overview.txt:414
+msgid ""
+"The test client is not capable of retrieving Web pages that are not powered "
+"by your Django project. If you need to retrieve other Web pages, use a "
+"Python standard library module such as :mod:`urllib` or :mod:`urllib2`."
+msgstr ""
+
+# 05ccf889e0a94c018c155e43e55d6f31
+#: ../../topics/testing/overview.txt:419
+msgid ""
+"To resolve URLs, the test client uses whatever URLconf is pointed-to by "
+"your :setting:`ROOT_URLCONF` setting."
+msgstr ""
+
+# 856b05c403fa4631a9e3e56c5d38f161
+#: ../../topics/testing/overview.txt:422
+msgid ""
+"Although the above example would work in the Python interactive interpreter, "
+"some of the test client's functionality, notably the template-related "
+"functionality, is only available *while tests are running*."
+msgstr ""
+
+# 459168b72c234c9db424e479448def2a
+#: ../../topics/testing/overview.txt:427
+msgid ""
+"The reason for this is that Django's test runner performs a bit of black "
+"magic in order to determine which template was loaded by a given view. This "
+"black magic (essentially a patching of Django's template system in memory) "
+"only happens during test running."
+msgstr ""
+
+# 0e0fc8ff89974dc2aa4b33d97b3e7da6
+#: ../../topics/testing/overview.txt:432
+msgid ""
+"By default, the test client will disable any CSRF checks performed by your "
+"site."
+msgstr ""
+
+# ea3f8c75b21e47c88d991038d6c8ec4f
+#: ../../topics/testing/overview.txt:435
+msgid ""
+"If, for some reason, you *want* the test client to perform CSRF checks, you "
+"can create an instance of the test client that enforces CSRF checks. To do "
+"this, pass in the ``enforce_csrf_checks`` argument when you construct your "
+"client::"
+msgstr ""
+
+# d6c0be281fb5414db43ac89a3cf7d593
+#: ../../topics/testing/overview.txt:445
+msgid "Making requests"
+msgstr ""
+
+# 10bb89e37e604a078fed6792a8c7d714
+#: ../../topics/testing/overview.txt:447
+msgid "Use the ``django.test.client.Client`` class to make requests."
+msgstr ""
+
+# 148693a2cc934aa59d06d895e8a8d4be
+#: ../../topics/testing/overview.txt:451
+msgid ""
+"It requires no arguments at time of construction. However, you can use "
+"keywords arguments to specify some default headers. For example, this will "
+"send a ``User-Agent`` HTTP header in each request::"
+msgstr ""
+
+# b6b9250e364d44e2b3b0d0b7102d4411
+#: ../../topics/testing/overview.txt:457
+msgid ""
+"The values from the ``extra`` keywords arguments passed to :meth:`~django."
+"test.client.Client.get()`, :meth:`~django.test.client.Client.post()`, etc. "
+"have precedence over the defaults passed to the class constructor."
+msgstr ""
+
+# 3007d26a20cc44f19d613aaa1b998383
+#: ../../topics/testing/overview.txt:462
+msgid ""
+"The ``enforce_csrf_checks`` argument can be used to test CSRF protection "
+"(see above)."
+msgstr ""
+
+# 13aee1a1f1934ad0886b6d6f6fc48fc4
+#: ../../topics/testing/overview.txt:465
+msgid ""
+"Once you have a ``Client`` instance, you can call any of the following "
+"methods:"
+msgstr ""
+
+# 3c25829fc9df4134affcbb4294b69a4e
+#: ../../topics/testing/overview.txt:471
+msgid ""
+"Makes a GET request on the provided ``path`` and returns a ``Response`` "
+"object, which is documented below."
+msgstr ""
+
+# f72948acb0f847b1b102e150369b223f
+#: ../../topics/testing/overview.txt:474
+msgid ""
+"The key-value pairs in the ``data`` dictionary are used to create a GET data "
+"payload. For example::"
+msgstr ""
+
+# 84ca40a21a974cce8b46e867f632cc40
+#: ../../topics/testing/overview.txt:480
+msgid "...will result in the evaluation of a GET request equivalent to::"
+msgstr ""
+
+# 62ede4b6449b47b98d90bdcd25caa658
+#: ../../topics/testing/overview.txt:484
+msgid ""
+"The ``extra`` keyword arguments parameter can be used to specify headers to "
+"be sent in the request. For example::"
+msgstr ""
+
+# 5f362cfbdf2f4bd089bffd1a3cfaedec
+#: ../../topics/testing/overview.txt:491
+msgid ""
+"...will send the HTTP header ``HTTP_X_REQUESTED_WITH`` to the details view, "
+"which is a good way to test code paths that use the :meth:`django.http."
+"HttpRequest.is_ajax()` method."
+msgstr ""
+
+# 5cba233583f4424388743f9b9a0ecc96
+#: ../../topics/testing/overview.txt:497
+msgid ""
+"The headers sent via ``**extra`` should follow CGI_ specification. For "
+"example, emulating a different \"Host\" header as sent in the HTTP request "
+"from the browser to the server should be passed as ``HTTP_HOST``."
+msgstr ""
+
+# 712ce5d23d7542278fd3cc90094fd926
+#: ../../topics/testing/overview.txt:504
+msgid ""
+"If you already have the GET arguments in URL-encoded form, you can use that "
+"encoding instead of using the data argument. For example, the previous GET "
+"request could also be posed as::"
+msgstr ""
+
+# a8cd3ede4e2c477c9462981d84e56e20
+#: ../../topics/testing/overview.txt:511
+msgid ""
+"If you provide a URL with both an encoded GET data and a data argument, the "
+"data argument will take precedence."
+msgstr ""
+
+# 22fd8b3213294cf18d53e51895a423e0
+# a4376c1eabd94e74a7db5c77f5f25093
+#: ../../topics/testing/overview.txt:514 ../../topics/testing/overview.txt:595
+msgid ""
+"If you set ``follow`` to ``True`` the client will follow any redirects and a "
+"``redirect_chain`` attribute will be set in the response object containing "
+"tuples of the intermediate urls and status codes."
+msgstr ""
+
+# f6e647f896954752b022ea3b5e054632
+#: ../../topics/testing/overview.txt:518
+msgid ""
+"If you had a URL ``/redirect_me/`` that redirected to ``/next/``, that "
+"redirected to ``/final/``, this is what you'd see::"
+msgstr ""
+
+# 12a42c27942f43eeb1d9f1a1770ebe10
+#: ../../topics/testing/overview.txt:527
+msgid ""
+"Makes a POST request on the provided ``path`` and returns a ``Response`` "
+"object, which is documented below."
+msgstr ""
+
+# 0b2b5a8a81be4adbbc6c66b1ca084667
+#: ../../topics/testing/overview.txt:530
+msgid ""
+"The key-value pairs in the ``data`` dictionary are used to submit POST data. "
+"For example::"
+msgstr ""
+
+# c5d487c0ec3d4197bd1330cd3e00eba4
+#: ../../topics/testing/overview.txt:536
+msgid "...will result in the evaluation of a POST request to this URL::"
+msgstr ""
+
+# 11f76bb1519d47a2a9807ffbf20f8183
+#: ../../topics/testing/overview.txt:540
+msgid "...with this POST data::"
+msgstr ""
+
+# 62a2e111d67547d890e4eeda7dc76c0b
+#: ../../topics/testing/overview.txt:544
+msgid ""
+"If you provide ``content_type`` (e.g. :mimetype:`text/xml` for an XML "
+"payload), the contents of ``data`` will be sent as-is in the POST request, "
+"using ``content_type`` in the HTTP ``Content-Type`` header."
+msgstr ""
+
+# ac619454e82a4afdb810260ade7ec137
+#: ../../topics/testing/overview.txt:548
+msgid ""
+"If you don't provide a value for ``content_type``, the values in ``data`` "
+"will be transmitted with a content type of :mimetype:`multipart/form-data`. "
+"In this case, the key-value pairs in ``data`` will be encoded as a multipart "
+"message and used to create the POST data payload."
+msgstr ""
+
+# 7522a12ed1e5453fb06f20c7b7ec8be8
+#: ../../topics/testing/overview.txt:554
+msgid ""
+"To submit multiple values for a given key -- for example, to specify the "
+"selections for a ``<select multiple>`` -- provide the values as a list or "
+"tuple for the required key. For example, this value of ``data`` would submit "
+"three selected values for the field named ``choices``::"
+msgstr ""
+
+# d5aa5d6bf9b249c69ff25b3b025fe193
+#: ../../topics/testing/overview.txt:561
+msgid ""
+"Submitting files is a special case. To POST a file, you need only provide "
+"the file field name as a key, and a file handle to the file you wish to "
+"upload as a value. For example::"
+msgstr ""
+
+# 43d2d7a2921e45049bf169e21e7754b5
+#: ../../topics/testing/overview.txt:569
+msgid ""
+"(The name ``attachment`` here is not relevant; use whatever name your file-"
+"processing code expects.)"
+msgstr ""
+
+# 2c85eb6859bf48468869d112c9c2f163
+#: ../../topics/testing/overview.txt:572
+msgid ""
+"Note that if you wish to use the same file handle for multiple ``post()`` "
+"calls then you will need to manually reset the file pointer between posts. "
+"The easiest way to do this is to manually close the file after it has been "
+"provided to ``post()``, as demonstrated above."
+msgstr ""
+
+# 8697a5f18a4447eb93a927d41dd07f98
+#: ../../topics/testing/overview.txt:578
+msgid ""
+"You should also ensure that the file is opened in a way that allows the data "
+"to be read. If your file contains binary data such as an image, this means "
+"you will need to open the file in ``rb`` (read binary) mode."
+msgstr ""
+
+# 6625d7b0a0af497aab2b525ed00b980f
+#: ../../topics/testing/overview.txt:583
+msgid "The ``extra`` argument acts the same as for :meth:`Client.get`."
+msgstr ""
+
+# 7b59460f373c4b41bdb8485f54e9e872
+#: ../../topics/testing/overview.txt:585
+msgid ""
+"If the URL you request with a POST contains encoded parameters, these "
+"parameters will be made available in the request.GET data. For example, if "
+"you were to make the request::"
+msgstr ""
+
+# 444547c91d6f4648a05c6466aea15142
+#: ../../topics/testing/overview.txt:591
+msgid ""
+"... the view handling this request could interrogate request.POST to "
+"retrieve the username and password, and could interrogate request.GET to "
+"determine if the user was a visitor."
+msgstr ""
+
+# f7e4deb77d9e4ca4a5f2145804005f24
+#: ../../topics/testing/overview.txt:601
+msgid ""
+"Makes a HEAD request on the provided ``path`` and returns a ``Response`` "
+"object. This method works just like :meth:`Client.get`, including the "
+"``follow`` and ``extra`` arguments, except it does not return a message body."
+msgstr ""
+
+# 4971f27e297e45ae92090c0b0162664d
+#: ../../topics/testing/overview.txt:608
+msgid ""
+"Makes an OPTIONS request on the provided ``path`` and returns a ``Response`` "
+"object. Useful for testing RESTful interfaces."
+msgstr ""
+
+# 472a0b6bf62247f9ba88ec340181bd34
+# fd5add5ca56c424f809c3d2de028fcd4
+# afe760d8a9864a4a97d22d76fc5c4d58
+#: ../../topics/testing/overview.txt:611 ../../topics/testing/overview.txt:626
+#: ../../topics/testing/overview.txt:649
+msgid ""
+"When ``data`` is provided, it is used as the request body, and a ``Content-"
+"Type`` header is set to ``content_type``."
+msgstr ""
+
+# 30566bf6810c495ea24c406f89d51f52
+# 8818cce6009748a78f3baf05c94845ef
+# a1d61a7484f948a99afc0edfbbc8581b
+# c900c67a3e2e4110ac53f7502b070e29
+#: ../../topics/testing/overview.txt:618 ../../topics/testing/overview.txt:633
+#: ../../topics/testing/overview.txt:641 ../../topics/testing/overview.txt:656
+msgid ""
+"The ``follow`` and ``extra`` arguments act the same as for :meth:`Client."
+"get`."
+msgstr ""
+
+# cedd873513384280af8a825fa782a8cd
+#: ../../topics/testing/overview.txt:623
+msgid ""
+"Makes a PUT request on the provided ``path`` and returns a ``Response`` "
+"object. Useful for testing RESTful interfaces."
+msgstr ""
+
+# 4f837608ed2d4fa1ad570077f0b12875
+#: ../../topics/testing/overview.txt:638
+msgid ""
+"Makes a PATCH request on the provided ``path`` and returns a ``Response`` "
+"object. Useful for testing RESTful interfaces."
+msgstr ""
+
+# 94e42ec8216a429e87cb94445b06084a
+#: ../../topics/testing/overview.txt:646
+msgid ""
+"Makes an DELETE request on the provided ``path`` and returns a ``Response`` "
+"object. Useful for testing RESTful interfaces."
+msgstr ""
+
+# 9eb1cfb9b4504b13be0431ef4638d072
+#: ../../topics/testing/overview.txt:662
+msgid ""
+"If your site uses Django's :doc:`authentication system</topics/auth/index>` "
+"and you deal with logging in users, you can use the test client's ``login()"
+"`` method to simulate the effect of a user logging into the site."
+msgstr ""
+
+# 5cf6dfc5db654c74bf1a94654296a870
+#: ../../topics/testing/overview.txt:667
+msgid ""
+"After you call this method, the test client will have all the cookies and "
+"session data required to pass any login-based tests that may form part of a "
+"view."
+msgstr ""
+
+# ff25a38c888247289fc95800e05bad1c
+#: ../../topics/testing/overview.txt:671
+msgid ""
+"The format of the ``credentials`` argument depends on which :ref:"
+"`authentication backend <authentication-backends>` you're using (which is "
+"configured by your :setting:`AUTHENTICATION_BACKENDS` setting). If you're "
+"using the standard authentication backend provided by Django "
+"(``ModelBackend``), ``credentials`` should be the user's username and "
+"password, provided as keyword arguments::"
+msgstr ""
+
+# 175c491b5b314b0190e0addfcfe7fc7d
+#: ../../topics/testing/overview.txt:683
+msgid ""
+"If you're using a different authentication backend, this method may require "
+"different credentials. It requires whichever credentials are required by "
+"your backend's ``authenticate()`` method."
+msgstr ""
+
+# 536469b526d7484482bef15ceb84ab6c
+#: ../../topics/testing/overview.txt:687
+msgid ""
+"``login()`` returns ``True`` if it the credentials were accepted and login "
+"was successful."
+msgstr ""
+
+# 72b795fda81745a6a6b850ff93cb0b3a
+#: ../../topics/testing/overview.txt:690
+msgid ""
+"Finally, you'll need to remember to create user accounts before you can use "
+"this method. As we explained above, the test runner is executed using a test "
+"database, which contains no users by default. As a result, user accounts "
+"that are valid on your production site will not work under test conditions. "
+"You'll need to create users as part of the test suite -- either manually "
+"(using the Django model API) or with a test fixture. Remember that if you "
+"want your test user to have a password, you can't set the user's password by "
+"setting the password attribute directly -- you must use the :meth:`~django."
+"contrib.auth.models.User.set_password()` function to store a correctly "
+"hashed password. Alternatively, you can use the :meth:`~django.contrib.auth."
+"models.UserManager.create_user` helper method to create a new user with a "
+"correctly hashed password."
+msgstr ""
+
+# 56da2096ba4545eb9a98b1e6e2e99759
+#: ../../topics/testing/overview.txt:706
+msgid ""
+"If your site uses Django's :doc:`authentication system</topics/auth/index>`, "
+"the ``logout()`` method can be used to simulate the effect of a user logging "
+"out of your site."
+msgstr ""
+
+# 0994e6422a094737b0824d41fafd4a5d
+#: ../../topics/testing/overview.txt:710
+msgid ""
+"After you call this method, the test client will have all the cookies and "
+"session data cleared to defaults. Subsequent requests will appear to come "
+"from an AnonymousUser."
+msgstr ""
+
+# cdb85949abc241b881976820567cfa25
+#: ../../topics/testing/overview.txt:715
+msgid "Testing responses"
+msgstr ""
+
+# 9179ff83d99e4310ba22346c45bbcb7c
+#: ../../topics/testing/overview.txt:717
+msgid ""
+"The ``get()`` and ``post()`` methods both return a ``Response`` object. This "
+"``Response`` object is *not* the same as the ``HttpResponse`` object "
+"returned Django views; the test response object has some additional data "
+"useful for test code to verify."
+msgstr ""
+
+# 3a1d555a3fec4e6eb615abd9fc37a3e6
+#: ../../topics/testing/overview.txt:722
+msgid "Specifically, a ``Response`` object has the following attributes:"
+msgstr ""
+
+# 6185046d1eda4fad9b92432dc7be2842
+#: ../../topics/testing/overview.txt:728
+msgid ""
+"The test client that was used to make the request that resulted in the "
+"response."
+msgstr ""
+
+# dfcbbaed5b114a1eb97047c2dbe52e42
+#: ../../topics/testing/overview.txt:733
+msgid ""
+"The body of the response, as a string. This is the final page content as "
+"rendered by the view, or any error message."
+msgstr ""
+
+# 323c9fe63c84412d95cbabeab1e2eb89
+#: ../../topics/testing/overview.txt:738
+msgid ""
+"The template ``Context`` instance that was used to render the template that "
+"produced the response content."
+msgstr ""
+
+# cc1d1863eb0c499288f7ec4f8bca1074
+#: ../../topics/testing/overview.txt:741
+msgid ""
+"If the rendered page used multiple templates, then ``context`` will be a "
+"list of ``Context`` objects, in the order in which they were rendered."
+msgstr ""
+
+# 606b2974bd204e14850db0cb70bcb165
+#: ../../topics/testing/overview.txt:744
+msgid ""
+"Regardless of the number of templates used during rendering, you can "
+"retrieve context values using the ``[]`` operator. For example, the context "
+"variable ``name`` could be retrieved using::"
+msgstr ""
+
+# 503c5200c74f4c0380c74d1e87c08286
+#: ../../topics/testing/overview.txt:754
+msgid "The request data that stimulated the response."
+msgstr ""
+
+# 7f1be4fccd394fa0883688d3d468667a
+#: ../../topics/testing/overview.txt:758
+msgid ""
+"The HTTP status of the response, as an integer. See :rfc:`2616#section-10` "
+"for a full list of HTTP status codes."
+msgstr ""
+
+# 3ee84c6432324fc6aa2bad9566e7212a
+#: ../../topics/testing/overview.txt:763
+msgid ""
+"A list of ``Template`` instances used to render the final content, in the "
+"order they were rendered. For each template in the list, use ``template."
+"name`` to get the template's file name, if the template was loaded from a "
+"file. (The name is a string such as ``'admin/index.html'``.)"
+msgstr ""
+
+# c0bfce9cb5e44f898a92c8d5c597b23b
+#: ../../topics/testing/overview.txt:769
+msgid ""
+"You can also use dictionary syntax on the response object to query the value "
+"of any settings in the HTTP headers. For example, you could determine the "
+"content type of a response using ``response['Content-Type']``."
+msgstr ""
+
+# 9f81b81577194467af3cf2c96169481c
+#: ../../topics/testing/overview.txt:774
+msgid "Exceptions"
+msgstr ""
+
+# 1ddd5862e26e4e2c9201914d6b3d968f
+#: ../../topics/testing/overview.txt:776
+msgid ""
+"If you point the test client at a view that raises an exception, that "
+"exception will be visible in the test case. You can then use a standard "
+"``try ... except`` block or :meth:`~unittest.TestCase.assertRaises` to test "
+"for exceptions."
+msgstr ""
+
+# a233db3612fa432796d37e85ccada5e9
+#: ../../topics/testing/overview.txt:780
+msgid ""
+"The only exceptions that are not visible to the test client are ``Http404``, "
+"``PermissionDenied`` and ``SystemExit``. Django catches these exceptions "
+"internally and converts them into the appropriate HTTP response codes. In "
+"these cases, you can check ``response.status_code`` in your test."
+msgstr ""
+
+# 68229b7bd7694fce827dc553d69eb8e2
+#: ../../topics/testing/overview.txt:786
+msgid "Persistent state"
+msgstr ""
+
+# e9250bd4ef6c49a9b4113ac5460e2747
+#: ../../topics/testing/overview.txt:788
+msgid ""
+"The test client is stateful. If a response returns a cookie, then that "
+"cookie will be stored in the test client and sent with all subsequent ``get()"
+"`` and ``post()`` requests."
+msgstr ""
+
+# eea3430b75ba491489e4ba10a23ba2e5
+#: ../../topics/testing/overview.txt:792
+msgid ""
+"Expiration policies for these cookies are not followed. If you want a cookie "
+"to expire, either delete it manually or create a new ``Client`` instance "
+"(which will effectively delete all cookies)."
+msgstr ""
+
+# bbe2a310b1cc48b68eaf865356f66393
+#: ../../topics/testing/overview.txt:796
+msgid ""
+"A test client has two attributes that store persistent state information. "
+"You can access these properties as part of a test condition."
+msgstr ""
+
+# abb518d58f96421ea9704d9259fdd8eb
+#: ../../topics/testing/overview.txt:801
+msgid ""
+"A Python :class:`~Cookie.SimpleCookie` object, containing the current values "
+"of all the client cookies. See the documentation of the :mod:`Cookie` module "
+"for more."
+msgstr ""
+
+# 95477b697683419fa7bcfd29fabba014
+#: ../../topics/testing/overview.txt:807
+msgid ""
+"A dictionary-like object containing session information. See the :doc:"
+"`session documentation</topics/http/sessions>` for full details."
+msgstr ""
+
+# 9f513e52ec5844c99687c69e4fadbb5f
+#: ../../topics/testing/overview.txt:810
+msgid ""
+"To modify the session and then save it, it must be stored in a variable "
+"first (because a new ``SessionStore`` is created every time this property is "
+"accessed)::"
+msgstr ""
+
+# a36e39ec0e8848c4bff3745925508548
+#: ../../topics/testing/overview.txt:820
+msgid "Example"
+msgstr ""
+
+# 67d10253b08b4bbe99eb9ea7c78a8d3b
+#: ../../topics/testing/overview.txt:822
+msgid "The following is a simple unit test using the test client::"
+msgstr ""
+
+# 3b8f09ef74254ec387271df0d3dc8907
+#: ../../topics/testing/overview.txt:844
+msgid ":class:`django.test.client.RequestFactory`"
+msgstr ""
+
+# 1fb942a047d14457ae3ccd9dace9df84
+#: ../../topics/testing/overview.txt:849
+msgid "Provided test case classes"
+msgstr ""
+
+# d1d4945535984373a0f14a0ae2195c0d
+#: ../../topics/testing/overview.txt:853
+msgid ""
+"Normal Python unit test classes extend a base class of :class:`unittest."
+"TestCase`. Django provides a few extensions of this base class:"
+msgstr ""
+
+# f49dcffe08184cbcac1d32b6fe36bc70
+#: ../../topics/testing/overview.txt:865
+msgid ""
+"Regardless of the version of Python you're using, if you've installed "
+"``unittest2``, ``django.utils.unittest`` will point to that library."
+msgstr ""
+
+# e17e4f0b23f948c583fef05f52096832
+#: ../../topics/testing/overview.txt:869
+msgid "SimpleTestCase"
+msgstr ""
+
+# aa8ecc61ce5747119904c1102848ab77
+#: ../../topics/testing/overview.txt:873
+msgid ""
+"A very thin subclass of :class:`unittest.TestCase`, it extends it with some "
+"basic functionality like:"
+msgstr ""
+
+# 48b7517847d0492a944f646ed79dbfc3
+#: ../../topics/testing/overview.txt:876
+msgid "Saving and restoring the Python warning machinery state."
+msgstr ""
+
+# 5067c75a7ff34ff0b9ade7d53cb75ed3
+#: ../../topics/testing/overview.txt:877
+msgid ""
+"Checking that a callable :meth:`raises a certain exception <SimpleTestCase."
+"assertRaisesMessage>`."
+msgstr ""
+
+# 4c0e7c7bc659426182e105f0663b77ce
+#: ../../topics/testing/overview.txt:878
+msgid ""
+":meth:`Testing form field rendering <SimpleTestCase.assertFieldOutput>`."
+msgstr ""
+
+# 2b0c92f615fb45dfa0ccfa5ebcc98ef1
+#: ../../topics/testing/overview.txt:879
+msgid ""
+"Testing server :ref:`HTML responses for the presence/lack of a given "
+"fragment <assertions>`."
+msgstr ""
+
+# b930eec061cb464eb9dcb0fa4ee3109c
+#: ../../topics/testing/overview.txt:880
+msgid ""
+"The ability to run tests with :ref:`modified settings <overriding-settings>`"
+msgstr ""
+
+# cefc785508574d38a82d60393d964668
+#: ../../topics/testing/overview.txt:882
+msgid ""
+"If you need any of the other more complex and heavyweight Django-specific "
+"features like:"
+msgstr ""
+
+# 06810d822dfd44aeb22c1ff0ebb8bacd
+#: ../../topics/testing/overview.txt:885
+msgid "Using the :attr:`~TestCase.client` :class:`~django.test.client.Client`."
+msgstr ""
+
+# de67015d46ca41aca8f2ebcec44f0606
+#: ../../topics/testing/overview.txt:886
+msgid "Testing or using the ORM."
+msgstr ""
+
+# c37d1550427d4ae2bc5bf2620293e4e0
+#: ../../topics/testing/overview.txt:887
+msgid "Database :attr:`~TestCase.fixtures`."
+msgstr ""
+
+# 29b5934cdb804a679fda658b05aa852a
+#: ../../topics/testing/overview.txt:888
+msgid "Custom test-time :attr:`URL maps <TestCase.urls>`."
+msgstr ""
+
+# 15582985ca6f4188a664ad01b2a6a295
+#: ../../topics/testing/overview.txt:889
+msgid ""
+"Test :ref:`skipping based on database backend features <skipping-tests>`."
+msgstr ""
+
+# 72bd3f7ceb7641adaf3c9c9b295371fc
+#: ../../topics/testing/overview.txt:890
+msgid "The remaining specialized :ref:`assert* <assertions>` methods."
+msgstr ""
+
+# d27918e02093473da316e005401cff91
+#: ../../topics/testing/overview.txt:892
+msgid ""
+"then you should use :class:`~django.test.TransactionTestCase` or :class:"
+"`~django.test.TestCase` instead."
+msgstr ""
+
+# b2666b41dbb64c3dbb1987b1b9f3c420
+#: ../../topics/testing/overview.txt:895
+msgid "``SimpleTestCase`` inherits from ``django.utils.unittest.TestCase``."
+msgstr ""
+
+# 3004cde9ff1a4e01a4e44fecf768378e
+#: ../../topics/testing/overview.txt:898
+msgid "TransactionTestCase"
+msgstr ""
+
+# 82fb8362bd4741d280129e8dbc48d2c3
+#: ../../topics/testing/overview.txt:902
+msgid ""
+"Django ``TestCase`` classes make use of database transaction facilities, if "
+"available, to speed up the process of resetting the database to a known "
+"state at the beginning of each test. A consequence of this, however, is that "
+"the effects of transaction commit and rollback cannot be tested by a Django "
+"``TestCase`` class. If your test requires testing of such transactional "
+"behavior, you should use a Django ``TransactionTestCase``."
+msgstr ""
+
+# 9c34ce606f8f4672bf0071df25fa448b
+#: ../../topics/testing/overview.txt:909
+msgid ""
+"``TransactionTestCase`` and ``TestCase`` are identical except for the manner "
+"in which the database is reset to a known state and the ability for test "
+"code to test the effects of commit and rollback:"
+msgstr ""
+
+# 591c22d12e5742a683c4ff6d5cba45f2
+#: ../../topics/testing/overview.txt:913
+msgid ""
+"A ``TransactionTestCase`` resets the database after the test runs by "
+"truncating all tables. A ``TransactionTestCase`` may call commit and "
+"rollback and observe the effects of these calls on the database."
+msgstr ""
+
+# 2ed89c81d45148eea9ed668b540a97d4
+#: ../../topics/testing/overview.txt:917
+msgid ""
+"A ``TestCase``, on the other hand, does not truncate tables after a test. "
+"Instead, it encloses the test code in a database transaction that is rolled "
+"back at the end of the test.  It also prevents the code under test from "
+"issuing any commit or rollback operations on the database, to ensure that "
+"the rollback at the end of the test restores the database to its initial "
+"state."
+msgstr ""
+
+# fb4c633a3b02414eae0f53f63bbad925
+#: ../../topics/testing/overview.txt:923
+msgid ""
+"When running on a database that does not support rollback (e.g. MySQL with "
+"the MyISAM storage engine), ``TestCase`` falls back to initializing the "
+"database by truncating tables and reloading initial data."
+msgstr ""
+
+# 3d3257c6b0b3455495a7f5973eefe368
+#: ../../topics/testing/overview.txt:931
+msgid ""
+"Prior to 1.5, ``TransactionTestCase`` flushed the database tables *before* "
+"each test. In Django 1.5, this is instead done *after* the test has been run."
+msgstr ""
+
+# a94c8d7036c14850881d0e5019aaf753
+#: ../../topics/testing/overview.txt:934
+msgid ""
+"When the flush took place before the test, it was guaranteed that primary "
+"key values started at one in :class:`~django.test.TransactionTestCase` tests."
+msgstr ""
+
+# c692e0f5f4d94ba490d77884712dc938
+#: ../../topics/testing/overview.txt:938
+msgid ""
+"Tests should not depend on this behaviour, but for legacy tests that do, "
+"the :attr:`~TransactionTestCase.reset_sequences` attribute can be used until "
+"the test has been properly updated."
+msgstr ""
+
+# cd1487d4c9554daa8c4d15425e178a77
+#: ../../topics/testing/overview.txt:946
+msgid ""
+"``TransactionTestCase`` inherits from :class:`~django.test.SimpleTestCase`."
+msgstr ""
+
+# 314c22fca56d4485b57e56b0d6501d19
+#: ../../topics/testing/overview.txt:952
+msgid ""
+"Setting ``reset_sequences = True`` on a ``TransactionTestCase`` will make "
+"sure sequences are always reset before the test run::"
+msgstr ""
+
+# 80d9bc52aacf4c79b8369718a59a51b7
+#: ../../topics/testing/overview.txt:963
+msgid ""
+"Unless you are explicitly testing primary keys sequence numbers, it is "
+"recommended that you do not hard code primary key values in tests."
+msgstr ""
+
+# d6e450bd98e748e5815dc02bd5eb44b9
+#: ../../topics/testing/overview.txt:966
+msgid ""
+"Using ``reset_sequences = True`` will slow down the test, since the primary "
+"key reset is an relatively expensive database operation."
+msgstr ""
+
+# 7fe1c555a264454d95555901043c55f2
+#: ../../topics/testing/overview.txt:970
+msgid "TestCase"
+msgstr ""
+
+# 70a56c942bde4de1b041633709a4f245
+#: ../../topics/testing/overview.txt:974
+msgid ""
+"This class provides some additional capabilities that can be useful for "
+"testing Web sites."
+msgstr ""
+
+# aa6ce12a0db54d78a033bdee9b263ec9
+#: ../../topics/testing/overview.txt:977
+msgid ""
+"Converting a normal :class:`unittest.TestCase` to a Django :class:`TestCase` "
+"is easy: Just change the base class of your test from `'unittest.TestCase'` "
+"to `'django.test.TestCase'`. All of the standard Python unit test "
+"functionality will continue to be available, but it will be augmented with "
+"some useful additions, including:"
+msgstr ""
+
+# 2fec396d6ce644ad969221d0f57cfe1a
+#: ../../topics/testing/overview.txt:983
+msgid "Automatic loading of fixtures."
+msgstr ""
+
+# ac7e1c94cb814f31a0e6df8477d1e01e
+#: ../../topics/testing/overview.txt:985
+msgid "Wraps each test in a transaction."
+msgstr ""
+
+# 5765bdd0758641f59029aef56c0957a5
+#: ../../topics/testing/overview.txt:987
+msgid "Creates a TestClient instance."
+msgstr ""
+
+# bf5e11447b03497e980beb343f059784
+#: ../../topics/testing/overview.txt:989
+msgid ""
+"Django-specific assertions for testing for things like redirection and form "
+"errors."
+msgstr ""
+
+# 5f560b5bf01a4953b61d35407133fd6e
+#: ../../topics/testing/overview.txt:996
+msgid "``TestCase`` inherits from :class:`~django.test.TransactionTestCase`."
+msgstr ""
+
+# 6b06dbf49ce5404689bc810fcbfcb2e6
+#: ../../topics/testing/overview.txt:1001
+msgid "LiveServerTestCase"
+msgstr ""
+
+# 503de887c6b84ba9ba050b54bf85f22c
+#: ../../topics/testing/overview.txt:1005
+msgid ""
+"``LiveServerTestCase`` does basically the same as :class:`~django.test."
+"TransactionTestCase` with one extra feature: it launches a live Django "
+"server in the background on setup, and shuts it down on teardown. This "
+"allows the use of automated test clients other than the :ref:`Django dummy "
+"client <test-client>` such as, for example, the Selenium_ client, to execute "
+"a series of functional tests inside a browser and simulate a real user's "
+"actions."
+msgstr ""
+
+# 8cc40e3cdec941c68f5030ef23a39c54
+#: ../../topics/testing/overview.txt:1013
+msgid ""
+"By default the live server's address is `'localhost:8081'` and the full URL "
+"can be accessed during the tests with ``self.live_server_url``. If you'd "
+"like to change the default address (in the case, for example, where the 8081 "
+"port is already taken) then you may pass a different one to the :djadmin:"
+"`test` command via the :djadminopt:`--liveserver` option, for example:"
+msgstr ""
+
+# ab2d26c8f9e34b7c924381fec9b194d5
+#: ../../topics/testing/overview.txt:1023
+msgid ""
+"Another way of changing the default server address is by setting the "
+"`DJANGO_LIVE_TEST_SERVER_ADDRESS` environment variable somewhere in your "
+"code (for example, in a :ref:`custom test runner<topics-testing-"
+"test_runner>`):"
+msgstr ""
+
+# 218f9019b8eb48b2a02bc71b1f1af91f
+#: ../../topics/testing/overview.txt:1032
+msgid ""
+"In the case where the tests are run by multiple processes in parallel (for "
+"example, in the context of several simultaneous `continuous integration`_ "
+"builds), the processes will compete for the same address, and therefore your "
+"tests might randomly fail with an \"Address already in use\" error. To avoid "
+"this problem, you can pass a comma-separated list of ports or ranges of "
+"ports (at least as many as the number of potential parallel processes). For "
+"example:"
+msgstr ""
+
+# 9b224c231bb442b19d6def4a63c64280
+#: ../../topics/testing/overview.txt:1043
+msgid ""
+"Then, during test execution, each new live test server will try every "
+"specified port until it finds one that is free and takes it."
+msgstr ""
+
+# ab2a305fb5bb404d889a27b0a3585cbe
+#: ../../topics/testing/overview.txt:1048
+msgid ""
+"To demonstrate how to use ``LiveServerTestCase``, let's write a simple "
+"Selenium test. First of all, you need to install the `selenium package`_ "
+"into your Python path:"
+msgstr ""
+
+# 501f841538bf493699685af1fb6524c9
+#: ../../topics/testing/overview.txt:1056
+msgid ""
+"Then, add a ``LiveServerTestCase``-based test to your app's tests module "
+"(for example: ``myapp/tests.py``). The code for this test may look as "
+"follows:"
+msgstr ""
+
+# 6fb7344bb5514374a05538c71477a06d
+#: ../../topics/testing/overview.txt:1085
+msgid "Finally, you may run the test as follows:"
+msgstr ""
+
+# 86a206443ace426f85e9b1d311ed855b
+#: ../../topics/testing/overview.txt:1091
+msgid ""
+"This example will automatically open Firefox then go to the login page, "
+"enter the credentials and press the \"Log in\" button. Selenium offers other "
+"drivers in case you do not have Firefox installed or wish to use another "
+"browser. The example above is just a tiny fraction of what the Selenium "
+"client can do; check out the `full reference`_ for more details."
+msgstr ""
+
+# cedb39dd0ec64383a2e332b55473b442
+#: ../../topics/testing/overview.txt:1104
+msgid ""
+"``LiveServerTestCase`` makes use of the :doc:`staticfiles contrib app </"
+"howto/static-files>` so you'll need to have your project configured "
+"accordingly (in particular by setting :setting:`STATIC_URL`)."
+msgstr ""
+
+# fbe268351b9a4dfcad2c083f6099828d
+#: ../../topics/testing/overview.txt:1110
+msgid ""
+"When using an in-memory SQLite database to run the tests, the same database "
+"connection will be shared by two threads in parallel: the thread in which "
+"the live server is run and the thread in which the test case is run. It's "
+"important to prevent simultaneous database queries via this shared "
+"connection by the two threads, as that may sometimes randomly cause the "
+"tests to fail. So you need to ensure that the two threads don't access the "
+"database at the same time. In particular, this means that in some cases (for "
+"example, just after clicking a link or submitting a form), you might need to "
+"check that a response is received by Selenium and that the next page is "
+"loaded before proceeding with further test execution. Do this, for example, "
+"by making Selenium wait until the `<body>` HTML tag is found in the response "
+"(requires Selenium > 2.13):"
+msgstr ""
+
+# 7d490528616e4c2abd2221964abc16de
+#: ../../topics/testing/overview.txt:1134
+msgid ""
+"The tricky thing here is that there's really no such thing as a \"page load,"
+"\" especially in modern Web apps that generate HTML dynamically after the "
+"server generates the initial document. So, simply checking for the presence "
+"of `<body>` in the response might not necessarily be appropriate for all use "
+"cases. Please refer to the `Selenium FAQ`_ and `Selenium documentation`_ for "
+"more information."
+msgstr ""
+
+# 3449c3b6df184a85b914fc041194f9e5
+#: ../../topics/testing/overview.txt:1145
+msgid "Test cases features"
+msgstr ""
+
+# c572dc5613bf4cba9c9f0875f8263b5e
+#: ../../topics/testing/overview.txt:1148
+msgid "Default test client"
+msgstr ""
+
+# 30f0d187f9db45eba95546c0001a65be
+#: ../../topics/testing/overview.txt:1152
+msgid ""
+"Every test case in a ``django.test.TestCase`` instance has access to an "
+"instance of a Django test client. This client can be accessed as ``self."
+"client``. This client is recreated for each test, so you don't have to worry "
+"about state (such as cookies) carrying over from one test to another."
+msgstr ""
+
+# 10ffc004fec343198ecca765d637cff4
+#: ../../topics/testing/overview.txt:1157
+msgid "This means, instead of instantiating a ``Client`` in each test::"
+msgstr ""
+
+# 0d2b732940cd4fe18208edec218a154f
+#: ../../topics/testing/overview.txt:1173
+msgid "...you can just refer to ``self.client``, like so::"
+msgstr ""
+
+# 122a344859e54baa910a8f7d54ba1364
+#: ../../topics/testing/overview.txt:1187
+msgid "Customizing the test client"
+msgstr ""
+
+# e6d418dcedfe47dd96a4a4458c76df9f
+#: ../../topics/testing/overview.txt:1191
+msgid ""
+"If you want to use a different ``Client`` class (for example, a subclass "
+"with customized behavior), use the :attr:`~TestCase.client_class` class "
+"attribute::"
+msgstr ""
+
+# e973b9601ffe4296a8197944c37c305e
+#: ../../topics/testing/overview.txt:1211
+msgid "Fixture loading"
+msgstr ""
+
+# 3ae6422020694f64a09043182a54de0c
+#: ../../topics/testing/overview.txt:1215
+msgid ""
+"A test case for a database-backed Web site isn't much use if there isn't any "
+"data in the database. To make it easy to put test data into the database, "
+"Django's custom ``TestCase`` class provides a way of loading **fixtures**."
+msgstr ""
+
+# 9bc0acbac0b2406995bf55e371f5b795
+#: ../../topics/testing/overview.txt:1219
+msgid ""
+"A fixture is a collection of data that Django knows how to import into a "
+"database. For example, if your site has user accounts, you might set up a "
+"fixture of fake user accounts in order to populate your database during "
+"tests."
+msgstr ""
+
+# 0cf0a57d07104f1baedd448d77198648
+#: ../../topics/testing/overview.txt:1223
+msgid ""
+"The most straightforward way of creating a fixture is to use the :djadmin:"
+"`manage.py dumpdata <dumpdata>` command. This assumes you already have some "
+"data in your database. See the :djadmin:`dumpdata documentation<dumpdata>` "
+"for more details."
+msgstr ""
+
+# 1e7ebb42774547879d0887af0a475a3b
+#: ../../topics/testing/overview.txt:1230
+msgid ""
+"If you've ever run :djadmin:`manage.py syncdb<syncdb>`, you've already used "
+"a fixture without even knowing it! When you call :djadmin:`syncdb` in the "
+"database for the first time, Django installs a fixture called "
+"``initial_data``. This gives you a way of populating a new database with any "
+"initial data, such as a default set of categories."
+msgstr ""
+
+# 58844d837a7b42b385db05b80f339f34
+#: ../../topics/testing/overview.txt:1237
+msgid ""
+"Fixtures with other names can always be installed manually using the :"
+"djadmin:`manage.py loaddata<loaddata>` command."
+msgstr ""
+
+# 926f8d12f5a3421a918cae0eb0ad5942
+#: ../../topics/testing/overview.txt:1242
+msgid ""
+"Django provides a second way to insert initial data into models -- the :ref:"
+"`custom SQL hook <initial-sql>`. However, this technique *cannot* be used to "
+"provide initial data for testing purposes. Django's test framework flushes "
+"the contents of the test database after each test; as a result, any data "
+"added using the custom SQL hook will be lost."
+msgstr ""
+
+# 6edefec4f0c34f09b2daba017449e040
+#: ../../topics/testing/overview.txt:1249
+msgid ""
+"Once you've created a fixture and placed it in a ``fixtures`` directory in "
+"one of your :setting:`INSTALLED_APPS`, you can use it in your unit tests by "
+"specifying a ``fixtures`` class attribute on your :class:`django.test."
+"TestCase` subclass::"
+msgstr ""
+
+# 380164367bf04d54b8e3e8f5f173504a
+#: ../../topics/testing/overview.txt:1268
+msgid "Here's specifically what will happen:"
+msgstr ""
+
+# feb6c67c747b4df696a383730843e47d
+#: ../../topics/testing/overview.txt:1270
+msgid ""
+"At the start of each test case, before ``setUp()`` is run, Django will flush "
+"the database, returning the database to the state it was in directly after :"
+"djadmin:`syncdb` was called."
+msgstr ""
+
+# 9d1872c6dafb417a86bcaf725134c57d
+#: ../../topics/testing/overview.txt:1274
+msgid ""
+"Then, all the named fixtures are installed. In this example, Django will "
+"install any JSON fixture named ``mammals``, followed by any fixture named "
+"``birds``. See the :djadmin:`loaddata` documentation for more details on "
+"defining and installing fixtures."
+msgstr ""
+
+# 8ccd6b40598d49a9848a2cbcbf39b21e
+#: ../../topics/testing/overview.txt:1279
+msgid ""
+"This flush/load procedure is repeated for each test in the test case, so you "
+"can be certain that the outcome of a test will not be affected by another "
+"test, or by the order of test execution."
+msgstr ""
+
+# fff6cfe25e404b708a9c17d7b15f11eb
+#: ../../topics/testing/overview.txt:1284
+msgid "URLconf configuration"
+msgstr ""
+
+# 166aa5f1a75444c790ab8c030a0aaafe
+#: ../../topics/testing/overview.txt:1288
+msgid ""
+"If your application provides views, you may want to include tests that use "
+"the test client to exercise those views. However, an end user is free to "
+"deploy the views in your application at any URL of their choosing. This "
+"means that your tests can't rely upon the fact that your views will be "
+"available at a particular URL."
+msgstr ""
+
+# 3c5eb21d8606409c9096552b3afa5efb
+#: ../../topics/testing/overview.txt:1294
+msgid ""
+"In order to provide a reliable URL space for your test, ``django.test."
+"TestCase`` provides the ability to customize the URLconf configuration for "
+"the duration of the execution of a test suite. If your ``TestCase`` instance "
+"defines an ``urls`` attribute, the ``TestCase`` will use the value of that "
+"attribute as the :setting:`ROOT_URLCONF` for the duration of that test."
+msgstr ""
+
+# d7b32604786942e09555757ac5563d24
+# 086974de78da46d1a9a31e0df8166009
+#: ../../topics/testing/overview.txt:1301
+#: ../../topics/testing/overview.txt:1337
+msgid "For example::"
+msgstr ""
+
+# 8ac0f797bce246e0b61e82eaca47e163
+#: ../../topics/testing/overview.txt:1312
+msgid ""
+"This test case will use the contents of ``myapp.test_urls`` as the URLconf "
+"for the duration of the test case."
+msgstr ""
+
+# a413f42f305a428b8d38feb092597632
+#: ../../topics/testing/overview.txt:1318
+msgid "Multi-database support"
+msgstr ""
+
+# eb29cd894df24783b4efa85b0c54cf92
+#: ../../topics/testing/overview.txt:1322
+msgid ""
+"Django sets up a test database corresponding to every database that is "
+"defined in the :setting:`DATABASES` definition in your settings file. "
+"However, a big part of the time taken to run a Django TestCase is consumed "
+"by the call to ``flush`` that ensures that you have a clean database at the "
+"start of each test run. If you have multiple databases, multiple flushes are "
+"required (one for each database), which can be a time consuming activity -- "
+"especially if your tests don't need to test multi-database activity."
+msgstr ""
+
+# 5c2bc5d044f3402ba478be0a8b920c5d
+#: ../../topics/testing/overview.txt:1331
+msgid ""
+"As an optimization, Django only flushes the ``default`` database at the "
+"start of each test run. If your setup contains multiple databases, and you "
+"have a test that requires every database to be clean, you can use the "
+"``multi_db`` attribute on the test suite to request a full flush."
+msgstr ""
+
+# 2a7a0bfb62d44d7f9f628709c1b6637b
+#: ../../topics/testing/overview.txt:1345
+msgid ""
+"This test case will flush *all* the test databases before running "
+"``testIndexPageView``."
+msgstr ""
+
+# 551edd4a86124febb1658d860853dc6b
+#: ../../topics/testing/overview.txt:1351
+msgid "Overriding settings"
+msgstr ""
+
+# d10746f43abc45d1a44da258b3fa53e2
+#: ../../topics/testing/overview.txt:1355
+msgid ""
+"For testing purposes it's often useful to change a setting temporarily and "
+"revert to the original value after running the testing code. For this use "
+"case Django provides a standard Python context manager (see :pep:`343`) :"
+"meth:`~django.test.TestCase.settings`, which can be used like this::"
+msgstr ""
+
+# cb5597c55fb24ec5bb916ef1f275fd02
+#: ../../topics/testing/overview.txt:1375
+msgid ""
+"This example will override the :setting:`LOGIN_URL` setting for the code in "
+"the ``with`` block and reset its value to the previous state afterwards."
+msgstr ""
+
+# 6b05aeea98514192a79cf7cbb404e7cf
+#: ../../topics/testing/overview.txt:1382
+msgid ""
+"In case you want to override a setting for just one test method or even the "
+"whole :class:`~django.test.TestCase` class, Django provides the :func:"
+"`~django.test.utils.override_settings` decorator (see :pep:`318`). It's used "
+"like this::"
+msgstr ""
+
+# c8e71dd3ca0a4c2c89aaf733d9835981
+#: ../../topics/testing/overview.txt:1397
+msgid "The decorator can also be applied to test case classes::"
+msgstr ""
+
+# 3d2e54d8fbad416cabb536ae1abec3ab
+#: ../../topics/testing/overview.txt:1411
+msgid ""
+"When given a class, the decorator modifies the class directly and returns "
+"it; it doesn't create and return a modified copy of it.  So if you try to "
+"tweak the above example to assign the return value to a different name than "
+"``LoginTestCase``, you may be surprised to find that the original "
+"``LoginTestCase`` is still equally affected by the decorator."
+msgstr ""
+
+# 37e6d72daea54da690d47a3f9de768be
+#: ../../topics/testing/overview.txt:1418
+msgid ""
+"When overriding settings, make sure to handle the cases in which your app's "
+"code uses a cache or similar feature that retains state even if the setting "
+"is changed. Django provides the :data:`django.test.signals.setting_changed` "
+"signal that lets you register callbacks to clean up and otherwise reset "
+"state when settings are changed."
+msgstr ""
+
+# a71d973ae1354c0c84531dafc081fdc9
+#: ../../topics/testing/overview.txt:1424
+msgid "Django itself uses this signal to reset various data:"
+msgstr ""
+
+# 7acd1e1ee91047d6956aecec2a246e20
+#: ../../topics/testing/overview.txt:1427
+msgid "Overriden settings"
+msgstr ""
+
+# e47aac88ee1d4594a50ecf68684c7877
+#: ../../topics/testing/overview.txt:1427
+msgid "Data reset"
+msgstr ""
+
+# 32f9f67dc43f4e18a72a9c6bbc2aaaf8
+#: ../../topics/testing/overview.txt:1429
+msgid "USE_TZ, TIME_ZONE"
+msgstr ""
+
+# c0e6b397f5a7406bba14071f335e2d55
+#: ../../topics/testing/overview.txt:1429
+msgid "Databases timezone"
+msgstr ""
+
+# 39dbfa2605744264b35b2d7fabf80da0
+#: ../../topics/testing/overview.txt:1430
+msgid "TEMPLATE_CONTEXT_PROCESSORS"
+msgstr ""
+
+# 57e23752aded40a3833bec9d4d182d4b
+#: ../../topics/testing/overview.txt:1430
+msgid "Context processors cache"
+msgstr ""
+
+# 243281e178aa42a88bb93dce9d52605f
+#: ../../topics/testing/overview.txt:1431
+msgid "TEMPLATE_LOADERS"
+msgstr ""
+
+# b16ce35d3221413599a802bbc2b40adb
+#: ../../topics/testing/overview.txt:1431
+msgid "Template loaders cache"
+msgstr ""
+
+# 5773aed7b3b14897b687a2094a1e1956
+#: ../../topics/testing/overview.txt:1432
+msgid "SERIALIZATION_MODULES"
+msgstr ""
+
+# 1f9baf1fd5ca4a1eaecff6921f94e8eb
+#: ../../topics/testing/overview.txt:1432
+msgid "Serializers cache"
+msgstr ""
+
+# 35e1fd051ef146f190483b1ba8f1b5b9
+#: ../../topics/testing/overview.txt:1433
+msgid "LOCALE_PATHS, LANGUAGE_CODE"
+msgstr ""
+
+# 148838c79edf4da19e426eb3b4a9939b
+#: ../../topics/testing/overview.txt:1433
+msgid "Default translation and loaded translations"
+msgstr ""
+
+# 71f7e008624f4ce2bec08431210186ff
+#: ../../topics/testing/overview.txt:1434
+msgid "MEDIA_ROOT, DEFAULT_FILE_STORAGE"
+msgstr ""
+
+# 03c1472d3a5a4196af0cf7ea7d8f98b0
+#: ../../topics/testing/overview.txt:1434
+msgid "Default file storage"
+msgstr ""
+
+# 2f996a89b73d4129b2bfe08ba106424c
+#: ../../topics/testing/overview.txt:1438
+msgid "Emptying the test outbox"
+msgstr ""
+
+# a932d2bcaab0425c96cbb6569dfa5f99
+#: ../../topics/testing/overview.txt:1440
+msgid ""
+"If you use Django's custom ``TestCase`` class, the test runner will clear "
+"the contents of the test email outbox at the start of each test case."
+msgstr ""
+
+# 591fe381543c4c6c82cc866390191e6e
+#: ../../topics/testing/overview.txt:1443
+msgid ""
+"For more detail on email services during tests, see `Email services`_ below."
+msgstr ""
+
+# c2535b8b4dcb43d7bf7c80bf635cfa1e
+#: ../../topics/testing/overview.txt:1448
+msgid "Assertions"
+msgstr ""
+
+# b9d1c517459a433eb00d412d93c1c389
+#: ../../topics/testing/overview.txt:1452
+msgid ""
+"As Python's normal :class:`unittest.TestCase` class implements assertion "
+"methods such as :meth:`~unittest.TestCase.assertTrue` and :meth:`~unittest."
+"TestCase.assertEqual`, Django's custom :class:`TestCase` class provides a "
+"number of custom assertion methods that are useful for testing Web "
+"applications:"
+msgstr ""
+
+# 72a0ff8c31124365802732070add4a83
+#: ../../topics/testing/overview.txt:1458
+msgid ""
+"The failure messages given by most of these assertion methods can be "
+"customized with the ``msg_prefix`` argument. This string will be prefixed to "
+"any failure message generated by the assertion. This allows you to provide "
+"additional details that may help you to identify the location and cause of "
+"an failure in your test suite."
+msgstr ""
+
+# 393467078ff744e8a7177b96a9db75de
+#: ../../topics/testing/overview.txt:1466
+msgid ""
+"Asserts that execution of callable ``callable_obj`` raised the "
+"``expected_exception`` exception and that such exception has an "
+"``expected_message`` representation. Any other outcome is reported as a "
+"failure. Similar to unittest's :meth:`~unittest.TestCase.assertRaisesRegexp` "
+"with the difference that ``expected_message`` isn't a regular expression."
+msgstr ""
+
+# 63db6773c4664514b886d3a3f460cf3e
+#: ../../topics/testing/overview.txt:1474
+msgid "Asserts that a form field behaves correctly with various inputs."
+msgstr ""
+
+# 97dfe4a17e5d46c7b42b9732077db133
+#: ../../topics/testing/overview.txt:1485
+msgid ""
+"For example, the following code tests that an ``EmailField`` accepts \"a@a."
+"com\" as a valid email address, but rejects \"aaa\" with a reasonable error "
+"message::"
+msgstr ""
+
+# fbe1e82cceed4e2caba54e231ca4adc0
+#: ../../topics/testing/overview.txt:1494
+msgid ""
+"Asserts that a ``Response`` instance produced the given ``status_code`` and "
+"that ``text`` appears in the content of the response. If ``count`` is "
+"provided, ``text`` must occur exactly ``count`` times in the response."
+msgstr ""
+
+# 5e1a61de5dc3475fb1bfcfd563691929
+# b134871fac8a4ac8b0cbfefdb686338b
+#: ../../topics/testing/overview.txt:1498
+#: ../../topics/testing/overview.txt:1509
+msgid ""
+"Set ``html`` to ``True`` to handle ``text`` as HTML. The comparison with the "
+"response content will be based on HTML semantics instead of character-by-"
+"character equality. Whitespace is ignored in most cases, attribute ordering "
+"is not significant. See :meth:`~SimpleTestCase.assertHTMLEqual` for more "
+"details."
+msgstr ""
+
+# c6b2cfeb9f54418b9debe1bc92cb9ae2
+#: ../../topics/testing/overview.txt:1506
+msgid ""
+"Asserts that a ``Response`` instance produced the given ``status_code`` and "
+"that ``text`` does not appears in the content of the response."
+msgstr ""
+
+# f9f3191689484b39832ad47b5a9bc3ce
+#: ../../topics/testing/overview.txt:1517
+msgid ""
+"Asserts that a field on a form raises the provided list of errors when "
+"rendered on the form."
+msgstr ""
+
+# c5cbcb3911984c5eb01597ca3f9cce8a
+#: ../../topics/testing/overview.txt:1520
+msgid ""
+"``form`` is the name the ``Form`` instance was given in the template context."
+msgstr ""
+
+# 9a29218943ba49298dfcc6e68b7e0bb2
+#: ../../topics/testing/overview.txt:1523
+msgid ""
+"``field`` is the name of the field on the form to check. If ``field`` has a "
+"value of ``None``, non-field errors (errors you can access via ``form."
+"non_field_errors()``) will be checked."
+msgstr ""
+
+# b291e8d86f4d445ba1e97a514d9575a0
+#: ../../topics/testing/overview.txt:1527
+msgid ""
+"``errors`` is an error string, or a list of error strings, that are expected "
+"as a result of form validation."
+msgstr ""
+
+# e545abb909b0465a8d92d392bef75650
+#: ../../topics/testing/overview.txt:1532
+msgid ""
+"Asserts that the template with the given name was used in rendering the "
+"response."
+msgstr ""
+
+# b36e5043d8b849e782774abae2a47c72
+#: ../../topics/testing/overview.txt:1535
+msgid "The name is a string such as ``'admin/index.html'``."
+msgstr ""
+
+# 808812f2284b4e5495140425a0b45a84
+#: ../../topics/testing/overview.txt:1537
+msgid "You can use this as a context manager, like this::"
+msgstr ""
+
+# 787d3c56c96b40508409e26b78cff737
+#: ../../topics/testing/overview.txt:1546
+msgid ""
+"Asserts that the template with the given name was *not* used in rendering "
+"the response."
+msgstr ""
+
+# c5c32e95da5747b2b21f07e9f7878a16
+#: ../../topics/testing/overview.txt:1549
+msgid ""
+"You can use this as a context manager in the same way as :meth:`~TestCase."
+"assertTemplateUsed`."
+msgstr ""
+
+# a1576068397747ca868839a3b8b2fa03
+#: ../../topics/testing/overview.txt:1554
+msgid ""
+"Asserts that the response return a ``status_code`` redirect status, it "
+"redirected to ``expected_url`` (including any GET data), and the final page "
+"was received with ``target_status_code``."
+msgstr ""
+
+# 2d967b7aaf2d497d9a47373f779281c3
+#: ../../topics/testing/overview.txt:1558
+msgid ""
+"If your request used the ``follow`` argument, the ``expected_url`` and "
+"``target_status_code`` will be the url and status code for the final point "
+"of the redirect chain."
+msgstr ""
+
+# eebd1b5a998449f998bd11dddc7973a5
+#: ../../topics/testing/overview.txt:1564
+msgid ""
+"Asserts that a queryset ``qs`` returns a particular list of values "
+"``values``."
+msgstr ""
+
+# 16edacac18be43fdbe81a609fd952ebc
+#: ../../topics/testing/overview.txt:1566
+msgid ""
+"The comparison of the contents of ``qs`` and ``values`` is performed using "
+"the function ``transform``; by default, this means that the ``repr()`` of "
+"each value is compared. Any other callable can be used if ``repr()`` doesn't "
+"provide a unique or helpful comparison."
+msgstr ""
+
+# 0da29037df0b422d9f16ba66477401a6
+#: ../../topics/testing/overview.txt:1571
+msgid ""
+"By default, the comparison is also ordering dependent. If ``qs`` doesn't "
+"provide an implicit ordering, you can set the ``ordered`` parameter to "
+"``False``, which turns the comparison into a Python set comparison."
+msgstr ""
+
+# 2baa0bfde75443fe9162a30672b1caea
+#: ../../topics/testing/overview.txt:1583
+msgid ""
+"Asserts that when ``func`` is called with ``*args`` and ``**kwargs`` that "
+"``num`` database queries are executed."
+msgstr ""
+
+# 7026e5d111c14e7aa8d6ac99bb87ce5d
+#: ../../topics/testing/overview.txt:1586
+msgid ""
+"If a ``\"using\"`` key is present in ``kwargs`` it is used as the database "
+"alias for which to check the number of queries.  If you wish to call a "
+"function with a ``using`` parameter you can do it by wrapping the call with "
+"a ``lambda`` to add an extra parameter::"
+msgstr ""
+
+# 7e8a5e6fba52475ea1bd8c28178ae6d4
+#: ../../topics/testing/overview.txt:1593
+msgid "You can also use this as a context manager::"
+msgstr ""
+
+# 2ee45a9d309e44efafbd80bb082379c5
+#: ../../topics/testing/overview.txt:1601
+msgid ""
+"Asserts that the strings ``html1`` and ``html2`` are equal. The comparison "
+"is based on HTML semantics. The comparison takes following things into "
+"account:"
+msgstr ""
+
+# 2945b6c3ec9d4b46b8b3fb660af1cb01
+#: ../../topics/testing/overview.txt:1605
+msgid "Whitespace before and after HTML tags is ignored."
+msgstr ""
+
+# f8e502464daa4faca7c9afe2e035b809
+#: ../../topics/testing/overview.txt:1606
+msgid "All types of whitespace are considered equivalent."
+msgstr ""
+
+# 490ca398734142dd8a2533279126c47d
+#: ../../topics/testing/overview.txt:1607
+msgid ""
+"All open tags are closed implicitly, e.g. when a surrounding tag is closed "
+"or the HTML document ends."
+msgstr ""
+
+# b2c12928bb9f4af4b74cc4ae59c11958
+#: ../../topics/testing/overview.txt:1609
+msgid "Empty tags are equivalent to their self-closing version."
+msgstr ""
+
+# 187637bc1e7c4fcf8f0e603b5ea8d0a3
+#: ../../topics/testing/overview.txt:1610
+msgid "The ordering of attributes of an HTML element is not significant."
+msgstr ""
+
+# 73b91dc89d59431cb992667a536c9598
+#: ../../topics/testing/overview.txt:1611
+msgid ""
+"Attributes without an argument are equal to attributes that equal in name "
+"and value (see the examples)."
+msgstr ""
+
+# fcd9525a511d46b4b39f836cb9cbc18f
+#: ../../topics/testing/overview.txt:1614
+msgid ""
+"The following examples are valid tests and don't raise any "
+"``AssertionError``::"
+msgstr ""
+
+# 84c9ad700cfa420a9ab949c3270c5cdf
+# 877c1da2f59443739473563982b9b289
+#: ../../topics/testing/overview.txt:1625
+#: ../../topics/testing/overview.txt:1634
+msgid ""
+"``html1`` and ``html2`` must be valid HTML. An ``AssertionError`` will be "
+"raised if one of them cannot be parsed."
+msgstr ""
+
+# 2c29b52187f84361917f0fc6da3c2c1b
+#: ../../topics/testing/overview.txt:1630
+msgid ""
+"Asserts that the strings ``html1`` and ``html2`` are *not* equal. The "
+"comparison is based on HTML semantics. See :meth:`~SimpleTestCase."
+"assertHTMLEqual` for details."
+msgstr ""
+
+# 9efb7a05137e47958026ae9409ab14d7
+#: ../../topics/testing/overview.txt:1641
+msgid ""
+"Asserts that the strings ``xml1`` and ``xml2`` are equal. The comparison is "
+"based on XML semantics. Similarily to :meth:`~SimpleTestCase."
+"assertHTMLEqual`, the comparison is made on parsed content, hence only "
+"semantic differences are considered, not syntax differences. When unvalid "
+"XML is passed in any parameter, an ``AssertionError`` is always raised, even "
+"if both string are identical."
+msgstr ""
+
+# c39bc978fa4c4d1187df05282e3dca3c
+#: ../../topics/testing/overview.txt:1652
+msgid ""
+"Asserts that the strings ``xml1`` and ``xml2`` are *not* equal. The "
+"comparison is based on XML semantics. See :meth:`~SimpleTestCase."
+"assertXMLEqual` for details."
+msgstr ""
+
+# 3b6e0f11881442bdafba0c76d9929cef
+#: ../../topics/testing/overview.txt:1659
+msgid "Email services"
+msgstr ""
+
+# 6aa615b0f9de4a5eabbb4e7c6319d87a
+#: ../../topics/testing/overview.txt:1661
+msgid ""
+"If any of your Django views send email using :doc:`Django's email "
+"functionality </topics/email>`, you probably don't want to send email each "
+"time you run a test using that view. For this reason, Django's test runner "
+"automatically redirects all Django-sent email to a dummy outbox. This lets "
+"you test every aspect of sending email -- from the number of messages sent "
+"to the contents of each message -- without actually sending the messages."
+msgstr ""
+
+# f0a4a994b1f44e058a36b9eec00d2f6e
+#: ../../topics/testing/overview.txt:1668
+msgid ""
+"The test runner accomplishes this by transparently replacing the normal "
+"email backend with a testing backend. (Don't worry -- this has no effect on "
+"any other email senders outside of Django, such as your machine's mail "
+"server, if you're running one.)"
+msgstr ""
+
+# 5d1a921722dc4d7896563e724ffa379d
+#: ../../topics/testing/overview.txt:1677
+msgid ""
+"During test running, each outgoing email is saved in ``django.core.mail."
+"outbox``. This is a simple list of all :class:`~django.core.mail."
+"EmailMessage` instances that have been sent. The ``outbox`` attribute is a "
+"special attribute that is created *only* when the ``locmem`` email backend "
+"is used. It doesn't normally exist as part of the :mod:`django.core.mail` "
+"module and you can't import it directly. The code below shows how to access "
+"this attribute correctly."
+msgstr ""
+
+# 963a63b67d194c968acc4f6e37b1c7b9
+#: ../../topics/testing/overview.txt:1685
+msgid ""
+"Here's an example test that examines ``django.core.mail.outbox`` for length "
+"and contents::"
+msgstr ""
+
+# 453682bac74a48f79924ee44d200fba7
+#: ../../topics/testing/overview.txt:1704
+msgid ""
+"As noted :ref:`previously <emptying-test-outbox>`, the test outbox is "
+"emptied at the start of every test in a Django ``TestCase``. To empty the "
+"outbox manually, assign the empty list to ``mail.outbox``::"
+msgstr ""
+
+# d29d597d3b7f47cab5828003718dfb5a
+#: ../../topics/testing/overview.txt:1716
+msgid "Skipping tests"
+msgstr ""
+
+# 3309a610026c4c4f8161a1746788fdd6
+#: ../../topics/testing/overview.txt:1720
+msgid ""
+"The unittest library provides the :func:`@skipIf <unittest.skipIf>` and :"
+"func:`@skipUnless <unittest.skipUnless>` decorators to allow you to skip "
+"tests if you know ahead of time that those tests are going to fail under "
+"certain conditions."
+msgstr ""
+
+# 881bae3a54ae43c9be0b06bb990eb88e
+#: ../../topics/testing/overview.txt:1725
+msgid ""
+"For example, if your test requires a particular optional library in order to "
+"succeed, you could decorate the test case with :func:`@skipIf <unittest."
+"skipIf>`. Then, the test runner will report that the test wasn't executed "
+"and why, instead of failing the test or omitting the test altogether."
+msgstr ""
+
+# c2b72b3b00cc439d8b622ea59f5f7b39
+#: ../../topics/testing/overview.txt:1730
+msgid ""
+"To supplement these test skipping behaviors, Django provides two additional "
+"skip decorators. Instead of testing a generic boolean, these decorators "
+"check the capabilities of the database, and skip the test if the database "
+"doesn't support a specific named feature."
+msgstr ""
+
+# d0c5400e435a4e368ba6b6e9584b0e89
+#: ../../topics/testing/overview.txt:1735
+msgid ""
+"The decorators use a string identifier to describe database features. This "
+"string corresponds to attributes of the database connection features class. "
+"See ``django.db.backends.BaseDatabaseFeatures`` class for a full list of "
+"database features that can be used as a basis for skipping tests."
+msgstr ""
+
+# 003bc2ac12594a2791bed9b6d3fcd2c2
+#: ../../topics/testing/overview.txt:1743
+msgid "Skip the decorated test if the named database feature is supported."
+msgstr ""
+
+# 3e71c5bf003d400ba4a3afed4fc345f4
+#: ../../topics/testing/overview.txt:1745
+msgid ""
+"For example, the following test will not be executed if the database "
+"supports transactions (e.g., it would *not* run under PostgreSQL, but it "
+"would under MySQL with MyISAM tables)::"
+msgstr ""
+
+# 4bf9eac3285e48f9957e76ac2c51ae3e
+#: ../../topics/testing/overview.txt:1756
+msgid ""
+"Skip the decorated test if the named database feature is *not* supported."
+msgstr ""
+
+# a08328f58f204b419ea1671b02596ae8
+#: ../../topics/testing/overview.txt:1759
+msgid ""
+"For example, the following test will only be executed if the database "
+"supports transactions (e.g., it would run under PostgreSQL, but *not* under "
+"MySQL with MyISAM tables)::"
+msgstr ""

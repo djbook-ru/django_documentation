@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-29 18:30\n"
+"POT-Creation-Date: 2013-02-27 00:21\n"
 "PO-Revision-Date: 2012-02-17 19:10+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -429,13 +429,36 @@ msgstr ""
 "менеджером по-умолчанию. Мы можем добавить дополнительный менеджер в другую "
 "модель, и добавить в наследование *после* базовой::"
 
+# dcdc236e20144827b9e1ed54fdfcaed1
+#: ../../topics/db/managers.txt:277
+msgid ""
+"Note that while you can *define* a custom manager on the abstract model, you "
+"can't *invoke* any methods using the abstract model. That is::"
+msgstr ""
+
+# 09d0beb4e8764e569aed50df51194c38
+#: ../../topics/db/managers.txt:282
+msgid "is legal, but::"
+msgstr ""
+
+# 8df39bcbdb7540d0a4e9d37b94a128ac
+#: ../../topics/db/managers.txt:286
+msgid ""
+"will raise an exception. This is because managers are intended to "
+"encapsulate logic for managing collections of objects. Since you can't have "
+"a collection of abstract objects, it doesn't make sense to be managing them. "
+"If you have functionality that applies to the abstract model, you should put "
+"that functionality in a ``staticmethod`` or ``classmethod`` on the abstract "
+"model."
+msgstr ""
+
 # 4c9a9a892dde44e9bd42926f1ee9584d
-#: ../../topics/db/managers.txt:278
+#: ../../topics/db/managers.txt:293
 msgid "Implementation concerns"
 msgstr "Проблемы реализации"
 
 # ac9c0bc2e9194ff59fc02491554e1b3b
-#: ../../topics/db/managers.txt:280
+#: ../../topics/db/managers.txt:295
 msgid ""
 "Whatever features you add to your custom ``Manager``, it must be possible to "
 "make a shallow copy of a ``Manager`` instance; i.e., the following code must "
@@ -445,7 +468,7 @@ msgstr ""
 "работать такой код::"
 
 # 63f6ee7f3bc4483eadda8d9472a9520b
-#: ../../topics/db/managers.txt:288
+#: ../../topics/db/managers.txt:303
 msgid ""
 "Django makes shallow copies of manager objects during certain queries; if "
 "your Manager cannot be copied, those queries will fail."
@@ -454,7 +477,7 @@ msgstr ""
 "Если ваш менеджер нельзя скопировать, эти запросы перестанут работать."
 
 # 5cb300a201834905b90e9f40ef7df99f
-#: ../../topics/db/managers.txt:291
+#: ../../topics/db/managers.txt:306
 msgid ""
 "This won't be an issue for most custom managers. If you are just adding "
 "simple methods to your ``Manager``, it is unlikely that you will "
@@ -470,12 +493,12 @@ msgstr ""
 "скопировать."
 
 # 35f77fec45744528b21cad7e6ddf8002
-#: ../../topics/db/managers.txt:302
+#: ../../topics/db/managers.txt:317
 msgid "Controlling automatic Manager types"
 msgstr "Тип автоматически создаваемого менеджера"
 
 # 67be4a6f3ed9419ca311ab1922ac0e05
-#: ../../topics/db/managers.txt:304
+#: ../../topics/db/managers.txt:319
 msgid ""
 "This document has already mentioned a couple of places where Django creates "
 "a manager class for you: `default managers`_ and the \"plain\" manager used "
@@ -491,7 +514,7 @@ msgstr ""
 "`django.db.models.Manager`."
 
 # 03ed13cb362043568f2572baeb6f9f84
-#: ../../topics/db/managers.txt:314
+#: ../../topics/db/managers.txt:329
 msgid ""
 "Throughout this section, we will use the term \"automatic manager\" to mean "
 "a manager that Django creates for you -- either as a default manager on a "
@@ -503,7 +526,7 @@ msgstr ""
 "менеджер для доступа к связанным объектам."
 
 # b8cd5397754b418f8b6d06fd129cdf08
-#: ../../topics/db/managers.txt:318
+#: ../../topics/db/managers.txt:333
 msgid ""
 "Sometimes this default class won't be the right choice. One example is in "
 "the :mod:`django.contrib.gis` application that ships with Django itself. All "
@@ -523,7 +546,7 @@ msgstr ""
 "каждый раз, когда Django должен автоматически создать его."
 
 # 7546beb312184e7d973a94263ce477d5
-#: ../../topics/db/managers.txt:326
+#: ../../topics/db/managers.txt:341
 msgid ""
 "Django provides a way for custom manager developers to say that their "
 "manager class should be used for automatic managers whenever it is the "
@@ -536,7 +559,7 @@ msgstr ""
 "``use_for_related_fields``::"
 
 # 7b38bf56190a4b59a93b19cf80e01d39
-#: ../../topics/db/managers.txt:336
+#: ../../topics/db/managers.txt:351
 msgid ""
 "If this attribute is set on the *default* manager for a model (only the "
 "default manager is considered in these situations), Django will use that "
@@ -549,7 +572,7 @@ msgstr ""
 "`django.db.models.Manager`."
 
 # b120df99300441f3a13a836b55d762c8
-#: ../../topics/db/managers.txt:343
+#: ../../topics/db/managers.txt:358
 msgid ""
 "Given the purpose for which it's used, the name of this attribute "
 "(``use_for_related_fields``) might seem a little odd. Originally, the "
@@ -568,12 +591,12 @@ msgstr ""
 "stability>` в следующих версиях Django."
 
 # 856be24e84aa47aabe7f65cd2c2b9315
-#: ../../topics/db/managers.txt:352
+#: ../../topics/db/managers.txt:367
 msgid "Writing correct Managers for use in automatic Manager instances"
 msgstr "Каким должен быть класс автоматически создаваемого менеджера"
 
 # 09808f0f6b504919930aa73ba28b5b72
-#: ../../topics/db/managers.txt:354
+#: ../../topics/db/managers.txt:369
 msgid ""
 "As already suggested by the `django.contrib.gis` example, above, the "
 "``use_for_related_fields`` feature is primarily for managers that need to "
@@ -586,12 +609,12 @@ msgstr ""
 "нескольких правилах."
 
 # b7a8e8663841420d87034926a3774a87
-#: ../../topics/db/managers.txt:360
+#: ../../topics/db/managers.txt:375
 msgid "Do not filter away any results in this type of manager subclass"
 msgstr "Не фильтруйте результаты запроса"
 
 # 3f856d857cf141bd80a168a0047a78be
-#: ../../topics/db/managers.txt:362
+#: ../../topics/db/managers.txt:377
 msgid ""
 "One reason an automatic manager is used is to access objects that are "
 "related to from some other model. In those situations, Django has to be able "
@@ -603,7 +626,7 @@ msgstr ""
 "связанные объекты."
 
 # b5730aa46e4242f2b7e48819889e0000
-#: ../../topics/db/managers.txt:367
+#: ../../topics/db/managers.txt:382
 msgid ""
 "If you override the ``get_query_set()`` method and filter out any rows, "
 "Django will return incorrect results. Don't do that. A manager that filters "
@@ -616,12 +639,12 @@ msgstr ""
 "роль автоматически создаваемого менеджера."
 
 # 7db1d09d1bc04699aba6bf65670aa0aa
-#: ../../topics/db/managers.txt:372
+#: ../../topics/db/managers.txt:387
 msgid "Set ``use_for_related_fields`` when you define the class"
 msgstr "Добавляйте ``use_for_related_fields`` при определении класса"
 
 # c3015c48723d49479915f56c2bcf33f3
-#: ../../topics/db/managers.txt:374
+#: ../../topics/db/managers.txt:389
 msgid ""
 "The ``use_for_related_fields`` attribute must be set on the manager *class*, "
 "not on an *instance* of the class. The earlier example shows the correct way "
@@ -632,7 +655,7 @@ msgstr ""
 "как этот не будет работать::"
 
 # 217bc644c3894cf09b20027f2547e4e6
-#: ../../topics/db/managers.txt:393
+#: ../../topics/db/managers.txt:408
 msgid ""
 "You also shouldn't change the attribute on the class object after it has "
 "been used in a model, since the attribute's value is processed when the "

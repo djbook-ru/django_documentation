@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-29 18:30\n"
+"POT-Creation-Date: 2013-02-27 00:21\n"
 "PO-Revision-Date: 2012-02-15 15:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -52,33 +52,34 @@ msgstr ""
 msgid "Install ReportLab"
 msgstr ""
 
-# 4a5d6a00abb04d95acbdfc206afb7291
+# 02fc693f88d44d9fb51befe20c23e783
 #: ../../howto/outputting-pdf.txt:23
 msgid ""
-"Download and install the ReportLab library from http://www.reportlab.org/oss/"
-"rl-toolkit/download/. The `user guide`_ (not coincidentally, a PDF file) "
-"explains how to install it."
+"Download and install the ReportLab library from http://www.reportlab.com/"
+"software/opensource/rl-toolkit/download/. The `user guide`_ (not "
+"coincidentally, a PDF file) explains how to install it. Alternatively, you "
+"can also install it with ``pip``:"
 msgstr ""
 
 # c757b5afc17d4793b0ad2c8e8db15eb0
-#: ../../howto/outputting-pdf.txt:26
+#: ../../howto/outputting-pdf.txt:32
 msgid ""
 "Test your installation by importing it in the Python interactive "
 "interpreter::"
 msgstr ""
 
 # a526d18844c2463ab84d5bd37d2e6ce3
-#: ../../howto/outputting-pdf.txt:30
+#: ../../howto/outputting-pdf.txt:36
 msgid "If that command doesn't raise any errors, the installation worked."
 msgstr ""
 
 # ca9200f0904048adbb2a457270b3230e
-#: ../../howto/outputting-pdf.txt:35
+#: ../../howto/outputting-pdf.txt:41
 msgid "Write your view"
 msgstr ""
 
 # 601547f585914481bcc1079f5fce26ba
-#: ../../howto/outputting-pdf.txt:37
+#: ../../howto/outputting-pdf.txt:43
 msgid ""
 "The key to generating PDFs dynamically with Django is that the ReportLab API "
 "acts on file-like objects, and Django's :class:`~django.http.HttpResponse` "
@@ -86,19 +87,19 @@ msgid ""
 msgstr ""
 
 # 40f4c3b6b57c4292aab5676996388df3
-#: ../../howto/outputting-pdf.txt:41
+#: ../../howto/outputting-pdf.txt:47
 msgid "Here's a \"Hello World\" example::"
 msgstr ""
 
 # acace618e5ab41ea89bb71d44e361f68
-#: ../../howto/outputting-pdf.txt:63
+#: ../../howto/outputting-pdf.txt:69
 msgid ""
 "The code and comments should be self-explanatory, but a few things deserve a "
 "mention:"
 msgstr ""
 
 # 4da1baf172c74341835cb51b14845bad
-#: ../../howto/outputting-pdf.txt:66
+#: ../../howto/outputting-pdf.txt:72
 msgid ""
 "The response gets a special MIME type, :mimetype:`application/pdf`. This "
 "tells browsers that the document is a PDF file, rather than an HTML file. If "
@@ -107,7 +108,7 @@ msgid ""
 msgstr ""
 
 # 64d167a4b8e44aefb962c8f0c8c75bc7
-#: ../../howto/outputting-pdf.txt:72
+#: ../../howto/outputting-pdf.txt:78
 msgid ""
 "The response gets an additional ``Content-Disposition`` header, which "
 "contains the name of the PDF file. This filename is arbitrary: Call it "
@@ -116,7 +117,7 @@ msgid ""
 msgstr ""
 
 # bdded7c2211541b3af6f69da79d5466c
-#: ../../howto/outputting-pdf.txt:77
+#: ../../howto/outputting-pdf.txt:83
 msgid ""
 "The ``Content-Disposition`` header starts with ``'attachment; '`` in this "
 "example. This forces Web browsers to pop-up a dialog box prompting/"
@@ -127,7 +128,7 @@ msgid ""
 msgstr ""
 
 # cb004cbac877437e8686dbf1b63eedc6
-#: ../../howto/outputting-pdf.txt:86
+#: ../../howto/outputting-pdf.txt:92
 msgid ""
 "Hooking into the ReportLab API is easy: Just pass ``response`` as the first "
 "argument to ``canvas.Canvas``. The ``Canvas`` class expects a file-like "
@@ -135,55 +136,63 @@ msgid ""
 msgstr ""
 
 # 623e3b1461ea44b4bc21c427de6858ea
-#: ../../howto/outputting-pdf.txt:91
+#: ../../howto/outputting-pdf.txt:97
 msgid ""
 "Note that all subsequent PDF-generation methods are called on the PDF object "
 "(in this case, ``p``) -- not on ``response``."
 msgstr ""
 
 # bc7a6236af714191b14a5c1b7ba6b7b1
-#: ../../howto/outputting-pdf.txt:94
+#: ../../howto/outputting-pdf.txt:100
 msgid ""
 "Finally, it's important to call ``showPage()`` and ``save()`` on the PDF "
 "file."
 msgstr ""
 
+# cd5ec28a69d246978c0d56ca2471dda2
+#: ../../howto/outputting-pdf.txt:105
+msgid ""
+"ReportLab is not thread-safe. Some of our users have reported odd issues "
+"with building PDF-generating Django views that are accessed by many people "
+"at the same time."
+msgstr ""
+
 # 1f0f38e5fbb34b2da3867b7f91346731
-#: ../../howto/outputting-pdf.txt:98
+#: ../../howto/outputting-pdf.txt:110
 msgid "Complex PDFs"
 msgstr ""
 
-# 5fe9267902454d04bc9e1ed29b7dfb81
-#: ../../howto/outputting-pdf.txt:100
+# 60da39820fe0463f90ccf0b8961c9450
+#: ../../howto/outputting-pdf.txt:112
 msgid ""
 "If you're creating a complex PDF document with ReportLab, consider using "
-"the :mod:`cStringIO` library as a temporary holding place for your PDF file. "
-"This library provides a file-like object interface that is particularly "
+"the :mod:`io` library as a temporary holding place for your PDF file. This "
+"library provides a file-like object interface that is particularly "
 "efficient. Here's the above \"Hello World\" example rewritten to use :mod:"
-"`cStringIO`::"
+"`io`::"
 msgstr ""
 
 # 66f462b68eda44ceac897aacae6b5417
-#: ../../howto/outputting-pdf.txt:138
+#: ../../howto/outputting-pdf.txt:146
 msgid "Further resources"
 msgstr ""
 
 # 69ba09ccce614492a630de2f1b80a5e9
-#: ../../howto/outputting-pdf.txt:140
+#: ../../howto/outputting-pdf.txt:148
 msgid ""
 "PDFlib_ is another PDF-generation library that has Python bindings. To use "
 "it with Django, just use the same concepts explained in this article."
 msgstr ""
 
 # 8a3e723375964de6a15cd0ce90d74c54
-#: ../../howto/outputting-pdf.txt:142
+#: ../../howto/outputting-pdf.txt:150
 msgid ""
 "`Pisa XHTML2PDF`_ is yet another PDF-generation library. Pisa ships with an "
 "example of how to integrate Pisa with Django."
 msgstr ""
 
 # f29096cff63141ffa61be1a6b2e177a0
-#: ../../howto/outputting-pdf.txt:144
+#: ../../howto/outputting-pdf.txt:152
 msgid ""
 "HTMLdoc_ is a command-line script that can convert HTML to PDF. It doesn't "
 "have a Python interface, but you can escape out to the shell using "
@@ -191,12 +200,12 @@ msgid ""
 msgstr ""
 
 # f9fb8df7b0b14271b8bb2fdb66848ad0
-#: ../../howto/outputting-pdf.txt:153
+#: ../../howto/outputting-pdf.txt:161
 msgid "Other formats"
 msgstr ""
 
 # 9445b846e25749d9830d028c0498f406
-#: ../../howto/outputting-pdf.txt:155
+#: ../../howto/outputting-pdf.txt:163
 msgid ""
 "Notice that there isn't a lot in these examples that's PDF-specific -- just "
 "the bits using ``reportlab``. You can use a similar technique to generate "

@@ -119,8 +119,6 @@ The "From:" header of the email will be the value of the
 
 This method exists for convenience and readability.
 
-.. versionchanged:: 1.3
-
 If ``html_message`` is provided, the resulting email will be a
 :mimetype:`multipart/alternative` email with ``message`` as the
 :mimetype:`text/plain` content type and ``html_message`` as the
@@ -192,7 +190,7 @@ from the request's POST data, sends that to admin@example.com and redirects to
             # to get proper validation errors.
             return HttpResponse('Make sure all fields are entered and valid.')
 
-.. _Header injection: http://www.nyphp.org/phundamentals/email_header_injection.php
+.. _Header injection: http://www.nyphp.org/phundamentals/8_Preventing-Email-Header-Injection
 
 .. _emailmessage-and-smtpconnection:
 
@@ -235,9 +233,6 @@ The :class:`~django.core.mail.EmailMessage` class is initialized with the
 following parameters (in the given order, if positional arguments are used).
 All parameters are optional and can be set at any time prior to calling the
 ``send()`` method.
-
-.. versionchanged:: 1.3
-   The ``cc`` argument was added.
 
 * ``subject``: The subject line of the email.
 
@@ -290,8 +285,8 @@ The class has the following methods:
   override this method to put the content you want into the MIME object.
 
 * ``recipients()`` returns a list of all the recipients of the message,
-  whether they're recorded in the ``to`` or ``bcc`` attributes. This is
-  another method you might need to override when subclassing, because the
+  whether they're recorded in the ``to``, ``cc`` or ``bcc`` attributes. This
+  is another method you might need to override when subclassing, because the
   SMTP server needs to be told the full list of recipients when the message
   is sent. If you add another way to specify recipients in your class, they
   need to be returned from this method as well.
@@ -365,8 +360,6 @@ subtype. For example::
 Email backends
 ==============
 
-.. versionadded:: 1.2
-
 The actual sending of an email is handled by the email backend.
 
 The email backend class has the following methods:
@@ -422,17 +415,6 @@ The SMTP backend is the default configuration inherited by Django. If you
 want to specify it explicitly, put the following in your settings::
 
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-.. admonition:: SMTPConnection objects
-
-    Prior to version 1.2, Django provided a
-    :class:`~django.core.mail.SMTPConnection` class. This class provided a way
-    to directly control the use of SMTP to send email. This class has been
-    deprecated in favor of the generic email backend API.
-
-    For backwards compatibility :class:`~django.core.mail.SMTPConnection` is
-    still available in ``django.core.mail`` as an alias for the SMTP backend.
-    New code should use :meth:`~django.core.mail.get_connection` instead.
 
 .. _topic-email-console-backend:
 
@@ -607,18 +589,3 @@ the email body. You then only need to set the :setting:`EMAIL_HOST` and
 
 For a more detailed discussion of testing and processing of emails locally,
 see the Python documentation for the :mod:`smtpd` module.
-
-SMTPConnection
-==============
-
-.. class:: SMTPConnection
-
-.. deprecated:: 1.2
-
-The ``SMTPConnection`` class has been deprecated in favor of the generic email
-backend API.
-
-For backwards compatibility ``SMTPConnection`` is still available in
-``django.core.mail`` as an alias for the :ref:`SMTP backend
-<topic-email-smtp-backend>`. New code should use
-:meth:`~django.core.mail.get_connection` instead.

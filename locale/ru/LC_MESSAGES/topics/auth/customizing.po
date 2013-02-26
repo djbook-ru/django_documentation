@@ -1,0 +1,1242 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-02-27 00:21\n"
+"PO-Revision-Date: 2013-02-27 00:21\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 5ec0bd06f7af46689f4fa0570b023d69
+#: ../../topics/auth/customizing.txt:3
+msgid "Customizing authentication in Django"
+msgstr ""
+
+# 5bbb5128ec5849d791601ad687e5dc69
+#: ../../topics/auth/customizing.txt:5
+msgid ""
+"The authentication that comes with Django is good enough for most common "
+"cases, but you may have needs not met by the out-of-the-box defaults. To "
+"customize authentication to your projects needs involves understanding what "
+"points of the provided system are extendible or replaceable. This document "
+"provides details about how the auth system can be customized."
+msgstr ""
+
+# e5e0af4c5e384a28888b0568f4269e41
+#: ../../topics/auth/customizing.txt:11
+msgid ""
+":ref:`Authentication backends <authentication-backends>` provide an "
+"extensible system for when a username and password stored with the User "
+"model need to be authenticated against a different service than Django's "
+"default."
+msgstr ""
+
+# 5584008e640c4f7ca6d09b3cfa5e13ab
+#: ../../topics/auth/customizing.txt:15
+msgid ""
+"You can give your models :ref:`custom permissions <custom-permissions>` that "
+"can be checked through Django's authorization system."
+msgstr ""
+
+# d16de6ae94754ab9b2aecb9738288385
+#: ../../topics/auth/customizing.txt:18
+msgid ""
+"You can :ref:`extend <extending-user>` the default User model, or :ref:"
+"`substitute <auth-custom-user>` a completely customized model."
+msgstr ""
+
+# f056ebbb410a48a09ff73ff9e565e40e
+#: ../../topics/auth/customizing.txt:24
+msgid "Other authentication sources"
+msgstr ""
+
+# ee9546fdc72546f290d3a086eaa944f6
+#: ../../topics/auth/customizing.txt:26
+msgid ""
+"There may be times you have the need to hook into another authentication "
+"source -- that is, another source of usernames and passwords or "
+"authentication methods."
+msgstr ""
+
+# 17edfc9b916d4fec948452e426ea5e93
+#: ../../topics/auth/customizing.txt:30
+msgid ""
+"For example, your company may already have an LDAP setup that stores a "
+"username and password for every employee. It'd be a hassle for both the "
+"network administrator and the users themselves if users had separate "
+"accounts in LDAP and the Django-based applications."
+msgstr ""
+
+# 6d93153aa438434a905c56859d8ea67e
+#: ../../topics/auth/customizing.txt:35
+msgid ""
+"So, to handle situations like this, the Django authentication system lets "
+"you plug in other authentication sources. You can override Django's default "
+"database-based scheme, or you can use the default system in tandem with "
+"other systems."
+msgstr ""
+
+# 00d2a044c32c442ebf156ad7aab539d2
+#: ../../topics/auth/customizing.txt:40
+msgid ""
+"See the `authentication backend reference <authentication-backends-"
+"reference>` for information on the authentication backends included with "
+"Django."
+msgstr ""
+
+# 8c51fd65446a4d92b3d746b15695078c
+#: ../../topics/auth/customizing.txt:45
+msgid "Specifying authentication backends"
+msgstr ""
+
+# 98c33f3c025e4d638bc36d8730ecae29
+#: ../../topics/auth/customizing.txt:47
+msgid ""
+"Behind the scenes, Django maintains a list of \"authentication backends\" "
+"that it checks for authentication. When somebody calls :func:`django.contrib."
+"auth.authenticate()` -- as described in :ref:`How to log a user in <how-to-"
+"log-a-user-in>` above -- Django tries authenticating across all of its "
+"authentication backends. If the first authentication method fails, Django "
+"tries the second one, and so on, until all backends have been attempted."
+msgstr ""
+
+# b42258a85c2a45a2bba28acc112b1a10
+#: ../../topics/auth/customizing.txt:54
+msgid ""
+"The list of authentication backends to use is specified in the :setting:"
+"`AUTHENTICATION_BACKENDS` setting. This should be a tuple of Python path "
+"names that point to Python classes that know how to authenticate. These "
+"classes can be anywhere on your Python path."
+msgstr ""
+
+# 83023254ab044d6186a0e4e76b46c021
+#: ../../topics/auth/customizing.txt:59
+msgid "By default, :setting:`AUTHENTICATION_BACKENDS` is set to::"
+msgstr ""
+
+# 39a3d191a7c5468eb2e1c8ec5c9298af
+#: ../../topics/auth/customizing.txt:63
+msgid ""
+"That's the basic authentication backend that checks the Django users "
+"database and queries the built-in permissions. It does not provide "
+"protection against brute force attacks via any rate limiting mechanism. You "
+"may either implement your own rate limiting mechanism in a custom auth "
+"backend, or use the mechanisms provided by most Web servers."
+msgstr ""
+
+# 376348d9a83743f48ea4e93660321c82
+#: ../../topics/auth/customizing.txt:69
+msgid ""
+"The order of :setting:`AUTHENTICATION_BACKENDS` matters, so if the same "
+"username and password is valid in multiple backends, Django will stop "
+"processing at the first positive match."
+msgstr ""
+
+# 6b23cccc193a4ed2a7c73dab43d508fe
+#: ../../topics/auth/customizing.txt:75
+msgid ""
+"Once a user has authenticated, Django stores which backend was used to "
+"authenticate the user in the user's session, and re-uses the same backend "
+"for the duration of that session whenever access to the currently "
+"authenticated user is needed. This effectively means that authentication "
+"sources are cached on a per-session basis, so if you change :setting:"
+"`AUTHENTICATION_BACKENDS`, you'll need to clear out session data if you need "
+"to force users to re-authenticate using different methods. A simple way to "
+"do that is simply to execute ``Session.objects.all().delete()``."
+msgstr ""
+
+# d00c0a955e464959ae65171095b6b66b
+#: ../../topics/auth/customizing.txt:86
+msgid ""
+"If a backend raises a :class:`~django.core.exceptions.PermissionDenied` "
+"exception, authentication will immediately fail. Django won't check the "
+"backends that follow."
+msgstr ""
+
+# 671ab7feee21419e953be714e89daf61
+#: ../../topics/auth/customizing.txt:91
+msgid "Writing an authentication backend"
+msgstr ""
+
+# f9f5d6985b5746af8828d36a164aae10
+#: ../../topics/auth/customizing.txt:93
+msgid ""
+"An authentication backend is a class that implements two required methods: "
+"``get_user(user_id)`` and ``authenticate(**credentials)``, as well as a set "
+"of optional permission related :ref:`authorization methods "
+"<authorization_methods>`."
+msgstr ""
+
+# 1abedcc2d6624998895bc5e537710b0b
+#: ../../topics/auth/customizing.txt:97
+msgid ""
+"The ``get_user`` method takes a ``user_id`` -- which could be a username, "
+"database ID or whatever -- and returns a ``User`` object."
+msgstr ""
+
+# 622e4a3c44214a19a2f43d85f9349d60
+#: ../../topics/auth/customizing.txt:100
+msgid ""
+"The ``authenticate`` method takes credentials as keyword arguments. Most of "
+"the time, it'll just look like this::"
+msgstr ""
+
+# 636606df6d234b918978016d6c4bd281
+#: ../../topics/auth/customizing.txt:107
+msgid "But it could also authenticate a token, like so::"
+msgstr ""
+
+# 90055239e5d5462487d82d78428d964f
+#: ../../topics/auth/customizing.txt:113
+msgid ""
+"Either way, ``authenticate`` should check the credentials it gets, and it "
+"should return a ``User`` object that matches those credentials, if the "
+"credentials are valid. If they're not valid, it should return ``None``."
+msgstr ""
+
+# 26f836d7400e49d688998ae5c22365cc
+#: ../../topics/auth/customizing.txt:117
+msgid ""
+"The Django admin system is tightly coupled to the Django ``User`` object "
+"described at the beginning of this document. For now, the best way to deal "
+"with this is to create a Django ``User`` object for each user that exists "
+"for your backend (e.g., in your LDAP directory, your external SQL database, "
+"etc.) You can either write a script to do this in advance, or your "
+"``authenticate`` method can do it the first time a user logs in."
+msgstr ""
+
+# f6f24bbbf4c24e78b2c8d67bbe199d49
+#: ../../topics/auth/customizing.txt:124
+msgid ""
+"Here's an example backend that authenticates against a username and password "
+"variable defined in your ``settings.py`` file and creates a Django ``User`` "
+"object the first time a user authenticates::"
+msgstr ""
+
+# 6cf7c0d6dc6b4620bbfb6cf265610d77
+#: ../../topics/auth/customizing.txt:167
+msgid "Handling authorization in custom backends"
+msgstr ""
+
+# 599389d4f1db44febd97a46b19acaec2
+#: ../../topics/auth/customizing.txt:169
+msgid "Custom auth backends can provide their own permissions."
+msgstr ""
+
+# a9e9d321d8c94e4a95d7df294fbbdb41
+#: ../../topics/auth/customizing.txt:171
+msgid ""
+"The user model will delegate permission lookup functions (:meth:`~django."
+"contrib.auth.models.User.get_group_permissions()`, :meth:`~django.contrib."
+"auth.models.User.get_all_permissions()`, :meth:`~django.contrib.auth.models."
+"User.has_perm()`, and :meth:`~django.contrib.auth.models.User."
+"has_module_perms()`) to any authentication backend that implements these "
+"functions."
+msgstr ""
+
+# 568437b1632044d6ae37c05da09c4ffe
+#: ../../topics/auth/customizing.txt:178
+msgid ""
+"The permissions given to the user will be the superset of all permissions "
+"returned by all backends. That is, Django grants a permission to a user that "
+"any one backend grants."
+msgstr ""
+
+# f985f557564a4d7a81e7f0c2af23a077
+#: ../../topics/auth/customizing.txt:182
+msgid ""
+"The simple backend above could implement permissions for the magic admin "
+"fairly simply::"
+msgstr ""
+
+# 654b7b22963a4392b382b0641395d0e9
+#: ../../topics/auth/customizing.txt:195
+msgid ""
+"This gives full permissions to the user granted access in the above example. "
+"Notice that in addition to the same arguments given to the associated :class:"
+"`django.contrib.auth.models.User` functions, the backend auth functions all "
+"take the user object, which may be an anonymous user, as an argument."
+msgstr ""
+
+# 30ff60bc4ee143848b4e407dd08529db
+#: ../../topics/auth/customizing.txt:200
+msgid ""
+"A full authorization implementation can be found in the ``ModelBackend`` "
+"class in `django/contrib/auth/backends.py`_, which is the default backend "
+"and queries the ``auth_permission`` table most of the time. If you wish to "
+"provide custom behavior for only part of the backend API, you can take "
+"advantage of Python inheritance and subclass ``ModelBackend`` instead of "
+"implementing the complete API in a custom backend."
+msgstr ""
+
+# 201f8d055ec7430dace2eddd89e5b3d6
+#: ../../topics/auth/customizing.txt:212
+msgid "Authorization for anonymous users"
+msgstr ""
+
+# c1136bd9d3f14ffb8502c6bf58faa27e
+#: ../../topics/auth/customizing.txt:214
+msgid ""
+"An anonymous user is one that is not authenticated i.e. they have provided "
+"no valid authentication details. However, that does not necessarily mean "
+"they are not authorized to do anything. At the most basic level, most Web "
+"sites authorize anonymous users to browse most of the site, and many allow "
+"anonymous posting of comments etc."
+msgstr ""
+
+# 78278ca440a249619f67a25c0620c2b7
+#: ../../topics/auth/customizing.txt:220
+msgid ""
+"Django's permission framework does not have a place to store permissions for "
+"anonymous users. However, the user object passed to an authentication "
+"backend may be an :class:`django.contrib.auth.models.AnonymousUser` object, "
+"allowing the backend to specify custom authorization behavior for anonymous "
+"users. This is especially useful for the authors of re-usable apps, who can "
+"delegate all questions of authorization to the auth backend, rather than "
+"needing settings, for example, to control anonymous access."
+msgstr ""
+
+# 33cbb996040b4fc89bfaedb3728baebb
+#: ../../topics/auth/customizing.txt:231
+msgid "Authorization for inactive users"
+msgstr ""
+
+# baf6645cbc0e4ad5a48e7382f87a34da
+#: ../../topics/auth/customizing.txt:233
+msgid ""
+"An inactive user is a one that is authenticated but has its attribute "
+"``is_active`` set to ``False``. However this does not mean they are not "
+"authorized to do anything. For example they are allowed to activate their "
+"account."
+msgstr ""
+
+# 225654e8769c4a5db9b1eeabe67610bc
+#: ../../topics/auth/customizing.txt:238
+msgid ""
+"The support for anonymous users in the permission system allows for a "
+"scenario where anonymous users have permissions to do something while "
+"inactive authenticated users do not."
+msgstr ""
+
+# a4553b8476ba48df822f255965edf1ad
+#: ../../topics/auth/customizing.txt:242
+msgid ""
+"Do not forget to test for the ``is_active`` attribute of the user in your "
+"own backend permission methods."
+msgstr ""
+
+# c3860481df894ccabd5fe9af2c5a03b6
+#: ../../topics/auth/customizing.txt:247
+msgid "Handling object permissions"
+msgstr ""
+
+# c1438f0240144ef5aa43fbd2179c94fa
+#: ../../topics/auth/customizing.txt:249
+msgid ""
+"Django's permission framework has a foundation for object permissions, "
+"though there is no implementation for it in the core. That means that "
+"checking for object permissions will always return ``False`` or an empty "
+"list (depending on the check performed). An authentication backend will "
+"receive the keyword parameters ``obj`` and ``user_obj`` for each object "
+"related authorization method and can return the object level permission as "
+"appropriate."
+msgstr ""
+
+# 9fcd36b508824c408868817f397b43ae
+#: ../../topics/auth/customizing.txt:259
+msgid "Custom permissions"
+msgstr ""
+
+# 20ecf50e12844bd39fba51decae86b24
+#: ../../topics/auth/customizing.txt:261
+msgid ""
+"To create custom permissions for a given model object, use the "
+"``permissions`` :ref:`model Meta attribute <meta-options>`."
+msgstr ""
+
+# 7282b04b9cac44598dcf8b2a636b8bf7
+#: ../../topics/auth/customizing.txt:264
+msgid ""
+"This example Task model creates three custom permissions, i.e., actions "
+"users can or cannot do with Task instances, specific to your application::"
+msgstr ""
+
+# 48a2a936008740bcb8628c58f4fe5a03
+#: ../../topics/auth/customizing.txt:276
+msgid ""
+"The only thing this does is create those extra permissions when you run :"
+"djadmin:`manage.py syncdb <syncdb>`. Your code is in charge of checking the "
+"value of these permissions when an user is trying to access the "
+"functionality provided by the application (viewing tasks, changing the "
+"status of tasks, closing tasks.) Continuing the above example, the following "
+"checks if a user may view tasks::"
+msgstr ""
+
+# 7556e3bacc294cce96aa2e70dd1f6542
+#: ../../topics/auth/customizing.txt:288
+msgid "Extending the existing User model"
+msgstr ""
+
+# eb2571bbb2324da2a328491c1c86ba74
+#: ../../topics/auth/customizing.txt:290
+msgid ""
+"There are two ways to extend the default :class:`~django.contrib.auth.models."
+"User` model without substituting your own model. If the changes you need are "
+"purely behavioral, and don't require any change to what is stored in the "
+"database, you can create a :ref:`proxy model <proxy-models>` based on :class:"
+"`~django.contrib.auth.models.User`. This allows for any of the features "
+"offered by proxy models including default ordering, custom managers, or "
+"custom model methods."
+msgstr ""
+
+# 5c9b8b7a6bd84e7cb5f8337d8758926f
+#: ../../topics/auth/customizing.txt:298
+msgid ""
+"If you wish to store information related to ``User``, you can use a :ref:"
+"`one-to-one relationship <ref-onetoone>` to a model containing the fields "
+"for additional information. This one-to-one model is often called a profile "
+"model, as it might store non-auth related information about a site user. For "
+"example you might create an Employee model::"
+msgstr ""
+
+# d65ecf8f14b349e38e7b34e6eff30c82
+#: ../../topics/auth/customizing.txt:310
+msgid ""
+"Assuming an existing Employee Fred Smith who has both a User and Employee "
+"model, you can access the related information using Django's standard "
+"related model conventions::"
+msgstr ""
+
+# 6e93b67b98494c73ae0d884aff2f686c
+#: ../../topics/auth/customizing.txt:317
+msgid ""
+"To add a profile model's fields to the user page in the admin, define an :"
+"class:`~django.contrib.admin.InlineModelAdmin` (for this example, we'll use "
+"a :class:`~django.contrib.admin.StackedInline`) in your app's ``admin.py`` "
+"and add it to a ``UserAdmin`` class which is registered with the :class:"
+"`~django.contrib.auth.models.User` class::"
+msgstr ""
+
+# 57bbe0bedf8d48bdb503b39b41c0d606
+#: ../../topics/auth/customizing.txt:344
+msgid ""
+"These profile models are not special in any way - they are just Django "
+"models that happen to have a one-to-one link with a User model. As such, "
+"they do not get auto created when a user is created, but a :attr:`django.db."
+"models.signals.post_save` could be used to create or update related models "
+"as appropriate."
+msgstr ""
+
+# d103270b09a94b35b939844a79ed9e1e
+#: ../../topics/auth/customizing.txt:350
+msgid ""
+"Note that using related models results in additional queries or joins to "
+"retrieve the related data, and depending on your needs substituting the User "
+"model and adding the related fields may be your better option.  However "
+"existing links to the default User model within your project's apps may "
+"justify the extra database load."
+msgstr ""
+
+# d053ae0b8fb34644bb43ad07ccd66dfb
+#: ../../topics/auth/customizing.txt:364
+msgid ""
+"Prior to 1.5, a single profile model could be specified site-wide with the "
+"setting :setting:`AUTH_PROFILE_MODULE` with a string consisting of the "
+"following items, separated by a dot:"
+msgstr ""
+
+# 85c4af9191bb42eeadbbfa6a7b1ec896
+#: ../../topics/auth/customizing.txt:368
+msgid ""
+"The name of the application (case sensitive) in which the user profile model "
+"is defined (in other words, the name which was passed to :djadmin:`manage.py "
+"startapp <startapp>` to create the application)."
+msgstr ""
+
+# 984d504cdae247c0a8b508e3ee1ca379
+#: ../../topics/auth/customizing.txt:373
+msgid "The name of the model (not case sensitive) class."
+msgstr ""
+
+# 16870c3855844c3d85f78825b95576a6
+#: ../../topics/auth/customizing.txt:375
+msgid ""
+"For example, if the profile model was a class named ``UserProfile`` and was "
+"defined inside an application named ``accounts``, the appropriate setting "
+"would be::"
+msgstr ""
+
+# 58f755a8b4a24d9196897075a1366fb5
+#: ../../topics/auth/customizing.txt:381
+msgid ""
+"When a user profile model has been defined and specified in this manner, "
+"each :class:`~django.contrib.auth.models.User` object will have a method -- :"
+"class:`~django.contrib.auth.models.User.get_profile()` -- which returns the "
+"instance of the user profile model associated with that :class:`~django."
+"contrib.auth.models.User`."
+msgstr ""
+
+# 2c65677878b44a25b0400697ad80e09c
+#: ../../topics/auth/customizing.txt:387
+msgid ""
+"The method :class:`~django.contrib.auth.models.User.get_profile()` does not "
+"create a profile if one does not exist."
+msgstr ""
+
+# 5e1cf218bbc349bd9a3e3b4ab118193f
+#: ../../topics/auth/customizing.txt:393
+msgid "Substituting a custom User model"
+msgstr ""
+
+# 6e5c2887477443cabdeb5947773a6940
+#: ../../topics/auth/customizing.txt:397
+msgid ""
+"Some kinds of projects may have authentication requirements for which "
+"Django's built-in :class:`~django.contrib.auth.models.User` model is not "
+"always appropriate. For instance, on some sites it makes more sense to use "
+"an email address as your identification token instead of a username."
+msgstr ""
+
+# 69e185ee6a0f4d61a3fa3014a9941c91
+#: ../../topics/auth/customizing.txt:402
+msgid ""
+"Django allows you to override the default User model by providing a value "
+"for the :setting:`AUTH_USER_MODEL` setting that references a custom model::"
+msgstr ""
+
+# 519e8345beac402c8df46b18e5a54e26
+#: ../../topics/auth/customizing.txt:407
+msgid ""
+"This dotted pair describes the name of the Django app (which must be in "
+"your :setting:`INSTALLED_APPS`), and the name of the Django model that you "
+"wish to use as your User model."
+msgstr ""
+
+# b31fc6924b444cee896276364f87f784
+#: ../../topics/auth/customizing.txt:413
+msgid ""
+"Changing :setting:`AUTH_USER_MODEL` has a big effect on your database "
+"structure. It changes the tables that are available, and it will affect the "
+"construction of foreign keys and many-to-many relationships. If you intend "
+"to set :setting:`AUTH_USER_MODEL`, you should set it before running ``manage."
+"py syncdb`` for the first time."
+msgstr ""
+
+# 0ae3dff5c75a445196e87cca421d513f
+#: ../../topics/auth/customizing.txt:419
+msgid ""
+"If you have an existing project and you want to migrate to using a custom "
+"User model, you may need to look into using a migration tool like South_ to "
+"ease the transition."
+msgstr ""
+
+# ad8dae4d04194c59a9a0fd8bc3eb97bd
+#: ../../topics/auth/customizing.txt:426
+msgid "Referencing the User model"
+msgstr ""
+
+# 813e9db1f7484e16adee27304e40e0b5
+#: ../../topics/auth/customizing.txt:430
+msgid ""
+"If you reference :class:`~django.contrib.auth.models.User` directly (for "
+"example, by referring to it in a foreign key), your code will not work in "
+"projects where the :setting:`AUTH_USER_MODEL` setting has been changed to a "
+"different User model."
+msgstr ""
+
+# 2c54437ee8a445ff929050ce283ba902
+#: ../../topics/auth/customizing.txt:437
+msgid ""
+"Instead of referring to :class:`~django.contrib.auth.models.User` directly, "
+"you should reference the user model using ``django.contrib.auth."
+"get_user_model()``. This method will return the currently active User model "
+"-- the custom User model if one is specified, or :class:`~django.contrib."
+"auth.models.User` otherwise."
+msgstr ""
+
+# 233be4509bae4067b93692459d7ba477
+#: ../../topics/auth/customizing.txt:443
+msgid ""
+"When you define a foreign key or many-to-many relations to the User model, "
+"you should specify the custom model using the :setting:`AUTH_USER_MODEL` "
+"setting. For example::"
+msgstr ""
+
+# 3762aaf1d15c47bfa9f0db67b258e8af
+#: ../../topics/auth/customizing.txt:454
+msgid "Specifying a custom User model"
+msgstr ""
+
+# b07acbf1e9324851b473306d1ecd0536
+#: ../../topics/auth/customizing.txt:458
+msgid ""
+"Think carefully before handling information not directly related to "
+"authentication in your custom User Model."
+msgstr ""
+
+# a5d470a2037f4295ad363e46847be06f
+#: ../../topics/auth/customizing.txt:461
+msgid ""
+"It may be better to store app-specific user information in a model that has "
+"a relation with the User model. That allows each app to specify its own user "
+"data requirements without risking conflicts with other apps. On the other "
+"hand, queries to retrieve this related information will involve a database "
+"join, which may have an effect on performance."
+msgstr ""
+
+# ad7153fa53394a069777c77b1bdc92f1
+#: ../../topics/auth/customizing.txt:467
+msgid ""
+"Django expects your custom User model to meet some minimum requirements."
+msgstr ""
+
+# 9fdebefc3eb842c4b5e32efe4ea72a85
+#: ../../topics/auth/customizing.txt:469
+msgid "Your model must have an integer primary key."
+msgstr ""
+
+# 3aa1507638cd4390becc6aa86ebaac8e
+#: ../../topics/auth/customizing.txt:471
+msgid ""
+"Your model must have a single unique field that can be used for "
+"identification purposes. This can be a username, an email address, or any "
+"other unique attribute."
+msgstr ""
+
+# 0a269a9798fd40f4ad8aa830df53d043
+#: ../../topics/auth/customizing.txt:475
+msgid ""
+"Your model must provide a way to address the user in a \"short\" and \"long"
+"\" form. The most common interpretation of this would be to use the user's "
+"given name as the \"short\" identifier, and the user's full name as the "
+"\"long\" identifier. However, there are no constraints on what these two "
+"methods return - if you want, they can return exactly the same value."
+msgstr ""
+
+# 7d5e0fc7df3a4261aa8a942afed8c1c8
+#: ../../topics/auth/customizing.txt:482
+msgid ""
+"The easiest way to construct a compliant custom User model is to inherit "
+"from :class:`~django.contrib.auth.models.AbstractBaseUser`. :class:`~django."
+"contrib.auth.models.AbstractBaseUser` provides the core implementation of a "
+"`User` model, including hashed passwords and tokenized password resets. You "
+"must then provide some key implementation details:"
+msgstr ""
+
+# 5f52ef2fb06a4d43bfac433458591ece
+#: ../../topics/auth/customizing.txt:494
+msgid ""
+"A string describing the name of the field on the User model that is used as "
+"the unique identifier. This will usually be a username of some kind, but it "
+"can also be an email address, or any other unique identifier. The field "
+"*must* be unique (i.e., have ``unique=True`` set in it's definition)."
+msgstr ""
+
+# 5d18d82d7f8545989ba7e4d317f76e16
+#: ../../topics/auth/customizing.txt:500
+msgid ""
+"In the following example, the field `identifier` is used as the identifying "
+"field::"
+msgstr ""
+
+# b16660952e6847f783118888deff2915
+#: ../../topics/auth/customizing.txt:510
+msgid ""
+"A list of the field names that *must* be provided when creating a user via "
+"the :djadmin:`createsuperuser` management command. The user will be prompted "
+"to supply a value for each of these fields. It should include any field for "
+"which :attr:`~django.db.models.Field.blank` is ``False`` or undefined, but "
+"may include additional fields you want prompted for when a user is created "
+"interactively. However, it will not work for :class:`~django.db.models."
+"ForeignKey` fields."
+msgstr ""
+
+# 0dc922a0f91545438b8f6170a72f5b1c
+#: ../../topics/auth/customizing.txt:518
+msgid ""
+"For example, here is the partial definition for a ``User`` model that "
+"defines two required fields - a date of birth and height::"
+msgstr ""
+
+# 724790b167d5480cb9bb709e1fc6f453
+#: ../../topics/auth/customizing.txt:530
+msgid ""
+"``REQUIRED_FIELDS`` must contain all required fields on your User model, but "
+"should *not* contain the ``USERNAME_FIELD``."
+msgstr ""
+
+# cfa7e1245e0e4d31b57ca5153ccc4a4e
+#: ../../topics/auth/customizing.txt:535
+msgid ""
+"A boolean attribute that indicates whether the user is considered \"active"
+"\".  This attribute is provided as an attribute on ``AbstractBaseUser`` "
+"defaulting to ``True``. How you choose to implement it will depend on the "
+"details of your chosen auth backends. See the documentation of the :attr:"
+"`attribute on the builtin user model <django.contrib.auth.models.User."
+"is_active>` for details."
+msgstr ""
+
+# 27009c334bac47a0b4f17730249a49ac
+#: ../../topics/auth/customizing.txt:544
+msgid ""
+"A longer formal identifier for the user. A common interpretation would be "
+"the full name name of the user, but it can be any string that identifies the "
+"user."
+msgstr ""
+
+# 7ea944340e414547adb58536aaa890fb
+#: ../../topics/auth/customizing.txt:550
+msgid ""
+"A short, informal identifier for the user. A common interpretation would be "
+"the first name of the user, but it can be any string that identifies the "
+"user in an informal way. It may also return the same value as :meth:`django."
+"contrib.auth.models.User.get_full_name()`."
+msgstr ""
+
+# cd022a86211546c2927f81c447e72198
+#: ../../topics/auth/customizing.txt:555
+msgid ""
+"The following methods are available on any subclass of :class:`~django."
+"contrib.auth.models.AbstractBaseUser`:"
+msgstr ""
+
+# 9f31b17dfce44100bba07471966f941b
+#: ../../topics/auth/customizing.txt:562
+msgid "Returns the value of the field nominated by ``USERNAME_FIELD``."
+msgstr ""
+
+# 707ca33fcf83468a87cdd66794ec1404
+#: ../../topics/auth/customizing.txt:566
+msgid ""
+"Always returns ``False``. This is a way of differentiating from  :class:"
+"`~django.contrib.auth.models.AnonymousUser` objects. Generally, you should "
+"prefer using :meth:`~django.contrib.auth.models.AbstractBaseUser."
+"is_authenticated()` to this method."
+msgstr ""
+
+# 9616f410cb424ba9b5845b5beb4e193a
+#: ../../topics/auth/customizing.txt:574
+msgid ""
+"Always returns ``True``. This is a way to tell if the user has been "
+"authenticated. This does not imply any permissions, and doesn't check if the "
+"user is active - it only indicates that the user has provided a valid "
+"username and password."
+msgstr ""
+
+# dd445814ddd346378a548adcfcdcb96a
+#: ../../topics/auth/customizing.txt:581
+msgid ""
+"Sets the user's password to the given raw string, taking care of the "
+"password hashing. Doesn't save the :class:`~django.contrib.auth.models."
+"AbstractBaseUser` object."
+msgstr ""
+
+# f6a25c9b78cf4db88a150df4da042b32
+#: ../../topics/auth/customizing.txt:587
+msgid ""
+"Returns ``True`` if the given raw string is the correct password for the "
+"user. (This takes care of the password hashing in making the comparison.)"
+msgstr ""
+
+# be6465ec0b374a3fbe4fd9f6d599b89d
+#: ../../topics/auth/customizing.txt:593
+msgid ""
+"Marks the user as having no password set.  This isn't the same as having a "
+"blank string for a password. :meth:`~django.contrib.auth.models."
+"AbstractBaseUser.check_password()` for this user will never return ``True``. "
+"Doesn't save the :class:`~django.contrib.auth.models.AbstractBaseUser` "
+"object."
+msgstr ""
+
+# bd690ab3f8ec4ceeba86225e382ad20c
+#: ../../topics/auth/customizing.txt:599
+msgid ""
+"You may need this if authentication for your application takes place against "
+"an existing external source such as an LDAP directory."
+msgstr ""
+
+# 796785bbe49f456ca1d0ffb31d1f40f7
+#: ../../topics/auth/customizing.txt:604
+msgid ""
+"Returns ``False`` if :meth:`~django.contrib.auth.models.AbstractBaseUser."
+"set_unusable_password()` has been called for this user."
+msgstr ""
+
+# 8eeba0af27b14a9a873417c2d5588556
+#: ../../topics/auth/customizing.txt:608
+msgid ""
+"You should also define a custom manager for your User model. If your User "
+"model defines `username` and `email` fields the same as Django's default "
+"User, you can just install Django's :class:`~django.contrib.auth.models."
+"UserManager`; however, if your User model defines different fields, you will "
+"need to define a custom manager that extends :class:`~django.contrib.auth."
+"models.BaseUserManager` providing two additional methods:"
+msgstr ""
+
+# 01eba7e4732d4249a88c632f576d1989
+#: ../../topics/auth/customizing.txt:620
+msgid ""
+"The prototype of `create_user()` should accept the username field, plus all "
+"required fields as arguments. For example, if your user model uses `email` "
+"as the username field, and has `date_of_birth` as a required fields, then "
+"create_user should be defined as::"
+msgstr ""
+
+# 03cbeea48a4944a7ae76bb7257766713
+#: ../../topics/auth/customizing.txt:630
+msgid ""
+"The prototype of `create_superuser()` should accept the username field, plus "
+"all required fields as arguments. For example, if your user model uses "
+"`email` as the username field, and has `date_of_birth` as a required fields, "
+"then create_superuser should be defined as::"
+msgstr ""
+
+# 06f1ba53bcb34a42ab38d9cb86132da9
+#: ../../topics/auth/customizing.txt:638
+msgid ""
+"Unlike `create_user()`, `create_superuser()` *must* require the caller to "
+"provider a password."
+msgstr ""
+
+# 408d28a741634411a1ceb60fd9b43845
+#: ../../topics/auth/customizing.txt:641
+msgid ""
+":class:`~django.contrib.auth.models.BaseUserManager` provides the following "
+"utility methods:"
+msgstr ""
+
+# 53dafe93c6dd4147ab866ea84ed6d77a
+#: ../../topics/auth/customizing.txt:648
+msgid ""
+"A classmethod that normalizes email addresses by lowercasing the domain "
+"portion of the email address."
+msgstr ""
+
+# 5ff291a1de9e44af82126869677a612e
+#: ../../topics/auth/customizing.txt:653
+msgid ""
+"Retrieves a user instance using the contents of the field nominated by "
+"``USERNAME_FIELD``."
+msgstr ""
+
+# ddf668f7cae04cf6b692c34dc4d718af
+#: ../../topics/auth/customizing.txt:658
+msgid ""
+"Returns a random password with the given length and given string of allowed "
+"characters. (Note that the default value of ``allowed_chars`` doesn't "
+"contain letters that can cause user confusion, including:"
+msgstr ""
+
+# 3731bb5a184945bf9289e55c01fa376e
+#: ../../topics/auth/customizing.txt:662
+msgid ""
+"``i``, ``l``, ``I``, and ``1`` (lowercase letter i, lowercase letter L, "
+"uppercase letter i, and the number one)"
+msgstr ""
+
+# 202d763c43914391b95891a3cf20bdd7
+#: ../../topics/auth/customizing.txt:664
+msgid ""
+"``o``, ``O``, and ``0`` (uppercase letter o, lowercase letter o, and zero)"
+msgstr ""
+
+# d0cc327fed794dd0a6a390da253fde7b
+#: ../../topics/auth/customizing.txt:668
+msgid "Extending Django's default User"
+msgstr ""
+
+# 24ce2252cf87447794ee7f1b5cfe2f37
+#: ../../topics/auth/customizing.txt:670
+msgid ""
+"If you're entirely happy with Django's :class:`~django.contrib.auth.models."
+"User` model and you just want to add some additional profile information, "
+"you can simply subclass ``django.contrib.auth.models.AbstractUser`` and add "
+"your custom profile fields. This class provides the full implementation of "
+"the default :class:`~django.contrib.auth.models.User` as an :ref:`abstract "
+"model <abstract-base-classes>`."
+msgstr ""
+
+# 757515f54ea1438cb54dd39ba31948c5
+#: ../../topics/auth/customizing.txt:680
+msgid "Custom users and the built-in auth forms"
+msgstr ""
+
+# c41928d682af4ab6a3db65002b84b3a3
+#: ../../topics/auth/customizing.txt:682
+msgid ""
+"As you may expect, built-in Django's :ref:`forms <built-in-auth-forms>` and :"
+"ref:`views <built-in-auth-views>` make certain assumptions about the user "
+"model that they are working with."
+msgstr ""
+
+# f827696ea1a341d6a4ee2f59bd1447b0
+#: ../../topics/auth/customizing.txt:686
+msgid ""
+"If your user model doesn't follow the same assumptions, it may be necessary "
+"to define a replacement form, and pass that form in as part of the "
+"configuration of the auth views."
+msgstr ""
+
+# 103f1905f71744f29f7345e2fd240188
+#: ../../topics/auth/customizing.txt:690
+msgid ":class:`~django.contrib.auth.forms.UserCreationForm`"
+msgstr ""
+
+# 88d432581ca04609966ceeb666b32441
+# 35dc6886a26b4badb9eba33e4dc7f59b
+#: ../../topics/auth/customizing.txt:692 ../../topics/auth/customizing.txt:697
+msgid ""
+"Depends on the :class:`~django.contrib.auth.models.User` model. Must be re-"
+"written for any custom user model."
+msgstr ""
+
+# 833c2b1ec40b47a3b97c64425dd2d42b
+#: ../../topics/auth/customizing.txt:695
+msgid ":class:`~django.contrib.auth.forms.UserChangeForm`"
+msgstr ""
+
+# d9edd7a5ac154a3ab6c40aa5a5a7a726
+#: ../../topics/auth/customizing.txt:700
+msgid ":class:`~django.contrib.auth.forms.AuthenticationForm`"
+msgstr ""
+
+# 9603bcfc1b0a476e933da0dfa604cb29
+#: ../../topics/auth/customizing.txt:702
+msgid ""
+"Works with any subclass of :class:`~django.contrib.auth.models."
+"AbstractBaseUser`, and will adapt to use the field defined in "
+"`USERNAME_FIELD`."
+msgstr ""
+
+# 110741093cd7475fbb7235cc53d9a13a
+#: ../../topics/auth/customizing.txt:705
+msgid ":class:`~django.contrib.auth.forms.PasswordResetForm`"
+msgstr ""
+
+# 60e9bd81e9044fe69c318d747cd54043
+#: ../../topics/auth/customizing.txt:707
+msgid ""
+"Assumes that the user model has an integer primary key, has a field named "
+"`email` that can be used to identify the user, and a boolean field named "
+"`is_active` to prevent password resets for inactive users."
+msgstr ""
+
+# 548825e5354c45c9a590c1bfd947b600
+#: ../../topics/auth/customizing.txt:711
+msgid ":class:`~django.contrib.auth.forms.SetPasswordForm`"
+msgstr ""
+
+# 3eaab38c13df46e9a15e2816d1926e02
+# 11e2349b004c42eb8c125991e3721df2
+# 0854b13b0fbd41dfaf88ca178abe38e7
+#: ../../topics/auth/customizing.txt:713 ../../topics/auth/customizing.txt:717
+#: ../../topics/auth/customizing.txt:721
+msgid ""
+"Works with any subclass of :class:`~django.contrib.auth.models."
+"AbstractBaseUser`"
+msgstr ""
+
+# af86245c1215499bb0aa69bc04a63a5e
+#: ../../topics/auth/customizing.txt:715
+msgid ":class:`~django.contrib.auth.forms.PasswordChangeForm`"
+msgstr ""
+
+# c6405c8424404a44a2e37c0862d25d2c
+#: ../../topics/auth/customizing.txt:719
+msgid ":class:`~django.contrib.auth.forms.AdminPasswordChangeForm`"
+msgstr ""
+
+# b536d4bbc9e44bbe883e5b70cfeba559
+#: ../../topics/auth/customizing.txt:725
+msgid "Custom users and django.contrib.admin"
+msgstr ""
+
+# 7749b18a757a4e5faeae1f61337f7706
+#: ../../topics/auth/customizing.txt:727
+msgid ""
+"If you want your custom User model to also work with Admin, your User model "
+"must define some additional attributes and methods. These methods allow the "
+"admin to control access of the User to admin content:"
+msgstr ""
+
+# da885c80e3af45af9caed26311d6495b
+#: ../../topics/auth/customizing.txt:735
+msgid "Returns True if the user is allowed to have access to the admin site."
+msgstr ""
+
+# fb8beff25bd54410a3f6fc6c9e87dda1
+#: ../../topics/auth/customizing.txt:739
+msgid "Returns True if the user account is currently active."
+msgstr ""
+
+# 79e440c2fb724f019076c20c3bb90a61
+#: ../../topics/auth/customizing.txt:743
+msgid ""
+"Returns True if the user has the named permission. If `obj` is provided, the "
+"permission needs to be checked against a specific object instance."
+msgstr ""
+
+# a4a2bb60776145adafc0f55ccaff0796
+#: ../../topics/auth/customizing.txt:749
+msgid ""
+"Returns True if the user has permission to access models in the given app."
+msgstr ""
+
+# b257d38ed1f841128e3ec42c687c52ed
+#: ../../topics/auth/customizing.txt:752
+msgid ""
+"You will also need to register your custom User model with the admin. If "
+"your custom User model extends ``django.contrib.auth.models.AbstractUser``, "
+"you can use Django's existing ``django.contrib.auth.admin.UserAdmin`` class. "
+"However, if your User model extends :class:`~django.contrib.auth.models."
+"AbstractBaseUser`, you'll need to define a custom ModelAdmin class. It may "
+"be possible to subclass the default ``django.contrib.auth.admin.UserAdmin``; "
+"however, you'll need to override any of the definitions that refer to fields "
+"on ``django.contrib.auth.models.AbstractUser`` that aren't on your custom "
+"User class."
+msgstr ""
+
+# 380333cb6d5546ffbf5af3acf33a8dd0
+#: ../../topics/auth/customizing.txt:764
+msgid "Custom users and permissions"
+msgstr ""
+
+# 7f14c8514f5243d0a6597d7275f55aea
+#: ../../topics/auth/customizing.txt:766
+msgid ""
+"To make it easy to include Django's permission framework into your own User "
+"class, Django provides :class:`~django.contrib.auth.models."
+"PermissionsMixin`. This is an abstract model you can include in the class "
+"hierarchy for your User model, giving you all the methods and database "
+"fields necessary to support Django's permission model."
+msgstr ""
+
+# c145e8df4a804d43ab6553e0bd875b0a
+#: ../../topics/auth/customizing.txt:772
+msgid ""
+":class:`~django.contrib.auth.models.PermissionsMixin` provides the following "
+"methods and attributes:"
+msgstr ""
+
+# 378dc57e66ec48f19ded31f54975ec90
+#: ../../topics/auth/customizing.txt:779
+msgid ""
+"Boolean. Designates that this user has all permissions without explicitly "
+"assigning them."
+msgstr ""
+
+# d05dee35b93f4ae7949bd5d6a909dca7
+#: ../../topics/auth/customizing.txt:784
+msgid ""
+"Returns a set of permission strings that the user has, through his/her "
+"groups."
+msgstr ""
+
+# f00a4e69fefa44a58f42fa1ed91fcd8d
+#: ../../topics/auth/customizing.txt:787
+msgid ""
+"If ``obj`` is passed in, only returns the group permissions for this "
+"specific object."
+msgstr ""
+
+# ef838cf5459643728e57f0f1c8ec6c4b
+#: ../../topics/auth/customizing.txt:792
+msgid ""
+"Returns a set of permission strings that the user has, both through group "
+"and user permissions."
+msgstr ""
+
+# 8068857ffaa843718c4ee863663caf81
+#: ../../topics/auth/customizing.txt:795
+msgid ""
+"If ``obj`` is passed in, only returns the permissions for this specific "
+"object."
+msgstr ""
+
+# 08a53004228745a49cba7ec4eb22321d
+#: ../../topics/auth/customizing.txt:800
+msgid ""
+"Returns ``True`` if the user has the specified permission, where perm is in "
+"the format ``\"<app label>.<permission codename>\"`` (see :ref:`permissions "
+"<topic-authorization>`). If the user is inactive, this method will always "
+"return ``False``."
+msgstr ""
+
+# 06c823c09d514abebf5dcd82cd4e8b66
+#: ../../topics/auth/customizing.txt:805
+msgid ""
+"If ``obj`` is passed in, this method won't check for a permission for the "
+"model, but for this specific object."
+msgstr ""
+
+# 284d1d5141c144858676db417b75d91a
+#: ../../topics/auth/customizing.txt:810
+msgid ""
+"Returns ``True`` if the user has each of the specified permissions, where "
+"each perm is in the format ``\"<app label>.<permission codename>\"``. If the "
+"user is inactive, this method will always return ``False``."
+msgstr ""
+
+# 7148e7e6f0354829aa8078ffea398a76
+#: ../../topics/auth/customizing.txt:815
+msgid ""
+"If ``obj`` is passed in, this method won't check for permissions for the "
+"model, but for the specific object."
+msgstr ""
+
+# 7b275d4d9dee4f61b629ea93fc8546a2
+#: ../../topics/auth/customizing.txt:820
+msgid ""
+"Returns ``True`` if the user has any permissions in the given package (the "
+"Django app label). If the user is inactive, this method will always return "
+"``False``."
+msgstr ""
+
+# 3e7b6f224737443287a254d7f55379e4
+#: ../../topics/auth/customizing.txt:826
+msgid ""
+"If you don't include the :class:`~django.contrib.auth.models."
+"PermissionsMixin`, you must ensure you don't invoke the permissions methods "
+"on ``ModelBackend``. ``ModelBackend`` assumes that certain fields are "
+"available on your user model. If your User model doesn't provide  those "
+"fields, you will receive database errors when you check permissions."
+msgstr ""
+
+# 3832bfa0c9ff4fc992b2693fb925e691
+#: ../../topics/auth/customizing.txt:834
+msgid "Custom users and Proxy models"
+msgstr ""
+
+# c5cbe64a379a46f4b19508c9ade5f540
+#: ../../topics/auth/customizing.txt:836
+msgid ""
+"One limitation of custom User models is that installing a custom User model "
+"will break any proxy model extending :class:`~django.contrib.auth.models."
+"User`. Proxy models must be based on a concrete base class; by defining a "
+"custom User model, you remove the ability of Django to reliably identify the "
+"base class."
+msgstr ""
+
+# 0813f779256d4cfd80934a69de9b77f4
+#: ../../topics/auth/customizing.txt:841
+msgid ""
+"If your project uses proxy models, you must either modify the proxy to "
+"extend the User model that is currently in use in your project, or merge "
+"your proxy's behavior into your User subclass."
+msgstr ""
+
+# b86cde4d432e4c32aeecb531696831de
+#: ../../topics/auth/customizing.txt:846
+msgid "Custom users and signals"
+msgstr ""
+
+# 22592f598af24c36be3fb731347eb119
+#: ../../topics/auth/customizing.txt:848
+msgid ""
+"Another limitation of custom User models is that you can't use :func:`django."
+"contrib.auth.get_user_model()` as the sender or target of a signal handler. "
+"Instead, you must register the handler with the resulting User model. See :"
+"doc:`/topics/signals` for more information on registering an sending signals."
+msgstr ""
+
+# de0a3d172dda41d28c34e949b8b20cbd
+#: ../../topics/auth/customizing.txt:855
+msgid "Custom users and testing/fixtures"
+msgstr ""
+
+# 4868b3f0f37c4b13a62efe6697c16146
+#: ../../topics/auth/customizing.txt:857
+msgid ""
+"If you are writing an application that interacts with the User model, you "
+"must take some precautions to ensure that your test suite will run "
+"regardless of the User model that is being used by a project. Any test that "
+"instantiates an instance of User will fail if the User model has been "
+"swapped out. This includes any attempt to create an instance of User with a "
+"fixture."
+msgstr ""
+
+# 607bdff86afa49c3910b89bafe4f1af3
+#: ../../topics/auth/customizing.txt:863
+msgid ""
+"To ensure that your test suite will pass in any project configuration, "
+"``django.contrib.auth.tests.utils`` defines a ``@skipIfCustomUser`` "
+"decorator. This decorator will cause a test case to be skipped if any User "
+"model other than the default Django user is in use. This decorator can be "
+"applied to a single test, or to an entire test class."
+msgstr ""
+
+# 7acc4cc313884719afe3b83ddf214637
+#: ../../topics/auth/customizing.txt:869
+msgid ""
+"Depending on your application, tests may also be needed to be added to "
+"ensure that the application works with *any* user model, not just the "
+"default User model. To assist with this, Django provides two substitute user "
+"models that can be used in test suites:"
+msgstr ""
+
+# bfa632e1387140b1b44597613abb896e
+#: ../../topics/auth/customizing.txt:874
+msgid ""
+"``django.contrib.auth.tests.custom_user.CustomUser``, a custom user model "
+"that uses an ``email`` field as the username, and has a basic admin-"
+"compliant permissions setup"
+msgstr ""
+
+# 180bc810662f4afdbef6a5e8a5d6684b
+#: ../../topics/auth/customizing.txt:878
+msgid ""
+"``django.contrib.auth.tests.custom_user.ExtensionUser``, a custom user model "
+"that extends ``django.contrib.auth.models.AbstractUser``, adding a "
+"``date_of_birth`` field."
+msgstr ""
+
+# 46bc383a053d4a708534981f7e527794
+#: ../../topics/auth/customizing.txt:882
+msgid ""
+"You can then use the ``@override_settings`` decorator to make that test run "
+"with the custom User model. For example, here is a skeleton for a test that "
+"would test three possible User models -- the default, plus the two User "
+"models provided by ``auth`` app::"
+msgstr ""
+
+# 9501300e6b5f4c02a0ec091bce5a3a61
+#: ../../topics/auth/customizing.txt:910
+msgid "A full example"
+msgstr ""
+
+# 92e31af4ca8b492fb065f965cac9f2f6
+#: ../../topics/auth/customizing.txt:912
+msgid ""
+"Here is an example of an admin-compliant custom user app. This user model "
+"uses an email address as the username, and has a required date of birth; it "
+"provides no permission checking, beyond a simple `admin` flag on the user "
+"account. This model would be compatible with all the built-in auth forms and "
+"views, except for the User creation forms. This example illustrates how most "
+"of the components work together, but is not intended to be copied directly "
+"into projects for production use."
+msgstr ""
+
+# ce445ce2bbd0488a9b96396155807855
+#: ../../topics/auth/customizing.txt:920
+msgid ""
+"This code would all live in a ``models.py`` file for a custom authentication "
+"app::"
+msgstr ""
+
+# b0845fadf5fe4846b695275672fe2287
+#: ../../topics/auth/customizing.txt:1004
+msgid ""
+"Then, to register this custom User model with Django's admin, the following "
+"code would be required in the app's ``admin.py`` file::"
+msgstr ""

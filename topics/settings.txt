@@ -32,6 +32,8 @@ Because a settings file is a Python module, the following apply:
 Designating the settings
 ========================
 
+.. envvar:: DJANGO_SETTINGS_MODULE
+
 When you use Django, you have to tell it which settings you're using. Do this
 by using an environment variable, ``DJANGO_SETTINGS_MODULE``.
 
@@ -220,7 +222,7 @@ In this example, default settings are taken from ``myapp_defaults``, and the
 The following example, which uses ``myapp_defaults`` as a positional argument,
 is equivalent::
 
-    settings.configure(myapp_defaults, DEBUG = True)
+    settings.configure(myapp_defaults, DEBUG=True)
 
 Normally, you will not need to override the defaults in this fashion. The
 Django defaults are sufficiently tame that you can safely use them. Be aware
@@ -242,7 +244,16 @@ is accessed.
 
 If you set ``DJANGO_SETTINGS_MODULE``, access settings values somehow, *then*
 call ``configure()``, Django will raise a ``RuntimeError`` indicating
-that settings have already been configured.
+that settings have already been configured. There is a property just for this
+purpose:
+
+.. attribute: django.conf.settings.configured
+
+For example::
+
+    from django.conf import settings
+    if not settings.configured:
+        settings.configure(myapp_defaults, DEBUG=True)
 
 Also, it's an error to call ``configure()`` more than once, or to call
 ``configure()`` after any setting has been accessed.
@@ -251,4 +262,3 @@ It boils down to this: Use exactly one of either ``configure()`` or
 ``DJANGO_SETTINGS_MODULE``. Not both, and not neither.
 
 .. _@login_required: ../authentication/#the-login-required-decorator
-

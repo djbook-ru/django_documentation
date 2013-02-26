@@ -114,6 +114,8 @@ your function. Example:
 Registering custom filters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. method:: django.template.Library.filter
+
 Once you've written your filter definition, you need to register it with
 your ``Library`` instance, to make it available to Django's template language:
 
@@ -143,12 +145,15 @@ You can use ``register.filter()`` as a decorator instead:
 If you leave off the ``name`` argument, as in the second example above, Django
 will use the function's name as the filter name.
 
-Finally, ``register.filter()`` also accepts two keyword arguments, ``is_safe``
-and ``needs_autoescape``, described in :ref:`filters and auto-escaping
-<filters-auto-escaping>` below.
+Finally, ``register.filter()`` also accepts three keyword arguments,
+``is_safe``, ``needs_autoescape``, and ``expects_localtime``. These arguments
+are described in :ref:`filters and auto-escaping <filters-auto-escaping>` and
+:ref:`filters and time zones <filters-timezones>` below.
 
 Template filters that expect strings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. method:: django.template.defaultfilters.stringfilter
 
 If you're writing a template filter that only expects a string as the first
 argument, you should use the decorator ``stringfilter``. This will
@@ -188,7 +193,7 @@ passed around inside the template code:
   They're commonly used for output that contains raw HTML that is intended
   to be interpreted as-is on the client side.
 
-  Internally, these strings are of type ``SafeString`` or ``SafeUnicode``.
+  Internally, these strings are of type ``SafeBytes`` or ``SafeText``.
   They share a common base class of ``SafeData``, so you can test
   for them using code like:
 
@@ -203,8 +208,8 @@ passed around inside the template code:
   not. These strings are only escaped once, however, even if auto-escaping
   applies.
 
-  Internally, these strings are of type ``EscapeString`` or
-  ``EscapeUnicode``. Generally you don't have to worry about these; they
+  Internally, these strings are of type ``EscapeBytes`` or
+  ``EscapeText``. Generally you don't have to worry about these; they
   exist for the implementation of the :tfilter:`escape` filter.
 
 Template filter code falls into one of two situations:
@@ -369,7 +374,7 @@ objects, you'll usually register it with the ``expects_localtime`` flag set to
 
 When this flag is set, if the first argument to your filter is a time zone
 aware datetime, Django will convert it to the current time zone before passing
-to your filter when appropriate, according to :ref:`rules for time zones
+it to your filter when appropriate, according to :ref:`rules for time zones
 conversions in templates <time-zones-in-templates>`.
 
 Writing custom template tags
@@ -539,8 +544,6 @@ tag is used inside a :ttag:`{% autoescape off %}<autoescape>` block.
 Thread-safety considerations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 1.2
-
 Once a node is parsed, its ``render`` method may be called any number of times.
 Since Django is sometimes run in multi-threaded environments, a single node may
 be simultaneously rendering with different contexts in response to two separate
@@ -568,7 +571,7 @@ A naive implementation of ``CycleNode`` might look something like this:
         def __init__(self, cyclevars):
             self.cycle_iter = itertools.cycle(cyclevars)
         def render(self, context):
-            return self.cycle_iter.next()
+            return next(self.cycle_iter)
 
 But, suppose we have two templates rendering the template snippet from above at
 the same time:
@@ -602,7 +605,7 @@ Let's refactor our ``CycleNode`` implementation to use the ``render_context``:
             if self not in context.render_context:
                 context.render_context[self] = itertools.cycle(self.cyclevars)
             cycle_iter = context.render_context[self]
-            return cycle_iter.next()
+            return next(cycle_iter)
 
 Note that it's perfectly safe to store global information that will not change
 throughout the life of the ``Node`` as an attribute. In the case of
@@ -723,6 +726,8 @@ cannot resolve the string passed to it in the current context of the page.
 Simple tags
 ~~~~~~~~~~~
 
+.. method:: django.template.Library.simple_tag
+
 Many template tags take a number of arguments -- strings or template variables
 -- and return a string after doing some processing based solely on
 the input arguments and some external information. For example, the
@@ -760,8 +765,6 @@ A few things to note about the ``simple_tag`` helper function:
   so we just receive a plain string.
 * If the argument was a template variable, our function is passed the
   current value of the variable, not the variable itself.
-
-.. versionadded:: 1.3
 
 If your template tag needs to access the current context, you can use the
 ``takes_context`` argument when registering your tag:

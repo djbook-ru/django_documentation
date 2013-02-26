@@ -22,14 +22,6 @@ lower-level way.
 The high-level framework
 ========================
 
-.. versionchanged:: 1.2
-   The high-level feeds framework was refactored in Django 1.2. The
-   pre-1.2 interface still exists, but it has been deprecated, and
-   will be removed in Django 1.4. If you need to maintain an old-style
-   Django feed, please consult the Django 1.1 documentation. For
-   details on updating to use the new high-level feed framework, see
-   the :ref:`Django 1.2 release notes <1.2-updating-feeds>`.
-
 Overview
 --------
 
@@ -61,6 +53,7 @@ This simple example, taken from `chicagocrime.org`_, describes a feed of the
 latest five news items::
 
     from django.contrib.syndication.views import Feed
+    from django.core.urlresolvers import reverse
     from chicagocrime.models import NewsItem
 
     class LatestEntriesFeed(Feed):
@@ -77,10 +70,14 @@ latest five news items::
         def item_description(self, item):
             return item.description
 
+        # item_link is only needed if NewsItem has no get_absolute_url method.
+        def item_link(self, item):
+            return reverse('news-item', args=[item.pk])
+
 To connect a URL to this feed, put an instance of the Feed object in
 your :doc:`URLconf </topics/http/urls>`. For example::
 
-    from django.conf.urls import patterns, url, include
+    from django.conf.urls import patterns
     from myproject.feeds import LatestEntriesFeed
 
     urlpatterns = patterns('',
@@ -179,9 +176,6 @@ These can be matched with a :doc:`URLconf </topics/http/urls>` line such as::
 
 Like a view, the arguments in the URL are passed to the ``get_object()``
 method along with the request object.
-
-.. versionchanged:: 1.2
-   Prior to version 1.2, ``get_object()`` only accepted a ``bits`` argument.
 
 Here's the code for these beat-specific feeds::
 
@@ -327,7 +321,7 @@ Here's a full example::
 
 And the accompanying URLconf::
 
-    from django.conf.urls import patterns, url, include
+    from django.conf.urls import patterns
     from myproject.feeds import RssSiteNewsFeed, AtomSiteNewsFeed
 
     urlpatterns = patterns('',
@@ -340,7 +334,7 @@ And the accompanying URLconf::
 Feed class reference
 --------------------
 
-.. class:: django.contrib.syndication.views.Feed
+.. class:: views.Feed
 
 This example illustrates all possible attributes and methods for a
 :class:`~django.contrib.syndication.views.Feed` class::
@@ -466,7 +460,7 @@ This example illustrates all possible attributes and methods for a
 
         author_name = 'Sally Smith' # Hard-coded author name.
 
-        # AUTHOR E-MAIL --One of the following three is optional. The framework
+        # AUTHOR EMAIL --One of the following three is optional. The framework
         # looks for them in this order.
 
         def author_email(self, obj):
@@ -646,7 +640,7 @@ This example illustrates all possible attributes and methods for a
 
         item_author_name = 'Sally Smith' # Hard-coded author name.
 
-        # ITEM AUTHOR E-MAIL --One of the following three is optional. The
+        # ITEM AUTHOR EMAIL --One of the following three is optional. The
         # framework looks for them in this order.
         #
         # If you specify this, you must specify item_author_name.
@@ -895,13 +889,13 @@ For example, to create an Atom 1.0 feed and print it to standard output::
     ...     link=u"http://www.example.com/entries/1/",
     ...     pubdate=datetime.now(),
     ...     description=u"<p>Today I had a Vienna Beef hot dog. It was pink, plump and perfect.</p>")
-    >>> print f.writeString('UTF-8')
+    >>> print(f.writeString('UTF-8'))
     <?xml version="1.0" encoding="UTF-8"?>
     <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     ...
     </feed>
 
-.. _django/utils/feedgenerator.py: https://code.djangoproject.com/browser/django/trunk/django/utils/feedgenerator.py
+.. _django/utils/feedgenerator.py: https://github.com/django/django/blob/master/django/utils/feedgenerator.py
 
 .. currentmodule:: django.contrib.syndication
 

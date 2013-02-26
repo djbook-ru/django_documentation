@@ -14,14 +14,20 @@ For example, Django was used at kusports.com_ to generate customized,
 printer-friendly NCAA tournament brackets, as PDF files, for people
 participating in a March Madness contest.
 
-.. _ReportLab: http://www.reportlab.org/oss/rl-toolkit/
+.. _ReportLab: http://www.reportlab.com/software/opensource/rl-toolkit/
 .. _kusports.com: http://www.kusports.com/
 
 Install ReportLab
 =================
 
-Download and install the ReportLab library from http://www.reportlab.org/oss/rl-toolkit/download/.
+Download and install the ReportLab library from
+http://www.reportlab.com/software/opensource/rl-toolkit/download/.
 The `user guide`_ (not coincidentally, a PDF file) explains how to install it.
+Alternatively, you can also install it with ``pip``:
+
+.. code-block:: bash
+
+    $ sudo pip install reportlab
 
 Test your installation by importing it in the Python interactive interpreter::
 
@@ -45,8 +51,8 @@ Here's a "Hello World" example::
 
     def some_view(request):
         # Create the HttpResponse object with the appropriate PDF headers.
-        response = HttpResponse(mimetype='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename=somefilename.pdf'
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
 
         # Create the PDF object, using the response object as its "file."
         p = canvas.Canvas(response)
@@ -81,7 +87,7 @@ mention:
   the PDF using whatever program/plugin they've been configured to use for
   PDFs. Here's what that code would look like::
 
-      response['Content-Disposition'] = 'filename=somefilename.pdf'
+      response['Content-Disposition'] = 'filename="somefilename.pdf"'
 
 * Hooking into the ReportLab API is easy: Just pass ``response`` as the
   first argument to ``canvas.Canvas``. The ``Canvas`` class expects a
@@ -94,30 +100,32 @@ mention:
 * Finally, it's important to call ``showPage()`` and ``save()`` on the PDF
   file.
 
+.. note::
+
+    ReportLab is not thread-safe. Some of our users have reported odd issues
+    with building PDF-generating Django views that are accessed by many people
+    at the same time.
+
 Complex PDFs
 ============
 
 If you're creating a complex PDF document with ReportLab, consider using the
-:mod:`cStringIO` library as a temporary holding place for your PDF file. This
+:mod:`io` library as a temporary holding place for your PDF file. This
 library provides a file-like object interface that is particularly efficient.
-Here's the above "Hello World" example rewritten to use :mod:`cStringIO`::
+Here's the above "Hello World" example rewritten to use :mod:`io`::
 
-    # Fall back to StringIO in environments where cStringIO is not available
-    try:
-        from cStringIO import StringIO
-    except ImportError:
-        from StringIO import StringIO
+    from io import BytesIO
     from reportlab.pdfgen import canvas
     from django.http import HttpResponse
 
     def some_view(request):
         # Create the HttpResponse object with the appropriate PDF headers.
-        response = HttpResponse(mimetype='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename=somefilename.pdf'
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
 
-        buffer = StringIO()
+        buffer = BytesIO()
 
-        # Create the PDF object, using the StringIO object as its "file."
+        # Create the PDF object, using the BytesIO object as its "file."
         p = canvas.Canvas(buffer)
 
         # Draw things on the PDF. Here's where the PDF generation happens.
@@ -128,7 +136,7 @@ Here's the above "Hello World" example rewritten to use :mod:`cStringIO`::
         p.showPage()
         p.save()
 
-        # Get the value of the StringIO buffer and write it to the response.
+        # Get the value of the BytesIO buffer and write it to the response.
         pdf = buffer.getvalue()
         buffer.close()
         response.write(pdf)

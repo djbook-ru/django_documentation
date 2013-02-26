@@ -93,8 +93,8 @@ GZip middleware
 Compresses content for browsers that understand GZip compression (all modern
 browsers).
 
-It is suggested to place this first in the middleware list, so that the
-compression of the response content is the last thing that happens.
+This middleware should be placed before any other middleware that need to
+read or write the response body so that compression happens afterward.
 
 It will NOT compress content if any of the following are true:
 
@@ -111,7 +111,7 @@ It will NOT compress content if any of the following are true:
   not to be performed on certain content types.
 
 You can apply GZip compression to individual views using the
-:func:`~django.views.decorators.http.gzip_page()` decorator.
+:func:`~django.views.decorators.gzip.gzip_page()` decorator.
 
 Conditional GET middleware
 --------------------------
@@ -124,7 +124,7 @@ Conditional GET middleware
 Handles conditional GET operations. If the response has a ``ETag`` or
 ``Last-Modified`` header, and the request has ``If-None-Match`` or
 ``If-Modified-Since``, the response is replaced by an
-:class:`~django.http.HttpNotModified`.
+:class:`~django.http.HttpResponseNotModified`.
 
 Also sets the ``Date`` and ``Content-Length`` response-headers.
 
@@ -146,7 +146,7 @@ Locale middleware
 
 Enables language selection based on data from the request. It customizes
 content for each user. See the :doc:`internationalization documentation
-</topics/i18n/index>`.
+</topics/i18n/translation>`.
 
 Message middleware
 ------------------
@@ -155,9 +155,6 @@ Message middleware
    :synopsis: Message middleware.
 
 .. class:: MessageMiddleware
-
-.. versionadded:: 1.2
-   ``MessageMiddleware`` was added.
 
 Enables cookie- and session-based message support. See the
 :doc:`messages documentation </ref/contrib/messages>`.
@@ -182,8 +179,8 @@ Authentication middleware
 .. class:: AuthenticationMiddleware
 
 Adds the ``user`` attribute, representing the currently-logged-in user, to
-every incoming ``HttpRequest`` object. See :doc:`Authentication in Web requests
-</topics/auth>`.
+every incoming ``HttpRequest`` object. See :ref:`Authentication in Web requests
+<auth-web-requests>`.
 
 CSRF protection middleware
 --------------------------
@@ -206,9 +203,9 @@ Transaction middleware
 
 .. class:: TransactionMiddleware
 
-Binds commit and rollback to the request/response phase. If a view function
-runs successfully, a commit is done. If it fails with an exception, a rollback
-is done.
+Binds commit and rollback of the default database to the request/response
+phase. If a view function runs successfully, a commit is done. If it fails with
+an exception, a rollback is done.
 
 The order of this middleware in the stack is important: middleware modules
 running outside of it run with commit-on-save - the default Django behavior.

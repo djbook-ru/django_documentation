@@ -14,7 +14,7 @@ The ``File`` Class
     The :class:`File` is a thin wrapper around Python's built-in file object
     with some Django-specific additions. Internally, Django uses this class
     any time it needs to represent a file.
-    
+
     :class:`File` objects have the following attributes and methods:
 
     .. attribute:: name
@@ -91,13 +91,18 @@ The ``ContentFile`` Class
 .. class:: ContentFile(File)
 
     The ``ContentFile`` class inherits from :class:`~django.core.files.File`,
-    but unlike :class:`~django.core.files.File` it operates on string content,
-    rather than an actual file. For example::
+    but unlike :class:`~django.core.files.File` it operates on string content
+    (bytes also supported), rather than an actual file. For example::
 
+        from __future__ import unicode_literals
         from django.core.files.base import ContentFile
 
-        f1 = ContentFile("my string content")
-        f2 = ContentFile(u"my unicode content encoded as UTF-8".encode('UTF-8'))
+        f1 = ContentFile("esta sentencia está en español")
+        f2 = ContentFile(b"these are bytes")
+
+    .. versionchanged:: 1.5
+
+        ContentFile also accepts Unicode strings.
 
 .. currentmodule:: django.core.files.images
 
@@ -143,7 +148,7 @@ below) will also have a couple of extra methods:
 
     Note that the ``content`` argument must be an instance of either
     :class:`File` or of a subclass of :class:`File`, such as
-    :class:`ContentFile`.
+    :class:`~django.core.files.base.ContentFile`.
 
 .. method:: File.delete([save=True])
 

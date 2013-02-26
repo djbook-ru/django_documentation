@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-29 18:30\n"
+"POT-Creation-Date: 2013-02-27 00:21\n"
 "PO-Revision-Date: 2013-01-21 00:38+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -313,13 +313,68 @@ msgstr ""
 "модели </topics/db/sql>`. Используйте ``django.db.connection.queries``, что "
 "бы понять что создает Django и начните с изменения этого запроса."
 
-# 99311418590e45cbb9490c71ec3bbb86
+# 90a315af6e21457aaecbeafe9c0bd14f
 #: ../../topics/db/optimization.txt:136
+msgid "Retrieve individual objects using a unique, indexed column"
+msgstr ""
+
+# 3e3d0b9c3c8749e2b4f38f2234f433c3
+#: ../../topics/db/optimization.txt:138
+msgid ""
+"There are two reasons to use a column with :attr:`~django.db.models.Field."
+"unique` or :attr:`~django.db.models.Field.db_index` when using :meth:"
+"`~django.db.models.query.QuerySet.get` to retrieve individual objects. "
+"First, the query will be quicker because of the underlying database index. "
+"Also, the query could run much slower if multiple objects match the lookup; "
+"having a unique constraint on the column guarantees this will never happen."
+msgstr ""
+
+# 0715b8536d1e4418ae5ae4e18f72ea3c
+#: ../../topics/db/optimization.txt:146
+msgid "So using the :ref:`example Weblog models <queryset-model-example>`::"
+msgstr ""
+
+# 0840219e352743978221119fb34baa38
+#: ../../topics/db/optimization.txt:150
+msgid "will be quicker than:"
+msgstr ""
+
+# 8e447906ef5a4c9b80a714d1a47326a8
+#: ../../topics/db/optimization.txt:154
+msgid ""
+"because ``id`` is indexed by the database and is guaranteed to be unique."
+msgstr ""
+
+# b71057a05b874f92bd95be9fb4144c37
+#: ../../topics/db/optimization.txt:156
+msgid "Doing the following is potentially quite slow:"
+msgstr ""
+
+# afb91a5db1314f30adc688e4f4221085
+#: ../../topics/db/optimization.txt:160
+msgid ""
+"First of all, `headline` is not indexed, which will make the underlying "
+"database fetch slower."
+msgstr ""
+
+# 8dede60bdbfa4b1a9f962f8687448469
+#: ../../topics/db/optimization.txt:163
+msgid ""
+"Second, the lookup doesn't guarantee that only one object will be returned. "
+"If the query matches more than one object, it will retrieve and transfer all "
+"of them from the database. This penalty could be substantial if hundreds or "
+"thousands of records are returned. The penalty will be compounded if the "
+"database lives on a separate server, where network overhead and latency also "
+"play a factor."
+msgstr ""
+
+# 99311418590e45cbb9490c71ec3bbb86
+#: ../../topics/db/optimization.txt:171
 msgid "Retrieve everything at once if you know you will need it"
 msgstr "Загружайте все данные сразу, если уверены, что будете использовать их."
 
 # 6f055181058148f690f0bbabd9e08994
-#: ../../topics/db/optimization.txt:138
+#: ../../topics/db/optimization.txt:173
 msgid ""
 "Hitting the database multiple times for different parts of a single 'set' of "
 "data that you will need all parts of is, in general, less efficient than "
@@ -333,12 +388,12 @@ msgstr ""
 "привести к большому количеству запросов. По этому:"
 
 # 78584f80ddf34e7cb81ed39ddb05a7ca
-#: ../../topics/db/optimization.txt:145
+#: ../../topics/db/optimization.txt:180
 msgid "Use ``QuerySet.select_related()`` and ``prefetch_related()``"
 msgstr "Используйте ``QuerySet.select_related()`` и ``prefetch_related()``"
 
 # 828d22e2734547d2aa87e4d37e9a5055
-#: ../../topics/db/optimization.txt:147
+#: ../../topics/db/optimization.txt:182
 msgid ""
 "Understand :meth:`~django.db.models.query.QuerySet.select_related` and :meth:"
 "`~django.db.models.query.QuerySet.prefetch_related` thoroughly, and use them:"
@@ -347,12 +402,12 @@ msgstr ""
 "`~django.db.models.query.QuerySet.prefetch_related` и используйте их в:"
 
 # 67f974fd1f3b439689ed34f3826b08e1
-#: ../../topics/db/optimization.txt:151
+#: ../../topics/db/optimization.txt:186
 msgid "in view code,"
 msgstr "коде представлений,"
 
 # f28cc50fafe246d5bbaa4e4b81c98c29
-#: ../../topics/db/optimization.txt:153
+#: ../../topics/db/optimization.txt:188
 msgid ""
 "and in :doc:`managers and default managers </topics/db/managers>` where "
 "appropriate. Be aware when your manager is and is not used; sometimes this "
@@ -363,17 +418,17 @@ msgstr ""
 "иногда это не однозначно, проверяйте самостоятельно."
 
 # 7e6fad8c043b43e8a8c7bb9ee74f894e
-#: ../../topics/db/optimization.txt:158
+#: ../../topics/db/optimization.txt:193
 msgid "Don't retrieve things you don't need"
 msgstr "Не получайте данные, которые вам не нужны"
 
 # 89960ddd479f488fa44a41f202dd1a33
-#: ../../topics/db/optimization.txt:161
+#: ../../topics/db/optimization.txt:196
 msgid "Use ``QuerySet.values()`` and ``values_list()``"
 msgstr "Используйте ``QuerySet.values()`` и ``values_list()``"
 
 # 4aef5fe470a7490c9d32b7bea937a4e7
-#: ../../topics/db/optimization.txt:163
+#: ../../topics/db/optimization.txt:198
 msgid ""
 "When you just want a ``dict`` or ``list`` of values, and don't need ORM "
 "model objects, make appropriate usage of :meth:`~django.db.models.query."
@@ -387,12 +442,12 @@ msgstr ""
 "совпадают с используемыми атрибутами моделей, все будет хорошо работать."
 
 # de2cc55d327e4c849f79f5fed2616504
-#: ../../topics/db/optimization.txt:171
+#: ../../topics/db/optimization.txt:206
 msgid "Use ``QuerySet.defer()`` and ``only()``"
 msgstr "Используйте ``QuerySet.defer()`` и ``only()``"
 
 # 1c1303e8125d453f9a60e826daebe0f8
-#: ../../topics/db/optimization.txt:173
+#: ../../topics/db/optimization.txt:208
 msgid ""
 "Use :meth:`~django.db.models.query.QuerySet.defer()` and :meth:`~django.db."
 "models.query.QuerySet.only()` if there are database columns you know that "
@@ -407,7 +462,7 @@ msgstr ""
 "уменьшит производительность."
 
 # 3f28276c21184e25b145120c3dd54ff8
-#: ../../topics/db/optimization.txt:179
+#: ../../topics/db/optimization.txt:214
 msgid ""
 "Also, be aware that there is some (small extra) overhead incurred inside "
 "Django when constructing a model with deferred fields. Don't be too "
@@ -427,23 +482,23 @@ msgstr ""
 "в объекты Python. Как всегда - используйте сначала профайлинг."
 
 # b90ecba80b574bd08cec9a78f3c429b6
-#: ../../topics/db/optimization.txt:189
+#: ../../topics/db/optimization.txt:224
 msgid "Use QuerySet.count()"
 msgstr "Используйте QuerySet.count()"
 
 # e0e2731f65f1400b9182c0a7abac4bcd
-#: ../../topics/db/optimization.txt:191
+#: ../../topics/db/optimization.txt:226
 msgid "...if you only want the count, rather than doing ``len(queryset)``."
 msgstr ""
 "...вместо``len(queryset)``, если вам необходимо только количество объектов."
 
 # c2ee8b46f953450b96f3866e1a8ab3af
-#: ../../topics/db/optimization.txt:194
+#: ../../topics/db/optimization.txt:229
 msgid "Use QuerySet.exists()"
 msgstr "Используйте QuerySet.exists()"
 
 # 9d2de4bd2bd142a285373ede3df71b41
-#: ../../topics/db/optimization.txt:196
+#: ../../topics/db/optimization.txt:231
 msgid ""
 "...if you only want to find out if at least one result exists, rather than "
 "``if queryset``."
@@ -451,24 +506,24 @@ msgstr ""
 "...если необходимо проверить есть ли результат, вместо ``if queryset``."
 
 # 825db166712945788583cb66a110538d
-#: ../../topics/db/optimization.txt:199
+#: ../../topics/db/optimization.txt:234
 msgid "But:"
 msgstr "Но:"
 
 # 680a7b16493444fca8c997d7fb7a5242
-#: ../../topics/db/optimization.txt:202
+#: ../../topics/db/optimization.txt:237
 msgid "Don't overuse ``count()`` and ``exists()``"
 msgstr "Но не переусердствуйте с ``count()`` и ``exists()``"
 
 # 8d40b1aac7f2438bb1c89fdc4301e3ff
-#: ../../topics/db/optimization.txt:204
+#: ../../topics/db/optimization.txt:239
 msgid ""
 "If you are going to need other data from the QuerySet, just evaluate it."
 msgstr ""
 "Если вам необходимы остальные данные из QuerySet, просто вычислите его."
 
 # 4c0df63b84774817ae5177f8878b3ffa
-#: ../../topics/db/optimization.txt:206
+#: ../../topics/db/optimization.txt:241
 msgid ""
 "For example, assuming an Email model that has a ``body`` attribute and a "
 "many-to-many relation to User, the following template code is optimal:"
@@ -477,12 +532,12 @@ msgstr ""
 "моделью User, следующий шаблон будет оптимальным:"
 
 # cdbfa25b0f35471aa0165c38aeb61e67
-#: ../../topics/db/optimization.txt:225
+#: ../../topics/db/optimization.txt:260
 msgid "It is optimal because:"
 msgstr "Он оптимальный потому что:"
 
 # 9539eb6825604efcb39d33b0ed04cb68
-#: ../../topics/db/optimization.txt:227
+#: ../../topics/db/optimization.txt:262
 msgid ""
 "Since QuerySets are lazy, this does no database queries if 'display_inbox' "
 "is False."
@@ -491,7 +546,7 @@ msgstr ""
 "равном False."
 
 # cb9c698a658944e596e39d5c85f766a8
-#: ../../topics/db/optimization.txt:230
+#: ../../topics/db/optimization.txt:265
 msgid ""
 "Use of :ttag:`with` means that we store ``user.emails.all`` in a variable "
 "for later use, allowing its cache to be re-used."
@@ -500,9 +555,10 @@ msgstr ""
 "для последующего использования."
 
 # 41963778875445df8194f09882561a4b
-#: ../../topics/db/optimization.txt:233
+#: ../../topics/db/optimization.txt:268
+#, fuzzy
 msgid ""
-"The line ``{% if emails %}`` causes ``QuerySet.__nonzero__()`` to be called, "
+"The line ``{% if emails %}`` causes ``QuerySet.__bool__()`` to be called, "
 "which causes the ``user.emails.all()`` query to be run on the database, and "
 "at the least the first line to be turned into an ORM object. If there aren't "
 "any results, it will return False, otherwise True."
@@ -513,7 +569,7 @@ msgstr ""
 "будет пуст, вернется False, иначе True."
 
 # 897016007b2242d28e538e6fec0ee0de
-#: ../../topics/db/optimization.txt:238
+#: ../../topics/db/optimization.txt:273
 msgid ""
 "The use of ``{{ emails|length }}`` calls ``QuerySet.__len__()``, filling out "
 "the rest of the cache without doing another query."
@@ -522,12 +578,12 @@ msgstr ""
 "заполняя оставшийся кэш без выполнения запроса."
 
 # 880be6de921144128e7de9856d8ecaed
-#: ../../topics/db/optimization.txt:241
+#: ../../topics/db/optimization.txt:276
 msgid "The :ttag:`for` loop iterates over the already filled cache."
 msgstr ":ttag:`for` выполняет цикл по уже заполненному кэшу."
 
 # f18cf12f128f42fba506a84fa4f36446
-#: ../../topics/db/optimization.txt:243
+#: ../../topics/db/optimization.txt:278
 msgid ""
 "In total, this code does either one or zero database queries. The only "
 "deliberate optimization performed is the use of the :ttag:`with` tag. Using "
@@ -540,12 +596,12 @@ msgstr ""
 "запросы."
 
 # b0119bef52584804a9822cda3e081ffd
-#: ../../topics/db/optimization.txt:249
+#: ../../topics/db/optimization.txt:284
 msgid "Use ``QuerySet.update()`` and ``delete()``"
 msgstr "Используйте ``QuerySet.update()`` и ``delete()``"
 
 # 490e14f2ea55444cbd90de13bd971e97
-#: ../../topics/db/optimization.txt:251
+#: ../../topics/db/optimization.txt:286
 msgid ""
 "Rather than retrieve a load of objects, set some values, and save them "
 "individual, use a bulk SQL UPDATE statement, via :ref:`QuerySet.update() "
@@ -558,7 +614,7 @@ msgstr ""
 "<topics-db-queries-delete>` при возможности."
 
 # 9ff2b21223164cd9a2bab0057145fbb1
-#: ../../topics/db/optimization.txt:256
+#: ../../topics/db/optimization.txt:291
 msgid ""
 "Note, however, that these bulk update methods cannot call the ``save()`` or "
 "``delete()`` methods of individual instances, which means that any custom "
@@ -571,12 +627,12 @@ msgstr ""
 "выполнена, учитывая обработчики :doc:`сигналов от объектов </ref/signals>`."
 
 # d8de60e82ee2404a9885dfcd0236c2ad
-#: ../../topics/db/optimization.txt:262
+#: ../../topics/db/optimization.txt:297
 msgid "Use foreign key values directly"
 msgstr "Используйте значения ключей непосредственно"
 
 # 0cbe76f10432449e92a33f3923a54a52
-#: ../../topics/db/optimization.txt:264
+#: ../../topics/db/optimization.txt:299
 msgid ""
 "If you only need a foreign key value, use the foreign key value that is "
 "already on the object you've got, rather than getting the whole related "
@@ -587,17 +643,17 @@ msgstr ""
 "объекта и использования первичного ключа. Например, делайте::"
 
 # 1f21a309620f4cc38605feb4b259192a
-#: ../../topics/db/optimization.txt:270
+#: ../../topics/db/optimization.txt:305
 msgid "instead of::"
 msgstr "вместо::"
 
 # 8f2cd743a02e414fb829a47c475b9ab8
-#: ../../topics/db/optimization.txt:275
+#: ../../topics/db/optimization.txt:310
 msgid "Insert in bulk"
 msgstr "Используйте общее добавление"
 
 # 440fe947da084800a61fc04f46faa86b
-#: ../../topics/db/optimization.txt:277
+#: ../../topics/db/optimization.txt:312
 msgid ""
 "When creating objects, where possible, use the :meth:`~django.db.models."
 "query.QuerySet.bulk_create()` method to reduce the number of SQL queries. "
@@ -609,12 +665,12 @@ msgstr ""
 
 # be83dba411f4479987d55b1077f74f69
 # c6c2483ab396498da884cfb6af72144d
-#: ../../topics/db/optimization.txt:286 ../../topics/db/optimization.txt:300
+#: ../../topics/db/optimization.txt:321 ../../topics/db/optimization.txt:335
 msgid "...is preferable to::"
 msgstr "...предпочтительнее чем::"
 
 # 0f10db6f7f07418abd894abd7fddbeb5
-#: ../../topics/db/optimization.txt:291
+#: ../../topics/db/optimization.txt:326
 msgid ""
 "Note that there are a number of :meth:`caveats to this method <django.db."
 "models.query.QuerySet.bulk_create>`, so make sure it's appropriate for your "
@@ -625,7 +681,7 @@ msgstr ""
 "всего случая."
 
 # 62b79a7f55d94eaa93f7e8c956d1ecc5
-#: ../../topics/db/optimization.txt:295
+#: ../../topics/db/optimization.txt:330
 msgid ""
 "This also applies to :class:`ManyToManyFields <django.db.models."
 "ManyToManyField>`, so doing::"
@@ -634,6 +690,6 @@ msgstr ""
 "ManyToManyField>`, это::"
 
 # e68b76058bec4186af237f0a0b441b29
-#: ../../topics/db/optimization.txt:305
+#: ../../topics/db/optimization.txt:340
 msgid "...where ``Bands`` and ``Artists`` have a many-to-many relationship."
 msgstr "...где ``Bands`` и ``Artists`` связаны через многое-ко-многому."

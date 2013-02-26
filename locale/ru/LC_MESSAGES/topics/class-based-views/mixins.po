@@ -1,0 +1,687 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-02-27 00:21\n"
+"PO-Revision-Date: 2013-02-27 00:21\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 417d3a9bbd4549c1b59adc546f39bb7f
+#: ../../topics/class-based-views/mixins.txt:3
+msgid "Using mixins with class-based views"
+msgstr ""
+
+# 4f2e14d294ee482aab89a49d78990fec
+#: ../../topics/class-based-views/mixins.txt:7
+msgid ""
+"This is an advanced topic. A working knowledge of :doc:`Django's class-based "
+"views<index>` is advised before exploring these techniques."
+msgstr ""
+
+# 2da9f0acdd044d499610191e1accc99f
+#: ../../topics/class-based-views/mixins.txt:11
+msgid ""
+"Django's built-in class-based views provide a lot of functionality, but some "
+"of it you may want to use separately. For instance, you may want to write a "
+"view that renders a template to make the HTTP response, but you can't use :"
+"class:`~django.views.generic.base.TemplateView`; perhaps you need to render "
+"a template only on `POST`, with `GET` doing something else entirely. While "
+"you could use :class:`~django.template.response.TemplateResponse` directly, "
+"this will likely result in duplicate code."
+msgstr ""
+
+# ade53d3a6b3e4dddb208e6607a3c40f1
+#: ../../topics/class-based-views/mixins.txt:21
+msgid ""
+"For this reason, Django also provides a number of mixins that provide more "
+"discrete functionality. Template rendering, for instance, is encapsulated in "
+"the :class:`~django.views.generic.base.TemplateResponseMixin`. The Django "
+"reference documentation contains :doc:`full documentation of all the mixins</"
+"ref/class-based-views/mixins>`."
+msgstr ""
+
+# d17382d37a304e60a2f388bd835d7301
+#: ../../topics/class-based-views/mixins.txt:29
+msgid "Context and template responses"
+msgstr ""
+
+# bb8ec37cb75645dbaa198e570d93d4ac
+#: ../../topics/class-based-views/mixins.txt:31
+msgid ""
+"Two central mixins are provided that help in providing a consistent "
+"interface to working with templates in class-based views."
+msgstr ""
+
+# e3e71fe91ee745aabc20f126fb9155b3
+#: ../../topics/class-based-views/mixins.txt:34
+msgid ":class:`~django.views.generic.base.TemplateResponseMixin`"
+msgstr ""
+
+# 03341864a4a444b9adb883ec9c219480
+#: ../../topics/class-based-views/mixins.txt:36
+msgid ""
+"Every built in view which returns a :class:`~django.template.response."
+"TemplateResponse` will call the :meth:`~django.views.generic.base."
+"TemplateResponseMixin.render_to_response` method that "
+"``TemplateResponseMixin`` provides. Most of the time this will be called for "
+"you (for instance, it is called by the ``get()`` method implemented by both :"
+"class:`~django.views.generic.base.TemplateView` and :class:`~django.views."
+"generic.detail.DetailView`); similarly, it's unlikely that you'll need to "
+"override it, although if you want your response to return something not "
+"rendered via a Django template then you'll want to do it. For an example of "
+"this, see the :ref:`JSONResponseMixin example <jsonresponsemixin-example>`."
+msgstr ""
+
+# 11ba7ebe94294b738e8604907e777f4b
+#: ../../topics/class-based-views/mixins.txt:48
+msgid ""
+"``render_to_response`` itself calls :meth:`~django.views.generic.base."
+"TemplateResponseMixin.get_template_names`, which by default will just look "
+"up :attr:`~django.views.generic.base.TemplateResponseMixin.template_name` on "
+"the class-based view; two other mixins (:class:`~django.views.generic.detail."
+"SingleObjectTemplateResponseMixin` and :class:`~django.views.generic.list."
+"MultipleObjectTemplateResponseMixin`) override this to provide more flexible "
+"defaults when dealing with actual objects."
+msgstr ""
+
+# 94ffb7bd0b394f5582f1dbecdb36d3d9
+#: ../../topics/class-based-views/mixins.txt:68
+msgid ":class:`~django.views.generic.base.ContextMixin`"
+msgstr ""
+
+# 4176e124306e41eaa50ee41259167258
+#: ../../topics/class-based-views/mixins.txt:62
+msgid ""
+"Every built in view which needs context data, such as for rendering a "
+"template (including ``TemplateResponseMixin`` above), should call :meth:"
+"`~django.views.generic.base.ContextMixin.get_context_data` passing any data "
+"they want to ensure is in there as keyword arguments. ``get_context_data`` "
+"returns a dictionary; in ``ContextMixin`` it simply returns its keyword "
+"arguments, but it is common to override this to add more members to the "
+"dictionary."
+msgstr ""
+
+# c1c0d7a7414e4f7fa7dfda5eee451718
+#: ../../topics/class-based-views/mixins.txt:71
+msgid "Building up Django's generic class-based views"
+msgstr ""
+
+# 18fa1fe2373943d1adec12f61178b5cd
+#: ../../topics/class-based-views/mixins.txt:73
+msgid ""
+"Let's look at how two of Django's generic class-based views are built out of "
+"mixins providing discrete functionality. We'll consider :class:`~django."
+"views.generic.detail.DetailView`, which renders a \"detail\" view of an "
+"object, and :class:`~django.views.generic.list.ListView`, which will render "
+"a list of objects, typically from a queryset, and optionally paginate them. "
+"This will introduce us to four mixins which between them provide useful "
+"functionality when working with either a single Django object, or multiple "
+"objects."
+msgstr ""
+
+# 540e5ec753da44bab99d295144684985
+#: ../../topics/class-based-views/mixins.txt:83
+msgid ""
+"There are also mixins involved in the generic edit views (:class:`~django."
+"views.generic.edit.FormView`, and the model-specific views :class:`~django."
+"views.generic.edit.CreateView`, :class:`~django.views.generic.edit."
+"UpdateView` and :class:`~django.views.generic.edit.DeleteView`), and in the "
+"date-based generic views. These are covered in the :doc:`mixin reference "
+"documentation</ref/class-based-views/mixins>`."
+msgstr ""
+
+# 8245382037f64c13bd48a4d1d9555b46
+#: ../../topics/class-based-views/mixins.txt:93
+msgid "DetailView: working with a single Django object"
+msgstr ""
+
+# 68a23810ab50462d80ac386c9a518169
+#: ../../topics/class-based-views/mixins.txt:95
+msgid ""
+"To show the detail of an object, we basically need to do two things: we need "
+"to look up the object and then we need to make a :class:`~django.template."
+"response.TemplateResponse` with a suitable template, and that object as "
+"context."
+msgstr ""
+
+# 9202b9c97cf44bf69dd912803aee7428
+#: ../../topics/class-based-views/mixins.txt:100
+msgid ""
+"To get the object, :class:`~django.views.generic.detail.DetailView` relies "
+"on :class:`~django.views.generic.detail.SingleObjectMixin`, which provides "
+"a :meth:`~django.views.generic.detail.SingleObjectMixin.get_object` method "
+"that figures out the object based on the URL of the request (it looks for "
+"``pk`` and ``slug`` keyword arguments as declared in the URLConf, and looks "
+"the object up either from the :attr:`~django.views.generic.detail."
+"SingleObjectMixin.model` attribute on the view, or the :attr:`~django.views."
+"generic.detail.SingleObjectMixin.queryset` attribute if that's provided). "
+"``SingleObjectMixin`` also overrides :meth:`~django.views.generic.base."
+"ContextMixin.get_context_data`, which is used across all Django's built in "
+"class-based views to supply context data for template renders."
+msgstr ""
+
+# 4351c7a575e04876baf2cfe88495f5fb
+#: ../../topics/class-based-views/mixins.txt:115
+msgid ""
+"To then make a :class:`~django.template.response.TemplateResponse`, :class:"
+"`DetailView` uses :class:`~django.views.generic.detail."
+"SingleObjectTemplateResponseMixin`, which extends :class:`~django.views."
+"generic.base.TemplateResponseMixin`, overriding :meth:`~django.views.generic."
+"base.TemplateResponseMixin.get_template_names()` as discussed above. It "
+"actually provides a fairly sophisticated set of options, but the main one "
+"that most people are going to use is ``<app_label>/<object_name>_detail."
+"html``. The ``_detail`` part can be changed by setting :attr:`~django.views."
+"generic.detail.SingleObjectTemplateResponseMixin.template_name_suffix` on a "
+"subclass to something else. (For instance, the :doc:`generic edit "
+"views<generic-editing>` use ``_form`` for create and update views, and "
+"``_confirm_delete`` for delete views.)"
+msgstr ""
+
+# 1bb1c79e81c74dfbbeed7b6bc4b56702
+#: ../../topics/class-based-views/mixins.txt:131
+msgid "ListView: working with many Django objects"
+msgstr ""
+
+# 44e34ebed1c9444b894003d35b157a79
+#: ../../topics/class-based-views/mixins.txt:133
+msgid ""
+"Lists of objects follow roughly the same pattern: we need a (possibly "
+"paginated) list of objects, typically a :class:`~django.db.models.query."
+"QuerySet`, and then we need to make a :class:`~django.template.response."
+"TemplateResponse` with a suitable template using that list of objects."
+msgstr ""
+
+# 6c76882c01eb47978332894daeedb935
+#: ../../topics/class-based-views/mixins.txt:139
+msgid ""
+"To get the objects, :class:`~django.views.generic.list.ListView` uses :class:"
+"`~django.views.generic.list.MultipleObjectMixin`, which provides both :meth:"
+"`~django.views.generic.list.MultipleObjectMixin.get_queryset` and :meth:"
+"`~django.views.generic.list.MultipleObjectMixin.paginate_queryset`. Unlike "
+"with :class:`~django.views.generic.detail.SingleObjectMixin`, there's no "
+"need to key off parts of the URL to figure out the queryset to work with, so "
+"the default just uses the :attr:`~django.views.generic.list."
+"MultipleObjectMixin.queryset` or :attr:`~django.views.generic.list."
+"MultipleObjectMixin.model` attribute on the view class. A common reason to "
+"override :meth:`~django.views.generic.list.MultipleObjectMixin.get_queryset` "
+"here would be to dynamically vary the objects, such as depending on the "
+"current user or to exclude posts in the future for a blog."
+msgstr ""
+
+# 964e4aed0345435f992451d289d2496f
+#: ../../topics/class-based-views/mixins.txt:155
+msgid ""
+":class:`~django.views.generic.list.MultipleObjectMixin` also overrides :meth:"
+"`~django.views.generic.base.ContextMixin.get_context_data` to include "
+"appropriate context variables for pagination (providing dummies if "
+"pagination is disabled). It relies on ``object_list`` being passed in as a "
+"keyword argument, which :class:`ListView` arranges for it."
+msgstr ""
+
+# 90e9a68d48ae4d8c859cd18d11400e80
+#: ../../topics/class-based-views/mixins.txt:162
+msgid ""
+"To make a :class:`~django.template.response.TemplateResponse`, :class:"
+"`ListView` then uses :class:`~django.views.generic.list."
+"MultipleObjectTemplateResponseMixin`; as with :class:`~django.views.generic."
+"detail.SingleObjectTemplateResponseMixin` above, this overrides "
+"``get_template_names()`` to provide :meth:`a range of options <django.views."
+"generic.list.MultipleObjectTemplateResponseMixin>`, with the most commonly-"
+"used being ``<app_label>/<object_name>_list.html``, with the ``_list`` part "
+"again being taken from the :attr:`~django.views.generic.list."
+"MultipleObjectTemplateResponseMixin.template_name_suffix` attribute. (The "
+"date based generic views use suffixes such as ``_archive``, "
+"``_archive_year`` and so on to use different templates for the various "
+"specialised date-based list views.)"
+msgstr ""
+
+# b80d02a50e3e4c33a21fa5674cf98c8e
+#: ../../topics/class-based-views/mixins.txt:177
+msgid "Using Django's class-based view mixins"
+msgstr ""
+
+# 20e344aa520549d0b6ef956f8e0f56b5
+#: ../../topics/class-based-views/mixins.txt:179
+msgid ""
+"Now we've seen how Django's generic class-based views use the provided "
+"mixins, let's look at other ways we can combine them. Of course we're still "
+"going to be combining them with either built-in class-based views, or other "
+"generic class-based views, but there are a range of rarer problems you can "
+"solve than are provided for by Django out of the box."
+msgstr ""
+
+# 23cf09e0a2d943d2ae8759dc18e3c020
+#: ../../topics/class-based-views/mixins.txt:188
+msgid ""
+"Not all mixins can be used together, and not all generic class based views "
+"can be used with all other mixins. Here we present a few examples that do "
+"work; if you want to bring together other functionality then you'll have to "
+"consider interactions between attributes and methods that overlap between "
+"the different classes you're using, and how `method resolution order`_ will "
+"affect which versions of the methods will be called in what order."
+msgstr ""
+
+# 2e4aa906abfe49e99710705814c397e0
+#: ../../topics/class-based-views/mixins.txt:196
+msgid ""
+"The reference documentation for Django's :doc:`class-based views</ref/class-"
+"based-views/index>` and :doc:`class-based view mixins</ref/class-based-views/"
+"mixins>` will help you in understanding which attributes and methods are "
+"likely to cause conflict between different classes and mixins."
+msgstr ""
+
+# 8955f8af8bbb43f3b86a3ca438332174
+#: ../../topics/class-based-views/mixins.txt:202
+msgid ""
+"If in doubt, it's often better to back off and base your work on :class:"
+"`View` or :class:`TemplateView`, perhaps with :class:`~django.views.generic."
+"detail.SingleObjectMixin` and :class:`~django.views.generic.list."
+"MultipleObjectMixin`. Although you will probably end up writing more code, "
+"it is more likely to be clearly understandable to someone else coming to it "
+"later, and with fewer interactions to worry about you will save yourself "
+"some thinking. (Of course, you can always dip into Django's implementation "
+"of the generic class based views for inspiration on how to tackle problems.)"
+msgstr ""
+
+# a59b9f0977a04c5baaab27cab01be35f
+#: ../../topics/class-based-views/mixins.txt:216
+msgid "Using SingleObjectMixin with View"
+msgstr ""
+
+# e2325044108e44ff813d14f0f88fe007
+#: ../../topics/class-based-views/mixins.txt:218
+msgid ""
+"If we want to write a simple class-based view that responds only to "
+"``POST``, we'll subclass :class:`~django.views.generic.base.View` and write "
+"a ``post()`` method in the subclass. However if we want our processing to "
+"work on a particular object, identified from the URL, we'll want the "
+"functionality provided by :class:`~django.views.generic.detail."
+"SingleObjectMixin`."
+msgstr ""
+
+# 6a66e565c1d34426b1ba87cb8d9a4006
+#: ../../topics/class-based-views/mixins.txt:225
+msgid ""
+"We'll demonstrate this with the publisher modelling we used in the :doc:"
+"`generic class-based views introduction<generic-display>`."
+msgstr ""
+
+# 6a504d13ea224b6b80c35baecadc43de
+#: ../../topics/class-based-views/mixins.txt:251
+msgid ""
+"In practice you'd probably want to record the interest in a key-value store "
+"rather than in a relational database, so we've left that bit out. The only "
+"bit of the view that needs to worry about using :class:`~django.views."
+"generic.detail.SingleObjectMixin` is where we want to look up the author "
+"we're interested in, which it just does with a simple call to ``self."
+"get_object()``. Everything else is taken care of for us by the mixin."
+msgstr ""
+
+# e5d096fc09e64b1886178c513a4b46d5
+#: ../../topics/class-based-views/mixins.txt:259
+msgid "We can hook this into our URLs easily enough::"
+msgstr ""
+
+# aa1372d4cec243e9b101c5186561dcc0
+#: ../../topics/class-based-views/mixins.txt:269
+msgid ""
+"Note the ``pk`` named group, which :meth:`~django.views.generic.detail."
+"SingleObjectMixin.get_object` uses to look up the ``Author`` instance. You "
+"could also use a slug, or any of the other features of :class:`~django.views."
+"generic.detail.SingleObjectMixin`."
+msgstr ""
+
+# 0b4a8dff16b445c6a6b91b92395b61cd
+#: ../../topics/class-based-views/mixins.txt:276
+msgid "Using SingleObjectMixin with ListView"
+msgstr ""
+
+# fc3f81a2a3da4582bfb3df3f8728dfee
+#: ../../topics/class-based-views/mixins.txt:278
+msgid ""
+":class:`~django.views.generic.list.ListView` provides built-in pagination, "
+"but you might want to paginate a list of objects that are all linked (by a "
+"foreign key) to another object. In our publishing example, you might want to "
+"paginate through all the books by a particular publisher."
+msgstr ""
+
+# d8dde7c8440d42d89d183d0e10eaceb1
+#: ../../topics/class-based-views/mixins.txt:284
+msgid ""
+"One way to do this is to combine :class:`ListView` with :class:`~django."
+"views.generic.detail.SingleObjectMixin`, so that the queryset for the "
+"paginated list of books can hang off the publisher found as the single "
+"object. In order to do this, we need to have two different querysets:"
+msgstr ""
+
+# fcf8294565d74ffb859739dce69a4454
+#: ../../topics/class-based-views/mixins.txt:290
+msgid "**Publisher queryset for use in get_object**"
+msgstr ""
+
+# 53c4cc3f64e040a487053dd64129e56a
+#: ../../topics/class-based-views/mixins.txt:290
+msgid "We'll set that up directly when we call ``get_object()``."
+msgstr ""
+
+# dce741f1778641e9a99f7a5ad3cbb518
+#: ../../topics/class-based-views/mixins.txt:294
+msgid "**Book queryset for use by ListView**"
+msgstr ""
+
+# 7efd3c623426421ab2cdad0c0c27961e
+#: ../../topics/class-based-views/mixins.txt:293
+msgid ""
+"We'll figure that out ourselves in ``get_queryset()`` so we can take into "
+"account the ``Publisher`` we're looking at."
+msgstr ""
+
+# 7d971bf8b1684c11b47983a4adafadfc
+#: ../../topics/class-based-views/mixins.txt:298
+msgid ""
+"We have to think carefully about ``get_context_data()``. Since both :class:"
+"`~django.views.generic.detail.SingleObjectMixin` and :class:`ListView` will "
+"put things in the context data under the value of ``context_object_name`` if "
+"it's set, we'll instead explictly ensure the Publisher is in the context "
+"data. :class:`ListView` will add in the suitable ``page_obj`` and "
+"``paginator`` for us providing we remember to call ``super()``."
+msgstr ""
+
+# 3ef1d440302e40ee8e7ffc796a4b7b63
+#: ../../topics/class-based-views/mixins.txt:307
+msgid "Now we can write a new ``PublisherDetail``::"
+msgstr ""
+
+# 49f336b7c9ed40be8783c5e255580f48
+#: ../../topics/class-based-views/mixins.txt:325
+msgid ""
+"Notice how we set ``self.object`` within ``get_queryset()`` so we can use it "
+"again later in ``get_context_data()``. If you don't set ``template_name``, "
+"the template will default to the normal :class:`ListView` choice, which in "
+"this case would be ``\"books/book_list.html\"`` because it's a list of "
+"books; :class:`ListView` knows nothing about :class:`~django.views.generic."
+"detail.SingleObjectMixin`, so it doesn't have any clue this view is anything "
+"to do with a Publisher."
+msgstr ""
+
+# c0b1f3b4bb3f4eb4b5154a94821680f4
+#: ../../topics/class-based-views/mixins.txt:336
+msgid ""
+"The ``paginate_by`` is deliberately small in the example so you don't have "
+"to create lots of books to see the pagination working! Here's the template "
+"you'd want to use::"
+msgstr ""
+
+# d1a439a36c38473e80e4fb50f1f50e52
+#: ../../topics/class-based-views/mixins.txt:369
+msgid "Avoid anything more complex"
+msgstr ""
+
+# 5950cd2294cf4975918ff31093ef558c
+#: ../../topics/class-based-views/mixins.txt:371
+msgid ""
+"Generally you can use :class:`~django.views.generic.base."
+"TemplateResponseMixin` and :class:`~django.views.generic.detail."
+"SingleObjectMixin` when you need their functionality. As shown above, with a "
+"bit of care you can even combine ``SingleObjectMixin`` with :class:`~django."
+"views.generic.list.ListView`. However things get increasingly complex as you "
+"try to do so, and a good rule of thumb is:"
+msgstr ""
+
+# b8cd8d5d08d94df8b1919adbd7182a3f
+#: ../../topics/class-based-views/mixins.txt:381
+msgid ""
+"Each of your views should use only mixins or views from one of the groups of "
+"generic class-based views: :doc:`detail, list<generic-display>`, :doc:"
+"`editing<generic-editing>` and date. For example it's fine to combine :class:"
+"`TemplateView` (built in view) with :class:`~django.views.generic.list."
+"MultipleObjectMixin` (generic list), but you're likely to have problems "
+"combining ``SingleObjectMixin`` (generic detail) with "
+"``MultipleObjectMixin`` (generic list)."
+msgstr ""
+
+# 6a282aa74c5a42ce9e9db272b7afd70f
+#: ../../topics/class-based-views/mixins.txt:390
+msgid ""
+"To show what happens when you try to get more sophisticated, we show an "
+"example that sacrifices readability and maintainability when there is a "
+"simpler solution. First, let's look at a naive attempt to combine :class:"
+"`~django.views.generic.detail.DetailView` with :class:`~django.views.generic."
+"edit.FormMixin` to enable use to ``POST`` a Django :class:`~django.forms."
+"Form` to the same URL as we're displaying an object using :class:"
+"`DetailView`."
+msgstr ""
+
+# 40006e698fc84dbd9778687b28ffa4d1
+#: ../../topics/class-based-views/mixins.txt:399
+msgid "Using FormMixin with DetailView"
+msgstr ""
+
+# 0540b7bfc958405ebc07bb6bfcbbf3e9
+#: ../../topics/class-based-views/mixins.txt:401
+msgid ""
+"Think back to our earlier example of using :class:`View` and :class:`~django."
+"views.generic.detail.SingleObjectMixin` together. We were recording a user's "
+"interest in a particular author; say now that we want to let them leave a "
+"message saying why they like them. Again, let's assume we're not going to "
+"store this in a relational database but instead in something more esoteric "
+"that we won't worry about here."
+msgstr ""
+
+# 13c406bf8df2420fb5aff38480125b9d
+#: ../../topics/class-based-views/mixins.txt:408
+msgid ""
+"At this point it's natural to reach for a :class:`~django.forms.Form` to "
+"encapsulate the information sent from the user's browser to Django. Say also "
+"that we're heavily invested in `REST`_, so we want to use the same URL for "
+"displaying the author as for capturing the message from the user. Let's "
+"rewrite our ``AuthorDetailView`` to do that."
+msgstr ""
+
+# a9e820435e43407c9b1be070cf4e2552
+#: ../../topics/class-based-views/mixins.txt:416
+msgid ""
+"We'll keep the ``GET`` handling from :class:`DetailView`, although we'll "
+"have to add a :class:`~django.forms.Form` into the context data so we can "
+"render it in the template. We'll also want to pull in form processing from :"
+"class:`~django.views.generic.edit.FormMixin`, and write a bit of code so "
+"that on ``POST`` the form gets called appropriately."
+msgstr ""
+
+# 31f086fa92994ecd986254fc1103539d
+#: ../../topics/class-based-views/mixins.txt:424
+msgid ""
+"We use :class:`~django.views.generic.edit.FormMixin` and implement ``post()"
+"`` ourselves rather than try to mix :class:`DetailView` with :class:"
+"`FormView` (which provides a suitable ``post()`` already) because both of "
+"the views implement ``get()``, and things would get much more confusing."
+msgstr ""
+
+# 564f688f96764d9d8c1cb9519bfa807f
+#: ../../topics/class-based-views/mixins.txt:432
+msgid "Our new ``AuthorDetail`` looks like this::"
+msgstr ""
+
+# ccef0935725d460b801cf04711322824
+#: ../../topics/class-based-views/mixins.txt:482
+msgid ""
+"``get_success_url()`` is just providing somewhere to redirect to, which gets "
+"used in the default implementation of ``form_valid()``. We have to provide "
+"our own ``post()`` as noted earlier, and override ``get_context_data()`` to "
+"make the :class:`~django.forms.Form` available in the context data."
+msgstr ""
+
+# 249829543394416eb615a4d79580fe1b
+#: ../../topics/class-based-views/mixins.txt:489
+msgid "A better solution"
+msgstr ""
+
+# 626d61d02a8f45c4b8c5a14effe11a36
+#: ../../topics/class-based-views/mixins.txt:491
+msgid ""
+"It should be obvious that the number of subtle interactions between :class:"
+"`~django.views.generic.edit.FormMixin` and :class:`DetailView` is already "
+"testing our ability to manage things. It's unlikely you'd want to write this "
+"kind of class yourself."
+msgstr ""
+
+# 63d6961a49a74d5b87407c5b0dc2a342
+#: ../../topics/class-based-views/mixins.txt:496
+msgid ""
+"In this case, it would be fairly easy to just write the ``post()`` method "
+"yourself, keeping :class:`DetailView` as the only generic functionality, "
+"although writing :class:`~django.forms.Form` handling code involves a lot of "
+"duplication."
+msgstr ""
+
+# 328c7050164840f49dda9fbd5970997a
+#: ../../topics/class-based-views/mixins.txt:501
+msgid ""
+"Alternatively, it would still be easier than the above approach to have a "
+"separate view for processing the form, which could use :class:`~django.views."
+"generic.edit.FormView` distinct from :class:`DetailView` without concerns."
+msgstr ""
+
+# f6677becf294489fb6f442a5f1f08db9
+#: ../../topics/class-based-views/mixins.txt:507
+msgid "An alternative better solution"
+msgstr ""
+
+# f312dba982aa49b3b0c02ce90015133d
+#: ../../topics/class-based-views/mixins.txt:509
+msgid ""
+"What we're really trying to do here is to use two different class based "
+"views from the same URL. So why not do just that? We have a very clear "
+"division here: ``GET`` requests should get the :class:`DetailView` (with "
+"the :class:`~django.forms.Form` added to the context data), and ``POST`` "
+"requests should get the :class:`FormView`. Let's set up those views first."
+msgstr ""
+
+# 32ecf748bcfe4bdd992a9df12f82e442
+#: ../../topics/class-based-views/mixins.txt:516
+msgid ""
+"The ``AuthorDisplay`` view is almost the same as :ref:`when we first "
+"introduced AuthorDetail<generic-views-extra-work>`; we have to write our own "
+"``get_context_data()`` to make the ``AuthorInterestForm`` available to the "
+"template. We'll skip the ``get_object()`` override from before for clarity."
+msgstr ""
+
+# 5503946109e54e36968980c67ac684f4
+#: ../../topics/class-based-views/mixins.txt:542
+msgid ""
+"Then the ``AuthorInterest`` is a simple :class:`FormView`, but we have to "
+"bring in :class:`~django.views.generic.detail.SingleObjectMixin` so we can "
+"find the author we're talking about, and we have to remember to set "
+"``template_name`` to ensure that form errors will render the same template "
+"as ``AuthorDisplay`` is using on ``GET``."
+msgstr ""
+
+# f1f14672e7534ef7896ef40c7d2859ab
+#: ../../topics/class-based-views/mixins.txt:577
+msgid ""
+"Finally we bring this together in a new ``AuthorDetail`` view. We already "
+"know that calling :meth:`~django.views.generic.base.View.as_view()` on a "
+"class-based view gives us something that behaves exactly like a function "
+"based view, so we can do that at the point we choose between the two "
+"subviews."
+msgstr ""
+
+# 3607698734c4431fa38f21170bd739c9
+#: ../../topics/class-based-views/mixins.txt:582
+msgid ""
+"You can of course pass through keyword arguments to :meth:`~django.views."
+"generic.base.View.as_view()` in the same way you would in your URLconf, such "
+"as if you wanted the ``AuthorInterest`` behavior to also appear at another "
+"URL but using a different template."
+msgstr ""
+
+# 35ffa71e8ffc495dbff8cc4443cc502b
+#: ../../topics/class-based-views/mixins.txt:601
+msgid ""
+"This approach can also be used with any other generic class-based views or "
+"your own class-based views inheriting directly from :class:`View` or :class:"
+"`TemplateView`, as it keeps the different views as separate as possible."
+msgstr ""
+
+# 039fdfc3ce9648eba776cb73afdca458
+#: ../../topics/class-based-views/mixins.txt:609
+msgid "More than just HTML"
+msgstr ""
+
+# 05b4972e5e7c498aa285c24f30fffa9a
+#: ../../topics/class-based-views/mixins.txt:611
+msgid ""
+"Where class based views shine is when you want to do the same thing many "
+"times. Suppose you're writing an API, and every view should return JSON "
+"instead of rendered HTML."
+msgstr ""
+
+# e78aa13cb4ec4278bc725940daec0434
+#: ../../topics/class-based-views/mixins.txt:615
+msgid ""
+"We can create a mixin class to use in all of our views, handling the "
+"conversion to JSON once."
+msgstr ""
+
+# 20df224c3d484081a920b6ab82d6504a
+#: ../../topics/class-based-views/mixins.txt:618
+msgid "For example, a simple JSON mixin might look something like this::"
+msgstr ""
+
+# cfa87f024e9a469a8c42c6e8a90e096d
+#: ../../topics/class-based-views/mixins.txt:647
+msgid "Now we mix this into the base TemplateView::"
+msgstr ""
+
+# 8e2a55eb251740a9b019f2a13fe1dbe6
+#: ../../topics/class-based-views/mixins.txt:654
+msgid ""
+"Equally we could use our mixin with one of the generic views. We can make "
+"our own version of :class:`~django.views.generic.detail.DetailView` by "
+"mixing ``JSONResponseMixin`` with the ``django.views.generic.detail."
+"BaseDetailView`` -- (the :class:`~django.views.generic.detail.DetailView` "
+"before template rendering behavior has been mixed in)::"
+msgstr ""
+
+# 74c84c6f35044fc68dcdc05789b77f2f
+#: ../../topics/class-based-views/mixins.txt:664
+msgid ""
+"This view can then be deployed in the same way as any other :class:`~django."
+"views.generic.detail.DetailView`, with exactly the same behavior -- except "
+"for the format of the response."
+msgstr ""
+
+# e02e3064092a4d329d6423245bc76076
+#: ../../topics/class-based-views/mixins.txt:668
+msgid ""
+"If you want to be really adventurous, you could even mix a :class:`~django."
+"views.generic.detail.DetailView` subclass that is able to return *both* HTML "
+"and JSON content, depending on some property of the HTTP request, such as a "
+"query argument or a HTTP header. Just mix in both the ``JSONResponseMixin`` "
+"and a :class:`~django.views.generic.detail."
+"SingleObjectTemplateResponseMixin`, and override the implementation of :func:"
+"`~django.views.generic.base.TemplateResponseMixin.render_to_response()` to "
+"defer to the appropriate subclass depending on the type of response that the "
+"user requested::"
+msgstr ""
+
+# 02a394f188fd4817a7273494eaebbbc9
+#: ../../topics/class-based-views/mixins.txt:687
+msgid ""
+"Because of the way that Python resolves method overloading, the local "
+"``render_to_response()`` implementation will override the versions provided "
+"by ``JSONResponseMixin`` and :class:`~django.views.generic.detail."
+"SingleObjectTemplateResponseMixin`."
+msgstr ""
