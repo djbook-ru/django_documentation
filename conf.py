@@ -55,21 +55,8 @@ copyright = 'Django Software Foundation and contributors'
 # built documents.
 #
 # The short X.Y version.
-version = '1.6'
-# The full version, including alpha/beta/rc tags.
-try:
-    from django import VERSION, get_version
-except ImportError:
-    release = version
-else:
-    def django_release():
-        pep386ver = get_version()
-        if VERSION[3:5] == ('alpha', 0) and 'dev' not in pep386ver:
-            return pep386ver + '.dev'
-        return pep386ver
-
-    release = django_release()
-
+version = '1.5'
+release = version
 # The "development version" of Django
 django_next_version = '1.6'
 
