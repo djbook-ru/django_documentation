@@ -495,6 +495,10 @@ msgid ""
 "translate strings lazily -- when the value is accessed rather than when "
 "they're called."
 msgstr ""
+"Используйте ленивые версии функций перевода из :mod:`django.utils."
+"translation` (их легко опознать по суффиксу ``lazy`` в их именах) для "
+"отложенного перевода строк -- перевод производится во время обращения к "
+"строке, а не когда вызывается функция."
 
 # 689bb2906837411c89878ea8cfd25de3
 #: ../../topics/i18n/translation.txt:313
@@ -503,13 +507,19 @@ msgid ""
 "translation. The translation itself will be done when the string is used in "
 "a string context, such as in template rendering."
 msgstr ""
+"Эти функции хранят ленивую ссылку на строку, не на её перевод. Сам перевод "
+"будет выполнен во время использования строки в строковом контексте, "
+"например, во время обработки шаблона."
 
 # e9d81fcd15dc41aa98fe0440c4f09dfe
-#: ../../topics/i18n/translation.txt:317
+#: ../../topics/i18n/translation.txt:306
+#, fuzzy
 msgid ""
 "This is essential when calls to these functions are located in code paths "
 "that are executed at module load time."
 msgstr ""
+"Это имеет значение, когда вызовы этих функций находятся в пути кода, которые "
+"выполняются во время загрузки модуля."
 
 # e15fe79b876745b9a7e1d9ca41dc4359
 #: ../../topics/i18n/translation.txt:320
@@ -519,6 +529,9 @@ msgid ""
 "actually class-level attributes. For that reason, make sure to use lazy "
 "translations in the following cases:"
 msgstr ""
+"Такое может легко произойти во время определения моделей, форм или модельных "
+"форм, так как в Django их поля реализованы в виде атрибутов класса. По этой "
+"причине, надо использовать ленивый перевод в следующих случаях:"
 
 # 13f4e65a29724ca586fb939063790dd5
 #: ../../topics/i18n/translation.txt:326
@@ -526,6 +539,8 @@ msgid ""
 "Model fields and relationships ``verbose_name`` and ``help_text`` option "
 "values"
 msgstr ""
+"Поля модели и связанные с ними значения атрибутов ``verbose_name`` и "
+"``help_text``"
 
 # 11f0d60558c745c4b1034a85c61350f4
 #: ../../topics/i18n/translation.txt:328
@@ -533,6 +548,8 @@ msgid ""
 "For example, to translate the help text of the *name* field in the following "
 "model, do the following::"
 msgstr ""
+"Например, для перевода подсказки для поля *name* в следующей модели, "
+"действуйте так::"
 
 # 2f41caa479ff45a0902e3bc3a1bee1d0
 #: ../../topics/i18n/translation.txt:336
@@ -541,6 +558,8 @@ msgid ""
 "``OneToOneField`` relationship as translatable by using their "
 "``verbose_name`` options::"
 msgstr ""
+"Вы можете перевести метки для ``ForeignKey``, ``ManyTomanyField`` или "
+"``OneToOneField`` с помощью их атрибута ``verbose_name``::"
 
 # 73329c7b9c0143da96c352e67c16a886
 #: ../../topics/i18n/translation.txt:345
@@ -549,11 +568,15 @@ msgid ""
 "should provide a lowercase verbose name text for the relation as Django will "
 "automatically titlecase it when required."
 msgstr ""
+"Подобно тому, как вы делаете для :attr:`~django.db.models.Options."
+"verbose_name`, вы должны предоставить текст метки (строчными буквами) для "
+"связи, а Django автоматически преобразует первую букву в прописную когда это "
+"необходимо."
 
 # a779cb26073047a2b0ce89d2bdb93de4
 #: ../../topics/i18n/translation.txt:350
 msgid "Model verbose names values"
-msgstr ""
+msgstr "Значения для подписи модели"
 
 # 480e8ca507064bdb9872c45d6dbcc3ab
 #: ../../topics/i18n/translation.txt:352
@@ -564,11 +587,15 @@ msgid ""
 "centric and somewhat naïve determination of verbose names Django performs by "
 "looking at the model's class name::"
 msgstr ""
+"Рекомендуется всегда предоставлять явные значения для :attr:`~django.db."
+"models.Options.verbose_name` и :attr:`~django.db.models.Options."
+"verbose_name_plural`, а не надеяться на механизм их автоматического "
+"определения через имя класса::"
 
 # a11766c657b84231aa0713b9b2e21c36
 #: ../../topics/i18n/translation.txt:368
 msgid "Model methods ``short_description`` attribute values"
-msgstr ""
+msgstr "Значения атрибута ``short_description`` у методов модели"
 
 # 583503d00fbd44b9b1b65a987af227e3
 #: ../../topics/i18n/translation.txt:370
@@ -576,11 +603,13 @@ msgid ""
 "For model methods, you can provide translations to Django and the admin site "
 "with the ``short_description`` attribute::"
 msgstr ""
+"Для методов модели вы можете с помощью атрибута ``short_description`` "
+"предоставить перевод для Django и интерфейса администратора::"
 
 # 2fc818c3b319452c9a0dd02add7abe48
 #: ../../topics/i18n/translation.txt:384
 msgid "Working with lazy translation objects"
-msgstr ""
+msgstr "Работа с ленивыми объектами перевода"
 
 # e456932a1b884be49457295bbe1a85f8
 #: ../../topics/i18n/translation.txt:386
@@ -593,6 +622,13 @@ msgid ""
 "bytestring, either, so this is consistent with normal Python behavior. For "
 "example::"
 msgstr ""
+"Результат вызова ``ugettext_lazy()`` может быть использован везде, где "
+"требуется юникодная строка (объект типа ``unicode``). Если вы попытаетесь "
+"использовать её там, где ожидается обычная строка (объект типа ``str``), то "
+"не получите ожидаемый результат, так как объект ``ugettext_lazy()`` не знает "
+"как преобразовать себя в обычную строку. Вы не можете использовать юникодную "
+"строку внутри обычной, что, в общем, является обычным поведением в Python. "
+"Например::"
 
 # dd362e2596f44ed9ab76e8ddd1d4a687
 #: ../../topics/i18n/translation.txt:400
@@ -601,6 +637,9 @@ msgid ""
 "\"``, you have tried to insert the result of ``ugettext_lazy()`` into a "
 "bytestring. That's a bug in your code."
 msgstr ""
+"Если вы встретили нечто подобное ``\"hello <django.utils.functional...>\"``, "
+"значит вы попытались встать результат ``ugettext_lazy()`` в обычную строку. "
+"Это ошибка в вашем коде."
 
 # 49f7fe5ada1941a4bd7be7cd58a492b7
 #: ../../topics/i18n/translation.txt:404
@@ -608,6 +647,8 @@ msgid ""
 "If you don't like the long ``ugettext_lazy`` name, you can just alias it as "
 "``_`` (underscore), like so::"
 msgstr ""
+"Если вам не нравится писать такое длинное имя как ``ugettext_lazy``, в "
+"можете создать для него псевдоним ``_`` (символ подчеркивания), вот так::"
 
 # 2601d9fc3f6c47edbb8e8bbf7f674f9d
 #: ../../topics/i18n/translation.txt:412
@@ -619,6 +660,12 @@ msgid ""
 "late as possible (so that the correct locale is in effect). This "
 "necessitates the use of the helper function described next."
 msgstr ""
+"Использование ``ugettext_lazy()`` и ``ungettext_lazy()`` для пометки строк в "
+"моделях и в прикладных функциях является обычной операцией. Работая с этими "
+"объектами в вашем коде, вы должны быть уверены, что вы не преобразоваете их "
+"случайно в строки, так как это преобразование должно происходить как можно "
+"позже (и будет приниматься во внимание правильная локаль). Это потребует "
+"использования вспомогательной функции, описанной далее."
 
 # a96bdcc3015048759b2a32b16e89803a
 #: ../../topics/i18n/translation.txt:422
@@ -646,7 +693,7 @@ msgstr ""
 # acf36a83d1a54087998f852154a51362
 #: ../../topics/i18n/translation.txt:455
 msgid "Joining strings: string_concat()"
-msgstr ""
+msgstr "Объединение строк: string_concat()"
 
 # ea6830b99b7640559f349c1d781bc507
 #: ../../topics/i18n/translation.txt:457
@@ -657,6 +704,12 @@ msgid ""
 "concatenates its contents *and* converts them to strings only when the "
 "result is included in a string. For example::"
 msgstr ""
+"Стандартное для Python объединение строк (``''.join([...])``) не будет "
+"работать со списками, которые содержат объекты отложенного перевода. Для "
+"этого вы можете использовать функцию :func:`django.utils.translation."
+"string_concat()`, создающую ленивый объект, который объединяет своё "
+"содержимое *и*  преобразует его в строку только когда результат функции "
+"включается в строку. Например::"
 
 # 46615b700d4c4f5e8c256041acd4230d
 #: ../../topics/i18n/translation.txt:469
@@ -665,6 +718,9 @@ msgid ""
 "strings when ``result`` itself is used in a string (usually at template "
 "rendering time)."
 msgstr ""
+"В данном случае, отложенный перевод в ``result`` будет преобразован в строку "
+"только когда сам ``result`` будет использован в строке (обычно это "
+"происходит во время обработки шаблона)."
 
 # 61f96d05b84847a3be700b4826fe0c55
 #: ../../topics/i18n/translation.txt:474
@@ -687,7 +743,7 @@ msgstr ""
 # 28aecf6baea0430bbc73a37422fba5fe
 #: ../../topics/i18n/translation.txt:492
 msgid "Localized names of languages"
-msgstr ""
+msgstr "Локализованные названия языков"
 
 # ed0cb915d3374508802b446b436c11ea
 #: ../../topics/i18n/translation.txt:496
@@ -695,6 +751,8 @@ msgid ""
 "The ``get_language_info()`` function provides detailed information about "
 "languages::"
 msgstr ""
+"Функция ``get_language_info()`` предоставляет детальную информацию о языках::"
+""
 
 # 82d157ab381a463ea5f3650109a1777b
 #: ../../topics/i18n/translation.txt:504
@@ -703,6 +761,9 @@ msgid ""
 "name of the language in English and in the language itself, respectively.  "
 "The ``bidi`` attribute is True only for bi-directional languages."
 msgstr ""
+"Атрибуты ``name`` и ``name_local`` содержат содержат название языка на "
+"английском и на этом самом языке соответственно.  Атрибут ``bidi`` "
+"установлен в True только для двунаправленных языков."
 
 # 9e8a0e81ce2e43b7b70132cb7db9e494
 #: ../../topics/i18n/translation.txt:508
@@ -710,11 +771,14 @@ msgid ""
 "The source of the language information is the ``django.conf.locale`` module. "
 "Similar access to this information is available for template code. See below."
 msgstr ""
+"Источником информации о языках является модуль ``django.conf.locale``. "
+"Аналогичный доступ к информации о языках есть и на уровне шаблонов. См. "
+"далее."
 
 # 82a28e4a1e254864bede1a8b886f07f7
 #: ../../topics/i18n/translation.txt:514
 msgid "Internationalization: in template code"
-msgstr ""
+msgstr "Интернационализация: в коде шаблонов"
 
 # 8c8c553e980a4c7cb4dedec80804a931
 #: ../../topics/i18n/translation.txt:518
@@ -726,11 +790,14 @@ msgid ""
 "all templates which use translations, even those templates that extend from "
 "other templates which have already loaded the ``i18n`` tag."
 msgstr ""
+"Для перевода текста в :doc:`шаблонах Django </topics/templates>` используют "
+"два шаблонах тега и немного отличающийся синтаксис. Чтобы воспользоваться "
+"этими тегами, поместите ``{% load i18n %}`` в начало шаблона."
 
 # 7466a2a6fe0244c08921076523cef2fa
 #: ../../topics/i18n/translation.txt:528
 msgid "``trans`` template tag"
-msgstr ""
+msgstr "Шаблонный тег``trans``"
 
 # f180dd3bb8184763930118b7a99c01ff
 #: ../../topics/i18n/translation.txt:530
@@ -738,6 +805,8 @@ msgid ""
 "The ``{% trans %}`` template tag translates either a constant string "
 "(enclosed in single or double quotes) or variable content::"
 msgstr ""
+"Шаблонный тег ``{% trans %}`` может переводить как обычную строку, "
+"заключенную в одинарные или двойные кавычки, так и содержимое переменой::"
 
 # 4cd0c1b1e6d04b78b264774d2bf8fce3
 #: ../../topics/i18n/translation.txt:536
@@ -746,6 +815,9 @@ msgid ""
 "translation is skipped. This is useful when \"stubbing out\" content that "
 "will require translation in the future::"
 msgstr ""
+"При использовании опции ``noop``, обращение к переменной происходит, но "
+"перевод не выполняется. Это удобно когда надо пометить контент для перевода "
+"в будущем::"
 
 # 49b92d47dda247d48791d92765178da1
 #: ../../topics/i18n/translation.txt:542
@@ -753,6 +825,8 @@ msgid ""
 "Internally, inline translations use an :func:`~django.utils.translation."
 "ugettext` call."
 msgstr ""
+"Перевод подстроку выполняется с помощью функции :func:`~django.utils."
+"translation.ugettext`."
 
 # da71a43d3ede486c97813f84baba74f6
 #: ../../topics/i18n/translation.txt:545
@@ -761,6 +835,9 @@ msgid ""
 "first resolve such variable to a string at run-time and then look up that "
 "string in the message catalogs."
 msgstr ""
+"В случае передачи шаблонной переменой (см. выше ``myvar``) в тег, тег "
+"сначала преобразовывает её в строку, а затем ищет для неё перевод в "
+"каталогах сообщений."
 
 # 28e6eae6318b492db0f3900b49546c4c
 #: ../../topics/i18n/translation.txt:549
@@ -769,6 +846,9 @@ msgid ""
 "trans %}``. If your translations require strings with variables "
 "(placeholders), use ``{% blocktrans %}`` instead."
 msgstr ""
+"Невозможно использовать шаблонные переменные внутри строки для тега ``{% "
+"trans %}``. Если же ваш перевод требует наличия переменой в строке, "
+"используйте шаблонный тег ``{% blocktrans %}``."
 
 # 23fba2b75f3847a1aea8865d04a34346
 #: ../../topics/i18n/translation.txt:554
@@ -776,6 +856,8 @@ msgid ""
 "If you'd like to retrieve a translated string without displaying it, you can "
 "use the following syntax::"
 msgstr ""
+"Если требуется получать переведённые строки без их отображения, то вы можете "
+"использовать следующий синтаксис::"
 
 # 6ae0551c39a944f584c46fe462fb2550
 #: ../../topics/i18n/translation.txt:562
@@ -783,6 +865,9 @@ msgid ""
 "In practice you'll use this to get strings that are used in multiple places "
 "or should be used as arguments for other template tags or filters::"
 msgstr ""
+"На практике вы будете применять это для получения строк, которые "
+"используются во множестве мест шаблона или должны быть использованы в "
+"качестве аргументов для других шаблонных тегов или фильтров::"
 
 # 8369a7c436e347538486a3816a5543f3
 #: ../../topics/i18n/translation.txt:578
@@ -790,11 +875,13 @@ msgid ""
 "``{% trans %}`` also supports :ref:`contextual markers<contextual-markers>` "
 "using the ``context`` keyword:"
 msgstr ""
+"Тег ``{% trans %}`` также поддерживает :ref:`контекстные маркеры<contextual-"
+"markers>` с помощью атрибута ``context``:"
 
 # 5f345ca6d1b848bf8d6099982bd9c6fe
 #: ../../topics/i18n/translation.txt:588
 msgid "``blocktrans`` template tag"
-msgstr ""
+msgstr "Шаблонный тег ``blocktrans``"
 
 # 970a87350d954190b38985ac34b9e9e9
 #: ../../topics/i18n/translation.txt:590
@@ -803,6 +890,9 @@ msgid ""
 "mark complex sentences consisting of literals and variable content for "
 "translation by making use of placeholders::"
 msgstr ""
+"В отличит от тега :ttag:`trans`, тег ``blocktrans`` позволяет отмечать "
+"сложные предложения, состоящие из строк и переменных, обеспечивая перевод с "
+"помощью подстановок::"
 
 # db6604d9e8ec44ebb3c696a190eb2d2d
 #: ../../topics/i18n/translation.txt:596
@@ -811,11 +901,16 @@ msgid ""
 "using template filters -- you need to bind the expression to a local "
 "variable for use within the translation block. Examples::"
 msgstr ""
+"Для перевода шаблонных выражений, скажем, с доступом к атрибутам объекта или "
+"с использованием шаблонных фильтров, потребуется связать выражение с "
+"локальной переменной для использования внутри переводимого блока. Примеры::"
 
 # fdde6c89b9ff41a09a1308391c5b8db5
 #: ../../topics/i18n/translation.txt:608
 msgid "You can use multiple expressions inside a single ``blocktrans`` tag::"
 msgstr ""
+"Вы можете использовать несколько выражений внутри одного тега ``blocktrans``:"
+":"
 
 # 68fe976d7ae1407b89ca5785891f78a7
 #: ../../topics/i18n/translation.txt:614
@@ -823,6 +918,8 @@ msgid ""
 "The previous more verbose format is still supported: ``{% blocktrans with "
 "book|title as book_t and author|title as author_t %}``"
 msgstr ""
+"Как и прежде тег поддерживает старое форматирование: ``{% blocktrans with "
+"book|title as book_t and author|title as author_t %}``"
 
 # ce751ec58f904ec0a3833d4c208b59af
 #: ../../topics/i18n/translation.txt:617
@@ -832,11 +929,14 @@ msgid ""
 "temporarily with the :func:`~django.utils.translation.deactivate_all` "
 "function."
 msgstr ""
+"Если невозможно вычисление хотя бы одного из аргументов блока, тогда тег "
+"переключается на язык по умолчанию с помощью функции :func:`~django.utils."
+"translation.deactivate_all`."
 
 # 2a5b24c07c784108aa9fc643824afb01
 #: ../../topics/i18n/translation.txt:622
 msgid "This tag also provides for pluralization. To use it:"
-msgstr ""
+msgstr "Этот тег также поддерживает склонение, например:"
 
 # f7071eddcf6a4658802cb883127fbb10
 #: ../../topics/i18n/translation.txt:624
@@ -844,6 +944,8 @@ msgid ""
 "Designate and bind a counter value with the name ``count``. This value will "
 "be the one used to select the right plural form."
 msgstr ""
+"Определите переменную ``count`` и свяжите с ней значение счётчика. По этому "
+"значению будет выбираться форма склонения."
 
 # a4538a4c011b45dda080da5444d43f74
 #: ../../topics/i18n/translation.txt:627
@@ -852,16 +954,18 @@ msgid ""
 "plural %}`` tag within the ``{% blocktrans %}`` and ``{% endblocktrans %}`` "
 "tags."
 msgstr ""
+"Укажите единственную и множественную формы, разделив их с помощью тега ``{% "
+"plural %}`` внутри тегов  ``{% blocktrans %}`` и ``{% endblocktrans %}``."
 
 # 822012d0e68142188b1872a5bf6cf980
 #: ../../topics/i18n/translation.txt:631
 msgid "An example::"
-msgstr ""
+msgstr "Пример::"
 
 # 0256a2cc5fd942b2bc4abac9e87365c0
 #: ../../topics/i18n/translation.txt:639
 msgid "A more complex example::"
-msgstr ""
+msgstr "Более сложный пример::"
 
 # 445b4444388b48128dcf51ee583d707f
 #: ../../topics/i18n/translation.txt:647
@@ -872,6 +976,11 @@ msgid ""
 "This means the same :ref:`notes regarding ungettext variables <pluralization-"
 "var-notes>` apply."
 msgstr ""
+"Когда используете и возможности склонения и присвоение значения локальным "
+"переменным в дополнение к значению счетчика помните, что конструкция "
+"``blocktrans`` на низком уровне преобразовывается в вызов ``ungettext``. Это "
+"означает, что к ней применяются :ref:`замечания для переменных ungettext "
+"<pluralization-var-notes>`."
 
 # f545c4b0de534a378e2c8cb7f212e5e2
 #: ../../topics/i18n/translation.txt:653
@@ -879,6 +988,8 @@ msgid ""
 "Reverse URL lookups cannot be carried out within the ``blocktrans`` and "
 "should be retrieved (and stored) beforehand::"
 msgstr ""
+"Обратное разрешение URL не можно быть выполнено внутри ``blocktrans`` и "
+"должно выполняться заранее::"
 
 # 8a010b73cc3145a5bdd478d2efd4406b
 #: ../../topics/i18n/translation.txt:661
@@ -886,6 +997,8 @@ msgid ""
 "``{% blocktrans %}`` also supports :ref:`contextual markers<contextual-"
 "markers>` using the ``context`` keyword:"
 msgstr ""
+"Тег ``{% blocktrans %}`` также поддерживает :ref:`контекстные "
+"маркеры<contextual-markers>` с помощью атрибута ``context``:"
 
 # a9fd890574204a80b46cbf5de5fedbc4
 #: ../../topics/i18n/translation.txt:671
@@ -918,13 +1031,15 @@ msgstr ""
 # efb5f988e4054095aed9e74f1b7ee0f9
 #: ../../topics/i18n/translation.txt:728
 msgid "Other tags"
-msgstr ""
+msgstr "Другие теги"
 
 # 4f19c2fc84534ed4964e5334eee87afd
 #: ../../topics/i18n/translation.txt:730
 msgid ""
 "Each ``RequestContext`` has access to three translation-specific variables:"
 msgstr ""
+"Каждый объект ``RequestContext`` имеет доступ к трём переменным, относящимся "
+"к механизму перевода:"
 
 # 405fe56f682d4f6c8a5c8498643f1170
 #: ../../topics/i18n/translation.txt:732
@@ -933,6 +1048,9 @@ msgid ""
 "`language code` and the second is the language name (translated into the "
 "currently active locale)."
 msgstr ""
+"``LANGUAGES`` является списком кортежей, в которых первый элемент является :"
+"term:`кодом языка<language code>`, а второй — названием языка , переведённым "
+"в текущую локаль."
 
 # 6e355160097e4284baaf10af2a4c8a0d
 #: ../../topics/i18n/translation.txt:736
@@ -940,6 +1058,9 @@ msgid ""
 "``LANGUAGE_CODE`` is the current user's preferred language, as a string. "
 "Example: ``en-us``. (See :ref:`how-django-discovers-language-preference`.)"
 msgstr ""
+"``LANGUAGE_CODE`` является предпочитаемым языком текущего позвонила, в виде "
+"строки. Например: ``en-us``. Обратитесь к :ref:`how-django-discovers-"
+"language-preference`."
 
 # 3177db52f36047c1af2a203f3cf97507
 #: ../../topics/i18n/translation.txt:739
@@ -948,6 +1069,10 @@ msgid ""
 "to-left language, e.g.: Hebrew, Arabic. If False it's a left-to-right "
 "language, e.g.: English, French, German etc."
 msgstr ""
+"``LANGUAGE_BIDI`` является текущим направлением локали. Если равно True, "
+"буквы в словах в этом языке идут справа налево, т.е.: иврит, арабский. Если "
+"False — соответственно, наоборот, т.е.: английский, французский, немецкий и "
+"так далее."
 
 # 236fd52cacc1400583e36556b61ba534
 #: ../../topics/i18n/translation.txt:743
@@ -955,11 +1080,13 @@ msgid ""
 "If you don't use the ``RequestContext`` extension, you can get those values "
 "with three tags::"
 msgstr ""
+"Если вы не используете расширение ``RequestContext``, вы можете получить эти "
+"значения с помощью тегов::"
 
 # 8890a2561b1747388ec08d6272e3e1e9
 #: ../../topics/i18n/translation.txt:750
 msgid "These tags also require a ``{% load i18n %}``."
-msgstr ""
+msgstr "Эти теги также требуют наличия ``{% load i18n %}`` в шаблоне."
 
 # f71b89faa811406c9d68bd09b55f266d
 #: ../../topics/i18n/translation.txt:752
@@ -968,6 +1095,9 @@ msgid ""
 "accepts constant strings. In those cases, just use ``_()`` syntax to specify "
 "a translation string::"
 msgstr ""
+"Сокращение для функции перевода также доступно внутри любого шаблонного "
+"тега, который работает с неизменяемыми строками. В этих случаях просто "
+"используйте синтаксис ``_()`` для указания переводимой строки::"
 
 # b682bff16fd84b969424bb50269f31b7
 #: ../../topics/i18n/translation.txt:758
@@ -975,6 +1105,8 @@ msgid ""
 "In this case, both the tag and the filter will see the already-translated "
 "string, so they don't need to be aware of translations."
 msgstr ""
+"В этом случае, и тег, и фильтр увидят заранее переведённую строку, т.е. им "
+"не надо будет беспокоиться о переводе."
 
 # 7e6c8f22410a4dd4bdd4267db9ae7a2d
 #: ../../topics/i18n/translation.txt:762
@@ -986,6 +1118,11 @@ msgid ""
 "might translate the string ``\"yes,no\"`` as ``\"ja,nein\"`` (keeping the "
 "comma intact)."
 msgstr ""
+"В этом примере в модуль перевода будет передана строка `` \"yes,no\" ``, а "
+"не отдельные строки ``\"yes\", `` и ``\"no\" ``. Перевод  этой строки должен "
+"содержать запятую так, чтобы код парсера фильтра знал как разбить эту строку."
+" Например, немецкий переводчик может переводить строку `` \"yes,no\" `` как "
+"``\"ja, nein\" ``, сохраняя нетронутой запятую."
 
 # c65b4343de4f44de836bc68d220d40f2
 #: ../../topics/i18n/translation.txt:769
@@ -994,11 +1131,14 @@ msgid ""
 "provided template tags and filters. To get information about a single "
 "language, use the ``{% get_language_info %}`` tag::"
 msgstr ""
+"Вы также можете получить информацию о любом доступном языке, используя "
+"предоставленные шаблонные теги и фильтры. Для получения информации об одном "
+"языке используйте тег ``{% get_language_info %}``::"
 
 # 2c35e16a2c0a4adf948bf8b468a44de1
 #: ../../topics/i18n/translation.txt:776
 msgid "You can then access the information::"
-msgstr ""
+msgstr "Затем вы можете узнать следующее::"
 
 # 657ab634609944e2b61815d34349cf33
 #: ../../topics/i18n/translation.txt:783
@@ -1021,7 +1161,7 @@ msgstr ""
 # 75e8fc5c5ec748b5838e4b60d5f4f72c
 #: ../../topics/i18n/translation.txt:799
 msgid "you can iterate over those languages in the template::"
-msgstr ""
+msgstr "вы можете по очереди пройтись по этим языкам в шаблоне::"
 
 # e33841e4aa774cfd95eaea086a079e6b
 #: ../../topics/i18n/translation.txt:804
