@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-27 00:21\n"
+"POT-Creation-Date: 2013-04-23 16:09\n"
 "PO-Revision-Date: 2012-02-15 15:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -23,178 +23,111 @@ msgstr ""
 msgid "Middleware"
 msgstr ""
 
-# 7b11d7bef575465d973abf99a09782c3
+# a368db5aaf0d437a82629031d7a41978
 #: ../../topics/http/middleware.txt:5
 msgid ""
 "Middleware is a framework of hooks into Django's request/response "
 "processing. It's a light, low-level \"plugin\" system for globally altering "
-"Django's input or output."
+"Django's input and/or output."
 msgstr ""
 
-# a17e566fa4d24de7ad6d6b344a79e96b
+# c72165db6d424bbcb05ec8dcf099644a
 #: ../../topics/http/middleware.txt:9
 msgid ""
 "Each middleware component is responsible for doing some specific function. "
-"For example, Django includes a middleware component, :class:`~django."
-"middleware.transaction.TransactionMiddleware`, that wraps the processing of "
-"each HTTP request in a database transaction."
+"For example, Django includes a middleware component, ``XViewMiddleware``, "
+"that adds an ``\"X-View\"`` HTTP header to every response to a ``HEAD`` "
+"request."
 msgstr ""
 
-# b1c7554d94fa4825bb401d89e149fbbe
-#: ../../topics/http/middleware.txt:14
+# da40bb995bb44396ac1b2735a3740e83
+#: ../../topics/http/middleware.txt:13
 msgid ""
 "This document explains how middleware works, how you activate middleware, "
 "and how to write your own middleware. Django ships with some built-in "
-"middleware you can use right out of the box. They're documented in the :doc:"
+"middleware you can use right out of the box; they're documented in the :doc:"
 "`built-in middleware reference </ref/middleware>`."
 msgstr ""
 
 # a3d4917dd30a40898417f88e7a4c7137
-#: ../../topics/http/middleware.txt:20
+#: ../../topics/http/middleware.txt:19
 msgid "Activating middleware"
 msgstr ""
 
-# 326246ee51064a92b9b237d196c1e24b
-#: ../../topics/http/middleware.txt:22
+# 2756529e9d214ada94c6e26ebda93fc3
+#: ../../topics/http/middleware.txt:21
 msgid ""
 "To activate a middleware component, add it to the :setting:"
-"`MIDDLEWARE_CLASSES` tuple in your Django settings."
-msgstr ""
-
-# 7e5784d93188415fbcace9f93ffdcdb1
-#: ../../topics/http/middleware.txt:25
-msgid ""
-"In :setting:`MIDDLEWARE_CLASSES`, each middleware component is represented "
-"by a string: the full Python path to the middleware's class name. For "
-"example, here's the default value created by :djadmin:`django-admin.py "
+"`MIDDLEWARE_CLASSES` list in your Django settings. In :setting:"
+"`MIDDLEWARE_CLASSES`, each middleware component is represented by a string: "
+"the full Python path to the middleware's class name. For example, here's the "
+"default :setting:`MIDDLEWARE_CLASSES` created by :djadmin:`django-admin.py "
 "startproject <startproject>`::"
 msgstr ""
 
-# b0bcbcf556484c4db1f6f4e0222889a6
-#: ../../topics/http/middleware.txt:38
+# 6a8a35487c444854b9e0d1b658e2a24f
+#: ../../topics/http/middleware.txt:35
 msgid ""
-"A Django installation doesn't require any middleware — :setting:"
-"`MIDDLEWARE_CLASSES` can be empty, if you'd like — but it's strongly "
+"During the request phases (:meth:`process_request` and :meth:`process_view` "
+"middleware), Django applies middleware in the order it's defined in :setting:"
+"`MIDDLEWARE_CLASSES`, top-down. During the response phases (:meth:"
+"`process_response` and :meth:`process_exception` middleware), the classes "
+"are applied in reverse order, from the bottom up. You can think of it like "
+"an onion: each middleware class is a \"layer\" that wraps the view:"
+msgstr ""
+
+# 1a94e9c6a7044dcb85bb4c858fbfa2cb
+#: ../../topics/http/middleware.txt:47
+msgid ""
+"A Django installation doesn't require any middleware -- e.g., :setting:"
+"`MIDDLEWARE_CLASSES` can be empty, if you'd like -- but it's strongly "
 "suggested that you at least use :class:`~django.middleware.common."
 "CommonMiddleware`."
 msgstr ""
 
-# 1f225fc6b93045679d5a3dba0a420464
-#: ../../topics/http/middleware.txt:43
-msgid ""
-"The order in :setting:`MIDDLEWARE_CLASSES` matters because a middleware can "
-"depend on other middleware. For instance, :class:`~django.contrib.auth."
-"middleware.AuthenticationMiddleware` stores the authenticated user in the "
-"session; therefore, it must run after :class:`~django.contrib.sessions."
-"middleware.SessionMiddleware`."
-msgstr ""
-
-# 3241884bf9e14ae593ba65f7d1a817c1
-#: ../../topics/http/middleware.txt:50
-msgid "Hooks and application order"
-msgstr ""
-
-# 653ee826949b47429d1dc8e9c9caba44
-#: ../../topics/http/middleware.txt:52
-msgid ""
-"During the request phase, before calling the view, Django applies middleware "
-"in the order it's defined in :setting:`MIDDLEWARE_CLASSES`, top-down. Two "
-"hooks are available:"
-msgstr ""
-
-# f6334c227d0e462d8eb6f53228a42f6f
-#: ../../topics/http/middleware.txt:56
-msgid ":meth:`process_request`"
-msgstr ""
-
-# 88537b1fb14f4753a0f2887cbf8d0558
-#: ../../topics/http/middleware.txt:57
-msgid ":meth:`process_view`"
-msgstr ""
-
-# 14e735682f1d4be1b9e0eed335c7c4f3
-#: ../../topics/http/middleware.txt:59
-msgid ""
-"During the response phase, after calling the view, middleware are applied in "
-"reverse order, from the bottom up. Three hooks are available:"
-msgstr ""
-
-# d8d75abe9a634ddb9a21281ca370951d
-#: ../../topics/http/middleware.txt:62
-msgid ":meth:`process_exception` (only if the view raised an exception)"
-msgstr ""
-
-# 3351a194993e43a3bc2c41acf46a2b20
-#: ../../topics/http/middleware.txt:63
-msgid ":meth:`process_template_response` (only for template responses)"
-msgstr ""
-
-# e6481c991e5b4fe6866929dfe6afad68
-#: ../../topics/http/middleware.txt:64
-msgid ":meth:`process_response`"
-msgstr ""
-
-# 6f90eb7e6eb146428a616f929ede16d1
-#: ../../topics/http/middleware.txt:71
-msgid ""
-"If you prefer, you can also think of it like an onion: each middleware class "
-"is a \"layer\" that wraps the view."
-msgstr ""
-
-# ee8939487be240a6ae9c1a6bc44188f5
-#: ../../topics/http/middleware.txt:74
-msgid "The behavior of each hook is described below."
-msgstr ""
-
 # 4103ae15c4df4e579f0b56cfbc38613b
-#: ../../topics/http/middleware.txt:77
+#: ../../topics/http/middleware.txt:53
 msgid "Writing your own middleware"
 msgstr ""
 
 # 0a668593921e4ab5b2b70b29bb6bc5de
-#: ../../topics/http/middleware.txt:79
+#: ../../topics/http/middleware.txt:55
 msgid ""
 "Writing your own middleware is easy. Each middleware component is a single "
 "Python class that defines one or more of the following methods:"
 msgstr ""
 
 # a4b71a34535c4134b7007005b28ded88
-#: ../../topics/http/middleware.txt:85
+#: ../../topics/http/middleware.txt:61
 msgid "``process_request``"
 msgstr ""
 
-# 8a12d5ff933048d79fa0bc406de213a3
-#: ../../topics/http/middleware.txt:89
-msgid "``request`` is an :class:`~django.http.HttpRequest` object."
+# 81f7c959c71c4307ac8fe50f6f8abf64
+#: ../../topics/http/middleware.txt:65
+msgid ""
+"``request`` is an :class:`~django.http.HttpRequest` object. This method is "
+"called on each request, before Django decides which view to execute."
 msgstr ""
 
-# 1385f0dbbd90408b8aa0592f8f454c87
-#: ../../topics/http/middleware.txt:91
+# 18747263cfcc402f9621fc346d452202
+#: ../../topics/http/middleware.txt:68
 msgid ""
-"``process_request()`` is called on each request, before Django decides which "
-"view to execute."
-msgstr ""
-
-# e1c762ca810f4ed3a8c15a7eacc59519
-#: ../../topics/http/middleware.txt:94
-msgid ""
-"It should return either ``None`` or an :class:`~django.http.HttpResponse` "
-"object. If it returns ``None``, Django will continue processing this "
-"request, executing any other ``process_request()`` middleware, then, "
-"``process_view()`` middleware, and finally, the appropriate view. If it "
-"returns an :class:`~django.http.HttpResponse` object, Django won't bother "
-"calling any other request, view or exception middleware, or the appropriate "
-"view; it'll apply response middleware to that :class:`~django.http."
-"HttpResponse`, and return the result."
+"``process_request()`` should return either ``None`` or an :class:`~django."
+"http.HttpResponse` object. If it returns ``None``, Django will continue "
+"processing this request, executing any other middleware and, then, the "
+"appropriate view. If it returns an :class:`~django.http.HttpResponse` "
+"object, Django won't bother calling ANY other request, view or exception "
+"middleware, or the appropriate view; it'll return that :class:`~django.http."
+"HttpResponse`. Response middleware is always called on every response."
 msgstr ""
 
 # f61cc5c1a2104797a18a8efcd1a96723
-#: ../../topics/http/middleware.txt:106
+#: ../../topics/http/middleware.txt:79
 msgid "``process_view``"
 msgstr ""
 
 # 475cd1b6909d48f9a507d6fc5b696566
-#: ../../topics/http/middleware.txt:110
+#: ../../topics/http/middleware.txt:83
 msgid ""
 "``request`` is an :class:`~django.http.HttpRequest` object. ``view_func`` is "
 "the Python function that Django is about to use. (It's the actual function "
@@ -205,25 +138,21 @@ msgid ""
 "(``request``)."
 msgstr ""
 
-# a30aeb4cd6454d759a4d61fe18f5e560
-#: ../../topics/http/middleware.txt:118
-msgid "``process_view()`` is called just before Django calls the view."
-msgstr ""
-
-# 34b9db1431fc495d93186952cd773ff9
-#: ../../topics/http/middleware.txt:120
+# 2ad691ead33840dda96517c0aaa88947
+#: ../../topics/http/middleware.txt:91
 msgid ""
-"It should return either ``None`` or an :class:`~django.http.HttpResponse` "
-"object. If it returns ``None``, Django will continue processing this "
-"request, executing any other ``process_view()`` middleware and, then, the "
-"appropriate view. If it returns an :class:`~django.http.HttpResponse` "
-"object, Django won't bother calling any other view or exception middleware, "
-"or the appropriate view; it'll apply response middleware to that :class:"
-"`~django.http.HttpResponse`, and return the result."
+"``process_view()`` is called just before Django calls the view. It should "
+"return either ``None`` or an :class:`~django.http.HttpResponse` object. If "
+"it returns ``None``, Django will continue processing this request, executing "
+"any other ``process_view()`` middleware and, then, the appropriate view. If "
+"it returns an :class:`~django.http.HttpResponse` object, Django won't bother "
+"calling ANY other request, view or exception middleware, or the appropriate "
+"view; it'll return that :class:`~django.http.HttpResponse`. Response "
+"middleware is always called on every response."
 msgstr ""
 
 # a0d78985134941b1a3612a92bfe9f317
-#: ../../topics/http/middleware.txt:130
+#: ../../topics/http/middleware.txt:102
 msgid ""
 "Accessing :attr:`request.POST <django.http.HttpRequest.POST>` or :attr:"
 "`request.REQUEST <django.http.HttpRequest.REQUEST>` inside middleware from "
@@ -234,7 +163,7 @@ msgid ""
 msgstr ""
 
 # 11bb5a5222894158b83f63a0f8b22440
-#: ../../topics/http/middleware.txt:137
+#: ../../topics/http/middleware.txt:109
 msgid ""
 "The :class:`~django.middleware.csrf.CsrfViewMiddleware` class can be "
 "considered an exception, as it provides the :func:`~django.views.decorators."
@@ -244,105 +173,87 @@ msgid ""
 msgstr ""
 
 # 8b8cae5546f7425badc2700185f17f0e
-#: ../../topics/http/middleware.txt:146
+#: ../../topics/http/middleware.txt:118
 msgid "``process_template_response``"
 msgstr ""
 
-# 07d7ab07940d4ef7816136cdee920af4
-#: ../../topics/http/middleware.txt:150
+# ebedc38d29f04c4fa90d545f02eb5825
+#: ../../topics/http/middleware.txt:122
 msgid ""
 "``request`` is an :class:`~django.http.HttpRequest` object. ``response`` is "
-"the :class:`~django.template.response.TemplateResponse` object (or "
-"equivalent) returned by a Django view or by a middleware."
+"a subclass of :class:`~django.template.response.SimpleTemplateResponse` (e."
+"g. :class:`~django.template.response.TemplateResponse`) or any response "
+"object that implements a ``render`` method."
 msgstr ""
 
-# bd11512cf0a2447aac677bfcb496bc5c
-#: ../../topics/http/middleware.txt:154
+# c10e3b4ca42d40edb5232a7d4640c0ad
+#: ../../topics/http/middleware.txt:127
 msgid ""
-"``process_template_response()`` is called just after the view has finished "
-"executing, if the response instance has a ``render()`` method, indicating "
-"that it is a :class:`~django.template.response.TemplateResponse` or "
-"equivalent."
+"``process_template_response()`` must return a response object that "
+"implements a ``render`` method. It could alter the given ``response`` by "
+"changing ``response.template_name`` and ``response.context_data``, or it "
+"could create and return a brand-new :class:`~django.template.response."
+"SimpleTemplateResponse` or equivalent."
 msgstr ""
 
-# 5367671e728d4805af94f8e871015a8e
-#: ../../topics/http/middleware.txt:158
+# 4849f2b8f641476992b10af1a9e31eec
+#: ../../topics/http/middleware.txt:133
 msgid ""
-"It must return a response object that implements a ``render`` method. It "
-"could alter the given ``response`` by changing ``response.template_name`` "
-"and ``response.context_data``, or it could create and return a brand-new :"
-"class:`~django.template.response.TemplateResponse` or equivalent."
+"``process_template_response()`` will only be called if the response instance "
+"has a ``render()`` method, indicating that it is a :class:`~django.template."
+"response.TemplateResponse` or equivalent."
 msgstr ""
 
 # fe08a4cc9cf649638d1a70ba90436f42
-#: ../../topics/http/middleware.txt:163
+#: ../../topics/http/middleware.txt:137
 msgid ""
 "You don't need to explicitly render responses -- responses will be "
 "automatically rendered once all template response middleware has been called."
 msgstr ""
 
-# e0b0b3b63f3c4756bd3af820f3472739
-#: ../../topics/http/middleware.txt:167
+# 954eaef5727946498a7dc977af4dfff5
+#: ../../topics/http/middleware.txt:141
 msgid ""
 "Middleware are run in reverse order during the response phase, which "
-"includes ``process_template_response()``."
+"includes process_template_response."
 msgstr ""
 
 # e0b0cfa902b24e57be40f2f876702552
-#: ../../topics/http/middleware.txt:173
+#: ../../topics/http/middleware.txt:147
 msgid "``process_response``"
 msgstr ""
 
-# fb50d19e7d38406ea25580ee2ac8e3cd
-#: ../../topics/http/middleware.txt:177
+# f78d5d78979b4e9b8117903f93ca21e1
+#: ../../topics/http/middleware.txt:151
 msgid ""
 "``request`` is an :class:`~django.http.HttpRequest` object. ``response`` is "
-"the :class:`~django.http.HttpResponse` or :class:`~django.http."
-"StreamingHttpResponse` object returned by a Django view or by a middleware."
+"the :class:`~django.http.HttpResponse` object returned by a Django view."
 msgstr ""
 
-# 9b0df8775698431bbd2ce7a02007b7e9
-#: ../../topics/http/middleware.txt:182
+# 3a3343bfe60442fbbb6696bc48cc3175
+#: ../../topics/http/middleware.txt:154
 msgid ""
-"``process_response()`` is called on all responses before they're returned to "
-"the browser."
+"``process_response()`` must return an :class:`~django.http.HttpResponse` "
+"object. It could alter the given ``response``, or it could create and return "
+"a brand-new :class:`~django.http.HttpResponse`."
 msgstr ""
 
-# e9fa9656e3e846be925fc7943d76f2da
-#: ../../topics/http/middleware.txt:185
-msgid ""
-"It must return an :class:`~django.http.HttpResponse` or :class:`~django.http."
-"StreamingHttpResponse` object. It could alter the given ``response``, or it "
-"could create and return a brand-new :class:`~django.http.HttpResponse` or :"
-"class:`~django.http.StreamingHttpResponse`."
-msgstr ""
-
-# abc800023fb047c68b86c3c1e406b3f7
-#: ../../topics/http/middleware.txt:191
+# cb8b9275ab0944a9bb203b35e6dc9874
+#: ../../topics/http/middleware.txt:158
 msgid ""
 "Unlike the ``process_request()`` and ``process_view()`` methods, the "
 "``process_response()`` method is always called, even if the ``process_request"
 "()`` and ``process_view()`` methods of the same middleware class were "
-"skipped (because an earlier middleware method returned an :class:`~django."
-"http.HttpResponse`). In particular, this means that your ``process_response()"
-"`` method cannot rely on setup done in ``process_request()``."
-msgstr ""
-
-# 9d5b74aa87dd43159e84e8c143943f6e
-#: ../../topics/http/middleware.txt:199
-msgid ""
-"Finally, remember that during the response phase, middleware are applied in "
-"reverse order, from the bottom up. This means classes defined at the end of :"
-"setting:`MIDDLEWARE_CLASSES` will be run first."
-msgstr ""
-
-# eef0e10b9f954bd4b567a4426478f7c0
-#: ../../topics/http/middleware.txt:204
-msgid "Dealing with streaming responses"
+"skipped because an earlier middleware method returned an :class:`~django."
+"http.HttpResponse` (this means that your ``process_response()`` method "
+"cannot rely on setup done in ``process_request()``, for example). In "
+"addition, during the response phase the classes are applied in reverse "
+"order, from the bottom up. This means classes defined at the end of :setting:"
+"`MIDDLEWARE_CLASSES` will be run first."
 msgstr ""
 
 # 79205467a94e484a9e33de5b9ffe5497
-#: ../../topics/http/middleware.txt:210
+#: ../../topics/http/middleware.txt:171
 msgid ""
 "Unlike :class:`~django.http.HttpResponse`, :class:`~django.http."
 "StreamingHttpResponse` does not have a ``content`` attribute. As a result, "
@@ -351,39 +262,37 @@ msgid ""
 "responses and adjust their behavior accordingly::"
 msgstr ""
 
-# 9ce1a20123ef486799d32a981b190577
-#: ../../topics/http/middleware.txt:223
+# 7b55053330ce413ab6b713a8039272fb
+#: ../../topics/http/middleware.txt:182
 msgid ""
 "``streaming_content`` should be assumed to be too large to hold in memory. "
-"Response middleware may wrap it in a new generator, but must not consume it. "
-"Wrapping is typically implemented as follows::"
+"Middleware may wrap it in a new generator, but must not consume it."
 msgstr ""
 
 # 40fa93b90d5d45faa019d5b954e44a8f
-#: ../../topics/http/middleware.txt:234
+#: ../../topics/http/middleware.txt:188
 msgid "``process_exception``"
 msgstr ""
 
 # ce62b3c3172946bfbcb4250d33663230
-#: ../../topics/http/middleware.txt:238
+#: ../../topics/http/middleware.txt:192
 msgid ""
 "``request`` is an :class:`~django.http.HttpRequest` object. ``exception`` is "
 "an ``Exception`` object raised by the view function."
 msgstr ""
 
-# 9cfa75a8bcff4e1e8427048bd9781d2a
-#: ../../topics/http/middleware.txt:241
+# 61957e55114d4a0e80279f8065b2ea2a
+#: ../../topics/http/middleware.txt:195
 msgid ""
 "Django calls ``process_exception()`` when a view raises an exception. "
 "``process_exception()`` should return either ``None`` or an :class:`~django."
 "http.HttpResponse` object. If it returns an :class:`~django.http."
-"HttpResponse` object, the template response and response middleware will be "
-"applied, and the resulting response returned to the browser. Otherwise, "
-"default exception handling kicks in."
+"HttpResponse` object, the response will be returned to the browser. "
+"Otherwise, default exception handling kicks in."
 msgstr ""
 
 # 1e291cb311d44047919954af42128bf0
-#: ../../topics/http/middleware.txt:248
+#: ../../topics/http/middleware.txt:201
 msgid ""
 "Again, middleware are run in reverse order during the response phase, which "
 "includes ``process_exception``. If an exception middleware returns a "
@@ -392,12 +301,12 @@ msgid ""
 msgstr ""
 
 # 4ab431f1159e4453b51ef2c3b635ee6a
-#: ../../topics/http/middleware.txt:253
+#: ../../topics/http/middleware.txt:206
 msgid "``__init__``"
 msgstr ""
 
 # 2aea601c51d146afb739b9130e161b1b
-#: ../../topics/http/middleware.txt:255
+#: ../../topics/http/middleware.txt:208
 msgid ""
 "Most middleware classes won't need an initializer since middleware classes "
 "are essentially placeholders for the ``process_*`` methods. If you do need "
@@ -406,14 +315,14 @@ msgid ""
 msgstr ""
 
 # 275eb6f469f34bc1a52589963edc28d5
-#: ../../topics/http/middleware.txt:260
+#: ../../topics/http/middleware.txt:213
 msgid ""
 "Django initializes your middleware without any arguments, so you can't "
 "define ``__init__`` as requiring any arguments."
 msgstr ""
 
 # ab80e1bdf7af4ad19af38aaca25afe9b
-#: ../../topics/http/middleware.txt:263
+#: ../../topics/http/middleware.txt:216
 msgid ""
 "Unlike the ``process_*`` methods which get called once per request, "
 "``__init__`` gets called only *once*, when the Web server responds to the "
@@ -421,31 +330,31 @@ msgid ""
 msgstr ""
 
 # 5d4b468fa68e4ab9b4f7d016f6a5e6bf
-#: ../../topics/http/middleware.txt:268
+#: ../../topics/http/middleware.txt:221
 msgid "Marking middleware as unused"
 msgstr ""
 
-# 95a921180017456c8dfce0876672b286
-#: ../../topics/http/middleware.txt:270
+# d592fad0df0241fea5e03f12ce82329b
+#: ../../topics/http/middleware.txt:223
 msgid ""
 "It's sometimes useful to determine at run-time whether a piece of middleware "
 "should be used. In these cases, your middleware's ``__init__`` method may "
-"raise :exc:`django.core.exceptions.MiddlewareNotUsed`. Django will then "
-"remove that piece of middleware from the middleware process."
+"raise ``django.core.exceptions.MiddlewareNotUsed``. Django will then remove "
+"that piece of middleware from the middleware process."
 msgstr ""
 
 # fd06570ca7074d8cb336176101cd8e0b
-#: ../../topics/http/middleware.txt:276
+#: ../../topics/http/middleware.txt:229
 msgid "Guidelines"
 msgstr ""
 
 # 887504fc929d431e9ce737124c2c2012
-#: ../../topics/http/middleware.txt:278
+#: ../../topics/http/middleware.txt:231
 msgid "Middleware classes don't have to subclass anything."
 msgstr ""
 
 # 823ac78eb8ea4cd9a43a2dd86d9cf735
-#: ../../topics/http/middleware.txt:280
+#: ../../topics/http/middleware.txt:233
 msgid ""
 "The middleware class can live anywhere on your Python path. All Django cares "
 "about is that the :setting:`MIDDLEWARE_CLASSES` setting includes the path to "
@@ -453,14 +362,14 @@ msgid ""
 msgstr ""
 
 # edc413f69b2e40fb80b878dcf877dc30
-#: ../../topics/http/middleware.txt:284
+#: ../../topics/http/middleware.txt:237
 msgid ""
 "Feel free to look at :doc:`Django's available middleware </ref/middleware>` "
 "for examples."
 msgstr ""
 
 # 19d38223e5ce43a4873087b7d591b808
-#: ../../topics/http/middleware.txt:287
+#: ../../topics/http/middleware.txt:240
 msgid ""
 "If you write a middleware component that you think would be useful to other "
 "people, contribute to the community! :doc:`Let us know </internals/"
