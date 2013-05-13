@@ -34,7 +34,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="./index.html">Django 1.4 documentation</a>
+          <a class="brand" href="./index.html">Django 1.5 documentation</a>
           <div class="nav-collapse">
             <ul class="nav">
               <li><a title="Djbook.ru" href="http://djbook.ru">Djbook.ru</a></li>
@@ -50,34 +50,32 @@
 
     <div class="container main">
         <div class="row">
-            <div class="span3">Всего:</div>
-            <div class="span9">
+            <div class="span5">Всего:</div>
+            <div class="span7">
                 <div class="progress {% if total != 100 %}progress-danger{% endif %} progress-striped">
                     <div class="bar" style="width: {{ total }}%;">{{ total }}%</div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="span3">Основные разделы:</div>
-            <div class="span9">
+            <div class="span5">Основные разделы:</div>
+            <div class="span7">
                 <div class="progress {% if total != 100 %}progress-danger{% endif %} progress-striped">
                     <div class="bar" style="width: {{ main_total }}%;">{{ main_total }}%</div>
                 </div>
             </div>
         </div>
         <br/>
-        {% for row in statistic|batch(2, ('', 0)) %}
+        {% for name, perc in statistic|sort %}
             <div class="row">
-                {% for name, perc in row %}
-                    {% if name %}
-                    <div class="span3">{{ name }}</div>
-                    <div class="span3">
-                        <div class="progress {% if perc != 100 %}progress-danger{% endif %}">
-                            <div class="bar" style="width: {{ perc }}%;">{{ perc }}%</div>
-                        </div>
+                {% if name %}
+                <div class="span5">{{ name }}</div>
+                <div class="span7">
+                    <div class="progress {% if perc != 100 %}progress-danger{% endif %}">
+                        <div class="bar" style="width: {{ perc }}%;">{{ perc }}%</div>
                     </div>
-                    {% endif %}
-                {% endfor %}
+                </div>
+                {% endif %}
             </div>
         {% endfor %}
     </div> <!-- /container -->

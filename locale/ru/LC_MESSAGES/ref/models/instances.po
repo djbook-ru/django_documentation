@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated <>, 2012.
+# Automatically generated <>, 2012, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-27 00:21\n"
-"PO-Revision-Date: 2012-03-24 00:26+0200\n"
+"PO-Revision-Date: 2013-05-13 00:33+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -80,16 +80,20 @@ msgid ""
 "as any change may prevent the model instance from being saved. Rather than "
 "overriding ``__init__``, try using one of these approaches:"
 msgstr ""
+"Возможно вам захочется переопределить метод ``__init__``. В таком случае не "
+"переопределяйте сигнатуру вызова этого метода, иначе объект модели может не "
+"сохраняться. Вместо переопределения ``__init__`` лучше используйте один из "
+"следующих подходов:"
 
 # e484785c269c4b5480bea184149e8068
 #: ../../ref/models/instances.txt:35
 msgid "Add a classmethod on the model class::"
-msgstr ""
+msgstr "Добавить метод класса в модель::"
 
 # 9212d78f8f2346a48ec444903a7425f0
 #: ../../ref/models/instances.txt:48
 msgid "Add a method on a custom manager (usually preferred)::"
-msgstr ""
+msgstr "Добавить метод в менеджер модели(лучший вариант)::"
 
 # a1af197f5374441fbd6f668e42644aef
 #: ../../ref/models/instances.txt:66
@@ -103,21 +107,18 @@ msgstr "Проверка объектов модели проходив в тр�
 
 # 2d28ada844a04da99aff382e3cec5dcd
 #: ../../ref/models/instances.txt:70
-#, fuzzy
 msgid "Validate the model fields - :meth:`Model.clean_fields()`"
-msgstr "Проверка полей модели"
+msgstr "Проверка полей модели - :meth:`Model.clean_fields()`"
 
 # 5960436d670c49339e1f8a77a898d12f
 #: ../../ref/models/instances.txt:71
-#, fuzzy
 msgid "Validate the model as a whole - :meth:`Model.clean()`"
-msgstr "Проверка всего объекта"
+msgstr "Проверка всего объекта - :meth:`Model.clean()`"
 
 # d3c5d873719c4115a6ed637da6a6642b
 #: ../../ref/models/instances.txt:72
-#, fuzzy
 msgid "Validate the field uniqueness - :meth:`Model.validate_unique()`"
-msgstr "Проверка уникальности полей"
+msgstr "Проверка уникальности полей - :meth:`Model.validate_unique()`"
 
 # c04c6f856f3f42c9af2f08d69dce7d7b
 #: ../../ref/models/instances.txt:74
@@ -174,7 +175,6 @@ msgstr ""
 
 # 1a6a7d81bc384d96aad756aad0f488ca
 #: ../../ref/models/instances.txt:98
-#, fuzzy
 msgid ""
 "Note that ``full_clean()`` will *not* be called automatically when you call "
 "your model's :meth:`~Model.save()` method, nor as a result of :class:"
@@ -184,8 +184,9 @@ msgid ""
 msgstr ""
 "Заметим, ``full_clean()`` *не* вызывается ни при вызове метода :meth:`~Model."
 "save()` модели, ни в результате проверки в :class:`~django.forms.ModelForm`. "
-"Этот метод используется для выполнения полной проверки объекта модели, "
-"созданного в коде."
+"В этом случае вызывается :class:`~django.forms.ModelForm` validation, :meth:"
+"`Model.clean_fields()`, :meth:`Model.clean()` и :meth:`Model.validate_unique"
+"()`."
 
 # e1a3dcc242d3470fad26fa9bd9828a0d
 #: ../../ref/models/instances.txt:105
@@ -193,6 +194,8 @@ msgid ""
 "You'll need to call ``full_clean`` manually when you want to run one-step "
 "model validation for your own manually created models. For example::"
 msgstr ""
+"Если вы хотите проверить созданный вами объект, вызовите ``full_clean``. "
+"Например::"
 
 # 6c596143cc8a410eadd412441a29c35c
 #: ../../ref/models/instances.txt:115
@@ -629,6 +632,8 @@ msgstr ""
 msgid ""
 "Using ``update_fields`` will force an update similarly to ``force_update``."
 msgstr ""
+"Использование ``update_fields`` инициирует обновление объекта, как и при "
+"вызове ``force_update``."
 
 # 3e9e7e8e699741929140673d8bdd9a74
 #: ../../ref/models/instances.txt:328
@@ -717,7 +722,7 @@ msgstr ""
 # cf9cce4cc6d648e397d828700475686a
 #: ../../ref/models/instances.txt:373
 msgid "Specifying which fields to save"
-msgstr ""
+msgstr "Указываем какие поля сохранять"
 
 # d44d33036cd24ff7a4e8f6a13cc28a44
 #: ../../ref/models/instances.txt:377
@@ -728,6 +733,10 @@ msgid ""
 "object. There will be a slight performance benefit from preventing all of "
 "the model fields from being updated in the database. For example::"
 msgstr ""
+"Если в ``save()`` передать именованный аргумент ``update_fields`` со списком "
+"полей модели, только эти поля будут обновлены. Это может пригодиться, если "
+"вы хотите обновить одно или несколько полей. Таким образом можно получить "
+"небольшой прирост в производительности. Например::"
 
 # 1a08e6b87af34a76ad19581af20ed6bc
 #: ../../ref/models/instances.txt:386
@@ -736,11 +745,13 @@ msgid ""
 "empty ``update_fields`` iterable will skip the save. A value of None will "
 "perform an update on all fields."
 msgstr ""
+"``update_fields`` может принимать любой итератор строк. Пустой "
+"``update_fields`` пропустит сохранение. None сохранит все поля."
 
 # 543907df97154c85a0766942aee3fddb
 #: ../../ref/models/instances.txt:390
 msgid "Specifying ``update_fields`` will force an update."
-msgstr ""
+msgstr "Указав ``update_fields`` вы инициируете редактирование записи."
 
 # 2aeecc4ffc9b43f5868ae4fd5ae12425
 #: ../../ref/models/instances.txt:392
@@ -752,6 +763,11 @@ msgid ""
 "change any deferred field value, the field will be added to the updated "
 "fields."
 msgstr ""
+"Если модель была загружена не со всеми полями (через :meth:`~django.db."
+"models.query.QuerySet.only()` или :meth:`~django.db.models.query.QuerySet."
+"defer()`), только загруженные поля будут сохранены. В этом случае "
+"``update_fields`` будет определен автоматически. Если значение поля будет "
+"изменено, оно будет добавлено в список для обновления."
 
 # 5710063c94b64f6a9867bbff8de57716
 #: ../../ref/models/instances.txt:400
@@ -892,16 +908,14 @@ msgstr ""
 
 # c2e13c9d8417413bac11402b7b71ad6d
 #: ../../ref/models/instances.txt:484
-#, fuzzy
 msgid ""
 "(Whilst this code is correct and simple, it may not be the most portable way "
 "to write this kind of method. The :func:`~django.core.urlresolvers.reverse` "
 "function is usually the best approach.)"
 msgstr ""
 "(Хотя это код правильный и простой, но такой подход не самый лучший для "
-"создания подобных методов. :func:`декоратор permalink() <permalink>`, "
-"описанный ниже, предоставляет лучший подход и вам следует прочитать о нем "
-"перед тем, как приняться за написание кода.)"
+"создания подобных методов. Лучше использовать функцию :func:`~django.core."
+"urlresolvers.reverse`.)"
 
 # f01a31faf0bc4c679cb0db2cfa8b3b01
 #: ../../ref/models/instances.txt:493
@@ -931,19 +945,17 @@ msgstr ""
 
 # c79820e1a3f049c6b2afbf034475175e
 #: ../../ref/models/instances.txt:503
-#, fuzzy
 msgid ""
 "It's good practice to use ``get_absolute_url()`` in templates, instead of "
 "hard-coding your objects' URLs. For example, this template code is bad:"
 msgstr ""
 "Хорошая практика использовать ``get_absolute_url()`` в шаблонах, вместо того "
-"что бы \"хард-кодить\" URL-ы. Например, это плохой подход::"
+"что бы \"хард-кодить\" URL-ы. Например, это плохой подход:"
 
 # 366627a9ab644c97b9436cbfe11008c1
 #: ../../ref/models/instances.txt:511
-#, fuzzy
 msgid "This template code is much better:"
-msgstr "Этот шаблон значительно лучше::"
+msgstr "Этот шаблон значительно лучше:"
 
 # f6ba7b82b1be4413bd17195594598517
 #: ../../ref/models/instances.txt:517
@@ -995,6 +1007,8 @@ msgid ""
 "`~django.core.urlresolvers.reverse` in the body of your ``get_absolute_url`` "
 "method instead."
 msgstr ""
+"Декоратор ``permalink`` больше не рекомендуется. Следует использовать :func:"
+"`~django.core.urlresolvers.reverse` в методе ``get_absolute_url``."
 
 # 0f2a9906c5454e6f8e5d462596a1630d
 #: ../../ref/models/instances.txt:542
@@ -1007,6 +1021,12 @@ msgid ""
 "func:`~django.core.urlresolvers.reverse` there is no reason to use "
 "``permalink`` any more."
 msgstr ""
+"В ранних версиях Django не было просто способа использовать URL определенный "
+"в URLconf в методе :meth:`~django.db.models.Model.get_absolute_url`. Вам "
+"приходилось определять URL и в URLConf и в :meth:`~django.db.models.Model."
+"get_absolute_url`. Для соблюдения DRY принципа был добавлен декоратор "
+"``permalink``. Но после представления функции :func:`~django.core."
+"urlresolvers.reverse` отпала надобность в ``permalink``."
 
 # 0de89d47f43f44d49c394757dba7a1cb
 #: ../../ref/models/instances.txt:552
@@ -1023,14 +1043,13 @@ msgstr ""
 
 # daa122604922490fb98638f694970b68
 #: ../../ref/models/instances.txt:557
-#, fuzzy
 msgid ""
 "The ``permalink`` decorator is a Python-level equivalent to the :ttag:`url` "
 "template tag and a high-level wrapper for the :func:`~django.core."
 "urlresolvers.reverse` function."
 msgstr ""
 "Декоратор ``permalink`` это эквивалент шаблонного тега :ttag:`url` и обертка "
-"для функции :func:`django.core.urlresolvers.reverse()`."
+"для функции :func:`~django.core.urlresolvers.reverse`."
 
 # 1655bcda94964ca3bf1dbeae206f18d7
 #: ../../ref/models/instances.txt:561
@@ -1043,13 +1062,12 @@ msgstr ""
 
 # b7b893018cd1456b8026524b479956c1
 #: ../../ref/models/instances.txt:566
-#, fuzzy
 msgid ""
 "...your model could have a :meth:`~django.db.models.Model.get_absolute_url` "
 "method that looked like this::"
 msgstr ""
 "...ваша модель может определить метод :meth:`~django.db.models.Model."
-"get_absolute_url()` таким образом::"
+"get_absolute_url` таким образом::"
 
 # 802da1e481af4c5082ad2fed6faeaae9
 #: ../../ref/models/instances.txt:575
@@ -1137,7 +1155,6 @@ msgstr ""
 
 # e0af5f91ae4a45bfa89adb4e84adaa04
 #: ../../ref/models/instances.txt:628
-#, fuzzy
 msgid ""
 "For every field that has :attr:`~django.db.models.Field.choices` set, the "
 "object will have a ``get_FOO_display()`` method, where ``FOO`` is the name "
@@ -1145,12 +1162,10 @@ msgid ""
 msgstr ""
 "Для каждого поля, которое содержит :attr:`~django.db.models.Field.choices`, "
 "объект будет иметь метод ``get_FOO_display()``, где ``FOO`` имя поля. Этот "
-"метод возвращает удобное для восприятия название для значения поля. "
-"Например, в следующей модели::"
+"метод возвращает удобное для восприятия название для значения поля."
 
 # 29b4c3a7c4604d31883039917f636f41
 #: ../../ref/models/instances.txt:657
-#, fuzzy
 msgid ""
 "For every :class:`~django.db.models.DateField` and :class:`~django.db.models."
 "DateTimeField` that does not have :attr:`null=True <django.db.models.Field."
