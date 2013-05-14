@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-23 16:09\n"
-"PO-Revision-Date: 2013-05-13 00:55+0300\n"
+"PO-Revision-Date: 2013-05-15 00:31+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -449,6 +449,11 @@ msgid ""
 "are executed before url resolving takes place (like ``process_request``, you "
 "can use ``process_view`` instead)."
 msgstr ""
+"Экземпляр :class:`~django.core.urlresolvers.ResolverMatch` представляющий "
+"запрошенный URL. Атрибут устанавливается при поиске подходящего URL-шаблона, "
+"это значит что middleware он не доступен т.к. они вызывается до обработки "
+"URL-а (в таком случае вместо ``process_request`` можно использовать "
+"``process_view``)."
 
 # 08c634bbd3554176b2dca88a53fd6a3d
 # 44d3adacb90c42afbf3855e352ba8cff
@@ -954,6 +959,9 @@ msgid ""
 "response if (and only if) no middleware accesses the :attr:`HttpResponse."
 "content` attribute before the response is returned."
 msgstr ""
+"При передаче итератора в :class:`HttpResponse` создается потоковый"
+"(streaming) ответ, но только если middleware не обращался к :attr:"
+"`HttpResponse.content` до возвращения ответа."
 
 # 09fca820a0514ad3a8826113b17cae72
 #: ../../ref/request-response.txt:578
@@ -962,6 +970,8 @@ msgid ""
 "response to be streamed from the iterator to the client, you should use the :"
 "class:`StreamingHttpResponse` class instead."
 msgstr ""
+"Этот способ считается устаревшим с Django 1.5. Используйте :class:"
+"`StreamingHttpResponse`."
 
 # 8c98f3ddad43439dae2cebbd91b3be4b
 #: ../../ref/request-response.txt:582
@@ -970,6 +980,8 @@ msgid ""
 "iterator, it will consume it immediately, store the response content as a "
 "string, and discard the iterator."
 msgstr ""
+"С Django 1.7 при передаче итератора в :class:`HttpResponse` он будет сразу "
+"выполнятся, а результат сохраняться как содержимое ответа."
 
 # 70de778a52b24bfdb192172899ba324c
 #: ../../ref/request-response.txt:588
@@ -978,6 +990,9 @@ msgid ""
 "instantiated with an iterator. Django will consume and save the content of "
 "the iterator on first access."
 msgstr ""
+"Теперь вы можете использовать :class:`HttpResponse` как объект-файл, даже "
+"если он был создан с итератором. Django выполнит итератор и сохранит "
+"результат при первом обращении."
 
 # 24256c8432e043ac9f8283f9c273f8f8
 #: ../../ref/request-response.txt:593
@@ -1055,7 +1070,7 @@ msgstr ""
 # 647a9b26265d4c81923f0da7b74d2cc1
 #: ../../ref/request-response.txt:634
 msgid "This is always ``False``."
-msgstr ""
+msgstr "Всегда ``False``."
 
 # 8d5007b0b9aa4133ae147a06db2b8614
 #: ../../ref/request-response.txt:636
@@ -1063,6 +1078,8 @@ msgid ""
 "This attribute exists so middleware can treat streaming responses "
 "differently from regular responses."
 msgstr ""
+"Указывает middleware, что этот ответ потоковый и его нужно обрабатывать не "
+"так, как обычные запросы."
 
 # 6cc7098661804a12ab60f6b9f276386c
 #: ../../ref/request-response.txt:644
@@ -1093,11 +1110,17 @@ msgid ""
 "specified, it is formed by the :setting:`DEFAULT_CONTENT_TYPE` and :setting:"
 "`DEFAULT_CHARSET` settings, by default: \"`text/html; charset=utf-8`\"."
 msgstr ""
+"``content_type`` - MIME-тип, возможно с кодировкой, используется в HTTP "
+"заголовке ``Content-Type``. Если не указан, используются настройки :setting:"
+"`DEFAULT_CONTENT_TYPE` и :setting:`DEFAULT_CHARSET`, по умолчанию: \"`text/"
+"html; charset=utf-8`\"."
 
 # b55aac3ee7c348fd97ddc31f159e0d1a
 #: ../../ref/request-response.txt:658
 msgid "Historically, this parameter was called ``mimetype`` (now deprecated)."
 msgstr ""
+"Раньше этот параметр назывался ``mimetype``(теперь этот атрибут считается "
+"устаревшим)."
 
 # 0f62f3e25a4f4deb8426026dd1a87a83
 #: ../../ref/request-response.txt:660
