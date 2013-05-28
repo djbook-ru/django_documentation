@@ -20,6 +20,7 @@ def create_statistic():
     translated = 0
 
     main = ['/intro/', '/howto/', '/ref/', '/faq/', '/topics/']
+    exclude = ['/releases/']
     main_total = 0
     main_translated = 0
 
@@ -30,6 +31,16 @@ def create_statistic():
                 po = pofile(po_path)
 
                 name = po_path[len(LOCALE_PATH):]
+
+                excluded = False
+                for item in exclude:
+                    if name.startswith(item):
+                        excluded = True
+                        break
+
+                if excluded:
+                    continue
+
                 statistic.append((unicode(name),  po.percent_translated()))
 
                 msg_total = len([e for e in po if not e.obsolete])
