@@ -1,12 +1,71 @@
+============
+Installation
+============
+
+To install all required packages run:
+
+    $ pip install -r djbook/deps.txt
+
+============
+How to start
+============
+
+You can find .po files in `locale/ru/LC_MESSAGES` folder.
+
+To build documentation HTML run:
+
+    $ ./translator.py create
+
+Generated HTML you can find in `_build/html`.
+
+So find .po you wish to translate, add changes and run `./translator.py create`.
+
+=============
+translator.py
+=============
+
+----------
+Base usage
+----------
+
+To list all command run:
+
+    $ ./translator.py --help
+
+To get info about some command run:
+
+    $ ./translator.py help [command_name]
+
+--------------
+Output control
+--------------
+
+Use ``--debug`` option to see debug info and error traceback.
+Use ``-v`` for verbose output.
+Use ``-q`` for quiet execute.
+
+---------------
+Add new command
+---------------
+
+We use https://github.com/dhellmann/cliff with a little bit fixed command loader.
+You can find command in ``djbook.commands`` package.
+
+There are three level of output:
+
+    self.app.stdout.write('hi!\n')     # default output
+    self.log.info('sending greeting')  # verbose output
+    self.log.debug('debugging')        # debug output
+
 Base usage
 ----------
 
 # To update translation and create doc use:
 $ ./create.sh
 
-
-Update documentation
---------------------
+====================================================
+Update documentation from Django source code
+====================================================
 
 Copy content of django/docs folder to django_documentation.
 
@@ -15,21 +74,18 @@ Add this to conf.py:
     sys.path.append(abspath(join(dirname(__file__), "djbook")))
     from djbook_conf import *
 
-Create .pot files:
+Then update .po files:
 
-    $ sphinx-build -b gettext . _build/translation
-
-Then update .po files from .pot files:
-
-    $ python update_po.py
+    $ ./translator.py makemessages
 
 Notes
 -----
 
 In `djbook/_theme/djbook/layout.html` are hardcoded link to comments scripts from server.
 
+=====
 Hints
------
+=====
 
 В оригинале часто используют ссылки следующего вида:
 

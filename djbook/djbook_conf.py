@@ -15,3 +15,5 @@ html_theme = "djbook"
 language = 'ru'
 locale_dirs = ['./locale/']
 gettext_compact = False
+
+exclude_patterns = ['_build', 'djbook']
