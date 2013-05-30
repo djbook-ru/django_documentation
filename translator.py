@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 from cliff.app import App
 from djbook import commands
 import imp
