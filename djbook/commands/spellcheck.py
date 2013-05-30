@@ -13,7 +13,7 @@ class Command(BaseCommand):
         re.compile(r'^@\(#\) Yandex Speller 1\.0$'),
     )
     missed_pattern = re.compile('^# (?P<word>.+) \d+$')
-    error_pattern = re.compile('^& .+$')
+    error_pattern = re.compile('^& (?P<word>.+) \d+ \d+: (?P<correct_word>.+)$')
     log = logging.getLogger(__name__)
 
     def __init__(self, *args, **kwargs):
@@ -78,5 +78,10 @@ class Command(BaseCommand):
             if missed_match and unicode(missed_match.group('word'), encoding='utf-8').lower() in self.ignore_words and not parsed_args.no_ignore:
                 return True
 
-            if parsed_args.show_missed and self.error_pattern.match(line):
+            error_match = self.error_pattern.match(line)
+
+            if parsed_args.show_missed and error_match:
+                return True
+
+            if error_match and unicode(error_match.group('word'), encoding='utf-8').lower() in self.ignore_words and not parsed_args.no_ignore:
                 return True
