@@ -9,6 +9,7 @@ class Command(BaseCommand):
     """
     Spell check .po files.
     """
+
     ignore_patterns = (
         re.compile(r'^@\(#\) Yandex Speller 1\.0$'),
     )
@@ -19,10 +20,11 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
 
-        ignore_file_path = os.path.join(self.app.doc_path, 'djbook', 'spellcheck_ignore.txt')
+        if getattr(self.app, 'doc_path', None):
+            ignore_file_path = os.path.join(self.app.doc_path, 'djbook', 'spellcheck_ignore.txt')
 
-        with open(ignore_file_path) as f:
-            self.ignore_words = [unicode(s, 'utf-8').lower() for s in f.read().split('\n')]
+            with open(ignore_file_path) as f:
+                self.ignore_words = [unicode(s, 'utf-8').lower() for s in f.read().split('\n')]
 
     def get_parser(self, prog_name):
         parser = super(Command, self).get_parser(prog_name)
