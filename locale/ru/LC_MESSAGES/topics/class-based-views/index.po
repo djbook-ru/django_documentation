@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Django 1.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-27 00:21\n"
-"PO-Revision-Date: 2013-02-27 00:21\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2013-06-15 16:56+0300\n"
+"Last-Translator: aum <compfaculty@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -17,11 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.5.4\n"
 
 # 4e1992488b434b25b562db9a20c24a60
 #: ../../topics/class-based-views/index.txt:3
 msgid "Class-based views"
-msgstr ""
+msgstr "Представления-классы (Class-based views, CBV)"
 
 # 1dc82f765aab4dc2a4211e6d5dc1fd2d
 #: ../../topics/class-based-views/index.txt:5
@@ -35,11 +36,25 @@ msgid ""
 "details, see the :doc:`class-based views reference documentation</ref/class-"
 "based-views/index>`."
 msgstr ""
+"Представление,  в самом общем виде, - это исполняемый(callable) объект, "
+"который принимает \"на вход\" запрос (request), и возвращает ответ"
+"(response). В этой роли может выступать не только функция, но и классы - и "
+"Django предоставляет нам такие классы и примеры их использования.  Такие "
+"классы позволяют создавать структурированные, повторно используемые "
+"представления, базируясь на возможностях наследования и, в том числе,  "
+"множественного наследования, -  с использованием примесей(mixins). Django "
+"включает в себя набор общих(generic) представлений, которые идеально "
+"подходят для решения ряда рутинных задач(мы рассмотрим их позже). Ну и "
+"конечно, вы можете использовать существующие классы Django для создания "
+"собственных, расширяемых и повторно используемых представлений, которые "
+"будут полностью удовлетворять вашим потребностям. За более полной "
+"информацией обратитесь к :doc:`документация по классам-представлениям </ref/"
+"class-based-views/index>`."
 
 # 31af98e814f749289905f969f14953a5
 #: ../../topics/class-based-views/index.txt:22
 msgid "Basic examples"
-msgstr ""
+msgstr "Простые примеры"
 
 # 2671579316004cb4902d1c7d82a56355
 #: ../../topics/class-based-views/index.txt:24
@@ -52,11 +67,21 @@ msgid ""
 "generic.base.TemplateView` extends the base class to make it also render a "
 "template."
 msgstr ""
+"Django предлагает нам базовый набор классов представлений, который может "
+"использоваться в широком спектре приложений. Все классы-представления "
+"наследуют класс :class:`~django.views.generic.base.View`, который "
+"обрабатывает \"привязку\" представления с соответствующими URL, "
+"диспетчеризацию HTTP запросов(анализ методов GET, POST и последующий вызов "
+"одноименного метода для обработки запроса) и ряд других простых действий. "
+"Класс  :class:`~django.views.generic.base.RedirectView` служит для простого "
+"HTTP перенаправления(redirect), а класс :class:`~django.views.generic.base."
+"TemplateView` расширяет базовый класс, предоставляя возможность обработки "
+"шаблонов."
 
 # fa8fd291147e4dd9b9fd44d0da82d53a
 #: ../../topics/class-based-views/index.txt:33
 msgid "Simple usage in your URLconf"
-msgstr ""
+msgstr "Использование CBV в ваших URLconf"
 
 # 4254d7dcd0d94996b387ae8b1b3c410e
 #: ../../topics/class-based-views/index.txt:35
@@ -66,6 +91,11 @@ msgid ""
 "view, you can simply pass them into the :meth:`~django.views.generic.base."
 "View.as_view` method call itself::"
 msgstr ""
+"Самой простой (прим. пер. но не самый верный) способ использования общих "
+"классов-представлений, - это создание них непосредственно в вашем URLconf. "
+"Если переопределяете всего несколько простых атрибутов в классе-"
+"представлении, вы можете просто передать эти значения как аргументы метода  :"
+"meth:`~django.views.generic.base.View.as_view`::"
 
 # 0e702fb0570041739ae0a3b46f83dfc7
 #: ../../topics/class-based-views/index.txt:47
@@ -76,11 +106,17 @@ msgid ""
 "be used for the ``url`` attribute on :class:`~django.views.generic.base."
 "RedirectView`."
 msgstr ""
+"Любые аргументы, переданные в  :meth:`~django.views.generic.base.View."
+"as_view` переопределят значения этих же аргументов, указанных в теле класса. "
+"В данном примере, мы назначаем атрибут ``template_name`` для класса "
+"``TemplateView``. Такой же принцип может быть использован для "
+"переопределения атрибута ``url`` в классе :class:`~django.views.generic.base."
+"RedirectView`."
 
 # f66b832eb1c3405c93710f897d398a29
 #: ../../topics/class-based-views/index.txt:54
 msgid "Subclassing generic views"
-msgstr ""
+msgstr "Использование общих классов-представлений в наследовании"
 
 # c42231bda2424dd7bc6cc63c2d1fb179
 #: ../../topics/class-based-views/index.txt:56
@@ -93,6 +129,17 @@ msgid ""
 "`~django.views.generic.base.TemplateView` - so we can just subclass it, and "
 "override the template name::"
 msgstr ""
+"Второй, более мощный и гибкий способ использования общих CBV, это "
+"использование их в качестве родительских классов. Вы можете указать эти "
+"классы в качестве родительских для вашего пользовательского класса-"
+"представления и переопределить в теле вашего класса значения атрибутов "
+"(таких как ``template_name``) или методы (такие как  ``get_context_data``), "
+"определив тем самым специфику его работы. Рассмотрим к примеру "
+"представление, которое просто отображает один шаблон , ``about.html``. "
+"Django предоставляет нам общий класс-представление  :class:`~django.views."
+"generic.base.TemplateView` для побобных задач - и все что нам надо сделать, "
+"- унаследовать этот класс в дочернем, пользовательском,  классе и "
+"переопределить имя шаблона::"
 
 # 4bb4df0a7fde4aa7be3b3dbee8dc0a8a
 #: ../../topics/class-based-views/index.txt:70
@@ -102,6 +149,11 @@ msgid ""
 "to the :meth:`~django.views.generic.base.View.as_view` class method instead, "
 "which provides a function-like entry to class-based views::"
 msgstr ""
+"Затем мы должны просто добавить это новое представление в наш URLconf.  "
+"`~django.views.generic.base.TemplateView` - это класс, а не функция. Чтобы "
+"связать URL и функцию представления ( как это делается для \"классических\" "
+"представлений), мы используем  специальный метод класса-представления   :"
+"meth:`~django.views.generic.base.View.as_view`::"
 
 # 4455863a35f4417188ea370333541a55
 #: ../../topics/class-based-views/index.txt:84
@@ -110,11 +162,14 @@ msgid ""
 "next topic on :doc:`generic class based views</topics/class-based-views/"
 "generic-display>`."
 msgstr ""
+"Для дополнительной информации по использованию общих(generic) представлений-"
+"классов, смотрите раздел :doc:`Общие классы-представления</topics/class-"
+"based-views/generic-display>`."
 
 # ffb1788a497a41cd84c1360960a3b3a8
 #: ../../topics/class-based-views/index.txt:90
 msgid "Supporting other HTTP methods"
-msgstr ""
+msgstr "Поддержка других методов HTTP"
 
 # 030f215f234244adb11397aacd40597f
 #: ../../topics/class-based-views/index.txt:92
@@ -126,16 +181,27 @@ msgid ""
 "the database, render a full response and send it to the client. It might be "
 "preferable to ask the API when the most recent book was published."
 msgstr ""
+"Предположим, кто-то хочет получить доступ к списку книг в нашей библиотеке, "
+"используя для этого HTTP и наши представления в качестве API. Клиент, "
+"работающий с API, будет коннектиться к сайту и получать данные о книгах с "
+"момента последнего визита. Но если новых книг не появилось, то мы "
+"сталкиваемся с проблемой непродуктивного расходования времени CPU,  создания "
+"ненужных запросов к БД:  все это лишь с целью того, чтобы вернуть "
+"пользователю ответ, \"что новых книг нет\". Было бы предпочтительней "
+"перенести в API функцию, проверяющую наличие обновлений( дату появления "
+"последней новой книги)."
 
 # 86b3a6c0880649b3b1c1dcbba37cbada
 #: ../../topics/class-based-views/index.txt:99
 msgid "We map the URL to book list view in the URLconf::"
 msgstr ""
+"В URLconf мы создаем отображение URL на представление, выводящее список "
+"книг::"
 
 # fd417ea95107429bb8d751e9302cd8ec
 #: ../../topics/class-based-views/index.txt:108
 msgid "And the view::"
-msgstr ""
+msgstr "И, собственно, само представление::"
 
 # 095a0cc5356c4c839618a1cd1765588d
 #: ../../topics/class-based-views/index.txt:124
@@ -147,11 +213,18 @@ msgid ""
 "Based on this information, the client may or may not download the full "
 "object list."
 msgstr ""
+"Если представление выполняется \"в контексте\"  ``GET`` запроса, то "
+"возвращается просто список объектов(используя шаблон ``book_list.html``). Но "
+"если клиент выполнит запрос с методом ``HEAD``,  то ответ(response) будет "
+"иметь пустое тело и установленный в нужное значение заголовок ``Last-"
+"Modified``, хранящий дату последних изменений в нашей \"библиотеке\".  "
+"Основываясь на этой информации, клиент должен принять решение, нужно ли "
+"( или нет ) получить и скачать полный список объектов."
 
 # 1045038e92e947c0b3dfe1a47df1ebc1
 #: ../../topics/class-based-views/index.txt:132
 msgid "Decorating class-based views"
-msgstr ""
+msgstr "Декорирование представлений-классов"
 
 # f5d005da5b6c41b4af846a34877027de
 #: ../../topics/class-based-views/index.txt:136
@@ -159,11 +232,14 @@ msgid ""
 "Since class-based views aren't functions, decorating them works differently "
 "depending on if you're using ``as_view`` or creating a subclass."
 msgstr ""
+"Поскольку CBV представления это не функции, то их декорирование(decorating) "
+"реализуется по разному, в зависимости от того, используете ли вы метод "
+"``as_view`` или создаете подклассы."
 
 # d832f9b3d488471089a526c6a80186e9
 #: ../../topics/class-based-views/index.txt:140
 msgid "Decorating in URLconf"
-msgstr ""
+msgstr "Декорирование в URLconf"
 
 # 6122365ca15048f3bb9e69de45b0d2be
 #: ../../topics/class-based-views/index.txt:142
@@ -172,6 +248,9 @@ msgid ""
 "of the :meth:`~django.views.generic.base.View.as_view` method. The easiest "
 "place to do this is in the URLconf where you deploy your view::"
 msgstr ""
+"Наиболее простой способ использования декораторов с CBV, это задекорировать "
+"вызов метода :meth:`~django.views.generic.base.View.as_view`.  В самом "
+"простом случае это можно сделать непосредственно в URLconf::"
 
 # 5b1551435d0146b6871df158e96ba751
 #: ../../topics/class-based-views/index.txt:156
@@ -180,11 +259,15 @@ msgid ""
 "every instance of a view to be decorated, you need to take a different "
 "approach."
 msgstr ""
+"Такой метод позволяет применить декоратор только к одному экземпляру класса-"
+"представления. Если вам необходимо использовать декоратор \"на уровне класса"
+"\", чтобы он применялся к каждому экземпляру, - то необходимо использовать "
+"другой подход."
 
 # 6cbe6826bb0f4af890563b52fbef3cea
 #: ../../topics/class-based-views/index.txt:163
 msgid "Decorating the class"
-msgstr ""
+msgstr "Декорирование класса"
 
 # 1b74ebf7a8f149e7a03bb65766cb75ac
 #: ../../topics/class-based-views/index.txt:165
@@ -193,6 +276,10 @@ msgid ""
 "class definition itself. To do this you apply the decorator to the :meth:"
 "`~django.views.generic.base.View.dispatch` method of the class."
 msgstr ""
+"Чтобы применить декоратор к каждому экземпляру CBV, вам необходимо "
+"задекорировать само определение класса. Чтобы сделать это, вы должны "
+"применить декоратор к методу  :meth:`~django.views.generic.base.View."
+"dispatch` класса."
 
 # 2b6757862fb046c78e40d28537f98a30
 #: ../../topics/class-based-views/index.txt:169
@@ -203,6 +290,11 @@ msgid ""
 "transforms a function decorator into a method decorator so that it can be "
 "used on an instance method. For example::"
 msgstr ""
+"Метод класса, это не совсем тоже самое, что и обычная функция. Поэтому вы не "
+"можете просто использовать декоратор функции с методом класса - вы должны "
+"сперва преобразовать его в декоратор для метода класса. Декоратор "
+"``method_decorator`` осуществляет такое преобразование, позволяя "
+"декорировать методы класса. Н-р::"
 
 # d59d7b95ea434853a77456c7e0ab6286
 #: ../../topics/class-based-views/index.txt:186
@@ -210,6 +302,8 @@ msgid ""
 "In this example, every instance of ``ProtectedView`` will have login "
 "protection."
 msgstr ""
+"В этом примере, каждый экземпляр ``ProtectedView`` будет осуществлять "
+"проверку прав доступа пользователя."
 
 # c11da2d72adc4e91abc48b081bd1a5cb
 #: ../../topics/class-based-views/index.txt:191
@@ -218,3 +312,6 @@ msgid ""
 "decorated method on the class. If your method does not accept a compatible "
 "set of parameters it will raise a ``TypeError`` exception."
 msgstr ""
+"``method_decorator`` передает  ``*args`` и ``**kwargs`` как параметры в "
+"декорируемый метод класса.  Если ваш метод не принимает схожий тип "
+"параметров, будет сгенерировано исключение ``TypeError`` exception."
