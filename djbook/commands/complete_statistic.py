@@ -5,10 +5,6 @@ import logging
 import os
 
 
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
-LOCALE_PATH = os.path.join(BASE_PATH, 'locale/ru/LC_MESSAGES')
-
-
 class Command(BaseCommand):
     """
     Calculate translation % complete and generate statistic.html
