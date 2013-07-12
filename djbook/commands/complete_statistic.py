@@ -17,7 +17,7 @@ class Command(BaseCommand):
         translated = 0
 
         main = ['/intro/', '/howto/', '/ref/', '/faq/', '/topics/']
-        exclude = ['/releases/']
+        exclude = ['/releases/', '/internals/']
         main_total = 0
         main_translated = 0
 
