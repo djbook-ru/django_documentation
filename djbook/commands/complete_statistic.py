@@ -5,10 +5,6 @@ import logging
 import os
 
 
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
-LOCALE_PATH = os.path.join(BASE_PATH, 'locale/ru/LC_MESSAGES')
-
-
 class Command(BaseCommand):
     """
     Calculate translation % complete and generate statistic.html
@@ -21,7 +17,7 @@ class Command(BaseCommand):
         translated = 0
 
         main = ['/intro/', '/howto/', '/ref/', '/faq/', '/topics/']
-        exclude = ['/releases/']
+        exclude = ['/releases/', '/internals/']
         main_total = 0
         main_translated = 0
 
