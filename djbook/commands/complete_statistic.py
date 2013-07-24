@@ -61,6 +61,7 @@ class Command(BaseCommand):
 
     def save_to_file(self, context):
         env = Environment(loader=FileSystemLoader(self.app.templates_path))
-        template = env.get_template('statistic.html')
-        with open(os.path.join(self.app.doc_path, '_build', 'html', 'statistic.html'), 'w') as output:
+        template_name = 'statistic.html'
+        template = env.get_template(template_name)
+        with open(os.path.join(self.app.doc_path, '_build', 'html', template_name), 'w') as output:
             output.write(template.render(**context).encode('utf8'))
