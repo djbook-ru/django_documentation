@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated <>, 2012.
+# Automatically generated <>, 2012, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-27 00:21\n"
-"PO-Revision-Date: 2012-02-28 00:33+0200\n"
+"PO-Revision-Date: 2013-06-06 18:12+0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -31,11 +31,15 @@ msgid ""
 "interacting with a single database. If you want to interact with multiple "
 "databases, you'll need to take some additional steps."
 msgstr ""
+"Этот документ описывает функционал Django для работы с несколькими базами "
+"данных. Большая часть документации Django предполагает, что вы работаете с "
+"единственной базой данных. Если вам требуется работать с несколькими базами "
+"данных, вам понадобится выполнить ряд дополнительных действий."
 
 # 0c5f4f719df24c168a178fda9a7f7444
 #: ../../topics/db/multi-db.txt:11
 msgid "Defining your databases"
-msgstr ""
+msgstr "Определение ваших баз данных"
 
 # 1aac27f6a23b422e9ca6badef10e531c
 #: ../../topics/db/multi-db.txt:13
@@ -47,6 +51,13 @@ msgid ""
 "for that specific connection. The settings in the inner dictionaries are "
 "described fully in the :setting:`DATABASES` documentation."
 msgstr ""
+"Первым шагом к использованию нескольких баз данных с Django будет "
+"определение серверов БД, которые вы планируете использовать. Это выполняется "
+"с помощью параметра конфигурации :setting:`DATABASES`. Этот параметр "
+"привязывает к базам данных псевдонимы, по которым эти базы будут доступны в "
+"Django и словари параметров с характеристиками подключения к ним. Эти "
+"дополнительные параметры полностью описаны в документации на :setting:"
+"`DATABASES`."
 
 # 3ec99ffaa0cc4447ae1de5179bd55f6b
 #: ../../topics/db/multi-db.txt:21
@@ -55,6 +66,10 @@ msgid ""
 "special significance. Django uses the database with the alias of ``default`` "
 "when no other database has been selected."
 msgstr ""
+"Базам данных можно назначать любой псевдоним. Тем не менее, псевдоним "
+"``default`` имеет особое значение. Django использует базу данных с "
+"псевдонимом ``default``, если явно не указано использование другой базы "
+"данных."
 
 # d6cbbc6b2d6e4a509d7a35d0801f3e8b
 #: ../../topics/db/multi-db.txt:25
@@ -62,6 +77,8 @@ msgid ""
 "The following is an example ``settings.py`` snippet defining two databases "
 "-- a default PostgreSQL database and a MySQL database called ``users``:"
 msgstr ""
+"Далее показан пример ``settings.py``, в котором определяются две базы данных "
+"-- стандартная БД PostgreSQL и БД MySQL с псевдонимом ``users``:"
 
 # 68d2b5bc84c841ceb7579353316b58cc
 #: ../../topics/db/multi-db.txt:46
@@ -73,6 +90,13 @@ msgid ""
 "used. The following is an example ``settings.py`` snippet defining two non-"
 "default databases, with the ``default`` entry intentionally left empty::"
 msgstr ""
+"Если концепция стандартной (``default``) базы данных не соответствует "
+"контексту вашего проекта, вам потребуется быть аккуратным, каждый раз "
+"указывая какую именно базу данных следует использовать в каждом случае. "
+"Django требует наличия записи ``default`` в конфигурации баз данных, но этот "
+"параметр можно оставить пустым, если вы не планируете его использовать. "
+"Следующий пример ``settings.py`` определяет две дополнительных базы данных, "
+"оставляя запись ``default`` пустой::"
 
 # cb3c2ab4bdfb4d6e8298766cab1a1dfe
 #: ../../topics/db/multi-db.txt:69
@@ -81,11 +105,14 @@ msgid ""
 "setting:`DATABASES` setting, Django will raise a ``django.db.utils."
 "ConnectionDoesNotExist`` exception."
 msgstr ""
+"Если вы попробуете получить доступ к базе данных, которая не определена в "
+"параметре конфигурации :setting:`DATABASES`, то Django выбросит исключение "
+"``django.db.utils.ConnectionDoesNotExist``."
 
 # 822de62948914e3aadf6847ceeb9174f
 #: ../../topics/db/multi-db.txt:74
 msgid "Synchronizing your databases"
-msgstr ""
+msgstr "Синхронизация ваших баз данных"
 
 # 95e12d2636b948f9b6b81858c8bf3cc9
 #: ../../topics/db/multi-db.txt:76
@@ -96,6 +123,11 @@ msgid ""
 "different database. So, to synchronize all models onto all databases in our "
 "example, you would need to call::"
 msgstr ""
+"Команда :djadmin:`syncdb` работает только с одной базой данных. По "
+"умолчанию, она работает с базой данных ``default``, но добавив аргумент :"
+"djadminopt:`--database`, вы можете указать команде, что надо работать с "
+"другой базой данных. Таким образом, для того, чтобы синхронизировать все "
+"модели со всеми базами данных, вам потребуется сделать::"
 
 # 5011b97dd9e04ced98c10edc1cac8c98
 #: ../../topics/db/multi-db.txt:85
@@ -105,6 +137,9 @@ msgid ""
 "routing>` that implements a policy constraining the availability of "
 "particular models."
 msgstr ""
+"Если не хотите, чтобы модели приложения синхронизировались в конкретную базу "
+"данных, вы можете определить :ref:`роутер<topics-db-multi-db-routing>`, "
+"который будет управлять размещением моделей по базам данных"
 
 # eac0ffc7172d47d186381a7a5b506398
 #: ../../topics/db/multi-db.txt:90
@@ -113,11 +148,14 @@ msgid ""
 "pipe all or part of the output of :djadmin:`sqlall` for a particular "
 "application directly into your database prompt, like this::"
 msgstr ""
+"Аналогично, если вам нужен более тонкий контроль над синхронизацией, вы "
+"можете перенаправить весь или часть потока от команды :djadmin:`sqlall` для "
+"определённого приложения прямо в командную строку базы данных, вот так::"
 
 # 7b239145c2134716baa306929f3728dd
 #: ../../topics/db/multi-db.txt:97
 msgid "Using other management commands"
-msgstr ""
+msgstr "Использование других команд"
 
 # 129b927ced0b4213a495b5c27e38f26d
 #: ../../topics/db/multi-db.txt:99
@@ -127,11 +165,15 @@ msgid ""
 "one database at a time, using :djadminopt:`--database` to control the "
 "database used."
 msgstr ""
+"Остальные команды ``django-admin.py``, работающие с базой данных, "
+"аналогичны :djadmin:`syncdb` -- т.е., только с одной базой данных за раз. "
+"Добавляйте :djadminopt:`--database`, чтобы указать какую базу данных следует "
+"использовать."
 
 # 8a3dbcfac1b043e58999147cf37a3fb4
 #: ../../topics/db/multi-db.txt:107
 msgid "Automatic database routing"
-msgstr ""
+msgstr "Автоматический роутинг для баз данных"
 
 # 001e42d0fdc345c5af0fc847a761bd3c
 #: ../../topics/db/multi-db.txt:109
@@ -143,6 +185,12 @@ msgid ""
 "if a database isn't specified, all queries fall back to the ``default`` "
 "database."
 msgstr ""
+"Простейшим способом использования нескольких баз данных является настройка "
+"схемы роутинга. Стандартная схема роутинга проверяет, что объекты привязаны "
+"к их оригинальной базе данных (т.е., объект, полученный из базы данных "
+"``foo``, будет сохранён в ту же базу данных). Стандартная схема роутинга "
+"проверяет, что если база данных не указана, то все запросы направляются к "
+"базе данных ``default``."
 
 # c616754e64c74e0489b22aa4bf091555
 #: ../../topics/db/multi-db.txt:116
@@ -152,16 +200,21 @@ msgid ""
 "to implement more interesting database allocation behaviors, you can define "
 "and install your own database routers."
 msgstr ""
+"Для активации стандартной схемы роутинга делать ничего не надо. Она уже "
+"настроена для каждого проекта Django. Тем не менее, если вы желаете "
+"реализовать более сложное поведение при выборе базы данных, вы можете "
+"определить и установить собственные роутеры для баз данных."
 
 # c49df0a2aef44c919762fd90a8cb1d61
 #: ../../topics/db/multi-db.txt:122
 msgid "Database routers"
-msgstr ""
+msgstr "Роутеры баз данных"
 
 # 512d3cf89582400b9d9e7075bbee12ce
 #: ../../topics/db/multi-db.txt:124
 msgid "A database Router is a class that provides up to four methods:"
 msgstr ""
+"Роутер базы данных является классом, которые предоставляет четыре метода:"
 
 # 5a54f7cd2a50468bb2d96729166a52a7
 #: ../../topics/db/multi-db.txt:128
@@ -169,6 +222,8 @@ msgid ""
 "Suggest the database that should be used for read operations for objects of "
 "type ``model``."
 msgstr ""
+"Выбирает базу данных, которая должна использоваться для операций чтения для "
+"объектов типа ``model``."
 
 # aee841638e974d16be08f4424e0dc25a
 # 06fd749e2c0544acbe4c77eb6550458a
@@ -179,12 +234,16 @@ msgid ""
 "dictionary. Details on valid hints are provided :ref:`below <topics-db-multi-"
 "db-hints>`."
 msgstr ""
+"Если операция над базой данных может предоставить любую дополнительную "
+"информацию, которая может помочь в выборе базы данных, она будет "
+"предоставлена в словаре ``hints`` (подсказки). Подробности на правильные "
+"подсказки предоставлена ref:`далее <topics-db-multi-db-hints>`."
 
 # a45d02c7fc8a4704bb190a3d662151fd
 # 4f9e2c34e3a1450c9803ea66affa85d7
 #: ../../topics/db/multi-db.txt:136 ../../topics/db/multi-db.txt:148
 msgid "Returns None if there is no suggestion."
-msgstr ""
+msgstr "Возвращает ``None``, если ничего не может предложить."
 
 # 2677f3fecd2348a7a26767266a17d9d2
 #: ../../topics/db/multi-db.txt:140
@@ -200,6 +259,11 @@ msgid ""
 "is purely a validation operation, used by foreign key and many to many "
 "operations to determine if a relation should be allowed between two objects."
 msgstr ""
+"Возвращает ``True``, если связь между ``obj1`` и ``obj2`` должна быть "
+"разрешена, ``False``, если связь запрещена и ``None``, если у роутера нет "
+"идей на этот счёт. Это обычная операция проверки, использующаяся операциями "
+"с внешними ключами и M2M, для определения возможности организации связи "
+"между двумя объектами."
 
 # 1c3cf101aec0411a8049c6fbde3daece
 #: ../../topics/db/multi-db.txt:160
