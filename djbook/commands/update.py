@@ -33,7 +33,8 @@ class Command(GithubCommandMixin, BaseCommand):
         self.app.run_subcommand(['makemessages'])
 
     def sync_with_archive(self, archive, tag):
-        doc_path = 'django-%s/docs/' % (tag.name,)
+        django_dir_name = archive.getmembers()[0].name.split('/')[0]
+        doc_path = '%s/docs/' % (django_dir_name,)
 
         tmp_path = tempfile.mkdtemp()
         doc_tmp_path = os.path.join(tmp_path, doc_path)
@@ -94,7 +95,7 @@ class Command(GithubCommandMixin, BaseCommand):
         url_obj = urllib2.urlopen(url)
         meta = url_obj.info()
         file_size = int(meta.getheaders("Content-Length")[0])
-        print("Downloading: {0} Bytes: {1}\n".format(url, file_size))
+        self.app.stdout.write("Downloading: {0} Bytes: {1}\n".format(url, file_size))
 
         file_size_dl = 0
         block_sz = 8192
@@ -108,8 +109,8 @@ class Command(GithubCommandMixin, BaseCommand):
             output.write(buffer)
             percent = float(file_size_dl) / file_size
             status = r"{0}  [{1:.2%}]".format(file_size_dl, percent)
-            status = status + chr(8) * (len(status) + 1)
-            print(status)
+            status = status + chr(8)*(len(status)+1)
+            self.app.stdout.write(status)
 
         output.seek(0)
         return output

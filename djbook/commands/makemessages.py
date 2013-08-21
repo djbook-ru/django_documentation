@@ -48,5 +48,5 @@ class Command(BaseCommand):
                 if not os.path.exists(pot_path):
                     po = pofile(po_path)
                     if po.percent_translated() != 0:
-                        self.app.stdout.write('WARNING! Remove file %s with %s%% complete\n' % (po_relative_name, po.percent_translated()))
+                        self.app.stdout.write('WARNING! Removed file %s with %s%% complete\n' % (po_relative_name, po.percent_translated()))
                     os.remove(po_path)
