@@ -90,14 +90,11 @@ class Command(GithubCommandMixin, BaseCommand):
         shutil.copyfile(src_path, dest_path)
 
     def load_file(self, url):
-        return open('/home/alerion/Workspace/django_documentation/django-1.5.2.tar.gz')
-
-
         output = cStringIO.StringIO()
         url_obj = urllib2.urlopen(url)
         meta = url_obj.info()
         file_size = int(meta.getheaders("Content-Length")[0])
-        self.app.stdout.write("Downloading: {0} Bytes: {1}\n".format(url, file_size))
+        print("Downloading: {0} Bytes: {1}\n".format(url, file_size))
 
         file_size_dl = 0
         block_sz = 8192
