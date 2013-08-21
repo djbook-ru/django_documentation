@@ -29,9 +29,10 @@ class Command(GithubCommandMixin, BaseCommand):
         tag = self.get_tag(repo, parsed_args.tag)
 
         archive = tarfile.open(mode="r:gz", fileobj=self.load_file(tag.tarball_url))
-        self.extract_archive(archive, tag)
+        self.sync_with_archive(archive, tag)
+        self.app.run_subcommand(['makemessages'])
 
-    def extract_archive(self, archive, tag):
+    def sync_with_archive(self, archive, tag):
         doc_path = 'django-%s/docs/' % (tag.name,)
 
         tmp_path = tempfile.mkdtemp()
@@ -78,7 +79,7 @@ class Command(GithubCommandMixin, BaseCommand):
 
     def fix_conf(self):
         conf_file = open(os.path.join(self.app.doc_path, 'conf.py'), 'a+')
-        conf_file.write('sys.path.append(abspath(join(dirname(__file__), "djbook")))\n')
+        conf_file.write('sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "djbook")))\n')
         conf_file.write('from djbook_conf import *\n')
 
     def copy_file(self, src_path, dest_path):
