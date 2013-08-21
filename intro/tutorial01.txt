@@ -19,10 +19,15 @@ tell Django is installed and which version by running the following command:
 
     python -c "import django; print(django.get_version())"
 
-You should see either the version of your Django installation or an error
-telling "No module named django". Check also that the version number matches
-the version of this tutorial. If they don't match, you can refer to the
-tutorial for your version of Django or update Django to the newest version.
+If Django is installed, you should see the version of your installation. If it
+isn't, you'll get an error telling "No module named django".
+
+This tutorial is written for Django |version| and Python 2.x. If the Django
+version doesn't match, you can refer to the tutorial for your version of Django
+or update Django to the newest version. If you are using Python 3.x, be aware
+that your code may need to differ from what is in the tutorial and you should
+continue using the tutorial only if you know what you are doing with Python
+3.x.
 
 See :doc:`How to install Django </topics/install>` for advice on how to remove
 older versions of Django and install a newer one.
@@ -93,7 +98,7 @@ Let's look at what :djadmin:`startproject` created::
 
 These files are:
 
-* The outer :file:`mysite/` directory is just a container for your
+* The outer :file:`mysite/` root directory is just a container for your
   project. Its name doesn't matter to Django; you can rename it to anything
   you like.
 
@@ -103,7 +108,7 @@ These files are:
 
 * The inner :file:`mysite/` directory is the actual Python package for your
   project. Its name is the Python package name you'll need to use to import
-  anything inside it (e.g. ``import mysite.settings``).
+  anything inside it (e.g. ``mysite.urls``).
 
 * :file:`mysite/__init__.py`: An empty file that tells Python that this
   directory should be considered a Python package. (Read `more about
@@ -259,11 +264,12 @@ that, run the following command:
 
     python manage.py syncdb
 
-The :djadmin:`syncdb` command looks at the :setting:`INSTALLED_APPS` setting and
-creates any necessary database tables according to the database settings in your
-:file:`settings.py` file. You'll see a message for each database table it
-creates, and you'll get a prompt asking you if you'd like to create a superuser
-account for the authentication system. Go ahead and do that.
+The :djadmin:`syncdb` command looks at the :setting:`INSTALLED_APPS` setting
+and creates any necessary database tables according to the database settings
+in your :file:`mysite/settings.py` file. You'll see a message for each
+database table it creates, and you'll get a prompt asking you if you'd like to
+create a superuser account for the authentication system. Go ahead and do
+that.
 
 If you're interested, run the command-line client for your database and type
 ``\dt`` (PostgreSQL), ``SHOW TABLES;`` (MySQL), or ``.schema`` (SQLite) to
@@ -527,7 +533,7 @@ API Django gives you. To invoke the Python shell, use this command:
 
 We're using this instead of simply typing "python", because :file:`manage.py`
 sets the ``DJANGO_SETTINGS_MODULE`` environment variable, which gives Django
-the Python import path to your :file:`settings.py` file.
+the Python import path to your :file:`mysite/settings.py` file.
 
 .. admonition:: Bypassing manage.py
 

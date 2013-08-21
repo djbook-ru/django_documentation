@@ -663,7 +663,7 @@ or with the ``{#`` ... ``#}`` :ref:`one-line comment constructs <template-commen
     <button type="submit">{% trans "Go" %}</button>
 
     {# Translators: This is a text of the base template #}
-    {% blocktrans %}Ambiguous translatable block of text{% endtransblock %}
+    {% blocktrans %}Ambiguous translatable block of text{% endblocktrans %}
 
 .. note:: Just for completeness, these are the corresponding fragments of the
     resulting ``.po`` file:
@@ -693,6 +693,31 @@ or with the ``{#`` ... ``#}`` :ref:`one-line comment constructs <template-commen
         # path/to/template/file.html:103
         msgid "Ambiguous translatable block of text"
         msgstr ""
+
+.. templatetag:: language
+
+Switching language in templates
+-------------------------------
+
+If you want to select a language within a template, you can use the
+``language`` template tag:
+
+.. code-block:: html+django
+
+    {% load i18n %}
+
+    {% get_current_language as LANGUAGE_CODE %}
+    <!-- Current language: {{ LANGUAGE_CODE }} -->
+    <p>{% trans "Welcome to our page" %}</p>
+
+    {% language 'en' %}
+        {% get_current_language as LANGUAGE_CODE %}
+        <!-- Current language: {{ LANGUAGE_CODE }} -->
+        <p>{% trans "Welcome to our page" %}</p>
+    {% endlanguage %}
+
+While the first occurrence of "Welcome to our page" uses the current language,
+the second will always be in English.
 
 .. _template-translation-vars:
 
@@ -1002,11 +1027,11 @@ prepend the current active language code to all url patterns defined within
     from django.conf.urls import patterns, include, url
     from django.conf.urls.i18n import i18n_patterns
 
-    urlpatterns = patterns(''
+    urlpatterns = patterns('',
         url(r'^sitemap\.xml$', 'sitemap.view', name='sitemap_xml'),
     )
 
-    news_patterns = patterns(''
+    news_patterns = patterns('',
         url(r'^$', 'news.views.index', name='index'),
         url(r'^category/(?P<slug>[\w-]+)/$', 'news.views.category', name='category'),
         url(r'^(?P<slug>[\w-]+)/$', 'news.views.details', name='detail'),
@@ -1098,13 +1123,11 @@ active language. Example::
 
 .. _reversing_in_templates:
 
-.. templatetag:: language
-
 Reversing in templates
 ----------------------
 
 If localized URLs get reversed in templates they always use the current
-language. To link to a URL in another language use the ``language``
+language. To link to a URL in another language use the :ttag:`language`
 template tag. It enables the given language in the enclosed template section:
 
 .. code-block:: html+django
@@ -1176,13 +1199,16 @@ German.
 
 The script should be run from one of two places:
 
-* The root directory of your Django project.
-* The root directory of your Django app.
+* The root directory of your Django project (the one that contains
+  ``manage.py``).
+* The root directory of one of your Django apps.
 
 The script runs over your project source tree or your application source tree
-and pulls out all strings marked for translation. It creates (or updates) a
-message file in the directory ``locale/LANG/LC_MESSAGES``. In the ``de``
-example, the file will be ``locale/de/LC_MESSAGES/django.po``.
+and pulls out all strings marked for translation (see
+:ref:`how-django-discovers-translations` and be sure :setting:`LOCALE_PATHS`
+is configured correctly). It creates (or updates) a message file in the
+directory ``locale/LANG/LC_MESSAGES``. In the ``de`` example, the file will be
+``locale/de/LC_MESSAGES/django.po``.
 
 By default :djadmin:`django-admin.py makemessages <makemessages>` examines every
 file that has the ``.html`` or ``.txt`` file extension. In case you want to
@@ -1409,7 +1435,9 @@ Here's example HTML template code:
     <select name="language">
     {% get_language_info_list for LANGUAGES as languages %}
     {% for language in languages %}
-    <option value="{{ language.code }}">{{ language.name_local }} ({{ language.code }})</option>
+    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+        {{ language.name_local }} ({{ language.code }})
+    </option>
     {% endfor %}
     </select>
     <input type="submit" value="Go" />

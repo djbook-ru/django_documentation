@@ -56,20 +56,24 @@ places:
   directory that holds ``models.py``. Again, the test runner looks for any
   subclass of :class:`unittest.TestCase` in this module.
 
-Here is an example :class:`unittest.TestCase` subclass::
+Here is an example which subclasses from :class:`django.test.TestCase`,
+which is a subclass of :class:`unittest.TestCase` that runs each test inside a
+transaction to provide isolation::
 
-    from django.utils import unittest
+    from django.test import TestCase
     from myapp.models import Animal
 
-    class AnimalTestCase(unittest.TestCase):
+    class AnimalTestCase(TestCase):
         def setUp(self):
-            self.lion = Animal(name="lion", sound="roar")
-            self.cat = Animal(name="cat", sound="meow")
+            Animal.objects.create(name="lion", sound="roar")
+            Animal.objects.create(name="cat", sound="meow")
 
         def test_animals_can_speak(self):
             """Animals that can speak are correctly identified"""
-            self.assertEqual(self.lion.speak(), 'The lion says "roar"')
-            self.assertEqual(self.cat.speak(), 'The cat says "meow"')
+            lion = Animal.objects.get(name="lion")
+            cat = Animal.objects.get(name="cat")
+            self.assertEqual(lion.speak(), 'The lion says "roar"')
+            self.assertEqual(cat.speak(), 'The cat says "meow"')
 
 When you :ref:`run your tests <running-tests>`, the default behavior of the test
 utility is to find all the test cases (that is, subclasses of
@@ -93,11 +97,11 @@ For more details about :mod:`unittest`, see the Python documentation.
     be sure to create your test classes as subclasses of
     :class:`django.test.TestCase` rather than :class:`unittest.TestCase`.
 
-    In the example above, we instantiate some models but do not save them to
-    the database. Using :class:`unittest.TestCase` avoids the cost of running
-    each test in a transaction and flushing the database, but for most
-    applications the scope of tests you will be able to write this way will
-    be fairly limited, so it's easiest to use :class:`django.test.TestCase`.
+    Using :class:`unittest.TestCase` avoids the cost of running each test in a
+    transaction and flushing the database, but if your tests interact with
+    the database their behavior will vary based on the order that the test
+    runner executes them. This can lead to unit tests that pass when run in
+    isolation but fail when run in a suite.
 
 .. _running-tests:
 
@@ -906,13 +910,22 @@ to test the effects of commit and rollback:
 
 * A ``TestCase``, on the other hand, does not truncate tables after a test.
   Instead, it encloses the test code in a database transaction that is rolled
-  back at the end of the test.  It also prevents the code under test from
-  issuing any commit or rollback operations on the database, to ensure that the
-  rollback at the end of the test restores the database to its initial state.
+  back at the end of the test. Both explicit commits like
+  ``transaction.commit()`` and implicit ones that may be caused by
+  ``Model.save()`` are replaced with a ``nop`` operation. This guarantees that
+  the rollback at the end of the test restores the database to its initial
+  state.
 
   When running on a database that does not support rollback (e.g. MySQL with the
   MyISAM storage engine), ``TestCase`` falls back to initializing the database
   by truncating tables and reloading initial data.
+
+.. warning::
+
+    While ``commit`` and ``rollback`` operations still *appear* to work when
+    used in ``TestCase``, no actual commit or rollback will be performed by the
+    database. This can cause your tests to pass or fail unexpectedly. Always
+    use ``TransactionalTestCase`` when testing transactional behavior.
 
 .. note::
 
@@ -965,8 +978,8 @@ This class provides some additional capabilities that can be useful for testing
 Web sites.
 
 Converting a normal :class:`unittest.TestCase` to a Django :class:`TestCase` is
-easy: Just change the base class of your test from `'unittest.TestCase'` to
-`'django.test.TestCase'`. All of the standard Python unit test functionality
+easy: Just change the base class of your test from ``'unittest.TestCase'`` to
+``'django.test.TestCase'``. All of the standard Python unit test functionality
 will continue to be available, but it will be augmented with some useful
 additions, including:
 
@@ -1002,7 +1015,7 @@ This allows the use of automated test clients other than the
 client, to execute a series of functional tests inside a browser and simulate a
 real user's actions.
 
-By default the live server's address is `'localhost:8081'` and the full URL
+By default the live server's address is ``'localhost:8081'`` and the full URL
 can be accessed during the tests with ``self.live_server_url``. If you'd like
 to change the default address (in the case, for example, where the 8081 port is
 already taken) then you may pass a different one to the :djadmin:`test` command
@@ -1094,7 +1107,7 @@ out the `full reference`_ for more details.
 .. note::
 
     ``LiveServerTestCase`` makes use of the :doc:`staticfiles contrib app
-    </howto/static-files>` so you'll need to have your project configured
+    </howto/static-files/index>` so you'll need to have your project configured
     accordingly (in particular by setting :setting:`STATIC_URL`).
 
 .. note::
@@ -1109,7 +1122,7 @@ out the `full reference`_ for more details.
     (for example, just after clicking a link or submitting a form), you might
     need to check that a response is received by Selenium and that the next
     page is loaded before proceeding with further test execution.
-    Do this, for example, by making Selenium wait until the `<body>` HTML tag
+    Do this, for example, by making Selenium wait until the ``<body>`` HTML tag
     is found in the response (requires Selenium > 2.13):
 
     .. code-block:: python
@@ -1126,7 +1139,7 @@ out the `full reference`_ for more details.
     The tricky thing here is that there's really no such thing as a "page load,"
     especially in modern Web apps that generate HTML dynamically after the
     server generates the initial document. So, simply checking for the presence
-    of `<body>` in the response might not necessarily be appropriate for all
+    of ``<body>`` in the response might not necessarily be appropriate for all
     use cases. Please refer to the `Selenium FAQ`_ and
     `Selenium documentation`_ for more information.
 
@@ -1579,10 +1592,10 @@ your test suite.
     ``False``, which turns the comparison into a Python set comparison.
 
     .. versionchanged:: 1.4
-    The ``ordered`` parameter is new in version 1.4. In earlier versions,
-    you would need to ensure the queryset is ordered consistently, possibly
-    via an explicit ``order_by()`` call on the queryset prior to
-    comparison.
+	The ``ordered`` parameter is new in version 1.4. In earlier versions,
+	you would need to ensure the queryset is ordered consistently, possibly
+	via an explicit ``order_by()`` call on the queryset prior to
+	comparison.
 
 
 .. method:: TestCase.assertNumQueries(num, func, *args, **kwargs)

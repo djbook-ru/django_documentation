@@ -835,6 +835,8 @@ above would result in the following output:
     * New York: 20,000,000
 * India
     * Calcutta: 15,000,000
+* USA
+    * Chicago: 7,000,000
 * Japan
     * Tokyo: 33,000,000
 
@@ -2373,7 +2375,7 @@ It is also able to consume standard context variables, e.g. assuming a
     <link rel="stylesheet" href="{% static user_stylesheet %}" type="text/css" media="screen" />
 
 If you'd like to retrieve a static URL without displaying it, you can use a
-slightly different call::
+slightly different call:
 
 .. versionadded:: 1.5
 
@@ -2388,8 +2390,10 @@ slightly different call::
     The :mod:`staticfiles<django.contrib.staticfiles>` contrib app also ships
     with a :ttag:`static template tag<staticfiles-static>` which uses
     ``staticfiles'`` :setting:`STATICFILES_STORAGE` to build the URL of the
-    given path. Use that instead if you have an advanced use case such as
-    :ref:`using a cloud service to serve static files<staticfiles-from-cdn>`::
+    given path (rather than simply using :func:`urlparse.urljoin` with the
+    :setting:`STATIC_URL` setting and the given path). Use that instead if you
+    have an advanced use case such as :ref:`using a cloud service to serve
+    static files<staticfiles-from-cdn>`::
 
         {% load static from staticfiles %}
         <img src="{% static "images/hi.jpg" %}" alt="Hi!" />

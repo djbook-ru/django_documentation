@@ -1,0 +1,349 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-21 17:15\n"
+"PO-Revision-Date: 2013-08-21 17:15\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 871d1fd9d40e468e9c15785fab1401dd
+#: ../../topics/class-based-views/intro.txt:3
+msgid "Introduction to Class-based views"
+msgstr ""
+
+# 57717ff44a46445e9277d83db8fc75c3
+#: ../../topics/class-based-views/intro.txt:5
+msgid ""
+"Class-based views provide an alternative way to implement views as Python "
+"objects instead of functions. They do not replace function-based views, but "
+"have certain differences and advantages when compared to function-based "
+"views:"
+msgstr ""
+
+# 2b112a8ff1ce4c678562aaea75be41d6
+#: ../../topics/class-based-views/intro.txt:9
+msgid ""
+"Organization of code related to specific HTTP methods (``GET``, ``POST``, "
+"etc) can be addressed by separate methods instead of conditional branching."
+msgstr ""
+
+# 7e7413d06389483c94fa2c48e9e05876
+#: ../../topics/class-based-views/intro.txt:12
+msgid ""
+"Object oriented techniques such as mixins (multiple inheritance) can be used "
+"to factor code into reusable components."
+msgstr ""
+
+# 8153fcce037040df940c16cbf26ba2f9
+#: ../../topics/class-based-views/intro.txt:16
+msgid ""
+"The relationship and history of generic views, class-based views, and class-"
+"based generic views"
+msgstr ""
+
+# 62c1f03fbdee4561b5e9d8e85d7c1129
+#: ../../topics/class-based-views/intro.txt:18
+msgid ""
+"In the beginning there was only the view function contract, Django passed "
+"your function an :class:`~django.http.HttpRequest` and expected back an :"
+"class:`~django.http.HttpResponse`. This was the extent of what Django "
+"provided."
+msgstr ""
+
+# d72306577e5a4bbfa7cb2109d9ce7fbf
+#: ../../topics/class-based-views/intro.txt:22
+msgid ""
+"Early on it was recognized that there were common idioms and patterns found "
+"in view development. Function-based generic views were introduced to "
+"abstract these patterns and ease view development for the common cases."
+msgstr ""
+
+# c588fb8fc03943d48b16c340260bc735
+#: ../../topics/class-based-views/intro.txt:26
+msgid ""
+"The problem with function-based generic views is that while they covered the "
+"simple cases well, there was no way to extend or customize them beyond some "
+"simple configuration options, limiting their usefulness in many real-world "
+"applications."
+msgstr ""
+
+# c12bb6b8c15d421187226475ea9642a6
+#: ../../topics/class-based-views/intro.txt:31
+msgid ""
+"Class-based generic views were created with the same objective as function-"
+"based generic views, to make view development easier. However, the way the "
+"solution is implemented, through the use of mixins, provides a toolkit that "
+"results in class-based generic views being more extensible and flexible than "
+"their function-based counterparts."
+msgstr ""
+
+# f54a9d1186274849a03caab659af4f93
+#: ../../topics/class-based-views/intro.txt:37
+msgid ""
+"If you have tried function based generic views in the past and found them "
+"lacking, you should not think of class-based generic views as simply a class-"
+"based equivalent, but rather as a fresh approach to solving the original "
+"problems that generic views were meant to solve."
+msgstr ""
+
+# 73edb240016c4cefa92758c2704f741b
+#: ../../topics/class-based-views/intro.txt:42
+msgid ""
+"The toolkit of base classes and mixins that Django uses to build class-based "
+"generic views are built for maximum flexibility, and as such have many hooks "
+"in the form of default method implementations and attributes that you are "
+"unlikely to be concerned with in the simplest use cases. For example, "
+"instead of limiting you to a class based attribute for ``form_class``, the "
+"implementation uses a ``get_form`` method, which calls a ``get_form_class`` "
+"method, which in its default implementation just returns the ``form_class`` "
+"attribute of the class. This gives you several options for specifying what "
+"form to use, from a simple attribute, to a fully dynamic, callable hook. "
+"These options seem to add hollow complexity for simple situations, but "
+"without them, more advanced designs would be limited."
+msgstr ""
+
+# abfa355edc09449bb8a208aaf3231253
+#: ../../topics/class-based-views/intro.txt:55
+msgid "Using class-based views"
+msgstr ""
+
+# eb418f150f454de5800614b72db885ba
+#: ../../topics/class-based-views/intro.txt:57
+msgid ""
+"At its core, a class-based view allows you to respond to different HTTP "
+"request methods with different class instance methods, instead of with "
+"conditionally branching code inside a single view function."
+msgstr ""
+
+# 4b5cb18fb2b44581b81859a76d5c4567
+#: ../../topics/class-based-views/intro.txt:61
+msgid ""
+"So where the code to handle HTTP ``GET`` in a view function would look "
+"something like::"
+msgstr ""
+
+# 869dc47defe3458fa585c9285ae49579
+#: ../../topics/class-based-views/intro.txt:71
+msgid "In a class-based view, this would become::"
+msgstr ""
+
+# bb8a565e3be74d0f8d3cfa464baec8a5
+#: ../../topics/class-based-views/intro.txt:81
+msgid ""
+"Because Django's URL resolver expects to send the request and associated "
+"arguments to a callable function, not a class, class-based views have an :"
+"meth:`~django.views.generic.base.View.as_view` class method which serves as "
+"the callable entry point to your class. The ``as_view`` entry point creates "
+"an instance of your class and calls its :meth:`~django.views.generic.base."
+"View.dispatch` method. ``dispatch`` looks at the request to determine "
+"whether it is a ``GET``, ``POST``, etc, and relays the request to a matching "
+"method if one is defined, or raises :class:`~django.http."
+"HttpResponseNotAllowed` if not::"
+msgstr ""
+
+# 2243da3dc49a4e4aa8595c5496fe6cba
+#: ../../topics/class-based-views/intro.txt:100
+msgid ""
+"It is worth noting that what your method returns is identical to what you "
+"return from a function-based view, namely some form of :class:`~django.http."
+"HttpResponse`. This means that :doc:`http shortcuts </topics/http/"
+"shortcuts>` or :class:`~django.template.response.TemplateResponse` objects "
+"are valid to use inside a class-based view."
+msgstr ""
+
+# 1de3bdd6510146b88b1df4e4570c370c
+#: ../../topics/class-based-views/intro.txt:107
+msgid ""
+"While a minimal class-based view does not require any class attributes to "
+"perform its job, class attributes are useful in many class-based designs, "
+"and there are two ways to configure or set class attributes."
+msgstr ""
+
+# 1e3fd6284801466998e5794556511722
+#: ../../topics/class-based-views/intro.txt:111
+msgid ""
+"The first is the standard Python way of subclassing and overriding "
+"attributes and methods in the subclass. So that if your parent class had an "
+"attribute ``greeting`` like this::"
+msgstr ""
+
+# 64cf396375204312922146d3941b4a8c
+#: ../../topics/class-based-views/intro.txt:124
+msgid "You can override that in a subclass::"
+msgstr ""
+
+# 453e0f1540614a7ab2a7b0fd71c9a033
+#: ../../topics/class-based-views/intro.txt:129
+msgid ""
+"Another option is to configure class attributes as keyword arguments to the :"
+"meth:`~django.views.generic.base.View.as_view` call in the URLconf::"
+msgstr ""
+
+# 6f762e5ad20542528e798c1f90ad2aad
+#: ../../topics/class-based-views/intro.txt:138
+msgid ""
+"While your class is instantiated for each request dispatched to it, class "
+"attributes set through the :meth:`~django.views.generic.base.View.as_view` "
+"entry point are configured only once at the time your URLs are imported."
+msgstr ""
+
+# df7f4b5828a044419489898be4d4ba6d
+#: ../../topics/class-based-views/intro.txt:144
+msgid "Using mixins"
+msgstr ""
+
+# 7e91b85a31a14269a976ce9c4b06c008
+#: ../../topics/class-based-views/intro.txt:146
+msgid ""
+"Mixins are a form of multiple inheritance where behaviors and attributes of "
+"multiple parent classes can be combined."
+msgstr ""
+
+# 35735e9c6a2e4f0b9fbd90181e86a153
+#: ../../topics/class-based-views/intro.txt:149
+msgid ""
+"For example, in the generic class-based views there is a mixin called :class:"
+"`~django.views.generic.base.TemplateResponseMixin` whose primary purpose is "
+"to define the method :meth:`~django.views.generic.base.TemplateResponseMixin."
+"render_to_response`. When combined with the behavior of the :class:`~django."
+"views.generic.base.View` base class, the result is a :class:`~django.views."
+"generic.base.TemplateView` class that will dispatch requests to the "
+"appropriate matching methods (a behavior defined in the ``View`` base "
+"class), and that has a :meth:`~django.views.generic.base."
+"TemplateResponseMixin.render_to_response` method that uses a :attr:`~django."
+"views.generic.base.TemplateResponseMixin.template_name` attribute to return "
+"a :class:`~django.template.response.TemplateResponse` object (a behavior "
+"defined in the ``TemplateResponseMixin``)."
+msgstr ""
+
+# 49e92710295541be9d7e09f897eafee1
+#: ../../topics/class-based-views/intro.txt:163
+msgid ""
+"Mixins are an excellent way of reusing code across multiple classes, but "
+"they come with some cost. The more your code is scattered among mixins, the "
+"harder it will be to read a child class and know what exactly it is doing, "
+"and the harder it will be to know which methods from which mixins to "
+"override if you are subclassing something that has a deep inheritance tree."
+msgstr ""
+
+# d620a021a77546178ffeaaabb4d5191b
+#: ../../topics/class-based-views/intro.txt:169
+msgid ""
+"Note also that you can only inherit from one generic view - that is, only "
+"one parent class may inherit from :class:`~django.views.generic.base.View` "
+"and the rest (if any) should be mixins. Trying to inherit from more than one "
+"class that inherits from ``View`` - for example, trying to use a form at the "
+"top of a list and combining :class:`~django.views.generic.edit."
+"ProcessFormView` and :class:`~django.views.generic.list.ListView` - won't "
+"work as expected."
+msgstr ""
+
+# a1ccdc9ad21d4f1382e6d28e1edf295f
+#: ../../topics/class-based-views/intro.txt:177
+msgid "Handling forms with class-based views"
+msgstr ""
+
+# 8f24262e6ebb4112bc70c4d677dc757d
+#: ../../topics/class-based-views/intro.txt:179
+msgid ""
+"A basic function-based view that handles forms may look something like this::"
+msgstr ""
+
+# af7be15bf0ac47a89adc98250228f25c
+#: ../../topics/class-based-views/intro.txt:197
+msgid "A similar class-based view might look like::"
+msgstr ""
+
+# 873d65eff3054b93b0d7bc7740780060
+#: ../../topics/class-based-views/intro.txt:222
+msgid ""
+"This is a very simple case, but you can see that you would then have the "
+"option of customizing this view by overriding any of the class attributes, e."
+"g. ``form_class``, via URLconf configuration, or subclassing and overriding "
+"one or more of the methods (or both!)."
+msgstr ""
+
+# 0371a0b4a58545daab7f0ce237b055d8
+#: ../../topics/class-based-views/intro.txt:228
+msgid "Decorating class-based views"
+msgstr ""
+
+# ad4a790b6f7043e9a06e274797dc5db2
+#: ../../topics/class-based-views/intro.txt:230
+msgid ""
+"The extension of class-based views isn't limited to using mixins. You can "
+"use also use decorators. Since class-based views aren't functions, "
+"decorating them works differently depending on if you're using ``as_view`` "
+"or creating a subclass."
+msgstr ""
+
+# 7fc0bc6f04314cc3a77e3d1fe9c040c2
+#: ../../topics/class-based-views/intro.txt:236
+msgid "Decorating in URLconf"
+msgstr ""
+
+# d920536443a940fd9eab1ca43e4f0db9
+#: ../../topics/class-based-views/intro.txt:238
+msgid ""
+"The simplest way of decorating class-based views is to decorate the result "
+"of the :meth:`~django.views.generic.base.View.as_view` method. The easiest "
+"place to do this is in the URLconf where you deploy your view::"
+msgstr ""
+
+# 52d802e01717485292c0d528a2721711
+#: ../../topics/class-based-views/intro.txt:252
+msgid ""
+"This approach applies the decorator on a per-instance basis. If you want "
+"every instance of a view to be decorated, you need to take a different "
+"approach."
+msgstr ""
+
+# eb859a6354654e96b2e6e23d82586eac
+#: ../../topics/class-based-views/intro.txt:259
+msgid "Decorating the class"
+msgstr ""
+
+# 460e6f85de094322bd76f828132979a3
+#: ../../topics/class-based-views/intro.txt:261
+msgid ""
+"To decorate every instance of a class-based view, you need to decorate the "
+"class definition itself. To do this you apply the decorator to the :meth:"
+"`~django.views.generic.base.View.dispatch` method of the class."
+msgstr ""
+
+# 6d6921e7d22343bbadfb1a33633f3b94
+#: ../../topics/class-based-views/intro.txt:265
+msgid ""
+"A method on a class isn't quite the same as a standalone function, so you "
+"can't just apply a function decorator to the method -- you need to transform "
+"it into a method decorator first. The ``method_decorator`` decorator "
+"transforms a function decorator into a method decorator so that it can be "
+"used on an instance method. For example::"
+msgstr ""
+
+# 34adc408a2e44b95afb9d5c35665a6bd
+#: ../../topics/class-based-views/intro.txt:282
+msgid ""
+"In this example, every instance of ``ProtectedView`` will have login "
+"protection."
+msgstr ""
+
+# 9b231bf2835547d987c4df7bf607a0b9
+#: ../../topics/class-based-views/intro.txt:287
+msgid ""
+"``method_decorator`` passes ``*args`` and ``**kwargs`` as parameters to the "
+"decorated method on the class. If your method does not accept a compatible "
+"set of parameters it will raise a ``TypeError`` exception."
+msgstr ""
