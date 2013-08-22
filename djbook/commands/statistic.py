@@ -38,12 +38,13 @@ class Command(BaseCommand):
                     if excluded:
                         continue
 
-                    statistic.append((unicode(name),  po.percent_translated()))
-
                     msg_total = len([e for e in po if not e.obsolete])
                     msg_translated = len(po.translated_entries())
+                    untranslated_count = msg_total - msg_translated
                     total += msg_total
                     translated += msg_translated
+
+                    statistic.append((unicode(name),  po.percent_translated(), untranslated_count))
 
                     for item in main:
                         if name.startswith(item):

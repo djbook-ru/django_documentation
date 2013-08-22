@@ -11,17 +11,36 @@
             </div>
         </div>
     </div>
-    <br/>
-    {% for name, perc in statistic|sort %}
-        <div class="row">
+    <div class="row" style="margin-top: 5px;">
+        <div class="span5"></div>
+        <div class="span7">
+            <label class="checkbox"><input type="checkbox" id="unfinished"> незаконечнные</label>
+        </div>
+    </div>
+    {% for name, perc, untranslated_count in statistic|sort %}
+        <div class="row po-row {% if untranslated_count and perc %}unfinished{% endif %}">
             {% if name %}
             <div class="span5"><a href=".{{ name|replace('.po', '.html') }}">{{ name }}</a></div>
             <div class="span7">
                 <div class="progress {% if perc != 100 %}progress-danger{% endif %}">
-                    <div class="bar" style="width: {{ perc }}%;">{{ perc }}%</div>
+                    <div class="bar" style="width: {{ perc }}%;">
+                        {{ perc }}%
+                        {% if untranslated_count %}<span style="font-size: 0.9em">({{ untranslated_count }}){% endif %}</span>
+                    </div>
                 </div>
             </div>
             {% endif %}
         </div>
     {% endfor %}
+    <script>
+        jQuery(function($){
+            $('#unfinished').change(function(){
+                if ($(this).prop('checked')) {
+                    $('.po-row').not('.unfinished').hide();
+                } else {
+                    $('.po-row').not('.unfinished').show();
+                }
+            })
+        });
+    </script>
 {% endblock %}
