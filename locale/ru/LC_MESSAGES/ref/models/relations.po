@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-29 18:30\n"
+"POT-Creation-Date: 2013-08-21 17:15\n"
 "PO-Revision-Date: 2012-03-07 01:00+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -79,8 +79,19 @@ msgstr "Добавляет указанный объект модели к мн�
 msgid "Example::"
 msgstr "Например::"
 
+# 86c70515afe24f8581fcb3b65da608d9
+#: ../../ref/models/relations.txt:47
+msgid ""
+"In the example above, ``e.save()`` is called to perform the update. Using "
+"``add()`` with a many-to-many relationship, however, will not call any ``save"
+"()`` methods, but rather create the relationships using :meth:`QuerySet."
+"bulk_create() <django.db.models.query.QuerySet.bulk_create>`. If you need to "
+"execute some custom logic when a relationship is created, listen to the :"
+"data:`~django.db.models.signals.m2m_changed` signal."
+msgstr ""
+
 # 6053c6088b0942b3ac4b66c23105e94b
-#: ../../ref/models/relations.txt:49
+#: ../../ref/models/relations.txt:57
 msgid ""
 "Creates a new object, saves it and puts it in the related object set. "
 "Returns the newly created object::"
@@ -89,12 +100,12 @@ msgstr ""
 "Возвращает созданный объект::"
 
 # 4bc23bbef79e4eb0a31c7a2fab77b24e
-#: ../../ref/models/relations.txt:61
+#: ../../ref/models/relations.txt:69
 msgid "This is equivalent to (but much simpler than)::"
 msgstr "Аналогично (но значительно проще)::"
 
 # 7a9070ca828748e9a2f59180bb96b09a
-#: ../../ref/models/relations.txt:72
+#: ../../ref/models/relations.txt:80
 msgid ""
 "Note that there's no need to specify the keyword argument of the model that "
 "defines the relationship. In the above example, we don't pass the parameter "
@@ -107,20 +118,31 @@ msgstr ""
 "должно содержать объект ``b``."
 
 # 084732d522a34c5dbf1b986daf386a4e
-#: ../../ref/models/relations.txt:79
+#: ../../ref/models/relations.txt:87
 msgid "Removes the specified model objects from the related object set::"
 msgstr "Удаляет указанный объект из списка связанных объектов::"
 
-# fd2a15f9f77349f2bbf011184cf9f347
-#: ../../ref/models/relations.txt:85
+# 0ce719d7aea5409e968995aab58d28c4
+#: ../../ref/models/relations.txt:93
 msgid ""
-"In order to prevent database inconsistency, this method only exists on :"
-"class:`~django.db.models.ForeignKey` objects where ``null=True``. If the "
-"related field can't be set to ``None`` (``NULL``), then an object can't be "
-"removed from a relation without being added to another. In the above "
-"example, removing ``e`` from ``b.entry_set()`` is equivalent to doing ``e."
-"blog = None``, and because the ``blog`` :class:`~django.db.models."
-"ForeignKey` doesn't have ``null=True``, this is invalid."
+"Similar to :meth:`add()`, ``e.save()`` is called in the example above to "
+"perform the update. Using ``remove()`` with a many-to-many relationship, "
+"however, will delete the relationships using :meth:`QuerySet.delete()<django."
+"db.models.query.QuerySet.delete>` which means no model ``save()`` methods "
+"are called; listen to the :data:`~django.db.models.signals.m2m_changed` "
+"signal if you wish to execute custom code when a relationship is deleted."
+msgstr ""
+
+# fd2a15f9f77349f2bbf011184cf9f347
+#: ../../ref/models/relations.txt:101
+#, fuzzy
+msgid ""
+"For :class:`~django.db.models.ForeignKey` objects, this method only exists "
+"if ``null=True``. If the related field can't be set to ``None`` (``NULL``), "
+"then an object can't be removed from a relation without being added to "
+"another. In the above example, removing ``e`` from ``b.entry_set()`` is "
+"equivalent to doing ``e.blog = None``, and because the ``blog`` :class:"
+"`~django.db.models.ForeignKey` doesn't have ``null=True``, this is invalid."
 msgstr ""
 "Для того, что бы предотвратить \"поломку\" данных в базе данных, этот метод "
 "предоставляется только для :class:`~django.db.models.ForeignKey` с "
@@ -131,19 +153,19 @@ msgstr ""
 "содержит ``null=True``, это невозможно."
 
 # 3d87d6cce5af49eb9f725e6ff16904d3
-#: ../../ref/models/relations.txt:96
+#: ../../ref/models/relations.txt:111
 msgid "Removes all objects from the related object set::"
 msgstr "Удаляет все объекты из списка связанных::"
 
 # 15f3cf7e85814bb9b0130e689bd2e6ee
-#: ../../ref/models/relations.txt:101
+#: ../../ref/models/relations.txt:116
 msgid ""
 "Note this doesn't delete the related objects -- it just disassociates them."
 msgstr ""
 "Заметим, что связанные объекты не удаляются -- просто разрывается связь."
 
 # 394718a224f5421e9cbf1dd47ba05f2e
-#: ../../ref/models/relations.txt:104
+#: ../../ref/models/relations.txt:119
 msgid ""
 "Just like ``remove()``, ``clear()`` is only available on :class:`~django.db."
 "models.ForeignKey`\\s where ``null=True``."

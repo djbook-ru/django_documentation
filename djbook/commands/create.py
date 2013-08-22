@@ -12,4 +12,4 @@ class Command(BaseCommand):
     def take_action(self, parsed_args):
         self.app.run_subcommand(['compilemessages'])
         self.app.run_subcommand(['buildhtml'])
-        self.app.run_subcommand(['complete_statistic'])
+        self.app.run_subcommand(['statistic'])

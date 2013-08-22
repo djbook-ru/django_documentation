@@ -1,0 +1,180 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-08-21 17:15\n"
+"PO-Revision-Date: 2013-08-21 17:15\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 81279b64c5424b3aa4eef6d2c3bf7351
+#: ../../releases/1.4.4.txt:3
+msgid "Django 1.4.4 release notes"
+msgstr ""
+
+# cd640cf48d454aa3a2994814851f234f
+#: ../../releases/1.4.4.txt:5
+msgid "*February 19, 2013*"
+msgstr ""
+
+# 88d82a0298e14508a76288eec6c09068
+#: ../../releases/1.4.4.txt:7
+msgid ""
+"Django 1.4.4 fixes four security issues present in previous Django releases "
+"in the 1.4 series, as well as several other bugs and numerous documentation "
+"improvements."
+msgstr ""
+
+# 9092663576d247fba1c15c7f112b2fae
+#: ../../releases/1.4.4.txt:11
+msgid "This is the fourth bugfix/security release in the Django 1.4 series."
+msgstr ""
+
+# 5ecadc258dff4bab99826c8a0815ee1a
+#: ../../releases/1.4.4.txt:15
+msgid "Host header poisoning"
+msgstr ""
+
+# 49d10313bb9f4f67963987bd3a00f811
+#: ../../releases/1.4.4.txt:17
+msgid ""
+"Some parts of Django -- independent of end-user-written applications -- make "
+"use of full URLs, including domain name, which are generated from the HTTP "
+"Host header. Django's documentation has for some time contained notes "
+"advising users on how to configure webservers to ensure that only valid Host "
+"headers can reach the Django application. However, it has been reported to "
+"us that even with the recommended webserver configurations there are still "
+"techniques available for tricking many common webservers into supplying the "
+"application with an incorrect and possibly malicious Host header."
+msgstr ""
+
+# 61a6a0ab3470438ca46795f2366ad8f2
+#: ../../releases/1.4.4.txt:26
+msgid ""
+"For this reason, Django 1.4.4 adds a new setting, ``ALLOWED_HOSTS``, "
+"containing an explicit list of valid host/domain names for this site. A "
+"request with a Host header not matching an entry in this list will raise "
+"``SuspiciousOperation`` if ``request.get_host()`` is called. For full "
+"details see the documentation for the :setting:`ALLOWED_HOSTS` setting."
+msgstr ""
+
+# e112c169e52540fb8889ef0d601d69fb
+#: ../../releases/1.4.4.txt:32
+msgid ""
+"The default value for this setting in Django 1.4.4 is ``['*']`` (matching "
+"any host), for backwards-compatibility, but we strongly encourage all sites "
+"to set a more restrictive value."
+msgstr ""
+
+# 3abfdb5b4ee041a19675b97330643765
+#: ../../releases/1.4.4.txt:36
+msgid ""
+"This host validation is disabled when ``DEBUG`` is ``True`` or when running "
+"tests."
+msgstr ""
+
+# cbe4e114b9504a348a0450ec273b8cc2
+#: ../../releases/1.4.4.txt:40
+msgid "XML deserialization"
+msgstr ""
+
+# 17e5340bcf6e433cb563a4a98265bf15
+#: ../../releases/1.4.4.txt:42
+msgid ""
+"The XML parser in the Python standard library is vulnerable to a number of "
+"attacks via external entities and entity expansion. Django uses this parser "
+"for deserializing XML-formatted database fixtures. This deserializer is not "
+"intended for use with untrusted data, but in order to err on the side of "
+"safety in Django 1.4.4 the XML deserializer refuses to parse an XML document "
+"with a DTD (DOCTYPE definition), which closes off these attack avenues."
+msgstr ""
+
+# cf8776eee46d470d8e333ce04875b588
+#: ../../releases/1.4.4.txt:49
+msgid ""
+"These issues in the Python standard library are CVE-2013-1664 and "
+"CVE-2013-1665. More information available `from the Python security team`_."
+msgstr ""
+
+# 13ead043b50343d6a78a8d8d1202c424
+#: ../../releases/1.4.4.txt:52
+msgid ""
+"Django's XML serializer does not create documents with a DTD, so this should "
+"not cause any issues with the typical round-trip from ``dumpdata`` to "
+"``loaddata``, but if you feed your own XML documents to the ``loaddata`` "
+"management command, you will need to ensure they do not contain a DTD."
+msgstr ""
+
+# 7b7b6155a1454047baadcd9aa9983574
+#: ../../releases/1.4.4.txt:61
+msgid "Formset memory exhaustion"
+msgstr ""
+
+# 75c03816657f4273af1743a5e3bfa624
+#: ../../releases/1.4.4.txt:63
+msgid ""
+"Previous versions of Django did not validate or limit the form-count data "
+"provided by the client in a formset's management form, making it possible to "
+"exhaust a server's available memory by forcing it to create very large "
+"numbers of forms."
+msgstr ""
+
+# d3c60589c1dc49edbb30a135e283e89b
+#: ../../releases/1.4.4.txt:68
+msgid ""
+"In Django 1.4.4, all formsets have a strictly-enforced maximum number of "
+"forms (1000 by default, though it can be set higher via the ``max_num`` "
+"formset factory argument)."
+msgstr ""
+
+# 26ac57299d4d466684fb27a9e7be7295
+#: ../../releases/1.4.4.txt:74
+msgid "Admin history view information leakage"
+msgstr ""
+
+# 0445cd0069074a13b7a877e02e1ff7cb
+#: ../../releases/1.4.4.txt:76
+msgid ""
+"In previous versions of Django, an admin user without change permission on a "
+"model could still view the unicode representation of instances via their "
+"admin history log. Django 1.4.4 now limits the admin history log view for an "
+"object to users with change permission for that model."
+msgstr ""
+
+# c600a803ac794f6e8c1e44d578d10910
+#: ../../releases/1.4.4.txt:83
+msgid "Other bugfixes and changes"
+msgstr ""
+
+# 9fb50b9d556c4d64a35402a99743283f
+#: ../../releases/1.4.4.txt:85
+msgid ""
+"Prevented transaction state from leaking from one request to the next "
+"(#19707)."
+msgstr ""
+
+# 0a0fe44c31fe41f58386296f471a7c2d
+#: ../../releases/1.4.4.txt:86
+msgid "Changed a SQL command syntax to be MySQL 4 compatible (#19702)."
+msgstr ""
+
+# bc0a1e699f564f5c8f0ce1865c496273
+#: ../../releases/1.4.4.txt:87
+msgid "Added backwards-compatibility with old unsalted MD5 passwords (#18144)."
+msgstr ""
+
+# 8fe70ab90aa84e05ace30df4ed9af3a6
+#: ../../releases/1.4.4.txt:88
+msgid "Numerous documentation improvements and fixes."
+msgstr ""

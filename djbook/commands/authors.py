@@ -1,41 +1,33 @@
-from cliff.command import Command as BaseCommand
-from git import *
 import logging
-import git
+import os
+
+from cliff.command import Command as BaseCommand
+from jinja2 import Environment, FileSystemLoader
+from github import GithubException
+
+from djbook.cliff_utils import GithubCommandMixin
 
 
-class Command(BaseCommand):
+class Command(GithubCommandMixin, BaseCommand):
     """
     Get authors from git history
     """
     log = logging.getLogger(__name__)
 
     def take_action(self, parsed_args):
-        repo = Repo(self.app.doc_path)
+        repo = self.get_repo('Alerion/django_documentation')
 
-        authors = set(c.author for c in repo.iter_commits('master'))
-        authors = self.filter_authors(authors)
+        try:
+            self.save_to_file({
+                'contributors': repo.get_contributors()
+            })
+        except GithubException as e:
+            print e
+            print dir(e)
 
-        for a in authors:
-            print a.name, a.email
-
-    def filter_authors(self, authors):
-        output = [Actor('Alerion', 'alerion.um(at)gmail.com')]
-        names = []
-
-        for author in authors:
-            if 'alerion' in author.name.lower() \
-                or 'alerion' in author.email.lower() \
-                or 'dmitriy' in author.name.lower() \
-                or 'dmitriy' in author.email.lower() \
-                or 'dkos' in author.email.lower():
-                continue
-
-            if author.name in names:
-                continue
-
-            author.email = author.email.replace('@', '(at)')
-            output.append(author)
-            names.append(author.name)
-
-        return output
+    def save_to_file(self, context):
+        env = Environment(loader=FileSystemLoader(self.app.templates_path))
+        template_name = 'authors.html'
+        template = env.get_template(template_name)
+        with open(os.path.join(self.app.doc_path, '_build', 'html', template_name), 'w') as output:
+            output.write(template.render(**context).encode('utf8'))

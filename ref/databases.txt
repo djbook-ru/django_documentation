@@ -151,8 +151,8 @@ MySQL when using the MyISAM storage engine, see the next section.
 Storage engines
 ---------------
 
-MySQL has several `storage engines`_ (previously called table types). You can
-change the default storage engine in the server configuration.
+MySQL has several `storage engines`_. You can change the default storage engine
+in the server configuration.
 
 Until MySQL 5.5.4, the default engine was MyISAM_ [#]_. The main drawbacks of
 MyISAM are that it doesn't support transactions or enforce foreign-key
@@ -187,7 +187,7 @@ key references and an `IntegrityError` is raised if any are found.
 
 .. _storage engines: http://dev.mysql.com/doc/refman/5.5/en/storage-engines.html
 .. _MyISAM: http://dev.mysql.com/doc/refman/5.5/en/myisam-storage-engine.html
-.. _InnoDB: http://dev.mysql.com/doc/refman/5.5/en/innodb.html
+.. _InnoDB: http://dev.mysql.com/doc/refman/5.5/en/innodb-storage-engine.html
 
 .. [#] Unless this was changed by the packager of your MySQL package. We've
    had reports that the Windows Community Server installer sets up InnoDB as
@@ -208,6 +208,15 @@ required for full MySQL support in Django.
     directory that was left by an earlier version.
 
 .. _MySQLdb: http://sourceforge.net/projects/mysql-python
+
+Python 3
+--------
+
+At the time of writing, the latest release of MySQLdb (1.2.4) doesn't support
+Python 3. In order to use MySQL under Python 3, you'll have to install an
+unofficial fork, such as `MySQL-for-Python-3`_.
+
+.. _MySQL-for-Python-3: https://github.com/clelland/MySQL-for-Python-3
 
 Creating your database
 ----------------------
@@ -318,8 +327,8 @@ Here's a sample configuration which uses a MySQL option file::
     default-character-set = utf8
 
 Several other MySQLdb connection options may be useful, such as ``ssl``,
-``use_unicode``, ``init_command``, and ``sql_mode``. Consult the
-`MySQLdb documentation`_ for more details.
+``init_command``, and ``sql_mode``. Consult the `MySQLdb documentation`_ for
+more details.
 
 .. _MySQL option file: http://dev.mysql.com/doc/refman/5.0/en/option-files.html
 .. _MySQLdb documentation: http://mysql-python.sourceforge.net/
@@ -646,9 +655,9 @@ as empty strings.
 Threaded option
 ----------------
 
-If you plan to run Django in a multithreaded environment (e.g. Apache in Windows
-using the default MPM module), then you **must** set the ``threaded`` option of
-your Oracle database configuration to True::
+If you plan to run Django in a multithreaded environment (e.g. Apache using the
+the default MPM module on any modern operating system), then you **must** set
+the ``threaded`` option of your Oracle database configuration to True::
 
             'OPTIONS': {
                 'threaded': True,

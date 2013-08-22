@@ -823,6 +823,10 @@ It is also important to remember that when running with :setting:`DEBUG`
 turned on, Django will remember every SQL query it executes. This is useful
 when you're debugging, but it'll rapidly consume memory on a production server.
 
+Finally, if :setting:`DEBUG` is ``False``, you also need to properly set
+the :setting:`ALLOWED_HOSTS` setting. Failing to do so will result in all
+requests being returned as "Bad Request (400)".
+
 .. _django/views/debug.py: https://github.com/django/django/blob/master/django/views/debug.py
 
 DEBUG_PROPAGATE_EXCEPTIONS
@@ -1250,9 +1254,9 @@ see the current list of translated languages by looking in
 
 .. _online source: https://github.com/django/django/blob/master/django/conf/global_settings.py
 
-The list is a tuple of two-tuples in the format ``(language code, language
-name)``, the ``language code`` part should be a
-:term:`language name<language code>` -- for example, ``('ja', 'Japanese')``.
+The list is a tuple of two-tuples in the format
+(:term:`language code<language code>`, ``language name``) -- for example,
+``('ja', 'Japanese')``.
 This specifies which languages are available for language selection. See
 :doc:`/topics/i18n/index`.
 
@@ -1420,7 +1424,7 @@ Example: ``"http://media.example.com/"``
 MESSAGE_LEVEL
 -------------
 
-Default: `messages.INFO`
+Default: ``messages.INFO``
 
 Sets the minimum message level that will be recorded by the messages
 framework. See the :doc:`messages documentation </ref/contrib/messages>` for
@@ -1912,7 +1916,7 @@ Example: ``"/var/www/example.com/static/"``
 If the :doc:`staticfiles</ref/contrib/staticfiles>` contrib app is enabled
 (default) the :djadmin:`collectstatic` management command will collect static
 files into this directory. See the howto on :doc:`managing static
-files</howto/static-files>` for more details about usage.
+files</howto/static-files/index>` for more details about usage.
 
 .. warning::
 

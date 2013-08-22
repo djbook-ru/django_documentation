@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Контрибьюторы{% endblock %}
+
+{% block content %}
+    {% for row in contributors|batch(3) %}
+    <div class="row">
+        {% for user in row %}
+        <div class="span4">
+            {% if user %}
+            <a href="{{ user.html_url }}" class="thumbnail pull-left">
+                <img src="{{ user.avatar_url }}" style="width: 80px; height: 80px;">
+            </a>
+            <a href="{{ user.html_url }}" style="margin: 10px 0 0 10px">{{ user.name }}</a><br>
+            {% if user.blog %}
+                {% if user.blog.startswith('http') %}
+                    {% set blog = user.blog %}
+                {% else %}
+                    {% set blog = 'http://'+user.blog %}
+                {% endif %}
+                <a href="{{ blog }}" style="margin: 10px 0 0 10px">{{ user.blog|truncate(30, True) }}</a><br>
+                {% endif %}
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+{% endblock %}

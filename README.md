@@ -20,3 +20,7 @@
 Необходимые пакеты можно установить запустив:
 
     $ pip install -r djbook/deps.txt
+
+Список всех команад:
+
+    $ ./translator.py --help

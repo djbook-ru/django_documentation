@@ -1,83 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Состояние перевода</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% extends 'base.html' %}
 
-    <!-- Le styles -->
-    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+{% block title %}Статистика{% endblock %}
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <style>
-        .progress {
-            margin-bottom: 0px;
-        }
-
-        body .container.main {
-            margin-top: 50px;
-        }
-    </style>
-  </head>
-
-  <body>
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="./index.html">Django 1.5 documentation</a>
-          <div class="nav-collapse">
-            <ul class="nav">
-              <li><a title="Djbook.ru" href="http://djbook.ru">Djbook.ru</a></li>
-              <li><a title="Содержание" href="./contents.html">Содержание</a></li>
-              <li><a title="Алфавитный указатель" href="./contents.html">Алфавитный указатель</a></li>
-              <li><a title="Модули" href="./py-modindex.html">Модули</a></li>
-              <li class="active"><a title="Состояние перевода" href="">Состояние перевода</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+{% block content %}
+    <div class="row">
+        <div class="span5">Всего:</div>
+        <div class="span7">
+            <div class="progress {% if total != 100 %}progress-danger{% endif %} progress-striped">
+                <div class="bar" style="width: {{ total }}%;">{{ total }}%</div>
+            </div>
         </div>
-      </div>
     </div>
-
-    <div class="container main">
+    <br/>
+    {% for name, perc in statistic|sort %}
         <div class="row">
-            <div class="span5">Всего:</div>
+            {% if name %}
+            <div class="span5"><a href=".{{ name|replace('.po', '.html') }}">{{ name }}</a></div>
             <div class="span7">
-                <div class="progress {% if total != 100 %}progress-danger{% endif %} progress-striped">
-                    <div class="bar" style="width: {{ total }}%;">{{ total }}%</div>
+                <div class="progress {% if perc != 100 %}progress-danger{% endif %}">
+                    <div class="bar" style="width: {{ perc }}%;">{{ perc }}%</div>
                 </div>
             </div>
+            {% endif %}
         </div>
-        <div class="row">
-            <div class="span5">Основные разделы:</div>
-            <div class="span7">
-                <div class="progress {% if total != 100 %}progress-danger{% endif %} progress-striped">
-                    <div class="bar" style="width: {{ main_total }}%;">{{ main_total }}%</div>
-                </div>
-            </div>
-        </div>
-        <br/>
-        {% for name, perc in statistic|sort %}
-            <div class="row">
-                {% if name %}
-                <div class="span5">{{ name }}</div>
-                <div class="span7">
-                    <div class="progress {% if perc != 100 %}progress-danger{% endif %}">
-                        <div class="bar" style="width: {{ perc }}%;">{{ perc }}%</div>
-                    </div>
-                </div>
-                {% endif %}
-            </div>
-        {% endfor %}
-    </div> <!-- /container -->
-  </body>
-</html>
+    {% endfor %}
+{% endblock %}

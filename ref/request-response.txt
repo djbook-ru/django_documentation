@@ -169,10 +169,11 @@ All attributes should be considered read-only, unless stated otherwise below.
 
 .. attribute:: HttpRequest.user
 
-    A ``django.contrib.auth.models.User`` object representing the currently
+    An object of type :setting:`AUTH_USER_MODEL` representing the currently
     logged-in user. If the user isn't currently logged in, ``user`` will be set
-    to an instance of ``django.contrib.auth.models.AnonymousUser``. You
-    can tell them apart with ``is_authenticated()``, like so::
+    to an instance of :class:`django.contrib.auth.models.AnonymousUser`. You
+    can tell them apart with
+    :meth:`~django.contrib.auth.models.User.is_authenticated`, like so::
 
         if request.user.is_authenticated():
             # Do something for logged-in users.
@@ -180,8 +181,8 @@ All attributes should be considered read-only, unless stated otherwise below.
             # Do something for anonymous users.
 
     ``user`` is only available if your Django installation has the
-    ``AuthenticationMiddleware`` activated. For more, see
-    :doc:`/topics/auth/index`.
+    :class:`~django.contrib.auth.middleware.AuthenticationMiddleware`
+    activated. For more, see :doc:`/topics/auth/index`.
 
 .. attribute:: HttpRequest.session
 
@@ -503,6 +504,26 @@ In addition, ``QueryDict`` has the following methods:
         >>> q.lists()
         [(u'a', [u'1', u'2', u'3'])]
 
+.. method:: QueryDict.pop(key)
+
+    Returns a list of values for the given key and removes them from the
+    dictionary. Raises ``KeyError`` if the key does not exist. For example::
+
+        >>> q = QueryDict('a=1&a=2&a=3', mutable=True)
+        >>> q.pop('a')
+        [u'1', u'2', u'3']
+
+.. method:: QueryDict.popitem()
+
+    Removes an arbitrary member of the dictionary (since there's no concept
+    of ordering), and returns a two value tuple containing the key and a list
+    of all values for the key. Raises ``KeyError`` when called on an empty
+    dictionary. For example::
+
+        >>> q = QueryDict('a=1&a=2&a=3', mutable=True)
+        >>> q.popitem()
+        (u'a', [u'1', u'2', u'3'])
+
 .. method:: QueryDict.dict()
 
     .. versionadded:: 1.4
@@ -708,7 +729,7 @@ Methods
 
     .. _HTTPOnly: https://www.owasp.org/index.php/HTTPOnly
 
-.. method:: HttpResponse.set_signed_cookie(key, value='', salt='', max_age=None, expires=None, path='/', domain=None, secure=None, httponly=True)
+.. method:: HttpResponse.set_signed_cookie(key, value, salt='', max_age=None, expires=None, path='/', domain=None, secure=None, httponly=True)
 
     .. versionadded:: 1.4
 
