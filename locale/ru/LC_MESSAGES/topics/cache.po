@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-21 17:15\n"
-"PO-Revision-Date: 2013-09-01 00:16+0400\n"
+"PO-Revision-Date: 2013-09-01 03:24+0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -1473,10 +1473,9 @@ msgid ""
 msgstr ""
 "Django предоставляет отличный способ выделения отдельных значений в кэше. "
 "Система кэширования Django обладает глобальным идентификатором версии, "
-"определённым в параметре конфигурации :setting:`VERSION <CACHES-VERSION>`. "
-"Значение этого параметра автоматически объединяется с префиксом кэша и "
-"пользователем, которые предоставил ключ, получая итоговый ключ для обращения "
-"к кэшу."
+"определённым в параметре кэша :setting:`VERSION <CACHES-VERSION>`. Значение "
+"этого параметра автоматически объединяется с префиксом кэша и пользователем, "
+"которые предоставил ключ, получая итоговый ключ для обращения к кэшу."
 
 # acb31bfad6f5427d94a3941584b9b90c
 #: ../../topics/cache.txt:830
@@ -1486,6 +1485,10 @@ msgid ""
 "``version`` argument, so you can specify a particular cache key version to "
 "set or get. For example::"
 msgstr ""
+"По-умолчанию, запрос любого ключа из кэша автоматически использует текущую "
+"версию кэша для сайта. Однако, простейшие функции для работы с кэшем "
+"принимают аргумент ``version`` и вы можете указывать конкретную версию кэша. "
+"Например::"
 
 # 0ecff9dd6a2a4f7cafd24d682ba34fd3
 #: ../../topics/cache.txt:844
@@ -1495,11 +1498,15 @@ msgid ""
 "keys to be bumped to a new version, leaving other keys unaffected. "
 "Continuing our previous example::"
 msgstr ""
+"Версия нужного ключа может быть увеличена или уменьшена с помощью методов "
+"``incr_version()`` и ``decr_version()``. Эти методы позволяет изменять "
+"версии нужных ключей, не затрагивая остальные ключи. Продолжая наш "
+"предыдущий пример::"
 
 # 73ee41bcca6f42609f3d456e3c1cc905
 #: ../../topics/cache.txt:864
 msgid "Cache key transformation"
-msgstr ""
+msgstr "Преобразование ключа кэша"
 
 # aad07f725cc74f6ba6d129cb703fcd18
 #: ../../topics/cache.txt:866
@@ -1509,6 +1516,10 @@ msgid ""
 "to provide a final cache key. By default, the three parts are joined using "
 "colons to produce a final string::"
 msgstr ""
+"Как описано в предыдущих двух разделах, система кэширования никогда не "
+"использует напрямую ключ, предоставленный пользователем. Ключ всегда "
+"комбинируется с префиксом кэша и версией ключа. По-умолчанию, эти три части "
+"объединяются через двоеточия, создавая итоговый ключ::"
 
 # d36a7fcc85894bf5be82ef03e882fd15
 #: ../../topics/cache.txt:874
@@ -1517,6 +1528,9 @@ msgid ""
 "processing to the final key (e.g., taking a hash digest of the key parts), "
 "you can provide a custom key function."
 msgstr ""
+"Если вам потребуется объединить эти части другим способом или создать ключ "
+"другим способом (т.е. приняв хэш ключа за сам ключ), вы можете указать "
+"функцию, которая будет выполнять эту работу."
 
 # 6212a60eaca0449a930e0235053cb775
 #: ../../topics/cache.txt:878
@@ -1526,11 +1540,15 @@ msgid ""
 "provided, this custom key function will be used instead of the default key "
 "combining function."
 msgstr ""
+"Параметр кэша :setting:`KEY_FUNCTION <CACHES-KEY_FUNCTION>` определяет путь "
+"(через точку) к функции, соответствующей прототипу ``make_key()`` из "
+"предыдущего примера. При наличии такой функции она будет использоваться "
+"вместо стандартной функции построения итогового ключа."
 
 # ac1ef3c7eb7643628e40cee0a8e17232
 #: ../../topics/cache.txt:884
 msgid "Cache key warnings"
-msgstr ""
+msgstr "Предупреждения о проблемах с ключами"
 
 # 0ac881dd53d547618aa04af5795ce683
 #: ../../topics/cache.txt:886
@@ -1542,6 +1560,14 @@ msgid ""
 "backends issue a warning (``django.core.cache.backends.base."
 "CacheKeyWarning``) if a key is used that would cause an error on memcached."
 msgstr ""
+"Memcached, наиболее используемый в продакшене бэкэнд кэширования, не "
+"поддерживает ключи длиной более 250 символов или содержащих пробелы или "
+"управляющие символы. Использование таких ключей приводит к исключению. Для "
+"обеспечения уверенности в портируемости кода между кэширующими бэкэндами и "
+"для уменьшения количества неприятных сюрпризов, другие встроенные кэширующие "
+"бэкэнды выбрасывают предупреждение ``django.core.cache.backends.base."
+"CacheKeyWarning``), если используемый ключ может привести к ошибке при "
+"работе с Memcached."
 
 # ad956ce1710548d48dc6511d2578afd1
 #: ../../topics/cache.txt:893
@@ -1552,6 +1578,11 @@ msgid ""
 "``CacheKeyWarning`` with this code in the ``management`` module of one of "
 "your :setting:`INSTALLED_APPS`::"
 msgstr ""
+"Если вы используете на продакшене кэширующий бэкэнд, который может принимать "
+"широкий диапазон ключей (собственный бэкэнд или один из встроенных бэкэндов, "
+"кроме Memcached), и не желаете видеть подобные предупреждения, вы можете "
+"заглушить ``CacheKeyWarning`` с помощью следующего кода в модуле "
+"``management`` одного из ваших приложений::"
 
 # 7f94f2f026954777bdc15eb937e2bc0c
 #: ../../topics/cache.txt:905
@@ -1561,6 +1592,12 @@ msgid ""
 "method, and follow the instructions for `using a custom cache backend`_. For "
 "instance, to do this for the ``locmem`` backend, put this code in a module::"
 msgstr ""
+"Если вам требуется изменить логику проверки ключа для одного из встроенных "
+"бэкэндов кэширования, вы можете унаследовать свой класс от него и "
+"переопределить метод ``validate_key``. Затем следуйте инструкциям :ref:`по "
+"использованию собственного бэкэнда кэширования<using-a-custom-cache-"
+"backend>`. Например, для реализации подобного для бэкэнда ``locmem``, "
+"поместите следующий код в модуль::"
 
 # 028c628ae918405e9e107c17be958f38
 #: ../../topics/cache.txt:917
@@ -1568,11 +1605,13 @@ msgid ""
 "...and use the dotted Python path to this class in the :setting:`BACKEND "
 "<CACHES-BACKEND>` portion of your :setting:`CACHES` setting."
 msgstr ""
+"...и используйте точечный путь к этому классу в ключе :setting:`BACKEND "
+"<CACHES-BACKEND>` параметра конфигураци :setting:`CACHES`."
 
 # 6dca884f44514eb8a0e05957ea58f1e4
 #: ../../topics/cache.txt:921
 msgid "Upstream caches"
-msgstr ""
+msgstr "Апстрим кэши"
 
 # c4c54ad682454628817315485d03ba8f
 #: ../../topics/cache.txt:923
@@ -1582,11 +1621,15 @@ msgid ""
 "\"upstream\" caches. These are systems that cache pages for users even "
 "before the request reaches your Web site."
 msgstr ""
+"До этого момента этот документ описывал кэширование ваших *собственных* "
+"данных. Но есть ещё один тип кэширования, относящийся к веб разработке: "
+"кэширование, выполняемое апстрим кэшами. Это такие системы, которые кэшируют "
+"страницы для пользователей так, что они даже не обращаются к вашему сайту."
 
 # 4e5c1ceb9ab24c7c93a3d35024b283a0
 #: ../../topics/cache.txt:928
 msgid "Here are a few examples of upstream caches:"
-msgstr ""
+msgstr "Рассмотрим несколько примеров таких кэшей::"
 
 # 58fe4f8b243c482686737a363b348490
 #: ../../topics/cache.txt:930
@@ -1597,6 +1640,11 @@ msgid ""
 "this caching; the ISP sits between example.com and your Web browser, "
 "handling all of the caching transparently."
 msgstr ""
+"Ваш провайдер может кэшировать определённые страницы, т.е. если вы запросите "
+"страницу с http://example.com/, то провайдер пришлёт её вам без обращения к "
+"самому сайту. Основатели данного сайта даже не будут знать о таком "
+"кэшировании, так как провайдер находится между вашим браузером и сайтом, "
+"незаметно выполняя кэширование."
 
 # 44704ea8542b4d39b1e9830e0b5a1a0a
 #: ../../topics/cache.txt:936
@@ -1606,6 +1654,10 @@ msgid ""
 "this case, each request first would be handled by the proxy, and it would be "
 "passed to your application only if needed."
 msgstr ""
+"Ваше Django приложение может находится за *прокси-кэше*, таким как Squid Web "
+"Proxy Cache (http://www.squid-cache.org/), который кэширует страницы для "
+"обеспечения производительности. В таком случае, каждый запрос сначала будет "
+"обработан прокси, а затем при необходимости будет передан вашему приложению."
 
 # c899e17aa9684a6ab71381aa49ee9ac4
 #: ../../topics/cache.txt:941
@@ -1615,6 +1667,10 @@ msgid ""
 "to that page, without even contacting the Web page again to see whether it "
 "has changed."
 msgstr ""
+"Ваш веб браузер также кэширует страницы. Если веб страница отправляет "
+"соответствующий заголовок, то ваш браузер будет использовать локально "
+"закэшированную копию для последующих запросов к этой странице, даже не "
+"пытаясь проверить, изменилась ли эта страница на сайте."
 
 # 573d9bfa5ccb4dd5a5271178cd858751
 #: ../../topics/cache.txt:946
@@ -1625,6 +1681,11 @@ msgid ""
 "could expose incorrect or sensitive data to subsequent visitors to those "
 "pages."
 msgstr ""
+"Апстрим кэширование -- неплохой ускоритель, но есть одна проблема с ним: "
+"содержимое большинства веб страниц различается в зависимости от "
+"аутентификации и других настроек и кэширующие систему, которые слепо "
+"сохраняют страницы, основываясь в основном на URL, могут выдать неправильные "
+"или секретные данные следующим посетителям этих страниц."
 
 # 820f10087b44457ba6cef5ac455ddbaf
 #: ../../topics/cache.txt:951
@@ -1635,6 +1696,11 @@ msgid ""
 "would have his user-specific inbox page cached for subsequent visitors to "
 "the site. That's not cool."
 msgstr ""
+"К примеру, скажем вы работаете с почтовой системой и содержимое входящих "
+"сообщений очевидно зависит от зарегистрированного в системе пользователя. "
+"Если провайдер слепо закэшировал ваш сайт, то первый пользователь, вошедший "
+"через этого же провайдера, закэширует свою страницу для последующих "
+"посетителей этого сайта. Это точно не круто."
 
 # 5b03993c13f64d9782f8258c2e97b5a7
 #: ../../topics/cache.txt:957
@@ -1645,11 +1711,16 @@ msgid ""
 "cache particular pages. We'll look at some of these headers in the sections "
 "that follow."
 msgstr ""
+"К счастью, протокол HTTP предоставляет решение для этой проблемы. Существует "
+"ряд HTTP заголовков, которые инструктируют апстрим кэши как именно следует "
+"различать страницы в зависимости от определённых переменных, также указывая "
+"что некоторые страницы кэшировать вообще не следует. Мы рассмотрим некоторые "
+"из этих заголовков в следующих секциях."
 
 # 3d6f5cfd15a84e35858a68e3779eeb79
 #: ../../topics/cache.txt:965
 msgid "Using Vary headers"
-msgstr ""
+msgstr "Использование заголовков Vary"
 
 # 10b66dd115c64d45b0d9dc7bead0b0a2
 #: ../../topics/cache.txt:967
@@ -1659,6 +1730,10 @@ msgid ""
 "of a Web page depend on a user's language preference, the page is said to "
 "\"vary on language.\""
 msgstr ""
+"Заголовок ``Vary`` определяет какие именно заголовки запроса кэширующий "
+"механизм должен принимать во внимание при построении своего ключа. Например, "
+"если содержимое страницы зависит от языковой настройки, то страница говорит "
+"\"обрати внимание на язык.\""
 
 # 348aa8c4176f48a38e36d43dff988b14
 #: ../../topics/cache.txt:972
@@ -1672,6 +1747,14 @@ msgid ""
 "to use the ``Vary`` header to tell caching mechanisms that the page output "
 "depends on those things."
 msgstr ""
+"По-умолчанию, кэширующая система Django создаёт свои ключи, используя "
+"запрошенный путь и запрос, т.е., ``\"/stories/2005/?order_by=author\"``. Это "
+"означает, что каждый запрос по этому URL будет использовать одну "
+"закэшированную версию, независимо от различия в куках или языковых "
+"настройках. Однако, если эта страница создаёт своё содержимое, основываясь "
+"на разнице в заголовках запроса, таких как куки или язык или тип браузера, "
+"вам следует использовать заголовок ``Vary``, чтобы указать кэширующему "
+"механизму, что вывод данной страница зависит от этих параметров."
 
 # 7c87e76915bf48d080a6589927271097
 #: ../../topics/cache.txt:980
@@ -1679,6 +1762,8 @@ msgid ""
 "To do this in Django, use the convenient ``vary_on_headers`` view decorator, "
 "like so::"
 msgstr ""
+"Чтобы сделать это в Django следует использовать декоратор представления "
+"``vary_on_headers``, так::"
 
 # f073734815ab42188095e705f199d1dc
 #: ../../topics/cache.txt:989
@@ -1686,6 +1771,9 @@ msgid ""
 "In this case, a caching mechanism (such as Django's own cache middleware) "
 "will cache a separate version of the page for each unique user-agent."
 msgstr ""
+"В этом случае кэширующий механизм (такой как кэширующий мидлварь Django) "
+"закэширует отдельную версию этой страница для каждого уникального типа "
+"браузера."
 
 # c75dc1a8ed504fdaba5ac8419ff9de54
 #: ../../topics/cache.txt:992
@@ -1696,11 +1784,15 @@ msgid ""
 "header (which may already exist), rather than setting it from scratch and "
 "potentially overriding anything that was already in there."
 msgstr ""
+"Преимущество использования декоратора ``vary_on_headers`` по сравнению с "
+"ручной установкой заголовка ``Vary`` (с помощью ``response['Vary'] = 'user-"
+"agent'``) в том, что декоратор *добавляет* значение к заголовку ``Vary`` "
+"(который может уже существовать), а не переопределяет его."
 
 # 31c35d83573a441c9383c6d0e521bda9
 #: ../../topics/cache.txt:998
 msgid "You can pass multiple headers to ``vary_on_headers()``::"
-msgstr ""
+msgstr "Вы можете передавать несколько заголовков в ``vary_on_headers()``::"
 
 # 89cad02c5bc54d2a8b7d3a0eddbfde9a
 #: ../../topics/cache.txt:1004
@@ -1711,6 +1803,10 @@ msgid ""
 "will be considered different from a request with the user-agent ``Mozilla`` "
 "and the cookie value ``foo=ham``."
 msgstr ""
+"Это указывает апстрим кэшам, что надо обращать внимание на *оба*, т.е. любая "
+"комбинация типа браузера и куки будет кэшироваться отдельно. Например, "
+"запрос от ``Mozilla`` с кукой ``foo=bar`` будет рассматриваться как отличный "
+"от запроса от ``Mozilla`` с кукой ``foo=ham``."
 
 # 94ba731b0e47402387733fe4924c9c6e
 #: ../../topics/cache.txt:1010
@@ -1718,6 +1814,8 @@ msgid ""
 "Because varying on cookie is so common, there's a ``vary_on_cookie`` "
 "decorator. These two views are equivalent::"
 msgstr ""
+"Так как зависимость от куки является настолько стандартной, что существует "
+"декоратор ``vary_on_cookie``. Следующие два представления эквивалентны::"
 
 # 839bcfe2ea8842aa96634f7b88a1919a
 #: ../../topics/cache.txt:1021
@@ -1725,6 +1823,8 @@ msgid ""
 "The headers you pass to ``vary_on_headers`` are not case sensitive; ``\"User-"
 "Agent\"`` is the same thing as ``\"user-agent\"``."
 msgstr ""
+"Заголовки, которые вы передаёте в ``vary_on_headers`` нечувствительны к "
+"регистру, т.е. ``\"User-Agent\"`` аналогичен ``\"user-agent\"``."
 
 # 4c7ff54c10ac43fc9477e6dd0ff707f7
 #: ../../topics/cache.txt:1024
@@ -1733,6 +1833,9 @@ msgid ""
 "patch_vary_headers``, directly. This function sets, or adds to, the ``Vary "
 "header``. For example::"
 msgstr ""
+"Также вы можете использовать вспомогательную функцию ``django.utils.cache."
+"patch_vary_headers`` напрямую. Эта функция устанавливает или добавляет "
+"заголовок ``Vary``. Например::"
 
 # 8d4a2d0f7c0d46bd88a43a5b368d2524
 #: ../../topics/cache.txt:1035
@@ -1741,16 +1844,21 @@ msgid ""
 "as its first argument and a list/tuple of case-insensitive header names as "
 "its second argument."
 msgstr ""
+"Функция ``patch_vary_headers`` принимает экземпляр :class:`~django.http."
+"HttpResponse` в качестве первого аргумента и список/кортеж имён заголовков в "
+"качестве второго аргумента."
 
 # ede94fbbc8cf4d6cbcf8aae493879bd3
 #: ../../topics/cache.txt:1039
 msgid "For more on Vary headers, see the `official Vary spec`_."
 msgstr ""
+"Более подробно о заголовках ``Vary`` можно почитать в :ref:`официальной "
+"спецификации<official-Vary-spec>`."
 
 # f10272f014324c8aae44786f2c313fd1
 #: ../../topics/cache.txt:1044
 msgid "Controlling cache: Using other headers"
-msgstr ""
+msgstr "Управление кэшированием: Использование других заголовков"
 
 # bbec76a818cb4ee7a03e3f5e71c517f8
 #: ../../topics/cache.txt:1046
@@ -1758,6 +1866,8 @@ msgid ""
 "Other problems with caching are the privacy of data and the question of "
 "where data should be stored in a cascade of caches."
 msgstr ""
+"Другими проблемами с кэшированием являются приватность данных и вопрос от "
+"том, где следует выполнять кэширование в каскаде кэшей."
 
 # 07240cefc7e042bdbd74a6cccf748233
 #: ../../topics/cache.txt:1049
@@ -1769,6 +1879,12 @@ msgid ""
 "stored in a public cache. So Web applications need a way to tell caches "
 "which data is private and which is public."
 msgstr ""
+"Пользователь обычно сталкивается с двумя видами кэшей: кэш его браузера "
+"(личный кэш) и кэш его провайдера (публичный кэш). Публичный кэш "
+"используется множеством пользователей и кем-то управляется. Это вызывает "
+"проблемы с личными данными, скажем, вам не захочется хранить номер своего "
+"банковского счёта в публичном кэше. Таким образом, веб приложения нуждаются "
+"в способе указать кэшам какие данные являются открытыми, а какие закрытыми."
 
 # 06cc2ef82df34d0786460bc1afd3a192
 #: ../../topics/cache.txt:1056
@@ -1776,6 +1892,9 @@ msgid ""
 "The solution is to indicate a page's cache should be \"private.\" To do this "
 "in Django, use the ``cache_control`` view decorator. Example::"
 msgstr ""
+"Решением является указание того, что страница должна кэшироваться в личном "
+"кэше. Для этого в Django следует использовать декоратор представления "
+"``cache_control``. Например::"
 
 # d4a5ff64f6e8434fac7c48674171db77
 #: ../../topics/cache.txt:1065
@@ -1783,6 +1902,8 @@ msgid ""
 "This decorator takes care of sending out the appropriate HTTP header behind "
 "the scenes."
 msgstr ""
+"Этот декоратор обеспечивает автоматическую отправку соответствующих HTTP "
+"заголовков."
 
 # b069d24c0f4d4e1caa9f377640e53124
 #: ../../topics/cache.txt:1068
@@ -1795,6 +1916,12 @@ msgid ""
 "``patch_cache_control``, the manual way to modify the cache control header "
 "(it is internally called by the ``cache_control`` decorator)::"
 msgstr ""
+"Следует отметить, что настройки открытости и закрытости взаимоисключающие. "
+"Декоратор обеспечивает эту проверку. Примером использования таких настроек "
+"будет блог, который содержит закрытые и открытые записи. Открытые записи "
+"могут кэшироваться везде. Следующий код использует ``patch_cache_control``, "
+"ручной способ изменения управляющего заголовка (обычно эта функция "
+"вызывается в декораторе ``cache_control``)::"
 
 # 69a4d8ef11d943aa899edf9d020011bc
 #: ../../topics/cache.txt:1090
@@ -1802,11 +1929,13 @@ msgid ""
 "There are a few other ways to control cache parameters. For example, HTTP "
 "allows applications to do the following:"
 msgstr ""
+"Существует несколько других способов управления параметрами кэширования. "
+"Например, HTTP позволяет приложениям делать следующее:"
 
 # 4b07691de08e451caeaba47080c112a7
 #: ../../topics/cache.txt:1093
 msgid "Define the maximum time a page should be cached."
-msgstr ""
+msgstr "Определить максимальное время хранения страницы в кэше."
 
 # 1948fc6622cd49699481af05cc1393fa
 #: ../../topics/cache.txt:1095
@@ -1816,6 +1945,11 @@ msgid ""
 "deliver cached content even if the server page changed, simply because the "
 "cache copy isn't yet expired.)"
 msgstr ""
+"Укажите, должен ли кэш всегда проверять наличие новых версий, возвращая "
+"закэшированное содержимое только если не было никаких изменений. (Некоторые "
+"кэши могут отдавать закэшированное содержимое даже если изменения страницы "
+"обнаружены, просто потому что ещё не вышло время жизни закэшированной "
+"записи.)"
 
 # 5b06c6ff4fb64d28bfd9145203c1a82f
 #: ../../topics/cache.txt:1100
@@ -1825,6 +1959,9 @@ msgid ""
 "the cache on every access and to store cached versions for, at most, 3,600 "
 "seconds::"
 msgstr ""
+"В Django используйте декоратор ``cache_control`` для определения этих "
+"параметров кэширования. В этом примере ``cache_control`` указывает, что надо "
+"проверять источник при каждом запросе и хранить данные не более 3600 секунд::"
 
 # 20ff20874ffa4c8fa01479aa72781c60
 #: ../../topics/cache.txt:1110
@@ -1832,46 +1969,48 @@ msgid ""
 "Any valid ``Cache-Control`` HTTP directive is valid in ``cache_control()``. "
 "Here's a full list:"
 msgstr ""
+"Любая верная HTTP директива ``Cache-Control`` верна в ``cache_control()``. "
+"Приведём полный список:"
 
 # 559e8c501dfb48b18a471173705ce673
 #: ../../topics/cache.txt:1113
 msgid "``public=True``"
-msgstr ""
+msgstr "``public=True``"
 
 # 917147fe7531414daa46ccd29b4f43b2
 #: ../../topics/cache.txt:1114
 msgid "``private=True``"
-msgstr ""
+msgstr "``private=True``"
 
 # b2ba489ff66d4c46a98886feb8628e0c
 #: ../../topics/cache.txt:1115
 msgid "``no_cache=True``"
-msgstr ""
+msgstr "``no_cache=True``"
 
 # 66dbb1eac677445b9cbb85951e2050a9
 #: ../../topics/cache.txt:1116
 msgid "``no_transform=True``"
-msgstr ""
+msgstr "``no_transform=True``"
 
 # a126d3b885e148bfa6206dcd09514dbc
 #: ../../topics/cache.txt:1117
 msgid "``must_revalidate=True``"
-msgstr ""
+msgstr "``must_revalidate=True``"
 
 # 0037ebf2b1394d3199dbe50cea4391dc
 #: ../../topics/cache.txt:1118
 msgid "``proxy_revalidate=True``"
-msgstr ""
+msgstr "``proxy_revalidate=True``"
 
 # e5087513511b46459ce62c17e6b7a8ce
 #: ../../topics/cache.txt:1119
 msgid "``max_age=num_seconds``"
-msgstr ""
+msgstr "``max_age=num_seconds``"
 
 # 4cafe7169b2b42bb850f96bfab37e140
 #: ../../topics/cache.txt:1120
 msgid "``s_maxage=num_seconds``"
-msgstr ""
+msgstr "``s_maxage=num_seconds``"
 
 # 37628c26987e4cb7bb5a18ff7e6763ef
 #: ../../topics/cache.txt:1122
@@ -1879,6 +2018,8 @@ msgid ""
 "For explanation of Cache-Control HTTP directives, see the `Cache-Control "
 "spec`_."
 msgstr ""
+"Больше об этих директивах можно узнать в :ref:`спецификации на Cache-"
+"Control<Cache-Control-spec>`."
 
 # a637a35aed8c473fa0b78600362a62b9
 #: ../../topics/cache.txt:1124
@@ -1888,6 +2029,11 @@ msgid ""
 "use a custom ``max_age`` in a ``cache_control`` decorator, the decorator "
 "will take precedence, and the header values will be merged correctly.)"
 msgstr ""
+"(Следует отметить, что кэширующая мидлварь уже устанавливает заголовок ``max-"
+"age`` равным значению параметра конфигурации :setting:"
+"`CACHE_MIDDLEWARE_SECONDS`. Если вы используете определённый ``max-age`` в "
+"декораторе ``cache_control``, декоратор применит его, правильно объеденив "
+"значения заголовка.)"
 
 # 3b105497127c4bc6948e7b25884dffaa
 #: ../../topics/cache.txt:1129
@@ -1896,11 +2042,14 @@ msgid ""
 "decorators.cache.never_cache`` is a view decorator that adds headers to "
 "ensure the response won't be cached by browsers or other caches. Example::"
 msgstr ""
+"Если потребуется использовать заголовки, которые полностью отключают "
+"кэширование, то воспользуйтесь декоратором ``django.views.decorators.cache."
+"never_cache``. Например::"
 
 # 09f1408c473249f485352b4e582ba9ac
 #: ../../topics/cache.txt:1143
 msgid "Other optimizations"
-msgstr ""
+msgstr "Другие оптимизации"
 
 # f8138fb936ed4dfabbe94af8d875474d
 #: ../../topics/cache.txt:1145
@@ -1908,6 +2057,8 @@ msgid ""
 "Django comes with a few other pieces of middleware that can help optimize "
 "your site's performance:"
 msgstr ""
+"Django поставляется несколькими мидлварями, которые могут помочь в "
+"оптимизации производительности вашего сайта:"
 
 # 324fa41b3c1640d0983e6b0007fbda10
 #: ../../topics/cache.txt:1148
@@ -1923,11 +2074,13 @@ msgid ""
 ":class:`django.middleware.gzip.GZipMiddleware` compresses responses for all "
 "modern browsers, saving bandwidth and transfer time."
 msgstr ""
+":class:`django.middleware.gzip.GZipMiddleware` сжимает отклики для всех "
+"современных браузеров, снижая нагрузку на сеть и время передачи."
 
 # 1467320a2d9f4a4e9860767b9778b146
 #: ../../topics/cache.txt:1156
 msgid "Order of MIDDLEWARE_CLASSES"
-msgstr ""
+msgstr "Порядок записей в MIDDLEWARE_CLASSES"
 
 # b0806ea5ee6a4ec8a7ab469067fdc1f4
 #: ../../topics/cache.txt:1158
@@ -1938,6 +2091,11 @@ msgid ""
 "storage. Middleware always adds something to the ``Vary`` response header "
 "when it can."
 msgstr ""
+"Если вы используете кэширующую мидлварь, важно правильно её разместить в "
+"параметре конфигурации :setting:`MIDDLEWARE_CLASSES`. Так происходит из-за "
+"того, что кэширующая мидлварь должна знать какие заголовки как влияют на "
+"кэширующие системы. Мидлварь всегда добавляет что-то в заголовок ``Vary``, "
+"когда может."
 
 # 76b328f3800e4bd291788b9d6840f551
 #: ../../topics/cache.txt:1163
@@ -1948,21 +2106,26 @@ msgid ""
 "``UpdateCacheMiddleware`` appears *before* any other middleware that might "
 "add something to the ``Vary`` header. The following middleware modules do so:"
 msgstr ""
+"``UpdateCacheMiddleware`` работает во время выдачи отклика, там где мидлвари "
+"применяются с конца списка, т.е. элемент наверху списка выполняется "
+"*последним*. Таким образом, надо удостовериться, что "
+"``UpdateCacheMiddleware`` указан *до* любых мидлварей, которые могут "
+"добавить что-то в заголовок ``Vary``. Следующие модули как раз такие:"
 
 # 273ca439d3c448dc9d0c7dc1a7b47337
 #: ../../topics/cache.txt:1169
 msgid "``SessionMiddleware`` adds ``Cookie``"
-msgstr ""
+msgstr "``SessionMiddleware`` добавляет ``Cookie``"
 
 # a3af5ef3ad2b48889952f4434c6352ab
 #: ../../topics/cache.txt:1170
 msgid "``GZipMiddleware`` adds ``Accept-Encoding``"
-msgstr ""
+msgstr "``GZipMiddleware`` добавляет ``Accept-Encoding``"
 
 # 7bc81dbc436847c5ba739540c8a96bc8
 #: ../../topics/cache.txt:1171
 msgid "``LocaleMiddleware`` adds ``Accept-Language``"
-msgstr ""
+msgstr "``LocaleMiddleware`` добавляет ``Accept-Language``"
 
 # 01f70c262ee34121855751d89cc5bdb3
 #: ../../topics/cache.txt:1173
@@ -1974,3 +2137,7 @@ msgid ""
 "updates the ``Vary`` header, so ``FetchFromCacheMiddleware`` must be *after* "
 "any item that does so."
 msgstr ""
+"``FetchFromCacheMiddleware``, с другой стороны, выполняется во время "
+"запроса, когда мидлвари применяются от начала списка, т.е. элемент наверху "
+"списка выполняется *первым*. ``FetchFromCacheMiddleware`` также должен "
+"выполняться после других мидлварей, которые изменяют заголовок ``Vary``."
