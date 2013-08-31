@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-21 17:15\n"
-"PO-Revision-Date: 2013-05-27 17:43+0400\n"
+"PO-Revision-Date: 2013-09-01 00:16+0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -1102,6 +1102,12 @@ msgid ""
 "every user of your site. Do this by passing additional arguments to the ``{% "
 "cache %}`` template tag to uniquely identify the cache fragment:"
 msgstr ""
+"Временами требуется кэшировать многочисленные копии одного фрагмента, "
+"различающиеся только небольшим куском динамических данных. Например, может "
+"потребоваться кэширование копии сайдбара из предыдущего примера для каждого "
+"пользователя вашего сайта. Это можно сделать, передав дополнительные "
+"аргументы в шаблонный тег ``{% cache %}``, что однозначно будет "
+"идентифицировать фрагмент:"
 
 # 8e29c0aa2872497386ac37673ca9aecc
 #: ../../topics/cache.txt:615
@@ -1109,6 +1115,9 @@ msgid ""
 "It's perfectly fine to specify more than one argument to identify the "
 "fragment. Simply pass as many arguments to ``{% cache %}`` as you need."
 msgstr ""
+"Чем больше аргументов вы используете для идентификации фрагмента, тем лучше. "
+"Просто указывайте для `{% cache %}`` столько аргументов, сколько считаете "
+"нужным."
 
 # a04311ac09f74f6c977acdd445fff573
 #: ../../topics/cache.txt:618
@@ -1119,6 +1128,11 @@ msgid ""
 "variables<template-translation-vars>` available in templates to achieve the "
 "same result:"
 msgstr ""
+"Если параметр конфигурации :setting:`USE_I18N` установлен в ``True``, то "
+"мидлварь кэширования сайта будет :ref:`учитывать активных язык<i18n-cache-"
+"key>`. Для шаблонного тега ``cache`` можно использовать одну из :ref:"
+"`переменных, предназначенных для перевода<template-translation-vars>`, "
+"доступных шаблонам для достижения того же результата:"
 
 # 9056ae4ade8b46a2860b759d6764afb3
 #: ../../topics/cache.txt:635
@@ -1128,6 +1142,10 @@ msgid ""
 "``my_timeout`` is set to the value ``600``, then the following two examples "
 "are equivalent:"
 msgstr ""
+"Время жизни фрагмента в кэше также может быть шаблонной переменной, до тех "
+"пор пока эта переменная разрешается в целое значение. Например, если "
+"шаблонная переменная ``my_timeout`` имеет значение ``600``, то следующие два "
+"примера эквивалентны:"
 
 # 349269b6e5b54c59a29b44981cdfcad1
 #: ../../topics/cache.txt:645
@@ -1135,11 +1153,14 @@ msgid ""
 "This feature is useful in avoiding repetition in templates. You can set the "
 "timeout in a variable, in one place, and just reuse that value."
 msgstr ""
+"Эта особенность полезна для уменьшения количества повторений в шаблонах. Вы "
+"можете установить время жизни в переменной, в одном месте, и затем "
+"использовать это значение."
 
 # bdde1d324fc941479c1d86d7b898bebd
 #: ../../topics/cache.txt:649
 msgid "The low-level cache API"
-msgstr ""
+msgstr "API низкого уровня для кэширования"
 
 # 3868bc207fb342499cf0c8a35627cfa1
 #: ../../topics/cache.txt:653
@@ -1147,6 +1168,8 @@ msgid ""
 "Sometimes, caching an entire rendered page doesn't gain you very much and "
 "is, in fact, inconvenient overkill."
 msgstr ""
+"Временами кэширование всей созданной странице не даёт нужного результата и, "
+"обычно, является неудобным излишеством."
 
 # 0203cbc5a30445349b9dc4824fb7c4f4
 #: ../../topics/cache.txt:656
@@ -1158,6 +1181,10 @@ msgid ""
 "want to cache the entire result (since some of the data changes often), but "
 "you'd still want to cache the results that rarely change."
 msgstr ""
+"Допустим ваш сайт содержит представление, итог работы которого зависит от "
+"нескольких ресурсоёмких запросов, результаты которых периодически "
+"изменяются. В этом случае, кэширование всей страницы будет только вредить, "
+"но вот кэширование редко изменяемых фрагментов было бы хорошим подходом."
 
 # b85226131dc642b0b211838f4dc43db6
 #: ../../topics/cache.txt:663
@@ -1169,11 +1196,17 @@ msgid ""
 "objects can be pickled; refer to the Python documentation for more "
 "information about pickling.)"
 msgstr ""
+"Для подобных случаев Django предоставляет простой API кэширования низкого "
+"уровня. Вы можете использовать этот API для хранения объектов в кэше с любым "
+"уровнем детализации. Вы можете поместить в кэш любой объект Python, который "
+"может быть безопасно \"замаринован\" (pickled :): строки, словари, списки "
+"объектов модели и так далее. (То есть, речь идёт о большинстве объектов "
+"языка Python, обратитесь к соответствующей документации.)"
 
 # bb1b4f3cb5f1441d81070754e62bf1ac
 #: ../../topics/cache.txt:671
 msgid "Accessing the cache"
-msgstr ""
+msgstr "Доступ к кэшу"
 
 # 5fd4daa2f11240808d7cb56e7c5b99c1
 #: ../../topics/cache.txt:675
@@ -1182,6 +1215,9 @@ msgid ""
 "automatically created from the ``'default'`` entry in the :setting:`CACHES` "
 "setting::"
 msgstr ""
+"Модуль кэширования, ``django.core.cache``, содержит объект ``cache``, "
+"который автоматически создаётся из записи `'default'`` параметра "
+"конфигурации :setting:`CACHES`::"
 
 # f65d4623f88645bab1ee67ac92d077b6
 #: ../../topics/cache.txt:681
@@ -1189,22 +1225,28 @@ msgid ""
 "If you have multiple caches defined in :setting:`CACHES`, then you can use :"
 "func:`django.core.cache.get_cache` to retrieve a cache object for any key::"
 msgstr ""
+"Если вы определили несколько кэшей в параметре конфигурации :setting:"
+"`CACHES`, то вы можете использовать функцию :func:`django.core.cache."
+"get_cache` для доступа к объекту кэша::"
 
 # bf91318dcca14bc181e27bdf179f43ec
 #: ../../topics/cache.txt:687
 msgid ""
 "If the named key does not exist, ``InvalidCacheBackendError`` will be raised."
 msgstr ""
+"Если указанного именованного ключа не существует, то будет вызвано "
+"исключение ``InvalidCacheBackendError``."
 
 # 31a3034eda634c39996ece4ffa9230ac
 #: ../../topics/cache.txt:691
 msgid "Basic usage"
-msgstr ""
+msgstr "Использование"
 
 # 2d709edc9f8149f6907b96027423b6c8
 #: ../../topics/cache.txt:693
 msgid "The basic interface is ``set(key, value, timeout)`` and ``get(key)``::"
 msgstr ""
+"Основной интерфейс прост: ``set(key, value, timeout)`` и ``get(key)``::"
 
 # dcea09136a014c148f15ad28dec639d1
 #: ../../topics/cache.txt:699
@@ -1214,12 +1256,17 @@ msgid ""
 "(explained above). It's the number of seconds the value should be stored in "
 "the cache."
 msgstr ""
+"Аргумент ``timeout`` является необязательным и обычно определяется в "
+"соответствующем бэкэнде кэша в параметре конфигурации :setting:`CACHES` "
+"(читайте выше). Аргумент определяет количество секунд, которое значение "
+"должно хранится в кэше."
 
 # e2ac6c0f0ffc47c48e59b270c7f2432a
 #: ../../topics/cache.txt:704
 msgid ""
 "If the object doesn't exist in the cache, ``cache.get()`` returns ``None``::"
 msgstr ""
+"Если объект отсутствует в кэше, то ``cache.get()`` возвращает ``None``::"
 
 # f6ef2a1eb1294361b93d4758d9dfcc86
 #: ../../topics/cache.txt:711
@@ -1228,6 +1275,10 @@ msgid ""
 "you won't be able to distinguish between your stored ``None`` value and a "
 "cache miss signified by a return value of ``None``."
 msgstr ""
+"Мы не советуем хранить в кэше литеральное значение ``None``, так как вы не "
+"сможете определить разницу между сохранённым значением ``None`` и "
+"отсутствием значения в кэше, о чём сигнализирует возвращение значения "
+"``None``."
 
 # ae0a4031fb5d4df0861efb615e0c498a
 #: ../../topics/cache.txt:715
@@ -1235,6 +1286,8 @@ msgid ""
 "``cache.get()`` can take a ``default`` argument. This specifies which value "
 "to return if the object doesn't exist in the cache::"
 msgstr ""
+"Метод ``cache.get()`` принимает аргумент ``default``. Он определяет "
+"значение, которое будет возвращено, если указанного объекта нет в кэше::"
 
 # c48b3839887b45b988e19d8b543f5880
 #: ../../topics/cache.txt:721
@@ -1243,6 +1296,10 @@ msgid ""
 "takes the same parameters as ``set()``, but it will not attempt to update "
 "the cache if the key specified is already present::"
 msgstr ""
+"Для того, чтобы добавить элемент в кэш только в случае, когда его там нет, "
+"следует использовать метод ``add()``. Он принимает такие же параметры, как и "
+"метод ``set()``, но не будет пытаться изменить значение, если оно уже "
+"присутствует в кэше::"
 
 # 3b19b90df27a431fb776fd3146a97c5b
 #: ../../topics/cache.txt:730
@@ -1251,6 +1308,9 @@ msgid ""
 "check the return value. It will return ``True`` if the value was stored, "
 "``False`` otherwise."
 msgstr ""
+"Если вам надо определить сохранил ли метод ``add()`` значение в кэше, вы "
+"можете проверить значение, которое он возвращает. ``True`` указывает, что "
+"значение было сохранено, а ``False`` -- наоборот."
 
 # 87ddeb757d844041b8b4377415531f27
 #: ../../topics/cache.txt:734
@@ -1259,6 +1319,9 @@ msgid ""
 "``get_many()`` returns a dictionary with all the keys you asked for that "
 "actually exist in the cache (and haven't expired)::"
 msgstr ""
+"С помощью методы ``get_many()`` можно получить ряд значений из кэша за один "
+"запрос. Этот метод возвращает словарь со всеми запрошенными ключами, которые "
+"действительно присутствуют в кэше (и имеют актуальный срок действия)::"
 
 # 04d054ef61e8474f8da1c3f9adf10fff
 #: ../../topics/cache.txt:744
@@ -1266,12 +1329,16 @@ msgid ""
 "To set multiple values more efficiently, use ``set_many()`` to pass a "
 "dictionary of key-value pairs::"
 msgstr ""
+"Для эффективного кэширования множества значений следует использовать метод "
+"``set_many()``, который принимает словарь ключей и их значений::"
 
 # 4c3d7f2b1b5d47ac8be387fd084ae3c3
 #: ../../topics/cache.txt:751
 msgid ""
 "Like ``cache.set()``, ``set_many()`` takes an optional ``timeout`` parameter."
 msgstr ""
+"Аналогично методу ``cache.set()``, метод ``set_many()`` принимает "
+"необязательный параметр ``timeout``."
 
 # 79accce07d424550959d1a6100d25fcb
 #: ../../topics/cache.txt:753
@@ -1279,6 +1346,8 @@ msgid ""
 "You can delete keys explicitly with ``delete()``. This is an easy way of "
 "clearing the cache for a particular object::"
 msgstr ""
+"Вы можете явно удалять значения из кэша с помощью метода ``delete()``. Это "
+"простейший способ очистки кэша для определённого объекта::"
 
 # f827e4ff97cf41d9b377d65bba2b1b7c
 #: ../../topics/cache.txt:758
@@ -1286,6 +1355,8 @@ msgid ""
 "If you want to clear a bunch of keys at once, ``delete_many()`` can take a "
 "list of keys to be cleared::"
 msgstr ""
+"Для одновременного удаления множества значений надо использовать метод "
+"``delete_many()``, который принимает список ключей, подлежащих удалению::"
 
 # b00267e3792f45f596f2c95add055168
 #: ../../topics/cache.txt:763
@@ -1294,6 +1365,9 @@ msgid ""
 "``.  Be careful with this; ``clear()`` will remove *everything* from the "
 "cache, not just the keys set by your application. ::"
 msgstr ""
+"Наконец, для полной очистки кэша надо использовать метод ``cache.clear()``. "
+"Будьте осторожными с этим методом. Метод удаляет из кэша *всё*, не только "
+"ключи, установленные вашим приложением. ::"
 
 # 6eaebd140f81434780aeb8133dd7d6e5
 #: ../../topics/cache.txt:769
@@ -1305,6 +1379,12 @@ msgid ""
 "call. A ValueError will be raised if you attempt to increment or decrement a "
 "nonexistent cache key.::"
 msgstr ""
+"Вы также можете увеличивать или уменьшать значение ключа, находящегося в "
+"кэше, с помощью методов ``incr()`` или ``desc()`` соответственно. По-"
+"умолчанию, значение в кэше будет увеличено или уменьшено на единицу. Другой "
+"шаг изменения величины может быть указан с помощью соответствующего "
+"аргумента методов. При попытке изменения несуществующего в кэше значения "
+"будет выброшено исключение ``ValueError``.::"
 
 # 30d4d17957704c22b2c98342c32bbf5a
 #: ../../topics/cache.txt:788
@@ -1315,11 +1395,15 @@ msgid ""
 "However, if the backend doesn't natively provide an increment/decrement "
 "operation, it will be implemented using a two-step retrieve/update."
 msgstr ""
+"Методы ``incr()`` и ``decr()`` не гарантируют атомарность операции. Тут всё "
+"зависит от бэкэнда. К примеру, memcached гарантирует атомарность этих "
+"операций. Другие бэкэнды делают это через двойную операцию считывания и "
+"сохранения нового значения."
 
 # a36cf47d87e14522986c7671150061ca
 #: ../../topics/cache.txt:797
 msgid "Cache key prefixing"
-msgstr ""
+msgstr "Прификсы ключей кэша"
 
 # c196c71a71c24f458f64c053978c4046
 #: ../../topics/cache.txt:799
@@ -1330,6 +1414,11 @@ msgid ""
 "different between servers, this can lead to some very hard to diagnose "
 "problems."
 msgstr ""
+"Если ваш кэш разделяется между несколькими серверами или между окружениями "
+"разработки и продакшена, возможна ситуация, когда данные, закэшированные "
+"одним сервером, будут использованы другим сервером. Если формат "
+"закэшированных данных различен между серверами, то это может привести к "
+"трудно выявляемым проблемам."
 
 # 022f7eace0eb4e81b5632415cdc39c68
 #: ../../topics/cache.txt:805
@@ -1339,6 +1428,10 @@ msgid ""
 "automatically prefix the cache key with the value of the :setting:"
 "`KEY_PREFIX <CACHES-KEY_PREFIX>` cache setting."
 msgstr ""
+"Чтобы избежать такой ситуации, Django предоставляет возможность назначения "
+"префиксов для всех ключей кэша, используемых сервером. При работе с ключём "
+"Django автоматически добавляет к нему префикс, определённый параметром "
+"конфигурации :setting:`KEY_PREFIX <CACHES-KEY_PREFIX>`."
 
 # d3acfa876b61422c8af9258e72883d53
 #: ../../topics/cache.txt:810
@@ -1347,11 +1440,14 @@ msgid ""
 "<CACHES-KEY_PREFIX>`, you can ensure that there will be no collisions in "
 "cache values."
 msgstr ""
+"Назначив различные префиксы для каждого экземпляра Django с помощью "
+"параметра конфигурации :setting:`KEY_PREFIX <CACHES-KEY_PREFIX>`, вы "
+"гарантируете отсутствие коллизий в значениях кэша."
 
 # a2d5e7476e2c44c682d499c058760c96
 #: ../../topics/cache.txt:817
 msgid "Cache versioning"
-msgstr ""
+msgstr "Версионирование кэша"
 
 # 55e277e0a1ad40e9880c44e67ad2096b
 #: ../../topics/cache.txt:819
@@ -1361,6 +1457,10 @@ msgid ""
 "entire cache, but this can lead to the loss of cache values that are still "
 "valid and useful."
 msgstr ""
+"При изменении работающего кода, который использует закэшированные значения, "
+"может потребоваться сброс всех закэшированных данных. Простым способом "
+"является отчистка всего кэша, но это может привести к потере закэшированных "
+"данных, которые всё ещё верны и полезны."
 
 # ce62385b7fc1406fa20fc0811eb5049f
 #: ../../topics/cache.txt:824
@@ -1371,6 +1471,12 @@ msgid ""
 "is automatically combined with the cache prefix and the user-provided cache "
 "key to obtain the final cache key."
 msgstr ""
+"Django предоставляет отличный способ выделения отдельных значений в кэше. "
+"Система кэширования Django обладает глобальным идентификатором версии, "
+"определённым в параметре конфигурации :setting:`VERSION <CACHES-VERSION>`. "
+"Значение этого параметра автоматически объединяется с префиксом кэша и "
+"пользователем, которые предоставил ключ, получая итоговый ключ для обращения "
+"к кэшу."
 
 # acb31bfad6f5427d94a3941584b9b90c
 #: ../../topics/cache.txt:830
