@@ -16,4 +16,4 @@ language = 'ru'
 locale_dirs = ['./locale/']
 gettext_compact = False
 
-exclude_patterns = ['_build', 'djbook']
+exclude_patterns = ['_build', 'djbook', 'env']
