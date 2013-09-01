@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated, 2013.
+# Automatically generated <>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-21 17:15\n"
-"PO-Revision-Date: 2013-08-21 17:15\n"
+"PO-Revision-Date: 2013-09-01 23:03+0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -21,7 +21,7 @@ msgstr ""
 # 0bf9a2909b6b44668c808819dc9943e2
 #: ../../intro/tutorial06.txt:3
 msgid "Writing your first Django app, part 6"
-msgstr ""
+msgstr "Создаём своё первое приложение с Django, часть 6"
 
 # 943c534d9b814a7382ba87a3cde39b0a
 #: ../../intro/tutorial06.txt:5
@@ -30,6 +30,9 @@ msgid ""
 "We've built a tested Web-poll application, and we'll now add a stylesheet "
 "and an image."
 msgstr ""
+"Продолжаем начатое в :doc:`пятой части </intro/tutorial05>`. Мы создали "
+"протестированное веб приложение для опросов и теперь нам надо добавить стили "
+"и картинку."
 
 # 552f45ec6b824b1ab952fd9ccdcc917b
 #: ../../intro/tutorial06.txt:9
@@ -39,6 +42,10 @@ msgid ""
 "to render the complete web page. In Django, we refer to these files as "
 "\"static files\"."
 msgstr ""
+"В отличие от HTML, генерируемого сервером, веб приложения обычно нуждаются в "
+"обработке дополнительных файлов, таких как изображения, JavaScript или CSS, "
+"которые нужны для отображения полной веб страницы. В Django мы называем "
+"такие файлы \"статикой\"."
 
 # 27e5c293859c4144a96c9d9752420a01
 #: ../../intro/tutorial06.txt:14
@@ -49,6 +56,11 @@ msgid ""
 "multiple sets of static files provided by each application starts to get "
 "tricky."
 msgstr ""
+"Для маленьких проектов это не является проблемой, так как вы можете просто "
+"разместить статичные файлы где-то на своём веб сервере. Однако, для больший "
+"проектов, особенно состоящих из множества приложений, взаимодействие с "
+"несколькими наборами статичных файлов, предоставляемых каждым приложением. "
+"начинает походить на работу фокусника."
 
 # 91b052b6cc0c4f3d9aad37f0d2d13042
 #: ../../intro/tutorial06.txt:20
@@ -57,11 +69,15 @@ msgid ""
 "from each of your applications (and any other places you specify) into a "
 "single location that can easily be served in production."
 msgstr ""
+"Именно для решения этой задачи существует ``django.contrib.staticfiles``. Он "
+"собирает статичные файлы из каждого вашего приложения (и из других мест, "
+"которые вы укажете) в единое место, которое может быть легко применяться на "
+"боевом сервере."
 
 # a2fa301ee6b946feb4b10e604b20870b
 #: ../../intro/tutorial06.txt:25
 msgid "Customize your *app's* look and feel"
-msgstr ""
+msgstr "Настройка вида вашего *приложения*"
 
 # ad5fcd970c62416b93d561eeb5127bf9
 #: ../../intro/tutorial06.txt:27
@@ -70,6 +86,9 @@ msgid ""
 "Django will look for static files there, similarly to how Django finds "
 "templates inside ``polls/templates/``."
 msgstr ""
+"Сначала создайте каталог ``static`` в каталоге ``polls``. Django будет "
+"искать статичные файлы в нём, аналогично тому как Django ищет шаблоны внутри "
+"``polls/templates/``."
 
 # baeb5e4a6f974a46b26b7d23de950fca
 #: ../../intro/tutorial06.txt:31
@@ -81,6 +100,12 @@ msgid ""
 "``polls`` we just created. The admin site uses the same directory structure "
 "for its static files."
 msgstr ""
+"Параметр конфигурации :setting:`STATICFILES_FINDERS` содержит список "
+"модулей, которые знают как получать статичные файлы из различных источников. "
+"Одним из стандартных является ``AppDirectoriesFinder``, который ищет "
+"каталоги \"static\" в каждом зарегистрированном приложении, например "
+"созданный нами каталог в ``polls``. Интерфейс администратора использует "
+"аналогичную структуру каталогов для своих статичных файлов."
 
 # 0b4c9832adbf40b9b862a3c25184cd3a
 #: ../../intro/tutorial06.txt:38
@@ -92,6 +117,12 @@ msgid ""
 "works, you can refer to this static file in Django simply as ``polls/style."
 "css``, similar to how you reference the path for templates."
 msgstr ""
+"Внутри созданного каталога ``static`` создайте ещё один каталог с именем "
+"``polls`` и внутри него создайте файл ``style.css``. Другими словами, ваши "
+"стили должны быть в файле ``polls/static/polls/style.css``. Из-за "
+"особенностей работы ``AppDirectoriesFinder`` вы можете обращаться из шаблона "
+"к этому статичному файлу как ``polls/style.css``, аналогично работе с "
+"шаблонами."
 
 # 4470edfc33f547639ffe507ecb8a1e68
 #: ../../intro/tutorial06.txt:47
@@ -106,18 +137,29 @@ msgid ""
 "by putting those static files inside *another* directory named for the "
 "application itself."
 msgstr ""
+"Аналогично шаблонам, мы *можем* просто размещать наши статичные файлы прямо "
+"в каталоге ``polls/static`` (не создавая ещё один каталог ``polls`` внутри), "
+"но это будет плохой идеей. Django выбирает первый найденный статичный файл с "
+"указанным именем и если *другое* приложение имеет статичный файл с таким же "
+"именем, Django не сможет понять какой именно был вам нужен. Нам надо явно "
+"указать Django нужный, а вложенный каталог даёт нам *именованное пространство"
+"\" для этого. Следовательно, просто размещайте статичные файлы приложения "
+"внутри *другого* каталога с именем как у приложения."
 
 # 689ba8d14ffa4ef68cd02d0d6fe0a357
 #: ../../intro/tutorial06.txt:57
 msgid ""
 "Put the following code in that stylesheet (``polls/static/polls/style.css``):"
 msgstr ""
+"Разместите следующий код в файле стилей (``polls/static/polls/style.css``):"
 
 # 8472a6bbe37849cb8541de05468e3151
 #: ../../intro/tutorial06.txt:65
 msgid ""
 "Next, add the following at the top of ``polls/templates/polls/index.html``:"
 msgstr ""
+"Затем добавьте следующие строки в начало ``polls/templates/polls/index."
+"html``:"
 
 # 5f6d2bc898424acf8a956f1dacb0f6f2
 #: ../../intro/tutorial06.txt:73
@@ -126,6 +168,9 @@ msgid ""
 "static>` template tag from the ``staticfiles`` template library. The ``{% "
 "static %}`` template tag generates the absolute URL of the static file."
 msgstr ""
+"Тэг ``{% load staticfiles %}`` загружает шаблонный тег :ttag:`{% static %} "
+"<staticfiles-static>` из шаблонной библиотеки ``staticfiles``. Шаблонные тег "
+"``{% static %}`` создаёт абсолютный URL на статичный файл."
 
 # 178a47aa75c6469d8c7532f3b0694287
 #: ../../intro/tutorial06.txt:77
@@ -134,11 +179,15 @@ msgid ""
 "polls/`` and you should see that the poll links are green (Django style!) "
 "which means that your stylesheet was properly loaded."
 msgstr ""
+"Это всё что вам требуется сделать. Перегрузите страницу ``http://"
+"localhost:8000/polls/`` и вы должны увидеть, что ссылки опроса стали "
+"зелёными (стиль Django!). Это означает, что ваш файл стилей загрузился "
+"нормально."
 
 # e486603580e14f55adfefcf978f4beab
 #: ../../intro/tutorial06.txt:82
 msgid "Adding a background-image"
-msgstr ""
+msgstr "Добавление фонового изображения"
 
 # a3a3ec7772514041910874d51c49d5b3
 #: ../../intro/tutorial06.txt:84
@@ -148,11 +197,17 @@ msgid ""
 "directory, put an image called ``background.gif``. In other words, put your "
 "image in ``polls/static/polls/images/background.gif``."
 msgstr ""
+"Теперь надо создать каталог для изображений. Создайте каталог ``images`` в "
+"каталоге ``polls/static/polls/``. Внутри созданного каталога разместите "
+"изображение с именем ``background.gif``. Другими словами, поместите ваше "
+"изображение в ``polls/static/polls/images/background.gif``."
 
 # 07f0ac099778448aa8640c3ded52e914
 #: ../../intro/tutorial06.txt:89
 msgid "Then, add to your stylesheet (``polls/static/polls/style.css``):"
 msgstr ""
+"Затем добавьте следующие строки в файл стилей (``polls/static/polls/style."
+"css``):"
 
 # 65b61dad79d649d996e6a50ceefa8533
 #: ../../intro/tutorial06.txt:97
@@ -160,6 +215,8 @@ msgid ""
 "Reload ``http://localhost:8000/polls/`` and you should see the background "
 "loaded in the bottom right of the screen."
 msgstr ""
+"Перегрузите страницу ``http://localhost:8000/polls/`` и вы должны увидеть, "
+"что фоновое изображение появилось в нижнем правом углу экрана."
 
 # 69cf06e0cb6f4713b80cb800bb93e25f
 #: ../../intro/tutorial06.txt:102
@@ -171,6 +228,13 @@ msgid ""
 "`static` template tag to generate its URLs) without having to modify a bunch "
 "of paths in your static files as well."
 msgstr ""
+"Естественно, что шаблонный тег `{% static %}`` не доступен для использования "
+"в статичных файлах, таких как ваш файл стилей, так как эти файлы не "
+"создаются с помощью Django. Вы должны всегда использовать **относительные "
+"пути** для связывания ваших статичных файлов друг с другом, так как вы "
+"можете изменить параметр конфигурации :setting:`STATIC_URL` (используемый "
+"шаблонным тегом :ttag:`static` для генерации своих URL) без необходимости "
+"менять кучу путей в ваших статичных файлах."
 
 # 4ba7f88aa4cc40b7a07d17cd423328a0
 #: ../../intro/tutorial06.txt:109
@@ -181,11 +245,16 @@ msgid ""
 "staticfiles>`. :doc:`Deploying static files </howto/static-files/"
 "deployment>` discusses how to use static files on a real server."
 msgstr ""
+"Это были **основы**. Для получения подробностей о настройках и другой "
+"информации обращайтесь к :doc:`ЧаВо по статичным файлам </howto/static-files/"
+"index>` и :doc:`справочнику по статике </ref/contrib/staticfiles>`. :doc:"
+"`Выкладывание статичных файлов </howto/static-files/deployment>` "
+"рассматривает вопросы использование статичных файлов на боевом сервере."
 
 # b65755684ea84a92a71c854910939fd2
 #: ../../intro/tutorial06.txt:117
 msgid "What's next?"
-msgstr ""
+msgstr "Что дальше?"
 
 # 90b386e6126d488a9db05d4210545484
 #: ../../intro/tutorial06.txt:119
@@ -194,6 +263,8 @@ msgid ""
 "might want to check out some pointers on :doc:`where to go from here </intro/"
 "whatsnext>`."
 msgstr ""
+"Здесь учебник заканчивается. Теперь вы можете почитать что-нибудь из :doc:"
+"`что делать дальше </intro/whatsnext>`."
 
 # fb69e4da9579411a8bb35ad9d29d3beb
 #: ../../intro/tutorial06.txt:123
@@ -202,3 +273,6 @@ msgid ""
 "turn polls into a \"reusable app\", check out :doc:`Advanced tutorial: How "
 "to write reusable apps</intro/reusable-apps>`."
 msgstr ""
+"Если вы знакомы с пакетированием в Python и желаете изучить процесс "
+"превращения приложения в \"независимое\", обратитесь к документу :doc:`Как "
+"создать независимое приложение</intro/reusable-apps>`."
