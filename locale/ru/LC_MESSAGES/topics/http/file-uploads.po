@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-21 17:15\n"
-"PO-Revision-Date: 2013-08-23 16:50+0300\n"
+"PO-Revision-Date: 2013-09-03 17:19+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -304,7 +304,7 @@ msgstr "Изменение обработчиков загрузки файла 
 # 69a90fed87cd4f6e9786b3b70f40fa55
 #: ../../topics/http/file-uploads.txt:291
 msgid "Sometimes particular views require different upload behavior. In these cases, you can override upload handlers on a per-request basis by modifying ``request.upload_handlers``. By default, this list will contain the upload handlers given by :setting:`FILE_UPLOAD_HANDLERS`, but you can modify the list as you would any other list."
-msgstr "Иногда различные представления требуют различной обработки загруженных файлов. В таких случаях вы можете переопределить обработчики загрузки изменив ``request.upload_handlers``. По умолчанию этот атрибут содержит обработчики из настройки :setting:`FILE_UPLOAD_HANDLERS`, но вы можете изменить его."
+msgstr "Иногда различные представления требуют различной обработки загруженных файлов. В таких случаях вы можете переопределить обработчики загрузки, изменив ``request.upload_handlers``. По умолчанию этот атрибут содержит обработчики из настройки :setting:`FILE_UPLOAD_HANDLERS`, но вы можете изменить его."
 
 # da5657e8db7648afa55997bfd244459f
 #: ../../topics/http/file-uploads.txt:297
@@ -324,17 +324,17 @@ msgstr "Если вы хотите полностью переопределит
 # b4e456f696184fc0b81060773ffd867d
 #: ../../topics/http/file-uploads.txt:314
 msgid "You can only modify upload handlers *before* accessing ``request.POST`` or ``request.FILES`` -- it doesn't make sense to change upload handlers after upload handling has already started. If you try to modify ``request.upload_handlers`` after reading from ``request.POST`` or ``request.FILES`` Django will throw an error."
-msgstr "Вы можете изменить обработчики загрузок *перед* использованием ``request.POST`` или ``request.FILES`` -- не имеет смысла это делать после начала загрузки. Если вы попытаетесь изменить ``request.upload_handlers`` после использования ``request.POST`` или ``request.FILES`` Django вызовет исключение."
+msgstr "Вы можете изменить обработчики загрузок *перед* использованием ``request.POST`` или ``request.FILES`` -- не имеет смысла это делать после начала загрузки. Если вы попытаетесь изменить ``request.upload_handlers`` после использования ``request.POST`` или ``request.FILES``, Django вызовет исключение."
 
 # fddd46c2332d46ab95fcbf3321a704bf
 #: ../../topics/http/file-uploads.txt:321
 msgid "Thus, you should always modify uploading handlers as early in your view as possible."
-msgstr "По этому вы должны изменять обработчики загрузки в представлении как можно раньше."
+msgstr "Вы должны изменять обработчики загрузки в представлении как можно раньше."
 
 # 5626f10113114fc3b63f8d8bbeef1e8a
 #: ../../topics/http/file-uploads.txt:324
 msgid "Also, ``request.POST`` is accessed by :class:`~django.middleware.csrf.CsrfViewMiddleware` which is enabled by default. This means you will need to use :func:`~django.views.decorators.csrf.csrf_exempt` on your view to allow you to change the upload handlers.  You will then need to use :func:`~django.views.decorators.csrf.csrf_protect` on the function that actually processes the request.  Note that this means that the handlers may start receiving the file upload before the CSRF checks have been done. Example code:"
-msgstr "Так же, ``request.POST`` используется :class:`~django.middleware.csrf.CsrfViewMiddleware`, который включен по умолчанию. Это означает, что вы должны использовать :func:`~django.views.decorators.csrf.csrf_exempt` для представления, в котором собираетесь изменить обработчики загрузки.  Так же не забывайте воспользоваться  декоратором :func:`~django.views.decorators.csrf.csrf_protect` для функции, которая будет обрабатывать запрос.  Обратите внимание, что получение файла может начаться перед выполнением CSRF проверки. Например:"
+msgstr "``request.POST`` используется :class:`~django.middleware.csrf.CsrfViewMiddleware`, который включен по умолчанию. Это означает, что вы должны использовать :func:`~django.views.decorators.csrf.csrf_exempt` для представления, в котором собираетесь изменить обработчики загрузки.  Также не забывайте воспользоваться  декоратором :func:`~django.views.decorators.csrf.csrf_protect` для функции, которая будет обрабатывать запрос.  Обратите внимание, что получение файла может начаться перед выполнением CSRF проверки. Например:"
 
 # eb91584715f84ef294e646264fba42de
 #: ../../topics/http/file-uploads.txt:349
@@ -379,12 +379,12 @@ msgstr "``start`` -- указывает на расположения данны
 # 4c9cccc847c24a368f537eb0ce59e334
 #: ../../topics/http/file-uploads.txt:368
 msgid "The data you return will get fed into the subsequent upload handlers' ``receive_data_chunk`` methods. In this way, one handler can be a \"filter\" for other handlers."
-msgstr "Данные возвращаемые этим методом будут переданы в метод ``receive_data_chunk`` следующих обработчиков. То есть один обработчиком может быть \"фильтром\" для других."
+msgstr "Данные, возвращаемые этим методом будут переданы в метод ``receive_data_chunk`` следующих обработчиков. То есть один обработчик может быть \"фильтром\" для других."
 
 # 5631126d68ac4be0bc57e4807896c985
 #: ../../topics/http/file-uploads.txt:372
 msgid "Return ``None`` from ``receive_data_chunk`` to short-circuit remaining upload handlers from getting this chunk. This is useful if you're storing the uploaded data yourself and don't want future handlers to store a copy of the data."
-msgstr "Верните ``None`` из ``receive_data_chunk`` если последующие обработчики не должны обрабатывать эти данные. Это может быть полезным, если данные сохраняются в вашем обработчике и вы не хотите, чтобы последующие сохраняли еще одну копию данных."
+msgstr "Верните ``None`` из ``receive_data_chunk``, если последующие обработчики не должны обрабатывать эти данные. Это может быть полезным, если данные сохраняются в вашем обработчике и вы не хотите, чтобы последующие сохраняли еще одну копию данных."
 
 # 7392fe17c12f4f69bf2a0c94c4d0214f
 #: ../../topics/http/file-uploads.txt:377
@@ -414,7 +414,7 @@ msgstr "Необязательные методы"
 # 07d64797234846dcb72764fde4371994
 #: ../../topics/http/file-uploads.txt:390
 msgid "Custom upload handlers may also define any of the following optional methods or attributes:"
-msgstr "Собственный загрузчик файлов может так же определить следующие методы и атрибуты:"
+msgstr "Собственный загрузчик файлов может определить следующие методы и атрибуты:"
 
 # d80e7672ee6a450695f4fb2d0bb05aba
 #: ../../topics/http/file-uploads.txt:403
@@ -454,22 +454,22 @@ msgstr "``field_name`` строковое название поля ``<input>``.
 # 4955f27aa08d4addb2b6da4b092c5a6b
 #: ../../topics/http/file-uploads.txt:411
 msgid "``file_name`` is the unicode filename that was provided by the browser."
-msgstr "``file_name`` название файла в unicode предоставленное браузером."
+msgstr "``file_name`` название файла в unicode, предоставленное браузером."
 
 # a773a1ad93ac4818b3f447250819ae55
 #: ../../topics/http/file-uploads.txt:413
 msgid "``content_type`` is the MIME type provided by the browser -- E.g. ``'image/jpeg'``."
-msgstr "``content_type`` -- MIME-тип предоставленный браузером -- например, ``'image/jpeg'``."
+msgstr "``content_type`` -- MIME-тип, предоставленный браузером -- например, ``'image/jpeg'``."
 
 # 9f3aadf534e54f998bcc4e0182c65e27
 #: ../../topics/http/file-uploads.txt:416
 msgid "``content_length`` is the length of the image given by the browser. Sometimes this won't be provided and will be ``None``."
-msgstr "``content_length`` -- размер изображения предоставленный браузером. Может быть не предоставлен и значение будет равным ``None``."
+msgstr "``content_length`` -- размер изображения, предоставленный браузером. Может быть не предоставлен и значение будет равным ``None``."
 
 # afc4e81d79db4fa5a1a5744f46a19052
 #: ../../topics/http/file-uploads.txt:419
 msgid "``charset`` is the character set (i.e. ``utf8``) given by the browser. Like ``content_length``, this sometimes won't be provided."
-msgstr "``charset`` -- кодировка (например, ``utf8``) предоставленная браузером. Как и ``content_length`` может быть пустым."
+msgstr "``charset`` -- кодировка (например, ``utf8``), предоставленная браузером. Как и ``content_length`` может быть пустым."
 
 # ea46f36d3a9a468d8993b0c84b680817
 #: ../../topics/http/file-uploads.txt:422
@@ -484,7 +484,7 @@ msgstr "``FileUploadHandler.upload_complete(self)``"
 # 89b1e939596c4f6e98fbb4019bc12b21
 #: ../../topics/http/file-uploads.txt:426
 msgid "Callback signaling that the entire upload (all files) has completed."
-msgstr "Вызывается после полной загрузке всех файлов."
+msgstr "Вызывается после полной загрузки всех файлов."
 
 # 1eba6bc56ca34aebbfc1f083435e5b69
 #: ../../topics/http/file-uploads.txt:444
@@ -494,7 +494,7 @@ msgstr "``FileUploadHandler.handle_raw_input(self, input_data, META, content_len
 # 2e297edb2ab34f44ae16b098b97d01fd
 #: ../../topics/http/file-uploads.txt:429
 msgid "Allows the handler to completely override the parsing of the raw HTTP input."
-msgstr "Позволяет полностью переопределить обработку \"сырых\" HTTP данных."
+msgstr "Позволяет полностью переопределить обработку \"сырых\" HTTP-данных."
 
 # 904572a138914bd2917b062718b69a54
 #: ../../topics/http/file-uploads.txt:432
