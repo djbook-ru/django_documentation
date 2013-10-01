@@ -69,6 +69,7 @@ class TranslatorApp(App):
         self.doc_path = os.path.dirname(os.path.abspath(__file__))
         self.locale_path = os.path.join(self.doc_path, 'locale', 'ru', 'LC_MESSAGES')
         self.templates_path = os.path.join(self.doc_path, 'djbook', 'templates')
+        self.html_path = os.path.join(self.doc_path, '_build', 'html')
 
     def initialize_app(self, argv):
         pass

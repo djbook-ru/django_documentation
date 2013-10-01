@@ -26,6 +26,7 @@ class GithubCommandMixin(object):
                     f.write(github_username)
                     f.write('\n')
                     f.write(github_password)
+                    print 'WARNING! Your Github password is saved in %s' % GithubCommandMixin.PASS_CHACHE_FILE
 
             self._github = Github(github_username, github_password)
 
