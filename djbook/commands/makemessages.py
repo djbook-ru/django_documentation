@@ -15,7 +15,8 @@ class Command(BaseCommand):
     def take_action(self, parsed_args):
         TRANSLATION_PATH = os.path.join(self.app.doc_path, '_build/translation')
 
-        shutil.rmtree(TRANSLATION_PATH)
+        if os.path.exists(TRANSLATION_PATH):
+            shutil.rmtree(TRANSLATION_PATH)
         os.system('sphinx-build -b gettext %s %s' % (self.app.doc_path, TRANSLATION_PATH))
 
         for path, dirs, files in os.walk(TRANSLATION_PATH):

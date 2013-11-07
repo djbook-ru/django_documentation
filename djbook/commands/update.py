@@ -67,7 +67,8 @@ class Command(GithubCommandMixin, BaseCommand):
                 doc_fpath = os.path.join(root, fname)
                 relative_fname = doc_fpath[len(self.app.doc_path) + 1:]
 
-                if relative_fname.startswith('_build/') or relative_fname.startswith('djbook/'):
+                if relative_fname.startswith('_build/') or relative_fname.startswith('djbook/') or \
+                    relative_fname.startswith('env/'):  # move to config
                     continue
 
                 tmp_fpath = os.path.join(doc_tmp_path, relative_fname)
