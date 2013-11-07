@@ -81,6 +81,7 @@ class Command(GithubCommandMixin, BaseCommand):
 
     def fix_conf(self):
         conf_file = open(os.path.join(self.app.doc_path, 'conf.py'), 'a+')
+        conf_file.write('import os')
         conf_file.write('sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "djbook")))\n')
         conf_file.write('from djbook_conf import *\n')
 
