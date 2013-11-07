@@ -2,6 +2,20 @@
 
 {% block title %}Статистика{% endblock %}
 
+{% block head %}
+<style>
+.po-row.even {
+    background-color: #eee;
+    -webkit-border-top-left-radius: 2px;
+    -webkit-border-bottom-left-radius: 2px;
+    -moz-border-radius-topleft: 2px;
+    -moz-border-radius-bottomleft: 2px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+</style>
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="span5">Всего:</div>
@@ -40,7 +54,16 @@
                 } else {
                     $('.po-row').not('.unfinished').show();
                 }
-            })
+
+                colorRows();
+            });
+
+            function colorRows() {
+                $('.po-row').removeClass('even');
+                $('.po-row:visible:even').addClass('even');
+            }
+
+            colorRows();
         });
     </script>
 {% endblock %}
