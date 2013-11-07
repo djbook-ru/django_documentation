@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-21 17:15\n"
+"POT-Creation-Date: 2013-11-07 10:34\n"
 "PO-Revision-Date: 2012-02-15 15:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -181,8 +181,15 @@ msgstr ""
 msgid "Calling ``DeserializedObject.save()`` saves the object to the database."
 msgstr ""
 
+# a598dbaf7e3a47f98a547226305f3269
+#: ../../topics/serialization.txt:122
+msgid ""
+"If the ``pk`` attribute in the serialized data doesn't exist or is null, a "
+"new instance will be saved to the database."
+msgstr ""
+
 # f64e2a25330540e49446520525be9152
-#: ../../topics/serialization.txt:120
+#: ../../topics/serialization.txt:130
 msgid ""
 "This ensures that deserializing is a non-destructive operation even if the "
 "data in your serialized representation doesn't match what's currently in the "
@@ -191,7 +198,7 @@ msgid ""
 msgstr ""
 
 # 7bf8f3606bcd4ab69a710c752686ab28
-#: ../../topics/serialization.txt:129
+#: ../../topics/serialization.txt:139
 msgid ""
 "In other words, the usual use is to examine the deserialized objects to make "
 "sure that they are \"appropriate\" for saving before doing so.  Of course, "
@@ -199,98 +206,194 @@ msgid ""
 msgstr ""
 
 # 1ae3f1c25f39459c8edbadad9a2a1036
-#: ../../topics/serialization.txt:133
+#: ../../topics/serialization.txt:143
 msgid ""
 "The Django object itself can be inspected as ``deserialized_object.object``."
 msgstr ""
 
-# ba42f1019a9d4306996ef6856b5a68cb
-#: ../../topics/serialization.txt:137
-msgid ""
-"If fields in the serialized data do not exist on a model, a "
-"``DeserializationError`` will be raised unless the ``ignorenonexistent`` "
-"argument is passed in as True::"
-msgstr ""
-
 # 185d0ebbd43f42bcacb27fe97953d4d1
-#: ../../topics/serialization.txt:146
+#: ../../topics/serialization.txt:156
 msgid "Serialization formats"
 msgstr ""
 
 # 2fe0217c06734ba88b00ecd7a7398d34
-#: ../../topics/serialization.txt:148
+#: ../../topics/serialization.txt:158
 msgid ""
 "Django supports a number of serialization formats, some of which require you "
 "to install third-party Python modules:"
 msgstr ""
 
 # 18bd3168753944c1a3a5391ff799904f
-#: ../../topics/serialization.txt:152
+#: ../../topics/serialization.txt:162
 msgid "Identifier"
 msgstr ""
 
 # 2628f2494e444948a0640abcd0b4797d
-#: ../../topics/serialization.txt:152
+#: ../../topics/serialization.txt:162
 msgid "Information"
 msgstr ""
 
 # 1794c7997cc1403d819003b4efbb2c31
-#: ../../topics/serialization.txt:154
+#: ../../topics/serialization.txt:164
 msgid "``xml``"
 msgstr ""
 
 # f39f8df2078a47aeae350d65c250e484
-#: ../../topics/serialization.txt:154
+#: ../../topics/serialization.txt:164
 msgid "Serializes to and from a simple XML dialect."
 msgstr ""
 
 # 2cc8c2114a444480ab6b56e7dd86598b
-#: ../../topics/serialization.txt:156
+#: ../../topics/serialization.txt:166
 msgid "``json``"
 msgstr ""
 
 # dc2aa2ee3e2e4465b2e98887ff0ac63f
-#: ../../topics/serialization.txt:156
+#: ../../topics/serialization.txt:166
 msgid "Serializes to and from JSON_."
 msgstr ""
 
 # dd45abd41c5547fd90fc364fbc1937b7
-#: ../../topics/serialization.txt:158
+#: ../../topics/serialization.txt:168
 msgid "``yaml``"
 msgstr ""
 
 # 9908f65c4ae14f0bb919e36c5d3947bf
-#: ../../topics/serialization.txt:158
+#: ../../topics/serialization.txt:168
 msgid ""
 "Serializes to YAML (YAML Ain't a Markup Language). This serializer is only "
 "available if PyYAML_ is installed."
 msgstr ""
 
-# f2624be0f13940e7b43dd94162590721
-#: ../../topics/serialization.txt:166
-msgid "Notes for specific serialization formats"
+# e22d3423c92b4110baa5e9d7c8051b2c
+#: ../../topics/serialization.txt:176
+msgid "XML"
 msgstr ""
 
-# 0a9dc116653c4210b7e7cc40ae457175
-#: ../../topics/serialization.txt:169
-msgid "json"
+# 63230399128248e7a7993a54778d35bf
+#: ../../topics/serialization.txt:178
+msgid "The basic XML serialization format is quite simple::"
+msgstr ""
+
+# 0ff40063122e43fe96c10999b79c30f0
+#: ../../topics/serialization.txt:188
+msgid ""
+"The whole collection of objects that is either serialized or de-serialized "
+"is represented by a ``<django-objects>``-tag which contains multiple "
+"``<object>``-elements. Each such object has two attributes: \"pk\" and "
+"\"model\", the latter being represented by the name of the app (\"sessions"
+"\") and the lowercase name of the model (\"session\") separated by a dot."
+msgstr ""
+
+# 7d7ab0831fa147b49d99cfb72e97dc9a
+#: ../../topics/serialization.txt:194
+msgid ""
+"Each field of the object is serialized as a ``<field>``-element sporting the "
+"fields \"type\" and \"name\". The text content of the element represents the "
+"value that should be stored."
+msgstr ""
+
+# c9df4ebf280c4940b20130902b2a756f
+#: ../../topics/serialization.txt:198
+msgid ""
+"Foreign keys and other relational fields are treated a little bit "
+"differently::"
+msgstr ""
+
+# e8d41e37b7c94a7daec4d03c048dce3e
+#: ../../topics/serialization.txt:206
+msgid ""
+"In this example we specify that the auth.Permission object with the PK 27 "
+"has a foreign key to the contenttypes.ContentType instance with the PK 9."
+msgstr ""
+
+# 4ece55d5ba544f208430e2fd2b255ba7
+#: ../../topics/serialization.txt:209
+msgid ""
+"ManyToMany-relations are exported for the model that binds them. For "
+"instance, the auth.User model has such a relation to the auth.Permission "
+"model::"
+msgstr ""
+
+# ef86105f9a4d42c7aa30e1a61b08079f
+#: ../../topics/serialization.txt:220
+msgid ""
+"This example links the given user with the permission models with PKs 46 and "
+"47."
+msgstr ""
+
+# 673a83274b6f43e1987843d4ac501bf1
+#: ../../topics/serialization.txt:223
+msgid "JSON"
+msgstr ""
+
+# efea9aacb7a4495d96dbf95c22ad96c6
+#: ../../topics/serialization.txt:225
+msgid ""
+"When staying with the same example data as before it would be serialized as "
+"JSON in the following way::"
+msgstr ""
+
+# b6955719e58c4e5ea62d35b27894928a
+#: ../../topics/serialization.txt:239
+msgid ""
+"The formatting here is a bit simpler than with XML. The whole collection is "
+"just represented as an array and the objects are represented by JSON objects "
+"with three properties: \"pk\", \"model\" and \"fields\". \"fields\" is again "
+"an object containing each field's name and value as property and property-"
+"value respectively."
+msgstr ""
+
+# 1f4b09cbbe754bbe8b4bd5ef445e8eea
+#: ../../topics/serialization.txt:245
+msgid ""
+"Foreign keys just have the PK of the linked object as property value. "
+"ManyToMany-relations are serialized for the model that defines them and are "
+"represented as a list of PKs."
+msgstr ""
+
+# e358225dbcfb4c3b895b8b2d6ddc647e
+#: ../../topics/serialization.txt:249
+msgid ""
+"Date and datetime related types are treated in a special way by the JSON "
+"serializer to make the format compatible with `ECMA-262`_."
 msgstr ""
 
 # 9b2cdf4106b24df0b98e0e1e91141353
-#: ../../topics/serialization.txt:171
+#: ../../topics/serialization.txt:252
 msgid ""
 "Be aware that not all Django output can be passed unmodified to :mod:`json`. "
 "In particular, :ref:`lazy translation objects <lazy-translations>` need a "
 "`special encoder`_ written for them. Something like this will work::"
 msgstr ""
 
+# 406f7a9fcdf64a289697fc179dc8d0f5
+#: ../../topics/serialization.txt:271
+msgid "YAML"
+msgstr ""
+
+# 86a626b9354d4296b9124ec6fe67421c
+#: ../../topics/serialization.txt:273
+msgid ""
+"YAML serialization looks quite similar to JSON. The object list is "
+"serialized as a sequence mappings with the keys \"pk\", \"model\" and "
+"\"fields\". Each field is again a mapping with the key being name of the "
+"field and the value the value::"
+msgstr ""
+
+# 3948fb5c16d44763b3a7bfbbc034033d
+#: ../../topics/serialization.txt:281
+msgid ""
+"Referential fields are again just represented by the PK or sequence of PKs."
+msgstr ""
+
 # d9fc343f240e451bb8f33afd2982eefe
-#: ../../topics/serialization.txt:190
+#: ../../topics/serialization.txt:286
 msgid "Natural keys"
 msgstr ""
 
 # 8488aef23215450fa97f524ac42e1385
-#: ../../topics/serialization.txt:192
+#: ../../topics/serialization.txt:288
 msgid ""
 "The default serialization strategy for foreign keys and many-to-many "
 "relations is to serialize the value of the primary key(s) of the objects in "
@@ -299,7 +402,7 @@ msgid ""
 msgstr ""
 
 # 534ca8a42f644ea7a3218ddffc2dda64
-#: ../../topics/serialization.txt:197
+#: ../../topics/serialization.txt:293
 msgid ""
 "Consider the case of a list of objects that have a foreign key referencing :"
 "class:`~django.contrib.contenttypes.models.ContentType`. If you're going to "
@@ -314,7 +417,7 @@ msgid ""
 msgstr ""
 
 # 6bf64397ee114d10b4bb9d7d4804f69a
-#: ../../topics/serialization.txt:211
+#: ../../topics/serialization.txt:307
 msgid ""
 "You should never include automatically generated objects in a fixture or "
 "other serialized data. By chance, the primary keys in the fixture may match "
@@ -324,7 +427,7 @@ msgid ""
 msgstr ""
 
 # 23534447895f4c3c96ea3e53e4e61250
-#: ../../topics/serialization.txt:217
+#: ../../topics/serialization.txt:313
 msgid ""
 "There is also the matter of convenience. An integer id isn't always the most "
 "convenient way to refer to an object; sometimes, a more natural reference "
@@ -332,7 +435,7 @@ msgid ""
 msgstr ""
 
 # 613d5d14371a4446bd97f4e4bff5463b
-#: ../../topics/serialization.txt:221
+#: ../../topics/serialization.txt:317
 msgid ""
 "It is for these reasons that Django provides *natural keys*. A natural key "
 "is a tuple of values that can be used to uniquely identify an object "
@@ -340,24 +443,24 @@ msgid ""
 msgstr ""
 
 # 18a5a8388674425684614e3e8cddd95d
-#: ../../topics/serialization.txt:226
+#: ../../topics/serialization.txt:322
 msgid "Deserialization of natural keys"
 msgstr ""
 
 # 5ef0d3fc4e6444488c486c2821216ba3
-#: ../../topics/serialization.txt:228
+#: ../../topics/serialization.txt:324
 msgid "Consider the following two models::"
 msgstr ""
 
 # f07cabce99af4e0b8ec717444eab6617
-#: ../../topics/serialization.txt:245
+#: ../../topics/serialization.txt:341
 msgid ""
 "Ordinarily, serialized data for ``Book`` would use an integer to refer to "
 "the author. For example, in JSON, a Book might be serialized as::"
 msgstr ""
 
 # e0f5c4db9f8241d2adda5d3fc0624cfb
-#: ../../topics/serialization.txt:259
+#: ../../topics/serialization.txt:355
 msgid ""
 "This isn't a particularly natural way to refer to an author. It requires "
 "that you know the primary key value for the author; it also requires that "
@@ -365,7 +468,7 @@ msgid ""
 msgstr ""
 
 # 496d9fb9656644cab4770d15f428bb8c
-#: ../../topics/serialization.txt:263
+#: ../../topics/serialization.txt:359
 msgid ""
 "However, if we add natural key handling to Person, the fixture becomes much "
 "more humane. To add natural key handling, you define a default Manager for "
@@ -374,12 +477,12 @@ msgid ""
 msgstr ""
 
 # 9646cb764e5a45a0b39945f8e81cd0d8
-#: ../../topics/serialization.txt:286
+#: ../../topics/serialization.txt:382
 msgid "Now books can use that natural key to refer to ``Person`` objects::"
 msgstr ""
 
 # 516dcd27af1d4240b30edbba073eb1e3
-#: ../../topics/serialization.txt:299
+#: ../../topics/serialization.txt:395
 msgid ""
 "When you try to load this serialized data, Django will use the "
 "``get_by_natural_key()`` method to resolve ``[\"Douglas\", \"Adams\"]`` into "
@@ -387,7 +490,7 @@ msgid ""
 msgstr ""
 
 # 6f8c4b869a114d45a27477a3594201a6
-#: ../../topics/serialization.txt:305
+#: ../../topics/serialization.txt:401
 msgid ""
 "Whatever fields you use for a natural key must be able to uniquely identify "
 "an object. This will usually mean that your model will have a uniqueness "
@@ -399,19 +502,19 @@ msgid ""
 msgstr ""
 
 # 32ab1c1564144b00a5ec7ffc78bd7d8c
-#: ../../topics/serialization.txt:315
+#: ../../topics/serialization.txt:411
 msgid "Serialization of natural keys"
 msgstr ""
 
 # 7ce6dcc36bf2421c91bc3b9c2c6bc00b
-#: ../../topics/serialization.txt:317
+#: ../../topics/serialization.txt:413
 msgid ""
 "So how do you get Django to emit a natural key when serializing an object? "
 "Firstly, you need to add another method -- this time to the model itself::"
 msgstr ""
 
 # dcd44a2d69e34551a53b64eb0e37cd98
-#: ../../topics/serialization.txt:334
+#: ../../topics/serialization.txt:430
 msgid ""
 "That method should always return a natural key tuple -- in this example, ``"
 "(first name, last name)``. Then, when you call ``serializers.serialize()``, "
@@ -419,7 +522,7 @@ msgid ""
 msgstr ""
 
 # e50f295a7cbd4e5d9cc687e07ea75d21
-#: ../../topics/serialization.txt:341
+#: ../../topics/serialization.txt:437
 msgid ""
 "When ``use_natural_keys=True`` is specified, Django will use the "
 "``natural_key()`` method to serialize any reference to objects of the type "
@@ -427,14 +530,14 @@ msgid ""
 msgstr ""
 
 # d71d59dc905f4b7aa409018ea8fa35e3
-#: ../../topics/serialization.txt:345
+#: ../../topics/serialization.txt:441
 msgid ""
 "If you are using :djadmin:`dumpdata` to generate serialized data, you use "
 "the :djadminopt:`--natural` command line flag to generate natural keys."
 msgstr ""
 
 # 93fd6d461cfb45aca10394bc7eff5cb4
-#: ../../topics/serialization.txt:350
+#: ../../topics/serialization.txt:446
 msgid ""
 "You don't need to define both ``natural_key()`` and ``get_by_natural_key()"
 "``. If you don't want Django to output natural keys during serialization, "
@@ -443,7 +546,7 @@ msgid ""
 msgstr ""
 
 # 1d639729f75440ecad22007eb81dc2b9
-#: ../../topics/serialization.txt:356
+#: ../../topics/serialization.txt:452
 msgid ""
 "Conversely, if (for some strange reason) you want Django to output natural "
 "keys during serialization, but *not* be able to load those key values, just "
@@ -451,12 +554,12 @@ msgid ""
 msgstr ""
 
 # 7da9e775a04d45bd8e619f48cad6d7bd
-#: ../../topics/serialization.txt:361
+#: ../../topics/serialization.txt:457
 msgid "Dependencies during serialization"
 msgstr ""
 
 # c026303c46ca4b0f952fce55e989edbd
-#: ../../topics/serialization.txt:363
+#: ../../topics/serialization.txt:459
 msgid ""
 "Since natural keys rely on database lookups to resolve references, it is "
 "important that the data exists before it is referenced. You can't make a "
@@ -465,7 +568,7 @@ msgid ""
 msgstr ""
 
 # 0f5c649304844ac4ab07b6ff8afe3cba
-#: ../../topics/serialization.txt:368
+#: ../../topics/serialization.txt:464
 msgid ""
 "To accommodate this limitation, calls to :djadmin:`dumpdata` that use the :"
 "djadminopt:`--natural` option will serialize any model with a ``natural_key()"
@@ -473,7 +576,7 @@ msgid ""
 msgstr ""
 
 # 8f72f724f3194da596c5c7160c536265
-#: ../../topics/serialization.txt:372
+#: ../../topics/serialization.txt:468
 msgid ""
 "However, this may not always be enough. If your natural key refers to "
 "another object (by using a foreign key or natural key to another object as "
@@ -483,7 +586,7 @@ msgid ""
 msgstr ""
 
 # d6f4bba335404a87af802c483cc4e2b7
-#: ../../topics/serialization.txt:378
+#: ../../topics/serialization.txt:474
 msgid ""
 "To control this ordering, you can define dependencies on your ``natural_key()"
 "`` methods. You do this by setting a ``dependencies`` attribute on the "
@@ -491,14 +594,14 @@ msgid ""
 msgstr ""
 
 # 519ddb02429541faa4262392c13df2f3
-#: ../../topics/serialization.txt:382
+#: ../../topics/serialization.txt:478
 msgid ""
 "For example, let's add a natural key to the ``Book`` model from the example "
 "above::"
 msgstr ""
 
 # bbc5ff6504fc459b8f77963a1c6309c3
-#: ../../topics/serialization.txt:392
+#: ../../topics/serialization.txt:488
 msgid ""
 "The natural key for a ``Book`` is a combination of its name and its author. "
 "This means that ``Person`` must be serialized before ``Book``. To define "
@@ -506,7 +609,7 @@ msgid ""
 msgstr ""
 
 # a32677f58f93420aaaabf9930545061b
-#: ../../topics/serialization.txt:400
+#: ../../topics/serialization.txt:496
 msgid ""
 "This definition ensures that all ``Person`` objects are serialized before "
 "any ``Book`` objects. In turn, any object referencing ``Book`` will be "

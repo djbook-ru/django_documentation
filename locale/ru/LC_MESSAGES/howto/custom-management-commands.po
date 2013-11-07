@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-23 16:09\n"
+"POT-Creation-Date: 2013-11-07 10:34\n"
 "PO-Revision-Date: 2013-07-13 00:13+0300\n"
 "Last-Translator: Tyshchenko Viktor <tyvik8@gmail.com>\n"
 "Language-Team: none\n"
@@ -167,43 +167,61 @@ msgstr ""
 "команды</ref/django-admin>` принимают также опции по умолчанию, такие как :"
 "djadminopt:`--verbosity` и :djadminopt:`--traceback`."
 
+# 4c9e5ee77cea49dcb316ed78c97955d0
+#: ../../howto/custom-management-commands.txt:124
+msgid "Management commands and locales"
+msgstr ""
+
 # 8546e31f4db940879cc0e0d52127b9bf
-#: ../../howto/custom-management-commands.txt:123
+#: ../../howto/custom-management-commands.txt:126
+#, fuzzy
 msgid ""
-"The :meth:`BaseCommand.execute` method sets the hardcoded ``en-us`` locale "
-"because the commands shipped with Django perform several tasks (for example, "
-"user-facing content rendering and database population) that require a system-"
-"neutral string language (for which we use ``en-us``)."
+"By default, the :meth:`BaseCommand.execute` method sets the hardcoded 'en-"
+"us' locale because some commands shipped with Django perform several tasks "
+"(for example, user-facing content rendering and database population) that "
+"require a system-neutral string language (for which we use 'en-us')."
 msgstr ""
 ":meth:`BaseCommand.execute` жёстко задаёт локаль как ``en-us``, потому что "
 "встроенные команды требуют нейтральной кодировки (например, ``en-us``)."
 
 # a9777c1463df46cab19a34b7f1904ac2
-#: ../../howto/custom-management-commands.txt:128
+#: ../../howto/custom-management-commands.txt:131
+#, fuzzy
 msgid ""
-"If your custom management command uses another locale, you should manually "
-"activate and deactivate it in your :meth:`~BaseCommand.handle` or :meth:"
-"`~NoArgsCommand.handle_noargs` method using the functions provided by the "
-"I18N support code:"
+"If, for some reason, your custom management command needs to use a fixed "
+"locale different from 'en-us', you should manually activate and deactivate "
+"it in your :meth:`~BaseCommand.handle` or :meth:`~NoArgsCommand."
+"handle_noargs` method using the functions provided by the I18N support code:"
 msgstr ""
 "Если пользовательская команда требует другой локали, то вы можете вручную "
 "активировать её в :meth:`~BaseCommand.handle` или :meth:`~NoArgsCommand."
 "handle_noargs`, используя функции по работе с интернационализацией (I18N)."
 
-# a4aad0f5b4324ccfa5bb482314154b9c
-#: ../../howto/custom-management-commands.txt:158
+# c0be229f57c942cdb6761ac939d018da
+#: ../../howto/custom-management-commands.txt:160
 msgid ""
-"Take into account though, that system management commands typically have to "
-"be very careful about running in non-uniform locales, so:"
+"Another need might be that your command simply should use the locale set in "
+"settings and Django should be kept from forcing it to 'en-us'. You can "
+"achieve it by using the :data:`BaseCommand.leave_locale_alone` option."
+msgstr ""
+
+# a4aad0f5b4324ccfa5bb482314154b9c
+#: ../../howto/custom-management-commands.txt:164
+#, fuzzy
+msgid ""
+"When working on the scenarios described above though, take into account that "
+"system management commands typically have to be very careful about running "
+"in non-uniform locales, so you might need to:"
 msgstr "При использовании нестандартной локали будьте осторожны:"
 
 # cf1213560947437f9fda192a6b10adde
-#: ../../howto/custom-management-commands.txt:161
+#: ../../howto/custom-management-commands.txt:168
+#, fuzzy
 msgid ""
 "Make sure the :setting:`USE_I18N` setting is always ``True`` when running "
-"the command (this is one good example of the potential problems stemming "
-"from a dynamic runtime environment that Django commands avoid offhand by "
-"always using a fixed locale)."
+"the command (this is a good example of the potential problems stemming from "
+"a dynamic runtime environment that Django commands avoid offhand by always "
+"using a fixed locale)."
 msgstr ""
 "Убедитесь, что параметр :setting:`USE_I18N` установлен в ``True``, когда "
 "команда запускается (это очень хороший пример потенциальных ошибок при "
@@ -211,7 +229,7 @@ msgstr ""
 "фиксированные настройки)."
 
 # 44681e7239f74b68b21103741b31534e
-#: ../../howto/custom-management-commands.txt:166
+#: ../../howto/custom-management-commands.txt:173
 msgid ""
 "Review the code of your command and the code it calls for behavioral "
 "differences when locales are changed and evaluate its impact on predictable "
@@ -219,17 +237,17 @@ msgid ""
 msgstr "Убедитесь в работоспособности команды при разных локалях."
 
 # e717915f10624e5b963245961def8e03
-#: ../../howto/custom-management-commands.txt:171
+#: ../../howto/custom-management-commands.txt:178
 msgid "Command objects"
 msgstr "Объект комманды"
 
 # 7456685d67a84ffebec34c7d138d08e8
-#: ../../howto/custom-management-commands.txt:175
+#: ../../howto/custom-management-commands.txt:182
 msgid "The base class from which all management commands ultimately derive."
 msgstr "Базовый класс для всех команд."
 
 # 52328b6bd83049d193d764f2da4622c1
-#: ../../howto/custom-management-commands.txt:177
+#: ../../howto/custom-management-commands.txt:184
 msgid ""
 "Use this class if you want access to all of the mechanisms which parse the "
 "command-line arguments and work out what code to call in response; if you "
@@ -242,7 +260,7 @@ msgstr ""
 "`подклассов<ref-basecommand-subclasses>`."
 
 # 6866c4ee26794dba9abfd62292159f6d
-#: ../../howto/custom-management-commands.txt:182
+#: ../../howto/custom-management-commands.txt:189
 msgid ""
 "Subclassing the :class:`BaseCommand` class requires that you implement the :"
 "meth:`~BaseCommand.handle` method."
@@ -251,12 +269,12 @@ msgstr ""
 "метод :meth:`~BaseCommand.handle`."
 
 # 2c9814dc55e444ff8fd18b61b86554ba
-#: ../../howto/custom-management-commands.txt:186
+#: ../../howto/custom-management-commands.txt:193
 msgid "Attributes"
 msgstr "Атрибуты"
 
 # a5b46460850f43d8b1bc4be593d6835a
-#: ../../howto/custom-management-commands.txt:188
+#: ../../howto/custom-management-commands.txt:195
 msgid ""
 "All attributes can be set in your derived class and can be used in :class:"
 "`BaseCommand`'s :ref:`subclasses<ref-basecommand-subclasses>`."
@@ -265,7 +283,7 @@ msgstr ""
 "`BaseCommand` :ref:`классах<ref-basecommand-subclasses>`."
 
 # 9d51e25419bd4535a0a1bc550f9323e4
-#: ../../howto/custom-management-commands.txt:193
+#: ../../howto/custom-management-commands.txt:200
 msgid ""
 "A string listing the arguments accepted by the command, suitable for use in "
 "help messages; e.g., a command which takes a list of application names might "
@@ -276,7 +294,7 @@ msgstr ""
 "список имён приложений может установить значение '<appname appname ...>'."
 
 # 3e81f138635a43f188cfb78afb6d2079
-#: ../../howto/custom-management-commands.txt:200
+#: ../../howto/custom-management-commands.txt:207
 msgid ""
 "A boolean indicating whether the command needs to be able to import Django "
 "settings; if ``True``, ``execute()`` will verify that this is possible "
@@ -287,7 +305,7 @@ msgstr ""
 "возможность импорта. Значение по умолчанию - ``True``."
 
 # b0e01d6ea6df4519ad9410a73be1698c
-#: ../../howto/custom-management-commands.txt:207
+#: ../../howto/custom-management-commands.txt:214
 msgid ""
 "A short description of the command, which will be printed in the help "
 "message when the user runs the command ``python manage.py help <command>``."
@@ -296,7 +314,7 @@ msgstr ""
 "выполнении ``python manage.py help <command>``."
 
 # cc413fae8aa747d2b80bd4684789ff5c
-#: ../../howto/custom-management-commands.txt:213
+#: ../../howto/custom-management-commands.txt:220
 msgid ""
 "This is the list of ``optparse`` options which will be fed into the "
 "command's ``OptionParser`` for parsing arguments."
@@ -305,7 +323,7 @@ msgstr ""
 "для получения аргументов."
 
 # 1524fecbd47442a087678cea0c526b04
-#: ../../howto/custom-management-commands.txt:218
+#: ../../howto/custom-management-commands.txt:225
 msgid ""
 "A boolean indicating whether the command outputs SQL statements; if "
 "``True``, the output will automatically be wrapped with ``BEGIN;`` and "
@@ -316,7 +334,7 @@ msgstr ""
 "между ``BEGIN;`` и ``COMMIT;``. Значение по умолчанию - ``False``."
 
 # 73af6abaf0b4483bac40db144adcef78
-#: ../../howto/custom-management-commands.txt:225
+#: ../../howto/custom-management-commands.txt:232
 msgid ""
 "A boolean; if ``True``, validation of installed models will be performed "
 "prior to executing the command. Default value is ``True``. To validate an "
@@ -328,13 +346,45 @@ msgstr ""
 "``True``. Для валидации определённой модели приложения вместо всех "
 "вызывайте :meth:`~BaseCommand.validate` из :meth:`BaseCommand.handle`."
 
+# b9f584ab4f344e31810439d5f8647f31
+#: ../../howto/custom-management-commands.txt:240
+msgid ""
+"A boolean indicating whether the locale set in settings should be preserved "
+"during the execution of the command instead of being forcibly set to 'en-us'."
+msgstr ""
+
+# f71b28b5cc7143f2a04f1fb3f8a83b7d
+#: ../../howto/custom-management-commands.txt:243
+msgid "Default value is ``False``."
+msgstr ""
+
+# 71dba1f585274ccca81c793280613762
+#: ../../howto/custom-management-commands.txt:245
+msgid ""
+"Make sure you know what you are doing if you decide to change the value of "
+"this option in your custom command if it creates database content that is "
+"locale-sensitive and such content shouldn't contain any translations (like "
+"it happens e.g. with django.contrib.auth permissions) as making the locale "
+"differ from the de facto default 'en-us' might cause unintended effects. See "
+"the `Management commands and locales`_ section above for further details."
+msgstr ""
+
+# d88fc6bc242e49c2ba995a0da381f1d0
+#: ../../howto/custom-management-commands.txt:252
+msgid ""
+"This option can't be ``False`` when the :data:`~BaseCommand."
+"can_import_settings` option is set to ``False`` too because attempting to "
+"set the locale needs access to settings. This condition will generate a :"
+"class:`CommandError`."
+msgstr ""
+
 # f2a5fafb4a2740bab802a84356a24551
-#: ../../howto/custom-management-commands.txt:232
+#: ../../howto/custom-management-commands.txt:262
 msgid "Methods"
 msgstr "Методы"
 
 # 39732a811fa24f768153bc95b742d339
-#: ../../howto/custom-management-commands.txt:234
+#: ../../howto/custom-management-commands.txt:264
 msgid ""
 ":class:`BaseCommand` has a few methods that can be overridden but only the :"
 "meth:`~BaseCommand.handle` method must be implemented."
@@ -344,7 +394,7 @@ msgstr ""
 "реализация метода :meth:`~BaseCommand.handle`."
 
 # a22e20e11359420caaa5b493e3ed6f57
-#: ../../howto/custom-management-commands.txt:239
+#: ../../howto/custom-management-commands.txt:269
 msgid ""
 "If you implement ``__init__`` in your subclass of :class:`BaseCommand`, you "
 "must call :class:`BaseCommand`'s ``__init__``."
@@ -353,7 +403,7 @@ msgstr ""
 "``__init__`` базового класса :class:`BaseCommand`."
 
 # 1e477a47326f4b0ba5bcadee6d393390
-#: ../../howto/custom-management-commands.txt:251
+#: ../../howto/custom-management-commands.txt:281
 msgid ""
 "Return the Django version, which should be correct for all built-in Django "
 "commands. User-supplied commands can override this method to return their "
@@ -364,7 +414,7 @@ msgstr ""
 "версию."
 
 # a0c1cb06252244e687554253bfcbad30
-#: ../../howto/custom-management-commands.txt:257
+#: ../../howto/custom-management-commands.txt:287
 msgid ""
 "Try to execute this command, performing model validation if needed (as "
 "controlled by the attribute :attr:`requires_model_validation`). If the "
@@ -376,7 +426,7 @@ msgstr ""
 "class:`CommandError`, будет разумно перехватить его и распечатать в stderr."
 
 # 9c52e526aaa64a6b91a45cf08ead992f
-#: ../../howto/custom-management-commands.txt:265
+#: ../../howto/custom-management-commands.txt:295
 msgid ""
 "``execute()`` should not be called directly from your code to execute a "
 "command. Use :ref:`call_command <call-command>` instead."
@@ -385,31 +435,31 @@ msgstr ""
 "вместо этого :ref:`call_command <call-command>`."
 
 # 6cafc720c3204ca2bdb0c74b69ed880c
-#: ../../howto/custom-management-commands.txt:270
+#: ../../howto/custom-management-commands.txt:300
 msgid "The actual logic of the command. Subclasses must implement this method."
 msgstr ""
 "Собственно, логика команды. Ваш подкласс обязательно должен реализовывать "
 "этот метод."
 
 # 1ca0570b45c54c148a9ed038b84dbc61
-#: ../../howto/custom-management-commands.txt:274
+#: ../../howto/custom-management-commands.txt:304
 msgid "Validates the given app, raising :class:`CommandError` for any errors."
 msgstr ""
 "Проверяет данные приложения, генерирует исключение :class:`CommandError` в "
 "случае ошибки."
 
 # 1c3b06ede55a40ccaa80d045e812ce9d
-#: ../../howto/custom-management-commands.txt:276
+#: ../../howto/custom-management-commands.txt:306
 msgid "If ``app`` is None, then all installed apps are validated."
 msgstr "Если ``app`` равно None, то будут проверены все приложения."
 
 # a5fcfdb5b825422d958d330623f9d06b
-#: ../../howto/custom-management-commands.txt:282
+#: ../../howto/custom-management-commands.txt:312
 msgid "BaseCommand subclasses"
 msgstr "Подклассы BaseCommand"
 
 # a5a93970fe6645e38c6f903c50be6808
-#: ../../howto/custom-management-commands.txt:286
+#: ../../howto/custom-management-commands.txt:316
 msgid ""
 "A management command which takes one or more installed application names as "
 "arguments, and does something with each of them."
@@ -418,7 +468,7 @@ msgstr ""
 "установленных приложений и выполняет с ними однотипные действия."
 
 # cec3669bfd424bedab61a9cd1f072d78
-#: ../../howto/custom-management-commands.txt:289
+#: ../../howto/custom-management-commands.txt:319
 msgid ""
 "Rather than implementing :meth:`~BaseCommand.handle`, subclasses must "
 "implement :meth:`~AppCommand.handle_app`, which will be called once for each "
@@ -428,7 +478,7 @@ msgstr ""
 "`~AppCommand.handle_app`, который будет вызываться для каждого приложения."
 
 # f1f968700b19432595df801d766d5a80
-#: ../../howto/custom-management-commands.txt:294
+#: ../../howto/custom-management-commands.txt:324
 msgid ""
 "Perform the command's actions for ``app``, which will be the Python module "
 "corresponding to an application name given on the command line."
@@ -437,7 +487,7 @@ msgstr ""
 "аргумента."
 
 # 6575381cb7284d87a99576fef840e84c
-#: ../../howto/custom-management-commands.txt:300
+#: ../../howto/custom-management-commands.txt:330
 msgid ""
 "A management command which takes one or more arbitrary arguments (labels) on "
 "the command line, and does something with each of them."
@@ -446,7 +496,7 @@ msgstr ""
 "(меток) и что-то делает с ними."
 
 # 8ac4171cb96e4277a675d3a78ffd9425
-#: ../../howto/custom-management-commands.txt:304
+#: ../../howto/custom-management-commands.txt:334
 msgid ""
 "Rather than implementing :meth:`~BaseCommand.handle`, subclasses must "
 "implement :meth:`~LabelCommand.handle_label`, which will be called once for "
@@ -456,7 +506,7 @@ msgstr ""
 "`~LabelCommand.handle_label`, который будет вызываться для каждого аргумента."
 
 # 21e5b5675c6e4dc4b7bfb9640b3f79f0
-#: ../../howto/custom-management-commands.txt:309
+#: ../../howto/custom-management-commands.txt:339
 msgid ""
 "Perform the command's actions for ``label``, which will be the string as "
 "given on the command line."
@@ -465,12 +515,12 @@ msgstr ""
 "строку."
 
 # 262b1421222347ee9662ac420fde0020
-#: ../../howto/custom-management-commands.txt:314
+#: ../../howto/custom-management-commands.txt:344
 msgid "A command which takes no arguments on the command line."
 msgstr "Команда, которая не принимает аргументов."
 
 # 0a1267268f164d3889e49be148669c21
-#: ../../howto/custom-management-commands.txt:316
+#: ../../howto/custom-management-commands.txt:346
 msgid ""
 "Rather than implementing :meth:`~BaseCommand.handle`, subclasses must "
 "implement :meth:`~NoArgsCommand.handle_noargs`; :meth:`~BaseCommand.handle` "
@@ -481,24 +531,24 @@ msgstr ""
 "проверить, что в команду не передаются аргументы."
 
 # 9837631d66ab4ad2bcc0e84201816c2f
-#: ../../howto/custom-management-commands.txt:322
+#: ../../howto/custom-management-commands.txt:352
 msgid "Perform this command's actions"
 msgstr "Просто напишите код здесь."
 
 # 8a5c315339c7440596701e7222293db9
-#: ../../howto/custom-management-commands.txt:327
+#: ../../howto/custom-management-commands.txt:357
 msgid "Command exceptions"
 msgstr "Исключение команды"
 
 # b8b53c2106c34ea08ab82e2d9f33f1e5
-#: ../../howto/custom-management-commands.txt:331
+#: ../../howto/custom-management-commands.txt:361
 msgid ""
 "Exception class indicating a problem while executing a management command."
 msgstr ""
 "Этот класс сигнализирует о неожиданных ситуациях при выполнении команды."
 
 # 63da4884ceb34b0bb7df044bbd434b3f
-#: ../../howto/custom-management-commands.txt:334
+#: ../../howto/custom-management-commands.txt:364
 msgid ""
 "If this exception is raised during the execution of a management command "
 "from a command line console, it will be caught and turned into a nicely-"
@@ -514,7 +564,7 @@ msgstr ""
 "ситуации в ходе выполнения команды."
 
 # ca92770932af4b098600b4fa9a2908e5
-#: ../../howto/custom-management-commands.txt:341
+#: ../../howto/custom-management-commands.txt:371
 msgid ""
 "If a management command is called from code through :ref:`call_command <call-"
 "command>`, it's up to you to catch the exception when needed."

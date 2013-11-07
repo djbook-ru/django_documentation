@@ -169,7 +169,7 @@ issued on the ``project.interesting`` and
 ``project.interesting.stuff`` loggers.
 
 This propagation can be controlled on a per-logger basis. If
-you don't want a particular logger to propagate to it's parents, you
+you don't want a particular logger to propagate to its parents, you
 can turn off this behavior.
 
 Making logging calls
@@ -218,13 +218,16 @@ handlers, filters and formatters that you want in your logging setup,
 and the log levels and other properties that you want those components
 to have.
 
-Prior to Django 1.5, the :setting:`LOGGING` setting overwrote the :ref:`default
-Django logging configuration <default-logging-configuration>`. From Django
-1.5 forward, the project's logging configuration is merged with Django's
-defaults, hence you can decide if you want to add to, or replace the existing
-configuration. To completely override the default configuration, set the
-``disable_existing_loggers`` key to True in the :setting:`LOGGING`
-dictConfig. Alternatively you can redefine some or all of the loggers.
+Prior to Django 1.5, the :setting:`LOGGING` setting always overwrote the
+:ref:`default Django logging configuration <default-logging-configuration>`.
+From Django 1.5 forward, it is possible to get the project's logging
+configuration merged with Django's defaults, hence you can decide if you want to
+add to, or replace the existing configuration.
+
+If the ``disable_existing_loggers`` key in the :setting:`LOGGING` dictConfig is
+set to ``True`` (which is the default) the default configuration is completely
+overridden. Alternatively you can redefine some or all of the loggers by
+setting ``disable_existing_loggers`` to ``False``.
 
 Logging is configured as soon as settings have been loaded
 (either manually using :func:`~django.conf.settings.configure` or when at least
@@ -394,7 +397,7 @@ requirements of logging in Web server environment.
 Loggers
 -------
 
-Django provides three built-in loggers.
+Django provides four built-in loggers.
 
 ``django``
 ~~~~~~~~~~
@@ -434,13 +437,42 @@ For performance reasons, SQL logging is only enabled when
 ``settings.DEBUG`` is set to ``True``, regardless of the logging
 level or handlers that are installed.
 
+``django.security.*``
+~~~~~~~~~~~~~~~~~~~~~~
+
+The security loggers will receive messages on any occurrence of
+:exc:`~django.core.exceptions.SuspiciousOperation`. There is a sub-logger for
+each sub-type of SuspiciousOperation. The level of the log event depends on
+where the exception is handled.  Most occurrences are logged as a warning, while
+any ``SuspiciousOperation`` that reaches the WSGI handler will be logged as an
+error. For example, when an HTTP ``Host`` header is included in a request from
+a client that does not match :setting:`ALLOWED_HOSTS`, Django will return a 400
+response, and an error message will be logged to the
+``django.security.DisallowedHost`` logger.
+
+Only the parent ``django.security`` logger is configured by default, and all
+child loggers will propagate to the parent logger. The ``django.security``
+logger is configured the same as the ``django.request`` logger, and any error
+events will be mailed to admins. Requests resulting in a 400 response due to
+a ``SuspiciousOperation`` will not be logged to the ``django.request`` logger,
+but only to the ``django.security`` logger.
+
+To silence a particular type of SuspiciousOperation, you can override that
+specific logger following this example::
+
+        'loggers': {
+            'django.security.DisallowedHost': {
+                'handlers': ['null'],
+                'propagate': False,
+            },
+
 Handlers
 --------
 
 Django provides one log handler in addition to those provided by the
 Python logging module.
 
-.. class:: AdminEmailHandler([include_html=False])
+.. class:: AdminEmailHandler(include_html=False, email_backend=None)
 
     This handler sends an email to the site admins for each log
     message it receives.
@@ -476,6 +508,23 @@ Python logging module.
     sensitive information to be filtered out of error reports -- learn more on
     :ref:`Filtering error reports<filtering-error-reports>`.
 
+    .. versionadded:: 1.6
+
+    By setting the ``email_backend`` argument of ``AdminEmailHandler``, the
+    :ref:`email backend <topic-email-backends>` that is being used by the
+    handler can be overridden, like this::
+
+        'handlers': {
+            'mail_admins': {
+                'level': 'ERROR',
+                'class': 'django.utils.log.AdminEmailHandler',
+                'email_backend': 'django.core.mail.backends.filebased.EmailBackend',
+            }
+        },
+
+    By default, an instance of the email backend specified in
+    :setting:`EMAIL_BACKEND` will be used.
+
 .. _Sentry: http://pypi.python.org/pypi/sentry
 
 
@@ -486,8 +535,6 @@ Django provides two log filters in addition to those provided by the Python
 logging module.
 
 .. class:: CallbackFilter(callback)
-
-   .. versionadded:: 1.4
 
    This filter accepts a callback function (which should accept a single
    argument, the record to be logged), and calls it for each record that passes
@@ -524,8 +571,6 @@ logging module.
         },
 
 .. class:: RequireDebugFalse()
-
-   .. versionadded:: 1.4
 
    This filter will only pass on records when settings.DEBUG is False.
 

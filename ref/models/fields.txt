@@ -12,8 +12,8 @@ This document contains all the gory details about all the `field options`_ and
 
 .. seealso::
 
-    If the built-in fields don't do the trick, you can try
-    :mod:`django.contrib.localflavor`, which contains assorted pieces of code
+    If the built-in fields don't do the trick, you can try :doc:`localflavor
+    </topics/localflavor>`, which contains assorted pieces of code
     that are useful for particular countries or cultures. Also, you can easily
     :doc:`write your own custom model fields </howto/custom-model-fields>`.
 
@@ -80,9 +80,10 @@ If a field has ``blank=False``, the field will be required.
 
 .. attribute:: Field.choices
 
-An iterable (e.g., a list or tuple) of 2-tuples to use as choices for this
-field. If this is given, the default form widget will be a select box with
-these choices instead of the standard text field.
+An iterable (e.g., a list or tuple) consisting itself of iterables of exactly
+two items (e.g. ``[(A, B), (A, B) ...]``) to use as choices for this field. If
+this is given, the default form widget will be a select box with these choices
+instead of the standard text field.
 
 The first element in each tuple is the actual value to be stored, and the
 second element is the human-readable name. For example::
@@ -96,6 +97,8 @@ second element is the human-readable name. For example::
 
 Generally, it's best to define choices inside a model class, and to
 define a suitably-named constant for each value::
+
+    from django.db import models
 
     class Student(models.Model):
         FRESHMAN = 'FR'
@@ -269,8 +272,8 @@ you try to save a model with a duplicate value in a :attr:`~Field.unique`
 field, a :exc:`django.db.IntegrityError` will be raised by the model's
 :meth:`~django.db.models.Model.save` method.
 
-This option is valid on all field types except :class:`ManyToManyField` and
-:class:`FileField`.
+This option is valid on all field types except :class:`ManyToManyField`,
+:class:`OneToOneField`, and :class:`FileField`.
 
 Note that when ``unique`` is ``True``, you don't need to specify
 :attr:`~Field.db_index`, because ``unique`` implies the creation of an index.
@@ -287,7 +290,17 @@ For example, if you have a field ``title`` that has
 ``unique_for_date="pub_date"``, then Django wouldn't allow the entry of two
 records with the same ``title`` and ``pub_date``.
 
-This is enforced by model validation but not at the database level.
+Note that if you set this to point to a :class:`DateTimeField`, only the date
+portion of the field will be considered. Besides, when :setting:`USE_TZ` is
+``True``, the check will be performed in the :ref:`current time zone
+<default-current-time-zone>` at the time the object gets saved.
+
+This is enforced by :meth:`Model.validate_unique()` during model validation
+but not at the database level. If any :attr:`~Field.unique_for_date` constraint
+involves fields that are not part of a :class:`~django.forms.ModelForm` (for
+example, if one of the fields is listed in ``exclude`` or has
+:attr:`editable=False<Field.editable>`), :meth:`Model.validate_unique()` will
+skip validation for that particular constraint.
 
 ``unique_for_month``
 --------------------
@@ -347,6 +360,22 @@ A 64 bit integer, much like an :class:`IntegerField` except that it is
 guaranteed to fit numbers from -9223372036854775808 to 9223372036854775807. The
 default form widget for this field is a :class:`~django.forms.TextInput`.
 
+``BinaryField``
+-------------------
+
+.. class:: BinaryField([**options])
+
+.. versionadded:: 1.6
+
+A field to store raw binary data. It only supports ``bytes`` assignment. Be
+aware that this field has limited functionality. For example, it is not possible
+to filter a queryset on a ``BinaryField`` value.
+
+.. admonition:: Abusing ``BinaryField``
+
+    Although you might think about storing files in the database, consider that
+    it is bad design in 99% of the cases. This field is *not* a replacement for
+    proper :doc:`static files </howto/static-files/index>` handling.
 
 ``BooleanField``
 ----------------
@@ -360,6 +389,11 @@ The default form widget for this field is a
 
 If you need to accept :attr:`~Field.null` values then use
 :class:`NullBooleanField` instead.
+
+.. versionchanged:: 1.6
+
+    The default value of ``BooleanField`` was changed from ``False`` to
+    ``None`` when :attr:`Field.default` isn't defined.
 
 ``CharField``
 -------------
@@ -819,8 +853,6 @@ for this field is a :class:`~django.forms.TextInput`.
 
 .. class:: GenericIPAddressField([protocol=both, unpack_ipv4=False, **options])
 
-.. versionadded:: 1.4
-
 An IPv4 or IPv6 address, in string format (e.g. ``192.0.2.30`` or
 ``2a02:42fe::4``). The default form widget for this field is a
 :class:`~django.forms.TextInput`.
@@ -843,6 +875,9 @@ are converted to lowercase.
     If this option is enabled that address would be unpacked to
     ``192.0.2.1``. Default is disabled. Can only be used
     when ``protocol`` is set to ``'both'``.
+
+If you allow for blank values, you have to allow for null values since blank
+values are stored as null.
 
 ``NullBooleanField``
 --------------------
@@ -940,8 +975,8 @@ Like all :class:`CharField` subclasses, :class:`URLField` takes the optional
 
 .. versionadded:: 1.5
 
-The current value of the field will be displayed as a clickable link above the
-input widget.
+    The current value of the field will be displayed as a clickable link above the
+    input widget.
 
 
 Relationship fields
@@ -974,12 +1009,15 @@ relationship with itself -- use ``models.ForeignKey('self')``.
 If you need to create a relationship on a model that has not yet been defined,
 you can use the name of the model, rather than the model object itself::
 
+    from django.db import models
+
     class Car(models.Model):
         manufacturer = models.ForeignKey('Manufacturer')
         # ...
 
     class Manufacturer(models.Model):
         # ...
+        pass
 
 To refer to models defined in another application, you can explicitly specify
 a model with the full application label. For example, if the ``Manufacturer``
@@ -1037,10 +1075,11 @@ define the details of how the relation works.
 .. attribute:: ForeignKey.related_name
 
     The name to use for the relation from the related object back to this one.
-    See the :ref:`related objects documentation <backwards-related-objects>` for
-    a full explanation and example. Note that you must set this value
-    when defining relations on :ref:`abstract models
-    <abstract-base-classes>`; and when you do so
+    It's also the default value for :attr:`related_query_name` (the name to use
+    for the reverse filter name from the target model). See the :ref:`related
+    objects documentation <backwards-related-objects>` for a full explanation
+    and example. Note that you must set this value when defining relations on
+    :ref:`abstract models <abstract-base-classes>`; and when you do so
     :ref:`some special syntax <abstract-related-name>` is available.
 
     If you'd prefer Django not to create a backwards relation, set
@@ -1050,10 +1089,41 @@ define the details of how the relation works.
 
         user = models.ForeignKey(User, related_name='+')
 
+.. attribute:: ForeignKey.related_query_name
+
+    .. versionadded:: 1.6
+
+    The name to use for the reverse filter name from the target model.
+    Defaults to the value of :attr:`related_name` if it is set, otherwise it
+    defaults to the name of the model::
+
+        # Declare the ForeignKey with related_query_name
+        class Tag(models.Model):
+            article = models.ForeignKey(Article, related_name="tags", related_query_name="tag")
+            name = models.CharField(max_length=255)
+
+        # That's now the name of the reverse filter
+        article_instance.filter(tag__name="important")
+
 .. attribute:: ForeignKey.to_field
 
     The field on the related object that the relation is to. By default, Django
     uses the primary key of the related object.
+
+.. attribute:: ForeignKey.db_constraint
+
+    .. versionadded:: 1.6
+
+    Controls whether or not a constraint should be created in the database for
+    this foreign key. The default is ``True``, and that's almost certainly what
+    you want; setting this to ``False`` can be very bad for data integrity.
+    That said, here are some scenarios where you might want to do this:
+
+    * You have legacy data that is not valid.
+    * You're sharding your database.
+
+    If this is set to ``False``, accessing a related object that doesn't exist
+    will raise its ``DoesNotExist`` exception.
 
 .. attribute:: ForeignKey.on_delete
 
@@ -1097,6 +1167,9 @@ The possible values for :attr:`~ForeignKey.on_delete` are found in
     necessary to avoid executing queries at the time your models.py is
     imported::
 
+        from django.db import models
+        from django.contrib.auth.models import User
+
         def get_sentinel_user():
             return User.objects.get_or_create(username='deleted')[0]
 
@@ -1107,7 +1180,7 @@ The possible values for :attr:`~ForeignKey.on_delete` are found in
 
     Take no action. If your database backend enforces referential
     integrity, this will cause an :exc:`~django.db.IntegrityError` unless
-    you manually add a SQL ``ON DELETE`` constraint to the database field
+    you manually add an SQL ``ON DELETE`` constraint to the database field
     (perhaps using :ref:`initial sql<initial-sql>`).
 
 .. _ref-manytomany:
@@ -1156,6 +1229,12 @@ that control how the relationship functions.
         users = models.ManyToManyField(User, related_name='u+')
         referents = models.ManyToManyField(User, related_name='ref+')
 
+.. attribute:: ForeignKey.related_query_name
+
+    .. versionadded:: 1.6
+
+    Same as :attr:`ForeignKey.related_query_name`.
+
 .. attribute:: ManyToManyField.limit_choices_to
 
     Same as :attr:`ForeignKey.limit_choices_to`.
@@ -1168,6 +1247,8 @@ that control how the relationship functions.
 
     Only used in the definition of ManyToManyFields on self. Consider the
     following model::
+
+        from django.db import models
 
         class Person(models.Model):
             friends = models.ManyToManyField("self")
@@ -1202,6 +1283,22 @@ that control how the relationship functions.
     the table for the model defining the relationship and the name of the field
     itself.
 
+.. attribute:: ManyToManyField.db_constraint
+
+    .. versionadded:: 1.6
+
+    Controls whether or not constraints should be created in the database for
+    the foreign keys in the intermediary table. The default is ``True``, and
+    that's almost certainly what you want; setting this to ``False`` can be
+    very bad for data integrity. That said, here are some scenarios where you
+    might want to do this:
+
+    * You have legacy data that is not valid.
+    * You're sharding your database.
+
+    It is an error to pass both ``db_constraint`` and ``through``.
+
+
 .. _ref-onetoone:
 
 ``OneToOneField``
@@ -1223,6 +1320,27 @@ related. This works exactly the same as it does for :class:`ForeignKey`,
 including all the options regarding :ref:`recursive <recursive-relationships>`
 and :ref:`lazy <lazy-relationships>` relationships.
 
+If you do not specify the the :attr:`~ForeignKey.related_name` argument for
+the ``OneToOneField``, Django will use the lower-case name of the current model
+as default value.
+
+With the following example::
+
+    from django.db import models
+    from django.contrib.auth.models import User
+
+    class MySpecialUser(models.Model):
+        user = models.OneToOneField(User)
+        supervisor = models.OneToOneField(User, related_name='supervisor_of')
+
+your resulting ``User`` model will have the following attributes::
+
+    >>> user = User.objects.get(pk=1)
+    >>> hasattr(user, 'myspecialuser')
+    True
+    >>> hasattr(user, 'supervisor_of')
+    True
+
 .. _onetoone-arguments:
 
 Additionally, ``OneToOneField`` accepts all of the extra arguments
@@ -1235,3 +1353,6 @@ accepted by :class:`ForeignKey`, plus one extra argument:
     link back to the parent class, rather than the extra
     ``OneToOneField`` which would normally be implicitly created by
     subclassing.
+
+See :doc:`One-to-one relationships </topics/db/examples/one_to_one>` for usage
+examples of ``OneToOneField``.

@@ -5,8 +5,6 @@ Cryptographic signing
 .. module:: django.core.signing
    :synopsis: Django's signing framework.
 
-.. versionadded:: 1.4
-
 The golden rule of Web application security is to never trust data from
 untrusted sources. Sometimes it can be useful to pass data through an
 untrusted medium. Cryptographically signed values can be passed through an
@@ -76,8 +74,10 @@ generate signatures. You can use a different secret by passing it to the
 
 .. class:: Signer(key=None, sep=':', salt=None)
 
-    Returns a signer which uses ``key`` to generate signatures and ``sep``
-    to separate values.
+    Returns a signer which uses ``key`` to generate signatures and ``sep`` to
+    separate values. ``sep`` cannot be in the `URL safe base64 alphabet
+    <http://tools.ietf.org/html/rfc4648#section-5>`_.  This alphabet contains
+    alphanumeric characters, hyphens, and underscores.
 
 Using the salt argument
 -----------------------

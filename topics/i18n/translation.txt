@@ -78,6 +78,7 @@ In this example, the text ``"Welcome to my site."`` is marked as a translation
 string::
 
     from django.utils.translation import ugettext as _
+    from django.http import HttpResponse
 
     def my_view(request):
         output = _("Welcome to my site.")
@@ -87,6 +88,7 @@ Obviously, you could code this without using the alias. This example is
 identical to the previous one::
 
     from django.utils.translation import ugettext
+    from django.http import HttpResponse
 
     def my_view(request):
         output = ugettext("Welcome to my site.")
@@ -190,6 +192,7 @@ of its value.)
 For example::
 
     from django.utils.translation import ungettext
+    from django.http import HttpResponse
 
     def hello_world(request, count):
         page = ungettext(
@@ -206,6 +209,7 @@ languages as the ``count`` variable.
 Lets see a slightly more complex usage example::
 
     from django.utils.translation import ungettext
+    from myapp.models import Report
 
     count = Report.objects.count()
     if count == 1:
@@ -281,6 +285,7 @@ For example::
 
 or::
 
+    from django.db import models
     from django.utils.translation import pgettext_lazy
 
     class MyThing(models.Model):
@@ -294,8 +299,6 @@ will appear in the ``.po`` file as:
     msgctxt "month name"
     msgid "May"
     msgstr ""
-
-.. versionadded:: 1.4
 
 Contextual markers are also supported by the :ttag:`trans` and
 :ttag:`blocktrans` template tags.
@@ -328,6 +331,7 @@ Model fields and relationships ``verbose_name`` and ``help_text`` option values
 For example, to translate the help text of the *name* field in the following
 model, do the following::
 
+    from django.db import models
     from django.utils.translation import ugettext_lazy as _
 
     class MyThing(models.Model):
@@ -335,8 +339,6 @@ model, do the following::
 
 You can mark names of ``ForeignKey``, ``ManyTomanyField`` or ``OneToOneField``
 relationship as translatable by using their ``verbose_name`` options::
-
-    from django.utils.translation import ugettext_lazy as _
 
     class MyThing(models.Model):
         kind = models.ForeignKey(ThingKind, related_name='kinds',
@@ -355,6 +357,7 @@ It is recommended to always provide explicit
 relying on the fallback English-centric and somewhat naïve determination of
 verbose names Django performs by looking at the model's class name::
 
+    from django.db import models
     from django.utils.translation import ugettext_lazy as _
 
     class MyThing(models.Model):
@@ -370,6 +373,7 @@ Model methods ``short_description`` attribute values
 For model methods, you can provide translations to Django and the admin site
 with the ``short_description`` attribute::
 
+    from django.db import models
     from django.utils.translation import ugettext_lazy as _
 
     class MyThing(models.Model):
@@ -404,6 +408,7 @@ If you ever see output that looks like ``"hello
 If you don't like the long ``ugettext_lazy`` name, you can just alias it as
 ``_`` (underscore), like so::
 
+    from django.db import models
     from django.utils.translation import ugettext_lazy as _
 
     class MyThing(models.Model):
@@ -416,6 +421,44 @@ convert them to strings, because they should be converted as late as possible
 (so that the correct locale is in effect). This necessitates the use of the
 helper function described next.
 
+.. _lazy-plural-translations:
+
+Lazy translations and plural
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 1.6
+
+When using lazy translation for a plural string (``[u]n[p]gettext_lazy``), you
+generally don't know the ``number`` argument at the time of the string
+definition. Therefore, you are authorized to pass a key name instead of an
+integer as the ``number`` argument. Then ``number`` will be looked up in the
+dictionary under that key during string interpolation. Here's example::
+
+    from django import forms
+    from django.utils.translation import ugettext_lazy
+
+    class MyForm(forms.Form):
+        error_message = ungettext_lazy("You only provided %(num)d argument",
+            "You only provided %(num)d arguments", 'num')
+
+        def clean(self):
+            # ...
+            if error:
+                raise forms.ValidationError(self.error_message % {'num': number})
+
+If the string contains exactly one unnamed placeholder, you can interpolate
+directly with the ``number`` argument::
+
+    class MyForm(forms.Form):
+        error_message = ungettext_lazy("You provided %d argument",
+            "You provided %d arguments")
+
+        def clean(self):
+            # ...
+            if error:
+                raise forms.ValidationError(self.error_message % number)
+
+
 Joining strings: string_concat()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -426,6 +469,7 @@ that concatenates its contents *and* converts them to strings only when the
 result is included in a string. For example::
 
     from django.utils.translation import string_concat
+    from django.utils.translation import ugettext_lazy
     ...
     name = ugettext_lazy('John Lennon')
     instrument = ugettext_lazy('guitar')
@@ -515,7 +559,6 @@ It's not possible to mix a template variable inside a string within ``{% trans
 %}``. If your translations require strings with variables (placeholders), use
 ``{% blocktrans %}`` instead.
 
-.. versionadded:: 1.4
 
 If you'd like to retrieve a translated string without displaying it, you can
 use the following syntax::
@@ -540,8 +583,6 @@ or should be used as arguments for other template tags or filters::
         {% cycle start end %}: {{ stage }}{% if forloop.counter|divisibleby:2 %}<br />{% else %}, {% endif %}
     {% endfor %}
     </p>
-
-.. versionadded:: 1.4
 
 ``{% trans %}`` also supports :ref:`contextual markers<contextual-markers>`
 using the ``context`` keyword:
@@ -581,8 +622,6 @@ You can use multiple expressions inside a single ``blocktrans`` tag::
 
 .. note:: The previous more verbose format is still supported:
    ``{% blocktrans with book|title as book_t and author|title as author_t %}``
-
-.. versionchanged:: 1.4
 
 If resolving one of the block arguments fails, blocktrans will fall back to
 the default language by deactivating the currently active language
@@ -628,14 +667,31 @@ be retrieved (and stored) beforehand::
     This is a URL: {{ the_url }}
     {% endblocktrans %}
 
-.. versionadded:: 1.4
-
 ``{% blocktrans %}`` also supports :ref:`contextual
 markers<contextual-markers>` using the ``context`` keyword:
 
 .. code-block:: html+django
 
     {% blocktrans with name=user.username context "greeting" %}Hi {{ name }}{% endblocktrans %}
+
+String literals passed to tags and filters
+------------------------------------------
+
+You can translate string literals passed as arguments to tags and filters
+by using the familiar ``_()`` syntax::
+
+    {% some_tag _("Page not found") value|yesno:_("yes,no") %}
+
+In this case, both the tag and the filter will see the translated string,
+so they don't need to be aware of translations.
+
+.. note::
+    In this example, the translation infrastructure will be passed the string
+    ``"yes,no"``, not the individual strings ``"yes"`` and ``"no"``. The
+    translated string will need to contain the comma so that the filter
+    parsing code knows how to split up the arguments. For example, a German
+    translator might translate the string ``"yes,no"`` as ``"ja,nein"``
+    (keeping the comma intact).
 
 .. _translator-comments-in-templates:
 
@@ -659,7 +715,7 @@ or with the ``{#`` ... ``#}`` :ref:`one-line comment constructs <template-commen
 
 .. code-block:: html+django
 
-    {# Translators: Label of a button that triggers search{% endcomment #}
+    {# Translators: Label of a button that triggers search #}
     <button type="submit">{% trans "Go" %}</button>
 
     {# Translators: This is a text of the base template #}
@@ -745,23 +801,6 @@ three tags::
     {% get_current_language_bidi as LANGUAGE_BIDI %}
 
 These tags also require a ``{% load i18n %}``.
-
-Translation hooks are also available within any template block tag that accepts
-constant strings. In those cases, just use ``_()`` syntax to specify a
-translation string::
-
-    {% some_special_tag _("Page not found") value|yesno:_("yes,no") %}
-
-In this case, both the tag and the filter will see the already-translated
-string, so they don't need to be aware of translations.
-
-.. note::
-    In this example, the translation infrastructure will be passed the string
-    ``"yes,no"``, not the individual strings ``"yes"`` and ``"no"``. The
-    translated string will need to contain the comma so that the filter
-    parsing code knows how to split up the arguments. For example, a German
-    translator might translate the string ``"yes,no"`` as ``"ja,nein"``
-    (keeping the comma intact).
 
 You can also retrieve information about any of the available languages using
 provided template tags and filters. To get information about a single language,
@@ -952,8 +991,8 @@ for a given version of a site — it's a good candidate for caching.
 
 Server-side caching will reduce CPU load. It's easily implemented with the
 :func:`~django.views.decorators.cache.cache_page` decorator. To trigger cache
-invalidation when your translations change, provide a version-dependant key
-prefix, as shown in the example below, or map the view at a version-dependant
+invalidation when your translations change, provide a version-dependent key
+prefix, as shown in the example below, or map the view at a version-dependent
 URL.
 
 .. code-block:: python
@@ -1515,14 +1554,17 @@ should be used -- installation-wide, for a particular user, or both.
 
 To set an installation-wide language preference, set :setting:`LANGUAGE_CODE`.
 Django uses this language as the default translation -- the final attempt if no
-other translator finds a translation.
+better matching translation is found through one of the methods employed by the
+locale middleware (see below).
 
-If all you want to do is run Django with your native language, and a language
-file is available for it, all you need to do is set :setting:`LANGUAGE_CODE`.
+If all you want is to run Django with your native language all you need to do
+is set :setting:`LANGUAGE_CODE` and make sure the corresponding :term:`message
+files <message file>` and their compiled versions (``.mo``) exist.
 
 If you want to let each individual user specify which language he or she
-prefers, use ``LocaleMiddleware``. ``LocaleMiddleware`` enables language
-selection based on data from the request. It customizes content for each user.
+prefers, then you also need to use use the ``LocaleMiddleware``.
+``LocaleMiddleware`` enables language selection based on data from the request.
+It customizes content for each user.
 
 To use ``LocaleMiddleware``, add ``'django.middleware.locale.LocaleMiddleware'``
 to your :setting:`MIDDLEWARE_CLASSES` setting. Because middleware order
@@ -1548,8 +1590,6 @@ For example, your :setting:`MIDDLEWARE_CLASSES` might look like this::
 
 ``LocaleMiddleware`` tries to determine the user's language preference by
 following this algorithm:
-
-.. versionchanged:: 1.4
 
 * First, it looks for the language prefix in the requested URL.  This is
   only performed when you are using the ``i18n_patterns`` function in your
@@ -1633,6 +1673,8 @@ Once ``LocaleMiddleware`` determines the user's preference, it makes this
 preference available as ``request.LANGUAGE_CODE`` for each
 :class:`~django.http.HttpRequest`. Feel free to read this value in your view
 code. Here's a simple example::
+
+    from django.http import HttpResponse
 
     def hello_world(request, count):
         if request.LANGUAGE_CODE == 'de-at':
