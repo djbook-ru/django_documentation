@@ -2,13 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2013-09-12 15:23+0300\n"
+"PO-Revision-Date: 2013-11-10 15:52+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -705,6 +706,9 @@ msgid ""
 "a cost to your database. Each foreign key you add will implicitly include "
 "all of its default orderings as well."
 msgstr ""
+"Сортировка не бесплатная операция. Каждое поле влияет на скорость выполнения "
+"запроса. Каждый внешний ключ добавит сортировку по умолчанию связанной "
+"модели."
 
 # 7d4492b3420a46a3ba839688362008f5
 #: ../../ref/models/querysets.txt:346
@@ -832,7 +836,6 @@ msgstr ""
 
 # 34765e81d5274c3f8b717f2d80f1ffbb
 #: ../../ref/models/querysets.txt:404
-#, fuzzy
 msgid ""
 "On PostgreSQL only, you can pass positional arguments (``*fields``) in order "
 "to specify the names of fields to which the ``DISTINCT`` should apply. This "
@@ -842,10 +845,12 @@ msgid ""
 "specified field names, the database will only compare the specified field "
 "names."
 msgstr ""
-"Вот в чем разница. При обычном вызове ``distinct()``, база данных сравнивает "
-"*каждое* поле каждой строки для определения уникальности записи. При "
-"передаче полей в ``distinct()``, база данных будет сравнивать только "
-"указанные поля."
+"Только для PostgreSQL можно указать позиционный аргумент (``*fields``) "
+"определяющий для каких полей применять ``DISTINCT``. Они будут добавлены в "
+"``SELECT DISTINCT ON`` часть SQL запроса. Вот в чем разница. При обычном "
+"вызове ``distinct()``, база данных сравнивает *каждое* поле каждой строки "
+"для определения уникальности записи. При передаче полей в ``distinct()``, "
+"база данных будет сравнивать только указанные поля."
 
 # 9eb9408232844162b66ce5cef3025bc0
 #: ../../ref/models/querysets.txt:412
@@ -873,7 +878,7 @@ msgstr ""
 # fde9c3fdeaee4e41ae6134df439fbd1a
 #: ../../ref/models/querysets.txt:420
 msgid "Examples (those after the first will only work on PostgreSQL)::"
-msgstr ""
+msgstr "Примеры (все, кроме первого, будут работать только в PostgreSQL)::"
 
 # af5851511053417684d907a9326d9023
 #: ../../ref/models/querysets.txt:441
@@ -1090,6 +1095,10 @@ msgid ""
 "Python list object, you can simply call ``list()`` on it, which will "
 "evaluate the queryset."
 msgstr ""
+"Обратите внимание, этот запрос возвращает ``ValuesListQuerySet``. Этот класс "
+"работает как список. В большинстве случаев этого достаточно, однако если вам "
+"действительно нужен список Python, вы можете использовать ``list()``, "
+"который выполнит ``QuerySet``."
 
 # 357b1daa9bcd4dea9ec83499a76f89d3
 #: ../../ref/models/querysets.txt:573
@@ -1098,33 +1107,29 @@ msgstr "dates"
 
 # 39c9d32ce13e4247960fb10a992f4943
 #: ../../ref/models/querysets.txt:577
-#, fuzzy
 msgid ""
 "Returns a ``DateQuerySet`` — a ``QuerySet`` that evaluates to a list of :"
 "class:`datetime.date` objects representing all available dates of a "
 "particular kind within the contents of the ``QuerySet``."
 msgstr ""
-"Возвращает ``DateQuerySet`` — ``QuerySet`` возвращающий список объектов "
-"``datetime.datetime`` отображающих возможные даты в контексте ``QuerySet``."
+"Возвращает ``DateQuerySet`` — ``QuerySet`` возвращающий список объектов :"
+"class:`datetime.date` отображающих возможные даты в контексте ``QuerySet``."
 
 # 4c676dfb14b54e969e866cc4eb76811d
 #: ../../ref/models/querysets.txt:585
-#, fuzzy
 msgid "``field`` should be the name of a ``DateField`` of your model."
-msgstr ""
-"``field`` -- название поля модели типа ``DateField`` или ``DateTimeField``."
+msgstr "``field`` -- название поля модели типа ``DateField``."
 
 # 7a8b45479ff14c29a5adbde580e97125
 #: ../../ref/models/querysets.txt:591
-#, fuzzy
 msgid ""
 "``kind`` should be either ``\"year\"``, ``\"month\"`` or ``\"day\"``. Each "
 "``datetime.date`` object in the result list is \"truncated\" to the given "
 "``type``."
 msgstr ""
 "``kind`` должен быть ``\"year\"``, ``\"month\"`` или ``\"day\"``. Каждый "
-"объект ``datetime.datetime`` - результат \"урезания\" данных в соответствии "
-"с указанным ``type``."
+"объект ``datetime.date`` - результат \"урезания\" данных в соответствии с "
+"указанным ``type``."
 
 # af481c348edd403dbe26e806860a8cc2
 #: ../../ref/models/querysets.txt:595
@@ -1170,39 +1175,34 @@ msgstr "Например::"
 
 # 357b1daa9bcd4dea9ec83499a76f89d3
 #: ../../ref/models/querysets.txt:618
-#, fuzzy
 msgid "datetimes"
-msgstr "dates"
+msgstr "datetimes"
 
 # 39c9d32ce13e4247960fb10a992f4943
 #: ../../ref/models/querysets.txt:624
-#, fuzzy
 msgid ""
 "Returns a ``DateTimeQuerySet`` — a ``QuerySet`` that evaluates to a list of :"
 "class:`datetime.datetime` objects representing all available dates of a "
 "particular kind within the contents of the ``QuerySet``."
 msgstr ""
-"Возвращает ``DateQuerySet`` — ``QuerySet`` возвращающий список объектов "
+"Возвращает ``DateTimeQuerySet`` — ``QuerySet`` возвращающий список объектов "
 "``datetime.datetime`` отображающих возможные даты в контексте ``QuerySet``."
 
 # 4c676dfb14b54e969e866cc4eb76811d
 #: ../../ref/models/querysets.txt:628
-#, fuzzy
 msgid "``field`` should be the name of a ``DateTimeField`` of your model."
-msgstr ""
-"``field`` -- название поля модели типа ``DateField`` или ``DateTimeField``."
+msgstr "``field`` -- название поля модели типа ``DateTimeField``."
 
 # 7a8b45479ff14c29a5adbde580e97125
 #: ../../ref/models/querysets.txt:630
-#, fuzzy
 msgid ""
 "``kind`` should be either ``\"year\"``, ``\"month\"``, ``\"day\"``, ``\"hour"
 "\"``, ``\"minute\"`` or ``\"second\"``. Each ``datetime.datetime`` object in "
 "the result list is \"truncated\" to the given ``type``."
 msgstr ""
-"``kind`` должен быть ``\"year\"``, ``\"month\"`` или ``\"day\"``. Каждый "
-"объект ``datetime.datetime`` результат \"урезания\" данных в соответствии с "
-"указанным ``kind``."
+"``kind`` должен быть ``\"year\"``, ``\"month\"``, ``\"day\"``, ``\"hour\"``, "
+"``\"minute\"`` или ``\"second\"``. Каждый объект ``datetime.datetime`` "
+"результат \"урезания\" данных в соответствии с указанным ``kind``."
 
 # bc9e881a6bbb4af09f0793ed6b9a89b2
 #: ../../ref/models/querysets.txt:637
@@ -1462,7 +1462,6 @@ msgstr ""
 
 # 9c1bd26fc3c1409caeb9d73b158aec1a
 #: ../../ref/models/querysets.txt:829
-#, fuzzy
 msgid ""
 "``select_related`` works by creating an SQL join and including the fields of "
 "the related object in the ``SELECT`` statement. For this reason, "
@@ -1472,11 +1471,11 @@ msgid ""
 "relationships - foreign key and one-to-one."
 msgstr ""
 "``select_related`` создает запрос SQL объединяющий связанные таблицы и "
-"включая дополнительные поля в SELECT. По этой причине, ``select_related`` "
-"получает связанные объекты в том же запросе. Однако, что бы избежать "
-"большого количества возвращаемых данных при обработке \"множественных\" "
-"связей, ``select_related`` работает только со связями возвращающими один "
-"объект - внешний ключ и связь один-к-одному."
+"включая дополнительные поля в ``SELECT``. По этой причине, "
+"``select_related`` получает связанные объекты в том же запросе. Однако, что "
+"бы избежать большого количества возвращаемых данных при обработке "
+"\"множественных\" связей, ``select_related`` работает только со связями "
+"возвращающими один объект - внешний ключ и связь один-к-одному."
 
 # d3ca3301d5f04a74adc64b849150dec0
 #: ../../ref/models/querysets.txt:836
@@ -1709,7 +1708,6 @@ msgstr ""
 
 # 3738fd126f124d05a43e190ffd4e7d1c
 #: ../../ref/models/querysets.txt:959
-#, fuzzy
 msgid ""
 "``prefetch_related`` in most cases will be implemented using an SQL query "
 "that uses the 'IN' operator. This means that for a large ``QuerySet`` a "
@@ -1717,9 +1715,9 @@ msgid ""
 "might have performance problems of its own when it comes to parsing or "
 "executing the SQL query. Always profile for your use case!"
 msgstr ""
-"``prefetch_related`` в основном использует оператор `IN` SQL запроса. Это "
-"означает, что для больших QuerySet может быть создано сложное условие 'IN', "
-"что, в зависимости от базы данных, может привести к проблемам с "
+"``prefetch_related`` в основном использует оператор 'IN' SQL запроса. Это "
+"означает, что для больших ``QuerySet`` может быть создано сложное условие "
+"'IN', что, в зависимости от базы данных, может привести к проблемам с "
 "производительностью при разборе и выполнении SQL запроса. Всегда анализируйте"
 "(profile) ваш запрос!"
 
@@ -2231,7 +2229,6 @@ msgstr ""
 
 # dee05b337045471ca43bce707de47a2a
 #: ../../ref/models/querysets.txt:1251
-#, fuzzy
 msgid ""
 "All of the cautions in the note for the :meth:`defer` documentation apply to "
 "``only()`` as well. Use it cautiously and only after exhausting your other "
@@ -2239,8 +2236,7 @@ msgid ""
 msgstr ""
 "Все замечания описанные для метода :meth:`defer` применимы так же и к методу "
 "``only()``. Используйте его с осторожностью и только в отсутствии других "
-"вариантов. Так же помните, что исключения полей указанных в :meth:"
-"`select_related` вызовет ошибку."
+"вариантов."
 
 # be693002305d4620b81f6195a5f605e7
 #: ../../ref/models/querysets.txt:1267
@@ -2454,13 +2450,13 @@ msgstr "get_or_create"
 
 # e3c560b3981d4cfcbf09766623b6825e
 #: ../../ref/models/querysets.txt:1388
-#, fuzzy
 msgid ""
 "A convenience method for looking up an object with the given ``kwargs`` (may "
 "be empty if your model has defaults for all fields), creating one if "
 "necessary."
 msgstr ""
-"Удобный метод для поиска объекта по заданным параметрам поиска ``kwargs``, и "
+"Удобный метод для поиска объекта по заданным параметрам поиска ``kwargs`` "
+"(может быть пустым, если все поля содержат значения по умолчанию), и "
 "создания нового при необходимости."
 
 # 0b3c276a1737474fa728a52a3e7d52f1
@@ -2588,7 +2584,6 @@ msgstr ""
 
 # 5ac92a346afa45b5b51f2c59c4dd87e3
 #: ../../ref/models/querysets.txt:1461
-#, fuzzy
 msgid ""
 "Finally, a word on using ``get_or_create()`` in Django views: please make "
 "sure to use it only in ``POST`` requests unless you have a good reason not "
@@ -2597,7 +2592,7 @@ msgid ""
 "methods`_ in the HTTP spec."
 msgstr ""
 "Наконец, несколько слов об использовании``get_or_create()`` в представлениях "
-"Django. Но если вам нужно использовать ``get_or_create()`` в представлении, "
+"Django. Если вам нужно использовать ``get_or_create()`` в представлении, "
 "пожалуйста используйте его только для ``POST`` запросов, если только у вас "
 "нет основательных причин не делать этого. Запросы ``GET`` не должны влиять "
 "на данные; используйте запрос ``POST`` для изменения данных. Подробнее "
@@ -2838,7 +2833,6 @@ msgstr ""
 
 # 46e53a048abe4842ab1948a410ac7ea9
 #: ../../ref/models/querysets.txt:1623
-#, fuzzy
 msgid ""
 "If your model's :ref:`Meta <meta-options>` specifies :attr:`~django.db."
 "models.Options.get_latest_by`, you can leave off the ``field_name`` argument "
@@ -2847,27 +2841,27 @@ msgid ""
 msgstr ""
 "Если в :ref:`Meta <meta-options>` модели определен :attr:`~django.db.models."
 "Options.get_latest_by`, вы можете не указывать аргумент ``field_name`` при "
-"вызове ``latest()``. Django будет использовать поле указанное в :attr:"
-"`~django.db.models.Options.get_latest_by` как значение по-умолчанию."
+"вызове ``earliest()`` или ``latest()``. Django будет использовать поле "
+"указанное в :attr:`~django.db.models.Options.get_latest_by` как значение по-"
+"умолчанию."
 
 # 12ca2adda00e4890a443adaeb6769fb1
 #: ../../ref/models/querysets.txt:1628
-#, fuzzy
 msgid ""
 "Like :meth:`get()`, ``earliest()`` and ``latest()`` raise :exc:`~django.core."
 "exceptions.DoesNotExist` if there is no object with the given parameters."
 msgstr ""
-"Как и :meth:`get()`, ``latest()`` вызывает исключение :exc:`~django.core."
-"exceptions.DoesNotExist`, если объект не найден."
+"Как и :meth:`get()`, ``earliest()`` и ``latest()`` вызывает исключение :exc:"
+"`~django.core.exceptions.DoesNotExist`, если объект не найден."
 
 # 4b363776d5f14c71ab312253808eb6c2
 #: ../../ref/models/querysets.txt:1632
-#, fuzzy
 msgid ""
 "Note that ``earliest()`` and ``latest()`` exist purely for convenience and "
 "readability."
 msgstr ""
-"Заметим что ``latest()`` существует исключительно для удобства и читаемости."
+"Заметим что ``earliest()`` и ``latest()`` существует исключительно для "
+"удобства и читаемости."
 
 # d762ed34648e4f7280d68c4885bc76f4
 #: ../../ref/models/querysets.txt:1636
@@ -3024,7 +3018,6 @@ msgstr ""
 
 # 3f644a7cf9d44244b98391c7769cf49f
 #: ../../ref/models/querysets.txt:1748
-#, fuzzy
 msgid ""
 "Additionally, if a ``some_queryset`` has not yet been evaluated, but you "
 "know that it will be at some point, then using ``some_queryset.exists()`` "
@@ -3032,10 +3025,10 @@ msgid ""
 "one to later retrieve the results) than simply using ``bool(some_queryset)"
 "``, which retrieves the results and then checks if any were returned."
 msgstr ""
-"Если ``some_query_set`` не был еще вычислен, но вы точно знаете что будет "
+"Если ``some_queryset`` не был еще вычислен, но вы точно знаете что будет "
 "вычислен в любом случае, тогда вызов ``some_query_set.exists()`` выполнит "
 "больше работы (один запрос для проверки наличия данных и один для получения "
-"данных) чем просто ``bool(some_query_set)``, который получит результат и "
+"данных) чем просто ``bool(some_queryset)``, который получит результат и "
 "проверит не пустой ли он."
 
 # 2572fda74ca44d289833cc0cba802033
@@ -3640,11 +3633,10 @@ msgstr "year"
 
 # fd13d794f2a2494689122c5fc066e0cd
 #: ../../ref/models/querysets.txt:2201
-#, fuzzy
 msgid ""
 "For date and datetime fields, an exact year match. Takes an integer year."
 msgstr ""
-"Проверка года для полей date/datetime. Принимает значение года из 4-х цифр."
+"Проверка года для полей date/datetime. Принимает числовое значение года."
 
 # 29083d0d847d4a7e8bff552fb33ec6c8
 # 56fee1cc131943e1922b92d0ce10e52e
@@ -3694,9 +3686,9 @@ msgstr "day"
 
 # 774d8c63fc154b85a91ae9aba6b60abd
 #: ../../ref/models/querysets.txt:2243
-#, fuzzy
 msgid "For date and datetime fields, an exact day match. Takes an integer day."
-msgstr "Проверка дня месяца для полей date/datetime."
+msgstr ""
+"Проверка дня месяца для полей date/datetime. Принимает номер дня месяца."
 
 # 86d6c940d9aa427d822aae2f525b374c
 #: ../../ref/models/querysets.txt:2255
@@ -3748,15 +3740,13 @@ msgstr ""
 # 2c265bf22e7546199e257c59162de6b3
 #: ../../ref/models/querysets.txt:2290
 msgid "hour"
-msgstr ""
+msgstr "hour"
 
 # fd13d794f2a2494689122c5fc066e0cd
 #: ../../ref/models/querysets.txt:2294
-#, fuzzy
 msgid ""
 "For datetime fields, an exact hour match. Takes an integer between 0 and 23."
-msgstr ""
-"Проверка года для полей date/datetime. Принимает значение года из 4-х цифр."
+msgstr "Проверка часа для полей date/datetime. Принимает число от 0 до 23."
 
 # ecf5440bd93740eeb2573c7040cf13a1
 # 6dafa4cefdb942d59883f89e03fe2ede
@@ -3771,32 +3761,28 @@ msgstr ""
 # 923004e7068d457e8cd0b2a01c193ba6
 #: ../../ref/models/querysets.txt:2312
 msgid "minute"
-msgstr ""
+msgstr "minute"
 
 # 8ab04c7938334d4cb1b2571c04614547
 #: ../../ref/models/querysets.txt:2316
-#, fuzzy
 msgid ""
 "For datetime fields, an exact minute match. Takes an integer between 0 and "
 "59."
 msgstr ""
-"Проверка месяца для полей date/datetime. Принимает целое число от 1(январь) "
-"до 12(декабрь)."
+"Проверка минуты для полей date/datetime. Принимает целое число от 0 до 59."
 
 # d4a6e72b8d13474bb43911547f92f1c6
 #: ../../ref/models/querysets.txt:2334
 msgid "second"
-msgstr ""
+msgstr "second"
 
 # 8ab04c7938334d4cb1b2571c04614547
 #: ../../ref/models/querysets.txt:2338
-#, fuzzy
 msgid ""
 "For datetime fields, an exact second match. Takes an integer between 0 and "
 "59."
 msgstr ""
-"Проверка месяца для полей date/datetime. Принимает целое число от 1(январь) "
-"до 12(декабрь)."
+"Проверка секунды для полей date/datetime. Принимает целое число от 0 до 59."
 
 # 0f8c1aba3b344712a47b748a97f71791
 #: ../../ref/models/querysets.txt:2356
