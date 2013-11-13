@@ -2,13 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2013-06-07 18:01+0300\n"
+"PO-Revision-Date: 2013-11-13 13:20+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -288,7 +289,6 @@ msgstr ""
 
 # d1ccff552786443cbf71206cc93c66b3
 #: ../../topics/db/sql.txt:169
-#, fuzzy
 msgid ""
 "``params`` is a list or dictionary of parameters. You'll use ``%s`` "
 "placeholders in the query string for a list, or ``%(key)s`` placeholders for "
@@ -297,13 +297,14 @@ msgid ""
 "parameters from the ``params`` argument."
 msgstr ""
 "``params`` -- это список параметров. Используйте ``%s`` в строке с запросом "
-"(независимо от базы данных); при выполнении запросу будут подставлены "
-"значения из списка ``params``."
+"для списка параметров, или ``%(key)s`` для словаря(где ``key`` будет заменен "
+"на значение ключа из словаря), независимо от базы данных. При выполнении "
+"запроса будут подставлены значения из списка ``params``."
 
 # f40bb00def4f4d0a81dc6709033ca4aa
 #: ../../topics/db/sql.txt:176
 msgid "Dictionary params not supported with SQLite"
-msgstr ""
+msgstr "Параметры из словаря не поддерживаются SQLite"
 
 # e5c795e606204dca9a8d53cfc374ddc3
 #: ../../topics/db/sql.txt:178
@@ -311,6 +312,8 @@ msgid ""
 "Dictionary params are not supported with the SQLite backend; with this "
 "backend, you must pass parameters as a list."
 msgstr ""
+"Параметры из словаря не поддерживаются SQLite, необходимо использовать "
+"список."
 
 # 67537d8af9fc4a5f9622c0c9feac352a
 #: ../../topics/db/sql.txt:183
@@ -329,7 +332,6 @@ msgstr "**Не делайте этого.**"
 
 # d26883ab7d38404fa63ca94186c35d92
 #: ../../topics/db/sql.txt:192
-#, fuzzy
 msgid ""
 "Using the ``params`` argument completely protects you from `SQL injection "
 "attacks`__, a common exploit where attackers inject arbitrary SQL into your "
@@ -370,7 +372,6 @@ msgstr ""
 
 # ee0f2a5bf7524a5fb495608716c544ee
 #: ../../topics/db/sql.txt:219
-#, fuzzy
 msgid ""
 "The object ``django.db.connection`` represents the default database "
 "connection. To use the database connection, call ``connection.cursor()`` to "
@@ -379,19 +380,15 @@ msgid ""
 "resulting rows."
 msgstr ""
 "Объект ``django.db.connection`` представляет подключение к базе данных по "
-"умолчанию, ``django.db.transaction`` представляет транзакции базы данных по "
 "умолчанию. Для использования подключения к базе данных вызовите ``connection."
 "cursor()`` что бы получить объект \"указателя\". Затем вызовите ``cursor."
 "execute(sql, [params])`` для выполнения SQL и ``cursor.fetchone()`` или "
-"``cursor.fetchall()`` для получения результата. При выполнении запросов "
-"изменяющих данные, необходимо вызвать ``transaction.commit_unless_managed()"
-"`` что бы убедиться, что изменения были применены к базе данных. Если запрос "
-"просто возвращает данные, в этом нет необходимости. Например::"
+"``cursor.fetchall()`` для получения результата. "
 
 # 0149a687358840a9baa97cbc048b51bd
 #: ../../topics/db/sql.txt:225
 msgid "For example::"
-msgstr ""
+msgstr "Например::"
 
 # 197a362594b04e75b6786b7e9865383d
 #: ../../topics/db/sql.txt:246
@@ -399,6 +396,7 @@ msgid ""
 "Note that if you want to include literal percent signs in the query, you "
 "have to double them in the case you are passing parameters::"
 msgstr ""
+"Если необходимо вставить символ процента, необходимо его продублировать::"
 
 # 4871c2ebadcc4dbca7f725dd583f8320
 #: ../../topics/db/sql.txt:252
@@ -442,10 +440,12 @@ msgid ""
 "described in :pep:`249` — except when it comes to :doc:`transaction handling "
 "</topics/db/transactions>`."
 msgstr ""
+"``connection`` и ``cursor`` реализуют стандартный Python DB-API описанный в :"
+"pep:`249`, кроме механизма :doc:`работы с транзакциями </topics/db/"
+"transactions>`."
 
 # f48db64db511477a812e99e1e1d7cbb2
 #: ../../topics/db/sql.txt:292
-#, fuzzy
 msgid ""
 "If you're not familiar with the Python DB-API, note that the SQL statement "
 "in ``cursor.execute()`` uses placeholders, ``\"%s\"``, rather than adding "
@@ -453,15 +453,11 @@ msgid ""
 "underlying database library will automatically escape your parameters as "
 "necessary."
 msgstr ""
-"``connection`` и ``cursor`` почти полностью реализуют Python DB-API "
-"описанный в :pep:`249` (кроме :doc:`работы с тразакциями </topics/db/"
-"transactions>`). Если вы не знакомы с Python DB-API, заметьте что SQL запрос "
-"переданный ``cursor.execute()`` использует подстановку параметром, ``\"%s"
-"\"``, вместо непосредственного добавления их в строку SQL запроса. При "
-"использовании такого подхода, библиотека для работы с текущей базой данной "
-"автоматически экранирует параметры. (Так же заметим что Django принимает ``"
-"\"%s\"``, *не*  ``\"?\"``, который использует библиотекой для SQLite в "
-"Python. Так сделано для последовательности и удобства.)"
+"Если вы не знакомы с Python DB-API, заметьте что SQL запрос переданный "
+"``cursor.execute()`` использует подстановку параметром, ``\"%s\"``, вместо "
+"непосредственного добавления их в строку SQL запроса. При использовании "
+"такого подхода, библиотека для работы с текущей базой данной автоматически "
+"экранирует параметры."
 
 # f134b90e2f484d9d9ce6a08fc865f49d
 #: ../../topics/db/sql.txt:297
@@ -470,6 +466,9 @@ msgid ""
 "\"`` placeholder, which is used by the SQLite Python bindings. This is for "
 "the sake of consistency and sanity."
 msgstr ""
+"Так же заметим что Django принимает ``\"%s\"``, *не*  ``\"?\"``, который "
+"использует библиотекой для SQLite в Python. Так сделано для "
+"последовательности и удобства."
 
 # db6f1acd82324f1db1c8280b3b581ff1
 #~ msgid "Transactions and raw SQL"
