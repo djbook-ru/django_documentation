@@ -2,13 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012, 2013.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2013-10-01 16:58+0300\n"
+"PO-Revision-Date: 2013-11-21 16:01+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -35,7 +36,6 @@ msgstr ""
 
 # 8db684042d98466aa16a0d154ee0faf0
 #: ../../ref/models/fields.txt:15
-#, fuzzy
 msgid ""
 "If the built-in fields don't do the trick, you can try :doc:`localflavor </"
 "topics/localflavor>`, which contains assorted pieces of code that are useful "
@@ -43,7 +43,7 @@ msgid ""
 "own custom model fields </howto/custom-model-fields>`."
 msgstr ""
 "Если существующие поля не предоставляют необходимого функционала, вы можете "
-"поискать в :mod:`django.contrib.localflavor`, который содержит "
+"поискать в :doc:`localflavor </topics/localflavor>`, который содержит "
 "дополнительный функционал полезный для различных стран. Так же вы можете "
 "легко :doc:`создать собственное поле для модели </howto/custom-model-"
 "fields>`."
@@ -170,16 +170,16 @@ msgstr "``choices``"
 
 # 2f1ab5c723af4d5faf0a33502fbd4930
 #: ../../ref/models/fields.txt:83
-#, fuzzy
 msgid ""
 "An iterable (e.g., a list or tuple) consisting itself of iterables of "
 "exactly two items (e.g. ``[(A, B), (A, B) ...]``) to use as choices for this "
 "field. If this is given, the default form widget will be a select box with "
 "these choices instead of the standard text field."
 msgstr ""
-"Итератор (например, список или кортеж) двухэлементных кортежей, который "
-"будет использоваться как варианты значений для поля. Если этот параметр "
-"указан, в форме будет использоваться ``select`` для этого поля."
+"Итератор (например, список или кортеж) двухэлементных кортежей(например, ``"
+"[(A, B), (A, B) ...]``), который будет использоваться как варианты значений "
+"для поля. Если этот параметр указан, в форме будет использоваться ``select`` "
+"для этого поля."
 
 # 06b3378ed2e84d00a25066994511c71f
 #: ../../ref/models/fields.txt:88
@@ -484,13 +484,12 @@ msgstr ""
 
 # 9228e41d79ad4f8c9a4a5c808992b330
 #: ../../ref/models/fields.txt:275
-#, fuzzy
 msgid ""
 "This option is valid on all field types except :class:`ManyToManyField`, :"
 "class:`OneToOneField`, and :class:`FileField`."
 msgstr ""
 "Этот параметр можно использовать для любого типа поля кроме :class:"
-"`ManyToManyField` и :class:`FileField`."
+"`ManyToManyField`, :class:`OneToOneField` и :class:`FileField`."
 
 # 703fa578992f4195ac316e755b6bb62a
 #: ../../ref/models/fields.txt:278
@@ -534,6 +533,10 @@ msgid ""
 "`USE_TZ` is ``True``, the check will be performed in the :ref:`current time "
 "zone <default-current-time-zone>` at the time the object gets saved."
 msgstr ""
+"Если указать этот параметр для :class:`DateTimeField`, только дата значения "
+"будет учитываться. Но при :setting:`USE_TZ` равном ``True``, проверка будет "
+"выполнена в :ref:`текущем часовом поясе <default-current-time-zone>` во "
+"время сохранения объекта."
 
 # fe1c0aa2472648a9bb46d4a025243404
 #: ../../ref/models/fields.txt:298
@@ -545,6 +548,12 @@ msgid ""
 "has :attr:`editable=False<Field.editable>`), :meth:`Model.validate_unique()` "
 "will skip validation for that particular constraint."
 msgstr ""
+"Проверка выполняется методом :meth:`Model.validate_unique()` во время "
+"валидации модели, не на уровне базы данных. Если :attr:`~Field."
+"unique_for_date` содержит поля, которые не входят в :class:`~django.forms."
+"ModelForm` (например, поле было указанно в ``exclude`` или содержит :attr:"
+"`editable=False<Field.editable>`), :meth:`Model.validate_unique()` не будет "
+"выполнять эту валидацию."
 
 # 8896dd7bc9294164a27a32b55196b7c7
 #: ../../ref/models/fields.txt:306
@@ -645,9 +654,8 @@ msgstr ""
 
 # 85f1d44cd44143a0855fb1a1dc492c4a
 #: ../../ref/models/fields.txt:364
-#, fuzzy
 msgid "``BinaryField``"
-msgstr "``CharField``"
+msgstr "``BinaryField``"
 
 # 0cf365c34505416da313bca413053f8d
 #: ../../ref/models/fields.txt:370
@@ -656,6 +664,9 @@ msgid ""
 "aware that this field has limited functionality. For example, it is not "
 "possible to filter a queryset on a ``BinaryField`` value."
 msgstr ""
+"Поля для хранения бинарных данных. Принимает значение типа ``bytes``. Это "
+"поле имеет ограниченный функционал. Например, ``QuerySet`` нельзя "
+"фильтровать по значению ``BinaryField``."
 
 # bf4154b3cee04acf8119a340e9223b9b
 #: ../../ref/models/fields.txt:376
@@ -664,6 +675,8 @@ msgid ""
 "it is bad design in 99% of the cases. This field is *not* a replacement for "
 "proper :doc:`static files </howto/static-files/index>` handling."
 msgstr ""
+"Помните, хранение файлов в базе данных в 99% случаях - это плохой подход. "
+"Это поле *не* замена :doc:`статическим файлам </howto/static-files/index>`."
 
 # a5cb2135a6bd43d7bd284e7312447416
 #: ../../ref/models/fields.txt:381
