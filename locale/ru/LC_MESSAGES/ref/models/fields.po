@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2013-11-21 16:01+0200\n"
+"PO-Revision-Date: 2013-11-21 22:41+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -1637,6 +1637,8 @@ msgid ""
 "If you allow for blank values, you have to allow for null values since blank "
 "values are stored as null."
 msgstr ""
+"Если вы разрешили пустые значение, необходимо также разрешить ``null`` т.к. "
+"пустые значения сохраняются как ``null``."
 
 # 6606f41ad49146eaa1940d1640714d49
 #: ../../ref/models/fields.txt:883
@@ -1973,7 +1975,6 @@ msgstr ""
 
 # 55230a57e9df458e9ef33a0b029aa87c
 #: ../../ref/models/fields.txt:1077
-#, fuzzy
 msgid ""
 "The name to use for the relation from the related object back to this one. "
 "It's also the default value for :attr:`related_query_name` (the name to use "
@@ -1983,11 +1984,13 @@ msgid ""
 "ref:`abstract models <abstract-base-classes>`; and when you do so :ref:`some "
 "special syntax <abstract-related-name>` is available."
 msgstr ""
-"Название, используемое для обратной связи от связанной модели. Ищите "
-"подробности и примеры :ref:`раздел о связанных объектах <backwards-related-"
-"objects>`. Заметим, что вы должны определить этот параметр для поля в :ref:"
-"`абстрактной модели <abstract-base-classes>`; при это можно использовать :"
-"ref:`некоторые дополнительные возможности <abstract-related-name>`."
+"Название, используемое для обратной связи от связанной модели. Также "
+"значение по умолчанию для  :attr:`related_query_name`(название обратной "
+"связи используемое при фильтрации результата запроса). Ищите подробности и "
+"примеры :ref:`раздел о связанных объектах <backwards-related-objects>`. "
+"Заметим, что вы должны определить этот параметр для поля в :ref:`абстрактной "
+"модели <abstract-base-classes>`; при это можно использовать :ref:`некоторые "
+"дополнительные возможности <abstract-related-name>`."
 
 # 743fb6f6f76f46b68bad10893d0baf37
 #: ../../ref/models/fields.txt:1085
@@ -2008,6 +2011,8 @@ msgid ""
 "to the value of :attr:`related_name` if it is set, otherwise it defaults to "
 "the name of the model::"
 msgstr ""
+"Название обратной связи используемое при фильтрации результата запроса. По "
+"умолчанию используется :attr:`related_name`, или название модели::"
 
 # 67aeaa8e376a4995b86f097e7174523c
 #: ../../ref/models/fields.txt:1110
@@ -2026,18 +2031,22 @@ msgid ""
 "you want; setting this to ``False`` can be very bad for data integrity. That "
 "said, here are some scenarios where you might want to do this:"
 msgstr ""
+"Указывает создавать ли \"constraint\" для внешнего ключа в базе данных. По "
+"умолчанию ``True`` и в большинстве случает это то, что вам нужно. Указав "
+"``False`` вы рискуете целостностью данных. Некоторые ситуации, когда вам "
+"может быть это необходимо:"
 
 # 996e794ca6784f45ba6b5e4f1317b9df
 # e1ae187cad15480fb134703255593b14
 #: ../../ref/models/fields.txt:1122 ../../ref/models/fields.txt:1296
 msgid "You have legacy data that is not valid."
-msgstr ""
+msgstr "Вам досталась в наследство нецелостная база данных"
 
 # 5264c35d19344db8820a39cfee93c41b
 # a48563cce92f4f3eaf77c72128073789
 #: ../../ref/models/fields.txt:1123 ../../ref/models/fields.txt:1297
 msgid "You're sharding your database."
-msgstr ""
+msgstr "Вы используете шардинг базы данных."
 
 # 9368d1c792354cb4801a5d55ddca6a57
 #: ../../ref/models/fields.txt:1125
@@ -2045,6 +2054,8 @@ msgid ""
 "If this is set to ``False``, accessing a related object that doesn't exist "
 "will raise its ``DoesNotExist`` exception."
 msgstr ""
+"При ``False``, если связанный объект не существует, при обращении к нему "
+"будет вызвано исключение ``DoesNotExist``."
 
 # 9f3747827cfa4f0f9a5c92df3a660289
 #: ../../ref/models/fields.txt:1130
@@ -2119,7 +2130,6 @@ msgstr ""
 
 # ec245c0521ea4cd0b673d172b0019256
 #: ../../ref/models/fields.txt:1181
-#, fuzzy
 msgid ""
 "Take no action. If your database backend enforces referential integrity, "
 "this will cause an :exc:`~django.db.IntegrityError` unless you manually add "
@@ -2205,9 +2215,8 @@ msgstr ""
 
 # 331f6897a2a94821b03a0e671bc2fb0e
 #: ../../ref/models/fields.txt:1236
-#, fuzzy
 msgid "Same as :attr:`ForeignKey.related_query_name`."
-msgstr "Аналогично :attr:`ForeignKey.related_name`."
+msgstr "Аналогично :attr:`ForeignKey.related_query_name`."
 
 # 28a9ed874c5544099722db8de0cd60b4
 #: ../../ref/models/fields.txt:1240
@@ -2301,11 +2310,15 @@ msgid ""
 "bad for data integrity. That said, here are some scenarios where you might "
 "want to do this:"
 msgstr ""
+"Указывает создавать ли \"constraint\" для внешних ключей в промежуточной "
+"таблице в базе данных. По умолчанию ``True`` и в большинстве случает это то, "
+"что вам нужно. Указав ``False`` вы рискуете целостностью данных. Некоторые "
+"ситуации, когда вам может быть это необходимо:"
 
 # cf201e35aa1a453fb839b91b5ee02b98
 #: ../../ref/models/fields.txt:1299
 msgid "It is an error to pass both ``db_constraint`` and ``through``."
-msgstr ""
+msgstr "Нельзя указать ``db_constraint`` и ``through`` одновременно."
 
 # 13a32ac5c4184542b884d2bb36eb12b1
 #: ../../ref/models/fields.txt:1305
@@ -2353,16 +2366,18 @@ msgid ""
 "the ``OneToOneField``, Django will use the lower-case name of the current "
 "model as default value."
 msgstr ""
+"Если вы не указали :attr:`~ForeignKey.related_name` для ``OneToOneField``, "
+"Django будет использовать название модели в нижнем регистре."
 
 # 5c3dd71514264991bf975b874c5f3094
 #: ../../ref/models/fields.txt:1327
 msgid "With the following example::"
-msgstr ""
+msgstr "В примере ниже::"
 
 # d2d5884323ec4829a6e8f8b8ab2b5fbb
 #: ../../ref/models/fields.txt:1336
 msgid "your resulting ``User`` model will have the following attributes::"
-msgstr ""
+msgstr "модель ``User`` будет содержать следующие атрибуты::"
 
 # d6506538d1bc4daf9348d818541abf56
 #: ../../ref/models/fields.txt:1346
@@ -2392,6 +2407,8 @@ msgid ""
 "See :doc:`One-to-one relationships </topics/db/examples/one_to_one>` for "
 "usage examples of ``OneToOneField``."
 msgstr ""
+"Смотрите примеров использования ``OneToOneField`` в :doc:`Связь один к "
+"одному </topics/db/examples/one_to_one>`."
 
 # 95dc37dbce0148aaafc10847615efaf4
 #~ msgid "This is enforced by model validation but not at the database level."

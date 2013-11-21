@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2013-11-10 15:52+0200\n"
+"PO-Revision-Date: 2013-11-21 23:19+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -1213,6 +1213,10 @@ msgid ""
 "object. If it's ``None``, Django uses the :ref:`current time zone <default-"
 "current-time-zone>`. It has no effect when :setting:`USE_TZ` is ``False``."
 msgstr ""
+"``tzinfo`` указывает часовой пояс используемый при создании объектов "
+"datetime. Принимает объект :class:`datetime.tzinfo`. Если передать ``None``, "
+"Django использует :ref:`текущий часовой пояс <default-current-time-zone>`. "
+"Не используется при :setting:`USE_TZ` равном ``False``."
 
 # 57e651fbcf294534a031ebfb87a6cd60
 #: ../../ref/models/querysets.txt:648
@@ -1221,21 +1225,26 @@ msgid ""
 "consequence, your database must be able to interpret the value of ``tzinfo."
 "tzname(None)``. This translates into the following requirements:"
 msgstr ""
+"Функция выполняет преобразование даты на уровне базы данных. По этому ваша "
+"база данных должна понимать значение вида ``tzinfo.tzname(None)``. Для этого "
+"необходимо:"
 
 # c02286dfc0714cb79386449c1a4f59fe
 #: ../../ref/models/querysets.txt:652
 msgid "SQLite: install pytz_ — conversions are actually performed in Python."
-msgstr ""
+msgstr "SQLite: установите pytz_ — преобразование выполняется в Python."
 
 # 4729dc1f08964e7f95223516a0acb706
 #: ../../ref/models/querysets.txt:653
 msgid "PostgreSQL: no requirements (see `Time Zones`_)."
-msgstr ""
+msgstr "PostgreSQL: нет дополнительных требований (смотрите `Time Zones`_)."
 
 # 7620300112df42548672eaf4b476ca92
 #: ../../ref/models/querysets.txt:654
 msgid "Oracle: no requirements (see `Choosing a Time Zone File`_)."
 msgstr ""
+"Oracle: нет дополнительных требований (смотрите `Choosing a Time Zone "
+"File`_)."
 
 # ee76f7ef2af5491dbfd763b2d4cdd593
 #: ../../ref/models/querysets.txt:655
@@ -1243,6 +1252,8 @@ msgid ""
 "MySQL: install pytz_ and load the time zone tables with "
 "`mysql_tzinfo_to_sql`_."
 msgstr ""
+"MySQL: установите pytz_ и загрузите таблицы часовых поясов с помощью "
+"`mysql_tzinfo_to_sql`_."
 
 # 11d5eb8529f54db2a837985ac116e865
 #: ../../ref/models/querysets.txt:664
@@ -1256,6 +1267,8 @@ msgid ""
 "query will be executed when accessing the results. A qs.none() queryset is "
 "an instance of ``EmptyQuerySet``."
 msgstr ""
+"Вызов none() вернет queryset, который никогда не возвращает объекты и не "
+"выполняет запросы. qs.none() возвращает экземпляр ``EmptyQuerySet``."
 
 # a2890d41c32d43eb9432fc98eb1227b8
 #: ../../ref/models/querysets.txt:681
@@ -1421,6 +1434,8 @@ msgid ""
 "If you need to clear the list of related fields added by past calls of "
 "``select_related`` on a ``QuerySet``, you can pass ``None`` as a parameter::"
 msgstr ""
+"Чтобы очистить список полей указанных ранее ``select_related`` для "
+"``QuerySet``, предайте ``None``::"
 
 # 13743d5ec15143f898643c04641f1dee
 #: ../../ref/models/querysets.txt:808
@@ -2607,11 +2622,15 @@ msgid ""
 "restrict the queries inside the context of that relation. That could lead "
 "you to some integrity problems if you don't use it consistently."
 msgstr ""
+"Вы можете использовать ``get_or_create()`` с атрибутами :class:`~django.db."
+"models.ManyToManyField` и обратными внешними связями. При это запросы будут "
+"ограничены контекстом связи. Это может вызвать некоторые проблемы при "
+"создании объектов."
 
 # 248e3fa46c6d4b0f803835cc5e32b274
 #: ../../ref/models/querysets.txt:1476
 msgid "Being the following models::"
-msgstr ""
+msgstr "Возьмем следующие модели::"
 
 # fdb17d71ad3d44aeb828244c68209094
 #: ../../ref/models/querysets.txt:1485
@@ -2619,6 +2638,8 @@ msgid ""
 "You can use ``get_or_create()`` through Book's chapters field, but it only "
 "fetches inside the context of that book::"
 msgstr ""
+"Вы можете использовать ``get_or_create()`` для поля ``chapters`` модели "
+"``Book``, но будут учитывать только объекты связанные с конкретной книгой::"
 
 # 5de2c7490a5d4732a056b55bb17ef048
 #: ../../ref/models/querysets.txt:1498
@@ -2628,6 +2649,10 @@ msgid ""
 "that chapter because it isn't related to that book, but it can't create it "
 "either because ``title`` field should be unique."
 msgstr ""
+"Это произошло, потому что мы пытались получить или создать \"Chapter 1\" для "
+"книги \"Ulysses\", но ни один объект не был найден, т.к. он не связан с этой "
+"книгой, и мы получили ошибку при попытке его создать т.к. поле ``title`` "
+"должно быть уникальным."
 
 # d429abc1e645455c940147c50ab985cd
 #: ../../ref/models/querysets.txt:1505
@@ -2866,7 +2891,7 @@ msgstr ""
 # d762ed34648e4f7280d68c4885bc76f4
 #: ../../ref/models/querysets.txt:1636
 msgid "earliest"
-msgstr ""
+msgstr "earliest"
 
 # 766675a64d734956a37b1a3a2f939a0e
 #: ../../ref/models/querysets.txt:1642
@@ -2874,11 +2899,13 @@ msgid ""
 "Works otherwise like :meth:`~django.db.models.query.QuerySet.latest` except "
 "the direction is changed."
 msgstr ""
+"Работает как и :meth:`~django.db.models.query.QuerySet.latest` только "
+"наоброт."
 
 # 45e7628d4bd04f3b90916551b1a0390c
 #: ../../ref/models/querysets.txt:1646
 msgid "first"
-msgstr ""
+msgstr "first"
 
 # 73fad5b23e0642e29eeaed90d74523ac
 #: ../../ref/models/querysets.txt:1651
@@ -2887,24 +2914,28 @@ msgid ""
 "matching object. If the ``QuerySet`` has no ordering defined, then the "
 "queryset is automatically ordered by the primary key."
 msgstr ""
+"Возвращает первый объект из выборки, или ``None`` если ничего не найдено. "
+"Если для ``QuerySet`` не указана сортировка, он будет отсортирован по "
+"первичному ключу."
 
 # b8f3a309033b420c9d374bbfcd3c4e36
 #: ../../ref/models/querysets.txt:1659
 msgid ""
 "Note that ``first()`` is a convenience method, the following code sample is "
 "equivalent to the above example::"
-msgstr ""
+msgstr "``first()`` создан просто для удобства и аналогичен следующему коду::"
 
 # 359c284c59554f579b28b6356a4888bb
 #: ../../ref/models/querysets.txt:1668
 msgid "last"
-msgstr ""
+msgstr "last"
 
 # d28a559f789f422cb279a02c8e6047e6
 #: ../../ref/models/querysets.txt:1673
 msgid ""
 "Works like  :meth:`first()`, but returns the last object in the queryset."
 msgstr ""
+"Работает как и :meth:`first()`, но возвращает последний объект из выборки."
 
 # bfeeeab3484b4fcc918460675ff3ef05
 #: ../../ref/models/querysets.txt:1676
@@ -3653,6 +3684,8 @@ msgid ""
 "When :setting:`USE_TZ` is ``True``, datetime fields are converted to the "
 "current time zone before filtering."
 msgstr ""
+"При :setting:`USE_TZ` равном ``True``, значение поля datetime будет "
+"преобразовано в текущий часовой пояс."
 
 # 003f2b547be24a74b2a8ffcb2f3a0d8a
 #: ../../ref/models/querysets.txt:2219
@@ -3678,6 +3711,9 @@ msgid ""
 "current time zone before filtering. This requires :ref:`time zone "
 "definitions in the database <database-time-zone-definitions>`."
 msgstr ""
+"При :setting:`USE_TZ` равном ``True``, значение поля datetime будет "
+"преобразовано в текущий часовой пояс. Для этого необходимо :ref:`настроить "
+"часовые пояса для базы данных <database-time-zone-definitions>`."
 
 # 3a7fa46732934635ba5767f67a5aaa83
 #: ../../ref/models/querysets.txt:2241
@@ -3757,6 +3793,8 @@ msgid ""
 "When :setting:`USE_TZ` is ``True``, values are converted to the current time "
 "zone before filtering."
 msgstr ""
+"При :setting:`USE_TZ` равном ``True``, значение поля datetime будет "
+"преобразовано в текущий часовой пояс."
 
 # 923004e7068d457e8cd0b2a01c193ba6
 #: ../../ref/models/querysets.txt:2312
@@ -3891,6 +3929,10 @@ msgid ""
 "emulates these features using a text field. Attempts to use aggregation on "
 "date/time fields in SQLite will raise ``NotImplementedError``."
 msgstr ""
+"SQLite не умеет использовать агрегацию для полей даты и времени. Это потому "
+"что там не встроенных полей даты и времени и Django эмулирует их используя "
+"текстовое поле. При использовании тикой агрегации с SQLite вызовет "
+"``NotImplementedError``."
 
 # b62b96d46a654d3491ba4da2641de110
 #: ../../ref/models/querysets.txt:2463
