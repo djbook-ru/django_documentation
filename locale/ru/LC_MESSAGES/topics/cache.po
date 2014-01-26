@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated <>, 2012, 2013.
+# Automatically generated <>, 2012, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2013-09-01 20:56+0400\n"
+"PO-Revision-Date: 2014-01-26 22:42+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -581,7 +581,6 @@ msgstr "Параметры кэша"
 
 # 7642d91d62404e8382403a02f7115261
 #: ../../topics/cache.txt:344
-#, fuzzy
 msgid ""
 "Each cache backend can be given additional arguments to control caching "
 "behavior. These arguments are provided as additional keys in the :setting:"
@@ -594,17 +593,15 @@ msgstr ""
 
 # ed29ac2f02a74e0da10a5ffecbe2e1e0
 #: ../../topics/cache.txt:348
-#, fuzzy
 msgid ""
 ":setting:`TIMEOUT <CACHES-TIMEOUT>`: The default timeout, in seconds, to use "
 "for the cache. This argument defaults to ``300`` seconds (5 minutes)."
 msgstr ""
 ":setting:`TIMEOUT <CACHES-TIMEOUT>`: стандартный период, в секундах, "
-"хранения закэшированных данных. Обычно, 300 секунд (5 минут)."
+"хранения закэшированных данных. Обычно, ``300`` секунд (5 минут)."
 
 # cd98577671fb4b50bbc831d7fecd3cb5
 #: ../../topics/cache.txt:352
-#, fuzzy
 msgid ""
 ":setting:`OPTIONS <CACHES-OPTIONS>`: Any options that should be passed to "
 "the cache backend. The list of valid options will vary with each backend, "
@@ -612,7 +609,8 @@ msgid ""
 "directly to the underlying cache library."
 msgstr ""
 ":setting:`OPTIONS <CACHES-OPTIONS>`: Любая опция, которая должна быть "
-"передана модулю. Список допустимых опций варьируется от модуля к модулю."
+"передана модулю. Список допустимых опций варьируется от модуля к модулю и "
+"передается непосредственно в библиотеку для кеширования."
 
 # ee21c295969f48cd827adcc5aac9372f
 #: ../../topics/cache.txt:357
@@ -626,17 +624,15 @@ msgstr ""
 
 # b7bbecd452f34daab21bf4dc8594acda
 #: ../../topics/cache.txt:361
-#, fuzzy
 msgid ""
 "``MAX_ENTRIES``: The maximum number of entries allowed in the cache before "
 "old values are deleted. This argument defaults to ``300``."
 msgstr ""
 "``MAX_ENTRIES``: максимальное количество элементов в кэше перед началом "
-"удаления старых значений. Обычно, 300 элементов."
+"удаления старых значений. Обычно, ``300`` элементов."
 
 # 440c4f8018f9413eacda97ccaee8bd38
 #: ../../topics/cache.txt:365
-#, fuzzy
 msgid ""
 "``CULL_FREQUENCY``: The fraction of entries that are culled when "
 "``MAX_ENTRIES`` is reached. The actual ratio is ``1 / CULL_FREQUENCY``, so "
@@ -647,11 +643,11 @@ msgstr ""
 "``CULL_FREQUENCY``: Часть элементов, которые надо удалить при достижении "
 "``MAX_ENTRIES``. Обычное соотношение — ``1/CULL_FREQUENCY``, таким образом,  "
 "надо установить ``CULL_FREQUENCY`` в ``2``, чтобы удалять половину значений "
-"кэша при достижении ``MAX_ENTRIES``."
+"кэша при достижении ``MAX_ENTRIES``. Аргумент должен быть целым числом и по "
+"умолчанию равен ``3``."
 
 # 59258d4194024c019cf8cbb067e32919
 #: ../../topics/cache.txt:371
-#, fuzzy
 msgid ""
 "A value of ``0`` for ``CULL_FREQUENCY`` means that the entire cache will be "
 "dumped when ``MAX_ENTRIES`` is reached. On some backends (``database`` in "
@@ -660,7 +656,8 @@ msgid ""
 msgstr ""
 "Значение ``0`` для ``CULL_FREQUENCY`` означает, что весь кэш должен быть "
 "сброшен при достижении ``MAX_ENTRIES``. Это делает очистку *значительно* "
-"быстрее ценой увеличения промахов кэша."
+"быстрее для определенных бекендов(в частности ``database``) ценой увеличения "
+"промахов кэша."
 
 # 978e9dbc456442fb9d145a4eb32a19ee
 #: ../../topics/cache.txt:376
@@ -805,7 +802,6 @@ msgstr ""
 
 # 2e6c7ef3a7bb4d77b37fd9712a16f163
 #: ../../topics/cache.txt:444
-#, fuzzy
 msgid ""
 "The cache middleware caches GET and HEAD responses with status 200, where "
 "the request and response headers allow. Responses to requests for the same "
@@ -814,19 +810,12 @@ msgid ""
 "answered with the same response headers as the corresponding GET request; in "
 "which case it can return a cached GET response for HEAD request."
 msgstr ""
-"Мидлварь кэширует GET и POST отклики со статусом 200, если заголовки запроса "
-"и отклика это позволяют. Отклики на запросы для одного URL с разными "
-"параметрами запроса считаются уникальными и кэшируются раздельно. "
-"Опционально, если параметр конфигурации :setting:"
-"`CACHE_MIDDLEWARE_ANONYMOUS_ONLY` установлен в ``True``, кто будут "
-"кэшироваться только анонимные запросы (т.е., сделанные неавторизованными "
-"пользователями). Это простой и эффективный способ отключения кэширования для "
-"любых страниц, требующих авторизованного пользователя (включая интерфейс "
-"администратора Django). Следует отметить, что если вы используете :setting:"
-"`CACHE_MIDDLEWARE_ANONYMOUS_ONLY`, вы должны проверить, что вы используете "
-"``AuthenticationMiddleware``. Мидлварь кэша ожидает, что запрос HEAD "
-"возвращает такие же заголовки, как и соответствующий GET запрос; в этом "
-"случае он может вернуть закэшированный GET отклик для запроса HEAD."
+"Мидлвар кэширует GET и HEAD отклики со статусом 200, если заголовки запроса "
+"и отклика это позволяют. Ответы на запросы для одного URL с разными "
+"параметрами запроса считаются уникальными и кэшируются раздельно. Мидлвар "
+"кэша ожидает, что запрос HEAD возвращает такие же заголовки, как и "
+"соответствующий GET запрос; в этом случае он может вернуть закэшированный "
+"GET отклик для запроса HEAD."
 
 # 7e280eb36872431c9be00cd1ff3c6021
 #: ../../topics/cache.txt:451
