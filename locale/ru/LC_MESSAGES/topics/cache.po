@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2014-01-26 22:42+0200\n"
+"PO-Revision-Date: 2014-02-04 00:48+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -1147,6 +1147,11 @@ msgid ""
 "additional arguments passed to the tag. This function can be useful for "
 "invalidating or overwriting a cached item, for example:"
 msgstr ""
+"Чтобы получить ключ кэша для кэшированного фрагменты шаблона, можно "
+"использовать функцию ``make_template_fragment_key``. ``fragment_name`` -- "
+"второй аргумент, передаваемый в тег ``cache``, ``vary_on``  -- список "
+"дополнительных аргументов, передаваемых в тег. Эту функцию можно "
+"использовать для переназначения или удаления кэшированных фрагментов шаблона:"
 
 # bdde1d324fc941479c1d86d7b898bebd
 #: ../../topics/cache.txt:655
@@ -1241,17 +1246,17 @@ msgstr ""
 
 # dcea09136a014c148f15ad28dec639d1
 #: ../../topics/cache.txt:705
-#, fuzzy
 msgid ""
 "The ``timeout`` argument is optional and defaults to the ``timeout`` "
 "argument of the appropriate backend in the :setting:`CACHES` setting "
 "(explained above). It's the number of seconds the value should be stored in "
 "the cache. Passing in ``None`` for ``timeout`` will cache the value forever."
 msgstr ""
-"Аргумент ``timeout`` является необязательным и обычно определяется в "
-"соответствующем бэкэнде кэша в параметре конфигурации :setting:`CACHES` "
-"(читайте выше). Аргумент определяет период в секундах, в течение которого "
-"значение должно храниться в кэше."
+"Аргумент ``timeout`` является необязательным и обычно равен аргументу "
+"``timeout`` соответствующего бэкэнда кэша из параметре конфигурации :setting:"
+"`CACHES` (читайте выше). Аргумент определяет период в секундах, в течение "
+"которого значение должно храниться в кэше. Передав ``None`` в ``timeout`` "
+"можно закэшировать данные навсегда."
 
 # e2ac6c0f0ffc47c48e59b270c7f2432a
 #: ../../topics/cache.txt:715
@@ -1398,11 +1403,13 @@ msgid ""
 "You can close the connection to your cache with ``close()`` if implemented "
 "by the cache backend."
 msgstr ""
+"Можно закрыть подключение к кэшу методом ``close()``, если бекенд "
+"кэширования предоставляет его."
 
 # e8e7f61a324a4f4ea863b2a456a9bc23
 #: ../../topics/cache.txt:813
 msgid "For caches that don't implement ``close`` methods it is a no-op."
-msgstr ""
+msgstr "Если кэш не реализует метод ``close``, он будет пустым."
 
 # a36cf47d87e14522986c7671150061ca
 #: ../../topics/cache.txt:818
@@ -1763,13 +1770,12 @@ msgstr ""
 
 # 7c87e76915bf48d080a6589927271097
 #: ../../topics/cache.txt:1001
-#, fuzzy
 msgid ""
 "To do this in Django, use the convenient :func:`django.views.decorators.vary."
 "vary_on_headers` view decorator, like so::"
 msgstr ""
-"Чтобы сделать это в Django следует использовать декоратор представления "
-"``vary_on_headers``, так::"
+"Чтобы сделать это в Django следует использовать декоратор представления :"
+"func:`django.views.decorators.vary.vary_on_headers`, так::"
 
 # f073734815ab42188095e705f199d1dc
 #: ../../topics/cache.txt:1010
@@ -1816,13 +1822,13 @@ msgstr ""
 
 # 94ba731b0e47402387733fe4924c9c6e
 #: ../../topics/cache.txt:1031
-#, fuzzy
 msgid ""
 "Because varying on cookie is so common, there's a :func:`django.views."
 "decorators.vary.vary_on_cookie` decorator. These two views are equivalent::"
 msgstr ""
 "Так как зависимость от куки является настолько стандартной, что существует "
-"декоратор ``vary_on_cookie``. Следующие два представления эквивалентны::"
+"декоратор :func:`django.views.decorators.vary.vary_on_cookie`. Следующие два "
+"представления эквивалентны::"
 
 # 839bcfe2ea8842aa96634f7b88a1919a
 #: ../../topics/cache.txt:1043
@@ -1835,14 +1841,13 @@ msgstr ""
 
 # 4c7ff54c10ac43fc9477e6dd0ff707f7
 #: ../../topics/cache.txt:1046
-#, fuzzy
 msgid ""
 "You can also use a helper function, :func:`django.utils.cache."
 "patch_vary_headers`, directly. This function sets, or adds to, the ``Vary "
 "header``. For example::"
 msgstr ""
-"Также вы можете использовать вспомогательную функцию ``django.utils.cache."
-"patch_vary_headers`` напрямую. Эта функция устанавливает или добавляет "
+"Также вы можете использовать вспомогательную функцию :func:`django.utils."
+"cache.patch_vary_headers` напрямую. Эта функция устанавливает или добавляет "
 "заголовок ``Vary``. Например::"
 
 # 8d4a2d0f7c0d46bd88a43a5b368d2524
@@ -1916,7 +1921,6 @@ msgstr ""
 
 # b069d24c0f4d4e1caa9f377640e53124
 #: ../../topics/cache.txt:1090
-#, fuzzy
 msgid ""
 "Note that the cache control settings \"private\" and \"public\" are mutually "
 "exclusive. The decorator ensures that the \"public\" directive is removed if "
@@ -1930,9 +1934,9 @@ msgstr ""
 "Следует отметить, что настройки открытости и закрытости взаимоисключающие. "
 "Декоратор обеспечивает эту проверку. Примером использования таких настроек "
 "будет блог, который содержит закрытые и открытые записи. Открытые записи "
-"могут кэшироваться везде. Следующий код использует ``patch_cache_control``, "
-"ручной способ изменения управляющего заголовка (обычно эта функция "
-"вызывается в декораторе ``cache_control``)::"
+"могут кэшироваться везде. Следующий код использует :func:`django.utils.cache."
+"patch_cache_control`, ручной способ изменения управляющего заголовка (обычно "
+"эта функция вызывается в декораторе ``cache_control``)::"
 
 # 69a4d8ef11d943aa899edf9d020011bc
 #: ../../topics/cache.txt:1113
@@ -2090,6 +2094,11 @@ msgid ""
 "See the warning in :class:`~django.middleware.gzip.GZipMiddleware` for "
 "details."
 msgstr ""
+":class:`django.middleware.gzip.GZipMiddleware` сжимает ответы для всех "
+"современных браузеров, уменьшая время загрузки и количество передаваемых "
+"данных. Будьте внимательны, при определенных условиях ``GZipMiddleware`` "
+"уязвим к атакам. Смотрите описание :class:`~django.middleware.gzip."
+"GZipMiddleware`."
 
 # 1467320a2d9f4a4e9860767b9778b146
 #: ../../topics/cache.txt:1182

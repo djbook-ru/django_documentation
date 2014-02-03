@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated, 2012.
-# redvi <liberty195@gmail.com>, 2013.
+# redvi <liberty195@gmail.com>, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2013-11-13 13:29+0200\n"
+"PO-Revision-Date: 2014-02-04 00:32+0200\n"
 "Last-Translator: redvi <liberty195@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -394,7 +394,7 @@ msgstr ""
 # fd428ed12ba14310bfa63375ef2fcffc
 #: ../../howto/error-reporting.txt:219
 msgid "Custom error reports"
-msgstr ""
+msgstr "Настройка отчета об ошибке"
 
 # da015ab93eca4927a6560af09a4885df
 #: ../../howto/error-reporting.txt:221
@@ -412,6 +412,14 @@ msgid ""
 "tell Django to use it via the :setting:`DEFAULT_EXCEPTION_REPORTER_FILTER` "
 "setting::"
 msgstr ""
+"Декораторы :func:`sensitive_variables` и :func:`sensitive_post_parameters` "
+"отмечают небезопасные аргументы и POST аргументы объекта ``HttpRequest``, "
+"которые передаются в функцию. При формировании отчета об ошибке эти данные "
+"фильтруются. Фильтрация выполняется классом :class:`django.views.debug."
+"SafeExceptionReporterFilter`. Этот класс заменит отмеченные декоратором "
+"данные \"звездочками\" (`**********`) при формировании отчета. Вы можете "
+"создать собственный класс фильтрации и указать его в настройке :setting:"
+"`DEFAULT_EXCEPTION_REPORTER_FILTER`::"
 
 # 4b422afd52714288a9d09991a69e901a
 #: ../../howto/error-reporting.txt:236
@@ -420,6 +428,8 @@ msgid ""
 "given view by setting the ``HttpRequest``'s ``exception_reporter_filter`` "
 "attribute::"
 msgstr ""
+"Также можно указать класс фильтрации для конкретного ``HttpRequest`` "
+"определив атрибут ``exception_reporter_filter``::"
 
 # 35989f9e057a4225a9f6456285a34427
 #: ../../howto/error-reporting.txt:247
@@ -427,6 +437,8 @@ msgid ""
 "Your custom filter class needs to inherit from :class:`django.views.debug."
 "SafeExceptionReporterFilter` and may override the following methods:"
 msgstr ""
+"Ваш класс фильтрации должен наследоваться от :class:`django.views.debug."
+"SafeExceptionReporterFilter` и может переопределить следующие методы:"
 
 # bed6986a829a464f8d97b3978470428e
 #: ../../howto/error-reporting.txt:255
@@ -434,6 +446,8 @@ msgid ""
 "Returns ``True`` to activate the filtering operated in the other methods. By "
 "default the filter is active if :setting:`DEBUG` is ``False``."
 msgstr ""
+"Возвращает ``True``, указывая фильтровать данные или нет. По умолчанию "
+"фильтрация выполняется при :setting:`DEBUG` равном ``False``."
 
 # 6ecfd7fbcceb4a319fe4374eecd7f8bf
 #: ../../howto/error-reporting.txt:260
@@ -443,6 +457,9 @@ msgid ""
 "dictionary of POST parameters as determined by :meth:"
 "`SafeExceptionReporterFilter.get_post_parameters`."
 msgstr ""
+"Возвращает строковое представление объекта запроса, то есть результат ``repr"
+"(request)``, но использует отфильтрованные POST параметры из метода :meth:"
+"`SafeExceptionReporterFilter.get_post_parameters`."
 
 # a62d26d47915430b980f5f199056ecb3
 #: ../../howto/error-reporting.txt:267
@@ -450,6 +467,8 @@ msgid ""
 "Returns the filtered dictionary of POST parameters. By default it replaces "
 "the values of sensitive parameters with stars (`**********`)."
 msgstr ""
+"Возвращает отфильтрованный словарь POST параметров. По умолчанию заменяет "
+"небезопасные данные \"звездочками\" (`**********`)."
 
 # f5fb4ede244e4145b58d70456c606824
 #: ../../howto/error-reporting.txt:272
@@ -458,6 +477,8 @@ msgid ""
 "frame. By default it replaces the values of sensitive variables with stars "
 "(`**********`)."
 msgstr ""
+"Возвращает отфильтрованный словарь локальных переменных. По умолчанию "
+"заменяет небезопасные данные \"звездочками\" (`**********`)."
 
 # 37a48b46a71b436cb3cc12ab7fe1ba12
 #: ../../howto/error-reporting.txt:278
@@ -467,3 +488,7 @@ msgid ""
 "handling, it's a good idea to emulate Django's built-in error handling and "
 "only report/log errors if :setting:`DEBUG` is ``False``."
 msgstr ""
+"Вы также можете изменить формирование для отчета создав :ref:`собственный "
+"мидлвар обработки ошибок <exception-middleware>`. Советуем сохранить "
+"поведение Django и возвращать отчет об ошибке только при :setting:`DEBUG` "
+"равном ``False``."

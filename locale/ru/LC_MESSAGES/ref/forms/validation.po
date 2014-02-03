@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated <>, 2012, 2013.
+# Automatically generated <>, 2012, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2013-03-08 03:29+0400\n"
+"PO-Revision-Date: 2014-02-04 01:18+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -45,7 +45,6 @@ msgstr ""
 
 # 7877226f14874d9cbf55f6796d321cdf
 #: ../../ref/forms/validation.txt:14
-#, fuzzy
 msgid ""
 "In general, any cleaning method can raise ``ValidationError`` if there is a "
 "problem with the data it is processing, passing the relevant information to "
@@ -56,8 +55,10 @@ msgid ""
 msgstr ""
 "В общем случае, любой нормализующий метод может вызвать исключение "
 "``ValidationError`` при наличии проблем с данными, передавая соответствующее "
-"сообщение об ошибке в конструктор исключения. Если проблем не выявлено, то "
-"метод должен возвращать нормализованное значение в виде объекта языка Python."
+"сообщение об ошибке в конструктор исключения. :ref:`Смотрите ниже <raising-"
+"validation-error>` примеры, как правильно вызывать ``ValidationError``. Если "
+"проблем не выявлено, то метод должен возвращать нормализованное значение в "
+"виде объекта языка Python."
 
 # cacdfe89b6d746ecb576f826a129b211
 #: ../../ref/forms/validation.txt:21
@@ -212,7 +213,6 @@ msgstr ""
 
 # f0af9ad49bc14b6eb0892d21f55aecad
 #: ../../ref/forms/validation.txt:83
-#, fuzzy
 msgid ""
 "Note that any errors raised by your ``Form.clean()`` override will not be "
 "associated with any field in particular. They go into a special \"field"
@@ -221,12 +221,12 @@ msgid ""
 "the form, you will need to access the ``_errors`` attribute on the form, "
 "which is :ref:`described later <modifying-field-errors>`."
 msgstr ""
-"Следует отметить, что любая ошибка, выданная методом ``clean()`` формы, не "
-"будет ассоциирована ни с каким полем. Такие ошибки привязываются к «особому» "
-"полю (``__all__``), доступ к которому можно получить через метод "
+"Следует отметить, что любая ошибка, выданная методом ``Form.clean()`` формы, "
+"не будет ассоциирована ни с каким полем. Такие ошибки привязываются к "
+"«особому» полю (``__all__``), доступ к которому можно получить через метод "
 "``non_field_errors()``. Если вам потребуется добавить ошибки к определённому "
-"полю формы, вам потребуется атрибут ``_errors`` формы, который `описан далее "
-"<described later>`_."
+"полю формы, вам потребуется атрибут ``_errors`` формы, который :ref:`описан "
+"далее <modifying-field-errors>`."
 
 # dad01054e9ec43bf9188aeadc139062f
 #: ../../ref/forms/validation.txt:91
@@ -301,21 +301,20 @@ msgstr ""
 
 # e3494411f62d4b848fb04b8bc19deea2
 #: ../../ref/forms/validation.txt:121
-#, fuzzy
 msgid "Raising ``ValidationError``"
-msgstr "Использование валидаторов"
+msgstr "Вызов ``ValidationError``"
 
 # c2c23d75a6654db38e1f1238b3d12992
 #: ../../ref/forms/validation.txt:125
 msgid ""
 "In order to make error messages flexible and easy to override, consider the "
 "following guidelines:"
-msgstr ""
+msgstr "Для удобной работы с ошибками валидации используйте следующие правила:"
 
 # 93bbd4b090ec457599928b7659080e48
 #: ../../ref/forms/validation.txt:128
 msgid "Provide a descriptive error ``code`` to the constructor::"
-msgstr ""
+msgstr "Передайте при создании код ошибки через аргумент ``code``::"
 
 # 44007a47599c4d3ab5beef6bb3330300
 #: ../../ref/forms/validation.txt:136
@@ -323,6 +322,8 @@ msgid ""
 "Don't coerce variables into the message; use placeholders and the ``params`` "
 "argument of the constructor::"
 msgstr ""
+"Переменные лучше передавать в аргументе ``params``, а в сообщении указать "
+"места для подстановки::"
 
 # 0c37a98f2edb4e44a772ac1fb34649e5
 #: ../../ref/forms/validation.txt:148
@@ -331,16 +332,18 @@ msgid ""
 "variables in any order or omitting them altogether when rewriting the "
 "message::"
 msgstr ""
+"Используйте именованные параметры в сообщении. Это позволит использовать "
+"переменные в любом параметре при переопределении сообщения::"
 
 # a4fdbfb4a89046ce944288b437a8d779
 #: ../../ref/forms/validation.txt:164
 msgid "Wrap the message with ``gettext`` to enable translation::"
-msgstr ""
+msgstr "Оберните сообщения в ``gettext`` для последующего перевода::"
 
 # 1b1adac71d8042a78ddea09fe233b178
 #: ../../ref/forms/validation.txt:172
 msgid "Putting it all together::"
-msgstr ""
+msgstr "Все вместе::"
 
 # 3e27bab31fb14f4985be9ff41e8ca16e
 #: ../../ref/forms/validation.txt:180
@@ -348,6 +351,8 @@ msgid ""
 "Following these guidelines is particularly necessary if you write reusable "
 "forms, form fields, and model fields."
 msgstr ""
+"Соблюдать правила очень важно при создании переносимых форм, полей форм и "
+"моделей."
 
 # f3a715eb09474a0b8a2764e2470eced3
 #: ../../ref/forms/validation.txt:183
@@ -356,11 +361,14 @@ msgid ""
 "your form ``clean()`` method) and you know you will *never* need to override "
 "your error message you can still opt for the less verbose::"
 msgstr ""
+"Не рекомендуется, но если вы в конце цепочки валидации(например, метод "
+"``clean()`` формы) и никогда не будете переопределять сообщение, можно "
+"просто сделать::"
 
 # d6bf8d3cd1124e5f9be030da685b650d
 #: ../../ref/forms/validation.txt:190
 msgid "Raising multiple errors"
-msgstr ""
+msgstr "Вызов нескольких ошибок"
 
 # 0d9c6e51f0564e22be26f2e3d75bbde9
 #: ../../ref/forms/validation.txt:192
@@ -379,6 +387,8 @@ msgid ""
 "As above, it is recommended to pass a list of ``ValidationError`` instances "
 "with ``code``\\s and ``params`` but a list of strings will also work::"
 msgstr ""
+"Рекомендуется использовать список объектов ``ValidationError`` с ``code`` и "
+"``params``, но можно использовать просто список строк::"
 
 # 7671a61ccaa9442abb1755168487579c
 #: ../../ref/forms/validation.txt:214
@@ -511,7 +521,6 @@ msgstr "Использование валидаторов"
 
 # 946d47fb191c428facd354abd58f4575
 #: ../../ref/forms/validation.txt:270
-#, fuzzy
 msgid ""
 "Django's form (and model) fields support use of simple utility functions and "
 "classes known as validators. A validator is merely a callable object or "
@@ -522,9 +531,12 @@ msgid ""
 "``default_validators`` attribute."
 msgstr ""
 "Поля форм (и моделей) Django поддерживают использование простых функций и "
-"классов, которые известны как валидаторы. Они могут быть переданы в "
-"конструктор поля через аргумент ``validators`` или определены в самом классе "
-"формы с помощью атрибута ``default_validators``."
+"классов, которые известны как валидаторы. Это просто функция, которая "
+"принимает значение и ничего не возвращает, если значение верно, иначе "
+"вызывает  :exc:`~django.core.exceptions.ValidationError`. Они могут быть "
+"переданы в конструктор поля через аргумент ``validators`` или определены в "
+"самом классе поля :class:`~django.forms.Field` с помощью атрибута "
+"``default_validators``."
 
 # 4e55c7fa49f94cac97beca8b7d366923
 #: ../../ref/forms/validation.txt:278
