@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2012-02-15 15:13\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2014-02-17 15:13\n"
+"Last-Translator: Tyshchenko Viktor <tyvik8@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -21,17 +21,17 @@ msgstr ""
 # 550630289f8a465bbd372aeb09bcd2ec
 #: ../../releases/1.4.txt:3
 msgid "Django 1.4 release notes"
-msgstr ""
+msgstr "О релизе Django 1.4"
 
 # 0c7daca019144075af0c63e48202fce5
 #: ../../releases/1.4.txt:5
 msgid "*March 23, 2012*"
-msgstr ""
+msgstr "*23 марта 2012*"
 
 # f622feb2dc7a4134b7dabb5046c7a668
 #: ../../releases/1.4.txt:7
 msgid "Welcome to Django 1.4!"
-msgstr ""
+msgstr "Добро пожаловать в Django 1.4!"
 
 # 389abb3ff88e4443a5a45322fd162cc6
 #: ../../releases/1.4.txt:9
@@ -42,11 +42,15 @@ msgid ""
 "in :doc:`our deprecation plan </internals/deprecation>`, and we've `begun "
 "the deprecation process for some features`_."
 msgstr ""
+"Здесь описаны `new features`_, а также `backwards incompatible changes`_ для "
+"тех, кто обновляется со старых версий. Мы удалили некоторую функциональность "
+"согласно :doc:`our deprecation plan </internals/deprecation>` и подготовили "
+"`begun the deprecation process for some features`_."
 
 # f592db28e7384de2b971a08d3eef583c
 #: ../../releases/1.4.txt:21
 msgid "Overview"
-msgstr ""
+msgstr "Обзор"
 
 # bae90ff4a538436f981639a6dc7f17f5
 #: ../../releases/1.4.txt:23
@@ -56,6 +60,9 @@ msgid ""
 "use timezone-aware objects internally, and translate them to users' local "
 "timezones for display."
 msgstr ""
+"Самым важным изменением стало `support for time zones`_, которая учитывает "
+"разницу даты/времени. Если эта опция включена, то Django сохраняет дату/время "
+"в формате UTC и переводит его в часовой пояс пользователя для отображения."
 
 # 9e3f3e57d14c4b79a619e1b6bab75fc8
 #: ../../releases/1.4.txt:28
@@ -67,11 +74,16 @@ msgid ""
 "migration-guide>` and the :ref:`timezone FAQ <time-zones-faq>` for useful "
 "pointers."
 msgstr ""
+"Если вы обновляете существующий проект до версии 1.4, перевод на новую функциональность "
+"требует осторожности: новый режим запрещает некоторое неряшливое поведение, которое "
+"было принято ранее. Мы призываем всех обратить внимание на "
+":ref:`timezone migration guide <time-zones-migration-guide>` и "
+":ref:`timezone FAQ <time-zones-faq>`."
 
 # 77e0d0aa54d94c24a2f8bdb582bc6054
 #: ../../releases/1.4.txt:34
 msgid "Other notable new features in Django 1.4 include:"
-msgstr ""
+msgstr "Другие изменения в Django 1.4:"
 
 # 92c44bdb887241f6ad31b94202d1602f
 #: ../../releases/1.4.txt:36
@@ -82,6 +94,11 @@ msgid ""
 "method to batch-load related objects in areas where :meth:`~django.db.models."
 "query.QuerySet.select_related` doesn't work."
 msgstr ""
+"Ряд улучшений ORM, включая `SELECT FOR UPDATE support`_, который позволяет "
+"`bulk insert <#model-objects-bulk-create-in-the-orm>`_ большие объёмы данных "
+"без потери в производительности, и `QuerySet.prefetch_related`_ -- метод, "
+"позволяющий пакетно загрузить связанные объекты, когда :meth:`~django.db.models."
+"query.QuerySet.select_related` не работает."
 
 # 835f5c09bcc14a7ca198b6327174108d
 #: ../../releases/1.4.txt:43
@@ -91,6 +108,9 @@ msgid ""
 "signing`_, several `CSRF improvements`_, and `simple clickjacking "
 "protection`_."
 msgstr ""
+"Улучшения безопасности, включая `improved password hashing`_ "
+"(поддержка PBKDF2_ и bcrypt_), новый `tools for cryptographic signing`_, "
+"некоторые `CSRF improvements`_ и `simple clickjacking protection`_."
 
 # d467bb1abcfd4fbfa8b3f1a4a39d2b6c
 #: ../../releases/1.4.txt:48
@@ -99,16 +119,19 @@ msgid ""
 "\" from prior versions. And for those who don't like the new layout, you can "
 "use `custom project and app templates`_ instead!"
 msgstr ""
+"`updated default project layout and manage.py`_, который убирает магию предыдущих "
+"версий. "
 
 # f4cf902968ec49099f5384952bb0f5f2
 #: ../../releases/1.4.txt:52
 msgid "`Support for in-browser testing frameworks`_ (like Selenium_)."
-msgstr ""
+msgstr "`Support for in-browser testing frameworks`_ (например, Selenium_)."
 
 # bef97ab9172d489b9db203a57630cd61
 #: ../../releases/1.4.txt:54
 msgid "... and a whole lot more; `see below <#what-s-new-in-django-1-4>`_!"
 msgstr ""
+"... и кучу всего другого; `see below <#what-s-new-in-django-1-4>`_!"
 
 # 96d28b475cc14d1baa40c73f35e20b9f
 #: ../../releases/1.4.txt:56
@@ -119,11 +142,16 @@ msgid ""
 "`backwards incompatible changes`_; people upgrading from previous versions "
 "of Django should read that list carefully."
 msgstr ""
+"Везде, где это возможно, мы стараемся поддерживать обратную совместимость "
+"согласно политике :doc:`our API stability policy </misc/api-stability>`. "
+"Однако, как и предыдущие версии, Django 1.4 ломает некоторую совместимость "
+"(`backwards incompatible changes`_). Будьте осторожны при обновлении с "
+"предыдущих версий."
 
 # 213df19afa184f7cadf36601eb51868b
 #: ../../releases/1.4.txt:63
 msgid "Python compatibility"
-msgstr ""
+msgstr "Совместимость версий Python"
 
 # e80870c48fa84ff48f78e768f3c6ad34
 #: ../../releases/1.4.txt:65
@@ -132,6 +160,8 @@ msgid ""
 "required Python version. Django is tested and supported on Python 2.5, 2.6 "
 "and 2.7."
 msgstr ""
+"Django 1.4 более не поддерживает Python 2.4. Теперь минимальной версией является "
+"Python 2.5. Этот релиз мы протестировали на Python 2.5, 2.6, 2.7."
 
 # 7eb02d85ae724c098bf15b567a2213d1
 #: ../../releases/1.4.txt:69
@@ -143,6 +173,11 @@ msgid ""
 "internals/release-process>`, Django 1.3 will continue to receive security "
 "support until the release of Django 1.5."
 msgstr ""
+"Это изменение должно затронуть лишь небольшое число пользователей, т.к. "
+"большинство ОС поставляется с Python 2.5 или чем-то поновее. Если у вас нет "
+"возможности уйти с Python 2.4, то лучше оставайтесь на 1.3. Согласно "
+":doc:`our support policy </internals/release-process>` мы будем выпускать "
+"обновления безопасности вплоть до выпуска Django 1.5."
 
 # f21d94288ae94ee787e840b05750272e
 #: ../../releases/1.4.txt:76
@@ -151,16 +186,18 @@ msgid ""
 "release of Django 1.4, we plan to publish a document outlining our full "
 "timeline for deprecating Python 2.x and moving to Python 3.x."
 msgstr ""
+"Django пока ещё не поддерживает Python 3.x, но в скором времени мы планируем "
+"опубликовать документ с планом перехода на Python 3.x."
 
 # 9d8aee022f664b8093ec70212a5c0f57
 #: ../../releases/1.4.txt:81
 msgid "What's new in Django 1.4"
-msgstr ""
+msgstr "Что новго в Django 1.4"
 
 # 68d556b7b1f84456841c8aa99c767e0f
 #: ../../releases/1.4.txt:84
 msgid "Support for time zones"
-msgstr ""
+msgstr "Поддержка часовых поясов."
 
 # 78121dad6c804fe4bd10631dbf806cba
 #: ../../releases/1.4.txt:86
@@ -170,6 +207,9 @@ msgid ""
 "interpret what a given date/time \"really means\". This can cause all sorts "
 "of subtle timezone-related bugs."
 msgstr ""
+"В предыдущих версиях Django использует \"наивную\" дату/время (без указания "
+"временной зоны), соответсвенно, каждый разработчик должен сам следить за тем, "
+"что же она означает по местному времени. Это провоцировало много ошибок."
 
 # c71b67c8de17458b94aba9006ec01c26
 #: ../../releases/1.4.txt:91
@@ -180,11 +220,15 @@ msgid ""
 "translates them to the end user's time zone in templates and forms. Reasons "
 "for using this feature include:"
 msgstr ""
+"В Django 1.4 вы можете активировать поддержку временных зон. В этом случае "
+"дата будет записываться в базу данных в формате UTC, а используя time-zone--"
+"объекты перевод в тайм-зону пользователя будет происходить автоматически. "
+"Это может понадобиться в следующих случаях:"
 
 # e104cc56f9094aaa9c069f69803383d6
 #: ../../releases/1.4.txt:97
 msgid "Customizing date and time display for users around the world."
-msgstr ""
+msgstr "Настройка отображения даты и времени для пользователей по всему миру."
 
 # 016018eca26b4bf88b00ca3571e0fd9f
 #: ../../releases/1.4.txt:99
@@ -193,11 +237,14 @@ msgid ""
 "(This argument doesn't apply to PostgreSQL, because it already stores "
 "timestamps with time zone information in Django 1.3.)"
 msgstr ""
+"Сохранение даты/времени в формате UTC обеспечивает совместимость и "
+"переносимость. Это не относится к PostgreSQL, потому что это уже реализовано "
+"в Django 1.3."
 
 # 9a61d2f1a85241fca34734d3e8df9f46
 #: ../../releases/1.4.txt:103
 msgid "Avoiding data corruption problems around DST transitions."
-msgstr ""
+msgstr "Позволяет избежать проблем с повреждением данных при переходе DST."
 
 # 379b84cb32c347b2a74cb6e340863019
 #: ../../releases/1.4.txt:105
@@ -207,11 +254,15 @@ msgid ""
 "project, read the :ref:`migration guide <time-zones-migration-guide>`. If "
 "you encounter problems, there's a helpful :ref:`FAQ <time-zones-faq>`."
 msgstr ""
+"Поддержка временных зон включена по умолчанию для новых проектов, созданных "
+"с помощью :djadmin:`startproject`. Если вы хотите его включить в существующем "
+"проекте, обратитесь к :ref:`migration guide <time-zones-migration-guide>`. "
+"При возникновении проблем загляните в :ref:`FAQ <time-zones-faq>`."
 
 # 40e04b980b4e439b9e29d55c829a3ca7
 #: ../../releases/1.4.txt:111
 msgid "Support for in-browser testing frameworks"
-msgstr ""
+msgstr "Поддержка фреймворков для тестирования в браузере"
 
 # f62ffa88b264484c98a0a4dee82bbf28
 #: ../../releases/1.4.txt:113
@@ -222,11 +273,15 @@ msgid ""
 "comprehensively. See the :class:`documentation<django.test."
 "LiveServerTestCase>` for more details and concrete examples."
 msgstr ""
+"Django 1.4 поддерживает интеграцию с фреймворками для тестирования в "
+"браузере типа Selenium_. Новый класс :class:`django.test.LiveServerTestCase` "
+"позволяет тестировать взаимодействие клиентской и серверной части. Подробную "
+"информацию и примеры можно найти в :class:`documentation<django.test.LiveServerTestCase>`."
 
 # acf4c9754b024462ad015bff89a6f02d
 #: ../../releases/1.4.txt:123
 msgid "Updated default project layout and ``manage.py``"
-msgstr ""
+msgstr "Обновлён шаблон нового проекта и ``manage.py``"
 
 # 516c1e597cf54ea8ac3ac6479a77ee68
 #: ../../releases/1.4.txt:125
@@ -237,6 +292,10 @@ msgid ""
 "caused double imports, trouble moving from development to deployment, and "
 "other difficult-to-debug path issues."
 msgstr ""
+"Django 1.4 поставляется с обновлённым шаблоном для нового приложения, который "
+"создаётся командой :djadmin:`startproject`. Он исправляет несколько ошибок, "
+"связанных с дублирующим импортом, трудностями деплоя и прочими "
+"плохоотлаживаемыми проблемами."
 
 # 4d7e3d4d6d56499ea4c0a25fbbd688e3
 #: ../../releases/1.4.txt:131
@@ -246,18 +305,22 @@ msgid ""
 "(The old-style ``manage.py`` will continue to work as before until Django "
 "1.6. In 1.5 it will raise ``DeprecationWarning``)."
 msgstr ""
+"Предыдущий ``manage.py`` использовал функциональность, которая стала "
+"устаревшей, так что надо бы обновить и его в проекте. Но можно пока не "
+"торопиться - он будет работать до версии 1.6, правда, в 1.5 вам напомнят "
+"исключением ``DeprecationWarning``."
 
 # 0220e674a57342188d297d08955e59bd
 #: ../../releases/1.4.txt:136
 msgid "The new recommended ``manage.py`` file should look like this::"
-msgstr ""
+msgstr "Новый рекомендуемый ``manage.py`` должен выглядеть как-то так::"
 
 # fbef75321e7d42cbb82253a1c7af6d26
 #: ../../releases/1.4.txt:148
 msgid ""
 "``{{ project_name }}`` should be replaced with the Python package name of "
 "the actual project."
-msgstr ""
+msgstr "где ``{{ project_name }}`` -- имя вашего приложения."
 
 # 50a21d03dd934024b079c30fc9d86f76
 #: ../../releases/1.4.txt:151
@@ -268,11 +331,15 @@ msgid ""
 "directory up, so it is outside the project package rather than adjacent to "
 "``settings.py`` and ``urls.py``."
 msgstr ""
+"Если настройки, пути и приложения импортируются в рамках проекта с помощью "
+"имени префикса (например, ``myproject.settings``, ``ROOT_URLCONF = \"myproject.urls\"``), "
+"то новый ``manage.py`` должен быть перемещён на директорию выше относительно "
+"``settings.py`` и ``urls.py``."
 
 # c8d9f2f0431b4ffe94a039719cc66b99
 #: ../../releases/1.4.txt:157
 msgid "For instance, with the following layout::"
-msgstr ""
+msgstr "Например, как-то так::"
 
 # 7e2793cc5d7e436ba8c387acbc3aee47
 #: ../../releases/1.4.txt:168
@@ -280,6 +347,8 @@ msgid ""
 "You could import ``mysite.settings``, ``mysite.urls``, and ``mysite.myapp``, "
 "but not ``settings``, ``urls``, or ``myapp`` as top-level modules."
 msgstr ""
+"Вы должны импортировать ``mysite.settings``, ``mysite.urls``, ``mysite.myapp``, "
+"а не ``settings``, ``urls``, ``myapp`` в виде модулей верхнего уровня."
 
 # 627a9fbdac7d457fa2a32a619973afb7
 #: ../../releases/1.4.txt:171
@@ -288,6 +357,9 @@ msgid ""
 "``manage.py``. For instance, to decouple \"myapp\" from the project module "
 "and import it as just ``myapp``, place it outside the ``mysite/`` directory::"
 msgstr ""
+"Всё, что импортируется как модуль верхнего уровня, может быть размещено рядом "
+"с новым ``manage.py``. Например, чтобы отделить \"myapp\" от проекта и импортировать "
+"его просто как ``myapp``, просто вынесите его из каталога ``mysite/``::"
 
 # cb7c51e53b6240b9ba5061a6906ee938
 #: ../../releases/1.4.txt:184
@@ -296,11 +368,13 @@ msgid ""
 "prefix, some places without it), the imports will need to be cleaned up when "
 "switching to the new ``manage.py``."
 msgstr ""
+"Если же импорт идёт непоследовательно (где-то с префиксом проекта, где-то без), "
+"то его необходимо почистить при обновлении ``manage.py``."
 
 # 9ca0728fa1eb476a96906a2c214777b0
 #: ../../releases/1.4.txt:189
 msgid "Custom project and app templates"
-msgstr ""
+msgstr "Пользовательские проекты и шаблоны приложений"
 
 # 161db856870945439bc0c863508b20b3
 #: ../../releases/1.4.txt:191
@@ -309,6 +383,8 @@ msgid ""
 "have a ``--template`` option for specifying a path or URL to a custom app or "
 "project template."
 msgstr ""
+"Команды :djadmin:`startapp` и :djadmin:`startproject` теперь имеют опцию "
+"``--template`` для указания пути или URL до пользовательского приложения или шаблона."
 
 # f14707ebf2a54f18bdbb9595b7ad945e
 #: ../../releases/1.4.txt:195
@@ -316,6 +392,8 @@ msgid ""
 "For example, Django will use the ``/path/to/my_project_template`` directory "
 "when you run the following command::"
 msgstr ""
+"Например, Django будет использовать каталог ``/path/to/my_project_template`` при "
+"выполнении следующего кода::"
 
 # 01216d7eb45f4044b006f9bc14372e55
 #: ../../releases/1.4.txt:200
@@ -323,18 +401,20 @@ msgid ""
 "You can also now provide a destination directory as the second argument to "
 "both :djadmin:`startapp` and :djadmin:`startproject`::"
 msgstr ""
+"Вы также можете указать каталог назначения вторым аргументом к :djadmin:`startapp` "
+"и :djadmin:`startproject`::"
 
 # dadf8bd0ebef418998ca5fabcad7d757
 #: ../../releases/1.4.txt:206
 msgid ""
 "For more information, see the :djadmin:`startapp` and :djadmin:"
 "`startproject` documentation."
-msgstr ""
+msgstr "За подробностями обратитесь к :djadmin:`startapp` и :djadmin:`startproject`."
 
 # 92ca01c396e4462a91c890fbf5a6576e
 #: ../../releases/1.4.txt:210
 msgid "Improved WSGI support"
-msgstr ""
+msgstr "Улучшение поддержки WSGI"
 
 # 208a26d4d41e45a38970899fb7bc7355
 #: ../../releases/1.4.txt:212
@@ -344,6 +424,9 @@ msgid ""
 "that can be used for :doc:`deploying with WSGI app servers</howto/deployment/"
 "wsgi/index>`."
 msgstr ""
+"Команда :djadmin:`startproject` теперь добавляет в новый проект файл :file:`wsgi.py`, "
+"содержащий простое приложение WSGI, которое используется :doc:`deploying with WSGI "
+"app servers</howto/deployment/wsgi/index>`."
 
 # 59c9e53007af4660bab7ac920990a5cd
 #: ../../releases/1.4.txt:217
@@ -354,6 +437,10 @@ msgid ""
 "setting:`WSGI_APPLICATION` setting lets you configure which WSGI callable :"
 "djadmin:`runserver` uses."
 msgstr ""
+":djadmin:`built-in development server<runserver>` теперь поддерживает внешние "
+"определения вызовов WSGI, что даёт возможность запустить runserver с конфигурацией "
+"на боевом сервере. Новая настройка :setting:`WSGI_APPLICATION` определяет какие "
+"вызовы WSGI использует :djadmin:`runserver`."
 
 # a4d8986e13dc443284538a4dffe938b4
 #: ../../releases/1.4.txt:223
@@ -361,11 +448,13 @@ msgid ""
 "(The :djadmin:`runfcgi` management command also internally wraps the WSGI "
 "callable configured via :setting:`WSGI_APPLICATION`.)"
 msgstr ""
+"(Команда :djadmin:`runfcgi` является обёрткой для WSGI, настроенной с "
+"помощью :setting:`WSGI_APPLICATION`.)"
 
 # 659a36aca02a407da9ce6c06eb94b2e8
 #: ../../releases/1.4.txt:227
 msgid "``SELECT FOR UPDATE`` support"
-msgstr ""
+msgstr "Поддержка ``SELECT FOR UPDATE``"
 
 # 7be0935efd0d46aab6a9e83c2b8ce885
 #: ../../releases/1.4.txt:229
@@ -376,18 +465,22 @@ msgid ""
 "transaction, meaning other transactions cannot modify or delete rows matched "
 "by a ``FOR UPDATE`` query."
 msgstr ""
+"В Django 1.4 есть метод :meth:`QuerySet.select_for_update() <django.db.models."
+"query.QuerySet.select_for_update>`, который генерирует SQL запрос ``SELECT ... "
+"FOR UPDATE``. Это блокирует записи до окончания транзакции, так что остальные "
+"пользователи не смогут их изменить или удалить."
 
 # 2be3435c2a194092b8c1d7d37acdb703
 #: ../../releases/1.4.txt:235
 msgid ""
 "For more details, see the documentation for :meth:`~django.db.models.query."
 "QuerySet.select_for_update`."
-msgstr ""
+msgstr "За подробностями обратитесь к :meth:`~django.db.models.query.QuerySet.select_for_update`."
 
 # e3ccf1a12eb6469fb3c1e73be408ec8f
 #: ../../releases/1.4.txt:239
 msgid "``Model.objects.bulk_create`` in the ORM"
-msgstr ""
+msgstr "``Model.objects.bulk_create`` в ORM"
 
 # f84c8bdc008544e58097d4305b102b3e
 #: ../../releases/1.4.txt:241
@@ -395,6 +488,8 @@ msgid ""
 "This method lets you create multiple objects more efficiently. It can result "
 "in significant performance increases if you have many objects."
 msgstr ""
+"Этот метод позволяет создавать несколько объектов более эффективно. Это может "
+"привести к значительному увеличению производительности, если у вас много объектов."
 
 # 22d19dddd66e4b3ebfb64a9bc64b0aff
 #: ../../releases/1.4.txt:244
@@ -402,18 +497,20 @@ msgid ""
 "Django makes use of this internally, meaning some operations (such as "
 "database setup for test suites) have seen a performance benefit as a result."
 msgstr ""
+"Django внутри себя использует этот метод, например при загрузке данных для тестов, "
+"что даёт некоторый выигрыш в производительности."
 
 # 7570072720884645a516844f1a5e071a
 #: ../../releases/1.4.txt:247
 msgid ""
 "See the :meth:`~django.db.models.query.QuerySet.bulk_create` docs for more "
 "information."
-msgstr ""
+msgstr "Подробнее описано в :meth:`~django.db.models.query.QuerySet.bulk_create`."
 
 # 1999d227efff4d2a86a13bb52728a2f7
 #: ../../releases/1.4.txt:251
 msgid "``QuerySet.prefetch_related``"
-msgstr ""
+msgstr "``QuerySet.prefetch_related``"
 
 # 908aea2a2edd4174a417d058d6710f1d
 #: ../../releases/1.4.txt:253
@@ -430,11 +527,20 @@ msgid ""
 "database queries (or worse) if objects on your primary ``QuerySet`` each "
 "have many related objects that you also need to fetch."
 msgstr ""
+"Метод :meth:`~django.db.models.query.QuerySet.prefetch_related`, который "
+"добавлен в :class:`~django.db.models.query.QuerySet`, похож на "
+":meth:`~django.db.models.query.QuerySet.select_related`, однако использует "
+"некоторую другую стратегию выполнения. Этот метод возвращает новый ``QuerySet``, "
+"который получает за один проход все связанные данные. В отличие от ``select_related`` "
+"он объединяет на уровне Python, а не в базе данных, и поддерживает отношения "
+"многие-ко-многим, класс :class:`~django.contrib.contenttypes.generic.GenericForeignKey`... "
+"Это позволяет избежать распространённой проблемы, когда код выполняет O(n) запросов, "
+"и для каждого из них подтягивает связанные объекты."
 
 # 2d725bf09f8e46a083d783ad0987fa81
 #: ../../releases/1.4.txt:267
 msgid "Improved password hashing"
-msgstr ""
+msgstr "Улучшенное хеширование паролей"
 
 # 5ee8d81fe9e44950b0ad283794ea98fb
 #: ../../releases/1.4.txt:269
@@ -447,11 +553,18 @@ msgid ""
 "can also easily choose a different algorithm (including the popular bcrypt_ "
 "algorithm). For more details, see :ref:`auth_password_storage`."
 msgstr ""
+"Система аутентификации Django (``django.contrib.auth``) хранит пароли с "
+"односторонним алгоритмом шифрования. Django 1.3 использует SHA1_, однако с "
+"ростом производительности компьютеров риск успешной атаки всё повышается. "
+"В Django 1.4 представлена новая система хранения паролей, основанная на "
+"алгоритме PBKDF2_ (рекомендован NIST_). Тем не менее вы можете указать "
+"свой, например, популярный bcrypt_. Для подробностей загляниет в "
+":ref:`auth_password_storage`."
 
 # e7907206634946a59844ed631d7b632a
 #: ../../releases/1.4.txt:283
 msgid "HTML5 doctype"
-msgstr ""
+msgstr "Поддержка HTML5"
 
 # ef96e103a613431ea63c5ce8d1843704
 #: ../../releases/1.4.txt:285
@@ -462,11 +575,15 @@ msgid ""
 "admin pages without having to lose HTML validity or override the provided "
 "templates to change the doctype."
 msgstr ""
+"В админке и прочих стандартных шаблонах мы теперь используем тип документа "
+"HTML5. В то же время Django старается сохранить совместимость со старыми "
+"браузерами. Это изменение позволяет использовать возможности HTML5 без "
+"потери корректности HTML, а также указать самому тип документа."
 
 # a031c5e0858045599046136e779e376e
 #: ../../releases/1.4.txt:292
 msgid "List filters in admin interface"
-msgstr ""
+msgstr "Фильтрация списков в интерфейса администратора"
 
 # 0cca7f72ed6a450c8cabbc9e46420db2
 #: ../../releases/1.4.txt:294
@@ -477,11 +594,15 @@ msgid ""
 "used internally and known as \"FilterSpec\"). For more details, see the "
 "documentation for :attr:`~django.contrib.admin.ModelAdmin.list_filter`."
 msgstr ""
+"До Django 1.4 :mod:`~django.contrib.admin` позволяло указывать значения "
+"отдельных полей без возможности создания своих фильтров. Это было исправлено "
+"с помощью небольшого API (ранее использовался внутренний \"FilterSpec\"). "
+"Подробнее можно прочитать здесь :attr:`~django.contrib.admin.ModelAdmin.list_filter`."
 
 # ab0f1ba23c1b4931b4cc882a3f4ac8c6
 #: ../../releases/1.4.txt:301
 msgid "Multiple sort in admin interface"
-msgstr ""
+msgstr "Множественная сортировка в интерфейсе администратора"
 
 # d82a12721a2b4761a8f6ae51cb6c86a9
 #: ../../releases/1.4.txt:303
@@ -493,11 +614,16 @@ msgid ""
 "`~django.contrib.admin.ModelAdmin.get_ordering` method for specifying the "
 "ordering dynamically (i.e., depending on the request)."
 msgstr ""
+"Теперь в админке можно указывать сортировку по нескольким столбцам. Учитываются "
+"все элементы, указанные в атрибуте :attr:`~django.contrib.admin.ModelAdmin.ordering`. "
+"Поведение взято из настольного GUI - достаточно кликнуть по заголовку столбца. "
+"Мы также добавили метод :meth:`~django.contrib.admin.ModelAdmin.get_ordering` "
+"для указания сортировки динамически, например, в зависимости от запроса."
 
 # fb2afe95925e413f8649f13f8a0bbc42
 #: ../../releases/1.4.txt:311
 msgid "New ``ModelAdmin`` methods"
-msgstr ""
+msgstr "Новые методы в ``ModelAdmin``"
 
 # 5b22f126f045437fbe710655b7223b33
 #: ../../releases/1.4.txt:313
@@ -506,6 +632,9 @@ msgid ""
 "mod:`~django.contrib.admin.ModelAdmin` to ease customization of how related "
 "objects are saved in the admin."
 msgstr ""
+"Мы добавили метод :meth:`~django.contrib.admin.ModelAdmin.save_related` в "
+"модель :mod:`~django.contrib.admin.ModelAdmin` для возможности управления "
+"сохранением связанных объектов."
 
 # 54174c53eb5847a9bc78f377d0e2471d
 #: ../../releases/1.4.txt:317
@@ -515,11 +644,15 @@ msgid ""
 "contrib.admin.ModelAdmin.get_list_display_links` enable dynamic "
 "customization of fields and links displayed on the admin change list."
 msgstr ""
+"Два других новых метода класса :class:`~django.contrib.admin.ModelAdmin` :meth:"
+"`~django.contrib.admin.ModelAdmin.get_list_display` и :meth:`~django."
+"contrib.admin.ModelAdmin.get_list_display_links` включают динамическое "
+"управление полями и ссылками, которые будут показаны в таблицах админки."
 
 # 011becf1613d4af7b0f3680dbcb70a5e
 #: ../../releases/1.4.txt:324
 msgid "Admin inlines respect user permissions"
-msgstr ""
+msgstr "Проверка прав в панели администратора"
 
 # dea8de3165e146a98274028ea21e60cf
 #: ../../releases/1.4.txt:326
@@ -530,11 +663,15 @@ msgid ""
 "permission for the related model determines if the user has the permission "
 "to add, change or delete relationships."
 msgstr ""
+"В админке теперь доступны только те действия, на которые пользователь "
+"имеет разрешения. Для отношения ``ManyToMany``, когда создаётся модель, "
+"на которую пользователь не имеет явных прав, они определяются из прав "
+"на отношение."
 
 # bd058ddf9d624cb28db4f5a51d2cc996
 #: ../../releases/1.4.txt:333
 msgid "Tools for cryptographic signing"
-msgstr ""
+msgstr "Инструменты для криптографических подписей"
 
 # a1a2fe03fc5a404f9af9c87491b7ef1c
 #: ../../releases/1.4.txt:335
@@ -543,18 +680,21 @@ msgid ""
 "for setting and reading signed cookies, one of the most common uses of "
 "signing in Web applications."
 msgstr ""
+"Django 1.4 добавляет как низкоуровневые, так и высокоуровневые средства для "
+"работы с куками, которые являются одним из самых распространённых способов "
+"подписи веб-приложения."
 
 # 77003a46424a4fcaa930d6a267ef0e62
 #: ../../releases/1.4.txt:339
 msgid ""
 "See the :doc:`cryptographic signing </topics/signing>` docs for more "
 "information."
-msgstr ""
+msgstr "Подробнее можно посмотреть здесь :doc:`cryptographic signing </topics/signing>`."
 
 # 8379f7a3c2df4b37aafc440319abcc61
 #: ../../releases/1.4.txt:343
 msgid "Cookie-based session backend"
-msgstr ""
+msgstr "Сессии на базе кук"
 
 # dde796f39c954a4c9117de425b7a9a1f
 #: ../../releases/1.4.txt:345
@@ -563,6 +703,8 @@ msgid ""
 "for :doc:`cryptographic signing </topics/signing>` to store the session data "
 "in the client's browser."
 msgstr ""
+"Django 1.4 поддерживает сессии на базе куков, используя криптографическую подпись "
+":doc:`cryptographic signing </topics/signing>` для хранения данных сессии в браузере клиента."
 
 # 675d826b49bf4b6f84d3cf011eadb5c8
 #: ../../releases/1.4.txt:351
@@ -572,18 +714,21 @@ msgid ""
 "it. Please read the documentation for further clarification before using "
 "this backend."
 msgstr ""
+"Данные сессии подписываются и проверяются сервером, но не шифруются. Это означает, "
+"что пользователь может их посмотреть, но не изменить. Пожалуйста, прочитайте "
+"документацию, прежде чем использовать эту возможность."
 
 # 61563dcfb8d34d8280068253c18a4f9b
 #: ../../releases/1.4.txt:356
 msgid ""
 "See the :ref:`cookie-based session backend <cookie-session-backend>` docs "
 "for more information."
-msgstr ""
+msgstr "Подробнее можно посмотреть здесь :ref:`cookie-based session backend <cookie-session-backend>`."
 
 # f59a922c7120466786ef4daefa55ac54
 #: ../../releases/1.4.txt:360
 msgid "New form wizard"
-msgstr ""
+msgstr "Новый построитель форм"
 
 # 6eeabe102797451bb960209ac62c40fe
 #: ../../releases/1.4.txt:362
@@ -593,6 +738,10 @@ msgid ""
 "in Django 1.3. It features a pluggable storage API and doesn't require the "
 "wizard to pass around hidden fields for every previous step."
 msgstr ""
+"Предыдущий ``FormWizard`` из модуля :mod:`django.contrib.formtools` заменён "
+"новой реализацией, основанной на классах представлений, которые появились в "
+"Django 1.3. Вместе с тем стало возможным подключить API для хранения, "
+"чтобы передавать скрытые поля с предыдущего шага."
 
 # 4cba8f8b817a44759e49c1a24e75ae71
 #: ../../releases/1.4.txt:367
@@ -602,18 +751,22 @@ msgid ""
 "topics/signing>` also introduced in Django 1.4 to store the wizard's state "
 "in the user's cookies."
 msgstr ""
+"Django 1.4 поставляется с возможностью хранения информации пользователя в "
+"сессиях или куках. Последние имеют инструменты для :doc:`cryptographic signing </"
+"topics/signing>`, которые введены в Django 1.4 для хранения состояния помощника "
+"(wizard`а) в куках."
 
 # 4ea104ece16c497895a5c47b7266adfa
 #: ../../releases/1.4.txt:372
 msgid ""
 "See the :doc:`form wizard </ref/contrib/formtools/form-wizard>` docs for "
 "more information."
-msgstr ""
+msgstr "Подробнее можно посмотреть здесь :doc:`form wizard </ref/contrib/formtools/form-wizard>`."
 
 # dbebb09dbeb24b8ca88cc45d6017eebd
 #: ../../releases/1.4.txt:376
 msgid "``reverse_lazy``"
-msgstr ""
+msgstr "``reverse_lazy``"
 
 # 78f1c8c19d8b4a6ba0fe856ccd3ca094
 #: ../../releases/1.4.txt:378
@@ -621,11 +774,13 @@ msgid ""
 "A lazily evaluated version of :func:`django.core.urlresolvers.reverse` was "
 "added to allow using URL reversals before the project's URLconf gets loaded."
 msgstr ""
+"Ленивая версия вычисления :func:`django.core.urlresolvers.reverse` была добавлена "
+"для расшифровки URL до загрузки URLconf."
 
 # c0cc8909e3244325b1a730de45f0a260
 #: ../../releases/1.4.txt:382
 msgid "Translating URL patterns"
-msgstr ""
+msgstr "Трансляция шаболнов URL"
 
 # b26f99cebacf4bd4b9a92cdcf2bc1d12
 #: ../../releases/1.4.txt:384
@@ -637,12 +792,18 @@ msgid ""
 "information about the language prefix and how to internationalize URL "
 "patterns."
 msgstr ""
+"С помощью функции хэлпера :func:`~django.conf.urls.i18n.i18n_patterns` "
+"Django теперь может учитывать языковой префикс в URL. Благодаря :func:`~django."
+"utils.translation.ugettext_lazy` стало возможным определять URL для "
+"интернационализации. Смотри :ref:`url-internationalization` для информации "
+"об использовании языковых префиксов и интернационализации шаблонов URL."
 
 # 97d694a0a1534720b1a8c3dbaf8fd8d7
 #: ../../releases/1.4.txt:392
 msgid ""
 "Contextual translation support for ``{% trans %}`` and ``{% blocktrans %}``"
 msgstr ""
+"Поддержка контекстного перевода для ``{% trans %}`` и ``{% blocktrans %}``"
 
 # a36b7fe1678f4321aa1a82ed6dbd141b
 #: ../../releases/1.4.txt:394
@@ -652,11 +813,14 @@ msgid ""
 "`trans` and :ttag:`blocktrans` template tags using the new ``context`` "
 "keyword."
 msgstr ""
+"Поддержка :ref:`contextual translation<contextual-markers>` была введена в "
+"Django 1.3 с помощью функции ``pgettext``, которая расширяла теги :ttag:"
+"`trans` и :ttag:`blocktrans` через ключевое слово ``context``."
 
 # 186c83c5a114452abcbb2b9ea6613551
 #: ../../releases/1.4.txt:400
 msgid "Customizable ``SingleObjectMixin`` URLConf kwargs"
-msgstr ""
+msgstr "Настройка ``SingleObjectMixin`` URLConf kwargs"
 
 # e4ee7a4349704a23b9bc8b95592eb5e7
 #: ../../releases/1.4.txt:402
@@ -667,11 +831,16 @@ msgid ""
 "`~django.views.generic.detail.SingleObjectMixin` to enable the customization "
 "of URLconf keyword arguments used for single object generic views."
 msgstr ""
+"Два новых атрибута :attr:`pk_url_kwarg<django.views.generic.detail."
+"SingleObjectMixin.pk_url_kwarg>` и :attr:`slug_url_kwarg<django.views."
+"generic.detail.SingleObjectMixin.slug_url_kwarg>` были добавлены в класс :class:"
+"`~django.views.generic.detail.SingleObjectMixin` для возможности настройки "
+"URLconf через единственный общий объект представления."
 
 # efea427b055f43aba8e10a280f7a7b71
 #: ../../releases/1.4.txt:411
 msgid "Assignment template tags"
-msgstr ""
+msgstr "Связывание тегов шаблонизатора"
 
 # d21ce218e7ee44a9b8404c18ce8e7f08
 #: ../../releases/1.4.txt:413
@@ -680,11 +849,14 @@ msgid ""
 "helper function was added to ``template.Library`` to ease the creation of "
 "template tags that store data in a specified context variable."
 msgstr ""
+"Новая функция :ref:`assignment_tag<howto-custom-template-tags-assignment-tags>` "
+"была добавлена в ``template.Library`` для упрощения создания тегов, "
+"которые хранят данные в контекстной переменной."
 
 # 7544b2ab11134670bb73e61f8485685a
 #: ../../releases/1.4.txt:418
 msgid "``*args`` and ``**kwargs`` support for template tag helper functions"
-msgstr ""
+msgstr "Поддержка ``*args`` и ``**kwargs`` для хэлперов тегов"
 
 # cfb2fb4e945a437f8b831a1e00188e70
 #: ../../releases/1.4.txt:420
@@ -695,6 +867,10 @@ msgid ""
 "template helper functions may now accept any number of positional or keyword "
 "arguments. For example:"
 msgstr ""
+"Хэлперы шаблонов :ref:`simple_tag<howto-custom-template-tags-simple-tags>`, :ref:"
+"`inclusion_tag <howto-custom-template-tags-inclusion-tags>` и новый "
+":ref:`assignment_tag<howto-custom-template-tags-assignment-tags>` теперь может"
+"принимать позиционные или словарные параметры:"
 
 # 19e6a7fd6df84c5cbe5319e4576e8a8f
 #: ../../releases/1.4.txt:436
@@ -702,11 +878,12 @@ msgid ""
 "Then, in the template, any number of arguments may be passed to the template "
 "tag. For example:"
 msgstr ""
+"Тогда в шаблоне любое число аргументов может быть передано в тег:"
 
 # 6f539dfdcec442899dfcad6557b01f67
 #: ../../releases/1.4.txt:444
 msgid "No wrapping of exceptions in ``TEMPLATE_DEBUG`` mode"
-msgstr ""
+msgstr "Обёртывание исключений в режиме ``TEMPLATE_DEBUG``"
 
 # 0fc60bd601d64e638d576eff0f870a0b
 #: ../../releases/1.4.txt:446
@@ -717,6 +894,11 @@ msgid ""
 "``TemplateSyntaxError`` and re-raised. This was done in order to provide "
 "detailed template source location information in the debug 500 page."
 msgstr ""
+"В предыдущей версии Django в случае, когда :setting:`TEMPLATE_DEBUG` "
+"установлена в ``True``, любое исключение при рендеринге шаблонов (даже "
+"не связанное с синтаксисом шаблона) порождало вызов исключения "
+"``TemplateSyntaxError``. Это было сделано в целях получения детальной "
+"информации для отладочной страницы ошибки 500."
 
 # 04734159308c4d43b8b1e7a8dd2e3ff2
 #: ../../releases/1.4.txt:452
@@ -727,11 +909,16 @@ msgid ""
 "of :setting:`TEMPLATE_DEBUG`, and there's no need to catch and unwrap "
 "``TemplateSyntaxError`` in order to catch other errors."
 msgstr ""
+"В Django 1.4 исключения не перехватываются. Вместо этого оригинальное "
+"исключение дополняется информацией об источнике. Это означает, что теперь "
+"можно ловить исключения при рендеринге шаблонов вне зависимости от "
+"значения :setting:`TEMPLATE_DEBUG`, и нет необходимости ловить и разворачивать "
+"``TemplateSyntaxError`` для обработки остальных ошибок."
 
 # aea00db3e90944a080ea186c7ad6340c
 #: ../../releases/1.4.txt:459
 msgid "``truncatechars`` template filter"
-msgstr ""
+msgstr "Фильтр шаблона ``truncatechars``"
 
 # a585d9d144104881952565643659701d
 #: ../../releases/1.4.txt:461
@@ -741,11 +928,14 @@ msgid ""
 "(\"...\"). See the documentation for :tfilter:`truncatechars` for more "
 "details."
 msgstr ""
+"Новый фильтр урезает строку до определённого количества символов. Обрезанная "
+"строка заканчивается последовательностью \"...\". Подробнее в документации по "
+":tfilter:`truncatechars`."
 
 # c6bd44649b104aeb8934995b4660ad89
 #: ../../releases/1.4.txt:467
 msgid "``static`` template tag"
-msgstr ""
+msgstr "Тег шаблона ``static``"
 
 # 17343231d4c74e7fb816eb073ab9ba0c
 #: ../../releases/1.4.txt:469
@@ -756,11 +946,16 @@ msgid ""
 "backend's ``url`` method and therefore supports advanced features such as :"
 "ref:`serving files from a cloud service<staticfiles-from-cdn>`."
 msgstr ""
+"В модуль :mod:`staticfiles<django.contrib.staticfiles>` добавлен новый "
+"тег шаблонизатора :ttag:`static<staticfiles-static>`, который позволяет "
+"указать на файл, который был сохранён с помощью :setting:`STATICFILES_STORAGE`. "
+"Он поддерживает метод ``url``, так что позволяет :ref:`serving files from a "
+"cloud service<staticfiles-from-cdn>`."
 
 # 6c26a2c211044807a1fc790735c6b2b5
 #: ../../releases/1.4.txt:476
 msgid "``CachedStaticFilesStorage`` storage backend"
-msgstr ""
+msgstr "Поддержка бэкенда ``CachedStaticFilesStorage``"
 
 # 41866b663d97400d92c0de3b6f536b2c
 #: ../../releases/1.4.txt:478
@@ -772,18 +967,23 @@ msgid ""
 "filename. For example, the file ``css/styles.css`` would also be saved as "
 "``css/styles.55e7cbb9ba48.css``"
 msgstr ""
+"В модуль :mod:`staticfiles<django.contrib.staticfiles>` добавлен класс бэкенда "
+":class:`~django.contrib.staticfiles.storage.CachedStaticFilesStorage`, который "
+"кеширует файлы при сохранении (при запуске команды :djadmin:`collectstatic`), "
+"добавляя MD5 к имени файла. Например, файл ``css/styles.css`` будет сохранён как "
+"``css/styles.55e7cbb9ba48.css``."
 
 # 5c96e6a904cd4fa5a1a4476e3eaadb6f
 #: ../../releases/1.4.txt:485
 msgid ""
 "See the :class:`~django.contrib.staticfiles.storage."
 "CachedStaticFilesStorage` docs for more information."
-msgstr ""
+msgstr "Подробнее описано здесь :class:`~django.contrib.staticfiles.storage.CachedStaticFilesStorage`."
 
 # 4a66e55ebbe14079ab5988aaf1991114
 #: ../../releases/1.4.txt:489
 msgid "Simple clickjacking protection"
-msgstr ""
+msgstr "Простая защита от кликджекинга"
 
 # 561c2fbb6e7548b89985881295b9a83a
 #: ../../releases/1.4.txt:491
@@ -794,11 +994,16 @@ msgid ""
 "you'll almost certainly want to :doc:`enable it </ref/clickjacking/>` to "
 "help plug that security hole for browsers that support the header."
 msgstr ""
+"Мы добавили поддержку защиты от `clickjacking <http://en.wikipedia.org/wiki/Clickjacking>`_, "
+"который использует атрибут заголовка ``X-Frame-Options``. Из-за обратной "
+"совместимости она отключена по умолчанию; как её включить можно посмотреть в "
+":doc:`enable it </ref/clickjacking/>`, чтобы обезопасить пользователей "
+"браузеров, которые поддерживают этот заголовок."
 
 # ec72485bcd5f4e76af1a0b51ba5fd537
 #: ../../releases/1.4.txt:498
 msgid "CSRF improvements"
-msgstr ""
+msgstr "Улучшение CSRF"
 
 # a37068af316543c0b20d9969abe51abc
 #: ../../releases/1.4.txt:500
@@ -810,11 +1015,17 @@ msgid ""
 "can improve the security and usefulness of CSRF protection. See the :doc:"
 "`CSRF docs </ref/contrib/csrf>` for more information."
 msgstr ""
+"Мы проделали некоторые улучшения в плане поддержки CSRF, включая декоратор "
+":func:`~django.views.decorators.csrf.ensure_csrf_cookie`, который будет "
+"полезен в тяжёлых AJAX-сайтах; защита запросов PUT и DELETE; настройки "
+":setting:`CSRF_COOKIE_SECURE` и :setting:`CSRF_COOKIE_PATH`, которые "
+"обеспечивают большую защиту от CSRF-атак. Подробнее можно посмотреть "
+"в разделе :doc:`CSRF docs </ref/contrib/csrf>`."
 
 # 32b456f0445344b299ff8c8382f4b90e
 #: ../../releases/1.4.txt:508
 msgid "Error report filtering"
-msgstr ""
+msgstr "Фильтраци отчётов об ошибках"
 
 # 7673f4be673e4ae486fd698534000076
 #: ../../releases/1.4.txt:510
@@ -825,6 +1036,11 @@ msgid ""
 "POST parameters that may contain sensitive information and should be "
 "filtered out of error reports."
 msgstr ""
+"Мы добавили два декоратора функций (:func:`~django.views.decorators.debug."
+"sensitive_variables` и :func:`~django.views.decorators.debug."
+"sensitive_post_parameters`) для обработки переменных и POST-параметров "
+"с целью исключения какой-либо персонализированной информации из "
+"отчётов об ошибках."
 
 # 2f659736d838490993fbeb2df88085f6
 #: ../../releases/1.4.txt:516
@@ -835,6 +1051,11 @@ msgid ""
 "``user_change_password`` in the admin app) to prevent the leaking of "
 "sensitive information such as user passwords."
 msgstr ""
+"Все POST-параметры теперь постоянно фильтруют вывод отчёта для определённых "
+"представлений (``login``, ``password_reset_confirm``, ``password_change`` "
+"и ``add_view`` в модуле :mod:`django.contrib.auth.views`, известном также "
+"как ``user_change_password`` в админке) для предотвращения утечки информации, "
+"например, паролей."
 
 # b21a123b10804eff8e53c74c5d31a055
 #: ../../releases/1.4.txt:522
@@ -843,11 +1064,14 @@ msgid ""
 "`custom filter<custom-error-reports>`. For more information see the docs on :"
 "ref:`Filtering error reports<filtering-error-reports>`."
 msgstr ""
+"Вы можете перекрыть поведение по умолчанию, написав свой фильтр :ref:"
+"`custom filter<custom-error-reports>`. Подробнее можно прочитать в :"
+"ref:`Filtering error reports<filtering-error-reports>`."
 
 # e78fe8cfe986466b8c13f92f55d6645c
 #: ../../releases/1.4.txt:527
 msgid "Extended IPv6 support"
-msgstr ""
+msgstr "Расширена поддержка IPv6"
 
 # a30c55ffb43b4d57b1a7a488af62bfd3
 #: ../../releases/1.4.txt:529
@@ -858,11 +1082,15 @@ msgid ""
 "validators.validate_ipv46_address` and :data:`~django.core.validators."
 "validate_ipv6_address`."
 msgstr ""
+"В Django 1.4 улучшена поддержка IPv6 с помощью нового класса поля модели "
+":class:`~django.db.models.GenericIPAddressField`, поля формы :class:`~django.forms."
+"GenericIPAddressField` и валидаторов :data:`~django.core.validators.validate_ipv46_address` "
+"и :data:`~django.core.validators.validate_ipv6_address`."
 
 # f3838eae2f494217b5e4aa3d3c9795bb
 #: ../../releases/1.4.txt:536
 msgid "HTML comparisons in tests"
-msgstr ""
+msgstr "Сравнение HTML в тестах"
 
 # 446f174ed5fe4785910012e4c190e132
 #: ../../releases/1.4.txt:538
@@ -877,11 +1105,20 @@ msgid ""
 "test whether the client's response contains a given HTML fragment. See the :"
 "ref:`assertions documentation <assertions>` for more."
 msgstr ""
+"В базовый класс тестов :mod:`django.test` добавлены хелперы для нестрого "
+"сравнения HTML, исключающие несовпадение пробелов, кавычки аргументов, их "
+"порядок. Вы можете сравнить непосредственно два HTML-документа через "
+"новые методы :meth:`~django.test.SimpleTestCase.assertHTMLEqual` и "
+":meth:`~django.test.SimpleTestCase.assertHTMLNotEqual` или использовать "
+"флаг ``html=True`` в методе :meth:`~django.test.SimpleTestCase."
+"assertContains` и :meth:`~django.test.SimpleTestCase.assertNotContains` для "
+"проверки что же отдаётся клиенту. Смотрите документацию по :ref:`assertions "
+"documentation <assertions>`."
 
 # a23e3f090d3f49999e13be04e2506dbf
 #: ../../releases/1.4.txt:551
 msgid "Two new date format strings"
-msgstr ""
+msgstr "Два новых формата даты"
 
 # 1396900e66934767bfc9d34d381a9f35
 #: ../../releases/1.4.txt:553
@@ -889,16 +1126,18 @@ msgid ""
 "Two new :tfilter:`date` formats were added for use in template filters, "
 "template tags and :ref:`format-localization`:"
 msgstr ""
+"Два новых формата :tfilter:`date` добавлены в фильтры шаблонов, тегов и "
+":ref:`format-localization`:"
 
 # 40939dc789cf4c38833c7c868f920ff1
 #: ../../releases/1.4.txt:556
 msgid "``e`` -- the name of the timezone of the given datetime object"
-msgstr ""
+msgstr "``e`` -- название временной зоны у объекта даты/времени"
 
 # 1b28a80ccc8b432794842638919f2b1d
 #: ../../releases/1.4.txt:557
 msgid "``o`` -- the ISO 8601 year number"
-msgstr ""
+msgstr "``o`` -- номер года по ISO 8601"
 
 # 8604e7cd1bec4b74a031534df224b3e8
 #: ../../releases/1.4.txt:559
@@ -908,26 +1147,29 @@ msgid ""
 "example a Spanish localization format previously only escaped the ``d`` "
 "format character::"
 msgstr ""
+"Если вы используете ``e`` или ``o``, обновитесь согласно :ref:`custom "
+"format files <custom-format-files>`. Например, для локализации на испанский "
+"экранируйте аналогично ``d``::"
 
 # 4880243424924888a3253296e0b8f34a
 #: ../../releases/1.4.txt:566
 msgid "But now it needs to also escape ``e`` and ``o``::"
-msgstr ""
+msgstr "Теперь же нужно экранировать и ``e`` с ``o``::"
 
 # f1e3414517ec4b57819ca95e4b681bea
 #: ../../releases/1.4.txt:570
 msgid "For more information, see the :tfilter:`date` documentation."
-msgstr ""
+msgstr "Подробнее можно посмотреть в документации к :tfilter:`date`."
 
 # 6f1e07a35b39497e99f943e2e7a5d0bc
 #: ../../releases/1.4.txt:573
 msgid "Minor features"
-msgstr ""
+msgstr "Минорные именения"
 
 # 043344790fae49f69e10f928e4766244
 #: ../../releases/1.4.txt:575
 msgid "Django 1.4 also includes several smaller improvements worth noting:"
-msgstr ""
+msgstr "Django 1.4 включает в себя также несколько небольших изменений:"
 
 # 836ceddf4fd043c1a38cfac1e1d8526a
 #: ../../releases/1.4.txt:577
@@ -937,23 +1179,26 @@ msgid ""
 "application code are slightly emphasized. This change makes it easier to "
 "scan a stacktrace for issues in application code."
 msgstr ""
+"Улучшенная техническая страница ошибки 500. Фреймы стека, которые относятся "
+"к коду Django, затемнены, а код приложения подсвечен. Это облегчит "
+"разбор ошибок приложения."
 
 # b63ca0414bb141acb917633452fe39f4
 #: ../../releases/1.4.txt:582
 msgid ":doc:`Tablespace support </topics/db/tablespaces>` in PostgreSQL."
-msgstr ""
+msgstr ":doc:`Tablespace support </topics/db/tablespaces>` в PostgreSQL."
 
 # 044457d68d8e436bb6481e8cb97f9936
 #: ../../releases/1.4.txt:584
 msgid "Customizable names for :meth:`~django.template.Library.simple_tag`."
-msgstr ""
+msgstr "Настраиваемые имена для :meth:`~django.template.Library.simple_tag`."
 
 # b7ca5dba7b534c4895518b86dab351f6
 #: ../../releases/1.4.txt:586
 msgid ""
 "In the documentation, a helpful :doc:`security overview </topics/security>` "
 "page."
-msgstr ""
+msgstr "Посмотрите раздел :doc:`security overview </topics/security>` в документации."
 
 # 979ceccfc2014781b1f80a2e2df352e2
 #: ../../releases/1.4.txt:589
@@ -962,6 +1207,9 @@ msgid ""
 "the :mod:`django.contrib.auth.hashers` module. Importing it from the old "
 "location will still work, but you should update your imports."
 msgstr ""
+"Функция ``django.contrib.auth.models.check_password`` перемещена в модуль "
+":mod:`django.contrib.auth.hashers`. Старый импорт всё ещё работает, но рекомендуется "
+"его обновить."
 
 # af128f3506364c9f9441c169964e3065
 #: ../../releases/1.4.txt:593
@@ -970,6 +1218,8 @@ msgid ""
 "to delete all files at the destination before copying or linking the static "
 "files."
 msgstr ""
+"Команда :djadmin:`collectstatic` обзавелась опцией ``--clear``, при указании которой "
+"перед копированием все старые файлы будут удалены."
 
 # 9bd925a95da94cc987673d188e617e50
 #: ../../releases/1.4.txt:597
@@ -977,6 +1227,7 @@ msgid ""
 "It's now possible to load fixtures containing forward references when using "
 "MySQL with the InnoDB database engine."
 msgstr ""
+"Стало возможным использовать для MySQL/InnoDB фикстуры со сложными зависимостями."
 
 # b3f297b0142541818619925fc3cae768
 #: ../../releases/1.4.txt:600
@@ -986,6 +1237,10 @@ msgid ""
 "data:`django.conf.urls.handler403`. See the documentation about :ref:`the "
 "403 (HTTP Forbidden) view<http_forbidden_view>` for more information."
 msgstr ""
+"Новый обработчик ошибки 403 добавлен как ``'django.views.defaults."
+"permission_denied'``. Вы можете указать свой обработчик в :data:`django.conf."
+"urls.handler403`. Подробнее можно посмотреть в документации по :ref:`the "
+"403 (HTTP Forbidden) view<http_forbidden_view>`."
 
 # 525351aa0b6c423da0d285d4ccba870b
 #: ../../releases/1.4.txt:606
@@ -993,6 +1248,8 @@ msgid ""
 "The :djadmin:`makemessages` command uses a new and more accurate lexer, "
 "`JsLex`_, for extracting translatable strings from JavaScript files."
 msgstr ""
+"Команда :djadmin:`makemessages` использует новый более точный лексер "
+"`JsLex`_ для получения строк для локализации из файлов JavaScript."
 
 # b4585e255a83480a83ebc782ea804a5b
 #: ../../releases/1.4.txt:611
@@ -1001,11 +1258,14 @@ msgid ""
 "able to retrieve a translation string without displaying it but setting a "
 "template context variable instead."
 msgstr ""
+"Тег шаблонизатора :ttag:`trans` теперь принимает опциональный аргумент ``as``, "
+"чтобы получить строку перевода без её отображения, а вместо этого настроить "
+"какую-либо контекстную переменную."
 
 # 912218df596f4a88812e3a464bfe3555
 #: ../../releases/1.4.txt:615
 msgid "The :ttag:`if` template tag now supports ``{% elif %}`` clauses."
-msgstr ""
+msgstr "Тег шаблонизатора :ttag:`if` теперь поддерживает ``{% elif %}``."
 
 # a1218aff09694c3a9beeb50a9f029079
 #: ../../releases/1.4.txt:617
@@ -1015,6 +1275,10 @@ msgid ""
 "proxy \"eating\" the fact that a request came in via HTTPS. But only use "
 "this setting if you know what you're doing."
 msgstr ""
+"Если вы используете Django за прокси, то вам может пригодиться новая "
+"настройка :setting:`SECURE_PROXY_SSL_HEADER`. Она решает проблему, когда "
+"прокси отбрасывает тот факт, что запрос пришёл через HTTPS. Используёте её "
+"только когда точно понимаете, что вы делаете."
 
 # d7c3dbfff0f54393a2468984ee1c73ff
 #: ../../releases/1.4.txt:622
@@ -1024,6 +1288,10 @@ msgid ""
 "Django detects that the request has originated in JavaScript code. (:meth:"
 "`~django.http.HttpRequest.is_ajax` is used for this.)"
 msgstr ""
+"Новая, текстовая, версия HTTP ошибки 500, которая показывается при :setting:"
+"`DEBUG` равным ``True``, теперь отсылает код JavaScript, в том случае, если "
+"Django узнает, что ошибка произошла в AJAX-запросе (метод :meth:"
+"`~django.http.HttpRequest.is_ajax`)."
 
 # 48cc47e2ad1042039f96549292c0abf4
 #: ../../releases/1.4.txt:627
@@ -1031,6 +1299,8 @@ msgid ""
 "Like its HTML counterpart, it contains a collection of different pieces of "
 "information about the state of the application."
 msgstr ""
+"Как и в случае HTML, там будет содержаться ряд полезной информации о состоянии "
+"приложения."
 
 # cb68eedd1c7043638abbbe4931af1cc2
 #: ../../releases/1.4.txt:630
@@ -1038,6 +1308,7 @@ msgid ""
 "This should make it easier to read when debugging interaction with client-"
 "side JavaScript."
 msgstr ""
+"Это должно помочь при отладке взаимодействия клиентского JavaScript и серверной части."
 
 # 2579c3abc215444a80cd0e87da81f3c2
 #: ../../releases/1.4.txt:633
@@ -1045,6 +1316,7 @@ msgid ""
 "Added the :djadminopt:`--no-location` option to the :djadmin:`makemessages` "
 "command."
 msgstr ""
+"Добавление опции :djadminopt:`--no-location` в команду :djadmin:`makemessages`"
 
 # 8e1266400a65415d99d3b51ceba865a8
 #: ../../releases/1.4.txt:636
@@ -1052,13 +1324,15 @@ msgid ""
 "Changed the ``locmem`` cache backend to use ``pickle.HIGHEST_PROTOCOL`` for "
 "better compatibility with the other cache backends."
 msgstr ""
+"Вместо бэкенд-кеша ``locmem`` следует использовать ``pickle.HIGHEST_PROTOCOL`` "
+"для лучшей совместимости с остальными кеширующими бэкендами."
 
 # cd1e90ffb70c4d72825303bc9c0e5a07
 #: ../../releases/1.4.txt:640
 msgid ""
 "Added support in the ORM for generating ``SELECT`` queries containing "
 "``DISTINCT ON``."
-msgstr ""
+msgstr "В ORM добавлена поддержка ``DISTINCT ON`` для запросов ``SELECT``."
 
 # 3e83df77fa8b45a88f1548dca50817b0
 #: ../../releases/1.4.txt:643
@@ -1067,13 +1341,16 @@ msgid ""
 "field names. If specified, then the ``DISTINCT`` statement is limited to "
 "these fields. This is only supported in PostgreSQL."
 msgstr ""
+"Метод ``distinct()`` у ``QuerySet`` теперь может опционально принимать список "
+"полей модели. Если он указан, то выражение ``DISTINCT`` действует только на "
+"эти поля. Поддерживается пока только в PostgreSQL."
 
 # fceb014f54c747dba8ee8c8105cc75cd
 #: ../../releases/1.4.txt:647
 msgid ""
 "For more details, see the documentation for :meth:`~django.db.models.query."
 "QuerySet.distinct`."
-msgstr ""
+msgstr "Подробнее в документации :meth:`~django.db.models.query.QuerySet.distinct`."
 
 # af7c1bb0596d4166ab731276328f72e0
 #: ../../releases/1.4.txt:650
@@ -1083,6 +1360,10 @@ msgid ""
 "built-in password reset mechanism and making it available is now much "
 "easier. For details, see :ref:`auth_password_reset`."
 msgstr ""
+"В страницу входа в админку добавлена ссылка на восстановление пароля, "
+"если в urls.py добавлена `'admin_password_reset'`. Теперь подключить "
+"встроенный механизм сброса пароля стало ещё проще. За подробностями обратитесь к "
+":ref:`auth_password_reset`."
 
 # 524263dba04c4018885fca52a452a560
 #: ../../releases/1.4.txt:655
@@ -1090,6 +1371,8 @@ msgid ""
 "The MySQL database backend can now make use of the savepoint feature "
 "implemented by MySQL version 5.0.3 or newer with the InnoDB storage engine."
 msgstr ""
+"В поддержку MySQL добавлена функциональность по работе с точками сохранения, "
+"которые были реализованы в версии 5.0.3 для движка InnoDB."
 
 # 24b6403c218a47868649453711a0d862
 #: ../../releases/1.4.txt:658
@@ -1101,6 +1384,11 @@ msgid ""
 "apply to extra forms, i.e. those which are not bound to an existing model "
 "instance."
 msgstr ""
+"Стало возможным передавать начальные значение в форму модели, которая "
+"представляет из себя набор форм, построенных с помощью ``modelformset_factory`` "
+"или ``inlineformset_factory``. Тем не менее, начальные значения применяются "
+"только к дополнительным формам, то есть те, которые не связаны с существующего "
+"экземпляра модели."
 
 # adbf969ece544eb5aed7c55ea07b761e
 #: ../../releases/1.4.txt:664
@@ -1109,6 +1397,9 @@ msgid ""
 "`Sitemap.protocol <django.contrib.sitemaps.Sitemap.protocol>` class "
 "attribute."
 msgstr ""
+"В поддержку карты сайта добавлена возможность работы с HTTPS-ссылками, "
+"которая реализована с помощью атрибута :attr:`Sitemap.protocol "
+"<django.contrib.sitemaps.Sitemap.protocol>`."
 
 # cafa89a712e64f40a604728909a02282
 #: ../../releases/1.4.txt:668
@@ -1118,16 +1409,20 @@ msgid ""
 "can be useful in tests that don't need to hit a database. See :ref:"
 "`testcase_hierarchy_diagram`."
 msgstr ""
+"Новый класс :class:`django.test.SimpleTestCase`, потомок :class:`unittest."
+"TestCase`, который легче, чем :class:`django.test.TestCase` и прочие. Его "
+"следует применять, когда не требуется подключение к БД, подробнее в :ref:"
+"`testcase_hierarchy_diagram`."
 
 # 232175d6a0784bcdb97ef33e5cce4f5b
 #: ../../releases/1.4.txt:675
 msgid "Backwards incompatible changes in 1.4"
-msgstr ""
+msgstr "Обратная несовместимость в 1.4"
 
 # d809f7d6abfb4dc79e41d44f22765b9c
 #: ../../releases/1.4.txt:678
 msgid "SECRET_KEY setting is required"
-msgstr ""
+msgstr "SECRET_KEY теперь обязателен"
 
 # 090c4c4b900c43cfb2b2590595d83c2d
 #: ../../releases/1.4.txt:680
@@ -1137,6 +1432,9 @@ msgid ""
 "vulnerabilities. No Django site should ever be run without a :setting:"
 "`SECRET_KEY`."
 msgstr ""
+"Работа сайта с пустой или известной злоумышленнику настрокой :setting:`SECRET_KEY` "
+"сразу нивелирует многие средства защиты вплоть до выполнения чужого кода. "
+"Ни один сайт на Django не должен запускаться без этой настройки."
 
 # 103effbaec5f4b00a056cd17a169b526
 #: ../../releases/1.4.txt:685
@@ -1147,11 +1445,15 @@ msgid ""
 "deprecation path due to the severity of the consequences of running Django "
 "with no :setting:`SECRET_KEY`."
 msgstr ""
+"В Django 1.4 запуск сайта без :setting:`SECRET_KEY` вызовет `DeprecationWarning`. "
+"В Django 1.5 будет исключение, что приведёт к отказу выполнения. Этот ускоренный "
+"путь устаревания поведения был выбран из-за серъёзности последствий при работе без "
+":setting:`SECRET_KEY`."
 
 # bc37cd16565545f5b68fc16698f35543
 #: ../../releases/1.4.txt:692
 msgid "django.contrib.admin"
-msgstr ""
+msgstr "django.contrib.admin"
 
 # b76270264e0a4906a32b47d893c6074b
 #: ../../releases/1.4.txt:694
@@ -1162,6 +1464,10 @@ msgid ""
 "staticfiles`` to handle such files in a generic way and defined conventions "
 "for static files included in apps."
 msgstr ""
+"Включаемое по умолчанию приложение ``django.contrib.admin`` долгое время "
+"поставлялось с набором статики: JavaScript, CSS, картинки... В Django 1.3 "
+"Добавлено новое приложение ``django.contrib.staticfiles`` для обработки "
+"этих файлов в общем виде и определения соглашений для всех включённых приложений."
 
 # 43cd1a7895d34db1ba1c3a10977a6ff0
 #: ../../releases/1.4.txt:700
@@ -1174,6 +1480,12 @@ msgid ""
 "setting:`STATIC_URL`. Django will now expect to find the admin static files "
 "under the URL ``<STATIC_URL>/admin/``."
 msgstr ""
+"Начиная с Django 1.4, файлы статики для админки следуют этому соглашению, "
+"что должно упростить деплой. В предыдущей версии была добавлена настройка "
+"``ADMIN_MEDIA_PREFIX``, которая указывала на местоположение этих файлов. "
+"На данный момент она считается устаревшей и заменена на более общую "
+":setting:`STATIC_URL`. Django будет искать файлы для админки по адресу "
+"``<STATIC_URL>/admin/``."
 
 # cad936263e03438e98c7b94b4f0aaf29
 #: ../../releases/1.4.txt:708
@@ -1184,6 +1496,10 @@ msgid ""
 "development server continues to serve the admin files just like before. Read "
 "the :doc:`static files howto </howto/static-files/index>` for more details."
 msgstr ""
+"Если у вас используется ``ADMIN_MEDIA_PREFIX`` (например, ``/media/``) убедитесь, "
+"что настройки :setting:`STATIC_URL` и :setting:`STATIC_ROOT` заданы верно. "
+"Встроенный веб-сервер продолжает работать также, как и раньше. Подробности "
+"можно подсмотреть здесь :doc:`static files howto </howto/static-files/index>`."
 
 # c6762e3d496d46d58269eecdd4212b73
 #: ../../releases/1.4.txt:714
@@ -1193,6 +1509,9 @@ msgid ""
 "`STATIC_URL` setting to the correct URL -- for example, ``http://media."
 "example.com/``."
 msgstr ""
+"Если ``ADMIN_MEDIA_PREFIX`` указывает на какой-либо домен (например, ``http://"
+"media.example.com/admin/``), убедитесь, что в :setting:`STATIC_URL` правильный "
+"путь -- например, ``http://media.example.com/``."
 
 # 96ae8e2e041c4dfc8f77142c8e5e45b8
 #: ../../releases/1.4.txt:721
@@ -1202,11 +1521,14 @@ msgid ""
 "from :file:`django/contrib/admin/media/` to :file:`django/contrib/admin/"
 "static/admin/`."
 msgstr ""
+"Если вы использовали знание внутреннего расположения файлов статики для админки, "
+"то вам нужно обновить пути: эти объекты были перемещены из :file:`django/contrib/"
+"admin/media/` в :file:`django/contrib/admin/static/admin/`."
 
 # 663c16eeb39e4e1a8aba077c11401b38
 #: ../../releases/1.4.txt:727
 msgid "Supported browsers for the admin"
-msgstr ""
+msgstr "Поддерживаемые браузеры для админки"
 
 # fde862c4f2b349ddaa93d589278d318d
 #: ../../releases/1.4.txt:729
@@ -1216,6 +1538,9 @@ msgid ""
 "browsers should provide a fully-functional admin experience, with the "
 "notable exception of Internet Explorer 6, which is no longer supported."
 msgstr ""
+"Django не следует какой-либо чёткой политеке поддержки браузеров в админке. "
+"На практике же это сводится к следующему: браузеры из `YUI's A-grade`_ "
+"должны поддерживаться полностью, за исключением IE 6, который снят с поддержки."
 
 # 7e489b60d6a2461ba8217244537fdecf
 #: ../../releases/1.4.txt:734
@@ -1224,6 +1549,8 @@ msgid ""
 "development. The practical implications of this policy are that contributors "
 "are free to improve the admin without consideration for these limitations."
 msgstr ""
+"IE 6, выпущенный более 10 лет назад, накладывает значительные ограничения "
+"на веб-разработку. Если их отбросить, то развивать Django становится гораздо легче. "
 
 # 4496b333acef40108b71644e29123ca8
 #: ../../releases/1.4.txt:738
@@ -1232,11 +1559,13 @@ msgid ""
 "Django. It only applies to the Django admin. Feel free to develop apps "
 "compatible with any range of browsers."
 msgstr ""
+"Эта решение относится только к панели администратора, так что вы можете "
+"сами определять какие браузеры должен поддерживать ваш сайт."
 
 # 78f2860b65b84a2d934172f804da2bc8
 #: ../../releases/1.4.txt:745
 msgid "Removed admin icons"
-msgstr ""
+msgstr "Иконки для админки"
 
 # b8ac4108913247059c2f51085ead2e84
 #: ../../releases/1.4.txt:747
@@ -1247,6 +1576,10 @@ msgid ""
 "ModelAdmin.filter_vertical>` \"filter\" widgets, some icon files were "
 "removed and grouped into two sprite files."
 msgstr ""
+"В рамках улучшения быстродействия и юзабилити админки иконки виджетов для "
+"фильтров :attr:`horizontal <django.contrib.admin.ModelAdmin.filter_horizontal>` "
+"и :attr:`vertical <django.contrib.admin.ModelAdmin.filter_vertical>` были "
+"перемещены и сгруппированы в два файла класса."
 
 # 995019e170ad4514a67dd28023250b70
 #: ../../releases/1.4.txt:753
@@ -1257,6 +1590,10 @@ msgid ""
 "and ``arrow-up.gif`` and ``arrow-down.gif`` were combined into ``sorting-"
 "icons.gif``."
 msgstr ""
+"А именно: ``selector-add.gif``, ``selector-addall.gif``, ``selector-"
+"remove.gif``, ``selector-removeall.gif``, ``selector_stacked-add.gif`` и "
+"``selector_stacked-remove.gif`` слиты в ``selector-icons.gif``; "
+"``arrow-up.gif`` и ``arrow-down.gif`` в ``sorting-icons.gif``."
 
 # 27d72edc96fc4083b82bc0cc4320e6b3
 #: ../../releases/1.4.txt:759
@@ -1264,11 +1601,13 @@ msgid ""
 "If you used those icons to customize the admin, then you'll need to replace "
 "them with your own icons or get the files from a previous release."
 msgstr ""
+"Если вы использовали эти файлы для модификации админки, вам нужно заменить их "
+"своими или взять из предыдущей версии."
 
 # ad4465c4b1ed4181a57abcabf16a5b5a
 #: ../../releases/1.4.txt:763
 msgid "CSS class names in admin forms"
-msgstr ""
+msgstr "Имена классов CSS в панели администратора"
 
 # 0412be097ffa47f5add7443ea775aa66
 #: ../../releases/1.4.txt:765
@@ -1280,11 +1619,15 @@ msgid ""
 "custom style sheets or JavaScript files if you previously used plain field "
 "names as selectors for custom styles or JavaScript transformations."
 msgstr ""
+"Дабы избежать конфликтов с остальными именами классов CSS (например, \"button\"), "
+"мы добавлили префикс (\"field-\") ко всем иенам классов, которые генерируются "
+"автоматически из имён полей формы, встраиваемых форм и ячеек таблиц. Адаптируйте "
+"ваши таблицы стилей и JavaScript код для учёта этого факта."
 
 # be26b70f29974b5e91a6efc739ca84d6
 #: ../../releases/1.4.txt:773
 msgid "Compatibility with old signed data"
-msgstr ""
+msgstr "Совместимость с ранее подписанными данными"
 
 # 17b2f00a622f44848b9dcb56d3aea35f
 #: ../../releases/1.4.txt:775
@@ -1293,6 +1636,10 @@ msgid ""
 "places in Django. While Django 1.3 kept fallbacks that would accept hashes "
 "produced by the previous methods, these fallbacks are removed in Django 1.4."
 msgstr ""
+"В Django 1.3 изменился механизм криптографической подписи данных, который "
+"использовался в ряде мест. Для обеспечения совместимости Django 1.3 поддерживал "
+"оба метода - и старый, и новый, однако в Django 1.4 обратная совместимость "
+"удалена."
 
 # b23a1c4037c348fd8ed83d47a72ae589
 #: ../../releases/1.4.txt:779
@@ -1305,38 +1652,47 @@ msgid ""
 "amount of time you need to run Django 1.3 for the data to expire or become "
 "irrelevant."
 msgstr ""
+"Так что, если вы обновляетесь до 1.4 с версии 1.2 или меньшей, вы можете "
+"потерять некоторые части данных, которые были подписаны с помощью старого "
+"криптографического метода. В данном случае рекомендуется какое-то время "
+"использовать Django 1.3, чтобы срок хранения подписанных данных истёк, "
+"и они бы зашифровались новым алгоритмом. Подверженные этой проблеме данные "
+"описаны ниже, где 1) последствия при игнорировании рекомендации 2) время, "
+"необходимое для переподписи данных."
+
 
 # ac988563a8cd4d73a6a818999b7348ba
 #: ../../releases/1.4.txt:786
 msgid "``contrib.sessions`` data integrity check"
-msgstr ""
+msgstr "проверка целостности данных в ``contrib.sessions``"
 
 # 5c9d0cf81ae04fd69b2c3a1b796e3efd
 #: ../../releases/1.4.txt:788
 msgid ""
 "Consequences: The user will be logged out, and session data will be lost."
 msgstr ""
+"Последствия: Пользователь будет разлогинен, и данные сессии потеряются."
 
 # 1b4f5074d32d48f9914be2ca08435f57
 #: ../../releases/1.4.txt:790
 msgid "Time period: Defined by :setting:`SESSION_COOKIE_AGE`."
-msgstr ""
+msgstr "Срок перевалидации: Определён в :setting:`SESSION_COOKIE_AGE`."
 
 # 67086118aeb04c73abb8e3a5c51815f2
 #: ../../releases/1.4.txt:792
 msgid "``contrib.auth`` password reset hash"
-msgstr ""
+msgstr "Хэш восстановления пароля в ``contrib.auth``"
 
 # 004fc3d7c19048778a801ccdc4537737
 #: ../../releases/1.4.txt:794
 msgid ""
 "Consequences: Password reset links from before the upgrade will not work."
-msgstr ""
+msgstr "Последствия: Старые ссылки для восстановления пароля перестанут работать."
 
 # a008ec5f10de459d857e8bdfbc6cdebb
 #: ../../releases/1.4.txt:796
 msgid "Time period: Defined by :setting:`PASSWORD_RESET_TIMEOUT_DAYS`."
-msgstr ""
+msgstr "Срок перевалидации: Определён в :setting:`PASSWORD_RESET_TIMEOUT_DAYS`."
 
 # 36da8089f6964388be8452f6c7c1f359
 #: ../../releases/1.4.txt:798
@@ -1346,30 +1702,33 @@ msgid ""
 "pre-upgrade Django instance and try to submit it to the upgraded Django "
 "instance:"
 msgstr ""
+"Хэши для форм: они имеют очень короткое время жизни. Так что это актуально только когда "
+"пользователь заполняет форму, сгенерированную Django до обновления, а отпреаляет "
+"уже в обновлённую версию:"
 
 # 35d58d7978324da2a6d535425fef865e
 #: ../../releases/1.4.txt:803
 msgid "``contrib.comments`` form security hash"
-msgstr ""
+msgstr "Хэш безопаности ``contrib.comments``"
 
 # bdd13a2645064710a4b916831ca1b93e
 #: ../../releases/1.4.txt:805
 msgid ""
 "Consequences: The user will see the validation error \"Security hash failed."
 "\""
-msgstr ""
+msgstr "Последствия: Пользователь увидит ошибку валидации \"Security hash failed.\"
 
 # fe37c182092144d4a082cfaddc15df79
 #: ../../releases/1.4.txt:807
 msgid ""
 "Time period: The amount of time you expect users to take filling out comment "
 "forms."
-msgstr ""
+msgstr "Срок перевалидации: Всё время, пока пользователь пишет комментарий."
 
 # e091fa21e16a4933be67f700b59a6fb2
 #: ../../releases/1.4.txt:810
 msgid "``FormWizard`` security hash"
-msgstr ""
+msgstr "Хэш безопасности ``FormWizard``"
 
 # 8c17744e231b46bfb2fcd14ad96c8998
 #: ../../releases/1.4.txt:812
@@ -1378,18 +1737,20 @@ msgid ""
 "will be sent back to the first page of the wizard, losing the data he has "
 "entered so far."
 msgstr ""
+"Последствия: Пользователь увидит сообщение об ошибке, в которой сказано, что "
+"он будет перенаправлен к первой форме мастера с потерей всех введённых данных."
 
 # f23db05158da45959964c734c9b6ea50
 #: ../../releases/1.4.txt:816
 msgid ""
 "Time period: The amount of time you expect users to take filling out the "
 "affected forms."
-msgstr ""
+msgstr "Срок перевалидации: Всё время, пока пользователь заполняет форму."
 
 # 8191ea67b7514c9eb5a52f0cdbda4a00
 #: ../../releases/1.4.txt:819
 msgid "CSRF check"
-msgstr ""
+msgstr "Проверка CSRF"
 
 # b8852d1d161542308976d9d3944457ac
 #: ../../releases/1.4.txt:821
@@ -1397,6 +1758,8 @@ msgid ""
 "Note: This is actually a Django 1.1 fallback, not Django 1.2, and it applies "
 "only if you're upgrading from 1.1."
 msgstr ""
+"Замечание: Это актуально для совместимости с Django 1.1 (не Django 1.2), и "
+"имеет значение только при обновлении с версии 1.1."
 
 # e5fa0a9ed3e54b1bab0eb8edebebbf26
 #: ../../releases/1.4.txt:824
@@ -1404,18 +1767,20 @@ msgid ""
 "Consequences: The user will see a 403 error with any CSRF-protected POST "
 "form."
 msgstr ""
+"Последствия: Пользователь увидит ошибку 403 с сообщением о том, что "
+"сработала CSRF-защита."
 
 # b83c77bcc5c9471b8b8e26b58a336450
 #: ../../releases/1.4.txt:827
 msgid ""
 "Time period: The amount of time you expect user to take filling out such "
 "forms."
-msgstr ""
+msgstr "Срок перевалидации: Всё время, пока пользователь заполняет форму."
 
 # 217e0a357f864af79e10328dd0e80f53
 #: ../../releases/1.4.txt:830
 msgid "``contrib.auth`` user password hash-upgrade sequence"
-msgstr ""
+msgstr "Обновление паролей пользователей через ``contrib.auth``"
 
 # 34aa4e076fb14448bd711071c2f4f6ee
 #: ../../releases/1.4.txt:832
@@ -1425,6 +1790,9 @@ msgid ""
 "upgrade to 1.4 and then need to downgrade to 1.3, version 1.3 won't be able "
 "to read the updated passwords."
 msgstr ""
+"Последствия: При записи в БД пароль пользователя будет обновлён с помощью нового "
+"криптостойкого алгоритма. Так что если вы обновитесь до 1.4, а потом "
+"откатитесь на 1.3, некоторые пользователи не смогут войти."
 
 # dbe25eee15b44d4ab8857886b350744c
 #: ../../releases/1.4.txt:837
@@ -1434,11 +1802,12 @@ msgid ""
 "well with Django 1.4 and you won't have to roll back to 1.3, enable the new "
 "password hashes."
 msgstr ""
+"Лекарство: Установите :setting:`PASSWORD_HASHERS`"
 
 # 5158c1eaa8f744da9cd5b67e9afb3469
 #: ../../releases/1.4.txt:843
 msgid "django.contrib.flatpages"
-msgstr ""
+msgstr "django.contrib.flatpages"
 
 # 5656e44be99747e7870e6c91f8b79832
 #: ../../releases/1.4.txt:845
@@ -1450,6 +1819,12 @@ msgid ""
 "notaflatpageoravalidurl/``, which would subsequently raise a 404. Requesting "
 "``/notaflatpageoravalidurl`` now will immediately raise a 404."
 msgstr ""
+"Начиная с версии 1.4 класс :class:`~django.contrib.flatpages.middleware."
+"FlatpageFallbackMiddleware` только добавляет конечный слеш и перенаправляет "
+"на получившийся URL, если такая страница есть в приложении. Например, "
+"при запросе ``/notaflatpageoravalidurl`` в предыдущей версии шло перенаправление "
+"на ``/notaflatpageoravalidurl/``, что порождало исключение, теперь же "
+"уже ``/notaflatpageoravalidurl`` будет вызывать ошибку 404."
 
 # e9391e793bb84c98800daef12cecd654
 #: ../../releases/1.4.txt:853
@@ -1458,12 +1833,15 @@ msgid ""
 "code), to match the behavior of :class:`~django.middleware.common."
 "CommonMiddleware`."
 msgstr ""
+"К тому же перенаправление таким образом считается перманентным (с кодом 301) "
+"в соответствии с поведением класса :class:`~django.middleware.common."
+"CommonMiddleware`."
 
 # 25073a1fe4d34700bd5168641096d370
 #: ../../releases/1.4.txt:857
 msgid ""
 "Serialization of :class:`~datetime.datetime` and :class:`~datetime.time`"
-msgstr ""
+msgstr "Сериализация :class:`~datetime.datetime` и :class:`~datetime.time`"
 
 # 54d0aaefdb0547be93dcf304295c0f10
 #: ../../releases/1.4.txt:859
@@ -1471,6 +1849,8 @@ msgid ""
 "As a consequence of time-zone support, and according to the ECMA-262 "
 "specification, we made changes to the JSON serializer:"
 msgstr ""
+"В следствии поддержки часовых поясов и согласно спецификации ECMA-262, "
+"мы внесли изменения в сериализатор JSON:"
 
 # 1c2cf0d995644a86953393908167c5d1
 #: ../../releases/1.4.txt:862
@@ -1478,6 +1858,8 @@ msgid ""
 "It includes the time zone for aware datetime objects. It raises an exception "
 "for aware time objects."
 msgstr ""
+"Для datetime-объектов добавляется временная зона, в случае с time-объектами "
+"генерируется исключение."
 
 # 798dbaaacfb14a07959d9d5ee25c63d7
 #: ../../releases/1.4.txt:864
@@ -1487,6 +1869,10 @@ msgid ""
 "supports milliseconds (3 digits). However, it's better than discarding "
 "microseconds entirely."
 msgstr ""
+"Для datetime- и time-объектов добавлена поддержка милисекунд. Немного теряется "
+"точность, потому что Python хранит микросекунды (6 знаков), а JSON милисекунды "
+"(3 знака). Однако, это всё равно лучше, чем простое их игнорирование в "
+"предыдущих версиях."
 
 # 0fe7957e65be467f99e91985e00a01a7
 #: ../../releases/1.4.txt:869
@@ -1495,6 +1881,9 @@ msgid ""
 "letter ``T`` is used to separate the date part from the time part, instead "
 "of a space. Time zone information is included in the ``[+-]HH:MM`` format."
 msgstr ""
+"Мы добавлили в XML-сериализатор поддержку формата ISO8601 для даты со временем. "
+"Для разделения части даты от части времени используется буква ``T`` вмесето "
+"пробела. Информация по временной зоне включает в себя формат ``[+-]HH:MM``."
 
 # 5ce54d53c403481da3d38d763481e414
 #: ../../releases/1.4.txt:873
@@ -1502,11 +1891,13 @@ msgid ""
 "Though the serializers now use these new formats when creating fixtures, "
 "they can still load fixtures that use the old format."
 msgstr ""
+"Хотя сериализаторы теперь используют новые форматы при создании фикстур, они "
+"все еще могут загрузить фикстуры, созданные ранее."
 
 # 3de26f3607cc43ae8398a9e36feef4ac
 #: ../../releases/1.4.txt:877
 msgid "``supports_timezone`` changed to ``False`` for SQLite"
-msgstr ""
+msgstr "Для SQLite ``supports_timezone`` установлен в ``False``"
 
 # e86bc1168c6644d3b0a81e6b9043a692
 #: ../../releases/1.4.txt:879
@@ -1516,6 +1907,10 @@ msgid ""
 "included an UTC offset. However, this offset was ignored when loading the "
 "value back from the database, which could corrupt the data."
 msgstr ""
+"Для SQLite поддержка временных зон может быть включена, однако, если вы сохраняете "
+"datetime-объект, SQLite представляет его как строку с указанием UTC. "
+"При загрузке же из базы эта информация отбрасывается, что может привести "
+"к порче данных."
 
 # 42832ce7b127418eb482cec96344e27f
 #: ../../releases/1.4.txt:884
@@ -1525,11 +1920,14 @@ msgid ""
 "setting:`USE_TZ` is ``False``, if you attempt to save an aware datetime "
 "object, Django raises an exception."
 msgstr ""
+"В контексте поддержки временных зон этот флаг изменён на ``False``, и дата-время "
+"сохраняется без этой информации. Когда настройка :setting:`USE_TZ` установлена "
+"в ``False``, при попытке сохранения со сведениями UTC произойдёт исключение."
 
 # 8c36d11e44e740a0906fe0a6a13acf7a
 #: ../../releases/1.4.txt:890
 msgid "``MySQLdb``-specific exceptions"
-msgstr ""
+msgstr "Специфические исключения ``MySQLdb``"
 
 # f081a3c4a78340ddbbb20bed38ac73b9
 #: ../../releases/1.4.txt:892
@@ -1539,11 +1937,15 @@ msgid ""
 "`django.db.DatabaseError` instead. If you were testing for ``MySQLdb."
 "OperationalError``, you'll need to update your ``except`` clauses."
 msgstr ""
+"Исторически MySQL-бэкенд вызывал ``MySQLdb.OperationalError``, если в запросе "
+"происходило исключение. Мы исправили этот баг, теперь вызывается "
+":exc:`django.db.DatabaseError`. Если у вас были завязки на ``MySQLdb."
+"OperationalError``, адаптируйте блок ``except``."
 
 # c363950a4ad842188b78f85e055d3cf4
 #: ../../releases/1.4.txt:899
 msgid "Database connection's thread-locality"
-msgstr ""
+msgstr "Потокобезопасные соединения с БД"
 
 # 4897424098524f4e9f5e58f1795cee76
 #: ../../releases/1.4.txt:901
@@ -1560,6 +1962,15 @@ msgid ""
 "object's attributes. If you need to access the actual ``DatabaseWrapper`` "
 "object, use ``django.db.connections[DEFAULT_DB_ALIAS]`` instead."
 msgstr ""
+"Объекты ``DatabaseWrapper`` (включая соединения типа ``django.db.connection`` и "
+"``django.db.connections[\"что_то_там\"]``) потокобезопасны. Сейчас они представляют "
+"из себя глобальные объекты, дабы имелся доступ из разных потоков. В то время как "
+"собственно объекты соединений глобальны, словарь ``django.db.connections`` "
+"остаётся потокобезопасным. Однако, если вы используете ORM или ``DatabaseWrapper.cursor()``, "
+"то заметите некоторое изменение в поведении. Теперь ``django.db.connection`` "
+"не ссылается напрямую на ``DatabaseWrapper``, а использует прокси для "
+"доступа к атрибутам объекта. Если вам всё-таки нужен непосредственно "
+"текущий ``DatabaseWrapper``, используйте ``django.db.connections[DEFAULT_DB_ALIAS]``."
 
 # a7d4e2c37e6d4a49a9d9db7629813065
 #: ../../releases/1.4.txt:913
@@ -1571,6 +1982,11 @@ msgid ""
 "existing code that purely relies on the ORM or on ``DatabaseWrapper.cursor()"
 "``."
 msgstr ""
+"Как часть изменений все основные соединения SQLite теперь могут быть потенциально "
+"доступны из других потоков (передав атрибут ``check_same_thread=False`` в "
+"pysqlite), однако ``DatabaseWrapper`` следует предыдущему поведению, где такой "
+"доступ запрещён. Это изменение не затронет тех пользователей, которые "
+"работали только с ORM или ``DatabaseWrapper.cursor()``."
 
 # 7914e60ebb864727bce1f8f928077b86
 #: ../../releases/1.4.txt:919
@@ -1580,11 +1996,15 @@ msgid ""
 "Concurrency behavior is defined by the underlying backend implementation. "
 "Check their documentation for details."
 msgstr ""
+"Наконец, т.к. стало возможным передавать соединения между потоками, Django "
+"не предпринимает никаких усилий для организации синхронизации с основным "
+"бэкендом. Параллельное поведение определяется базовой реализацией бекэндов. "
+"Загляните в документацию для выяснения подробностей."
 
 # e55612e9834c435394a494d59d4e0be3
 #: ../../releases/1.4.txt:925
 msgid "`COMMENTS_BANNED_USERS_GROUP` setting"
-msgstr ""
+msgstr "Настройка `COMMENTS_BANNED_USERS_GROUP`"
 
 # eb278d5d1fda4c639359028ed9948baa
 #: ../../releases/1.4.txt:927
@@ -1595,6 +2015,11 @@ msgid ""
 "parts of the app such as the template tags. To fix this problem, we removed "
 "the code from the feed class."
 msgstr ""
+"Django :doc:`comments app </ref/contrib/comments/index>` исторически поддерживал "
+"исключение комментариев для определённой группы пользователей, однако мы "
+"нигде не освещали этот момент и не применяли это исключение в других частях "
+"приложения, например, в тегах шаблонов. Для решения проблемы мы просто "
+"исключили этот код."
 
 # ba119c8c372443d7874132432ccc1005
 #: ../../releases/1.4.txt:933
@@ -1602,6 +2027,8 @@ msgid ""
 "If you rely on the feature and want to restore the old behavior, use a "
 "custom comment model manager to exclude the user group, like this::"
 msgstr ""
+"Если вам всё-таки нужно старое поведение, используйте свой менеджер моделей "
+"для исключения групп пользователей, например::"
 
 # e0801347d1cf4631a7b947ce30b096e4
 #: ../../releases/1.4.txt:948
@@ -1610,6 +2037,9 @@ msgid ""
 "``my_comments_app/managers.py``) and add it your :ref:`custom comment app "
 "model <custom-comment-app-api>`::"
 msgstr ""
+"Сохраните этот менеджер моделей в вашем приложении для комментариев (например, в "
+"``my_comments_app/managers.py``) и добавьте в ваш :ref:`custom comment app "
+"model <custom-comment-app-api>`::"
 
 # 98ab06cf54e04814a738eb86f8e9ad4d
 #: ../../releases/1.4.txt:962
@@ -1617,11 +2047,13 @@ msgid ""
 "For more details, see the documentation about :doc:`customizing the comments "
 "framework </ref/contrib/comments/custom>`."
 msgstr ""
+"Подробнее можно найти в документации по :doc:`customizing the comments "
+"framework </ref/contrib/comments/custom>`."
 
 # 5818241dd25042f79d43d6dc14ba99f8
 #: ../../releases/1.4.txt:966
 msgid "`IGNORABLE_404_STARTS` and `IGNORABLE_404_ENDS` settings"
-msgstr ""
+msgstr "Настройки `IGNORABLE_404_STARTS` и `IGNORABLE_404_ENDS`"
 
 # 94dddd0785bb42a9926099fa46121878
 #: ../../releases/1.4.txt:968
@@ -1630,6 +2062,9 @@ msgid ""
 "`404 error reporting</howto/error-reporting>` by adding prefixes to "
 "``IGNORABLE_404_STARTS`` and suffixes to ``IGNORABLE_404_ENDS``."
 msgstr ""
+"До Django 1.4 было возможным исключить из обрабботки некоторые URL "
+"(:doc:`404 error reporting</howto/error-reporting>`) путём добавления "
+"префикса в ``IGNORABLE_404_STARTS`` и суффикса в ``IGNORABLE_404_ENDS``."
 
 # dbca0db163d94975811ee783872f81af
 #: ../../releases/1.4.txt:972
@@ -1638,12 +2073,16 @@ msgid ""
 "`IGNORABLE_404_URLS`, which is a list of compiled regular expressions. "
 "Django won't send an email for 404 errors on URLs that match any of them."
 msgstr ""
+"Теперь же обе эти настройки переместились в :setting:`IGNORABLE_404_URLS`, "
+"в котором хранится список скомпилированных регулярных выражений. Django не "
+"будет генерировать ошибку 404 для любого из них."
 
 # 31cabf83fed548f0a67a51437210449c
 #: ../../releases/1.4.txt:977
 msgid ""
 "Furthermore, the previous settings had some rather arbitrary default values::"
 msgstr ""
+"Однако, ``IGNORABLE_404_STARTS`` и  ``IGNORABLE_404_ENDS`` имели настройки по умолчанию::"
 
 # 418dde035d6b45f1b00210f5adf68400
 #: ../../releases/1.4.txt:983
@@ -1653,6 +2092,9 @@ msgid ""
 "setting:`IGNORABLE_404_URLS`, ``IGNORABLE_404_STARTS``, and "
 "``IGNORABLE_404_ENDS`` are all now empty."
 msgstr ""
+"Django не будет определять остались ли у вас всякие ``/cgi-bin/`` или ``favicon.ico``."
+"Теперь по умолчанию списки :setting:`IGNORABLE_404_URLS`, ``IGNORABLE_404_STARTS`` и "
+"``IGNORABLE_404_ENDS`` пусты."
 
 # bfa4b750faa74d509bb77b8c395ab4f5
 #: ../../releases/1.4.txt:988
@@ -1661,6 +2103,9 @@ msgid ""
 "or if you want to keep the old default value, you should add the following "
 "lines in your settings file::"
 msgstr ""
+"Если вы настраивали ``IGNORABLE_404_STARTS`` или ``IGNORABLE_404_ENDS``, "
+"или если хотите сохранить старое поведение по умолчанию, добавьте в файл настроек "
+"следующие строки::"
 
 # ac173b886c954932a0119c4d97fa3339
 #: ../../releases/1.4.txt:1000
@@ -1668,11 +2113,13 @@ msgid ""
 "Don't forget to escape characters that have a special meaning in a regular "
 "expression, such as periods."
 msgstr ""
+"Не забудьте экранировать символы, которые имеют специальное значение в регулярных "
+"выражениях."
 
 # b2a66d46216f429c8d5f1062994ef656
 #: ../../releases/1.4.txt:1004
 msgid "CSRF protection extended to PUT and DELETE"
-msgstr ""
+msgstr "CSRF-защита распространена на запросы PUT и DELETE"
 
 # 5ba1969ea48e4c0cb47398b01940df58
 #: ../../releases/1.4.txt:1006
@@ -1683,6 +2130,11 @@ msgid ""
 "defined as safe by :rfc:`2616` -- i.e., we exempt GET, HEAD, OPTIONS and "
 "TRACE, and we enforce protection on everything else."
 msgstr ""
+"Изначально Django поддерживал защиту от CSRF только для POST-запросов, как "
+"это описано в :doc:`CSRF protection </ref/contrib/csrf/>`. Однако, сейчас "
+"стало популярным использовать в AJAX-запросах PUT и DELETE, так что мы "
+"решили следовать :rfc:`2616` -- включая GET, HEAD, OPTIONS и TRACE и "
+"включить защиту для всех запросов."
 
 # 7688a37b8c454786823ce3668c5abce7
 #: ../../releases/1.4.txt:1012
@@ -1690,11 +2142,13 @@ msgid ""
 "If you're using PUT or DELETE methods in AJAX applications, please see the :"
 "ref:`instructions about using AJAX and CSRF <csrf-ajax>`."
 msgstr ""
+"Если вы используете методы PUT или DELETE в AJAX-приложениях, изучите "
+":ref:`instructions about using AJAX and CSRF <csrf-ajax>`."
 
 # 206bfd556cbd42e79623f1bc7676a057
 #: ../../releases/1.4.txt:1016
 msgid "Password reset view now accepts ``subject_template_name``"
-msgstr ""
+msgstr "Представление сброса пароля теперь принимает ``subject_template_name``"
 
 # 59d9d3e2a0e1471e876ff49194b6dd74
 #: ../../releases/1.4.txt:1018
@@ -1705,11 +2159,15 @@ msgid ""
 "password reset form, then you will need to ensure your form's ``save()`` "
 "method accepts this keyword argument."
 msgstr ""
+"Представление ``password_reset`` в ``django.contrib.auth`` теперь принимает "
+"параметр ``subject_template_name``, который передаёт форму пароля как "
+"арогумент. Если вы используете это представление со своей формой сброса пароля, "
+"то убедитесь, что метод ``save()`` принимает этот аргумент."
 
 # 9ccbf1d7f8654b9783bc84976c7cb19e
 #: ../../releases/1.4.txt:1025
 msgid "``django.core.template_loaders``"
-msgstr ""
+msgstr "``django.core.template_loaders``"
 
 # 53a7d24e133b4d4da461a9bd715a49e2
 #: ../../releases/1.4.txt:1027
@@ -1719,11 +2177,14 @@ msgid ""
 "If your code still referenced this, please use ``django.template.loader`` "
 "instead."
 msgstr ""
+"Начиная с 2005 года это была ссылка на ``django.template.loader``, и теперь "
+"мы наконец-то удалили её. Замените в коде ``django.core.template_loaders`` на "
+"``django.template.loader``."
 
 # 1ac8c938ba8c4867bf2af74d3691c4e2
 #: ../../releases/1.4.txt:1032
 msgid "``django.db.models.fields.URLField.verify_exists``"
-msgstr ""
+msgstr "``django.db.models.fields.URLField.verify_exists``"
 
 # 9279585a41d84c829c3ffadee60e3e4c
 #: ../../releases/1.4.txt:1034
@@ -1731,11 +2192,14 @@ msgid ""
 "This functionality has been removed due to intractable performance and "
 "security issues. Any existing usage of ``verify_exists`` should be removed."
 msgstr ""
+"Эта функциональность была удалена вследствии ошибок безопасности и "
+"падения производительности. Все вызовы ``verify_exists`` должны быть "
+"удалены."
 
 # ee37162292a24c1a8becd8d599d47bd5
 #: ../../releases/1.4.txt:1039
 msgid "``django.core.files.storage.Storage.open``"
-msgstr ""
+msgstr "``django.core.files.storage.Storage.open``"
 
 # f92b0239370c4d23bbe14ebdcacba44d
 #: ../../releases/1.4.txt:1041
@@ -1746,11 +2210,15 @@ msgid ""
 "relied on the ``mixin`` parameter, you can easily achieve the same by "
 "overriding the ``open`` method, like this::"
 msgstr ""
+"Метод ``open`` базового класса Storage принимал непонятный параметр ``mixin``, "
+"который позволял динамически менять класс возвращаемого файлового объекта. "
+"Теперь он удалён. В тех редких случаях, когда он всё же использовался, вы "
+"можете адаптировать код, переопределив метод ``open``::"
 
 # a59398e074e243d586e48843be445078
 #: ../../releases/1.4.txt:1065
 msgid "YAML deserializer now uses ``yaml.safe_load``"
-msgstr ""
+msgstr "Десериализатор YAML теперь использует ``yaml.safe_load``"
 
 # fb8331969fb4414888e6ac0f7f1c7cc8
 #: ../../releases/1.4.txt:1067
@@ -1762,11 +2230,16 @@ msgid ""
 "objects. Even though fixtures are trusted data, the YAML deserializer now "
 "uses ``yaml.safe_load`` for additional security."
 msgstr ""
+"``yaml.load`` может посторить любой объект Python, который может выполнить "
+"любой код из ненадёжного источника. Это функция не нужна непосредственно "
+"десериализатору YAML для Django, которой использует загрузку фикстур только "
+"примитивных объектов. Так что для обеспечения безопасности теперь "
+"используется ``yaml.safe_load``."
 
 # 46c0daaa142a40ceab17901471dbc4cb
 #: ../../releases/1.4.txt:1075
 msgid "Session cookies now have the ``httponly`` flag by default"
-msgstr ""
+msgstr "По умолчанию сессионные куки имеют флаг ``httponly``"
 
 # 7a2c065452ec4a3792f1cf61a881c781
 #: ../../releases/1.4.txt:1077
@@ -1777,11 +2250,16 @@ msgid ""
 "JavaScript in many browsers. For strict backwards compatibility, use "
 "``SESSION_COOKIE_HTTPONLY = False`` in your settings file."
 msgstr ""
+"Сессионные куки теперь идут по умолчанию вместе с атрибутом ``httponly`` "
+"для избежания потенциальных XSS атак. Вследствие этого некоторые вещи (например, "
+"sessionid) более недоступны для JavaScript для большинства браузеров. "
+"Для совместимости вы можете вернуть старое поведение, указав в настройках "
+"``SESSION_COOKIE_HTTPONLY = False``."
 
 # 2db6b81951b943e0b2ac76cc7302d75c
 #: ../../releases/1.4.txt:1085
 msgid "The :tfilter:`urlize` filter no longer escapes every URL"
-msgstr ""
+msgstr "Фильтр :tfilter:`urlize` более не экранирует каждый URL"
 
 # 272143b90e82451fbafd216b4b6f46fe
 #: ../../releases/1.4.txt:1087
@@ -1792,11 +2270,16 @@ msgid ""
 "contains a ``%xx`` sequence, but such URLs are very unlikely to happen in "
 "the wild, because they would confuse browsers too."
 msgstr ""
+"Если URL содержит ``%xx``, где ``xx`` - числа, то :tfilter:`urlize` понимает, "
+"что этот URL уже экранирован и не пытается проделать это ещё раз. Такое "
+"поведение неверно для URL, которые содержат последовательность ``%xx``, но "
+"вряд ли они появятся в реальном окружении, к тому же браузеры не смогут "
+"правильно понять куда же им идти."
 
 # 3a3d2f65ab3f4544b946cb808413a2c7
 #: ../../releases/1.4.txt:1094
 msgid "``assertTemplateUsed`` and ``assertTemplateNotUsed`` as context manager"
-msgstr ""
+msgstr "``assertTemplateUsed`` и ``assertTemplateNotUsed`` как менеджеры контекстов"
 
 # 9e39e7c828444775882b3d2aa8a628ac
 #: ../../releases/1.4.txt:1096
@@ -1806,16 +2289,20 @@ msgid ""
 "`~django.test.SimpleTestCase.assertTemplateNotUsed`. And they can be used as "
 "a context manager::"
 msgstr ""
+"Теперь стало возможным проверить используется ли шаблон в блоке кода с помощью "
+"методов :meth:`~django.test.SimpleTestCase.assertTemplateUsed` и "
+":meth:`~django.test.SimpleTestCase.assertTemplateNotUsed`. Эти методы можно "
+"использовать как менеджеры контекстов::"
 
 # e54ad019c82043cc89adec170eeab5f7
 #: ../../releases/1.4.txt:1106
 msgid "See the :ref:`assertion documentation<assertions>` for more."
-msgstr ""
+msgstr "Подробнее здесь :ref:`assertion documentation<assertions>`."
 
 # 5e4fa13e2d5342d4ba6a143b1c85c445
 #: ../../releases/1.4.txt:1109
 msgid "Database connections after running the test suite"
-msgstr ""
+msgstr "Соединения к БД после запуска тестов"
 
 # 927be06503ab440ba51ea6a7bd435512
 #: ../../releases/1.4.txt:1111
@@ -1825,6 +2312,9 @@ msgid ""
 "to potential threads that would still be running and attempting to create "
 "new connections."
 msgstr ""
+"Исполнитель тестов более не восстанавливает соединение с БД после выполнения "
+"тестов. Это предотвращает боевую базу от потенциального воздействия потоков, "
+"которые будут висеть и порождать новые соединения."
 
 # 9b9b0133c132444aa5cfc344e2960efd
 #: ../../releases/1.4.txt:1116
@@ -1834,11 +2324,13 @@ msgid ""
 "subclassing ``DjangoTestRunner`` and overriding its ``teardown_databases()`` "
 "method."
 msgstr ""
+"Если в коде у вас были завязки на это, то вы можете восстановить прежнее поведение "
+"перекрыв метод ``teardown_databases()`` у ``DjangoTestRunner``."
 
 # 5e91444f1fdd406f85bbb87e127818a6
 #: ../../releases/1.4.txt:1122
 msgid "Output of :djadmin:`manage.py help <help>`"
-msgstr ""
+msgstr "Вывод :djadmin:`manage.py help <help>`"
 
 # 2cab76857f46463396b8232629fbd412
 #: ../../releases/1.4.txt:1124
@@ -1849,11 +2341,15 @@ msgid ""
 "all available management commands in a script, use :djadmin:`manage.py help "
 "--commands <help>` instead."
 msgstr ""
+":djadmin:`manage.py help <help>` теперь группирует доступные команды по "
+"приложениям. Если вы зависили от этого вывода -- например, парсили его -- "
+"адаптируйте свой код. Получить список всех доступных команд можно с "
+"помощью :djadmin:`manage.py help --commands <help>`."
 
 # 09ea9968d9934a3d8769054df2ff27fd
 #: ../../releases/1.4.txt:1131
 msgid "``extends`` template tag"
-msgstr ""
+msgstr "Тег шаблона ``extends``"
 
 # 7e4bac16d15947289e618f7a47c040b2
 #: ../../releases/1.4.txt:1133
@@ -1863,6 +2359,9 @@ msgid ""
 "string literal when it wasn't. It now uses ``parser.compile_filter``, like "
 "other tags."
 msgstr ""
+"Ранее тег :ttag:`extends` использовал примитивный алгоритм разбора "
+"аргументов, ошибочно считая строкой то, что по сути не было ею. Теперь же "
+"``parser.compile_filter`` работает также, как и остальные теги."
 
 # 8aff2f9cc29a4008a1bba9a54283e1b0
 #: ../../releases/1.4.txt:1137
@@ -1871,11 +2370,14 @@ msgid ""
 "interests of full disclosure, the ``ExtendsNode.__init__`` definition has "
 "changed, which may break any custom tags that use this class."
 msgstr ""
+"Внутренности этого тега не были частью публичного API, но в интересах реализации "
+"``ExtendsNode.__init__`` изменилось, что может сказаться на совместимости с "
+"тегами, основанными на этом классе."
 
 # 36e4b72c60914bd4875cb692ed8210c8
 #: ../../releases/1.4.txt:1142
 msgid "Loading some incomplete fixtures no longer works"
-msgstr ""
+msgstr "Загрузка неполных фикстур более не поддерживается"
 
 # d473d8169422467aba37a1992e611194
 #: ../../releases/1.4.txt:1144
@@ -1887,11 +2389,15 @@ msgid ""
 "import, they should explicitly specify all field values, regardless of field "
 "options on the model."
 msgstr ""
+"До версии 1.4 для полей даты и времени в модели можно было указать значения auto_now и "
+"auto_now_add при загрузке фикстур. Это работало не всегда так, как хотелось, и "
+"в 1.4 было решено убрать такую возможность, потому что фикстуры загружались "
+"в \"сыром\" виде, вне зависиости от опций модели."
 
 # a6f2c6c04b7644429077f08f170c0151
 #: ../../releases/1.4.txt:1151
 msgid "Development Server Multithreading"
-msgstr ""
+msgstr "Многопоточность встроенного сервера"
 
 # be5caed671514b5b870b8d0e2cc7e414
 #: ../../releases/1.4.txt:1153
@@ -1900,11 +2406,13 @@ msgid ""
 "djadminopt:`--nothreading` option to disable the use of threading in the "
 "development server::"
 msgstr ""
+"Встроенный сервер теперь по умолчанию запускается в многопоточном режиме. "
+"Для отключения этой функциональности используйте опцию :djadminopt:`--nothreading`::"
 
 # 32aa5ba614d94e76a332a3a2e31316cb
 #: ../../releases/1.4.txt:1160
 msgid "Attributes disabled in markdown when safe mode set"
-msgstr ""
+msgstr "Отключены атрибуты в разметке при активации безопасного режима"
 
 # befde435a43c4a4c8106bdba2350de63
 #: ../../releases/1.4.txt:1162
@@ -1917,11 +2425,17 @@ msgid ""
 "Python-Markdown library less than 2.1, a warning is issued that the output "
 "is insecure."
 msgstr ""
+"До Django 1.4 атрибуты были включены в вывод разметки вне зависимости от "
+"настроек безопасности фильтра. В версии 2.1 в библиотеку Python-Markdown "
+"была добавлена опция enable_attributes. При установке ``safe_mode=True`` "
+"и ``enable_attributes=False`` в фильтр будут передаваться безопасные "
+"аргументы. Использование версии Python-Markdown < 2.1, приведёт к "
+"предупреждению безопасности."
 
 # 2af9af2536ea4b8a8f51a7db1401b8f7
 #: ../../releases/1.4.txt:1171
 msgid "FormMixin get_initial returns an instance-specific dictionary"
-msgstr ""
+msgstr "get_initial у FormMixin возвращает изначальный словарь"
 
 # cdb672dad3d74279ae04a8c41aca4281
 #: ../../releases/1.4.txt:1173
@@ -1932,16 +2446,20 @@ msgid ""
 "instances can modify their initial data without messing with the class "
 "variable."
 msgstr ""
+"В Django 1.3 метод ``get_initial`` класса :class:`django.views.generic.edit.FormMixin` "
+"возвращал класс ``initial`` словаря. Мы решили возвращать копию словаря, так как "
+"экземпляры форм могли модифицировать исходные данные без изменения переменной "
+"класса."
 
 # 58dfc36926c24ae0a7a8b596843d9dc0
 #: ../../releases/1.4.txt:1180
 msgid "Features deprecated in 1.4"
-msgstr ""
+msgstr "Устаревшая функциональность в 1.4"
 
 # 03b77c47f7124ae9b8f300dec2549593
 #: ../../releases/1.4.txt:1183
 msgid "Old styles of calling ``cache_page`` decorator"
-msgstr ""
+msgstr "Старый стиль вызова декоратора ``cache_page``"
 
 # e955bb836c6c488ea0246d9ca25a8eaf
 #: ../../releases/1.4.txt:1185
@@ -1950,11 +2468,14 @@ msgid ""
 "cache_page` have been deprecated. Please see the documentation for the "
 "correct way to use this decorator."
 msgstr ""
+"Некоторые вызовы :func:`~django.views.decorators.cache.cache_page` стали "
+"устаревшими. Обратитесь к документации для правильного использования этого "
+"декоратора."
 
 # 2226077cb7604ae5b453cab2bb82e5fc
 #: ../../releases/1.4.txt:1190
 msgid "Support for PostgreSQL versions older than 8.2"
-msgstr ""
+msgstr "Поддержка версий PostgreSQL меньше 8.2"
 
 # e381ae287ae64ea0b2108fc3cf14301e
 #: ../../releases/1.4.txt:1192
@@ -1964,18 +2485,21 @@ msgid ""
 "and, more importantly, the end of upstream support periods for 8.0 and 8.1 "
 "was near (November 2010)."
 msgstr ""
+"Django 1.3 не работает с PostgreSQL младше 8.0, и мы настоятельно "
+"рекомендуем использовать более новые версии, тем более что срок окончания "
+"поддержки 8.0 и 8.1 уже близок (ноябрь 2010)."
 
 # 5162e64ad3ce411a891987a6c2169130
 #: ../../releases/1.4.txt:1197
 msgid ""
 "Django 1.4 takes that policy further and sets 8.2 as the minimum PostgreSQL "
 "version it officially supports."
-msgstr ""
+msgstr "В Django 1.4 мы учли это и сделали версию 8.2 минимально поддерживаемой."
 
 # ade15759574d491caf744d13bb9eb836
 #: ../../releases/1.4.txt:1201
 msgid "Request exceptions are now always logged"
-msgstr ""
+msgstr "Исключения в запросе теперь всегда логируются"
 
 # 1dc8a99510ff46859b3fdbef6637a01c
 #: ../../releases/1.4.txt:1203
@@ -1986,6 +2510,11 @@ msgid ""
 "maintain the established behavior of error emails, the ``'django.request'`` "
 "logger was called only when :setting:`DEBUG` was ``False``."
 msgstr ""
+"После того как мы добавили :doc:`logging support </topics/logging/>` в "
+"Django 1.3, оповещение администратора по email было перемещено в класс "
+":class:`django.utils.log.AdminEmailHandler`, который прикреплялся к логгеру "
+"``django.request``. В целях совместимости с предыдущим поведением логгер "
+"``django.request`` будет вызван только если :setting:`DEBUG` установлен в ``False``."
 
 # b524c311649945ce83d8f73680e3cc8f
 #: ../../releases/1.4.txt:1210
@@ -1996,6 +2525,10 @@ msgid ""
 "filter attached to :class:`django.utils.log.AdminEmailHandler` to prevent "
 "admin error emails in ``DEBUG`` mode::"
 msgstr ""
+"Для увеличения гибкости регистрации ошибок запросов логгер ``'django.request'`` "
+"сейчас вызывается независимо от значения :setting:`DEBUG`, однако в новом "
+"проекте по умолчанию добавлен фильтр в :class:`django.utils.log.AdminEmailHandler` "
+"для предотвращения отправки сообщений об ошибках в режиме разработки::"
 
 # b71fa860873549c68e48082711858d0b
 #: ../../releases/1.4.txt:1229
@@ -2008,6 +2541,11 @@ msgid ""
 "become a deprecation warning in Django 1.5, and in Django 1.6 the backwards-"
 "compatibility shim will be removed entirely."
 msgstr ""
+"Если вы адаптируете уже существующий проект, то в настройке :setting:`LOGGING` "
+"этого фильтра нет. Для обратной совместимости Django определит, что у вашего "
+"обработчика ``'mail_admins'`` нет раздела ``'filters'`` и автоматически добавит "
+"его. В Django 1.5 мы будем выводить предупреждение, а в версии 1.6 эта "
+"совместимость будет удалена."
 
 # dcd09968b8cb46988bd309ae9379b8de
 #: ../../releases/1.4.txt:1237
@@ -2015,11 +2553,13 @@ msgid ""
 "The existence of any ``'filters'`` key under the ``'mail_admins'`` handler "
 "will disable this backward-compatibility shim and deprecation warning."
 msgstr ""
+"Добавление ключа ``'filters'`` в обработчик ``'mail_admins'`` рушит обратную "
+"совместимость."
 
 # 11ee8f17f37148edb863fee08003635a
 #: ../../releases/1.4.txt:1241
 msgid "``django.conf.urls.defaults``"
-msgstr ""
+msgstr "``django.conf.urls.defaults``"
 
 # beaf543a468048d78763a8bb45d0d0dc
 #: ../../releases/1.4.txt:1243
@@ -2029,16 +2569,20 @@ msgid ""
 "`~django.conf.urls.handler404`, :data:`~django.conf.urls.handler500` were "
 "located in a ``django.conf.urls.defaults`` module."
 msgstr ""
+"Вплоть до Django 1.3 функции :func:`~django.conf.urls.include`, :func:"
+"`~django.conf.urls.patterns` и :func:`~django.conf.urls.url`, а также "
+":data:`~django.conf.urls.handler404`, :data:`~django.conf.urls.handler500` "
+"распологались в модуле ``django.conf.urls.defaults``."
 
 # 8a940db105f141a6aa32c9ca2513d64e
 #: ../../releases/1.4.txt:1248
 msgid "In Django 1.4, they live in :mod:`django.conf.urls`."
-msgstr ""
+msgstr "В Django 1.4 они перемещены в модуль :mod:`django.conf.urls`."
 
 # 9551825b51f8407ab338052d5f31ee93
 #: ../../releases/1.4.txt:1251
 msgid "``django.contrib.databrowse``"
-msgstr ""
+msgstr "``django.contrib.databrowse``"
 
 # 971bda03a33f41768504f0199a558805
 #: ../../releases/1.4.txt:1253
@@ -2049,6 +2593,10 @@ msgid ""
 "was made. While Databrowse has been deprecated, an enhancement of ``django."
 "contrib.admin`` providing a similar feature set is still possible."
 msgstr ""
+"Просмотрщик данных долгое время не развивался, и по сей день не было новых "
+"коммитов. Было предложено `GSOC project`_ интегрировать в панель администратора, "
+"но никакого прогресса не видно. В то время как Databrowse стал устаревшим, "
+"некоторая его функциональность переместилась в ``django.contrib.admin``."
 
 # 44106d42e1b44f208c9eb3ef5d380b57
 #: ../../releases/1.4.txt:1261
@@ -2057,11 +2605,13 @@ msgid ""
 "itself, so it's available to be adopted by an individual or group as a third-"
 "party project."
 msgstr ""
+"Лицензия на Databrowse совпадает с лицензией Django, так что любой желающий "
+"может доработать его для себя."
 
 # 7d57fc797f3d4426bda0074c8872e77f
 #: ../../releases/1.4.txt:1266
 msgid "``django.core.management.setup_environ``"
-msgstr ""
+msgstr "``django.core.management.setup_environ``"
 
 # 602deff0007b43509fa2607b057552e7
 #: ../../releases/1.4.txt:1268
@@ -2071,6 +2621,9 @@ msgid ""
 "layout. This function is now deprecated, as its path workarounds are no "
 "longer needed with the new ``manage.py`` and default project layout."
 msgstr ""
+"Эта функция временно модифицирует ``sys.path``, делая возможным импорт каталога "
+"проекта для старой структуры проекта, создаваемой :djadmin:`startproject`. Эта "
+"функция более не нужна с новым ``manage.py`` и структурой проекта."
 
 # 77d757af4e9e4ee0b9e5f7271ff3bbe2
 #: ../../releases/1.4.txt:1273
@@ -2081,11 +2634,15 @@ msgid ""
 "``DJANGO_SETTINGS_MODULE`` environment variable or using :func:`django.conf."
 "settings.configure`."
 msgstr ""
+"Эта функция никогда не документировалась в API, но рекомендовалась для "
+"настройки окружения Django для пользовательских скриптов. Вместо неё следует "
+"использовать функцию :func:`django.conf.settings.configure` или переменную "
+"окружения ``DJANGO_SETTINGS_MODULE``."
 
 # 95dddbda9f084d069107c81d84e1db4a
 #: ../../releases/1.4.txt:1279
 msgid "``django.core.management.execute_manager``"
-msgstr ""
+msgstr "``django.core.management.execute_manager``"
 
 # b1dbb5d7187c45968e26c3a66f18e3d3
 #: ../../releases/1.4.txt:1281
@@ -2098,11 +2655,17 @@ msgid ""
 "functions is documented as part of the public API, but a deprecation path is "
 "needed due to use in existing ``manage.py`` files."
 msgstr ""
+"Эта функция ранее использовалась ``manage.py`` для выполнения команд приложения."
+"Она идентична ``django.core.management.execute_from_command_line`` за исключением "
+"первого вызова ``setup_environ``. Так что теперь объявлена устаревшей, вместо неё "
+"следует использовать ``execute_from_command_line``. Ни одна из этих функций не "
+"документирована в рамках API, но объявить устаревшей ``django.core.management."
+"execute_manager`` всё-таки нужно для дальнейшего использования ``manage.py``."
 
 # 742089c2ff124ee7b217ad50215ee3aa
 #: ../../releases/1.4.txt:1290
 msgid "``is_safe`` and ``needs_autoescape`` attributes of template filters"
-msgstr ""
+msgstr "Атрибуты фильтров в шаблонах ``needs_autoescape`` и ``is_safe``"
 
 # bbf07b4b08c843169eb67be0e7bf3467
 #: ../../releases/1.4.txt:1292
@@ -2111,6 +2674,9 @@ msgid ""
 "filter interacts with Django's auto-escaping behavior. They used to be "
 "attributes of the filter function::"
 msgstr ""
+"Два флага (``is_safe`` и ``needs_autoescape``) определяют как каждый фильтр "
+"шаблона взаимодействует с автоэкранированием Django. Раньше они были атрибутами "
+"функции::"
 
 # 56cd1c2855f04675a0ce2603d7c77d78
 #: ../../releases/1.4.txt:1301
@@ -2120,6 +2686,10 @@ msgid ""
 "stringfilter>`. Now, the flags are keyword arguments of :meth:`@register."
 "filter <django.template.Library.filter>`::"
 msgstr ""
+"Однако, это вызывало проблемы при комбинировании декораторов, осбоенно "
+":func:`@stringfilter <django.template.defaultfilters.stringfilter>`. "
+"Теперь же флаги являются аргументами :meth:`@register.filter "
+"<django.template.Library.filter>`::"
 
 # fd56913642904e8aa4a212fa14f130c2
 #: ../../releases/1.4.txt:1310
@@ -2127,11 +2697,13 @@ msgid ""
 "See :ref:`filters and auto-escaping <filters-auto-escaping>` for more "
 "information."
 msgstr ""
+"Подробнее в документации :ref:`filters and auto-escaping "
+"<filters-auto-escaping>`."
 
 # 30d92b78c8de4f339fcde03d20fbe72a
 #: ../../releases/1.4.txt:1313
 msgid "Wildcard expansion of application names in `INSTALLED_APPS`"
-msgstr ""
+msgstr "Раскрытие шаблонов имен приложений в `INSTALLED_APPS`"
 
 # fb2e2213750340678f2d152398283ef1
 #: ../../releases/1.4.txt:1315
@@ -2141,6 +2713,10 @@ msgid ""
 "a filesystem-based implementation of ``from <package> import *``. "
 "Unfortunately, `this can't be done reliably`_."
 msgstr ""
+"До Django 1.3 :setting:`INSTALLED_APPS` позволяло использовать маску "
+"в именах приложения, например, ``django.contrib.*``. Расшифровка была "
+"возможна за счёт реализации ``from <package> import *``, основанной на "
+"структуре файлов. К сожалению, `this can't be done reliably`_."
 
 # cd6599f68e074d7fb6a2722fc6db8760
 #: ../../releases/1.4.txt:1320
@@ -2149,11 +2725,15 @@ msgid ""
 "obviously useful, it was removed in Django 1.4. If you relied on it, you "
 "must edit your settings file to list all your applications explicitly."
 msgstr ""
+"Такое поведение нигде не документировано, более того - противоречит дзену "
+"Python, так что оно было удалено в Django 1.4. Если вы полагались на него, "
+"то нужно отредактировать файл настроек, чтобы получить список всех приложений "
+"в явном виде."
 
 # 73c27a1973c94236a1e303efe801ea02
 #: ../../releases/1.4.txt:1327
 msgid "``HttpRequest.raw_post_data`` renamed to ``HttpRequest.body``"
-msgstr ""
+msgstr "``HttpRequest.raw_post_data`` переименован в ``HttpRequest.body``"
 
 # e2a4fb563f3c458ca1a1df665f9ad2d4
 #: ../../releases/1.4.txt:1329
@@ -2162,12 +2742,15 @@ msgid ""
 "actually provided the body of the HTTP request. It's been renamed to "
 "``HttpRequest.body``, and ``HttpRequest.raw_post_data`` has been deprecated."
 msgstr ""
+"Этот атрибут назывался ``HttpRequest.raw_post_data``, но на самом деле представлял "
+"собой тело HTTP запроса. Теперь он объявлен устаревшим, а вместо него следует "
+"использовать ``HttpRequest.body``."
 
 # 7087d4ec49f84c2f8c714411f1cf7381
 #: ../../releases/1.4.txt:1334
 msgid ""
 "``django.contrib.sitemaps`` bug fix with potential performance implications"
-msgstr ""
+msgstr "Исправлена потенциальная ошибка производительности в ``django.contrib.sitemaps``"
 
 # ac84afbe203a4d3aa14efbd766544205
 #: ../../releases/1.4.txt:1336
@@ -2181,11 +2764,19 @@ msgid ""
 "the performance impact, consider using the :doc:`caching framework </topics/"
 "cache>` within your ``Sitemap`` subclass."
 msgstr ""
+"В предыдущих версиях объекты ``Paginator`` кешировали карту сайта, что могло "
+"сказаться на актуальности. Мы избавились от этого, так что при каждом запросе "
+"к sitemap создаётся новый объект ``Paginator`` и вызывается метод :"
+"attr:`~django.contrib.sitemaps.Sitemap.items()` класса :class:"
+"`~django.contrib.sitemaps.Sitemap`. В зависимости от того, что ваш метод "
+"``items()`` делает, это может сказаться на производительности. Для смягчения "
+"последствий рассмотрите возможность использования :doc:`caching framework </topics/"
+"cache>` в ваших подклассах ``Sitemap``."
 
 # 06fec52368c3453aa647f8a23275fe06
 #: ../../releases/1.4.txt:1346
 msgid "Versions of Python-Markdown earlier than 2.1"
-msgstr ""
+msgstr "Версии Python-Markdown меньшие 2.1"
 
 # 78ea8b6d4f6543a1a1e13493ea369e4b
 #: ../../releases/1.4.txt:1348
@@ -2194,4 +2785,6 @@ msgid ""
 "disable attributes. As a security issue, earlier versions of this library "
 "will not be supported by the markup contrib app in 1.5 under an accelerated "
 "deprecation timeline."
-msgstr ""
+msgstr "Версии Python-Markdown меньшие, чем 2,1 не поддерживают возможность "
+"отключения атрибутов. В целях безопасности старые версии этой библиотеки "
+"не будут поддерживаться для разметки в 1.5 и подлежат скорейшему отключению."
