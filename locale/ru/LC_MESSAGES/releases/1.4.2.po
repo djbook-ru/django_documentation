@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-21 17:15\n"
 "PO-Revision-Date: 2013-02-27 00:21\n"
-"Last-Translator: Automatically generated\n"
+"Last-Translator: Viktor Tyshchenko <tyvik8@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -21,22 +21,22 @@ msgstr ""
 # c7cd844fbcc34e57ba6250f4eff41203
 #: ../../releases/1.4.2.txt:3
 msgid "Django 1.4.2 release notes"
-msgstr ""
+msgstr "Релиз Django 1.4.2"
 
 # 84ad1a5b3bc64ee2bbbda6e8b6b4bbf5
 #: ../../releases/1.4.2.txt:5
 msgid "*October 17, 2012*"
-msgstr ""
+msgstr "*17 октября 2012*"
 
 # 562219aec695401b8d8f95016fdfd170
 #: ../../releases/1.4.2.txt:7
 msgid "This is the second security release in the Django 1.4 series."
-msgstr ""
+msgstr "Это второй релиз безопасности в ветке Django 1.4."
 
 # 73d92d41e7574b9dabcc2be82f344b7d
 #: ../../releases/1.4.2.txt:10
 msgid "Host header poisoning"
-msgstr ""
+msgstr "Уязвимость в заголовке хоста"
 
 # 2e634bd78ffe47cdae5c88e7042a234d
 #: ../../releases/1.4.2.txt:12
@@ -48,6 +48,12 @@ msgid ""
 "documentation has for some time contained notes advising users on such "
 "configuration."
 msgstr ""
+"В некоторых местах Django -- независимо от пользовательских приложений -- "
+"используют полный URL, включая имя домена, которое генерируется из HTTP "
+"заголовка Host. Отражение таких атак находится за пределами возможностей "
+"Django и требует правильно сконфигурированного web-сервера. В документации "
+"можно найти несколько заметок на этот счёт."
+
 
 # 8a93e8f57d014e40ba9389ad7be164b8
 #: ../../releases/1.4.2.txt:18
@@ -59,6 +65,10 @@ msgid ""
 "the header. Thus, for example, the following Host header would be accepted "
 "by Django when running on \"validsite.com\"::"
 msgstr ""
+"Встроенный обработчик заголовка Host по-прежнему уязвим, как нам и "
+"сообщалось ранее. В ``django.http.HttpRequest.get_host()`` в версиях Django "
+"1.3.3 и 1.4.1 неверно обрабатывает информацию о логине/пароле пользователя. "
+"Например, следующий код вернёт \"validsite.com\"::"
 
 # 8f8dfea08f084c5bbdeada86ec222939
 #: ../../releases/1.4.2.txt:27
@@ -66,6 +76,9 @@ msgid ""
 "Using this, an attacker can cause parts of Django -- particularly the "
 "password-reset mechanism -- to generate and display arbitrary URLs to users."
 msgstr ""
+"Пользуясь этим, злоумышленник может вызвать методы Django -- в частности "
+"восстановление пароля -- для создания и отображения произвольных "
+"URL-адреса для пользователей."
 
 # d04b66fea57f410c873a0200f934ba0c
 #: ../../releases/1.4.2.txt:30
@@ -75,17 +88,22 @@ msgid ""
 "password pairs) now raise the exception :exc:`django.core.exceptions."
 "SuspiciousOperation`."
 msgstr ""
+"Чтобы исключить такую возможность, был изменён ``HttpRequest.get_host()``. "
+"Теперь при разборе заголовка Host, который содержит потенциально опасный "
+"контент (например, имя пользователя или пароль) будет вызывать исключение "
+":exc:`django.core.exceptions.SuspiciousOperation`."
 
 # cdcaf626e7844b7f945ee672b7b6d8b0
 #: ../../releases/1.4.2.txt:35
 msgid ""
 "Details of this issue were initially posted online as a `security advisory`_."
 msgstr ""
+"Подробнее об этом изменении можно посмотреть в `security advisory`_."
 
 # c8db489cf7fc4613b6da1a2a1a70350f
 #: ../../releases/1.4.2.txt:40
 msgid "Backwards incompatible changes"
-msgstr ""
+msgstr "Нарушение обратной совместимости"
 
 # 5c2a2d9b476f430f8bf1038129955c4c
 #: ../../releases/1.4.2.txt:42
@@ -94,21 +112,24 @@ msgid ""
 "constructor arguments have been adapted to match those of all other model "
 "fields. The first two keyword arguments are now verbose_name and name."
 msgstr ""
+"Новые аргументы для конструктора :class:`~django.db.models.GenericIPAddressField` "
+"адаптированы таким образом, чтобы совпадали с остальными полями модели. "
+"Теперь два первых аргумента verbose_name и name."
 
 # fb35f12d49bd4170a5e9ad362dc38480
 #: ../../releases/1.4.2.txt:47
 msgid "Other bugfixes and changes"
-msgstr ""
+msgstr "Остальные исправления и изменения"
 
 # f62c6cbe074d4d05b2b5fddfae127c7d
 #: ../../releases/1.4.2.txt:49
 msgid "Subclass HTMLParser only for appropriate Python versions (#18239)."
-msgstr ""
+msgstr "Подкласс HTMLParser использует соответствующую версию Python (#18239)."
 
 # bf268b0d6796429d8edd7279d940fffe
 #: ../../releases/1.4.2.txt:50
 msgid "Added batch_size argument to qs.bulk_create() (#17788)."
-msgstr ""
+msgstr "Добавлен аргумент batch_size в qs.bulk_create() (#17788)."
 
 # 99b8e948b0564811bc80b5847b4859cd
 #: ../../releases/1.4.2.txt:51
@@ -116,23 +137,26 @@ msgid ""
 "Fixed a small regression in the admin filters where wrongly formatted dates "
 "passed as url parameters caused an unhandled ValidationError (#18530)."
 msgstr ""
+"Исправлена небольшая регрессия в фильтрах админки, когда неправильно "
+"форматированная дата, которая передавалась как параметр, вызывала необработанное "
+"исключение ValidationError (#18530)."
 
 # 475a4ad512584a42ab28dcfb2c6ff8d2
 #: ../../releases/1.4.2.txt:52
 msgid ""
 "Fixed an endless loop bug when accessing permissions in templates (#18979)"
-msgstr ""
+msgstr "Исправлен бесконечный цикл при запросе доступа в шаблоне (#18979)"
 
 # 3c9222c51806460e962252286b2f6b63
 #: ../../releases/1.4.2.txt:53
 msgid "Fixed some Python 2.5 compatibility issues"
-msgstr ""
+msgstr "Исправлена совместимость с Python 2.5"
 
 # 23bfc98c1d0b4c63a7878179df8302a5
 #: ../../releases/1.4.2.txt:54
 msgid ""
 "Fixed an issue with quoted filenames in Content-Disposition header (#19006)"
-msgstr ""
+msgstr "Исправлена ошибка с экранированием имён файлов в заголовке Content-Disposition (#19006)."
 
 # 5abb4ea4662f4aa38ab22d19b95f76b9
 #: ../../releases/1.4.2.txt:55
@@ -140,8 +164,10 @@ msgid ""
 "Made the context option in ``trans`` and ``blocktrans`` tags accept literals "
 "wrapped in single quotes (#18881)."
 msgstr ""
+"Контекстные опции для тегов ``trans`` и ``blocktrans`` теперь принимают "
+"строки в одинарных кавычках (#18881)."
 
 # 477c8a3dd40945819d8559652a7b263d
 #: ../../releases/1.4.2.txt:56
 msgid "Numerous documentation improvements and fixes."
-msgstr ""
+msgstr "Многочисленные улучшения и исправления документации."

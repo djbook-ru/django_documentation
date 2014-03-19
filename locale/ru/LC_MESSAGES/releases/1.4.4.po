@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Django 1.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2013-08-21 17:15\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2014-03-21 17:15\n"
+"Last-Translator: Viktor Tyshchenko <tyvik8@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -21,12 +21,12 @@ msgstr ""
 # 81279b64c5424b3aa4eef6d2c3bf7351
 #: ../../releases/1.4.4.txt:3
 msgid "Django 1.4.4 release notes"
-msgstr ""
+msgstr "Релиз Django 1.4.4"
 
 # cd640cf48d454aa3a2994814851f234f
 #: ../../releases/1.4.4.txt:5
 msgid "*February 19, 2013*"
-msgstr ""
+msgstr "*19 февраля 2013*"
 
 # 88d82a0298e14508a76288eec6c09068
 #: ../../releases/1.4.4.txt:7
@@ -35,16 +35,18 @@ msgid ""
 "in the 1.4 series, as well as several other bugs and numerous documentation "
 "improvements."
 msgstr ""
+"Патч Django 1.4.4 исправляет 4 проблемы безопасности в ветке 1.4, а также "
+"множество других ошибок как в коде, так и в документации."
 
 # 9092663576d247fba1c15c7f112b2fae
 #: ../../releases/1.4.4.txt:11
 msgid "This is the fourth bugfix/security release in the Django 1.4 series."
-msgstr ""
+msgstr "Это четвёртый релиз безопасности для ветки Django 1.4."
 
 # 5ecadc258dff4bab99826c8a0815ee1a
 #: ../../releases/1.4.4.txt:15
 msgid "Host header poisoning"
-msgstr ""
+msgstr "Опасный заголовок Host"
 
 # 49d10313bb9f4f67963987bd3a00f811
 #: ../../releases/1.4.4.txt:17
@@ -58,6 +60,12 @@ msgid ""
 "techniques available for tricking many common webservers into supplying the "
 "application with an incorrect and possibly malicious Host header."
 msgstr ""
+"Некоторые алгоритмы Django -- вне зависимости от пользовательских приложений -- "
+"использовали полные URL`ы, включая доменное имя, которое генерируется из "
+"заголовка запроса Host. В документации Django уже некоторое время назад были "
+"опубликованы рекомендации по конфигурированию web-серверов, которые помогут "
+"обезопасить Django-приложение. Тем не менее даже в случае корректной настройки "
+"оставались лазейки для использования этой уязвимости."
 
 # 61a6a0ab3470438ca46795f2366ad8f2
 #: ../../releases/1.4.4.txt:26
@@ -68,6 +76,11 @@ msgid ""
 "``SuspiciousOperation`` if ``request.get_host()`` is called. For full "
 "details see the documentation for the :setting:`ALLOWED_HOSTS` setting."
 msgstr ""
+"По этой причине в Django 1.4.4 добавлена новая настройка ``ALLOWED_HOSTS``, "
+"в котором должен быть явно указан список допустимых хостов для этого сайта. "
+"Запрос с неверным заголовком Host при вызове ``request.get_host()`` сгенерирует "
+"исключение ``SuspiciousOperation``. Подробнее можно посмотреть в документации "
+"по настройке :setting:`ALLOWED_HOSTS`."
 
 # e112c169e52540fb8889ef0d601d69fb
 #: ../../releases/1.4.4.txt:32
@@ -76,6 +89,9 @@ msgid ""
 "any host), for backwards-compatibility, but we strongly encourage all sites "
 "to set a more restrictive value."
 msgstr ""
+"Значением по умолчанию в Django 1.3.6 является ``['*']`` (любой хост). Это "
+"оставлено для обратной совместимости, но мы настоятельно рекомендуем "
+"ужесточить это условие."
 
 # 3abfdb5b4ee041a19675b97330643765
 #: ../../releases/1.4.4.txt:36
@@ -83,11 +99,13 @@ msgid ""
 "This host validation is disabled when ``DEBUG`` is ``True`` or when running "
 "tests."
 msgstr ""
+"Валидация хоста отключена, когда ``DEBUG`` установлен в ``True``, а также при "
+"запуске тестов."
 
 # cbe4e114b9504a348a0450ec273b8cc2
 #: ../../releases/1.4.4.txt:40
 msgid "XML deserialization"
-msgstr ""
+msgstr "Десериализация XML"
 
 # 17e5340bcf6e433cb563a4a98265bf15
 #: ../../releases/1.4.4.txt:42
@@ -99,6 +117,10 @@ msgid ""
 "safety in Django 1.4.4 the XML deserializer refuses to parse an XML document "
 "with a DTD (DOCTYPE definition), which closes off these attack avenues."
 msgstr ""
+"XML-парсер в стандартной поставке Python уязвимы для ряда атак через внешние "
+"сущности и расширения. Django же использует его для десериализации фикстур "
+"БД. В принципе, в них не должно быть плохих данных, но мы решили перестраховаться "
+"и сделали невозможным атаки через это направление."
 
 # cf8776eee46d470d8e333ce04875b588
 #: ../../releases/1.4.4.txt:49
@@ -106,6 +128,8 @@ msgid ""
 "These issues in the Python standard library are CVE-2013-1664 and "
 "CVE-2013-1665. More information available `from the Python security team`_."
 msgstr ""
+"Эти вопросы проходят под номерами CVE-2013-1664 и CVE-2013-1665 стандартной "
+"библиотеки. Подробнее можно посмотреть на `from the Python security team`_."
 
 # 13ead043b50343d6a78a8d8d1202c424
 #: ../../releases/1.4.4.txt:52
@@ -115,11 +139,14 @@ msgid ""
 "``loaddata``, but if you feed your own XML documents to the ``loaddata`` "
 "management command, you will need to ensure they do not contain a DTD."
 msgstr ""
+"Сериализатор Django не создаёт DTD, так что это не должно быть проблемой при "
+"обычной загрузке восстановлении через ``dumpdata``/``loaddata``, однако если "
+"вы применяете сторонний XML через ``loaddata`` убедитесь, что он не содержит DTD."
 
 # 7b7b6155a1454047baadcd9aa9983574
 #: ../../releases/1.4.4.txt:61
 msgid "Formset memory exhaustion"
-msgstr ""
+msgstr "Нехватка памяти для наборов форм"
 
 # 75c03816657f4273af1743a5e3bfa624
 #: ../../releases/1.4.4.txt:63
@@ -129,6 +156,9 @@ msgid ""
 "exhaust a server's available memory by forcing it to create very large "
 "numbers of forms."
 msgstr ""
+"Предыдущие версии Django не проверяли и не ограничивали в размере наборы форм, "
+"делая возможным создание огромного их количества, что исчерпывало всю доступную "
+"память на сервере."
 
 # d3c60589c1dc49edbb30a135e283e89b
 #: ../../releases/1.4.4.txt:68
@@ -137,11 +167,13 @@ msgid ""
 "forms (1000 by default, though it can be set higher via the ``max_num`` "
 "formset factory argument)."
 msgstr ""
+"В Django 1.4.4 все наборы форм имеют ограничение в количестве оных (по "
+"умолчанию 1000, но это значение может быть увеличено через аргумент ``max_num``)."
 
 # 26ac57299d4d466684fb27a9e7be7295
 #: ../../releases/1.4.4.txt:74
 msgid "Admin history view information leakage"
-msgstr ""
+msgstr "Утечка истории посещения админки"
 
 # 0445cd0069074a13b7a877e02e1ff7cb
 #: ../../releases/1.4.4.txt:76
@@ -151,30 +183,34 @@ msgid ""
 "admin history log. Django 1.4.4 now limits the admin history log view for an "
 "object to users with change permission for that model."
 msgstr ""
+"В предыдущих версиях Django админ без права редактирования всё ещё мог видеть "
+"unicode представления объектов через историю. Теперь добавлено ограничение "
+"на просмотр лога."
 
 # c600a803ac794f6e8c1e44d578d10910
 #: ../../releases/1.4.4.txt:83
 msgid "Other bugfixes and changes"
-msgstr ""
+msgstr "Остальные исправления и изменения"
 
 # 9fb50b9d556c4d64a35402a99743283f
 #: ../../releases/1.4.4.txt:85
 msgid ""
 "Prevented transaction state from leaking from one request to the next "
 "(#19707)."
-msgstr ""
+msgstr "Предотвращение утечки состояния транзакции между запросами (#19707)."
 
 # 0e1850a0bd584387b701823ef0f25c13
 #: ../../releases/1.4.4.txt:86
 msgid "Changed an SQL command syntax to be MySQL 4 compatible (#19702)."
-msgstr ""
+msgstr "Изменён синтаксис SQL-команд для совместимости с MySQL 4 (#19702)."
 
 # bc0a1e699f564f5c8f0ce1865c496273
 #: ../../releases/1.4.4.txt:87
 msgid "Added backwards-compatibility with old unsalted MD5 passwords (#18144)."
 msgstr ""
+"Добавлена поддержка обратной совместимости со старыми \"несолёными\" паролями (#18144)."
 
 # 8fe70ab90aa84e05ace30df4ed9af3a6
 #: ../../releases/1.4.4.txt:88
 msgid "Numerous documentation improvements and fixes."
-msgstr ""
+msgstr "Многочисленные улучшения и исправления документации."
