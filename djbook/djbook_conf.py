@@ -1,9 +1,11 @@
 # to apply these settings add to conf.py
 # sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "djbook")))
 # from djbook_conf import *
+
 import sys
 import os
 from git import Repo
+from spelling_filters import IgnoreEnglishFilter
 
 #sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "_ext")))
 
@@ -25,3 +27,6 @@ locale_dirs = ['./locale/']
 gettext_compact = False
 
 exclude_patterns = ['_build', 'djbook', 'env']
+
+spelling_lang = 'ru_RU'
+spelling_filters = [IgnoreEnglishFilter]

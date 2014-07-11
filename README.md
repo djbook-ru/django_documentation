@@ -24,3 +24,7 @@
 Список всех команад:
 
     $ ./translator.py --help
+
+Проверка орфографии:
+
+    $ ./translator.py spellcheck
