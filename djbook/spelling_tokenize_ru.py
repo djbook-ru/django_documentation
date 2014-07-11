@@ -64,7 +64,7 @@ class tokenize(enchant.tokenize.tokenize):
 
     _DOC_ERRORS = ["pos","pos"]
 
-    def __init__(self,text,valid_chars=("'",)):
+    def __init__(self,text,valid_chars=("'", "-")):
         self._valid_chars = valid_chars
         self._text = text
         self._offset = 0

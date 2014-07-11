@@ -127,7 +127,7 @@ class SpellingBuilder(Builder):
                     msg = ':'.join(msg_parts)
                     self.info(msg)
                     self.output.write(u"%s:%s: (%s) %s | %s\n" % (
-                        docname,
+                        docname + '.po',
                         lineno, word,
                         self.format_suggestions(suggestions),
                         node.astext()

@@ -12,4 +12,4 @@ class IgnoreEnglishFilter(Filter):
         self.pattern = re.compile(ur'[а-яА-Я]+')
 
     def _skip(self, word):
-        return not self.pattern.search(word)
+        return self.pattern.search(word) is None
