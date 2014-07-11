@@ -173,7 +173,7 @@ class tokenize(enchant.tokenize.tokenize):
                 # added ё - е replace
                 word = word.replace(u'ё', u'е')
                 word = word.replace(u'Ё', u'Е')
-                return (word, curPos)
+                return (word.lower(), curPos)
         self._offset = offset
         raise StopIteration()
 

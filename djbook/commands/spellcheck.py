@@ -1,3 +1,4 @@
+# coding: utf-8
 import logging
 import os
 
@@ -7,7 +8,8 @@ from cliff.command import Command as BaseCommand
 
 class Command(BaseCommand):
     """
-    Spell-check translation
+    Spell-check translation. Words are lowered to reduce number of ignored words.
+    Also `ё` replaced with `Ё`.
     """
     log = logging.getLogger(__name__)
 
