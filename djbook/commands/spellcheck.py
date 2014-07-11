@@ -18,6 +18,7 @@ class Command(BaseCommand):
         spelling_path = os.path.join(self.app.doc_path, '_build/spelling')
         cmd = 'sphinx-build -b spelling -n -d %s -D language=ru_RU . %s'
         os.system(cmd % (doctrees_path, spelling_path))
+        self.app.stdout.write('Check result in %s\n' % spelling_path)
 
     def _check_enviroment(self):
         import enchant
@@ -28,7 +29,7 @@ class Command(BaseCommand):
             from enchant.tokenize.ru import tokenize
         except ImportError:
             copyfile(
-                os.path.join(enchant_path, 'tokenize/en.py'),
+                os.path.join(self.app.doc_path, 'djbook/spelling_tokenize_ru.py'),
                 os.path.join(enchant_path, 'tokenize/ru.py')
             )
 

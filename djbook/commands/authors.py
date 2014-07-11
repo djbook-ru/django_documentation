@@ -23,7 +23,6 @@ class Command(GithubCommandMixin, BaseCommand):
             })
         except GithubException as e:
             print e
-            print dir(e)
 
     def save_to_file(self, context):
         env = Environment(loader=FileSystemLoader(self.app.templates_path))
