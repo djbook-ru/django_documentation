@@ -126,12 +126,16 @@ class SpellingBuilder(Builder):
                     msg_parts.append(node.astext())
                     msg = ':'.join(msg_parts)
                     self.info(msg)
-                    self.output.write(u"%s:%s: (%s) %s | %s\n" % (
-                        docname + '.po',
-                        lineno, word,
-                        self.format_suggestions(suggestions),
-                        node.astext()
-                    ))
+
+                    if False:  # To generate simple output.txt for spell_statistic command
+                        self.output.write('%s\n' % word)
+                    else:
+                        self.output.write(u"%s:%s: (%s) %s | %s\n" % (
+                            docname + '.po',
+                            lineno, word,
+                            self.format_suggestions(suggestions),
+                            node.astext()
+                        ))
 
                     # We found at least one bad spelling, so set the status
                     # code for the app to a value that indicates an error.
