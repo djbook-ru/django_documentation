@@ -32,6 +32,13 @@ Attributes
 All attributes should be considered read-only, unless stated otherwise below.
 ``session`` is a notable exception.
 
+.. attribute:: HttpRequest.scheme
+
+   .. versionadded:: 1.7
+
+   A string representing the scheme of the request (``http`` or ``https``
+   usually).
+
 .. attribute:: HttpRequest.body
 
     The raw HTTP request body as a byte string. This is useful for processing
@@ -93,10 +100,6 @@ All attributes should be considered read-only, unless stated otherwise below.
     non-form data posted in the request, access this through the
     :attr:`HttpRequest.body` attribute instead.
 
-    .. versionchanged:: 1.5
-
-        Before Django 1.5, HttpRequest.POST contained non-form data.
-
     It's possible that a request can come in via POST with an empty ``POST``
     dictionary -- if, say, a form is requested via the POST HTTP method but
     does not include form data. Therefore, you shouldn't use ``if request.POST``
@@ -106,6 +109,9 @@ All attributes should be considered read-only, unless stated otherwise below.
     Note: ``POST`` does *not* include file-upload information. See ``FILES``.
 
 .. attribute:: HttpRequest.REQUEST
+
+    .. deprecated:: 1.7
+        Use the more explicit ``GET`` and ``POST`` instead.
 
     For convenience, a dictionary-like object that searches ``POST`` first,
     then ``GET``. Inspired by PHP's ``$_REQUEST``.
@@ -126,7 +132,7 @@ All attributes should be considered read-only, unless stated otherwise below.
 
     A dictionary-like object containing all uploaded files. Each key in
     ``FILES`` is the ``name`` from the ``<input type="file" name="" />``. Each
-    value in ``FILES`` is an :class:`UploadedFile` as described below.
+    value in ``FILES`` is an :class:`~django.core.files.uploadedfile.UploadedFile`.
 
     See :doc:`/topics/files` for more information.
 
@@ -195,8 +201,6 @@ All attributes should be considered read-only, unless stated otherwise below.
     setting. See :ref:`how-django-processes-a-request` for details.
 
 .. attribute:: HttpRequest.resolver_match
-
-    .. versionadded:: 1.5
 
     An instance of :class:`~django.core.urlresolvers.ResolverMatch` representing
     the resolved url. This attribute is only set after url resolving took place,
@@ -330,56 +334,41 @@ Methods
             process(element)
 
 
-UploadedFile objects
-====================
-
-.. class:: UploadedFile
-
-
-Attributes
-----------
-
-.. attribute::  UploadedFile.name
-
-    The name of the uploaded file.
-
-.. attribute:: UploadedFile.size
-
-    The size, in bytes, of the uploaded file.
-
-Methods
-----------
-
-.. method:: UploadedFile.chunks(chunk_size=None)
-
-    Returns a generator that yields sequential chunks of data.
-
-.. method:: UploadedFile.read(num_bytes=None)
-
-    Read a number of bytes from the file.
-
-
-
 QueryDict objects
 =================
 
 .. class:: QueryDict
 
-In an :class:`HttpRequest` object, the ``GET`` and ``POST`` attributes are instances
-of ``django.http.QueryDict``. :class:`QueryDict` is a dictionary-like
-class customized to deal with multiple values for the same key. This is
-necessary because some HTML form elements, notably
-``<select multiple="multiple">``, pass multiple values for the same key.
+In an :class:`HttpRequest` object, the ``GET`` and ``POST`` attributes are
+instances of ``django.http.QueryDict``, a dictionary-like class customized to
+deal with multiple values for the same key. This is necessary because some HTML
+form elements, notably ``<select multiple>``, pass multiple values for the same
+key.
 
-``QueryDict`` instances are immutable, unless you create a ``copy()`` of them.
-That means you can't change attributes of ``request.POST`` and ``request.GET``
-directly.
+The ``QueryDict``\ s at ``request.POST`` and ``request.GET`` will be immutable
+when accessed in a normal request/response cycle. To get a mutable version you
+need to use ``.copy()``.
 
 Methods
 -------
 
-:class:`QueryDict` implements all the standard dictionary methods, because it's
+:class:`QueryDict` implements all the standard dictionary methods because it's
 a subclass of dictionary. Exceptions are outlined here:
+
+.. method:: QueryDict.__init__(query_string, mutable=False, encoding=None)
+
+   Instantiates a ``QueryDict`` object based on ``query_string``.
+
+          >>> QueryDict('a=1&a=2&c=3')
+          <QueryDict: {u'a': [u'1', u'2'], u'b': [u'1']}>
+
+   Most ``QueryDict``\ s you encounter, and in particular those at
+   ``request.POST`` and ``request.GET``, will be immutable. If you are
+   instantiating one yourself, you can make it mutable by passing
+   ``mutable=True`` to its ``__init__()``.
+
+   Strings for setting both keys and values will be converted from ``encoding``
+   to unicode. If encoding is not set, it defaults to :setting:`DEFAULT_CHARSET`.
 
 .. method:: QueryDict.__getitem__(key)
 
@@ -393,8 +382,8 @@ a subclass of dictionary. Exceptions are outlined here:
 
     Sets the given key to ``[value]`` (a Python list whose single element is
     ``value``). Note that this, as other dictionary functions that have side
-    effects, can only be called on a mutable ``QueryDict`` (one that was created
-    via ``copy()``).
+    effects, can only be called on a mutable ``QueryDict`` (such as one that
+    was created via ``copy()``).
 
 .. method:: QueryDict.__contains__(key)
 
@@ -417,8 +406,7 @@ a subclass of dictionary. Exceptions are outlined here:
     dictionary ``update()`` method, except it *appends* to the current
     dictionary items rather than replacing them. For example::
 
-          >>> q = QueryDict('a=1')
-          >>> q = q.copy() # to make it mutable
+          >>> q = QueryDict('a=1', mutable=True)
           >>> q.update({'a': '2'})
           >>> q.getlist('a')
           [u'1', u'2']
@@ -463,8 +451,7 @@ In addition, ``QueryDict`` has the following methods:
 .. method:: QueryDict.copy()
 
     Returns a copy of the object, using ``copy.deepcopy()`` from the Python
-    standard library. The copy will be mutable -- that is, you can change its
-    values.
+    standard library. This copy will be mutable even if the original was not.
 
 .. method:: QueryDict.getlist(key, default)
 
@@ -576,28 +563,12 @@ file-like object::
 Passing iterators
 ~~~~~~~~~~~~~~~~~
 
-Finally, you can pass ``HttpResponse`` an iterator rather than strings. If you
-use this technique, the iterator should return strings.
+Finally, you can pass ``HttpResponse`` an iterator rather than strings.
+``HttpResponse`` will consume the iterator immediately, store its content as a
+string, and discard it.
 
-Passing an iterator as content to :class:`HttpResponse` creates a
-streaming response if (and only if) no middleware accesses the
-:attr:`HttpResponse.content` attribute before the response is returned.
-
-.. versionchanged:: 1.5
-
-    This technique is fragile and was deprecated in Django 1.5. If you need the
-    response to be streamed from the iterator to the client, you should use the
-    :class:`StreamingHttpResponse` class instead.
-
-    As of Django 1.7, when :class:`HttpResponse` is instantiated with an
-    iterator, it will consume it immediately, store the response content as a
-    string, and discard the iterator.
-
-.. versionchanged:: 1.5
-
-    You can now use :class:`HttpResponse` as a file-like object even if it was
-    instantiated with an iterator. Django will consume and save the content of
-    the iterator on first access.
+If you need the response to be streamed from the iterator to the client, you
+must use the :class:`StreamingHttpResponse` class instead.
 
 Setting header fields
 ~~~~~~~~~~~~~~~~~~~~~
@@ -639,7 +610,7 @@ Attributes
 
 .. attribute:: HttpResponse.content
 
-    A string representing the content, encoded from a Unicode
+    A bytestring representing the content, encoded from a Unicode
     object if necessary.
 
 .. attribute:: HttpResponse.status_code
@@ -708,8 +679,8 @@ Methods
 
 .. method:: HttpResponse.set_cookie(key, value='', max_age=None, expires=None, path='/', domain=None, secure=None, httponly=False)
 
-    Sets a cookie. The parameters are the same as in the :class:`Cookie.Morsel`
-    object in the Python standard library.
+    Sets a cookie. The parameters are the same as in the
+    :class:`~http.cookies.Morsel` cookie object in the Python standard library.
 
     * ``max_age`` should be a number of seconds, or ``None`` (default) if
       the cookie should last only as long as the client's browser session.
@@ -734,6 +705,14 @@ Methods
       data.
 
     .. _HTTPOnly: https://www.owasp.org/index.php/HTTPOnly
+
+    .. warning::
+
+        Both :rfc:`2109` and :rfc:`6265` state that user agents should support
+        cookies of at least 4096 bytes. For many browsers this is also the
+        maximum size. Django will not raise an exception if there's an attempt
+        to store a cookie of more than 4096 bytes, but many browsers will not
+        set the cookie correctly.
 
 .. method:: HttpResponse.set_signed_cookie(key, value, salt='', max_age=None, expires=None, path='/', domain=None, secure=None, httponly=True)
 
@@ -835,19 +814,85 @@ types of HTTP responses. Like ``HttpResponse``, these subclasses live in
     :class:`~django.template.response.SimpleTemplateResponse`, and the
     ``render`` method must itself return a valid response object.
 
+JsonResponse objects
+====================
+
+.. versionadded:: 1.7
+
+.. class:: JsonResponse
+
+.. method:: JsonResponse.__init__(data, encoder=DjangoJSONEncoder, safe=True, **kwargs)
+
+   An :class:`HttpResponse` subclass that helps to create a JSON-encoded
+   response. It inherits most behavior from its superclass with a couple
+   differences:
+
+   Its default ``Content-Type`` header is set to ``application/json``.
+
+   The first parameter, ``data``, should be a ``dict`` instance. If the ``safe``
+   parameter is set to ``False`` (see below) it can be any JSON-serializable
+   object.
+
+   The ``encoder``, which defaults to
+   ``django.core.serializers.json.DjangoJSONEncoder``, will be used to
+   serialize the data. See :ref:`JSON serialization
+   <serialization-formats-json>` for more details about this serializer.
+
+   The ``safe`` boolean parameter defaults to ``True``. If it's set to ``False``,
+   any object can be passed for serialization (otherwise only ``dict`` instances
+   are allowed). If ``safe`` is ``True`` and a non-``dict`` object is passed as
+   the first argument, a :exc:`TypeError` will be raised.
+
+Usage
+-----
+
+Typical usage could look like::
+
+    >>> from django.http import JsonResponse
+    >>> response = JsonResponse({'foo': 'bar'})
+    >>> response.content
+    '{"foo": "bar"}'
+
+
+Serializing non-dictionary objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order to serialize objects other than ``dict`` you must set the ``safe``
+parameter to ``False``::
+
+    >>> response = JsonResponse([1, 2, 3], safe=False)
+
+Without passing ``safe=False``, a :exc:`TypeError` will be raised.
+
+.. warning::
+
+    Before the `5th edition of EcmaScript
+    <http://www.ecma-international.org/publications/standards/Ecma-262.htm>`_
+    it was possible to poison the JavaScript ``Array`` constructor. For this
+    reason, Django does not allow passing non-dict objects to the
+    :class:`~django.http.JsonResponse` constructor by default.  However, most
+    modern browsers implement EcmaScript 5 which removes this attack vector.
+    Therefore it is possible to disable this security precaution.
+
+Changing the default JSON encoder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to use a differ JSON encoder class you can pass the ``encoder``
+parameter to the constructor method::
+
+    >>> response = JsonResponse(data, encoder=MyJSONEncoder)
+
 .. _httpresponse-streaming:
 
 StreamingHttpResponse objects
 =============================
-
-.. versionadded:: 1.5
 
 .. class:: StreamingHttpResponse
 
 The :class:`StreamingHttpResponse` class is used to stream a response from
 Django to the browser. You might want to do this if generating the response
 takes too long or uses too much memory. For instance, it's useful for
-generating large CSV files.
+:ref:`generating large CSV files <streaming-csv-files>`.
 
 .. admonition:: Performance considerations
 
@@ -886,16 +931,16 @@ Attributes
 
     An iterator of strings representing the content.
 
-.. attribute:: HttpResponse.status_code
+.. attribute:: StreamingHttpResponse.status_code
 
     The `HTTP status code`_ for the response.
 
-.. attribute:: HttpResponse.reason_phrase
+.. attribute:: StreamingHttpResponse.reason_phrase
 
     .. versionadded:: 1.6
 
     The HTTP reason phrase for the response.
 
-.. attribute:: HttpResponse.streaming
+.. attribute:: StreamingHttpResponse.streaming
 
     This is always ``True``.

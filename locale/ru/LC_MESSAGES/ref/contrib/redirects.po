@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-27 00:21\n"
+"POT-Creation-Date: 2014-07-11 11:43+0300\n"
 "PO-Revision-Date: 2012-02-15 15:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -23,125 +23,132 @@ msgstr ""
 msgid "The redirects app"
 msgstr ""
 
-# 087b732c8fd74c2caa415590c3629e66
+# b5fc4a6ceb9c47d7a6ed34943406bb65
 #: ../../ref/contrib/redirects.txt:8
 msgid ""
 "Django comes with an optional redirects application. It lets you store "
-"simple redirects in a database and handles the redirecting for you."
+"simple redirects in a database and handles the redirecting for you. It uses "
+"the HTTP response status code ``301 Moved Permanently`` by default."
 msgstr ""
 
 # 2df4f820058c471ebfa3e7d4ea7bc87f
-#: ../../ref/contrib/redirects.txt:12
+#: ../../ref/contrib/redirects.txt:13
 msgid "Installation"
 msgstr ""
 
 # 58da8e4c83e249b5b3bbc28d556e86a0
-#: ../../ref/contrib/redirects.txt:14
+#: ../../ref/contrib/redirects.txt:15
 msgid "To install the redirects app, follow these steps:"
 msgstr ""
 
 # 57194f7523614620895291a841e9446a
-#: ../../ref/contrib/redirects.txt:16
+#: ../../ref/contrib/redirects.txt:17
 msgid ""
 "Ensure that the ``django.contrib.sites`` framework :ref:`is installed "
 "<enabling-the-sites-framework>`."
 msgstr ""
 
 # 26f89c72ccea4626866a141f94d5ad07
-#: ../../ref/contrib/redirects.txt:18
+#: ../../ref/contrib/redirects.txt:19
 msgid ""
 "Add ``'django.contrib.redirects'`` to your :setting:`INSTALLED_APPS` setting."
 msgstr ""
 
 # 460e598c803841d48fe95290e325e848
-#: ../../ref/contrib/redirects.txt:19
+#: ../../ref/contrib/redirects.txt:20
 msgid ""
 "Add ``'django.contrib.redirects.middleware.RedirectFallbackMiddleware'`` to "
 "your :setting:`MIDDLEWARE_CLASSES` setting."
 msgstr ""
 
-# b038e1ea359641679545710549a66970
-#: ../../ref/contrib/redirects.txt:21
-msgid "Run the command :djadmin:`manage.py syncdb <syncdb>`."
+# dce7f4f7997e4397abeccfe86ba5ef56
+#: ../../ref/contrib/redirects.txt:22
+msgid "Run the command :djadmin:`manage.py migrate <migrate>`."
 msgstr ""
 
 # 610b6f3e78764715a7fc336598396fdb
-#: ../../ref/contrib/redirects.txt:24
+#: ../../ref/contrib/redirects.txt:25
 msgid "How it works"
 msgstr ""
 
-# 655e5c9764bd499682afe182047f9fa7
-#: ../../ref/contrib/redirects.txt:26
+# 04cc1a6d96624f208119c925bb4b46b1
+#: ../../ref/contrib/redirects.txt:27
 msgid ""
-"``manage.py syncdb`` creates a ``django_redirect`` table in your database. "
+"``manage.py migrate`` creates a ``django_redirect`` table in your database. "
 "This is a simple lookup table with ``site_id``, ``old_path`` and "
 "``new_path`` fields."
 msgstr ""
 
-# 2967424d57094e7d88d4332710a3981a
-#: ../../ref/contrib/redirects.txt:29
+# c4b399d0ef32400b83294e5e484660d4
+#: ../../ref/contrib/redirects.txt:30
 msgid ""
-"The ``RedirectFallbackMiddleware`` does all of the work. Each time any "
-"Django application raises a 404 error, this middleware checks the redirects "
-"database for the requested URL as a last resort. Specifically, it checks for "
-"a redirect with the given ``old_path`` with a site ID that corresponds to "
-"the :setting:`SITE_ID` setting."
+"The :class:`~django.contrib.redirects.middleware.RedirectFallbackMiddleware` "
+"does all of the work. Each time any Django application raises a 404 error, "
+"this middleware checks the redirects database for the requested URL as a "
+"last resort. Specifically, it checks for a redirect with the given "
+"``old_path`` with a site ID that corresponds to the :setting:`SITE_ID` "
+"setting."
 msgstr ""
 
-# e40b85e30b1140889133586aade42250
-#: ../../ref/contrib/redirects.txt:35
+# 9884f34f24514d0db774ca23e503ce11
+#: ../../ref/contrib/redirects.txt:37
 msgid ""
 "If it finds a match, and ``new_path`` is not empty, it redirects to "
-"``new_path``."
+"``new_path`` using a 301 (\"Moved Permanently\") redirect. You can subclass :"
+"class:`~django.contrib.redirects.middleware.RedirectFallbackMiddleware` and "
+"set :attr:`~django.contrib.redirects.middleware.RedirectFallbackMiddleware."
+"response_redirect_class` to :class:`django.http.HttpResponseRedirect` to use "
+"a ``302 Moved Temporarily`` redirect instead."
 msgstr ""
 
 # 356fe5b44c66453baf7db5284a843ff9
-#: ../../ref/contrib/redirects.txt:37
+#: ../../ref/contrib/redirects.txt:44
 msgid ""
 "If it finds a match, and ``new_path`` is empty, it sends a 410 (\"Gone\") "
 "HTTP header and empty (content-less) response."
 msgstr ""
 
 # 5f51c02f9e5346f1bb65f02ae37587a0
-#: ../../ref/contrib/redirects.txt:39
+#: ../../ref/contrib/redirects.txt:46
 msgid ""
 "If it doesn't find a match, the request continues to be processed as usual."
 msgstr ""
 
 # 4f46266005cd4fdf91f5934a4690042c
-#: ../../ref/contrib/redirects.txt:42
+#: ../../ref/contrib/redirects.txt:49
 msgid ""
 "The middleware only gets activated for 404s -- not for 500s or responses of "
 "any other status code."
 msgstr ""
 
-# c95022b257dc4559812b391723fe2b82
-#: ../../ref/contrib/redirects.txt:45
+# 4a0ed46dbe0d42428f3145bf52db2b02
+#: ../../ref/contrib/redirects.txt:52
 msgid ""
 "Note that the order of :setting:`MIDDLEWARE_CLASSES` matters. Generally, you "
-"can put ``RedirectFallbackMiddleware`` at the end of the list, because it's "
-"a last resort."
+"can put :class:`~django.contrib.redirects.middleware."
+"RedirectFallbackMiddleware` at the end of the list, because it's a last "
+"resort."
 msgstr ""
 
 # aa86360c2dfa44249f0390a065678744
-#: ../../ref/contrib/redirects.txt:49
+#: ../../ref/contrib/redirects.txt:56
 msgid ""
 "For more on middleware, read the :doc:`middleware docs </topics/http/"
 "middleware>`."
 msgstr ""
 
 # f2fc98d09a704d49899b94f330942fd0
-#: ../../ref/contrib/redirects.txt:53
+#: ../../ref/contrib/redirects.txt:60
 msgid "How to add, change and delete redirects"
 msgstr ""
 
 # 2049f80851f44f7cb9a0c69263f8bf32
-#: ../../ref/contrib/redirects.txt:56
+#: ../../ref/contrib/redirects.txt:63
 msgid "Via the admin interface"
 msgstr ""
 
 # 9d4e0ae459794e519bcdee9d73a517e3
-#: ../../ref/contrib/redirects.txt:58
+#: ../../ref/contrib/redirects.txt:65
 msgid ""
 "If you've activated the automatic Django admin interface, you should see a "
 "\"Redirects\" section on the admin index page. Edit redirects as you edit "
@@ -149,15 +156,52 @@ msgid ""
 msgstr ""
 
 # eddeacf65a7449318b537559427ccd72
-#: ../../ref/contrib/redirects.txt:63
+#: ../../ref/contrib/redirects.txt:70
 msgid "Via the Python API"
 msgstr ""
 
 # 992e989b28e845c79b97f0b692b10eb8
-#: ../../ref/contrib/redirects.txt:67
+#: ../../ref/contrib/redirects.txt:74
 msgid ""
 "Redirects are represented by a standard :doc:`Django model </topics/db/"
 "models>`, which lives in `django/contrib/redirects/models.py`_. You can "
 "access redirect objects via the :doc:`Django database API </topics/db/"
 "queries>`."
+msgstr ""
+
+# 2f8bf1dc8a574f8b9f30a0c4a6e76edd
+#: ../../ref/contrib/redirects.txt:81
+msgid "Middleware"
+msgstr ""
+
+# 6e55726e09474aa38b9efecdcbc861c5
+#: ../../ref/contrib/redirects.txt:85
+msgid ""
+"You can change the :class:`~django.http.HttpResponse` classes used by the "
+"middleware by creating a subclass of :class:`~django.contrib.redirects."
+"middleware.RedirectFallbackMiddleware` and overriding "
+"``response_gone_class`` and/or ``response_redirect_class``."
+msgstr ""
+
+# 05d846d6620a448ea8201dec24eec872
+#: ../../ref/contrib/redirects.txt:94
+msgid ""
+"The :class:`~django.http.HttpResponse` class used when a :class:`~django."
+"contrib.redirects.models.Redirect` is not found for the requested path or "
+"has a blank ``new_path`` value."
+msgstr ""
+
+# 146eaf7399714a548395e8f1bc3f352d
+#: ../../ref/contrib/redirects.txt:99
+msgid "Defaults to :class:`~django.http.HttpResponseGone`."
+msgstr ""
+
+# 84ad29289b4d49aebce6cbaa44e45e03
+#: ../../ref/contrib/redirects.txt:105
+msgid "The :class:`~django.http.HttpResponse` class that handles the redirect."
+msgstr ""
+
+# 9f8ce45a7f6048f09bac787f84c75c0e
+#: ../../ref/contrib/redirects.txt:108
+msgid "Defaults to :class:`~django.http.HttpResponsePermanentRedirect`."
 msgstr ""

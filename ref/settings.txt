@@ -79,17 +79,21 @@ responsible to provide your own validation of the ``Host`` header (perhaps in a
 middleware; if so this middleware must be listed first in
 :setting:`MIDDLEWARE_CLASSES`).
 
-.. note::
+.. versionchanged:: 1.7
 
-    If you want to also allow the `fully qualified domain name (FQDN)`_, which
-    some browsers can send in the Host header, you must explicitly add another
-    ALLOWED_HOSTS entry that includes a trailing period. This entry can also be
-    a subdomain wildcard::
+    In previous versions of Django, if you wanted to also allow the
+    `fully qualified domain name (FQDN)`_, which some browsers can send in the
+    ``Host`` header, you had to explicitly add another ``ALLOWED_HOSTS`` entry
+    that included a trailing period. This entry could also be a subdomain
+    wildcard::
 
         ALLOWED_HOSTS = [
             '.example.com', # Allow domain and subdomains
             '.example.com.', # Also allow FQDN and subdomains
         ]
+
+    In Django 1.7, the trailing dot is stripped when performing host validation,
+    thus an entry with a trailing dot isn't required.
 
 .. _`fully qualified domain name (FQDN)`: http://en.wikipedia.org/wiki/Fully_qualified_domain_name
 
@@ -179,15 +183,13 @@ The cache backend to use. The built-in cache backends are:
 You can use a cache backend that doesn't ship with Django by setting
 :setting:`BACKEND <CACHES-BACKEND>` to a fully-qualified path of a cache
 backend class (i.e. ``mypackage.backends.whatever.WhateverCache``).
-Writing a whole new cache backend from scratch is left as an exercise
-to the reader; see the other backends for examples.
 
 .. setting:: CACHES-KEY_FUNCTION
 
 KEY_FUNCTION
 ~~~~~~~~~~~~
 
-A string containing a dotted path to a function that defines how to
+A string containing a dotted path to a function (or any callable) that defines how to
 compose a prefix, version and key into a final cache key. The default
 implementation is equivalent to the function::
 
@@ -253,6 +255,10 @@ Default: 300
 
 The number of seconds before a cache entry is considered stale.
 
+.. versionadded:: 1.7
+
+If the value of this settings is ``None``, cache entries will not expire.
+
 .. setting:: CACHES-VERSION
 
 VERSION
@@ -317,6 +323,28 @@ The default number of seconds to cache a page when the caching middleware or
 See :doc:`/topics/cache`.
 
 .. _settings-csrf:
+
+.. setting:: CSRF_COOKIE_AGE
+
+CSRF_COOKIE_AGE
+---------------
+
+.. versionadded:: 1.7
+
+Default: ``31449600`` (1 year, in seconds)
+
+The age of CSRF cookies, in seconds.
+
+The reason for setting a long-lived expiration time is to avoid problems in
+the case of a user closing a browser or bookmarking a page and then loading
+that page from a browser cache. Without persistent cookies, the form submission
+would fail in this case.
+
+Some browsers (specifically Internet Explorer) can disallow the use of
+persistent cookies or can have the indexes to the cookie jar corrupted on disk,
+thereby causing CSRF protection checks to fail (and sometimes intermittently).
+Change this setting to ``None`` to use session-based CSRF cookies, which
+keep the cookies in-memory instead of on persistent storage.
 
 .. setting:: CSRF_COOKIE_DOMAIN
 
@@ -430,7 +458,7 @@ other database types. This example is for PostgreSQL::
 
     DATABASES = {
         'default': {
-            'ENGINE':'django.db.backends.postgresql_psycopg2',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'mydatabase',
             'USER': 'mydatabaseuser',
             'PASSWORD': 'mypassword',
@@ -482,9 +510,7 @@ The database backend to use. The built-in database backends are:
 
 You can use a database backend that doesn't ship with Django by setting
 ``ENGINE`` to a fully-qualified path (i.e.
-``mypackage.backends.whatever``). Writing a whole new database backend from
-scratch is left as an exercise to the reader; see the other backends for
-examples.
+``mypackage.backends.whatever``).
 
 .. setting:: HOST
 
@@ -579,10 +605,31 @@ Default: ``''`` (Empty string)
 
 The username to use when connecting to the database. Not used with SQLite.
 
+.. setting:: DATABASE-TEST
+
+TEST
+~~~~
+
+.. versionchanged:: 1.7
+
+    All :setting:`TEST <DATABASE-TEST>` sub-entries used to be independent
+    entries in the database settings dictionary, with a ``TEST_`` prefix.
+    For backwards compatibility with older versions of Django, you can define
+    both versions of the settings as long as they match.
+    Further, ``TEST_CREATE``, ``TEST_USER_CREATE`` and ``TEST_PASSWD``
+    were changed to ``CREATE_DB``, ``CREATE_USER`` and ``PASSWORD``
+    respectively.
+
+Default: ``{}``
+
+A dictionary of settings for test databases; for more details about the
+creation and use of test databases, see :ref:`the-test-database`. The
+following entries are available:
+
 .. setting:: TEST_CHARSET
 
-TEST_CHARSET
-~~~~~~~~~~~~
+CHARSET
+^^^^^^^
 
 Default: ``None``
 
@@ -598,8 +645,8 @@ backends.
 
 .. setting:: TEST_COLLATION
 
-TEST_COLLATION
-~~~~~~~~~~~~~~
+COLLATION
+^^^^^^^^^
 
 Default: ``None``
 
@@ -612,8 +659,8 @@ Only supported for the ``mysql`` backend (see the `MySQL manual`_ for details).
 
 .. setting:: TEST_DEPENDENCIES
 
-TEST_DEPENDENCIES
-~~~~~~~~~~~~~~~~~
+DEPENDENCIES
+^^^^^^^^^^^^
 
 Default: ``['default']``, for all databases other than ``default``,
 which has no dependencies.
@@ -624,8 +671,8 @@ on :ref:`controlling the creation order of test databases
 
 .. setting:: TEST_MIRROR
 
-TEST_MIRROR
-~~~~~~~~~~~
+MIRROR
+^^^^^^
 
 Default: ``None``
 
@@ -639,8 +686,8 @@ configurations of multiple databases. See the documentation on
 
 .. setting:: TEST_NAME
 
-TEST_NAME
-~~~~~~~~~
+NAME
+^^^^
 
 Default: ``None``
 
@@ -654,8 +701,8 @@ See :ref:`the-test-database`.
 
 .. setting:: TEST_CREATE
 
-TEST_CREATE
-~~~~~~~~~~~
+CREATE_DB
+^^^^^^^^^
 
 Default: ``True``
 
@@ -664,22 +711,10 @@ This is an Oracle-specific setting.
 If it is set to ``False``, the test tablespaces won't be automatically created
 at the beginning of the tests and dropped at the end.
 
-.. setting:: TEST_USER
-
-TEST_USER
-~~~~~~~~~
-
-Default: ``None``
-
-This is an Oracle-specific setting.
-
-The username to use when connecting to the Oracle database that will be used
-when running tests. If not provided, Django will use ``'test_' + USER``.
-
 .. setting:: TEST_USER_CREATE
 
-TEST_USER_CREATE
-~~~~~~~~~~~~~~~~
+CREATE_USER
+^^^^^^^^^^^
 
 Default: ``True``
 
@@ -688,10 +723,22 @@ This is an Oracle-specific setting.
 If it is set to ``False``, the test user won't be automatically created at the
 beginning of the tests and dropped at the end.
 
+.. setting:: TEST_USER
+
+USER
+^^^^
+
+Default: ``None``
+
+This is an Oracle-specific setting.
+
+The username to use when connecting to the Oracle database that will be used
+when running tests. If not provided, Django will use ``'test_' + USER``.
+
 .. setting:: TEST_PASSWD
 
-TEST_PASSWD
-~~~~~~~~~~~
+PASSWORD
+^^^^^^^^
 
 Default: ``None``
 
@@ -702,8 +749,8 @@ when running tests. If not provided, Django will use a hardcoded default value.
 
 .. setting:: TEST_TBLSPACE
 
-TEST_TBLSPACE
-~~~~~~~~~~~~~
+TBLSPACE
+^^^^^^^^
 
 Default: ``None``
 
@@ -714,8 +761,8 @@ provided, Django will use ``'test_' + NAME``.
 
 .. setting:: TEST_TBLSPACE_TMP
 
-TEST_TBLSPACE_TMP
-~~~~~~~~~~~~~~~~~
+TBLSPACE_TMP
+^^^^^^^^^^^^
 
 Default: ``None``
 
@@ -723,6 +770,116 @@ This is an Oracle-specific setting.
 
 The name of the temporary tablespace that will be used when running tests. If
 not provided, Django will use ``'test_' + NAME + '_temp'``.
+
+.. setting:: OLD_TEST_CHARSET
+
+TEST_CHARSET
+~~~~~~~~~~~~
+
+.. deprecated:: 1.7
+
+    Use the :setting:`CHARSET <TEST_CHARSET>` entry in the
+    :setting:`TEST <DATABASE-TEST>` dictionary.
+
+.. setting:: OLD_TEST_COLLATION
+
+TEST_COLLATION
+~~~~~~~~~~~~~~
+
+.. deprecated:: 1.7
+
+    Use the :setting:`COLLATION <TEST_COLLATION>` entry in the
+    :setting:`TEST <DATABASE-TEST>` dictionary.
+
+.. setting:: OLD_TEST_DEPENDENCIES
+
+TEST_DEPENDENCIES
+~~~~~~~~~~~~~~~~~
+
+.. deprecated:: 1.7
+
+    Use the :setting:`DEPENDENCIES <TEST_DEPENDENCIES>` entry in the
+    :setting:`TEST <DATABASE-TEST>` dictionary.
+
+.. setting:: OLD_TEST_MIRROR
+
+TEST_MIRROR
+~~~~~~~~~~~
+
+.. deprecated:: 1.7
+
+    Use the :setting:`MIRROR <TEST_MIRROR>` entry in the
+    :setting:`TEST <DATABASE-TEST>` dictionary.
+
+.. setting:: OLD_TEST_NAME
+
+TEST_NAME
+~~~~~~~~~
+
+.. deprecated:: 1.7
+
+    Use the :setting:`NAME <TEST_NAME>` entry in the
+    :setting:`TEST <DATABASE-TEST>` dictionary.
+
+.. setting:: OLD_TEST_CREATE
+
+TEST_CREATE
+~~~~~~~~~~~
+
+.. deprecated:: 1.7
+
+    Use the :setting:`CREATE_DB <TEST_CREATE>` entry in the
+    :setting:`TEST <DATABASE-TEST>` dictionary.
+
+.. setting:: OLD_TEST_USER
+
+TEST_USER
+~~~~~~~~~
+
+.. deprecated:: 1.7
+
+    Use the :setting:`USER <TEST_USER>` entry in the
+    :setting:`TEST <DATABASE-TEST>` dictionary.
+
+.. setting:: OLD_TEST_USER_CREATE
+
+TEST_USER_CREATE
+~~~~~~~~~~~~~~~~
+
+.. deprecated:: 1.7
+
+    Use the :setting:`CREATE_USER <TEST_USER_CREATE>` entry in the
+    :setting:`TEST <DATABASE-TEST>` dictionary.
+
+.. setting:: OLD_TEST_PASSWD
+
+TEST_PASSWD
+~~~~~~~~~~~
+
+.. deprecated:: 1.7
+
+    Use the :setting:`PASSWORD <TEST_PASSWD>` entry in the
+    :setting:`TEST <DATABASE-TEST>` dictionary.
+
+.. setting:: OLD_TEST_TBLSPACE
+
+TEST_TBLSPACE
+~~~~~~~~~~~~~
+
+.. deprecated:: 1.7
+
+    Use the :setting:`TBLSPACE <TEST_TBLSPACE>` entry in the
+    :setting:`TEST <DATABASE-TEST>` dictionary.
+
+.. setting:: OLD_TEST_TBLSPACE_TMP
+
+TEST_TBLSPACE_TMP
+~~~~~~~~~~~~~~~~~
+
+.. deprecated:: 1.7
+
+    Use the :setting:`TBLSPACE_TMP <TEST_TBLSPACE_TMP>` entry in the
+    :setting:`TEST <DATABASE-TEST>` dictionary.
 
 .. setting:: DATABASE_ROUTERS
 
@@ -955,7 +1112,8 @@ DEFAULT_FROM_EMAIL
 Default: ``'webmaster@localhost'``
 
 Default email address to use for various automated correspondence from the
-site manager(s).
+site manager(s). This doesn't include error messages sent to :setting:`ADMINS`
+and :setting:`MANAGERS`; for that, see :setting:`SERVER_EMAIL`.
 
 .. setting:: DEFAULT_INDEX_TABLESPACE
 
@@ -1073,6 +1231,26 @@ EMAIL_USE_TLS
 Default: ``False``
 
 Whether to use a TLS (secure) connection when talking to the SMTP server.
+This is used for explicit TLS connections, generally on port 587. If you are
+experiencing hanging connections, see the implicit TLS setting
+:setting:`EMAIL_USE_SSL`.
+
+.. setting:: EMAIL_USE_SSL
+
+EMAIL_USE_SSL
+-------------
+
+.. versionadded:: 1.7
+
+Default: ``False``
+
+Whether to use an implicit TLS (secure) connection when talking to the SMTP
+server. In most email documentation this type of TLS connection is referred
+to as SSL. It is generally used on port 465. If you are experiencing problems,
+see the explicit TLS setting :setting:`EMAIL_USE_TLS`.
+
+Note that :setting:`EMAIL_USE_TLS`/:setting:`EMAIL_USE_SSL` are mutually
+exclusive, so only set one of those settings to ``True``.
 
 .. setting:: FILE_CHARSET
 
@@ -1106,6 +1284,25 @@ Default: ``2621440`` (i.e. 2.5 MB).
 The maximum size (in bytes) that an upload will be before it gets streamed to
 the file system. See :doc:`/topics/files` for details.
 
+.. setting:: FILE_UPLOAD_DIRECTORY_PERMISSIONS
+
+FILE_UPLOAD_DIRECTORY_PERMISSIONS
+---------------------------------
+
+.. versionadded:: 1.7
+
+Default: ``None``
+
+The numeric mode to apply to directories created in the process of uploading
+files.
+
+This setting also determines the default permissions for collected static
+directories when using the :djadmin:`collectstatic` management command. See
+:djadmin:`collectstatic` for details on overriding it.
+
+This value mirrors the functionality and caveats of the
+:setting:`FILE_UPLOAD_PERMISSIONS` setting.
+
 .. setting:: FILE_UPLOAD_PERMISSIONS
 
 FILE_UPLOAD_PERMISSIONS
@@ -1121,6 +1318,10 @@ If this isn't given or is ``None``, you'll get operating-system
 dependent behavior. On most platforms, temporary files will have a mode
 of ``0600``, and files saved from memory will be saved using the
 system's standard umask.
+
+This setting also determines the default permissions for collected static files
+when using the :djadmin:`collectstatic` management command. See
+:djadmin:`collectstatic` for details on overriding it.
 
 .. warning::
 
@@ -1242,18 +1443,43 @@ INSTALLED_APPS
 
 Default: ``()`` (Empty tuple)
 
-A tuple of strings designating all applications that are enabled in this Django
-installation. Each string should be a full Python path to a Python package that
-contains a Django application, as created by :djadmin:`django-admin.py startapp
-<startapp>`.
+A tuple of strings designating all applications that are enabled in this
+Django installation. Each string should be a dotted Python path to:
 
-.. admonition:: App names must be unique
+* an application configuration class, or
+* a package containing a application.
 
-    The application names (that is, the final dotted part of the
-    path to the module containing ``models.py``) defined in
-    :setting:`INSTALLED_APPS` *must* be unique. For example, you can't
-    include both ``django.contrib.auth`` and ``myproject.auth`` in
-    INSTALLED_APPS.
+:doc:`Learn more about application configurations </ref/applications>`.
+
+.. versionchanged:: 1.7
+
+    :setting:`INSTALLED_APPS` now supports application configurations.
+
+.. admonition:: Use the application registry for introspection
+
+    Your code should never access :setting:`INSTALLED_APPS` directly. Use
+    :attr:`django.apps.apps` instead.
+
+.. admonition:: Application names and labels must be unique in
+                :setting:`INSTALLED_APPS`
+
+    Application :attr:`names <django.apps.AppConfig.name>` — the dotted Python
+    path to the application package — must be unique. There is no way to
+    include the same application twice, short of duplicating its code under
+    another name.
+
+    Application :attr:`labels <django.apps.AppConfig.label>` — by default the
+    final part of the name — must be unique too. For example, you can't
+    include both ``django.contrib.auth`` and ``myproject.auth``. However, you
+    can relabel an application with a custom configuration that defines a
+    different :attr:`~django.apps.AppConfig.label`.
+
+    These rules apply regardless of whether :setting:`INSTALLED_APPS`
+    references application configuration classes on application packages.
+
+When several applications provide different versions of the same resource
+(template, static file, management command, translation), the application
+listed first in :setting:`INSTALLED_APPS` has precedence.
 
 .. setting:: INTERNAL_IPS
 
@@ -1266,7 +1492,7 @@ A tuple of IP addresses, as strings, that:
 
 * See debug comments, when :setting:`DEBUG` is ``True``
 * Receive X headers in admindocs if the ``XViewMiddleware`` is installed (see
-  :doc:`/topics/http/middleware`)
+  :doc:`/ref/contrib/admin/admindocs`)
 
 .. setting:: LANGUAGE_CODE
 
@@ -1293,6 +1519,40 @@ See :ref:`how-django-discovers-language-preference` for more details.
 
 .. _list of language identifiers: http://www.i18nguy.com/unicode/language-identifiers.html
 
+.. setting:: LANGUAGE_COOKIE_AGE
+
+LANGUAGE_COOKIE_AGE
+-------------------
+
+.. versionadded:: 1.7
+
+Default: ``None`` (expires at browser close)
+
+The age of the language cookie, in seconds.
+
+.. setting:: LANGUAGE_COOKIE_DOMAIN
+
+LANGUAGE_COOKIE_DOMAIN
+----------------------
+
+.. versionadded:: 1.7
+
+Default: ``None``
+
+The domain to use for the language cookie. Set this to a string such as
+``".example.com"`` (note the leading dot!) for cross-domain cookies, or use
+``None`` for a standard domain cookie.
+
+Be cautious when updating this setting on a production site. If you update
+this setting to enable cross-domain cookies on a site that previously used
+standard domain cookies, existing user cookies that have the old domain
+will not be updated. This will result in site users being unable to switch
+the language as long as these cookies persist. The only safe and reliable
+option to perform the switch is to change the language cookie name
+permanently (via the :setting:`SESSION_COOKIE_NAME` setting) and to add
+a middleware that copies the value from the old cookie to a new one and then
+deletes the old one.
+
 .. setting:: LANGUAGE_COOKIE_NAME
 
 LANGUAGE_COOKIE_NAME
@@ -1303,6 +1563,31 @@ Default: ``'django_language'``
 The name of the cookie to use for the language cookie. This can be whatever
 you want (but should be different from :setting:`SESSION_COOKIE_NAME`). See
 :doc:`/topics/i18n/index`.
+
+.. setting:: LANGUAGE_COOKIE_PATH
+
+LANGUAGE_COOKIE_PATH
+--------------------
+
+.. versionadded:: 1.7
+
+Default: ``/``
+
+The path set on the language cookie. This should either match the URL path of your
+Django installation or be a parent of that path.
+
+This is useful if you have multiple Django instances running under the same
+hostname. They can use different cookie paths and each instance will only see
+its own language cookie.
+
+Be cautious when updating this setting on a production site. If you update this
+setting to use a deeper path than it previously used, existing user cookies that
+have the old path will not be updated. This will result in site users being
+unable to switch the language as long as these cookies persist. The only safe
+and reliable option to perform the switch is to change the language cookie name
+permanently (via the :setting:`SESSION_COOKIE_NAME` setting), and to add
+a middleware that copies the value from the old cookie to a new one and then
+deletes the one.
 
 .. setting:: LANGUAGES
 
@@ -1325,28 +1610,18 @@ This specifies which languages are available for language selection. See
 Generally, the default value should suffice. Only set this setting if you want
 to restrict language selection to a subset of the Django-provided languages.
 
-If you define a custom :setting:`LANGUAGES` setting, it's OK to mark the
-languages as translation strings (as in the default value referred to above)
--- but use a "dummy" ``gettext()`` function, not the one in
-``django.utils.translation``. You should *never* import
-``django.utils.translation`` from within your settings file, because that
-module in itself depends on the settings, and that would cause a circular
-import.
+If you define a custom :setting:`LANGUAGES` setting, you can mark the
+language names as translation strings using the
+:func:`~django.utils.translation.ugettext_lazy` function.
 
-The solution is to use a "dummy" ``gettext()`` function. Here's a sample
-settings file::
+Here's a sample settings file::
 
-    gettext = lambda s: s
+    from django.utils.translation import ugettext_lazy as _
 
     LANGUAGES = (
-        ('de', gettext('German')),
-        ('en', gettext('English')),
+        ('de', _('German')),
+        ('en', _('English')),
     )
-
-With this arrangement, ``django-admin.py makemessages`` will still find and
-mark these strings for translation, but the translation won't happen at
-runtime -- so you'll have to remember to wrap the languages in the *real*
-``gettext()`` in any code that uses :setting:`LANGUAGES` at runtime.
 
 .. setting:: LOCALE_PATHS
 
@@ -1393,7 +1668,7 @@ __ https://github.com/django/django/blob/master/django/utils/log.py
 LOGGING_CONFIG
 --------------
 
-Default: ``'django.utils.log.dictConfig'``
+Default: ``'logging.config.dictConfig'``
 
 A path to a callable that will be used to configure logging in the
 Django project. Points at a instance of Python's `dictConfig`_
@@ -1401,6 +1676,10 @@ configuration method by default.
 
 If you set :setting:`LOGGING_CONFIG` to ``None``, the logging
 configuration process will be skipped.
+
+.. versionchanged:: 1.7
+
+    Previously, the default value was ``'django.utils.log.dictConfig'``.
 
 .. _dictConfig: http://docs.python.org/library/logging.config.html#configuration-dictionary-schema
 
@@ -1446,9 +1725,16 @@ Default: ``''`` (Empty string)
 
 URL that handles the media served from :setting:`MEDIA_ROOT`, used
 for :doc:`managing stored files </topics/files>`. It must end in a slash if set
-to a non-empty value.
+to a non-empty value. You will need to :ref:`configure these files to be served
+<serving-uploaded-files-in-development>` in both development and production.
 
 Example: ``"http://media.example.com/"``
+
+.. warning::
+
+    There are security risks if you are accepting uploaded content from
+    untrusted users! See the security guide's topic on
+    :ref:`user-uploaded-content-security` for mitigation details.
 
 .. warning::
 
@@ -1463,12 +1749,37 @@ MIDDLEWARE_CLASSES
 Default::
 
     ('django.middleware.common.CommonMiddleware',
-     'django.contrib.sessions.middleware.SessionMiddleware',
-     'django.middleware.csrf.CsrfViewMiddleware',
-     'django.contrib.auth.middleware.AuthenticationMiddleware',
-     'django.contrib.messages.middleware.MessageMiddleware',)
+     'django.middleware.csrf.CsrfViewMiddleware',)
 
 A tuple of middleware classes to use. See :doc:`/topics/http/middleware`.
+
+.. versionchanged:: 1.7
+
+    :class:`~django.contrib.sessions.middleware.SessionMiddleware`,
+    :class:`~django.contrib.auth.middleware.AuthenticationMiddleware`, and
+    :class:`~django.contrib.messages.middleware.MessageMiddleware` were removed
+    from this setting.
+
+.. setting:: MIGRATION_MODULES
+
+MIGRATION_MODULES
+-----------------
+
+Default::
+
+    {} # empty dictionary
+
+A dictionary specifying the package where migration modules can be found on a per-app basis. The default value
+of this setting is an empty dictionary, but the default package name for migration modules is ``migrations``.
+
+Example::
+
+    {'blog': 'blog.db_migrations'}
+
+In this case, migrations pertaining to the ``blog`` app will be contained in the ``blog.db_migrations`` package.
+
+:djadmin:`makemigrations` will automatically create the package if it doesn't
+already exist.
 
 .. setting:: MONTH_DAY_FORMAT
 
@@ -1547,6 +1858,8 @@ unpredictable value.
 :djadmin:`django-admin.py startproject <startproject>` automatically adds a
 randomly-generated ``SECRET_KEY`` to each new project.
 
+Django will refuse to start if :setting:`SECRET_KEY` is not set.
+
 .. warning::
 
     **Keep this value secret.**
@@ -1554,10 +1867,6 @@ randomly-generated ``SECRET_KEY`` to each new project.
     Running Django with a known :setting:`SECRET_KEY` defeats many of Django's
     security protections, and can lead to privilege escalation and remote code
     execution vulnerabilities.
-
-.. versionchanged:: 1.5
-
-    Django will now refuse to start if :setting:`SECRET_KEY` is not set.
 
 .. setting:: SECURE_PROXY_SSL_HEADER
 
@@ -1661,6 +1970,12 @@ Default: ``'root@localhost'``
 The email address that error messages come from, such as those sent to
 :setting:`ADMINS` and :setting:`MANAGERS`.
 
+.. admonition:: Why are my emails sent from a different address?
+
+    This address is used only for error messages. It is *not* the address that
+    regular email messages sent with :meth:`~django.core.mail.send_mail()`
+    come from; for that, see :setting:`DEFAULT_FROM_EMAIL`.
+
 .. setting:: SHORT_DATE_FORMAT
 
 SHORT_DATE_FORMAT
@@ -1694,11 +2009,27 @@ See also :setting:`DATE_FORMAT` and :setting:`SHORT_DATE_FORMAT`.
 SIGNING_BACKEND
 ---------------
 
-Default: 'django.core.signing.TimestampSigner'
+Default: ``'django.core.signing.TimestampSigner'``
 
 The backend used for signing cookies and other data.
 
 See also the :doc:`/topics/signing` documentation.
+
+.. setting:: SILENCED_SYSTEM_CHECKS
+
+SILENCED_SYSTEM_CHECKS
+----------------------
+
+.. versionadded:: 1.7
+
+Default: ``[]``
+
+A list of identifiers of messages generated by the system check framework
+(i.e. ``["models.W001"]``) that you wish to permanently acknowledge and ignore.
+Silenced warnings will no longer be output to the console; silenced errors
+will still be printed, but will not prevent management commands from running.
+
+See also the :doc:`/ref/checks` documentation.
 
 .. setting:: TEMPLATE_CONTEXT_PROCESSORS
 
@@ -1762,7 +2093,7 @@ Default::
 
 A tuple of template loader classes, specified as strings. Each ``Loader`` class
 knows how to import templates from a particular source. Optionally, a tuple can be
-used instead of a string. The first item in the tuple should be the ``Loader``'s
+used instead of a string. The first item in the tuple should be the ``Loader``’s
 module, subsequent items are passed to the ``Loader`` during initialization. See
 :doc:`/ref/templates/api`.
 
@@ -1790,6 +2121,26 @@ The name of the class to use for starting the test suite. See
 
     Previously the default ``TEST_RUNNER`` was
     ``django.test.simple.DjangoTestSuiteRunner``.
+
+.. setting:: TEST_NON_SERIALIZED_APPS
+
+TEST_NON_SERIALIZED_APPS
+------------------------
+
+.. versionadded:: 1.7
+
+Default: ``[]``
+
+In order to restore the database state between tests for
+``TransactionTestCase``\s and database backends without transactions, Django
+will :ref:`serialize the contents of all apps with migrations
+<test-case-serialized-rollback>` when it starts the test run so it can then
+reload from that copy before tests that need it.
+
+This slows down the startup time of the test runner; if you have apps that
+you know don't need this feature, you can add their full names in here (e.g.
+``'django.contrib.contenttypes'``) to exclude them from this serialization
+process.
 
 .. setting:: THOUSAND_SEPARATOR
 
@@ -2056,25 +2407,6 @@ The default value for the X-Frame-Options header used by
 :doc:`clickjacking protection </ref/clickjacking/>` documentation.
 
 
-Admindocs
-=========
-
-Settings for :mod:`django.contrib.admindocs`.
-
-.. setting:: ADMIN_FOR
-
-ADMIN_FOR
----------
-
-Default: ``()`` (Empty tuple)
-
-Used for admin-site settings modules, this should be a tuple of settings
-modules (in the format ``'foo.bar.baz'``) for which this site is an admin.
-
-The admin site uses this in its automatically-introspected documentation of
-models, views and template tags.
-
-
 Auth
 ====
 
@@ -2091,22 +2423,6 @@ A tuple of authentication backend classes (as strings) to use when attempting to
 authenticate a user. See the :ref:`authentication backends documentation
 <authentication-backends>` for details.
 
-.. setting:: AUTH_PROFILE_MODULE
-
-AUTH_PROFILE_MODULE
--------------------
-
-.. deprecated:: 1.5
-    With the introduction of :ref:`custom User models <auth-custom-user>`,
-    the use of :setting:`AUTH_PROFILE_MODULE` to define a single profile
-    model is no longer supported. See the
-    :doc:`Django 1.5 release notes</releases/1.5>` for more information.
-
-Default: Not defined
-
-The site-specific user profile model used by this site. See
-:ref:`User profiles <auth-profiles>`.
-
 .. setting:: AUTH_USER_MODEL
 
 AUTH_USER_MODEL
@@ -2115,6 +2431,14 @@ AUTH_USER_MODEL
 Default: 'auth.User'
 
 The model to use to represent a User. See :ref:`auth-custom-user`.
+
+.. warning::
+    You cannot change the AUTH_USER_MODEL setting during the lifetime of
+    a project (i.e. once you have made and migrated models that depend on it)
+    without serious effort. It is intended to be set at the project start,
+    and the model it refers to must be available in the first migration of
+    the app that it lives in.
+    See :ref:`auth-custom-user` for more details.
 
 .. setting:: LOGIN_REDIRECT_URL
 
@@ -2129,13 +2453,9 @@ The URL where requests are redirected after login when the
 This is used by the :func:`~django.contrib.auth.decorators.login_required`
 decorator, for example.
 
-.. versionchanged:: 1.5
-
-    This setting now also accepts view function names and
-    :ref:`named URL patterns <naming-url-patterns>` which can be used to reduce
-    configuration duplication since you no longer have to define the URL in two
-    places (``settings`` and URLconf).
-    For backward compatibility reasons the default remains unchanged.
+This setting also accepts view function names and :ref:`named URL patterns
+<naming-url-patterns>` which can be used to reduce configuration duplication
+since you don't have to define the URL in two places (``settings`` and URLconf).
 
 .. setting:: LOGIN_URL
 
@@ -2147,13 +2467,9 @@ Default: ``'/accounts/login/'``
 The URL where requests are redirected for login, especially when using the
 :func:`~django.contrib.auth.decorators.login_required` decorator.
 
-.. versionchanged:: 1.5
-
-    This setting now also accepts view function names and
-    :ref:`named URL patterns <naming-url-patterns>` which can be used to reduce
-    configuration duplication since you no longer have to define the URL in two
-    places (``settings`` and URLconf).
-    For backward compatibility reasons the default remains unchanged.
+This setting also accepts view function names and :ref:`named URL patterns
+<naming-url-patterns>` which can be used to reduce configuration duplication
+since you don't have to define the URL in two places (``settings`` and URLconf).
 
 .. setting:: LOGOUT_URL
 
@@ -2286,7 +2602,8 @@ See :ref:`message storage backends <message-storage-backends>` for more details.
 The backends that use cookies --
 :class:`~django.contrib.messages.storage.cookie.CookieStorage` and
 :class:`~django.contrib.messages.storage.fallback.FallbackStorage` --
-use the value of :setting:`SESSION_COOKIE_DOMAIN` when setting their cookies.
+use the value of :setting:`SESSION_COOKIE_DOMAIN`, :setting:`SESSION_COOKIE_SECURE`
+and :setting:`SESSION_COOKIE_HTTPONLY` when setting their cookies.
 
 .. setting:: MESSAGE_TAGS
 
@@ -2362,6 +2679,8 @@ standard domain cookies, existing user cookies will be set to the old
 domain. This may result in them being unable to log in as long as these cookies
 persist.
 
+This setting also affects cookies set by :mod:`django.contrib.messages`.
+
 .. setting:: SESSION_COOKIE_HTTPONLY
 
 SESSION_COOKIE_HTTPONLY
@@ -2378,6 +2697,10 @@ is not part of the :rfc:`2109` standard for cookies, and it isn't honored
 consistently by all browsers. However, when it is honored, it can be a
 useful way to mitigate the risk of client side script accessing the
 protected cookie data.
+
+.. versionadded:: 1.7
+
+This setting also affects cookies set by :mod:`django.contrib.messages`.
 
 .. _HTTPOnly: https://www.owasp.org/index.php/HTTPOnly
 
@@ -2416,6 +2739,10 @@ Whether to use a secure cookie for the session cookie. If this is set to
 ``True``, the cookie will be marked as "secure," which means browsers may
 ensure that the cookie is only sent under an HTTPS connection.
 
+.. versionadded:: 1.7
+
+This setting also affects cookies set by :mod:`django.contrib.messages`.
+
 .. setting:: SESSION_ENGINE
 
 SESSION_ENGINE
@@ -2440,7 +2767,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE
 
 Default: ``False``
 
-Whether to expire the session when the user closes his or her browser. See
+Whether to expire the session when the user closes their browser. See
 :ref:`browser-length-vs-persistent-sessions`.
 
 .. setting:: SESSION_FILE_PATH
@@ -2470,8 +2797,6 @@ that is, if any of its dictionary values have been assigned or deleted.
 
 SESSION_SERIALIZER
 ------------------
-
-.. versionadded:: 1.5.3
 
 Default: ``'django.contrib.sessions.serializers.JSONSerializer'``
 
@@ -2520,7 +2845,11 @@ Settings for :mod:`django.contrib.staticfiles`.
 STATIC_ROOT
 -----------
 
-Default: ``''`` (Empty string)
+Default: ``None``
+
+.. versionchanged:: 1.6.2
+
+    The default changed from ``''`` (empty string) to ``None``.
 
 The absolute path to the directory where :djadmin:`collectstatic` will collect
 static files for deployment.
@@ -2538,7 +2867,7 @@ files</howto/static-files/index>` for more details about usage.
     your static files from their permanent locations into one directory for
     ease of deployment; it is **not** a place to store your static files
     permanently. You should do that in directories that will be found by
-    :doc:`staticfiles</ref/contrib/staticfiles>`'s
+    :doc:`staticfiles</ref/contrib/staticfiles>`’s
     :setting:`finders<STATICFILES_FINDERS>`, which by default, are
     ``'static/'`` app sub-directories and any directories you include in
     :setting:`STATICFILES_DIRS`).
@@ -2559,6 +2888,10 @@ If not ``None``, this will be used as the base path for
 :doc:`staticfiles app</ref/contrib/staticfiles>`.
 
 It must end in a slash if set to a non-empty value.
+
+You may need to :ref:`configure these files to be served in development
+<serving-static-files-in-development>` and will definitely need to do so
+:doc:`in production </howto/static-files/deployment>`.
 
 .. setting:: STATICFILES_DIRS
 
@@ -2596,9 +2929,7 @@ tuples, e.g.::
         ("downloads", "/opt/webfiles/stats"),
     )
 
-Example:
-
-Assuming you have :setting:`STATIC_URL` set ``'/static/'``, the
+For example, assuming you have :setting:`STATIC_URL` set to ``'/static/'``, the
 :djadmin:`collectstatic` management command would collect the "stats" files
 in a ``'downloads'`` subdirectory of :setting:`STATIC_ROOT`.
 
@@ -2608,7 +2939,7 @@ This would allow you to refer to the local file
 
 .. code-block:: html+django
 
-    <a href="{{ STATIC_URL }}downloads/polls_20101022.tar.gz">
+    <a href="{% static "downloads/polls_20101022.tar.gz" %}">
 
 .. setting:: STATICFILES_STORAGE
 
@@ -2707,6 +3038,7 @@ Error reporting
 * :setting:`IGNORABLE_404_URLS`
 * :setting:`MANAGERS`
 * :setting:`SEND_BROKEN_LINK_EMAILS`
+* :setting:`SILENCED_SYSTEM_CHECKS`
 
 File uploads
 ------------
@@ -2729,7 +3061,10 @@ Globalization (i18n/l10n)
 * :setting:`FIRST_DAY_OF_WEEK`
 * :setting:`FORMAT_MODULE_PATH`
 * :setting:`LANGUAGE_CODE`
+* :setting:`LANGUAGE_COOKIE_AGE`
+* :setting:`LANGUAGE_COOKIE_DOMAIN`
 * :setting:`LANGUAGE_COOKIE_NAME`
+* :setting:`LANGUAGE_COOKIE_PATH`
 * :setting:`LANGUAGES`
 * :setting:`LOCALE_PATHS`
 * :setting:`MONTH_DAY_FORMAT`
@@ -2800,20 +3135,8 @@ Templates
 
 Testing
 -------
-* Database
-
-  * :setting:`TEST_CHARSET`
-  * :setting:`TEST_COLLATION`
-  * :setting:`TEST_DEPENDENCIES`
-  * :setting:`TEST_MIRROR`
-  * :setting:`TEST_NAME`
-  * :setting:`TEST_CREATE`
-  * :setting:`TEST_USER`
-  * :setting:`TEST_USER_CREATE`
-  * :setting:`TEST_PASSWD`
-  * :setting:`TEST_TBLSPACE`
-  * :setting:`TEST_TBLSPACE_TMP`
-
+* Database: :setting:`TEST <DATABASE-TEST>`
+* :setting:`TEST_NON_SERIALIZED_APPS`
 * :setting:`TEST_RUNNER`
 
 URLs

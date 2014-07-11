@@ -113,7 +113,7 @@ models. For example::
         article.full_clean()
     except ValidationError as e:
         # Do something based on the errors contained in e.message_dict.
-        # Display them to a user, or handle them programatically.
+        # Display them to a user, or handle them programmatically.
         pass
 
 The first step ``full_clean()`` performs is to clean each individual field.
@@ -149,10 +149,13 @@ access to more than a single field::
             if self.status == 'published' and self.pub_date is None:
                 self.pub_date = datetime.date.today()
 
+Note, however, that like :meth:`Model.full_clean()`, a model's ``clean()``
+method is not invoked when you call your model's :meth:`~Model.save()` method.
+
 Any :exc:`~django.core.exceptions.ValidationError` exceptions raised by
 ``Model.clean()`` will be stored in a special key error dictionary key,
-``NON_FIELD_ERRORS``, that is used for errors that are tied to the entire model
-instead of to a specific field::
+:data:`~django.core.exceptions.NON_FIELD_ERRORS`, that is used for errors
+that are tied to the entire model instead of to a specific field::
 
     from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
     try:
@@ -342,6 +345,8 @@ only.
 
 Using ``update_fields`` will force an update similarly to ``force_update``.
 
+.. _ref-models-field-updates-using-f-expressions:
+
 Updating attributes based on existing fields
 --------------------------------------------
 
@@ -356,41 +361,25 @@ achieve this is to do something like::
 If the old ``number_sold`` value retrieved from the database was 10, then
 the value of 11 will be written back to the database.
 
-This sequence has a standard update problem in that it contains a race
-condition. If another thread of execution has already saved an updated value
-after the current thread retrieved the old value, the current thread will only
-save the old value plus one, rather than the new (current) value plus one.
-
-The process can be made robust and slightly faster by expressing the update
-relative to the original field value, rather than as an explicit assignment of
-a new value. Django provides :ref:`F() expressions <query-expressions>` for
-performing this kind of relative update. Using ``F()`` expressions, the
-previous example is expressed as::
+The process can be made robust, :ref:`avoiding a race condition
+<avoiding-race-conditions-using-f>`, as well as slightly faster by expressing
+the update relative to the original field value, rather than as an explicit
+assignment of a new value. Django provides :class:`F expressions
+<django.db.models.F>` for performing this kind of relative update. Using
+:class:`F expressions <django.db.models.F>`, the previous example is expressed
+as::
 
     >>> from django.db.models import F
     >>> product = Product.objects.get(name='Venezuelan Beaver Cheese')
     >>> product.number_sold = F('number_sold') + 1
     >>> product.save()
 
-This approach doesn't use the initial value from the database. Instead, it
-makes the database do the update based on whatever value is current at the time
-that the :meth:`~Model.save()` is executed.
-
-Once the object has been saved, you must reload the object in order to access
-the actual value that was applied to the updated field::
-
-    >>> product = Products.objects.get(pk=product.pk)
-    >>> print(product.number_sold)
-    42
-
-For more details, see the documentation on :ref:`F() expressions
-<query-expressions>` and their :ref:`use in update queries
+For more details, see the documentation on :class:`F expressions
+<django.db.models.F>` and their :ref:`use in update queries
 <topics-db-queries-update>`.
 
 Specifying which fields to save
 -------------------------------
-
-.. versionadded:: 1.5
 
 If ``save()`` is passed a list of field names in keyword argument
 ``update_fields``, only the fields named in that list will be updated.
@@ -477,9 +466,29 @@ the conversion to string objects when required.
 
 .. method:: Model.__str__()
 
-The ``__str__()`` method is called whenever you call ``str()`` on an object. The main use for this method directly inside Django is when the ``repr()`` output of a model is displayed anywhere (for example, in debugging output).
-Thus, you should return a nice, human-readable string for the object's
-``__str__()``.  It isn't required to put ``__str__()`` methods everywhere if you have sensible :meth:`~Model.__unicode__()` methods.
+The ``__str__()`` method is called whenever you call ``str()`` on an
+object. In Python 3, Django uses ``str(obj)`` in a number of
+places. Most notably, to display an object in the Django admin site
+and as the value inserted into a template when it displays an
+object. Thus, you should always return a nice, human-readable
+representation of the model from the ``__str__()`` method.
+
+For example::
+
+    from django.db import models
+
+    class Person(models.Model):
+        first_name = models.CharField(max_length=50)
+        last_name = models.CharField(max_length=50)
+
+        def __str__(self):
+            return '%s %s' % (self.first_name, self.last_name)
+
+In Python 2, the main use of ``__str__`` directly inside Django is
+when the ``repr()`` output of a model is displayed anywhere (for
+example, in debugging output). It isn't required to put ``__str__()``
+methods everywhere if you have sensible :meth:`~Model.__unicode__()`
+methods.
 
 The previous :meth:`~Model.__unicode__()` example could be similarly written
 using ``__str__()`` like this::
@@ -495,6 +504,59 @@ using ``__str__()`` like this::
             # Note use of django.utils.encoding.force_bytes() here because
             # first_name and last_name will be unicode strings.
             return force_bytes('%s %s' % (self.first_name, self.last_name))
+
+``__eq__``
+----------
+
+.. method:: Model.__eq__()
+
+The equality method is defined such that instances with the same primary
+key value and the same concrete class are considered equal. For proxy
+models, concrete class is defined as the model's first non-proxy parent;
+for all other models it is simply the model's class.
+
+For example::
+
+    from django.db import models
+
+    class MyModel(models.Model):
+        id = models.AutoField(primary_key=True)
+
+    class MyProxyModel(MyModel):
+        class Meta:
+            proxy = True
+
+    class MultitableInherited(MyModel):
+        pass
+
+    MyModel(id=1) == MyModel(id=1)
+    MyModel(id=1) == MyProxyModel(id=1)
+    MyModel(id=1) != MultitableInherited(id=1)
+    MyModel(id=1) != MyModel(id=2)
+
+.. versionchanged:: 1.7
+
+  In previous versions only instances of the exact same class and same
+  primary key value were considered equal.
+
+``__hash__``
+------------
+
+.. method:: Model.__hash__()
+
+The ``__hash__`` method is based on the instance's primary key value. It
+is effectively hash(obj.pk). If the instance doesn't have a primary key
+value then a ``TypeError`` will be raised (otherwise the ``__hash__``
+method would return different values before and after the instance is
+saved, but changing the ``__hash__`` value of an instance `is forbidden
+in Python`_).
+
+.. versionchanged:: 1.7
+
+  In previous versions instance's without primary key value were
+  hashable.
+
+.. _is forbidden in Python: http://docs.python.org/reference/datamodel.html#object.__hash__
 
 ``get_absolute_url``
 --------------------
@@ -551,7 +613,7 @@ in ``get_absolute_url()`` and have all your other code call that one place.
 
 .. note::
     The string you return from ``get_absolute_url()`` **must** contain only
-    ASCII characters (required by the URI specfication, :rfc:`2396`) and be
+    ASCII characters (required by the URI specification, :rfc:`2396`) and be
     URL-encoded, if necessary.
 
     Code and templates calling ``get_absolute_url()`` should be able to use the

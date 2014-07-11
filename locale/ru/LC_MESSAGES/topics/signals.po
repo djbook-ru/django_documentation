@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 10:34\n"
+"POT-Creation-Date: 2014-07-11 11:43+0300\n"
 "PO-Revision-Date: 2013-05-10 17:13+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -139,16 +139,46 @@ msgstr "Прослушивание сигналов"
 
 # dc46276797a747fc9d4364e439e3b207
 #: ../../topics/signals.txt:50
+#, fuzzy
 msgid ""
 "To receive a signal, you need to register a *receiver* function that gets "
-"called when the signal is sent by using the :meth:`.Signal.connect` method:"
+"called when the signal is sent by using the :meth:`Signal.connect` method:"
 msgstr ""
 "Для того, чтобы принять сигнал, Вам необходимо с помощью метода :meth:`."
 "Signal.connect` зарегистрировать функцию *receiver*, которая вызывается, "
 "когда сигнал послан:"
 
+# 64db3f0d8c3b4a7c891677d1e2190cf2
+#: ../../topics/signals.txt:55
+msgid ""
+"The callback function which will be connected to this signal. See :ref:"
+"`receiver-functions` for more information."
+msgstr ""
+
+# bfeaf566df3b405586abfa6632e5f1f1
+#: ../../topics/signals.txt:58
+msgid ""
+"Specifies a particular sender to receive signals from. See :ref:`connecting-"
+"to-specific-signals` for more information."
+msgstr ""
+
+# 2ea1a2a56d674b1387f39af8221e5941
+#: ../../topics/signals.txt:61
+msgid ""
+"Django stores signal handlers as weak references by default. Thus, if your "
+"receiver is a local function, it may be garbage collected. To prevent this, "
+"pass ``weak=False`` when you call the signal's ``connect()`` method."
+msgstr ""
+
+# 98be0b8b23c84a189a33ff316c3991f2
+#: ../../topics/signals.txt:66
+msgid ""
+"A unique identifier for a signal receiver in cases where duplicate signals "
+"may be sent. See :ref:`preventing-duplicate-signals` for more information."
+msgstr ""
+
 # a2af84686e054a5c9b35290c85602202
-#: ../../topics/signals.txt:71
+#: ../../topics/signals.txt:70
 msgid ""
 "Let's see how this works by registering a signal that gets called after each "
 "HTTP request is finished. We'll be connecting to the :data:`~django.core."
@@ -159,12 +189,12 @@ msgstr ""
 "выполнения HTTP запроса."
 
 # 89263935819744c6adf649f33d4c1d16
-#: ../../topics/signals.txt:78
+#: ../../topics/signals.txt:77
 msgid "Receiver functions"
 msgstr "Функции-получатели"
 
 # 09c82838de604454a6f40746291966fb
-#: ../../topics/signals.txt:80
+#: ../../topics/signals.txt:79
 msgid ""
 "First, we need to define a receiver function. A receiver can be any Python "
 "function or method:"
@@ -173,7 +203,7 @@ msgstr ""
 "Python функцией или методом следующего вида:"
 
 # c0ecdfd6dcbb408f9d1d5c3d0bd5c23c
-#: ../../topics/signals.txt:88
+#: ../../topics/signals.txt:87
 msgid ""
 "Notice that the function takes a ``sender`` argument, along with wildcard "
 "keyword arguments (``**kwargs``); all signal handlers must take these "
@@ -184,7 +214,7 @@ msgstr ""
 "подобные аргументы."
 
 # c9f2316e1e0f46f590cc713ee2db3946
-#: ../../topics/signals.txt:91
+#: ../../topics/signals.txt:90
 msgid ""
 "We'll look at senders `a bit later`_, but right now look at the ``**kwargs`` "
 "argument. All signals send keyword arguments, and may change those keyword "
@@ -200,7 +230,7 @@ msgstr ""
 "искушение записывать наш обработчик  сигнала в виде ``my_callback(sender)``."
 
 # de1629cd68ac48a39d8c3365a7a6c9f3
-#: ../../topics/signals.txt:100
+#: ../../topics/signals.txt:99
 msgid ""
 "This would be wrong -- in fact, Django will throw an error if you do so. "
 "That's because at any point arguments could get added to the signal and your "
@@ -212,12 +242,12 @@ msgstr ""
 "новые аргументы."
 
 # 104596e09975419fb23c12deb638fb8d
-#: ../../topics/signals.txt:107
+#: ../../topics/signals.txt:106
 msgid "Connecting receiver functions"
 msgstr "Регистрация функции-получателя"
 
 # f6b13043424247199d0f9ee794a33d5b
-#: ../../topics/signals.txt:109
+#: ../../topics/signals.txt:108
 msgid ""
 "There are two ways you can connect a receiver to a signal. You can take the "
 "manual connect route:"
@@ -226,16 +256,26 @@ msgstr ""
 "можете вручную вызвать connect:"
 
 # e926cfa5e44b428b8e12e409920b9685
-#: ../../topics/signals.txt:118
-msgid ""
-"Alternatively, you can use a ``receiver`` decorator when you define your "
-"receiver:"
+#: ../../topics/signals.txt:117
+#, fuzzy
+msgid "Alternatively, you can use a :func:`receiver` decorator:"
 msgstr ""
 "Кроме того, вы можете использовать декоратор ``receiver`` при определении "
 "вашего получателя:"
 
+# 595ae5fd166042f9a9cd12798187736b
+#: ../../topics/signals.txt:121
+#, fuzzy
+msgid "A signal or a list of signals to connect a function to."
+msgstr "``receiver`` может также принимать список сигналов."
+
+# 943c645f28244411930071d0ebe80957
+#: ../../topics/signals.txt:123
+msgid "Here's how you connect with the decorator:"
+msgstr ""
+
 # 0804e201f6984fc9bd5edb1714713d22
-#: ../../topics/signals.txt:130
+#: ../../topics/signals.txt:134
 msgid ""
 "Now, our ``my_callback`` function will be called each time a request "
 "finishes."
@@ -243,34 +283,43 @@ msgstr ""
 "Теперь наша функция ``my_callback`` будет вызываться каждый раз, когда "
 "запрос завершается."
 
-# 595ae5fd166042f9a9cd12798187736b
-#: ../../topics/signals.txt:132
-msgid ""
-"Note that ``receiver`` can also take a list of signals to connect a function "
-"to."
-msgstr "``receiver`` может также принимать список сигналов."
-
-# e97c060877b74113bd0c733ed104b6b9
-#: ../../topics/signals.txt:141
-msgid ""
-"You can put signal handling and registration code anywhere you like. "
-"However, you'll need to make sure that the module it's in gets imported "
-"early on so that the signal handling gets registered before any signals need "
-"to be sent. This makes your app's ``models.py`` a good place to put "
-"registration of signal handlers."
+# b9a341b042e94003a8d9a20e59f42c6c
+#: ../../topics/signals.txt:0
+msgid "Where should this code live?"
 msgstr ""
-"Вы можете расположить обработчик сигнала и зарегистрировать его там, где Вам "
-"удобно. Тем не менее, вы должны убедиться, что регистрация обработчика "
-"сигнала происходит до того, как он будет отправлен. Поэтому файл ``models."
-"py`` вашего приложения хорошо подходит для регистрации обработчиков сигналов."
+
+# a362ca35868941ff9ed31815d545ea4a
+#: ../../topics/signals.txt:139
+msgid ""
+"Strictly speaking, signal handling and registration code can live anywhere "
+"you like, although it's recommended to avoid the application's root module "
+"and its ``models`` module to minimize side-effects of importing code."
+msgstr ""
+
+# 7d3977ab15704d8a94e8671d10a0ee8f
+#: ../../topics/signals.txt:143
+msgid ""
+"In practice, signal handlers are usually defined in a ``signals`` submodule "
+"of the application they relate to. Signal receivers are connected in the :"
+"meth:`~django.apps.AppConfig.ready` method of your application configuration "
+"class. If you're using the :func:`receiver` decorator, simply import the "
+"``signals`` submodule inside :meth:`~django.apps.AppConfig.ready`."
+msgstr ""
+
+# c2a8d157a9ff496cb4bff7b8324f8617
+#: ../../topics/signals.txt:152
+msgid ""
+"Since :meth:`~django.apps.AppConfig.ready` didn't exist in previous versions "
+"of Django, signal registration usually happened in the ``models`` module."
+msgstr ""
 
 # 41e8a0544ebc4b71826e0b64b63fdc68
-#: ../../topics/signals.txt:150
+#: ../../topics/signals.txt:159
 msgid "Connecting to signals sent by specific senders"
 msgstr "Сигналы, получаемые от определённых отправителей."
 
 # d4f90bb4f1cd4bc2a072ba3ecd7b0b35
-#: ../../topics/signals.txt:152
+#: ../../topics/signals.txt:161
 msgid ""
 "Some signals get sent many times, but you'll only be interested in receiving "
 "a certain subset of those signals. For example, consider the :data:`django."
@@ -285,7 +334,7 @@ msgstr ""
 "интересует только одна конкретная модель:"
 
 # 90fd1199c2d142d7af468219d8cfcce9
-#: ../../topics/signals.txt:158
+#: ../../topics/signals.txt:167
 msgid ""
 "In these cases, you can register to receive signals sent only by particular "
 "senders. In the case of :data:`django.db.models.signals.pre_save`, the "
@@ -298,7 +347,7 @@ msgstr ""
 "указать, что вы хотите получать только сигналы, посылаемые этой моделью:"
 
 # be20662e65cd411bb5bb10692b8105bf
-#: ../../topics/signals.txt:173
+#: ../../topics/signals.txt:182
 msgid ""
 "The ``my_handler`` function will only be called when an instance of "
 "``MyModel`` is saved."
@@ -307,7 +356,7 @@ msgstr ""
 "``MyModel``."
 
 # 102bc0931719454987f316d4be75cd61
-#: ../../topics/signals.txt:176
+#: ../../topics/signals.txt:185
 msgid ""
 "Different signals use different objects as their senders; you'll need to "
 "consult the :doc:`built-in signal documentation </ref/signals>` for details "
@@ -318,17 +367,17 @@ msgstr ""
 "`документации по встроенным сигналам </ref/signals>`."
 
 # 23c26373b2de4e6eaaabc467d0138214
-#: ../../topics/signals.txt:183
+#: ../../topics/signals.txt:192
 msgid "Preventing duplicate signals"
 msgstr "Предотвращение дублирования сигналов"
 
 # 2847d49930604b3ab4fc10cee303c802
-#: ../../topics/signals.txt:185
+#: ../../topics/signals.txt:194
+#, fuzzy
 msgid ""
-"In some circumstances, the module in which you are connecting signals may be "
-"imported multiple times. This can cause your receiver function to be "
-"registered more than once, and thus called multiples times for a single "
-"signal event."
+"In some circumstances, the code connecting receivers to signals may run "
+"multiple times. This can cause your receiver function to be registered more "
+"than once, and thus called multiples times for a single signal event."
 msgstr ""
 "В некоторых случаях модуль, в котором Вы подключаете сигналы, может быть "
 "импортирован несколько раз. Это может привести к тому, что получатель "
@@ -336,7 +385,7 @@ msgstr ""
 "произойдет несколько раз при наступлении одного и того же события."
 
 # ec23c77952f747d1b7e458c56e90df30
-#: ../../topics/signals.txt:190
+#: ../../topics/signals.txt:198
 msgid ""
 "If this behavior is problematic (such as when using signals to send an email "
 "whenever a model is saved), pass a unique identifier as the ``dispatch_uid`` "
@@ -354,24 +403,24 @@ msgstr ""
 "каждого уникального значения ``dispatch_uid``."
 
 # 360400afe91e47b3959912ab7a9b41ca
-#: ../../topics/signals.txt:204
+#: ../../topics/signals.txt:212
 msgid "Defining and sending signals"
 msgstr "Создание и посылка сигналов."
 
 # 8762e59a04024aa6a070719ac40d4650
-#: ../../topics/signals.txt:206
+#: ../../topics/signals.txt:214
 msgid ""
 "Your applications can take advantage of the signal infrastructure and "
 "provide its own signals."
 msgstr "Вы можете создавать свои собственные сигналы в ваших приложениях."
 
 # 653c289e6ed84f90b9325c834c4f8467
-#: ../../topics/signals.txt:210
+#: ../../topics/signals.txt:218
 msgid "Defining signals"
 msgstr "Создание сигналов"
 
 # 0215405b67894438829a74a2f16a1303
-#: ../../topics/signals.txt:214
+#: ../../topics/signals.txt:222
 msgid ""
 "All signals are :class:`django.dispatch.Signal` instances. The "
 "``providing_args`` is a list of the names of arguments the signal will "
@@ -385,12 +434,12 @@ msgstr ""
 "никакой проверки, передаёт ли сигнал эти параметры, не выполняется."
 
 # a876236a58ed4496ba55fe02ee4d8c33
-#: ../../topics/signals.txt:219
+#: ../../topics/signals.txt:227
 msgid "For example:"
 msgstr "Например:"
 
 # 3fa3757b1eee4f6f90d9bbbc8f84bb3c
-#: ../../topics/signals.txt:227
+#: ../../topics/signals.txt:235
 msgid ""
 "This declares a ``pizza_done`` signal that will provide receivers with "
 "``toppings`` and ``size`` arguments."
@@ -399,7 +448,7 @@ msgstr ""
 "аргументы ``toppings`` и ``size``."
 
 # 5cf07d797a5e42aaa2d6332efbc74d97
-#: ../../topics/signals.txt:230
+#: ../../topics/signals.txt:238
 msgid ""
 "Remember that you're allowed to change this list of arguments at any time, "
 "so getting the API right on the first try isn't necessary."
@@ -408,44 +457,46 @@ msgstr ""
 "параметров."
 
 # 8cdb260b687e4f69a70360d938938458
-#: ../../topics/signals.txt:233
+#: ../../topics/signals.txt:242
 msgid "Sending signals"
 msgstr "Отправка сигналов"
 
 # 52cd4075802346758dd4ee3417bc6c5a
-#: ../../topics/signals.txt:235
+#: ../../topics/signals.txt:244
 msgid "There are two ways to send signals in Django."
 msgstr "В Django существует два способа отправки сигналов."
 
 # 229c517baa6c43a185c16699c7a3518e
-#: ../../topics/signals.txt:240
+#: ../../topics/signals.txt:249
+#, fuzzy
 msgid ""
 "To send a signal, call either :meth:`Signal.send` or :meth:`Signal."
-"send_robust`. You must provide the ``sender`` argument, and may provide as "
-"many other keyword arguments as you like."
+"send_robust`. You must provide the ``sender`` argument (which is a class "
+"most of the time), and may provide as many other keyword arguments as you "
+"like."
 msgstr ""
 "Для отправки сигнала необходимо вызвать  :meth:`Signal.send` или :meth:"
 "`Signal.send_robust`. Вы обязательно должны указать аргумент ``sender``, "
 "кроме того можно указать сколько угодно других именованных аргументов."
 
 # 13e9903325a94edeac7efaa12341f282
-#: ../../topics/signals.txt:244
+#: ../../topics/signals.txt:253
 msgid "For example, here's how sending our ``pizza_done`` signal might look:"
 msgstr "Например, вот как может выглядать отправка сигнала ``pizza_done``."
 
 # a505ed071edd45b7958fcf1e65fb4f9e
-#: ../../topics/signals.txt:255
+#: ../../topics/signals.txt:264
 msgid ""
-"Both ``send()`` and ``send_robust()`` return a list of tuple pairs ``"
-"[(receiver, response), ... ]``, representing the list of called receiver "
+"Both ``send()`` and ``send_robust()`` return a list of tuple pairs "
+"``[(receiver, response), ... ]``, representing the list of called receiver "
 "functions and their response values."
 msgstr ""
-"И ``send()``, и ``send_robust()`` возвращают список кортежей пар ``"
-"[(receiver, response), ... ]``. Каждый кортеж содержит вызываемую функцию и "
-"ее ответ."
+"И ``send()``, и ``send_robust()`` возвращают список кортежей пар "
+"``[(receiver, response), ... ]``. Каждый кортеж содержит вызываемую функцию "
+"и ее ответ."
 
 # bdc7c750ebf247f791021c9e00fe81fa
-#: ../../topics/signals.txt:259
+#: ../../topics/signals.txt:268
 msgid ""
 "``send()`` differs from ``send_robust()`` in how exceptions raised by "
 "receiver functions are handled. ``send()`` does *not* catch any exceptions "
@@ -459,7 +510,7 @@ msgstr ""
 "ошибки."
 
 # 28f94531ee6d4885bb64f35e1c94dd60
-#: ../../topics/signals.txt:264
+#: ../../topics/signals.txt:273
 msgid ""
 "``send_robust()`` catches all errors derived from Python's ``Exception`` "
 "class, and ensures all receivers are notified of the signal. If an error "
@@ -473,12 +524,12 @@ msgstr ""
 "вызываемой ошибке."
 
 # d7b1465919154cd19b25ee832423e043
-#: ../../topics/signals.txt:269
+#: ../../topics/signals.txt:278
 msgid "Disconnecting signals"
 msgstr "Отключение сигнала"
 
 # 88061ce91e76476ba6ddb5aed8965aaf
-#: ../../topics/signals.txt:273
+#: ../../topics/signals.txt:282
 msgid ""
 "To disconnect a receiver from a signal, call :meth:`Signal.disconnect`. The "
 "arguments are as described in :meth:`.Signal.connect`."
@@ -487,7 +538,7 @@ msgstr ""
 "Аргументы те же, что и у :meth:`.Signal.connect`."
 
 # 1bce26d6c4ab487ea056f247a2639404
-#: ../../topics/signals.txt:276
+#: ../../topics/signals.txt:285
 msgid ""
 "The *receiver* argument indicates the registered receiver to disconnect. It "
 "may be ``None`` if ``dispatch_uid`` is used to identify the receiver."
@@ -495,6 +546,20 @@ msgstr ""
 "В аргументе *receiver* указывается получатель, который должен перестать "
 "получать сигнал. *receiver* может быть ``None``, если для идентификации "
 "получателя используется ``dispatch_uid``."
+
+# e97c060877b74113bd0c733ed104b6b9
+#~ msgid ""
+#~ "You can put signal handling and registration code anywhere you like. "
+#~ "However, you'll need to make sure that the module it's in gets imported "
+#~ "early on so that the signal handling gets registered before any signals "
+#~ "need to be sent. This makes your app's ``models.py`` a good place to put "
+#~ "registration of signal handlers."
+#~ msgstr ""
+#~ "Вы можете расположить обработчик сигнала и зарегистрировать его там, где "
+#~ "Вам удобно. Тем не менее, вы должны убедиться, что регистрация "
+#~ "обработчика сигнала происходит до того, как он будет отправлен. Поэтому "
+#~ "файл ``models.py`` вашего приложения хорошо подходит для регистрации "
+#~ "обработчиков сигналов."
 
 # 787163063c07407695d698dc9564dd56
 #~ msgid "The ability to pass a list of signals was added."

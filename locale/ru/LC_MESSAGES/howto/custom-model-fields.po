@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 10:34\n"
+"POT-Creation-Date: 2014-07-11 11:43+0300\n"
 "PO-Revision-Date: 2014-04-07 00:28+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -525,13 +525,115 @@ msgstr ""
 "полей, смотрите :doc:`раздел о полях модели </ref/models/fields>` for "
 "examples and details."
 
+# 301de0041f354df38fe57fe7bfe9e8b5
+#: ../../howto/custom-model-fields.txt:236
+msgid "Field deconstruction"
+msgstr ""
+
+# a7c0b4b1afeb4913bc56375a904a2547
+#: ../../howto/custom-model-fields.txt:240
+msgid ""
+"``deconstruct()`` is part of the migrations framework in Django 1.7 and "
+"above. If you have custom fields from previous versions they will need this "
+"method added before you can use them with migrations."
+msgstr ""
+
+# 3a4f8cbcfc0d4ad59510d28364ba721c
+#: ../../howto/custom-model-fields.txt:244
+msgid ""
+"The counterpoint to writing your ``__init__()`` method is writing the "
+"``deconstruct()`` method. This method tells Django how to take an instance "
+"of your new field and reduce it to a serialized form - in particular, what "
+"arguments to pass to ``__init__()`` to re-create it."
+msgstr ""
+
+# 6fb1f8d916e84fe0bce54a681b82e812
+#: ../../howto/custom-model-fields.txt:249
+msgid ""
+"If you haven't added any extra options on top of the field you inherited "
+"from, then there's no need to write a new ``deconstruct()`` method. If, "
+"however, you're, changing the arguments passed in ``__init__()`` (like we "
+"are in ``HandField``), you'll need to supplement the values being passed."
+msgstr ""
+
+# 83562f2b7d5347009fc9afadfd7c5821
+#: ../../howto/custom-model-fields.txt:254
+msgid ""
+"The contract of ``deconstruct()`` is simple; it returns a tuple of four "
+"items: the field's attribute name, the full import path of the field class, "
+"the positional arguments (as a list), and the keyword arguments (as a dict). "
+"Note this is different from the ``deconstruct()`` method :ref:`for custom "
+"classes <custom-deconstruct-method>` which returns a tuple of three things."
+msgstr ""
+
+# 50b9eb146f44425683ad9b042f76e3c8
+#: ../../howto/custom-model-fields.txt:260
+msgid ""
+"As a custom field author, you don't need to care about the first two values; "
+"the base ``Field`` class has all the code to work out the field's attribute "
+"name and import path. You do, however, have to care about the positional and "
+"keyword arguments, as these are likely the things you are changing."
+msgstr ""
+
+# ed3f47ea1f2349d38d8a431221b70425
+#: ../../howto/custom-model-fields.txt:265
+msgid ""
+"For example, in our ``HandField`` class we're always forcibly setting "
+"max_length in ``__init__()``. The ``deconstruct()`` method on the base "
+"``Field`` class will see this and try to return it in the keyword arguments; "
+"thus, we can drop it from the keyword arguments for readability::"
+msgstr ""
+
+# 169ab452ae7244f5b2caf90ff45e19c1
+#: ../../howto/custom-model-fields.txt:283
+msgid ""
+"If you add a new keyword argument, you need to write code to put its value "
+"into ``kwargs`` yourself::"
+msgstr ""
+
+# 402cd9125c034853a3e5727b4b63e998
+#: ../../howto/custom-model-fields.txt:302
+msgid ""
+"More complex examples are beyond the scope of this document, but remember - "
+"for any configuration of your Field instance, ``deconstruct()`` must return "
+"arguments that you can pass to ``__init__`` to reconstruct that state."
+msgstr ""
+
+# 02ba493eedf5431da8e5795b79fde004
+#: ../../howto/custom-model-fields.txt:306
+msgid ""
+"Pay extra attention if you set new default values for arguments in the "
+"``Field`` superclass; you want to make sure they're always included, rather "
+"than disappearing if they take on the old default value."
+msgstr ""
+
+# 72c84b7f1ba747269636a2cc35eefe78
+#: ../../howto/custom-model-fields.txt:310
+msgid ""
+"In addition, try to avoid returning values as positional arguments; where "
+"possible, return values as keyword arguments for maximum future "
+"compatibility. Of course, if you change the names of things more often than "
+"their position in the constructor's argument list, you might prefer "
+"positional, but bear in mind that people will be reconstructing your field "
+"from the serialized version for quite a while (possibly years), depending "
+"how long your migrations live for."
+msgstr ""
+
+# afd85743fbc745c691549a2478ae5015
+#: ../../howto/custom-model-fields.txt:317
+msgid ""
+"You can see the results of deconstruction by looking in migrations that "
+"include the field, and you can test deconstruction in unit tests by just "
+"deconstructing and reconstructing the field::"
+msgstr ""
+
 # ccdf18966b884e47b527e53527b87219
-#: ../../howto/custom-model-fields.txt:234
+#: ../../howto/custom-model-fields.txt:327
 msgid "The ``SubfieldBase`` metaclass"
 msgstr "Метакласс ``SubfieldBase``"
 
 # a511197a6d0547c1915e9f8c17de1ac4
-#: ../../howto/custom-model-fields.txt:238
+#: ../../howto/custom-model-fields.txt:331
 msgid ""
 "As we indicated in the introduction_, field subclasses are often needed for "
 "two reasons: either to take advantage of a custom database column type, or "
@@ -547,7 +649,7 @@ msgstr ""
 "Python, вы можете пропустить этот раздел."
 
 # bc5f8023a399477994fb27774ce3496b
-#: ../../howto/custom-model-fields.txt:245
+#: ../../howto/custom-model-fields.txt:338
 msgid ""
 "If you're handling custom Python types, such as our ``Hand`` class, we need "
 "to make sure that when Django initializes an instance of our model and "
@@ -568,12 +670,12 @@ msgstr ""
 # 23f1c9910512473e852f8cd1d6ab5b98
 # a5f20ed046d34070bee573fe53500653
 # 497f47a638de4e2395c3e37ff9210a9a
-#: ../../howto/custom-model-fields.txt:252
+#: ../../howto/custom-model-fields.txt:345
 msgid "For example, on Python 2::"
 msgstr "Например, для Python 2::"
 
 # bcc6e848fc334fdcb0ff7398a78709f1
-#: ../../howto/custom-model-fields.txt:263
+#: ../../howto/custom-model-fields.txt:356
 msgid ""
 "On Python 3, in lieu of setting the ``__metaclass__`` attribute, add "
 "``metaclass`` to the class definition::"
@@ -582,7 +684,7 @@ msgstr ""
 "``metaclass``::"
 
 # 921e85c73ca54737864b3f65f8a6e30e
-#: ../../howto/custom-model-fields.txt:269
+#: ../../howto/custom-model-fields.txt:362
 msgid ""
 "If you want your code to work on Python 2 & 3, you can use :func:`six."
 "with_metaclass`::"
@@ -591,7 +693,7 @@ msgstr ""
 "func:`six.with_metaclass`::"
 
 # 23c255f0a9414627a2360c9413f5f1a0
-#: ../../howto/custom-model-fields.txt:277
+#: ../../howto/custom-model-fields.txt:370
 msgid ""
 "This ensures that the :meth:`.to_python` method, documented below, will "
 "always be called when the attribute is initialized."
@@ -600,12 +702,12 @@ msgstr ""
 "будет всегда вызываться при инициализации атрибута."
 
 # d1121da5c6f141e6b07ea92e1b00e195
-#: ../../howto/custom-model-fields.txt:281
+#: ../../howto/custom-model-fields.txt:374
 msgid "ModelForms and custom fields"
 msgstr "ModelForms и собственные поля"
 
 # 32eeab5385cb41ffa87372d34f0dd262
-#: ../../howto/custom-model-fields.txt:283
+#: ../../howto/custom-model-fields.txt:376
 msgid ""
 "If you use :class:`~django.db.models.SubfieldBase`, :meth:`.to_python` will "
 "be called every time an instance of the field is assigned a value. This "
@@ -618,7 +720,7 @@ msgstr ""
 "правильность его типа и обработать все ошибки."
 
 # f1d872d8ba394232b1ae914b36962369
-#: ../../howto/custom-model-fields.txt:289
+#: ../../howto/custom-model-fields.txt:382
 msgid ""
 "This is especially important if you use :doc:`ModelForms </topics/forms/"
 "modelforms>`. When saving a ModelForm, Django will use form values to "
@@ -632,29 +734,30 @@ msgstr ""
 "проверки данных в форме будет нарушен."
 
 # d47092e197634e85b7ca5d72a27454d1
-#: ../../howto/custom-model-fields.txt:295
+#: ../../howto/custom-model-fields.txt:388
+#, fuzzy
 msgid ""
 "Therefore, you must ensure that the form field used to represent your custom "
 "field performs whatever input validation and data cleaning is necessary to "
-"convert user-provided form input into a `to_python()`-compatible model field "
-"value. This may require writing a custom form field, and/or implementing "
-"the :meth:`.formfield` method on your field to return a form field class "
-"whose `to_python()` returns the correct datatype."
+"convert user-provided form input into a ``to_python()``-compatible model "
+"field value. This may require writing a custom form field, and/or "
+"implementing the :meth:`.formfield` method on your field to return a form "
+"field class whose ``to_python()`` returns the correct datatype."
 msgstr ""
 "Поэтому вы должны убедиться, что поле формы, которое отображает ваше поле "
 "модели, выполняет все необходимые проверки данных и преобразует их в тип "
 "аналогичный используемому методом `to_python()` вашего поля модели. Для "
 "этого, возможно, вам придется создать собственный класс поля формы и/или "
-"переопределить метод :meth:`.formfield` поля модели, чтобы метод `to_python()"
-"` класса поля формы возвращал данные правильного типа."
+"переопределить метод :meth:`.formfield` поля модели, чтобы метод "
+"`to_python()` класса поля формы возвращал данные правильного типа."
 
 # a6d906ba2d50431ead5827cabd984ce1
-#: ../../howto/custom-model-fields.txt:304
+#: ../../howto/custom-model-fields.txt:397
 msgid "Documenting your custom field"
 msgstr "Документирование собственного поля"
 
 # d2981188b931450e8b0bc810eaeeda7b
-#: ../../howto/custom-model-fields.txt:308
+#: ../../howto/custom-model-fields.txt:401
 msgid ""
 "As always, you should document your field type, so users will know what it "
 "is. In addition to providing a docstring for it, which is useful for "
@@ -675,7 +778,7 @@ msgstr ""
 "cards (bridge style)'."
 
 # e6b87c75fd95402d8838de29a379cddd
-#: ../../howto/custom-model-fields.txt:317
+#: ../../howto/custom-model-fields.txt:410
 msgid ""
 "In the :mod:`django.contrib.admindocs` display, the field description is "
 "interpolated with ``field.__dict__`` which allows the description to "
@@ -687,12 +790,12 @@ msgstr ""
 "class:`~django.db.models.CharField` выглядит следующим образом::"
 
 # 46ca5032629e464d9326ff01a97edd02
-#: ../../howto/custom-model-fields.txt:325
+#: ../../howto/custom-model-fields.txt:418
 msgid "Useful methods"
 msgstr "Полезные методы"
 
 # 427d3fabea8645bc87646e6b7cce2659
-#: ../../howto/custom-model-fields.txt:327
+#: ../../howto/custom-model-fields.txt:420
 msgid ""
 "Once you've created your :class:`~django.db.models.Field` subclass and set "
 "up the ``__metaclass__``, you might consider overriding a few standard "
@@ -705,12 +808,12 @@ msgstr ""
 "порядке убывания важности."
 
 # 661e0b6c078f4db39535c2d48d48fe9d
-#: ../../howto/custom-model-fields.txt:333
+#: ../../howto/custom-model-fields.txt:426
 msgid "Custom database types"
 msgstr "Типы полей базы данных"
 
 # 49fd3ed7a29b4d80a9846e75e2b141d0
-#: ../../howto/custom-model-fields.txt:337
+#: ../../howto/custom-model-fields.txt:430
 msgid ""
 "Returns the database column data type for the :class:`~django.db.models."
 "Field`, taking into account the connection object, and the settings "
@@ -720,7 +823,7 @@ msgstr ""
 "учитывая настройки подключения и параметры поля."
 
 # a79545d83fa941b5a944b4b34c0ac782
-#: ../../howto/custom-model-fields.txt:340
+#: ../../howto/custom-model-fields.txt:433
 msgid ""
 "Say you've created a PostgreSQL custom type called ``mytype``. You can use "
 "this field with Django by subclassing ``Field`` and implementing the :meth:`."
@@ -731,7 +834,7 @@ msgstr ""
 "метод :meth:`.db_type`::"
 
 # bc30994495ae4f249496156af1b9feb7
-#: ../../howto/custom-model-fields.txt:350
+#: ../../howto/custom-model-fields.txt:443
 msgid ""
 "Once you have ``MytypeField``, you can use it in any model, just like any "
 "other ``Field`` type::"
@@ -740,7 +843,7 @@ msgstr ""
 "другие подтипы ``Field``::"
 
 # 25b06f62895f45bc9ba30b1e33e073d7
-#: ../../howto/custom-model-fields.txt:357
+#: ../../howto/custom-model-fields.txt:450
 msgid ""
 "If you aim to build a database-agnostic application, you should account for "
 "differences in database column types. For example, the date/time column type "
@@ -758,19 +861,23 @@ msgstr ""
 # 23f1c9910512473e852f8cd1d6ab5b98
 # a5f20ed046d34070bee573fe53500653
 # 497f47a638de4e2395c3e37ff9210a9a
-#: ../../howto/custom-model-fields.txt:363
-#: ../../howto/custom-model-fields.txt:495
-#: ../../howto/custom-model-fields.txt:671
+#: ../../howto/custom-model-fields.txt:456
+#: ../../howto/custom-model-fields.txt:591
+#: ../../howto/custom-model-fields.txt:784
 msgid "For example::"
 msgstr "Например::"
 
 # 68182603cd4b47659e5b92c2e3cd09be
-#: ../../howto/custom-model-fields.txt:372
+#: ../../howto/custom-model-fields.txt:465
+#, fuzzy
 msgid ""
-"The :meth:`.db_type` method is only called by Django when the framework "
+"The :meth:`.db_type` method is called by Django when the framework "
 "constructs the ``CREATE TABLE`` statements for your application -- that is, "
-"when you first create your tables. It's not called at any other time, so it "
-"can afford to execute slightly complex code, such as the ``connection."
+"when you first create your tables. It is also called when constructing a "
+"``WHERE`` clause that includes the model field -- that is, when you retrieve "
+"data using QuerySet methods like ``get()``, ``filter()``, and ``exclude()`` "
+"and have the model field as an argument. It's not called at any other time, "
+"so it can afford to execute slightly complex code, such as the ``connection."
 "settings_dict`` check in the above example."
 msgstr ""
 "Метод :meth:`.db_type` используется Django только при создании ``CREATE "
@@ -779,7 +886,7 @@ msgstr ""
 "сложный код, как проверка ``connection.settings_dict`` в примере выше."
 
 # e51328f1b23c4a03b2f85ab47aa36c6e
-#: ../../howto/custom-model-fields.txt:378
+#: ../../howto/custom-model-fields.txt:474
 msgid ""
 "Some database column types accept parameters, such as ``CHAR(25)``, where "
 "the parameter ``25`` represents the maximum column length. In cases like "
@@ -793,7 +900,7 @@ msgstr ""
 "создавать поле ``CharMaxlength25Field``::"
 
 # 5b4ac47ef08a4dcb98ee538b4cb3a2eb
-#: ../../howto/custom-model-fields.txt:394
+#: ../../howto/custom-model-fields.txt:490
 msgid ""
 "The better way of doing this would be to make the parameter specifiable at "
 "run time -- i.e., when the class is instantiated. To do that, just "
@@ -804,7 +911,7 @@ msgstr ""
 "models.Field.__init__`::"
 
 # 9b74368a917448a18e3eeed21c4e2c60
-#: ../../howto/custom-model-fields.txt:412
+#: ../../howto/custom-model-fields.txt:508
 msgid ""
 "Finally, if your column requires truly complex SQL setup, return ``None`` "
 "from :meth:`.db_type`. This will cause Django's SQL creation code to skip "
@@ -818,12 +925,12 @@ msgstr ""
 "либо другим способом."
 
 # 392329bf4bf647d1a5766d2bb15082ae
-#: ../../howto/custom-model-fields.txt:419
+#: ../../howto/custom-model-fields.txt:515
 msgid "Converting database values to Python objects"
 msgstr "Преобразование значений базы данных в объекты Python"
 
 # a8e078688ed5477587db4f0b3f994d11
-#: ../../howto/custom-model-fields.txt:423
+#: ../../howto/custom-model-fields.txt:519
 msgid ""
 "Converts a value as returned by your database (or a serializer) to a Python "
 "object."
@@ -832,7 +939,7 @@ msgstr ""
 "объект Python."
 
 # b931e9c1d4bb49a6a5062d432647ec8e
-#: ../../howto/custom-model-fields.txt:426
+#: ../../howto/custom-model-fields.txt:522
 msgid ""
 "The default implementation simply returns ``value``, for the common case in "
 "which the database backend already returns data in the correct format (as a "
@@ -843,7 +950,7 @@ msgstr ""
 "(например, строка Python string)."
 
 # 62902371d5c047df8cb06b4caff4d195
-#: ../../howto/custom-model-fields.txt:430
+#: ../../howto/custom-model-fields.txt:526
 msgid ""
 "If your custom :class:`~django.db.models.Field` class deals with data "
 "structures that are more complex than strings, dates, integers or floats, "
@@ -855,23 +962,23 @@ msgstr ""
 "метод. Метод должен корректно работать со следующими аргументами:"
 
 # fb1688a134a8429186ab2f5d6e19c39b
-#: ../../howto/custom-model-fields.txt:435
+#: ../../howto/custom-model-fields.txt:531
 msgid ""
 "An instance of the correct type (e.g., ``Hand`` in our ongoing example)."
 msgstr "Объект нужного типа (например, ``Hand`` в нашем примере)."
 
 # cca370d5dc4548d5b1338470d4e1d5a4
-#: ../../howto/custom-model-fields.txt:437
+#: ../../howto/custom-model-fields.txt:533
 msgid "A string (e.g., from a deserializer)."
 msgstr "Строка (например, при десериализации)."
 
 # 00f3339e4406498dbfe43b39dfff53c0
-#: ../../howto/custom-model-fields.txt:439
+#: ../../howto/custom-model-fields.txt:535
 msgid "Whatever the database returns for the column type you're using."
 msgstr "Значение, возвращаемое базой данных."
 
 # 128ac3c4ef9f4c509e5a97db8a6580dd
-#: ../../howto/custom-model-fields.txt:441
+#: ../../howto/custom-model-fields.txt:537
 msgid ""
 "In our ``HandField`` class, we're storing the data as a VARCHAR field in the "
 "database, so we need to be able to process strings and ``Hand`` instances "
@@ -881,7 +988,7 @@ msgstr ""
 "обрабатывать строки и объекты ``Hand`` в методе :meth:`.to_python`::"
 
 # 64eb9981da4d496899a39112fca3c038
-#: ../../howto/custom-model-fields.txt:462
+#: ../../howto/custom-model-fields.txt:558
 msgid ""
 "Notice that we always return a ``Hand`` instance from this method. That's "
 "the Python object type we want to store in the model's attribute. If "
@@ -894,7 +1001,7 @@ msgstr ""
 "exceptions.ValidationError`."
 
 # 20dff6ea3d2d4b61908acca320f58bcb
-#: ../../howto/custom-model-fields.txt:467
+#: ../../howto/custom-model-fields.txt:563
 msgid ""
 "**Remember:** If your custom field needs the :meth:`.to_python` method to be "
 "called when it is created, you should be using `The SubfieldBase metaclass`_ "
@@ -906,7 +1013,7 @@ msgstr ""
 "метод :meth:`.to_python` не будет автоматически вызван."
 
 # 97abd394f9164c8584b1865e7ad09236
-#: ../../howto/custom-model-fields.txt:474
+#: ../../howto/custom-model-fields.txt:570
 msgid ""
 "If your custom field allows ``null=True``, any field method that takes "
 "``value`` as an argument, like :meth:`~Field.to_python` and :meth:`~Field."
@@ -917,12 +1024,12 @@ msgstr ""
 "get_prep_value`, должны учитывать ситуацию, когда ``value`` равно ``None``."
 
 # ff46ada6ed6e44189c67f6468a4b74a2
-#: ../../howto/custom-model-fields.txt:480
+#: ../../howto/custom-model-fields.txt:576
 msgid "Converting Python objects to query values"
 msgstr "Преобразование объектов Python в значения в запросе"
 
 # d760810bf758497297e6f0f4fda9cb7e
-#: ../../howto/custom-model-fields.txt:484
+#: ../../howto/custom-model-fields.txt:580
 msgid ""
 "This is the reverse of :meth:`.to_python` when working with the database "
 "backends (as opposed to serialization). The ``value`` parameter is the "
@@ -937,7 +1044,7 @@ msgstr ""
 "метод должен вернуть данные для подстановки в запрос."
 
 # 9a1f745b1bf14861b1981ed0e4648a93
-#: ../../howto/custom-model-fields.txt:491
+#: ../../howto/custom-model-fields.txt:587
 msgid ""
 "This conversion should *not* include any database-specific conversions. If "
 "database-specific conversions are required, they should be made in the call "
@@ -947,13 +1054,24 @@ msgstr ""
 "данных. Если необходимо преобразование специфическое для какой либо базы "
 "данных, его необходимо выполнить в методе :meth:`.get_db_prep_value`."
 
+# a397183f2a3846c9a337cb553a673b4b
+#: ../../howto/custom-model-fields.txt:602
+msgid ""
+"If your custom field uses the ``CHAR``, ``VARCHAR`` or ``TEXT`` types for "
+"MySQL, you must make sure that :meth:`.get_prep_value` always returns a "
+"string type. MySQL performs flexible and unexpected matching when a query is "
+"performed on these types and the provided value is an integer, which can "
+"cause queries to include unexpected objects in their results. This problem "
+"cannot occur if you always return a string type from :meth:`.get_prep_value`."
+msgstr ""
+
 # 8ba0bfd71aec49d1b1daf418fc42048c
-#: ../../howto/custom-model-fields.txt:505
+#: ../../howto/custom-model-fields.txt:612
 msgid "Converting query values to database values"
 msgstr "Преобразование значения из запроса в значение базы данных"
 
 # 6b5e19155be44592afe363746b5b5700
-#: ../../howto/custom-model-fields.txt:509
+#: ../../howto/custom-model-fields.txt:616
 msgid ""
 "Some data types (for example, dates) need to be in a specific format before "
 "they can be used by a database backend. :meth:`.get_db_prep_value` is the "
@@ -968,7 +1086,7 @@ msgstr ""
 "зависит от используемой базы данных."
 
 # 9eeaed2ad0154651a97c6dba7334cc2a
-#: ../../howto/custom-model-fields.txt:516
+#: ../../howto/custom-model-fields.txt:623
 msgid ""
 "The ``prepared`` argument describes whether or not the value has already "
 "been passed through :meth:`.get_prep_value` conversions. When ``prepared`` "
@@ -981,7 +1099,7 @@ msgstr ""
 "умолчанию вызовет :meth:`.get_prep_value` перед дальнейшим преобразованием."
 
 # 4699a2ddc22342bcb5715770e09c2049
-#: ../../howto/custom-model-fields.txt:525
+#: ../../howto/custom-model-fields.txt:632
 msgid ""
 "Same as the above, but called when the Field value must be *saved* to the "
 "database. As the default implementation just calls :meth:`."
@@ -997,12 +1115,12 @@ msgstr ""
 "каких либо других запросах (что выполняется в :meth:`.get_db_prep_value`)."
 
 # db2735ee6c5e49e0ad629c29909e6e24
-#: ../../howto/custom-model-fields.txt:533
+#: ../../howto/custom-model-fields.txt:640
 msgid "Preprocessing values before saving"
 msgstr "Обработка данных перед сохранением"
 
 # 1c5ccaf481f84ebd8b6314f1483a679d
-#: ../../howto/custom-model-fields.txt:537
+#: ../../howto/custom-model-fields.txt:644
 msgid ""
 "This method is called just prior to :meth:`.get_db_prep_save` and should "
 "return the value of the appropriate attribute from ``model_instance`` for "
@@ -1018,7 +1136,7 @@ msgstr ""
 "будет равен ``True``, иначе - ``False``."
 
 # 61dfdcaabb7c4ef1a5660ccb988f3ea5
-#: ../../howto/custom-model-fields.txt:544
+#: ../../howto/custom-model-fields.txt:651
 msgid ""
 "You only need to override this method if you want to preprocess the value "
 "somehow, just before saving. For example, Django's :class:`~django.db.models."
@@ -1032,7 +1150,7 @@ msgstr ""
 "DateField.auto_now` или :attr:`~django.db.models.DateField.auto_now_add`."
 
 # 8f60b55bd14d4601aa58894eab66f940
-#: ../../howto/custom-model-fields.txt:550
+#: ../../howto/custom-model-fields.txt:657
 msgid ""
 "If you do override this method, you must return the value of the attribute "
 "at the end. You should also update the model's attribute if you make any "
@@ -1043,28 +1161,28 @@ msgstr ""
 "конце. Вы также должны обновить атрибут модели, если изменяли значение."
 
 # cea3a2a4ece84401aefd943d92962dc3
-#: ../../howto/custom-model-fields.txt:556
+#: ../../howto/custom-model-fields.txt:663
 msgid "Preparing values for use in database lookups"
 msgstr "Подготовка значений при поиске в базе данных"
 
 # c0a7147674d344e4ab9a847e81523ee8
-#: ../../howto/custom-model-fields.txt:558
+#: ../../howto/custom-model-fields.txt:665
 msgid ""
 "As with value conversions, preparing a value for database lookups is a two "
 "phase process."
 msgstr ""
-"Как и преобразование значения поля, преобразование значения для поиска"
-"(WHERE) в базе данных выполняется в две фазы."
+"Как и преобразование значения поля, преобразование значения для "
+"поиска(WHERE) в базе данных выполняется в две фазы."
 
 # 35cdbdd1a70f4d5293fa850a4366b2b3
-#: ../../howto/custom-model-fields.txt:563
+#: ../../howto/custom-model-fields.txt:670
 msgid ""
 ":meth:`.get_prep_lookup` performs the first phase of lookup preparation, "
 "performing generic data validity checks"
 msgstr ":meth:`.get_prep_lookup` выполняет первую фазу, проверяя значение"
 
 # 043b1310ceed441e8080752cc141b753
-#: ../../howto/custom-model-fields.txt:566
+#: ../../howto/custom-model-fields.txt:673
 msgid ""
 "Prepares the ``value`` for passing to the database when used in a lookup (a "
 "``WHERE`` constraint in SQL). The ``lookup_type`` will be one of the valid "
@@ -1079,8 +1197,16 @@ msgstr ""
 "``startswith``, ``istartswith``, ``endswith``, ``iendswith``, ``range``, "
 "``year``, ``month``, ``day``, ``isnull``, ``search``, ``regex`` и ``iregex``."
 
+# 6c98a628ece24d9bb13bb7bb6362dea7
+#: ../../howto/custom-model-fields.txt:682
+msgid ""
+"If you are using :doc:`Custom lookups </ref/models/custom-lookups>` the "
+"``lookup_type`` can be any ``lookup_name`` used by the project's custom "
+"lookups."
+msgstr ""
+
 # a8fe7eae9a934a55a0b179d4dd85573f
-#: ../../howto/custom-model-fields.txt:573
+#: ../../howto/custom-model-fields.txt:686
 msgid ""
 "Your method must be prepared to handle all of these ``lookup_type`` values "
 "and should raise either a ``ValueError`` if the ``value`` is of the wrong "
@@ -1098,7 +1224,7 @@ msgstr ""
 "использовать метод :meth:`.get_db_prep_lookup` родительского класса."
 
 # 1a5ef9b9277f47b8a5fbf0848fd3f895
-#: ../../howto/custom-model-fields.txt:580
+#: ../../howto/custom-model-fields.txt:693
 msgid ""
 "If you needed to implement ``get_db_prep_save()``, you will usually need to "
 "implement ``get_prep_lookup()``. If you don't, ``get_prep_value`` will be "
@@ -1111,7 +1237,7 @@ msgstr ""
 "фильтров ``exact``, ``gt``, ``gte``, ``lt``, ``lte``, ``in`` и ``range``."
 
 # 176453595b224b209cff718d77b33b5e
-#: ../../howto/custom-model-fields.txt:585
+#: ../../howto/custom-model-fields.txt:698
 msgid ""
 "You may also want to implement this method to limit the lookup types that "
 "could be used with your custom field type."
@@ -1120,7 +1246,7 @@ msgstr ""
 "используемых с вашим полем."
 
 # ad20a1d2d712482ba5b7e4c1d2a11e57
-#: ../../howto/custom-model-fields.txt:588
+#: ../../howto/custom-model-fields.txt:701
 msgid ""
 "Note that, for ``range`` and ``in`` lookups, ``get_prep_lookup`` will "
 "receive a list of objects (presumably of the right type) and will need to "
@@ -1134,7 +1260,7 @@ msgstr ""
 "``get_prep_value()`` для объектов списка."
 
 # 0a8a4f91d3f643bbb223ce31844d084e
-#: ../../howto/custom-model-fields.txt:594
+#: ../../howto/custom-model-fields.txt:707
 msgid ""
 "For example, the following code implements ``get_prep_lookup`` to limit the "
 "accepted lookup types to ``exact`` and ``in``::"
@@ -1143,7 +1269,7 @@ msgstr ""
 "используемые фильтры до ``exact`` и ``in``::"
 
 # e34085db53c840e0b7e8ea87c5e7a70a
-#: ../../howto/custom-model-fields.txt:611
+#: ../../howto/custom-model-fields.txt:724
 msgid ""
 "Performs any database-specific data conversions required by a lookup. As "
 "with :meth:`.get_db_prep_value`, the specific connection that will be used "
@@ -1157,12 +1283,12 @@ msgstr ""
 "meth:`.get_prep_lookup`."
 
 # df6f403d3b3a4ee6b73582b24f05ebe8
-#: ../../howto/custom-model-fields.txt:618
+#: ../../howto/custom-model-fields.txt:731
 msgid "Specifying the form field for a model field"
 msgstr "Определение поля формы для поля модели"
 
 # 82688290147c463f9ed132ea13f0b6d0
-#: ../../howto/custom-model-fields.txt:622
+#: ../../howto/custom-model-fields.txt:735
 msgid ""
 "Returns the default form field to use when this model field is displayed in "
 "a form.  This method is called by the :class:`~django.forms.ModelForm` "
@@ -1172,7 +1298,7 @@ msgstr ""
 "модели. Этот метод используется в :class:`~django.forms.ModelForm`."
 
 # 8639b9a27a89445686fb692f239158c8
-#: ../../howto/custom-model-fields.txt:625
+#: ../../howto/custom-model-fields.txt:738
 msgid ""
 "The form field class can be specified via the ``form_class`` and "
 "``choices_form_class`` arguments; the latter is used if the field has "
@@ -1186,7 +1312,7 @@ msgstr ""
 "forms.CharField` или :class:`~django.forms.TypedChoiceField`."
 
 # bd3cdf42948e4dbdbbe1e3993458618b
-#: ../../howto/custom-model-fields.txt:631
+#: ../../howto/custom-model-fields.txt:744
 msgid ""
 "All of the ``kwargs`` dictionary is passed directly to the form field's "
 "``__init__()`` method. Normally, all you need to do is set up a good default "
@@ -1203,7 +1329,7 @@ msgstr ""
 "`раздел о формах </topics/forms/index>`."
 
 # 4a4a40129fbb4ab39c78fb257d6e660f
-#: ../../howto/custom-model-fields.txt:638
+#: ../../howto/custom-model-fields.txt:751
 msgid ""
 "Continuing our ongoing example, we can write the :meth:`.formfield` method "
 "as::"
@@ -1211,7 +1337,7 @@ msgstr ""
 "Продолжая наш пример, мы можем создать следующий метод :meth:`.formfield`::"
 
 # 586fbac7e61043c2b220931533b4f206
-#: ../../howto/custom-model-fields.txt:650
+#: ../../howto/custom-model-fields.txt:763
 msgid ""
 "This assumes we've imported a ``MyFormField`` field class (which has its own "
 "default widget). This document doesn't cover the details of writing custom "
@@ -1222,12 +1348,12 @@ msgstr ""
 "создание собственного поля формы."
 
 # e97eeb36bb364cb18f852c1417a7533b
-#: ../../howto/custom-model-fields.txt:658
+#: ../../howto/custom-model-fields.txt:771
 msgid "Emulating built-in field types"
 msgstr "Эмуляция встроенных полей"
 
 # d09bfaa8cde6491b88acbe7b8feecd1f
-#: ../../howto/custom-model-fields.txt:662
+#: ../../howto/custom-model-fields.txt:775
 msgid ""
 "Returns a string giving the name of the :class:`~django.db.models.Field` "
 "subclass we are emulating at the database level. This is used to determine "
@@ -1238,7 +1364,7 @@ msgstr ""
 "данных для простых случаев."
 
 # 8c90c86b7b9445cc8086c4d54bb83876
-#: ../../howto/custom-model-fields.txt:666
+#: ../../howto/custom-model-fields.txt:779
 msgid ""
 "If you have created a :meth:`.db_type` method, you don't need to worry "
 "about :meth:`.get_internal_type` -- it won't be used much. Sometimes, "
@@ -1251,17 +1377,18 @@ msgstr ""
 "вы можете использовать этот метод."
 
 # bf17777d08b447969f5bb8041619ff3e
-#: ../../howto/custom-model-fields.txt:679
+#: ../../howto/custom-model-fields.txt:792
+#, fuzzy
 msgid ""
-"No matter which database backend we are using, this will mean that "
-"``syncdb`` and other SQL commands create the right column type for storing a "
+"No matter which database backend we are using, this will mean that :djadmin:"
+"`migrate` and other SQL commands create the right column type for storing a "
 "string."
 msgstr ""
 "Без разницы какую базу данных мы используем, ``syncdb`` и другие SQL выберут "
 "правильный тип поля в базе данных."
 
 # 654cbaa57af549aab02f5989e3009a7f
-#: ../../howto/custom-model-fields.txt:682
+#: ../../howto/custom-model-fields.txt:796
 msgid ""
 "If :meth:`.get_internal_type` returns a string that is not known to Django "
 "for the database backend you are using -- that is, it doesn't appear in "
@@ -1280,30 +1407,30 @@ msgstr ""
 "для сериализатора, может быть хорошей практикой."
 
 # f2cdcc2f9bf8422ea4541dd7f27a9f9f
-#: ../../howto/custom-model-fields.txt:692
+#: ../../howto/custom-model-fields.txt:806
 msgid "Converting field data for serialization"
 msgstr "Преобразование значения поля для сериалайзера"
 
 # 5523584c5f2840c59822800acda92cb5
-#: ../../howto/custom-model-fields.txt:696
+#: ../../howto/custom-model-fields.txt:810
 msgid ""
 "This method is used by the serializers to convert the field into a string "
 "for output. Calling ``Field._get_val_from_obj(obj)`` is the best way to get "
 "the value to serialize. For example, since our ``HandField`` uses strings "
 "for its data storage anyway, we can reuse some existing conversion code::"
 msgstr ""
-"Этот метод используется сериализатором. Вызов ``Field._get_val_from_obj(obj)"
-"`` - лучший способ получить значение для сериализатора. Например, так как "
-"``HandField`` использует строку для хранения в базе данных, мы можем "
-"использовать существующий код::"
+"Этот метод используется сериализатором. Вызов ``Field."
+"_get_val_from_obj(obj)`` - лучший способ получить значение для "
+"сериализатора. Например, так как ``HandField`` использует строку для "
+"хранения в базе данных, мы можем использовать существующий код::"
 
 # f25603485907460f8a3346be9af89499
-#: ../../howto/custom-model-fields.txt:709
+#: ../../howto/custom-model-fields.txt:823
 msgid "Some general advice"
 msgstr "Несколько советов"
 
 # 987da81e73dd455ba9af1e395bca31f8
-#: ../../howto/custom-model-fields.txt:711
+#: ../../howto/custom-model-fields.txt:825
 msgid ""
 "Writing a custom field can be a tricky process, particularly if you're doing "
 "complex conversions between your Python types and your database and "
@@ -1315,7 +1442,7 @@ msgstr ""
 "сериализатиора. Вот несколько советов как упросить эту задачу:"
 
 # c52acd8bee464a568e366a7941baa69d
-#: ../../howto/custom-model-fields.txt:716
+#: ../../howto/custom-model-fields.txt:830
 msgid ""
 "Look at the existing Django fields (in :file:`django/db/models/fields/"
 "__init__.py`) for inspiration. Try to find a field that's similar to what "
@@ -1327,15 +1454,16 @@ msgstr ""
 "это лучше, чем создавать свое поле с нуля."
 
 # 5a6eb4ff2b524ae9b60578f7c033bfcf
-#: ../../howto/custom-model-fields.txt:721
+#: ../../howto/custom-model-fields.txt:835
+#, fuzzy
 msgid ""
-"Put a ``__str__()`` or ``__unicode__()`` method on the class you're wrapping "
-"up as a field. There are a lot of places where the default behavior of the "
-"field code is to call :func:`~django.utils.encoding.force_text` on the "
-"value. (In our examples in this document, ``value`` would be a ``Hand`` "
-"instance, not a ``HandField``). So if your ``__unicode__()`` method "
-"(``__str__()`` on Python 3) automatically converts to the string form of "
-"your Python object, you can save yourself a lot of work."
+"Put a ``__str__()`` (``__unicode__()`` on Python 2) method on the class "
+"you're wrapping up as a field. There are a lot of places where the default "
+"behavior of the field code is to call :func:`~django.utils.encoding."
+"force_text` on the value. (In our examples in this document, ``value`` would "
+"be a ``Hand`` instance, not a ``HandField``). So if your ``__str__()`` "
+"method (``__unicode__()`` on Python 2) automatically converts to the string "
+"form of your Python object, you can save yourself a lot of work."
 msgstr ""
 "Добавьте метод ``__str__()`` или ``__unicode__()`` в класс, который вы "
 "используете для значений вашего поля. Во многих случаях используется "
@@ -1345,12 +1473,12 @@ msgstr ""
 "в строку, это сохранит вам много времени."
 
 # 2cd137f2faa6491ab1134fc3a8cc1016
-#: ../../howto/custom-model-fields.txt:732
+#: ../../howto/custom-model-fields.txt:846
 msgid "Writing a ``FileField`` subclass"
 msgstr "Создание подкласса ``FileField``"
 
 # 905bed0faa17403789212baff5fd99c4
-#: ../../howto/custom-model-fields.txt:734
+#: ../../howto/custom-model-fields.txt:848
 msgid ""
 "In addition to the above methods, fields that deal with files have a few "
 "other special requirements which must be taken into account. The majority of "
@@ -1364,7 +1492,7 @@ msgstr ""
 "лишь операции, необходимые для работы с различными типами файлов."
 
 # 2807550b394243708642034b5c5355fc
-#: ../../howto/custom-model-fields.txt:740
+#: ../../howto/custom-model-fields.txt:854
 msgid ""
 "Django provides a ``File`` class, which is used as a proxy to the file's "
 "contents and operations. This can be subclassed to customize how the file is "
@@ -1378,7 +1506,7 @@ msgstr ""
 "`разделе о файлах </ref/files/file>`."
 
 # da5e6b64339a4a38afeed856ab69bd5f
-#: ../../howto/custom-model-fields.txt:746
+#: ../../howto/custom-model-fields.txt:860
 msgid ""
 "Once a subclass of ``File`` is created, the new ``FileField`` subclass must "
 "be told to use it. To do so, simply assign the new ``File`` subclass to the "
@@ -1389,12 +1517,12 @@ msgstr ""
 "подкласса ``FileField``."
 
 # 16bf8d57b75e48e99a87bb7a21dd210d
-#: ../../howto/custom-model-fields.txt:751
+#: ../../howto/custom-model-fields.txt:865
 msgid "A few suggestions"
 msgstr "Несколько советов"
 
 # 8c76cdf3f4014c608e2fe4b205ff2e01
-#: ../../howto/custom-model-fields.txt:753
+#: ../../howto/custom-model-fields.txt:867
 msgid ""
 "In addition to the above details, there are a few guidelines which can "
 "greatly improve the efficiency and readability of the field's code."
@@ -1403,7 +1531,7 @@ msgstr ""
 "помогут улучшить ваш код."
 
 # b5e0923f41364300a290ef25ad78fb3b
-#: ../../howto/custom-model-fields.txt:756
+#: ../../howto/custom-model-fields.txt:870
 msgid ""
 "The source for Django's own ``ImageField`` (in ``django/db/models/fields/"
 "files.py``) is a great example of how to subclass ``FileField`` to support a "
@@ -1414,7 +1542,7 @@ msgstr ""
 "files.py``) - хороший пример переопределения ``FileField``, изучите его."
 
 # 85b2b8f7c50e4ab59e349c9fbc0adac7
-#: ../../howto/custom-model-fields.txt:761
+#: ../../howto/custom-model-fields.txt:875
 msgid ""
 "Cache file attributes wherever possible. Since files may be stored in remote "
 "storage systems, retrieving them may cost extra time, or even money, that "

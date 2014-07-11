@@ -51,11 +51,17 @@ algorithm the system follows to determine which Python code to execute:
 3. Django runs through each URL pattern, in order, and stops at the first
    one that matches the requested URL.
 
-4. Once one of the regexes matches, Django imports and calls the given
-   view, which is a simple Python function (or a :doc:`class based view
-   </topics/class-based-views/index>`). The view gets passed an
-   :class:`~django.http.HttpRequest` as its first argument and any values
-   captured in the regex as remaining arguments.
+4. Once one of the regexes matches, Django imports and calls the given view,
+   which is a simple Python function (or a :doc:`class based view
+   </topics/class-based-views/index>`). The view gets passed the following
+   arguments:
+
+   * An instance of :class:`~django.http.HttpRequest`.
+   * If the matched regular expression returned no named groups, then the
+     matches from the regular expression are provided as positional arguments.
+   * The keyword arguments are made up of any named groups matched by the
+     regular expression, overridden by any arguments specified in the optional
+     ``kwargs`` argument to :func:`django.conf.urls.url`.
 
 5. If no regex matches, or if an exception is raised during any
    point in this process, Django invokes an appropriate
@@ -106,7 +112,7 @@ Example requests:
 * ``/articles/2003/03/03/`` would match the final pattern. Django would call
   the function ``news.views.article_detail(request, '2003', '03', '03')``.
 
-.. _Dive Into Python's explanation: http://diveintopython.net/regular_expressions/street_addresses.html#re.matching.2.3
+.. _Dive Into Python's explanation: http://www.diveintopython.net/regular_expressions/street_addresses.html#re.matching.2.3
 
 Named groups
 ============
@@ -178,8 +184,8 @@ The URLconf doesn't look at the request method. In other words, all request
 methods -- ``POST``, ``GET``, ``HEAD``, etc. -- will be routed to the same
 function for the same URL.
 
-Notes on capturing text in URLs
-===============================
+Captured arguments are always strings
+=====================================
 
 Each captured argument is sent to the view as a plain Python string, regardless
 of what sort of match the regular expression makes. For example, in this
@@ -189,6 +195,9 @@ URLconf line::
 
 ...the ``year`` argument to ``news.views.year_archive()`` will be a string, not
 an integer, even though the ``\d{4}`` will only match integer strings.
+
+Specifying defaults for view arguments
+======================================
 
 A convenient trick is to specify default parameters for your views' arguments.
 Here's an example URLconf and view::
@@ -650,7 +659,7 @@ change the entry in the URLconf.
 
 In some scenarios where views are of a generic nature, a many-to-one
 relationship might exist between URLs and views. For these cases the view name
-isn't a good enough identificator for it when it comes the time of reversing
+isn't a good enough identifier for it when comes the time of reversing
 URLs. Read the next section to know about the solution Django provides for this.
 
 .. _naming-url-patterns:
@@ -866,7 +875,7 @@ For example::
         url(r'^advanced/$', 'apps.help.views.views.advanced'),
     )
 
-    url(r'^help/', include(help_patterns, 'bar', 'foo')),
+    url(r'^help/', include((help_patterns, 'bar', 'foo'))),
 
 This will include the nominated URL patterns into the given application and
 instance namespace.
@@ -877,3 +886,8 @@ attribute: A 3-tuple that contains all the patterns in the corresponding admin
 site, plus the application namespace ``'admin'``, and the name of the admin
 instance. It is this ``urls`` attribute that you ``include()`` into your
 projects ``urlpatterns`` when you deploy an Admin instance.
+
+Be sure to pass a tuple to ``include()``. If you simply pass three arguments:
+``include(help_patterns, 'bar', 'foo')``, Django won't throw an error but due
+to the signature of ``include()``, ``'bar'`` will be the instance namespace and
+``'foo'`` will be the application namespace instead of vice versa.

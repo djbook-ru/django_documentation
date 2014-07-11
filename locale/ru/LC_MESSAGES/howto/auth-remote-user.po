@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 10:34\n"
+"POT-Creation-Date: 2014-07-11 11:43+0300\n"
 "PO-Revision-Date: 2013-12-06 17:49+0700\n"
 "Last-Translator: redvi <liberty195@gmail.com>\n"
 "Language-Team: none\n"
@@ -25,7 +25,7 @@ msgid "Authentication using ``REMOTE_USER``"
 msgstr "Аутентификация при помощи ``REMOTE_USER``"
 
 # 64bb41ce69594461b0568cb1d314313c
-#: ../../howto/auth-remote-user.txt:7
+#: ../../howto/auth-remote-user.txt:5
 msgid ""
 "This document describes how to make use of external authentication sources "
 "(where the Web server sets the ``REMOTE_USER`` environment variable) in your "
@@ -34,169 +34,166 @@ msgid ""
 "Windows Authentication or Apache and `mod_authnz_ldap`_, `CAS`_, `Cosign`_, "
 "`WebAuth`_, `mod_auth_sspi`_, etc."
 msgstr ""
-"Документ описывает использование внешних источников аутентификации "
-"(когда на веб-сервере установлена переменная ``REMOTE_USER``) в "
-"приложениях Django.  Этот тип аутентификации является типичным "
-"для интранет-сайтов, использующих такие решения как  IIS и Integrated "
-"Windows Authentication или Apache и `mod_authnz_ldap`_, `CAS`_, `Cosign`_, "
-"`WebAuth`_, `mod_auth_sspi`_."
+"Документ описывает использование внешних источников аутентификации (когда на "
+"веб-сервере установлена переменная ``REMOTE_USER``) в приложениях Django.  "
+"Этот тип аутентификации является типичным для интранет-сайтов, использующих "
+"такие решения как  IIS и Integrated Windows Authentication или Apache и "
+"`mod_authnz_ldap`_, `CAS`_, `Cosign`_, `WebAuth`_, `mod_auth_sspi`_."
 
 # 5f7bf4bf1a254a29a43d54445581439b
-#: ../../howto/auth-remote-user.txt:20
+#: ../../howto/auth-remote-user.txt:18
+#, fuzzy
 msgid ""
 "When the Web server takes care of authentication it typically sets the "
 "``REMOTE_USER`` environment variable for use in the underlying application.  "
 "In Django, ``REMOTE_USER`` is made available in the :attr:`request.META "
 "<django.http.HttpRequest.META>` attribute.  Django can be configured to make "
-"use of the ``REMOTE_USER`` value using the ``RemoteUserMiddleware`` and "
-"``RemoteUserBackend`` classes found in :mod:`django.contrib.auth`."
+"use of the ``REMOTE_USER`` value using the ``RemoteUserMiddleware`` and :"
+"class:`~django.contrib.auth.backends.RemoteUserBackend` classes found in :"
+"mod:`django.contrib.auth`."
 msgstr ""
-"Для обеспечения наибольшей безопасности Web-сервер устанавливает переменную окружения "
-"``REMOTE_USER`` и использует её в базовом приложении. "
-"В Django, ``REMOTE_USER`` доступна в атрибуте :attr:`request.META "
-"<django.http.HttpRequest.META>`. Настройте Django для того, чтобы "
-"задействовать переменную ``REMOTE_USER``, используя классы  ``RemoteUserMiddleware`` и "
+"Для обеспечения наибольшей безопасности Web-сервер устанавливает переменную "
+"окружения ``REMOTE_USER`` и использует её в базовом приложении. В Django, "
+"``REMOTE_USER`` доступна в атрибуте :attr:`request.META <django.http."
+"HttpRequest.META>`. Настройте Django для того, чтобы задействовать "
+"переменную ``REMOTE_USER``, используя классы  ``RemoteUserMiddleware`` и "
 "``RemoteUserBackend`` из :mod:`django.contrib.auth`."
 
 # 040a12c81e954f42842bea8391087f80
-#: ../../howto/auth-remote-user.txt:28
+#: ../../howto/auth-remote-user.txt:27
 msgid "Configuration"
 msgstr "Конфигурирование"
 
 # a021ae7982a54f26b768aeda7764281e
-#: ../../howto/auth-remote-user.txt:32
+#: ../../howto/auth-remote-user.txt:29
 msgid ""
 "First, you must add the :class:`django.contrib.auth.middleware."
 "RemoteUserMiddleware` to the :setting:`MIDDLEWARE_CLASSES` setting **after** "
 "the :class:`django.contrib.auth.middleware.AuthenticationMiddleware`::"
 msgstr ""
 "Сначала нужно добавить :class:`django.contrib.auth.middleware."
-"RemoteUserMiddleware` в настройки :setting:`MIDDLEWARE_CLASSES` **после** "
-":class:`django.contrib.auth.middleware.AuthenticationMiddleware`::"
+"RemoteUserMiddleware` в настройки :setting:`MIDDLEWARE_CLASSES` **после** :"
+"class:`django.contrib.auth.middleware.AuthenticationMiddleware`::"
 
 # 1c22f3d498494efd9f826b7b8d9dedb5
-#: ../../howto/auth-remote-user.txt:44
+#: ../../howto/auth-remote-user.txt:41
+#, fuzzy
 msgid ""
 "Next, you must replace the :class:`~django.contrib.auth.backends."
-"ModelBackend` with ``RemoteUserBackend`` in the :setting:"
-"`AUTHENTICATION_BACKENDS` setting::"
+"ModelBackend` with :class:`~django.contrib.auth.backends.RemoteUserBackend` "
+"in the :setting:`AUTHENTICATION_BACKENDS` setting::"
 msgstr ""
-"Затем заменить :class:`~django.contrib.auth.backends."
-"ModelBackend` на ``RemoteUserBackend`` в настройках :setting:"
-"`AUTHENTICATION_BACKENDS`::"
+"Затем заменить :class:`~django.contrib.auth.backends.ModelBackend` на "
+"``RemoteUserBackend`` в настройках :setting:`AUTHENTICATION_BACKENDS`::"
 
 # cf9c4f03623d4cb7b87233a2e9c77238
-#: ../../howto/auth-remote-user.txt:51
+#: ../../howto/auth-remote-user.txt:49
+#, fuzzy
 msgid ""
 "With this setup, ``RemoteUserMiddleware`` will detect the username in "
 "``request.META['REMOTE_USER']`` and will authenticate and auto-login that "
-"user using the ``RemoteUserBackend``."
+"user using the :class:`~django.contrib.auth.backends.RemoteUserBackend`."
 msgstr ""
-"С такими настройками ``RemoteUserMiddleware`` обнаружит имя пользователя в запросе "
-"``request.META['REMOTE_USER']``, аутентифицирует его и выполнит вход, "
-"используя ``RemoteUserBackend``."
+"С такими настройками ``RemoteUserMiddleware`` обнаружит имя пользователя в "
+"запросе ``request.META['REMOTE_USER']``, аутентифицирует его и выполнит "
+"вход, используя ``RemoteUserBackend``."
 
 # 3d84c4da77fb43048f645e03ee36c3cb
-#: ../../howto/auth-remote-user.txt:56
+#: ../../howto/auth-remote-user.txt:54
 msgid ""
 "Since the ``RemoteUserBackend`` inherits from ``ModelBackend``, you will "
 "still have all of the same permissions checking that is implemented in "
 "``ModelBackend``."
 msgstr ""
-"Поскольку ``RemoteUserBackend`` наследуется от ``ModelBackend``, вам "
-"всё равно придётся проверять процедуру аутентификации, "
-"реализованную при помощи ``ModelBackend``."
+"Поскольку ``RemoteUserBackend`` наследуется от ``ModelBackend``, вам всё "
+"равно придётся проверять процедуру аутентификации, реализованную при помощи "
+"``ModelBackend``."
 
 # 18d145f574c44ff696756021cd7ff272
-#: ../../howto/auth-remote-user.txt:60
+#: ../../howto/auth-remote-user.txt:58
 msgid ""
 "If your authentication mechanism uses a custom HTTP header and not "
 "``REMOTE_USER``, you can subclass ``RemoteUserMiddleware`` and set the "
 "``header`` attribute to the desired ``request.META`` key.  For example::"
 msgstr ""
 "Если механизм аутентификации использует обычные HTTP-заголовки и не содержит "
-"``REMOTE_USER``, вы можете создать подкласс ``RemoteUserMiddleware`` и установить "
-"атрибут ``header`` с ключом ``request.META``.  Например::"
-
-# 878bfe56a60842bf9d17f1922c2a2bfa
-#: ../../howto/auth-remote-user.txt:71
-msgid "``RemoteUserBackend``"
-msgstr "``RemoteUserBackend``"
+"``REMOTE_USER``, вы можете создать подкласс ``RemoteUserMiddleware`` и "
+"установить атрибут ``header`` с ключом ``request.META``.  Например::"
 
 # 93264720e6484ab18d09007e510b9f9b
-#: ../../howto/auth-remote-user.txt:75
+#: ../../howto/auth-remote-user.txt:67
+#, fuzzy
 msgid ""
 "If you need more control, you can create your own authentication backend "
-"that inherits from ``RemoteUserBackend`` and overrides certain parts:"
+"that inherits from :class:`~django.contrib.auth.backends.RemoteUserBackend` "
+"and override one or more of its attributes and methods."
 msgstr ""
-"При необходимости большего контроля допускается создание собственного бэкэнда(backend) аутентификации, "
-"который должен наследоваться от ``RemoteUserBackend`` и отменять кое-что: "
+"При необходимости большего контроля допускается создание собственного "
+"бэкэнда(backend) аутентификации, который должен наследоваться от "
+"``RemoteUserBackend`` и отменять кое-что: "
+
+# 878bfe56a60842bf9d17f1922c2a2bfa
+#~ msgid "``RemoteUserBackend``"
+#~ msgstr "``RemoteUserBackend``"
 
 # 8b3144ca37114d3ba2c989a0e67e3e9c
-#: ../../howto/auth-remote-user.txt:79
-msgid "Attributes"
-msgstr "Атрибуты"
+#~ msgid "Attributes"
+#~ msgstr "Атрибуты"
 
 # feefec82946f4a8caf6f420af2fa2e65
-#: ../../howto/auth-remote-user.txt:83
-msgid ""
-"``True`` or ``False``.  Determines whether or not a :class:`~django.contrib."
-"auth.models.User` object is created if not already in the database.  "
-"Defaults to ``True``."
-msgstr ""
-"``True`` или ``False``. Определяет может ли быть создан объект класса :class:`~django.contrib."
-"auth.models.User`, уже имеющийся в базе данных.  "
-"По-умолчанию ``True``."
+#~ msgid ""
+#~ "``True`` or ``False``.  Determines whether or not a :class:`~django."
+#~ "contrib.auth.models.User` object is created if not already in the "
+#~ "database.  Defaults to ``True``."
+#~ msgstr ""
+#~ "``True`` или ``False``. Определяет может ли быть создан объект класса :"
+#~ "class:`~django.contrib.auth.models.User`, уже имеющийся в базе данных.  "
+#~ "По-умолчанию ``True``."
 
 # 1306e7d7727a4ae8bec0b795b66e356b
-#: ../../howto/auth-remote-user.txt:88
-msgid "Methods"
-msgstr "Методы"
+#~ msgid "Methods"
+#~ msgstr "Методы"
 
 # 6b9f6d67c7224806924abeb673f0e655
-#: ../../howto/auth-remote-user.txt:92
-msgid ""
-"The username passed as ``remote_user`` is considered trusted. This method "
-"simply returns the ``User`` object with the given username, creating a new "
-"``User`` object if :attr:`~RemoteUserBackend.create_unknown_user` is "
-"``True``."
-msgstr ""
-"Имя пользователя передаётся как ``remote_user``, что считается надёжным. Этот метод "
-"просто возвращает объект ``User`` с данным именем пользователя и создаёт новый  "
-"пользовательский объект, если атрибут :attr:`~RemoteUserBackend.create_unknown_user` установлен "
-"в ``True``."
+#~ msgid ""
+#~ "The username passed as ``remote_user`` is considered trusted. This method "
+#~ "simply returns the ``User`` object with the given username, creating a "
+#~ "new ``User`` object if :attr:`~RemoteUserBackend.create_unknown_user` is "
+#~ "``True``."
+#~ msgstr ""
+#~ "Имя пользователя передаётся как ``remote_user``, что считается надёжным. "
+#~ "Этот метод просто возвращает объект ``User`` с данным именем пользователя "
+#~ "и создаёт новый  пользовательский объект, если атрибут :attr:"
+#~ "`~RemoteUserBackend.create_unknown_user` установлен в ``True``."
 
 # afe6d9abbc7f4db5afbe54a922e4514b
-#: ../../howto/auth-remote-user.txt:97
-msgid ""
-"Returns ``None`` if :attr:`~RemoteUserBackend.create_unknown_user` is "
-"``False`` and a ``User`` object with the given username is not found in the "
-"database."
-msgstr ""
-"Возвращает ``None``, если атрибут :attr:`~RemoteUserBackend.create_unknown_user` "
-"установлен в ``False`` и объект ``User`` с данным именем пользователя, если "
-"он не найден в базе данных."
+#~ msgid ""
+#~ "Returns ``None`` if :attr:`~RemoteUserBackend.create_unknown_user` is "
+#~ "``False`` and a ``User`` object with the given username is not found in "
+#~ "the database."
+#~ msgstr ""
+#~ "Возвращает ``None``, если атрибут :attr:`~RemoteUserBackend."
+#~ "create_unknown_user` установлен в ``False`` и объект ``User`` с данным "
+#~ "именем пользователя, если он не найден в базе данных."
 
 # dc60de861f494b79b819a05c3aefe371
-#: ../../howto/auth-remote-user.txt:103
-msgid ""
-"Performs any cleaning on the ``username`` (e.g. stripping LDAP DN "
-"information) prior to using it to get or create a :class:`~django.contrib."
-"auth.models.User` object.  Returns the cleaned username."
-msgstr ""
-"Очищает ``username`` (например, информацию LDAP DN "
-") прежде, чем получить или создать объект :class:`~django.contrib."
-"auth.models.User`.  Возвращает чистое имя пользователя."
+#~ msgid ""
+#~ "Performs any cleaning on the ``username`` (e.g. stripping LDAP DN "
+#~ "information) prior to using it to get or create a :class:`~django.contrib."
+#~ "auth.models.User` object.  Returns the cleaned username."
+#~ msgstr ""
+#~ "Очищает ``username`` (например, информацию LDAP DN ) прежде, чем получить "
+#~ "или создать объект :class:`~django.contrib.auth.models.User`.  Возвращает "
+#~ "чистое имя пользователя."
 
 # 4716c7ff4a3a40fbb2fa1b701994749a
-#: ../../howto/auth-remote-user.txt:110
-msgid ""
-"Configures a newly created user.  This method is called immediately after a "
-"new user is created, and can be used to perform custom setup actions, such "
-"as setting the user's groups based on attributes in an LDAP directory. "
-"Returns the user object."
-msgstr ""
-"Настройки для созданного пользователя. Этот метод вызывается сразу после "
-"создания пользователя и может быть использован для настройки "
-"пользовательских групп на основе атрибутов каталога LDAP. "
-"Возвращает пользовательский объект."
+#~ msgid ""
+#~ "Configures a newly created user.  This method is called immediately after "
+#~ "a new user is created, and can be used to perform custom setup actions, "
+#~ "such as setting the user's groups based on attributes in an LDAP "
+#~ "directory. Returns the user object."
+#~ msgstr ""
+#~ "Настройки для созданного пользователя. Этот метод вызывается сразу после "
+#~ "создания пользователя и может быть использован для настройки "
+#~ "пользовательских групп на основе атрибутов каталога LDAP. Возвращает "
+#~ "пользовательский объект."

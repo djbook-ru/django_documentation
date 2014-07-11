@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 10:34\n"
+"POT-Creation-Date: 2014-07-11 11:43+0300\n"
 "PO-Revision-Date: 2014-04-07 17:34+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -108,6 +108,11 @@ msgstr ""
 "содержит сгенерированный ответ. Каждая функция представления должна "
 "возвращать объект :class:`~django.http.HttpResponse`. (Есть исключения, но "
 "мы расскажем об этом далее.)"
+
+# ce492af3e84147b5acb0a6c67c9db51e
+#: ../../topics/http/views.txt:0
+msgid "Django's Time Zone"
+msgstr ""
 
 # 46ef2a032f6f4af08fc1c649441fd6ae
 #: ../../topics/http/views.txt:51
@@ -234,256 +239,262 @@ msgstr ""
 msgid "Customizing error views"
 msgstr "Настройка представления обрабатывающего ошибки"
 
-# 47c9adc2659f4512ad156aef5aad0c5d
-#: ../../topics/http/views.txt:139
-msgid "The 404 (page not found) view"
-msgstr "Представление обрабатывающее 404 ошибку(страница не найдена)"
-
-# b9ed7d9a68ae4f578f2a666150de9216
-#: ../../topics/http/views.txt:143
-msgid ""
-"When you raise :exc:`~django.http.Http404` from within a view, Django loads "
-"a special view devoted to handling 404 errors. By default, it's the view :"
-"func:`django.views.defaults.page_not_found`, which either produces a very "
-"simple \"Not Found\" message or loads and renders the template ``404.html`` "
-"if you created it in your root template directory."
-msgstr ""
-"Когда вы вызываете :exc:`~django.http.Http404` исключение, Django загружает "
-"специальное представление, назначение которого обрабатывать 404 ошибку. По "
-"умолчанию, это функция  :func:`django.views.defaults.page_not_found`, "
-"которая возвращает сообщение \"Not Found\" или загружает и выполняет шаблон  "
-"``404.html``, если вы его создали в корне каталога с шаблонами."
-
-# 66754b74d6c348baa5bb4adf1eaf1d29
-#: ../../topics/http/views.txt:149
-msgid ""
-"The default 404 view will pass one variable to the template: "
-"``request_path``, which is the URL that resulted in the error."
-msgstr ""
-"Представление для обработки 404 ошибки передает в шаблон одну переменную: "
-"``request_path``, значение которой URL, вернувший ошибку."
-
 # 2a00399ca3274c7a8008f5464138c565
-#: ../../topics/http/views.txt:152
+#: ../../topics/http/views.txt:136
+#, fuzzy
 msgid ""
-"The ``page_not_found`` view should suffice for 99% of Web applications, but "
-"if you want to override it, you can specify :data:`~django.conf.urls."
-"handler404` in your root URLconf (setting ``handler404`` anywhere else will "
-"have no effect), like so::"
+"The default error views in Django should suffice for most Web applications, "
+"but can easily be overridden if you need any custom behavior. Simply specify "
+"the handlers as seen below in your URLconf (setting them anywhere else will "
+"have no effect)."
 msgstr ""
 "Представления ``page_not_found`` хватит для 99% Web-приложений, но если вы "
 "хотите переопределить его, добавьте функцию :data:`~django.conf.urls."
 "handler404` в главный URLconf(добавление ``handler404` куда-либо еще не "
 "сработает), например::"
 
-# 19d24f75a24e49cfa4b075696068b61c
-#: ../../topics/http/views.txt:159
+# 9dd4a5f329ce4596afbb2d55e899969d
+#: ../../topics/http/views.txt:141
 msgid ""
-"Behind the scenes, Django determines the 404 view by looking for "
-"``handler404`` in your root URLconf, and falling back to ``django.views."
-"defaults.page_not_found`` if you did not define one."
+"The :func:`~django.views.defaults.page_not_found` view is overridden by :"
+"data:`~django.conf.urls.handler404`::"
 msgstr ""
-"При 404 ошибке Django ищет функцию ``handler404`` в URLconf, если она не "
-"найден - использует ``django.views.defaults.page_not_found``."
 
-# 8324afecf36c41f88b3676b4cad310fc
-#: ../../topics/http/views.txt:163
-msgid "Three things to note about 404 views:"
-msgstr ""
-"Три вещи, которые необходимо знать о представлении, обрабатывающем 404 "
-"ошибку:"
-
-# 382a1c6a66d8416281acefc949537305
-#: ../../topics/http/views.txt:165
+# 23b77216bd834ffc98d226d523646b79
+#: ../../topics/http/views.txt:146
 msgid ""
-"The 404 view is also called if Django doesn't find a match after checking "
-"every regular expression in the URLconf."
+"The :func:`~django.views.defaults.server_error` view is overridden by :data:"
+"`~django.conf.urls.handler500`::"
 msgstr ""
-"404-представление вызывается, если Django не находит подходящего URL-шаблона "
-"в URLconf."
-
-# 8422486c1d4e4906b3c0971e95fdc4b4
-#: ../../topics/http/views.txt:168
-msgid ""
-"The 404 view is passed a :class:`~django.template.RequestContext` and will "
-"have access to variables supplied by your :setting:"
-"`TEMPLATE_CONTEXT_PROCESSORS` setting (e.g., ``MEDIA_URL``)."
-msgstr ""
-"Представление обрабатывающее 404 ошибку использует :class:`~django.template."
-"RequestContext`, и в шаблоне будут доступные все переменные, добавленные "
-"процессорами контекста из настройки :setting:`TEMPLATE_CONTEXT_PROCESSORS` "
-"(например, ``MEDIA_URL``)."
-
-# b2f3cbce988748638f1a038cb35d7201
-#: ../../topics/http/views.txt:172
-msgid ""
-"If :setting:`DEBUG` is set to ``True`` (in your settings module), then your "
-"404 view will never be used, and your URLconf will be displayed instead, "
-"with some debug information."
-msgstr ""
-"Если :setting:`DEBUG` установлен в ``True`` (в настройках проекта), "
-"представление для обработки 404 ошибки никогда не будет использовано, и "
-"будет показан URLconf с отладочной информацией."
-
-# e7d619aba2dd4f8c90ec5e0efeb08aeb
-#: ../../topics/http/views.txt:179
-msgid "The 500 (server error) view"
-msgstr "Представление обрабатывающее 500 ошибку(ошибка сервера)"
-
-# ad53ede3b1e549c1b30c04086d5bd69e
-#: ../../topics/http/views.txt:183
-msgid ""
-"Similarly, Django executes special-case behavior in the case of runtime "
-"errors in view code. If a view results in an exception, Django will, by "
-"default, call the view ``django.views.defaults.server_error``, which either "
-"produces a very simple \"Server Error\" message or loads and renders the "
-"template ``500.html`` if you created it in your root template directory."
-msgstr ""
-"Кроме того, Django вызывает определенный обработчик и при исключении в коде. "
-"Если представление вызовет исключение, Django по умолчанию вызовет "
-"представление ``django.views.defaults.server_error``, которое вернет "
-"сообщение \"Server Error\" или загрузит и вернет шаблон ``500.html``, если "
-"такой существует."
-
-# 7486bc647a6f421bba460f59dad1ad5f
-#: ../../topics/http/views.txt:189
-msgid ""
-"The default 500 view passes no variables to the ``500.html`` template and is "
-"rendered with an empty ``Context`` to lessen the chance of additional errors."
-msgstr ""
-"Представление обрабатывающее ошибку 500 не передает переменных в шаблон и "
-"использует ``Context``, чтобы избежать дополнительных ошибок."
-
-# a8ad1444096647f8b0bdf3dcc57ef842
-#: ../../topics/http/views.txt:192
-msgid ""
-"This ``server_error`` view should suffice for 99% of Web applications, but "
-"if you want to override the view, you can specify :data:`~django.conf.urls."
-"handler500` in your root URLconf, like so::"
-msgstr ""
-"Представления ``server_error`` хватит для 99% Web-приложений, но если вы "
-"хотите переопределить его, добавьте функцию :data:`~django.conf.urls."
-"handler500` в URLconf, например::"
-
-# 50207fec8dc843578664980488deefd4
-#: ../../topics/http/views.txt:198
-msgid ""
-"Behind the scenes, Django determines the 500 view by looking for "
-"``handler500`` in your root URLconf, and falling back to ``django.views."
-"defaults.server_error`` if you did not define one."
-msgstr ""
-"При 500 ошибке Django ищет функцию ``handler500`` в URLconf, если она не "
-"найден - использует ``django.views.defaults.server_error``."
-
-# 3d72f0fc154b45d9af275f84e85536e7
-#: ../../topics/http/views.txt:202
-msgid "One thing to note about 500 views:"
-msgstr "Одна вещь необходимо знать о представлении обрабатывающем 500 ошибку:"
-
-# b3155f17ca174dc59770fa09428ee0f6
-#: ../../topics/http/views.txt:204
-msgid ""
-"If :setting:`DEBUG` is set to ``True`` (in your settings module), then your "
-"500 view will never be used, and the traceback will be displayed instead, "
-"with some debug information."
-msgstr ""
-"Если :setting:`DEBUG` установлен в ``True`` (в настройках проекта), "
-"представление для обработки 500 ошибки никогда не будет использовано, и "
-"будет показан стек вызовов с отладочной информацией."
-
-# 8c5c1dc9ffea40908ae959335f32cc4b
-#: ../../topics/http/views.txt:211
-msgid "The 403 (HTTP Forbidden) view"
-msgstr "Представление обрабатывающее 403 ошибку(запрещено)"
-
-# 66652edaa0b24e4cbd65702f2317f654
-#: ../../topics/http/views.txt:215
-msgid ""
-"In the same vein as the 404 and 500 views, Django has a view to handle 403 "
-"Forbidden errors. If a view results in a 403 exception then Django will, by "
-"default, call the view ``django.views.defaults.permission_denied``."
-msgstr ""
-"Как и для 404 и 500 ошибок, Django вызывает представление для обработки 403 "
-"ошибки. Если представление вызовет 403 исключение, Django по умолчанию "
-"выполнит представление ``django.views.defaults.permission_denied``."
-
-# 107570fa640e4af9b550ab65e12c1aea
-#: ../../topics/http/views.txt:219
-msgid ""
-"This view loads and renders the template ``403.html`` in your root template "
-"directory, or if this file does not exist, instead serves the text \"403 "
-"Forbidden\", as per :rfc:`2616` (the HTTP 1.1 Specification)."
-msgstr ""
-"Это представление загружает и выполняет шаблон ``403.html`` из корневом "
-"каталоге шаблонов, или, если он не существует, вернет текст \"403 Forbidden"
-"\", в соответствии с :rfc:`2616` (спецификация HTTP 1.1)."
-
-# 8c7b09d2289547a08b2a5aa684094ce7
-#: ../../topics/http/views.txt:223
-msgid ""
-"``django.views.defaults.permission_denied`` is triggered by a :exc:`~django."
-"core.exceptions.PermissionDenied` exception. To deny access in a view you "
-"can use code like this::"
-msgstr ""
-"``django.views.defaults.permission_denied`` вызывается при исключении :exc:"
-"`~django.core.exceptions.PermissionDenied`. Ограничить доступ вы можете "
-"следующим образом::"
 
 # fc1890c71ba74b8facc69eae7291af54
-#: ../../topics/http/views.txt:234
+#: ../../topics/http/views.txt:151
+#, fuzzy
 msgid ""
-"It is possible to override ``django.views.defaults.permission_denied`` in "
-"the same way you can for the 404 and 500 views by specifying a :data:"
-"`~django.conf.urls.handler403` in your root URLconf::"
+"The :func:`~django.views.defaults.permission_denied` view is overridden by :"
+"data:`~django.conf.urls.handler403`::"
 msgstr ""
 "Как и для 404 и 500 ошибок, вы можете переопределить ``django.views.defaults."
 "permission_denied`` указав функцию :data:`~django.conf.urls.handler403` в "
 "главном URLconf::"
 
+# 5b41069254894373bda13b84f3e859df
+#: ../../topics/http/views.txt:156
+msgid ""
+"The :func:`~django.views.defaults.bad_request` view is overridden by :data:"
+"`~django.conf.urls.handler400`::"
+msgstr ""
+
+# 47c9adc2659f4512ad156aef5aad0c5d
+#~ msgid "The 404 (page not found) view"
+#~ msgstr "Представление обрабатывающее 404 ошибку(страница не найдена)"
+
+# b9ed7d9a68ae4f578f2a666150de9216
+#~ msgid ""
+#~ "When you raise :exc:`~django.http.Http404` from within a view, Django "
+#~ "loads a special view devoted to handling 404 errors. By default, it's the "
+#~ "view :func:`django.views.defaults.page_not_found`, which either produces "
+#~ "a very simple \"Not Found\" message or loads and renders the template "
+#~ "``404.html`` if you created it in your root template directory."
+#~ msgstr ""
+#~ "Когда вы вызываете :exc:`~django.http.Http404` исключение, Django "
+#~ "загружает специальное представление, назначение которого обрабатывать 404 "
+#~ "ошибку. По умолчанию, это функция  :func:`django.views.defaults."
+#~ "page_not_found`, которая возвращает сообщение \"Not Found\" или загружает "
+#~ "и выполняет шаблон  ``404.html``, если вы его создали в корне каталога с "
+#~ "шаблонами."
+
+# 66754b74d6c348baa5bb4adf1eaf1d29
+#~ msgid ""
+#~ "The default 404 view will pass one variable to the template: "
+#~ "``request_path``, which is the URL that resulted in the error."
+#~ msgstr ""
+#~ "Представление для обработки 404 ошибки передает в шаблон одну переменную: "
+#~ "``request_path``, значение которой URL, вернувший ошибку."
+
+# 19d24f75a24e49cfa4b075696068b61c
+#~ msgid ""
+#~ "Behind the scenes, Django determines the 404 view by looking for "
+#~ "``handler404`` in your root URLconf, and falling back to ``django.views."
+#~ "defaults.page_not_found`` if you did not define one."
+#~ msgstr ""
+#~ "При 404 ошибке Django ищет функцию ``handler404`` в URLconf, если она не "
+#~ "найден - использует ``django.views.defaults.page_not_found``."
+
+# 8324afecf36c41f88b3676b4cad310fc
+#~ msgid "Three things to note about 404 views:"
+#~ msgstr ""
+#~ "Три вещи, которые необходимо знать о представлении, обрабатывающем 404 "
+#~ "ошибку:"
+
+# 382a1c6a66d8416281acefc949537305
+#~ msgid ""
+#~ "The 404 view is also called if Django doesn't find a match after checking "
+#~ "every regular expression in the URLconf."
+#~ msgstr ""
+#~ "404-представление вызывается, если Django не находит подходящего URL-"
+#~ "шаблона в URLconf."
+
+# 8422486c1d4e4906b3c0971e95fdc4b4
+#~ msgid ""
+#~ "The 404 view is passed a :class:`~django.template.RequestContext` and "
+#~ "will have access to variables supplied by your :setting:"
+#~ "`TEMPLATE_CONTEXT_PROCESSORS` setting (e.g., ``MEDIA_URL``)."
+#~ msgstr ""
+#~ "Представление обрабатывающее 404 ошибку использует :class:`~django."
+#~ "template.RequestContext`, и в шаблоне будут доступные все переменные, "
+#~ "добавленные процессорами контекста из настройки :setting:"
+#~ "`TEMPLATE_CONTEXT_PROCESSORS` (например, ``MEDIA_URL``)."
+
+# b2f3cbce988748638f1a038cb35d7201
+#~ msgid ""
+#~ "If :setting:`DEBUG` is set to ``True`` (in your settings module), then "
+#~ "your 404 view will never be used, and your URLconf will be displayed "
+#~ "instead, with some debug information."
+#~ msgstr ""
+#~ "Если :setting:`DEBUG` установлен в ``True`` (в настройках проекта), "
+#~ "представление для обработки 404 ошибки никогда не будет использовано, и "
+#~ "будет показан URLconf с отладочной информацией."
+
 # e7d619aba2dd4f8c90ec5e0efeb08aeb
-#: ../../topics/http/views.txt:243
-msgid "The 400 (bad request) view"
-msgstr "Представление обрабатывающее 400 ошибку(неверный запрос)"
+#~ msgid "The 500 (server error) view"
+#~ msgstr "Представление обрабатывающее 500 ошибку(ошибка сервера)"
 
-# ba142d4d2ec54ae0881967a1a7f46706
-#: ../../topics/http/views.txt:249
-msgid ""
-"When a :exc:`~django.core.exceptions.SuspiciousOperation` is raised in "
-"Django, it may be handled by a component of Django (for example resetting "
-"the session data). If not specifically handled, Django will consider the "
-"current request a 'bad request' instead of a server error."
-msgstr ""
-"Если Django взывает исключение :exc:`~django.core.exceptions."
-"SuspiciousOperation`, оно может быть обработано другими компонентами "
-"(например, будет сброшены данные сессии). Если исключение не обработано, "
-"Django пометит запрос как неверный('bad request') вместо вызова ошибки "
-"сервера."
+# ad53ede3b1e549c1b30c04086d5bd69e
+#~ msgid ""
+#~ "Similarly, Django executes special-case behavior in the case of runtime "
+#~ "errors in view code. If a view results in an exception, Django will, by "
+#~ "default, call the view ``django.views.defaults.server_error``, which "
+#~ "either produces a very simple \"Server Error\" message or loads and "
+#~ "renders the template ``500.html`` if you created it in your root template "
+#~ "directory."
+#~ msgstr ""
+#~ "Кроме того, Django вызывает определенный обработчик и при исключении в "
+#~ "коде. Если представление вызовет исключение, Django по умолчанию вызовет "
+#~ "представление ``django.views.defaults.server_error``, которое вернет "
+#~ "сообщение \"Server Error\" или загрузит и вернет шаблон ``500.html``, "
+#~ "если такой существует."
 
-# e60e58bd137b49e78a3948f7be8c94da
-#: ../../topics/http/views.txt:254
-msgid ""
-"``django.views.defaults.bad_request``, is otherwise very similar to the "
-"``server_error`` view, but returns with the status code 400 indicating that "
-"the error condition was the result of a client operation."
-msgstr ""
-"``django.views.defaults.bad_request`` очень похоже на представление "
-"``server_error``, но возвращает 400 ответ, означающий, что ошибка вызвана на "
-"стороне клиента."
+# 7486bc647a6f421bba460f59dad1ad5f
+#~ msgid ""
+#~ "The default 500 view passes no variables to the ``500.html`` template and "
+#~ "is rendered with an empty ``Context`` to lessen the chance of additional "
+#~ "errors."
+#~ msgstr ""
+#~ "Представление обрабатывающее ошибку 500 не передает переменных в шаблон и "
+#~ "использует ``Context``, чтобы избежать дополнительных ошибок."
 
 # a8ad1444096647f8b0bdf3dcc57ef842
-#: ../../topics/http/views.txt:258
-msgid ""
-"Like ``server_error``, the default ``bad_request`` should suffice for 99% of "
-"Web applications, but if you want to override the view, you can specify :"
-"data:`~django.conf.urls.handler400` in your root URLconf, like so::"
-msgstr ""
-"Как и ``server_error``, стандартного ``bad_request`` хватит для 99% Web-"
-"приложений, но если вы хотите переопределить его, добавьте функцию :data:"
-"`~django.conf.urls.handler400` в главный URLconf, например::"
+#~ msgid ""
+#~ "This ``server_error`` view should suffice for 99% of Web applications, "
+#~ "but if you want to override the view, you can specify :data:`~django.conf."
+#~ "urls.handler500` in your root URLconf, like so::"
+#~ msgstr ""
+#~ "Представления ``server_error`` хватит для 99% Web-приложений, но если вы "
+#~ "хотите переопределить его, добавьте функцию :data:`~django.conf.urls."
+#~ "handler500` в URLconf, например::"
+
+# 50207fec8dc843578664980488deefd4
+#~ msgid ""
+#~ "Behind the scenes, Django determines the 500 view by looking for "
+#~ "``handler500`` in your root URLconf, and falling back to ``django.views."
+#~ "defaults.server_error`` if you did not define one."
+#~ msgstr ""
+#~ "При 500 ошибке Django ищет функцию ``handler500`` в URLconf, если она не "
+#~ "найден - использует ``django.views.defaults.server_error``."
+
+# 3d72f0fc154b45d9af275f84e85536e7
+#~ msgid "One thing to note about 500 views:"
+#~ msgstr ""
+#~ "Одна вещь необходимо знать о представлении обрабатывающем 500 ошибку:"
+
+# b3155f17ca174dc59770fa09428ee0f6
+#~ msgid ""
+#~ "If :setting:`DEBUG` is set to ``True`` (in your settings module), then "
+#~ "your 500 view will never be used, and the traceback will be displayed "
+#~ "instead, with some debug information."
+#~ msgstr ""
+#~ "Если :setting:`DEBUG` установлен в ``True`` (в настройках проекта), "
+#~ "представление для обработки 500 ошибки никогда не будет использовано, и "
+#~ "будет показан стек вызовов с отладочной информацией."
+
+# 8c5c1dc9ffea40908ae959335f32cc4b
+#~ msgid "The 403 (HTTP Forbidden) view"
+#~ msgstr "Представление обрабатывающее 403 ошибку(запрещено)"
+
+# 66652edaa0b24e4cbd65702f2317f654
+#~ msgid ""
+#~ "In the same vein as the 404 and 500 views, Django has a view to handle "
+#~ "403 Forbidden errors. If a view results in a 403 exception then Django "
+#~ "will, by default, call the view ``django.views.defaults."
+#~ "permission_denied``."
+#~ msgstr ""
+#~ "Как и для 404 и 500 ошибок, Django вызывает представление для обработки "
+#~ "403 ошибки. Если представление вызовет 403 исключение, Django по "
+#~ "умолчанию выполнит представление ``django.views.defaults."
+#~ "permission_denied``."
+
+# 107570fa640e4af9b550ab65e12c1aea
+#~ msgid ""
+#~ "This view loads and renders the template ``403.html`` in your root "
+#~ "template directory, or if this file does not exist, instead serves the "
+#~ "text \"403 Forbidden\", as per :rfc:`2616` (the HTTP 1.1 Specification)."
+#~ msgstr ""
+#~ "Это представление загружает и выполняет шаблон ``403.html`` из корневом "
+#~ "каталоге шаблонов, или, если он не существует, вернет текст \"403 "
+#~ "Forbidden\", в соответствии с :rfc:`2616` (спецификация HTTP 1.1)."
+
+# 8c7b09d2289547a08b2a5aa684094ce7
+#~ msgid ""
+#~ "``django.views.defaults.permission_denied`` is triggered by a :exc:"
+#~ "`~django.core.exceptions.PermissionDenied` exception. To deny access in a "
+#~ "view you can use code like this::"
+#~ msgstr ""
+#~ "``django.views.defaults.permission_denied`` вызывается при исключении :"
+#~ "exc:`~django.core.exceptions.PermissionDenied`. Ограничить доступ вы "
+#~ "можете следующим образом::"
+
+# e7d619aba2dd4f8c90ec5e0efeb08aeb
+#~ msgid "The 400 (bad request) view"
+#~ msgstr "Представление обрабатывающее 400 ошибку(неверный запрос)"
+
+# ba142d4d2ec54ae0881967a1a7f46706
+#~ msgid ""
+#~ "When a :exc:`~django.core.exceptions.SuspiciousOperation` is raised in "
+#~ "Django, it may be handled by a component of Django (for example resetting "
+#~ "the session data). If not specifically handled, Django will consider the "
+#~ "current request a 'bad request' instead of a server error."
+#~ msgstr ""
+#~ "Если Django взывает исключение :exc:`~django.core.exceptions."
+#~ "SuspiciousOperation`, оно может быть обработано другими компонентами "
+#~ "(например, будет сброшены данные сессии). Если исключение не обработано, "
+#~ "Django пометит запрос как неверный('bad request') вместо вызова ошибки "
+#~ "сервера."
+
+# e60e58bd137b49e78a3948f7be8c94da
+#~ msgid ""
+#~ "``django.views.defaults.bad_request``, is otherwise very similar to the "
+#~ "``server_error`` view, but returns with the status code 400 indicating "
+#~ "that the error condition was the result of a client operation."
+#~ msgstr ""
+#~ "``django.views.defaults.bad_request`` очень похоже на представление "
+#~ "``server_error``, но возвращает 400 ответ, означающий, что ошибка вызвана "
+#~ "на стороне клиента."
+
+# a8ad1444096647f8b0bdf3dcc57ef842
+#~ msgid ""
+#~ "Like ``server_error``, the default ``bad_request`` should suffice for 99% "
+#~ "of Web applications, but if you want to override the view, you can "
+#~ "specify :data:`~django.conf.urls.handler400` in your root URLconf, like "
+#~ "so::"
+#~ msgstr ""
+#~ "Как и ``server_error``, стандартного ``bad_request`` хватит для 99% Web-"
+#~ "приложений, но если вы хотите переопределить его, добавьте функцию :data:"
+#~ "`~django.conf.urls.handler400` в главный URLconf, например::"
 
 # 6bbadc66d75046bc892ad654e570a0cc
-#: ../../topics/http/views.txt:264
-msgid ""
-"``bad_request`` views are also only used when :setting:`DEBUG` is ``False``."
-msgstr ""
-"``bad_request`` используется только при :setting:`DEBUG` равном ``False``."
+#~ msgid ""
+#~ "``bad_request`` views are also only used when :setting:`DEBUG` is "
+#~ "``False``."
+#~ msgstr ""
+#~ "``bad_request`` используется только при :setting:`DEBUG` равном ``False``."
