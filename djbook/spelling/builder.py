@@ -121,7 +121,7 @@ class SpellingBuilder(Builder):
                     msg_parts = [docname + '.po']
                     if lineno:
                         msg_parts.append(darkgreen(str(lineno)))
-                    msg_parts.append(red(word))
+                    msg_parts.append(' %s ' % red(word))
                     msg_parts.append(self.format_suggestions(suggestions))
                     msg_parts.append(node.astext())
                     msg = ':'.join(msg_parts)
