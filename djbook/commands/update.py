@@ -8,7 +8,6 @@ import filecmp
 import shutil
 
 from cliff.command import Command as BaseCommand
-from github import GithubException
 
 from djbook.cliff_utils import GithubCommandMixin
 

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-11 11:43+0300\n"
-"PO-Revision-Date: 2014-07-14 16:29+0300\n"
+"PO-Revision-Date: 2014-07-21 13:30+0300\n"
 "Last-Translator: aum <compfaculty@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -130,10 +130,14 @@ msgid ""
 "this behavior is considered deprecated. If you want to load initial data for "
 "an app, consider doing it in a :ref:`data migration <data-migrations>`."
 msgstr ""
+"Если приложение использует миграции, фикстуры не будут автоматически "
+"загружаться. Т.к. миграции будут обязательны в Django 2.0, автоматически "
+"загружаемые фикстуры считаются устаревшими. Если вам необходимо загрузить "
+"начальные данные для приложения, используйте :ref:`миграцию данных <data-"
+"migrations>`."
 
 # 9add2716be294645ab7e3cf8f0beeceb
 #: ../../howto/initial-data.txt:87
-#, fuzzy
 msgid ""
 "If you create a fixture named ``initial_data.[xml/yaml/json]``, that fixture "
 "will be loaded every time you run :djadmin:`migrate`. This is extremely "
@@ -143,8 +147,8 @@ msgid ""
 msgstr ""
 "Если создать файл предварительной настройки с именем ``initial_data.[xml/"
 "yaml/json]``, то он будет загружен автоматически при каждом запуске :djadmin:"
-"`syncdb`.  Конечно это очень удобно, но стоит помнить, что данные будут "
-"обновляться *каждый раз* при запуске :djadmin:`syncdb`, поэтому лучше не "
+"`migrate`.  Конечно это очень удобно, но стоит помнить, что данные будут "
+"обновляться *каждый раз* при запуске :djadmin:`migrate`, поэтому лучше не "
 "использовать ``initial_data`` с данными, которые вы планируете "
 "редактировать.  (Прим. пер. : если  автозагрузку надо временно \"отключить"
 "\", то удобно просто добавить символ нижнего подчеркивания перед "
@@ -200,10 +204,14 @@ msgid ""
 "want to use initial SQL for an app, consider doing it in a :ref:`data "
 "migration <data-migrations>`."
 msgstr ""
+"Если приложение использует миграции, фикстуры не будут автоматически "
+"загружаться. Т.к. миграции будут обязательны в Django 2.0, автоматически "
+"загружаемые фикстуры считаются устаревшими. Если вам необходимо загрузить "
+"начальные данные для приложения, используйте :ref:`миграцию данных <data-"
+"migrations>`."
 
 # ebc53ffcea9b4b098c7447b995981d2d
 #: ../../howto/initial-data.txt:121
-#, fuzzy
 msgid ""
 "Django provides a hook for passing the database arbitrary SQL that's "
 "executed just after the CREATE TABLE statements when you run :djadmin:"
@@ -211,7 +219,7 @@ msgid ""
 "also create SQL functions, views, triggers, etc."
 msgstr ""
 "В Django есть возможность \"перехватить\" выполнение инструкции CREATE "
-"TABLE  командой :djadmin:`syncdb` и передать базе данных произвольные  "
+"TABLE  командой :djadmin:`migrate` и передать базе данных произвольные  "
 "инструкции  SQL для выполнения.  Мы можем использовать этот \"трюк\" чтобы "
 "заполнить записями таблицы базы данных, или создать SQL функции, "
 "отображения, триггеры и т.д. "
@@ -278,7 +286,7 @@ msgstr ""
 # 3ab6f0ef0abb4b9aa48270f547f0cb56
 #: ../../howto/initial-data.txt:0
 msgid "Initial SQL data and testing"
-msgstr ""
+msgstr "Начальные SQL данные и тестирование"
 
 # 86ee88c6d694432496f250ab27d12674
 #: ../../howto/initial-data.txt:153
@@ -295,7 +303,6 @@ msgstr ""
 
 # 037bcb1315dd475d87887418ff911863
 #: ../../howto/initial-data.txt:158
-#, fuzzy
 msgid ""
 "If you require data for a test case, you should add it using either a :ref:"
 "`test fixture <topics-testing-fixtures>`, or programmatically add it during "
@@ -313,7 +320,6 @@ msgstr "Данные SQL и особенности баз данных"
 
 # d48ded8835184d7f91a4327908d4dadd
 #: ../../howto/initial-data.txt:165
-#, fuzzy
 msgid ""
 "There's also a hook for backend-specific SQL data. For example, you can have "
 "separate initial-data files for PostgreSQL and SQLite. For each app, Django "
@@ -326,15 +332,15 @@ msgid ""
 "sql/<modelname>.sqlite3.sql``)."
 msgstr ""
 "Возможность создать начальные данные с помощью запросов SQL  учитывает также "
-"и специфику бэкэнда.  Н-р,  можно иметь несколько независимых файлов, "
+"и специфику бэкэнда.  Например, можно иметь несколько независимых файлов, "
 "инициализирующих данные,  для PostgreSQL и SQLite. Для каждого приложения, "
-"Django проверит наличие файла вида ``<appname>/sql/<modelname>.<backend>."
-"sql``, где ``<appname>`` -  каталог приложения,  ``<modelname>`` - имя "
+"Django проверит наличие файла вида ``<app_label>/sql/<modelname>.<backend>."
+"sql``, где ``<app_label>`` -  каталог приложения,  ``<modelname>`` - имя "
 "модели в нижнем регистре, ``<backend>`` - последняя часть от имени модуля, "
 "указанного в  :setting:`ENGINE <DATABASE-ENGINE>` в файле настроек. (т.е., "
 "если вы указали базу данных в настройках в  :setting:`ENGINE <DATABASE-"
 "ENGINE>`  со значением  ``django.db.backends.sqlite3``, Django будет искать "
-"файл  с именем  ``<appname>/sql/<modelname>.sqlite3.sql``)."
+"файл  с именем  ``<app_label>/sql/<modelname>.sqlite3.sql``)."
 
 # 3d1837b90e094d1f9349bad4d3de78ef
 #: ../../howto/initial-data.txt:176
