@@ -1,6 +1,6 @@
 from cliff.command import Command as BaseCommand
 from jinja2 import Environment, FileSystemLoader
-from djbook.polib import pofile
+from polib import pofile
 import logging
 import os
 
@@ -44,7 +44,7 @@ class Command(BaseCommand):
                     total += msg_total
                     translated += msg_translated
 
-                    statistic.append((unicode(name),  po.percent_translated(), untranslated_count))
+                    statistic.append((unicode(name), po.percent_translated(), untranslated_count))
 
                     for item in main:
                         if name.startswith(item):
