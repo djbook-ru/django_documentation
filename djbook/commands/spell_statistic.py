@@ -6,6 +6,9 @@ from cliff.command import Command as BaseCommand
 
 
 class Command(BaseCommand):
+    """
+    [for development purpose]
+    """
     log = logging.getLogger(__name__)
 
     def take_action(self, parsed_args):

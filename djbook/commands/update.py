@@ -14,7 +14,7 @@ from djbook.cliff_utils import GithubCommandMixin
 
 class Command(GithubCommandMixin, BaseCommand):
     """
-    Clone Django repo(https://github.com/django/django) to /tmp/
+    Clone Django repo(https://github.com/django/django) and update documentation and translation.
     """
     log = logging.getLogger(__name__)
 

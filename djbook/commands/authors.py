@@ -10,7 +10,7 @@ from djbook.cliff_utils import GithubCommandMixin
 
 class Command(GithubCommandMixin, BaseCommand):
     """
-    Get authors from git history
+    Generate page with authors from git history
     """
     log = logging.getLogger(__name__)
 

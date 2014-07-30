@@ -9,8 +9,7 @@ from polib import pofile
 
 class Command(BaseCommand):
     """
-    Translate untranslated messages with Google Translator.
-    Saves all changes to .po file as fuzzy.
+    Translate untranslated messages with Google Translator. Saves all changes to .po file as fuzzy.
 
     Example:
 
