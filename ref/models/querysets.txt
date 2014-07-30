@@ -721,6 +721,11 @@ can be useful in situations where you might want to pass in either a model
 manager or a ``QuerySet`` and do further filtering on the result. After calling
 ``all()`` on either object, you'll definitely have a ``QuerySet`` to work with.
 
+When a ``QuerySet`` is :ref:`evaluated <when-querysets-are-evaluated>`, it
+typically caches its results. If the data in the database might have changed
+since a ``QuerySet`` was evaluated, you can get updated results for the same
+query by calling ``all()`` on a previously evaluated ``QuerySet``.
+
 select_related
 ~~~~~~~~~~~~~~
 
@@ -766,9 +771,8 @@ following models::
         # ...
         author = models.ForeignKey(Person)
 
-...then a call to ``Book.objects.select_related('person',
-'person__city').get(id=4)`` will cache the related ``Person`` *and* the related
-``City``::
+... then a call to ``Book.objects.select_related('person__city').get(id=4)``
+will cache the related ``Person`` *and* the related ``City``::
 
     b = Book.objects.select_related('person__city').get(id=4)
     p = b.author         # Doesn't hit the database.
@@ -2076,7 +2080,7 @@ For an introduction, see :ref:`models and database queries documentation
 <field-lookups-intro>`.
 
 Django's inbuilt lookups are listed below. It is also possible to write
-:doc:`custom lookups </ref/models/custom-lookups>` for model fields.
+:doc:`custom lookups </howto/custom-lookups>` for model fields.
 
 As a convenience when no lookup type is provided (like in
 ``Entry.objects.get(id=14)``) the lookup type is assumed to be :lookup:`exact`.

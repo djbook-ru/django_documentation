@@ -88,8 +88,8 @@ middleware; if so this middleware must be listed first in
     wildcard::
 
         ALLOWED_HOSTS = [
-            '.example.com', # Allow domain and subdomains
-            '.example.com.', # Also allow FQDN and subdomains
+            '.example.com',  # Allow domain and subdomains
+            '.example.com.',  # Also allow FQDN and subdomains
         ]
 
     In Django 1.7, the trailing dot is stripped when performing host validation,
@@ -1270,7 +1270,7 @@ FILE_UPLOAD_HANDLERS
 Default::
 
     ("django.core.files.uploadhandler.MemoryFileUploadHandler",
-     "django.core.files.uploadhandler.TemporaryFileUploadHandler",)
+     "django.core.files.uploadhandler.TemporaryFileUploadHandler")
 
 A tuple of handlers to use for uploading. See :doc:`/topics/files` for details.
 
@@ -1310,13 +1310,13 @@ FILE_UPLOAD_PERMISSIONS
 
 Default: ``None``
 
-The numeric mode (i.e. ``0644``) to set newly uploaded files to. For
+The numeric mode (i.e. ``0o644``) to set newly uploaded files to. For
 more information about what these modes mean, see the documentation for
 :func:`os.chmod`.
 
 If this isn't given or is ``None``, you'll get operating-system
 dependent behavior. On most platforms, temporary files will have a mode
-of ``0600``, and files saved from memory will be saved using the
+of ``0o600``, and files saved from memory will be saved using the
 system's standard umask.
 
 This setting also determines the default permissions for collected static files
@@ -1637,7 +1637,7 @@ Example::
 
     LOCALE_PATHS = (
         '/home/www/project/common_files/locale',
-        '/var/local/translations/locale'
+        '/var/local/translations/locale',
     )
 
 Django will look within each of these paths for the ``<locale_code>/LC_MESSAGES``
@@ -1728,6 +1728,11 @@ for :doc:`managing stored files </topics/files>`. It must end in a slash if set
 to a non-empty value. You will need to :ref:`configure these files to be served
 <serving-uploaded-files-in-development>` in both development and production.
 
+In order to use ``{{ MEDIA_URL }}`` in your templates, you must have
+``'django.core.context_processors.media'`` in your
+:setting:`TEMPLATE_CONTEXT_PROCESSORS`. It's there by default, but be sure
+to include it if you override that setting and want this behavior.
+
 Example: ``"http://media.example.com/"``
 
 .. warning::
@@ -1749,7 +1754,7 @@ MIDDLEWARE_CLASSES
 Default::
 
     ('django.middleware.common.CommonMiddleware',
-     'django.middleware.csrf.CsrfViewMiddleware',)
+     'django.middleware.csrf.CsrfViewMiddleware')
 
 A tuple of middleware classes to use. See :doc:`/topics/http/middleware`.
 
@@ -1767,7 +1772,7 @@ MIGRATION_MODULES
 
 Default::
 
-    {} # empty dictionary
+    {}  # empty dictionary
 
 A dictionary specifying the package where migration modules can be found on a per-app basis. The default value
 of this setting is an empty dictionary, but the default package name for migration modules is ``migrations``.
@@ -1958,7 +1963,7 @@ A dictionary of modules containing serializer definitions (provided as
 strings), keyed by a string identifier for that serialization type. For
 example, to define a YAML serializer, use::
 
-    SERIALIZATION_MODULES = { 'yaml' : 'path.to.yaml_serializer' }
+    SERIALIZATION_MODULES = {'yaml': 'path.to.yaml_serializer'}
 
 .. setting:: SERVER_EMAIL
 
@@ -2505,7 +2510,7 @@ Default::
      'django.contrib.auth.hashers.SHA1PasswordHasher',
      'django.contrib.auth.hashers.MD5PasswordHasher',
      'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
-     'django.contrib.auth.hashers.CryptPasswordHasher',)
+     'django.contrib.auth.hashers.CryptPasswordHasher')
 
 
 .. _settings-comments:
@@ -2616,7 +2621,7 @@ Default::
     messages.INFO: 'info',
     messages.SUCCESS: 'success',
     messages.WARNING: 'warning',
-    messages.ERROR: 'error',}
+    messages.ERROR: 'error'}
 
 This sets the mapping of message level to message tag, which is typically
 rendered as a CSS class in HTML. If you specify a value, it will extend
