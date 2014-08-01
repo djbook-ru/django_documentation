@@ -45,7 +45,7 @@ class Command(BaseCommand):
             #print
             #print entry.msgstr
 
-        #po.save()
+        po.save()
 
 
 class Msg(object):

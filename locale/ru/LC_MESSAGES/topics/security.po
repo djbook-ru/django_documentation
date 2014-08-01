@@ -9,13 +9,13 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-11 11:43+0300\n"
-"PO-Revision-Date: 2014-07-14 15:53+0300\n"
+"PO-Revision-Date: 2014-08-01 15:08+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
-"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Gtranslator 2.91.6\n"
@@ -499,7 +499,7 @@ msgstr ""
 # c41a5873cc024936b8c07e40f9b680aa
 #: ../../topics/security.txt:210
 msgid "User-uploaded content"
-msgstr ""
+msgstr "Контент, загружаемый пользователями"
 
 # f7e10f9ea6c44acea5e6705fc202980c
 #: ../../topics/security.txt:213
@@ -507,6 +507,8 @@ msgid ""
 "Consider :ref:`serving static files from a cloud service or CDN <staticfiles-"
 "from-cdn>` to avoid some of these issues."
 msgstr ""
+"Обратите внимание на :ref:`раздачу файлов из облачного сервиса или CDN "
+"<staticfiles-from-cdn>` для избежания некоторых из этих проблем."
 
 # 271807741fae4ffe97fc0a3f4658bddf
 #: ../../topics/security.txt:216
@@ -529,6 +531,11 @@ msgid ""
 "disabled. You don't want users to be able to execute arbitrary code by "
 "uploading and requesting a specially crafted file."
 msgstr ""
+"Если вы самостоятельно раздаете статические файлы, убедитесь, что "
+"обработчики, как ``mod_php`` в Apache, который будет выполнять статические "
+"файлы в виде кода, будут отключены. Вы же не хотите, чтобы пользователи "
+"могли выполнить произвольный код путем загрузки и запроса специально "
+"созданного файла."
 
 # 8ee62e36aeef4311b881d3e77a552b2f
 #: ../../topics/security.txt:226
@@ -542,6 +549,14 @@ msgid ""
 "user, it may be displayed as HTML depending on the type and configuration of "
 "your web server."
 msgstr ""
+"Обработка загрузки медиа файлов в Django имеет некоторые уязвимости, если "
+"медиа файлы раздаются без учета некоторых правил безопасности. В частности, "
+"HTML файл может быть загружен в виде изображения, если этот файл содержит "
+"правильный заголовок PNG с последующим вредоносным HTML. Этот файл будет "
+"проходить проверку библиотеками, которые Django использует для обработки "
+"изображений (PIL или Pillow) в :class:`~django.db.models.ImageField`. Когда "
+"этот файл впоследствии отображается для пользователя, он может отображаться "
+"как HTML в зависимости от типа и конфигурации веб-сервера."
 
 # 2cd2b93d55994f908bae309726856ffe
 #: ../../topics/security.txt:235
@@ -550,6 +565,10 @@ msgid ""
 "validate all user uploaded file content, however, there are some other steps "
 "you can take to mitigate these attacks:"
 msgstr ""
+"Не существует идеального технического решения на уровне Django для "
+"безопасной проверки всех типов файлов, которые могут загрузить другие "
+"пользователи. Однако, можно предпринять некоторые другие способы, чтобы "
+"обезопасить себя от атаки:"
 
 # 55b36b89c98b4227a167a7873a0e45a3
 #: ../../topics/security.txt:239
@@ -562,6 +581,13 @@ msgid ""
 "like ``usercontent-example.com``. It's *not* sufficient to serve content "
 "from a subdomain like ``usercontent.example.com``."
 msgstr ""
+"Один класс атак можно предотвратить путем раздачи медиа файлов с отдельного "
+"домена верхнего уровня или второго уровня. Это предотвращает любые "
+"эксплойты, которые могут быть заблокированы `same-origin policy`_, таких как "
+"межсайтовый скриптинг. Например, если ваш сайт работает на ``example.com``, "
+"вам следует раздавать медиа файлы (настройка :setting:`MEDIA_URL`) с другого "
+"домена, например ``usercontent-example.com``. Но *не* достаточно раздавать "
+"медиа файлы с поддомен вида ``usercontent.example.com``."
 
 # 51e29388d28340bfb3927c936a9189e4
 #: ../../topics/security.txt:247
@@ -570,6 +596,9 @@ msgid ""
 "extensions for user uploaded files and configure the web server to only "
 "serve such files."
 msgstr ""
+"Помимо этого, приложения могут определять белый список допустимых расширений "
+"файлов для загружаемых пользователем файлов и настроить веб-сервер чтобы "
+"раздавать только такие файлы."
 
 # 4b86731ffeb045a8b9e9fbff35703764
 #: ../../topics/security.txt:256
@@ -630,11 +659,9 @@ msgstr ""
 "Хорошей идеей будет ограничить доступ к вашей системе кэширования и к базе "
 "данных с помощью фаервола."
 
-# ad8659c7fada401c952159438bf0f915
 #~ msgid "Markup library"
 #~ msgstr "Библиотека Markup"
 
-# 79be68f727a644a792b96bdc5fa6f10a
 #~ msgid ""
 #~ "If you use :mod:`django.contrib.markup`, you need to ensure that the "
 #~ "filters are only used on trusted input, or that you have correctly "
