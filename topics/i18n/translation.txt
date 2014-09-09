@@ -1040,7 +1040,7 @@ Client-side caching will save bandwidth and make your site load faster. If
 you're using ETags (:setting:`USE_ETAGS = True <USE_ETAGS>`), you're already
 covered. Otherwise, you can apply :ref:`conditional decorators
 <conditional-decorators>`. In the following example, the cache is invalidated
-whenever your restart your application server.
+whenever you restart your application server.
 
 .. code-block:: python
 
@@ -1095,18 +1095,22 @@ prepend the current active language code to all url patterns defined within
     from django.conf.urls import patterns, include, url
     from django.conf.urls.i18n import i18n_patterns
 
+    from about import views as about_views
+    from news import views as news_views
+    from sitemap.views import sitemap
+
     urlpatterns = patterns('',
-        url(r'^sitemap\.xml$', 'sitemap.view', name='sitemap_xml'),
+        url(r'^sitemap\.xml$', sitemap, name='sitemap_xml'),
     )
 
     news_patterns = patterns('',
-        url(r'^$', 'news.views.index', name='index'),
-        url(r'^category/(?P<slug>[\w-]+)/$', 'news.views.category', name='category'),
-        url(r'^(?P<slug>[\w-]+)/$', 'news.views.details', name='detail'),
+        url(r'^$', news_views.index, name='index'),
+        url(r'^category/(?P<slug>[\w-]+)/$', news_views.category, name='category'),
+        url(r'^(?P<slug>[\w-]+)/$', news_views.details, name='detail'),
     )
 
     urlpatterns += i18n_patterns('',
-        url(r'^about/$', 'about.view', name='about'),
+        url(r'^about/$', about_views.main, name='about'),
         url(r'^news/', include(news_patterns, namespace='news')),
     )
 
@@ -1150,18 +1154,22 @@ URL patterns can also be marked translatable using the
     from django.conf.urls.i18n import i18n_patterns
     from django.utils.translation import ugettext_lazy as _
 
+    from about import views as about_views
+    from news import views as news_views
+    from sitemaps.views import sitemap
+
     urlpatterns = patterns(''
-        url(r'^sitemap\.xml$', 'sitemap.view', name='sitemap_xml'),
+        url(r'^sitemap\.xml$', sitemap, name='sitemap_xml'),
     )
 
     news_patterns = patterns(''
-        url(r'^$', 'news.views.index', name='index'),
-        url(_(r'^category/(?P<slug>[\w-]+)/$'), 'news.views.category', name='category'),
-        url(r'^(?P<slug>[\w-]+)/$', 'news.views.details', name='detail'),
+        url(r'^$', news_views.index, name='index'),
+        url(_(r'^category/(?P<slug>[\w-]+)/$'), news_views.category, name='category'),
+        url(r'^(?P<slug>[\w-]+)/$', news_views.details, name='detail'),
     )
 
     urlpatterns += i18n_patterns('',
-        url(_(r'^about/$'), 'about.view', name='about'),
+        url(_(r'^about/$'), about_views.main, name='about'),
         url(_(r'^news/'), include(news_patterns, namespace='news')),
     )
 
@@ -1245,10 +1253,9 @@ To create or update a message file, run this command::
 
     django-admin.py makemessages -l de
 
-...where ``de`` is the language code for the message file you want to create.
-The language code, in this case, is in :term:`locale format<locale name>`. For
-example, it's ``pt_BR`` for Brazilian Portuguese and ``de_AT`` for Austrian
-German.
+...where ``de`` is the :term:`locale name` for the message file you want to
+create. For example, ``pt_BR`` for Brazilian Portuguese, ``de_AT`` for Austrian
+German or ``id`` for Indonesian.
 
 The script should be run from one of two places:
 
@@ -1318,7 +1325,9 @@ For example, if your Django app contained a translation string for the text
     _("Welcome to my site.")
 
 ...then :djadmin:`django-admin.py makemessages <makemessages>` will have created
-a ``.po`` file containing the following snippet -- a message::
+a ``.po`` file containing the following snippet -- a message:
+
+.. code-block:: po
 
     #: path/to/python/module.py:23
     msgid "Welcome to my site."

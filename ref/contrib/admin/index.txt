@@ -1314,9 +1314,10 @@ templates used by the :class:`ModelAdmin` views:
                 queryset, use_distinct = super(PersonAdmin, self).get_search_results(request, queryset, search_term)
                 try:
                     search_term_as_int = int(search_term)
-                    queryset |= self.model.objects.filter(age=search_term_as_int)
-                except:
+                except ValueError:
                     pass
+                else:
+                    queryset |= self.model.objects.filter(age=search_term_as_int)
                 return queryset, use_distinct
 
 .. method:: ModelAdmin.save_related(request, form, formsets, change)
@@ -2508,9 +2509,10 @@ In this example, we register the ``AdminSite`` instance
 Note that you may not want autodiscovery of ``admin`` modules when using your
 own ``AdminSite`` instance since you will likely be importing all the per-app
 ``admin`` modules in your ``myproject.admin`` module. This means you need to
-put ``'django.contrib.admin.app.SimpleAdminConfig'`` instead of
+put ``'django.contrib.admin.apps.SimpleAdminConfig'`` instead of
 ``'django.contrib.admin'`` in your :setting:`INSTALLED_APPS` setting.
 
+.. _multiple-admin-sites:
 
 Multiple admin sites in the same URLconf
 ----------------------------------------
@@ -2567,10 +2569,12 @@ your URLconf. Specifically, add these four patterns:
 
 .. code-block:: python
 
-    url(r'^admin/password_reset/$', 'django.contrib.auth.views.password_reset', name='admin_password_reset'),
-    url(r'^admin/password_reset/done/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'),
-    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', name='password_reset_confirm'),
-    url(r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete', name='password_reset_complete'),
+    from django.contrib.auth import views as auth_views
+
+    url(r'^admin/password_reset/$', auth_views.password_reset, name='admin_password_reset'),
+    url(r'^admin/password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', auth_views.password_reset_confirm, name='password_reset_confirm'),
+    url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
 
 .. versionchanged:: 1.6
 

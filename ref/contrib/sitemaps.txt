@@ -49,12 +49,15 @@ loader can find the default templates.)
 Initialization
 ==============
 
-.. function:: views.sitemap(request, sitemaps, section=None, template_name='sitemap.xml', mimetype='application/xml')
+.. function:: views.sitemap(request, sitemaps, section=None, template_name='sitemap.xml', content_type='application/xml')
 
 To activate sitemap generation on your Django site, add this line to your
 :doc:`URLconf </topics/http/urls>`::
 
-   (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
+   from django.contrib.sitemaps.views import sitemap
+
+   (r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
+       name='django.contrib.sitemaps.views.sitemap')
 
 This tells Django to build a sitemap when a client accesses :file:`/sitemap.xml`.
 
@@ -267,6 +270,7 @@ Here's an example of a :doc:`URLconf </topics/http/urls>` using both::
 
     from django.conf.urls import patterns
     from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
+    from django.contrib.sitemaps.views import sitemap
     from blog.models import Entry
 
     info_dict = {
@@ -284,7 +288,8 @@ Here's an example of a :doc:`URLconf </topics/http/urls>` using both::
         # ...
 
         # the sitemap
-        (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
+        url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
+            name='django.contrib.sitemaps.views.sitemap'),
     )
 
 .. _URLconf: ../url_dispatch/
@@ -300,7 +305,10 @@ the sitemap. For example::
 
     # sitemaps.py
     from django.contrib import sitemaps
+    from django.contrib.sitemaps.views import sitemap
     from django.core.urlresolvers import reverse
+
+    from . import views
 
     class StaticViewSitemap(sitemaps.Sitemap):
         priority = 0.5
@@ -321,18 +329,19 @@ the sitemap. For example::
     }
 
     urlpatterns = patterns('',
-        url(r'^$', 'views.main', name='main'),
-        url(r'^about/$', 'views.about', name='about'),
-        url(r'^license/$', 'views.license', name='license'),
+        url(r'^$', views.main, name='main'),
+        url(r'^about/$', views.about, name='about'),
+        url(r'^license/$', views.license, name='license'),
         # ...
-        url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
+        url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
+            name='django.contrib.sitemaps.views.sitemap')
     )
 
 
 Creating a sitemap index
 ========================
 
-.. function:: views.index(request, sitemaps, template_name='sitemap_index.xml', mimetype='application/xml', sitemap_url_name='django.contrib.sitemaps.views.sitemap')
+.. function:: views.index(request, sitemaps, template_name='sitemap_index.xml', content_type='application/xml', sitemap_url_name='django.contrib.sitemaps.views.sitemap')
 
 The sitemap framework also has the ability to create a sitemap index that
 references individual sitemap files, one per each section defined in your
@@ -454,7 +463,7 @@ generate a Google News compatible sitemap:
     {% endspaceless %}
     </urlset>
 
-.. _`Google news sitemaps`: https://support.google.com/webmasters/answer/74288?hl=en
+.. _`Google news sitemaps`: https://support.google.com/news/publisher/answer/74288?hl=en
 
 Pinging Google
 ==============
@@ -485,7 +494,7 @@ that: :func:`django.contrib.sitemaps.ping_google()`.
 One useful way to call :func:`ping_google` is from a model's ``save()``
 method::
 
-   from django.contrib.sitemaps import ping_google
+    from django.contrib.sitemaps import ping_google
 
     class Entry(models.Model):
         # ...

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-30 13:35+0300\n"
+"POT-Creation-Date: 2014-09-09 11:16+0300\n"
 "PO-Revision-Date: 2014-07-11 11:43+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -23,55 +23,182 @@ msgstr ""
 msgid "Django 1.6.6 release notes"
 msgstr ""
 
-# 4c0df230ee004b7cbba01959f0fe85e0
+# 8fd3b9dafffb42dab8e98d473012b597
 #: ../../releases/1.6.6.txt:5
-msgid "*Under development*"
+msgid "*August 20, 2014*"
 msgstr ""
 
-# a311cb17eadc4fcdade194b1ff6fdf3c
+# 58a84ecc919e4e4dae49b31d50835b7b
 #: ../../releases/1.6.6.txt:7
-msgid "Django 1.6.6 fixes several bugs in 1.6.5."
+msgid "Django 1.6.6 fixes several security issues and bugs in 1.6.5."
+msgstr ""
+
+# 777a09236425416c87fffac4edb3f25e
+#: ../../releases/1.6.6.txt:10
+msgid ""
+":func:`~django.core.urlresolvers.reverse()` could generate URLs pointing to "
+"other hosts"
+msgstr ""
+
+# 247a5c823f0146d29331693a41696a9f
+#: ../../releases/1.6.6.txt:12
+msgid ""
+"In certain situations, URL reversing could generate scheme-relative URLs  "
+"(URLs starting with two slashes), which could unexpectedly redirect a user  "
+"to a different host. An attacker could exploit this, for example, by "
+"redirecting users to a phishing site designed to ask for user's passwords."
+msgstr ""
+
+# a70c96adc9d34476b4f05ba34f55ae86
+#: ../../releases/1.6.6.txt:17
+msgid ""
+"To remedy this, URL reversing now ensures that no URL starts with two "
+"slashes (//), replacing the second slash with its URL encoded counterpart "
+"(%2F). This approach ensures that semantics stay the same, while making the "
+"URL relative to the domain and not to the scheme."
+msgstr ""
+
+# effc9790decb423399ab31fe2335c099
+#: ../../releases/1.6.6.txt:23
+msgid "File upload denial-of-service"
+msgstr ""
+
+# 5e88fd3fa3934950b03a09162a3de420
+#: ../../releases/1.6.6.txt:25
+msgid ""
+"Before this release, Django's file upload handing in its default "
+"configuration may degrade to producing a huge number of ``os.stat()`` system "
+"calls when a duplicate filename is uploaded. Since ``stat()`` may invoke IO, "
+"this may produce a huge data-dependent slowdown that slowly worsens over "
+"time. The net result is that given enough time, a user with the ability to "
+"upload files can cause poor performance in the upload handler, eventually "
+"causing it to become very slow simply by uploading 0-byte files. At this "
+"point, even a slow network connection and few HTTP requests would be all "
+"that is necessary to make a site unavailable."
+msgstr ""
+
+# a66ac683cb254543a687dc3dc8f47212
+#: ../../releases/1.6.6.txt:34
+msgid ""
+"We've remedied the issue by changing the algorithm for generating file names "
+"if a file with the uploaded name already exists. :meth:`Storage."
+"get_available_name() <django.core.files.storage.Storage.get_available_name>` "
+"now appends an underscore plus a random 7 character alphanumeric string (e."
+"g. ``\"_x3a1gho\"``), rather than iterating through an underscore followed "
+"by a number (e.g. ``\"_1\"``, ``\"_2\"``, etc.)."
+msgstr ""
+
+# cf991dbb0d2d469ba5c28e535dbf1f04
+#: ../../releases/1.6.6.txt:43
+msgid "``RemoteUserMiddleware`` session hijacking"
+msgstr ""
+
+# 308a0bdf1a054213afbffce9351e7f26
+#: ../../releases/1.6.6.txt:45
+msgid ""
+"When using the :class:`~django.contrib.auth.middleware.RemoteUserMiddleware` "
+"and the ``RemoteUserBackend``, a change to the ``REMOTE_USER`` header "
+"between requests without an intervening logout could result in the prior "
+"user's session being co-opted by the subsequent user. The middleware now "
+"logs the user out on a failed login attempt."
+msgstr ""
+
+# 2a211ff9b207442e9f22dade7bcfa76f
+#: ../../releases/1.6.6.txt:52
+msgid "Data leakage via query string manipulation in ``contrib.admin``"
+msgstr ""
+
+# c44e3d6f373a4722a930471392260591
+#: ../../releases/1.6.6.txt:54
+msgid ""
+"In older versions of Django it was possible to reveal any field's data by "
+"modifying the \"popup\" and \"to_field\" parameters of the query string on "
+"an admin change form page. For example, requesting a URL like ``/admin/auth/"
+"user/?_popup=1&t=password`` and viewing the page's HTML allowed viewing the "
+"password hash of each user. While the admin requires users to have "
+"permissions to view the change form pages in the first place, this could "
+"leak data if you rely on users having access to view only certain fields on "
+"a model."
+msgstr ""
+
+# 1c2c40e85dc14f1a98d643d2a10f26be
+#: ../../releases/1.6.6.txt:62
+msgid ""
+"To address the issue, an exception will now be raised if a ``to_field`` "
+"value that isn't a related field to a model that has been registered with "
+"the admin is specified."
 msgstr ""
 
 # 9fcc819014e6420e9292d34d9f84de60
-#: ../../releases/1.6.6.txt:10
+#: ../../releases/1.6.6.txt:67
 msgid "Bugfixes"
 msgstr ""
 
-# e7cc08a22ab64f52a9bf8ec2b090e24c
-#: ../../releases/1.6.6.txt:12
+# 7d65afaa3c3e4313a1406cd32775f497
+#: ../../releases/1.6.6.txt:69
 msgid ""
-"Corrected email and URL validation to reject a trailing dash (`#22579 "
-"<http://code.djangoproject.com/ticket/22579>`_)."
+"Corrected email and URL validation to reject a trailing dash (:ticket:"
+"`22579`)."
 msgstr ""
 
-# 5716d4bcc4674ef4b8217416274826e8
-#: ../../releases/1.6.6.txt:15
-msgid ""
-"Prevented indexes on PostgreSQL virtual fields (`#22514 <http://code."
-"djangoproject.com/ticket/22514>`_)."
+# 9bcad678705c4e36ab1d5666c51f7cca
+#: ../../releases/1.6.6.txt:72
+msgid "Prevented indexes on PostgreSQL virtual fields (:ticket:`22514`)."
 msgstr ""
 
-# 22199dd277994782bf6f90ad1f15802b
-#: ../../releases/1.6.6.txt:18
+# db852a025ef84557a726c6b212e30777
+#: ../../releases/1.6.6.txt:74
 msgid ""
 "Prevented edge case where values of FK fields could be initialized with a "
 "wrong value when an inline model formset is created for a relationship "
-"defined to point to a field other than the PK (`#13794 <https://code."
-"djangoproject.com/ticket/13794>`_)."
+"defined to point to a field other than the PK (:ticket:`13794`)."
 msgstr ""
 
-# 3f4dbec49e184c73ac3754b1c5bd0782
-#: ../../releases/1.6.6.txt:23
+# b818f59453a44ad9850c42e501a66902
+#: ../../releases/1.6.6.txt:78
 msgid ""
-"Restored ``pre_delete``  signals for ``GenericRelation`` cascade deletion "
-"(`#22998 <https://code.djangoproject.com/ticket/22998>`_)."
+"Restored ``pre_delete``  signals for ``GenericRelation`` cascade deletion (:"
+"ticket:`22998`)."
 msgstr ""
 
-# c82793d34e984651aeaaf44b64f6ef74
-#: ../../releases/1.6.6.txt:26
+# 4220ebec37d5466c95108ca0a9ae0d30
+#: ../../releases/1.6.6.txt:81
 msgid ""
 "Fixed transaction handling when specifying non-default database in "
-"``createcachetable`` and ``flush`` (`#23089 <https://code.djangoproject.com/"
-"ticket/23089>`_)."
+"``createcachetable`` and ``flush`` (:ticket:`23089`)."
+msgstr ""
+
+# 2bc56e86725a4a768904da25a4fff8f4
+#: ../../releases/1.6.6.txt:84
+msgid ""
+"Fixed the \"ORA-01843: not a valid month\" errors when using Unicode with "
+"older versions of Oracle server (:ticket:`20292`)."
+msgstr ""
+
+# a980e89635294f558205f549ec77dc60
+#: ../../releases/1.6.6.txt:87
+msgid ""
+"Restored bug fix for sending unicode email with Python 2.6.5 and below (:"
+"ticket:`19107`)."
+msgstr ""
+
+# 5e9c25befe6548ad9ef12df2201b32b8
+#: ../../releases/1.6.6.txt:90
+msgid ""
+"Prevented ``UnicodeDecodeError`` in ``runserver`` with non-UTF-8 and non-"
+"English locale (:ticket:`23265`)."
+msgstr ""
+
+# 56b2404ed94d4e2e82605f9b65985adb
+#: ../../releases/1.6.6.txt:93
+msgid ""
+"Fixed JavaScript errors while editing multi-geometry objects in the "
+"OpenLayers widget (:ticket:`23137`, :ticket:`23293`)."
+msgstr ""
+
+# 863e6669331f452fa8cb49cc1a706b2f
+#: ../../releases/1.6.6.txt:96
+msgid ""
+"Prevented a crash on Python 3 with query strings containing unencoded non-"
+"ASCII characters (:ticket:`22996`)."
 msgstr ""

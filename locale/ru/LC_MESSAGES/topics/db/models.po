@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-30 13:35+0300\n"
+"POT-Creation-Date: 2014-09-09 11:16+0300\n"
 "PO-Revision-Date: 2014-06-25 16:07+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none <>\n"
@@ -1808,10 +1808,9 @@ msgid ""
 "the name that is the default :attr:`~django.db.models.ForeignKey."
 "related_name` value for :class:`~django.db.models.ForeignKey` and :class:"
 "`~django.db.models.ManyToManyField` relations.  If you are putting those "
-"types of relations on a subclass of another model, you **must** specify the :"
-"attr:`~django.db.models.ForeignKey.related_name` attribute on each such "
-"field. If you forget, Django will raise an error when you run :djadmin:"
-"`check` or :djadmin:`migrate`."
+"types of relations on a subclass of the parent model, you **must** specify "
+"the :attr:`~django.db.models.ForeignKey.related_name` attribute on each such "
+"field. If you forget, Django will raise a validation error."
 msgstr ""
 "Т.к. multi-table наследование использует :class:`~django.db.models."
 "OneToOneField` для связи родительской и дочерней модели, возможно из "
@@ -1825,7 +1824,7 @@ msgstr ""
 "djadmin:`syncdb`."
 
 # b6bb8021f39c4c9ebb8b43d8016066a0
-#: ../../topics/db/models.txt:1074
+#: ../../topics/db/models.txt:1073
 msgid ""
 "For example, using the above ``Place`` class again, let's create another "
 "subclass with a :class:`~django.db.models.ManyToManyField`::"
@@ -1833,13 +1832,25 @@ msgstr ""
 "Например, используя ``Place`` определенную выше, создадим еще одну дочернюю "
 "модель с :class:`~django.db.models.ManyToManyField`::"
 
+# e378397b83114d8191b86beffd88ec32
+#: ../../topics/db/models.txt:1079
+msgid "This results in the error::"
+msgstr ""
+
+# ac4c1c7c9d5f4e59a9d6ac7079852322
+#: ../../topics/db/models.txt:1087
+msgid ""
+"Adding ``related_name`` to the ``customers`` field as follows would resolve "
+"the error: ``models.ManyToManyField(Place, related_name='provider')``."
+msgstr ""
+
 # 6b7c685d836847928a3a0395a90ac4ed
-#: ../../topics/db/models.txt:1083
+#: ../../topics/db/models.txt:1091
 msgid "Specifying the parent link field"
 msgstr "Определение связи к родительской модели"
 
 # 3b342bbc60db458dbe652238a4c13d0e
-#: ../../topics/db/models.txt:1085
+#: ../../topics/db/models.txt:1093
 msgid ""
 "As mentioned, Django will automatically create a :class:`~django.db.models."
 "OneToOneField` linking your child class back any non-abstract parent models. "
@@ -1857,12 +1868,12 @@ msgstr ""
 "моделью."
 
 # c047d5ee744642dbb949a9cba0dc4ad1
-#: ../../topics/db/models.txt:1096
+#: ../../topics/db/models.txt:1104
 msgid "Proxy models"
 msgstr "Proxy-модели"
 
 # 30fe4cdf231d46bfa5caafbe188cac13
-#: ../../topics/db/models.txt:1098
+#: ../../topics/db/models.txt:1106
 msgid ""
 "When using :ref:`multi-table inheritance <multi-table-inheritance>`, a new "
 "database table is created for each subclass of a model. This is usually the "
@@ -1878,7 +1889,7 @@ msgstr ""
 "менеджер по умолчанию или добавить новые методы."
 
 # ffe67274918b4f42bec162a1029b5566
-#: ../../topics/db/models.txt:1105
+#: ../../topics/db/models.txt:1113
 msgid ""
 "This is what proxy model inheritance is for: creating a *proxy* for the "
 "original model. You can create, delete and update instances of the proxy "
@@ -1895,7 +1906,7 @@ msgstr ""
 "оригинальной модели."
 
 # c0d6200a93274980b6e99385b38469aa
-#: ../../topics/db/models.txt:1112
+#: ../../topics/db/models.txt:1120
 msgid ""
 "Proxy models are declared like normal models. You tell Django that it's a "
 "proxy model by setting the :attr:`~django.db.models.Options.proxy` attribute "
@@ -1906,7 +1917,7 @@ msgstr ""
 "классе ``Meta`` в ``True``."
 
 # 8a3d40b42a1c440db013b79f03a1516a
-#: ../../topics/db/models.txt:1116
+#: ../../topics/db/models.txt:1124
 msgid ""
 "For example, suppose you want to add a method to the ``Person`` model. You "
 "can do it like this::"
@@ -1915,7 +1926,7 @@ msgstr ""
 "так::"
 
 # 2ba71b3e967d4f1890f490234bf13c38
-#: ../../topics/db/models.txt:1132
+#: ../../topics/db/models.txt:1140
 msgid ""
 "The ``MyPerson`` class operates on the same database table as its parent "
 "``Person`` class. In particular, any new instances of ``Person`` will also "
@@ -1926,7 +1937,7 @@ msgstr ""
 "через модель ``MyPerson``, и наоборот::"
 
 # 1916078fe747413c8ffb17a913e198a5
-#: ../../topics/db/models.txt:1140
+#: ../../topics/db/models.txt:1148
 msgid ""
 "You could also use a proxy model to define a different default ordering on a "
 "model. You might not always want to order the ``Person`` model, but "
@@ -1940,7 +1951,7 @@ msgstr ""
 "по полю ``last_name`` при использовании proxy-модели. Это просто::"
 
 # d3a69b9ddecc4ce3a29baf46d1b6e743
-#: ../../topics/db/models.txt:1149
+#: ../../topics/db/models.txt:1157
 msgid ""
 "Now normal ``Person`` queries will be unordered and ``OrderedPerson`` "
 "queries will be ordered by ``last_name``."
@@ -1949,12 +1960,12 @@ msgstr ""
 "``OrderedPerson``  будут отсортированы по полю ``last_name``."
 
 # a6ca4b8252474f108c6dd2ebac5f62d8
-#: ../../topics/db/models.txt:1153
+#: ../../topics/db/models.txt:1161
 msgid "QuerySets still return the model that was requested"
 msgstr "QuerySets возвращает объекты запрашиваемого типа"
 
 # 0b62b0db98e84e6cb3d6d587f31ca6af
-#: ../../topics/db/models.txt:1155
+#: ../../topics/db/models.txt:1163
 msgid ""
 "There is no way to have Django return, say, a ``MyPerson`` object whenever "
 "you query for ``Person`` objects. A queryset for ``Person`` objects will "
@@ -1972,12 +1983,12 @@ msgstr ""
 "она используется."
 
 # 53ef4533648e4cb0aadb96df50b49ccf
-#: ../../topics/db/models.txt:1164
+#: ../../topics/db/models.txt:1172
 msgid "Base class restrictions"
 msgstr "Ограничения базового класса"
 
 # f3ab4b245e5c46ff944b1cb85d826955
-#: ../../topics/db/models.txt:1166
+#: ../../topics/db/models.txt:1174
 msgid ""
 "A proxy model must inherit from exactly one non-abstract model class. You "
 "can't inherit from multiple non-abstract models as the proxy model doesn't "
@@ -1992,7 +2003,7 @@ msgstr ""
 "что они *не* определяют поля модели."
 
 # fbb86bce98b045e8850ff0c48c0f37d2
-#: ../../topics/db/models.txt:1172
+#: ../../topics/db/models.txt:1180
 msgid ""
 "Proxy models inherit any ``Meta`` options that they don't define from their "
 "non-abstract model parent (the model they are proxying for)."
@@ -2001,12 +2012,12 @@ msgstr ""
 "модели, которые она не переопределяет."
 
 # cabb533e8a29477f91c59c2b0c5f7bd9
-#: ../../topics/db/models.txt:1176
+#: ../../topics/db/models.txt:1184
 msgid "Proxy model managers"
 msgstr "Менеджер proxy-модели"
 
 # ce2c391c7a2d4f8ca5c53000d96d90ef
-#: ../../topics/db/models.txt:1178
+#: ../../topics/db/models.txt:1186
 msgid ""
 "If you don't specify any model managers on a proxy model, it inherits the "
 "managers from its model parents. If you define a manager on the proxy model, "
@@ -2019,7 +2030,7 @@ msgstr ""
 "определенные в родительской модели."
 
 # a81df51964be4070a5f2d51f0f855fd7
-#: ../../topics/db/models.txt:1183
+#: ../../topics/db/models.txt:1191
 msgid ""
 "Continuing our example from above, you could change the default manager used "
 "when you query the ``Person`` model like this::"
@@ -2028,7 +2039,7 @@ msgstr ""
 "используемый для получения данных модели ``Person``, таким способом::"
 
 # 4cf5f584dbbc4b62be6746c13c39b55f
-#: ../../topics/db/models.txt:1198
+#: ../../topics/db/models.txt:1206
 msgid ""
 "If you wanted to add a new manager to the Proxy, without replacing the "
 "existing default, you can use the techniques described in the :ref:`custom "
@@ -2042,7 +2053,7 @@ msgstr ""
 "менеджером и добавьте его в наследование после базового класса::"
 
 # 9a432c52fd6a4856a382dbd8e7c1188d
-#: ../../topics/db/models.txt:1214
+#: ../../topics/db/models.txt:1222
 msgid ""
 "You probably won't need to do this very often, but, when you do, it's "
 "possible."
@@ -2051,12 +2062,12 @@ msgstr ""
 "что это возможно."
 
 # 62f377f567c640b4badb638cab44948c
-#: ../../topics/db/models.txt:1220
+#: ../../topics/db/models.txt:1228
 msgid "Differences between proxy inheritance and  unmanaged models"
 msgstr "Разница между proxy наследованием и неуправляемой(unmanaged) моделью"
 
 # 9acff3c4e12d45bb9e5d5c95bea6b371
-#: ../../topics/db/models.txt:1222
+#: ../../topics/db/models.txt:1230
 msgid ""
 "Proxy model inheritance might look fairly similar to creating an unmanaged "
 "model, using the :attr:`~django.db.models.Options.managed` attribute on a "
@@ -2069,7 +2080,7 @@ msgstr ""
 "использовать."
 
 # 3aa4d7b7229c42a69095862f0b8e7166
-#: ../../topics/db/models.txt:1227
+#: ../../topics/db/models.txt:1235
 msgid ""
 "One difference is that you can (and, in fact, must unless you want an empty "
 "model) specify model fields on models with ``Meta.managed=False``. You "
@@ -2087,7 +2098,7 @@ msgstr ""
 "таблице."
 
 # 092266b85308496e9e32d1993f2f8b7d
-#: ../../topics/db/models.txt:1235
+#: ../../topics/db/models.txt:1243
 msgid ""
 "The other difference that is more important for proxy models, is how model "
 "managers are handled. Proxy models are intended to behave exactly like the "
@@ -2108,7 +2119,7 @@ msgstr ""
 "этом."
 
 # 8a621d0da9a241a1937c23cb3caffd50
-#: ../../topics/db/models.txt:1244
+#: ../../topics/db/models.txt:1252
 msgid ""
 "When these two features were implemented, attempts were made to squash them "
 "into a single option. It turned out that interactions with inheritance, in "
@@ -2122,12 +2133,12 @@ msgstr ""
 "возникло решение использовать два механизма."
 
 # dc68f51ff7d84b2eb68326648c7c73a8
-#: ../../topics/db/models.txt:1250
+#: ../../topics/db/models.txt:1258
 msgid "So, the general rules are:"
 msgstr "Основные правила:"
 
 # c79456c86e4d433b84906bc8a06ee4ab
-#: ../../topics/db/models.txt:1252
+#: ../../topics/db/models.txt:1260
 msgid ""
 "If you are mirroring an existing model or database table and don't want all "
 "the original database table columns, use ``Meta.managed=False``. That option "
@@ -2140,7 +2151,7 @@ msgstr ""
 "управляются не Django."
 
 # 6aea5fefef234ce592994dc913a64486
-#: ../../topics/db/models.txt:1256
+#: ../../topics/db/models.txt:1264
 msgid ""
 "If you are wanting to change the Python-only behavior of a model, but keep "
 "all the same fields as in the original, use ``Meta.proxy=True``. This sets "
@@ -2152,12 +2163,12 @@ msgstr ""
 "воспринимается как точная копия оригинальной при сохранении данных."
 
 # 2086c62df8f04f768ee64325305e9547
-#: ../../topics/db/models.txt:1264
+#: ../../topics/db/models.txt:1272
 msgid "Multiple inheritance"
 msgstr "Множественное наследование"
 
 # 4a0f21b359d4431e8591c3e0b6a2eee4
-#: ../../topics/db/models.txt:1266
+#: ../../topics/db/models.txt:1274
 msgid ""
 "Just as with Python's subclassing, it's possible for a Django model to "
 "inherit from multiple parent models. Keep in mind that normal Python name "
@@ -2174,7 +2185,7 @@ msgstr ""
 "родительской модели, остальные будут проигнорированы."
 
 # 49a1ffdb8c724403b4e8003c21552d82
-#: ../../topics/db/models.txt:1273
+#: ../../topics/db/models.txt:1281
 msgid ""
 "Generally, you won't need to inherit from multiple parents. The main use-"
 "case where this is useful is for \"mix-in\" classes: adding a particular "
@@ -2191,7 +2202,7 @@ msgstr ""
 "проблем с определением, откуда взялась та или другая информация."
 
 # 5a7be81a8c81477e8b056d825a27be4b
-#: ../../topics/db/models.txt:1282
+#: ../../topics/db/models.txt:1290
 msgid ""
 "Before Django 1.7, inheriting from multiple models that had an ``id`` "
 "primary key field did not raise an error, but could result in data loss. For "
@@ -2200,32 +2211,32 @@ msgid ""
 msgstr ""
 
 # 1f708b52559f45618c53c5edbf1d83a1
-#: ../../topics/db/models.txt:1297
+#: ../../topics/db/models.txt:1305
 msgid ""
 "This snippet demonstrates how creating a child object overwrote the value of "
 "a previously created parent object::"
 msgstr ""
 
 # b08d3c1deaee46cb8dcdcb6190f83816
-#: ../../topics/db/models.txt:1313
+#: ../../topics/db/models.txt:1321
 msgid ""
 "To properly use multiple inheritance, you can use an explicit :class:"
 "`~django.db.models.AutoField` in the base models::"
 msgstr ""
 
 # 98c18961c5eb439eb86bc0f0aa666982
-#: ../../topics/db/models.txt:1327
+#: ../../topics/db/models.txt:1335
 msgid ""
 "Or use a common ancestor to hold the :class:`~django.db.models.AutoField`::"
 msgstr ""
 
 # c40aca9df47e4e0fb62cb95e72451eb7
-#: ../../topics/db/models.txt:1342
+#: ../../topics/db/models.txt:1350
 msgid "Field name \"hiding\" is not permitted"
 msgstr "Переопределение полей запрещено"
 
 # 54c9809587054cb0b8b07380a5297651
-#: ../../topics/db/models.txt:1344
+#: ../../topics/db/models.txt:1352
 msgid ""
 "In normal Python class inheritance, it is permissible for a child class to "
 "override any attribute from the parent class. In Django, this is not "
@@ -2241,7 +2252,7 @@ msgstr ""
 "именем ``author`` в дочерних моделях."
 
 # 2ea60b93e66e4d32a0a05223278618ee
-#: ../../topics/db/models.txt:1351
+#: ../../topics/db/models.txt:1359
 msgid ""
 "Overriding fields in a parent model leads to difficulties in areas such as "
 "initializing new instances (specifying which field is being initialized in "
@@ -2256,7 +2267,7 @@ msgstr ""
 "все немного по другому."
 
 # bc73a22c790d4d93af6a9975358cec3e
-#: ../../topics/db/models.txt:1358
+#: ../../topics/db/models.txt:1366
 msgid ""
 "This restriction only applies to attributes which are :class:`~django.db."
 "models.Field` instances. Normal Python attributes can be overridden if you "
@@ -2272,7 +2283,7 @@ msgstr ""
 "к. они находятся в разных таблицах."
 
 # de3b9fbfc05f455bb72881440bad07f0
-#: ../../topics/db/models.txt:1366
+#: ../../topics/db/models.txt:1374
 msgid ""
 "Django will raise a :exc:`~django.core.exceptions.FieldError` if you "
 "override any model field in any ancestor model."
