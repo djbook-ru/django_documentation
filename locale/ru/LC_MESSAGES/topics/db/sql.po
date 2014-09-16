@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-11 11:43+0300\n"
-"PO-Revision-Date: 2014-06-25 16:14+0300\n"
+"PO-Revision-Date: 2014-09-17 01:18+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -49,6 +49,10 @@ msgid ""
 "using ``params`` in order to protect against SQL injection attacks. Please "
 "read more about :ref:`SQL injection protection <sql-injection-protection>`."
 msgstr ""
+"Вы должны быть предельно осторожны, используя SQL. Экранируйте все "
+"параметры, контролируемые пользователем, используя ``params``, чтобы "
+"защитится от SQL инъекции. Больше о :ref:`защите от SQL инъекций <sql-"
+"injection-protection>`."
 
 # 627f540faf3140fdbcbd4abc520f7517
 #: ../../topics/db/sql.txt:27
@@ -66,7 +70,6 @@ msgstr ""
 
 # 469e5687a634474aa610614ca198c9d6
 #: ../../topics/db/sql.txt:34
-#, fuzzy
 msgid ""
 "This method takes a raw SQL query, executes it, and returns a ``django.db."
 "models.query.RawQuerySet`` instance. This ``RawQuerySet`` instance can be "
@@ -75,11 +78,11 @@ msgid ""
 msgstr ""
 "Этот метод принимает чистый SQL запрос, выполняет его, и возвращает "
 "экземпляр ``django.db.models.query.RawQuerySet``. Экземпляр ``RawQuerySet`` "
-"может быть проитерирован как и обычный QuerySet для получения объектов."
+"может быть проитерирован как и обычный :class:`~django.db.models.query."
+"QuerySet` для получения объектов."
 
 # f6a47f7c25e2489381a74ce0f02f9541
 #: ../../topics/db/sql.txt:39
-#, fuzzy
 msgid ""
 "This is best illustrated with an example. Suppose you have the following "
 "model::"
@@ -104,7 +107,7 @@ msgstr ""
 # 8c2d2f24b3ac4df698551580d3b94a47
 #: ../../topics/db/sql.txt:0
 msgid "Model table names"
-msgstr ""
+msgstr "Названия таблиц для моделей"
 
 # c23b5906efa84836923b7356b69db3b6
 #: ../../topics/db/sql.txt:59
@@ -159,6 +162,12 @@ msgid ""
 "query for ``WHERE mycolumn=0``, both rows will match. To prevent this, "
 "perform the correct typecasting before using the value in a query."
 msgstr ""
+"Выполняя запрос в MySQL, обратите внимание на преобразование типов. Если  вы "
+"выполняете запрос по текстовому полю, но используете числовое значение, "
+"MySQL преобразует все значения поля в число перед сравнением. Например, если "
+"таблица содержит значения ``'abc'``, ``'def'`` и в запросе ``WHERE "
+"mycolumn=0``, обе строки попадут в результат. Чтобы избежать этого, "
+"используйте значение правильного типа в запросе."
 
 # 5ed4c3daa8c24a92b5178b0f48371fa9
 #: ../../topics/db/sql.txt:90
@@ -172,6 +181,13 @@ msgid ""
 "internal caching would be a performance drawback and adding such caching "
 "would be backward incompatible."
 msgstr ""
+"Хотя ``RawQuerySet`` и можно проитерировать как :class:`~django.db.models."
+"query.QuerySet`, ``RawQuerySet`` не предоставляет все методы ``QuerySet``. "
+"Например, ``__bool__()`` и ``__len__()`` не определены в ``RawQuerySet``, "
+"все экземпляры ``RawQuerySet`` равны ``True``. Они не определены в "
+"``RawQuerySet``, потому что их реализация без внутреннего кеширования может "
+"вызвать большие проблемы с производительностью, а добавление такого кеша "
+"повредило бы обратной совместимости."
 
 # 7168bcb8e867443a9faefbdcbf96ea7a
 #: ../../topics/db/sql.txt:100
@@ -241,7 +257,6 @@ msgstr ""
 
 # 4ede67da26cf4329a2fc6d07c63116eb
 #: ../../topics/db/sql.txt:140
-#, fuzzy
 msgid ""
 "However, the indexing and slicing are not performed at the database level. "
 "If you have a large number of ``Person`` objects in your database, it is "
@@ -395,6 +410,9 @@ msgid ""
 "using PostgreSQL or MySQL, although this wasn't documented. Now you can also "
 "do this when using Oracle, and it is officially supported."
 msgstr ""
+"В Django 1.5 и ниже можно было передавать аргументы словарем для PostgreSQL "
+"или MySQL, однако, это не было задокументировано. Теперь это можно "
+"использовать и для Oracle, и такая возможность официально поддерживается."
 
 # a3f6386003184a438fa817a3ee5f75b3
 #: ../../topics/db/sql.txt:240
@@ -449,6 +467,10 @@ msgid ""
 "were committed to the database. Since Django now defaults to database-level "
 "autocommit, this isn't necessary any longer."
 msgstr ""
+"В Django 1.5 и ниже, поесле операций, которые изменяют данные, необходимо "
+"было вызвать``transaction.commit_unless_managed()`` для коммита изменений в "
+"базу данных. Теперь Django на уровне базы данных использует autocommit и в "
+"этом нет необходимости."
 
 # 197a362594b04e75b6786b7e9865383d
 #: ../../topics/db/sql.txt:276
@@ -539,16 +561,20 @@ msgid ""
 "Django 1.7 explicitly added support to allow using a cursor as context "
 "manager."
 msgstr ""
+":pep:`249` не определяет должен ли курсор поддерживать интерфейс "
+"контекстного менеджера. До Python 2.7 курсор можно было использовать как "
+"контекстный менеджер из-за странного поведения магических методов (`Python "
+"ticket #9220`_). Django 1.7 явно предоставляет эту возможность."
 
 # 710f20cf02fa42c3a83e1772aaf6b439
 #: ../../topics/db/sql.txt:341
 msgid "Using a cursor as a context manager:"
-msgstr ""
+msgstr "Использование курсора как контекстный менеджер:"
 
 # ce9b35f1daee48988c4b22285e92f725
 #: ../../topics/db/sql.txt:348
 msgid "is equivalent to:"
-msgstr ""
+msgstr "эквивалентно:"
 
 # db6f1acd82324f1db1c8280b3b581ff1
 #~ msgid "Transactions and raw SQL"
