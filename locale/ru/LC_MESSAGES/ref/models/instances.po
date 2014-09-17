@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-11 11:43+0300\n"
-"PO-Revision-Date: 2014-07-14 14:16+0300\n"
+"PO-Revision-Date: 2014-09-17 18:46+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -155,6 +155,9 @@ msgid ""
 "validate_unique()`. Previously, :meth:`Model.validate_unique()` was always "
 "called by ``full_clean``."
 msgstr ""
+"Параметр ``validate_unique`` был добавлен для пропуска проверки :meth:`Model."
+"validate_unique()`. Ранее :meth:`Model.validate_unique()` вызывался всегда "
+"при вызове ``full_clean``."
 
 # 06e39a0d61cf4fd8b83b5cea1435e0a3
 #: ../../ref/models/instances.txt:95
@@ -245,10 +248,11 @@ msgid ""
 "method is not invoked when you call your model's :meth:`~Model.save()` "
 "method."
 msgstr ""
+"Обратите внимание, :meth:`Model.full_clean()`, как и метод модели "
+"``clean()``, не вызываются при вызове :meth:`~Model.save()`."
 
 # add054fa6fe04f13bc58b99020a5edab
 #: ../../ref/models/instances.txt:155
-#, fuzzy
 msgid ""
 "Any :exc:`~django.core.exceptions.ValidationError` exceptions raised by "
 "``Model.clean()`` will be stored in a special key error dictionary key, :"
@@ -256,9 +260,9 @@ msgid ""
 "that are tied to the entire model instead of to a specific field::"
 msgstr ""
 "Любое исключение :exc:`~django.core.exceptions.ValidationError` вызванное в "
-"``Model.clean()`` будет сохранено со специальным ключом в словаре ошибок, "
-"``NON_FIELD_ERRORS``, который используется для ошибок относящихся ко всей "
-"модели, а не конкретному полю::"
+"``Model.clean()`` будет сохранено со специальным ключом в словаре ошибок, :"
+"data:`~django.core.exceptions.NON_FIELD_ERRORS`, который используется для "
+"ошибок относящихся ко всей модели, а не конкретному полю::"
 
 # 91c9d98f74c54c40a03252a75f9e3ca8
 #: ../../ref/models/instances.txt:166
@@ -421,8 +425,8 @@ msgid ""
 "See `How Django knows to UPDATE vs. INSERT`_, below, for the reason this "
 "happens."
 msgstr ""
-"О том, как это определяется, смотрите `How Django knows to UPDATE vs. "
-"INSERT`_ ниже."
+"О том, как это определяется, смотрите :ref:`How Django knows to UPDATE vs. "
+"INSERT` (FIXME) ниже."
 
 # 5be5ef59904444f9821b174edb1dbdc0
 #: ../../ref/models/instances.txt:251
@@ -585,9 +589,8 @@ msgid ""
 msgstr ""
 "Будьте осторожны, явно указывая значение первичного ключа при сохранении "
 "нового объекта, если вы не уверенны, что этот первичный ключ не "
-"используется. Более подробно об этом читайте  `Explicitly specifying auto-"
-"primary-key values`_ и `Принудительное выполнение INSERT или UPDATE <ref-"
-"models-force-insert>`_."
+"используется. Более подробно об этом читайте :ref:`Explicitly specifying "
+"auto-primary-key values` (FIXME) и :ref:`ref-models-force-insert`."
 
 # 71bee65874244f709b1210097335bc17
 #: ../../ref/models/instances.txt:318
@@ -602,6 +605,14 @@ msgid ""
 "algorithm by setting the :attr:`~django.db.models.Options.select_on_save` "
 "option to ``True``."
 msgstr ""
+"В предыдущих версиях Django выполнялся ``SELECT`` запрос, когда первичный "
+"ключ был явно указан. Если ``SELECT`` находил строку, Django выполнял "
+"``UPDATE`` запрос, иначе -- ``INSERT``. В результате выполнялся один лишний "
+"запрос в случае использования ``UPDATE``. В очень редких случаях база данных "
+"не оповещает об обновлении записи, если уже есть с указанным первичным "
+"ключом. Например, тригер PostgreSQL ``ON UPDATE``, который возвращает "
+"``NULL``. В таких случаях можно вернуться к старому алгоритму, указав "
+"``True`` в :attr:`~django.db.models.Options.select_on_save`."
 
 # d180ef568b2b4c21a0763872d5b1b3f8
 #: ../../ref/models/instances.txt:331
@@ -674,7 +685,6 @@ msgstr ""
 
 # d4ecdc8b5c9d4726bce0631972668fa7
 #: ../../ref/models/instances.txt:364
-#, fuzzy
 msgid ""
 "The process can be made robust, :ref:`avoiding a race condition <avoiding-"
 "race-conditions-using-f>`, as well as slightly faster by expressing the "
@@ -683,20 +693,20 @@ msgid ""
 "models.F>` for performing this kind of relative update. Using :class:`F "
 "expressions <django.db.models.F>`, the previous example is expressed as::"
 msgstr ""
-"Этот процесс может быть надежным и немного быстрее, если выполнить "
+"Этот процесс может быть надежным, :ref:`предотвращая состояния гонки "
+"<avoiding-race-conditions-using-f>`, и немного быстрее, если выполнить "
 "обновление значение поля, а не явное присвоение нового значения. Django "
-"предоставляет :ref:`объект F() <query-expressions>` для выполнения "
-"обновления. Используя ``F()``, следующий пример будет выглядеть таким "
-"образом::"
+"предоставляет :class:`объект F <django.db.models.F>` для выполнения "
+"обновления. Используя :class:`F() <django.db.models.F>`, следующий пример "
+"будет выглядеть таким образом::"
 
 # 243276e7f53b4e898cafe9c475d44fa8
 #: ../../ref/models/instances.txt:377
-#, fuzzy
 msgid ""
 "For more details, see the documentation on :class:`F expressions <django.db."
 "models.F>` and their :ref:`use in update queries <topics-db-queries-update>`."
 msgstr ""
-"Подробности смотрите в описании :ref:`объекта F() <query-expressions>` и "
+"Подробности смотрите в описании :class:`объекта F <django.db.models.F>` и "
 "его :ref:`использование в запросах обновления <topics-db-queries-update>`."
 
 # cf9cce4cc6d648e397d828700475686a
@@ -860,7 +870,6 @@ msgstr "``__str__``"
 
 # 322fead3b40a4c5780afc817e7714563
 #: ../../ref/models/instances.txt:469
-#, fuzzy
 msgid ""
 "The ``__str__()`` method is called whenever you call ``str()`` on an object. "
 "In Python 3, Django uses ``str(obj)`` in a number of places. Most notably, "
@@ -869,29 +878,24 @@ msgid ""
 "nice, human-readable representation of the model from the ``__str__()`` "
 "method."
 msgstr ""
-"Метод ``__unicode__()`` вызывается когда вы применяете функцию ``unicode()`` "
-"к объекту. Django использует ``unicode(obj)`` (или похожую функцию :meth:"
-"`str(obj) <Model.__str__>`) вы нескольких местах. В частности, для "
-"отображения объектов в интерфейсе администратора Django и в качестве "
-"значения, вставляемого в шаблон, при отображении объекта. Поэтому, вы должны "
-"всегда возвращать в методе ``__unicode__()`` красивое и удобное для "
+"Метод ``__str__()`` вызывается когда вы применяете функцию ``str()`` к "
+"объекту. В Python 3 Django использует ``str(obj)`` в нескольких местах. В "
+"частности, для отображения объектов в интерфейсе администратора Django и в "
+"качестве значения, вставляемого в шаблон, при отображении объекта. Поэтому, "
+"вы должны всегда возвращать в методе ``__str__()`` красивое и удобное для "
 "восприятия представление объекта."
 
 # c1169ef193684b02a2f0ff7ea349c3bd
 #: ../../ref/models/instances.txt:487
-#, fuzzy
 msgid ""
 "In Python 2, the main use of ``__str__`` directly inside Django is when the "
 "``repr()`` output of a model is displayed anywhere (for example, in "
 "debugging output). It isn't required to put ``__str__()`` methods everywhere "
 "if you have sensible :meth:`~Model.__unicode__()` methods."
 msgstr ""
-"Метод ``__str__()`` вызывается, когда вы применяет функцию ``str()`` к "
-"объекту. Django использует его если нужно вывести результат функции "
-"``repr()`` (например, при отладке). Поэтому, вы должны всегда возвращать в "
-"методе ``__str__()`` красивое и удобное для восприятия представление "
-"объекта. Определять метод ``__str__()`` не обязательно, если вы определили "
-"метод :meth:`~Model.__unicode__()`."
+"В Python 2 Django использует ``__str__``, если нужно вывести результат "
+"функции ``repr()`` (например, при отладке). Определять метод ``__str__()`` "
+"не обязательно, если вы определили метод :meth:`~Model.__unicode__()`."
 
 # 389315b6074e4b5ebd98d75cde5e3c31
 #: ../../ref/models/instances.txt:493
@@ -904,9 +908,8 @@ msgstr ""
 
 # 811e6bcf2367418bb7cdc15a31029b32
 #: ../../ref/models/instances.txt:509
-#, fuzzy
 msgid "``__eq__``"
-msgstr "``__str__``"
+msgstr "``__eq__``"
 
 # 7432bc1b5e2b44afbd28a4849049e0c9
 #: ../../ref/models/instances.txt:513
@@ -916,6 +919,11 @@ msgid ""
 "concrete class is defined as the model's first non-proxy parent; for all "
 "other models it is simply the model's class."
 msgstr ""
+"Метод проверки равенства по умолчанию работает следующим образом: если два "
+"объекта содержат одинаковый первичный ключ и являются экземплярами одно "
+"класса, тогда они равны. Для прокси-моделей класс определяется поиском "
+"первого не прокси родительского класса. Для всех остальных моделей - это "
+"просто класс модели."
 
 # 7fba26715f1e4b7c8ac7a636306b435c
 #: ../../ref/models/instances.txt:539
@@ -923,12 +931,13 @@ msgid ""
 "In previous versions only instances of the exact same class and same primary "
 "key value were considered equal."
 msgstr ""
+"В предыдущих версиях только экземпляры одно класса с одинаковым первичным "
+"ключом считались равными."
 
 # 811e6bcf2367418bb7cdc15a31029b32
 #: ../../ref/models/instances.txt:543
-#, fuzzy
 msgid "``__hash__``"
-msgstr "``__str__``"
+msgstr "``__hash__``"
 
 # a0325aa2b4d24f9faef17863e297b50e
 #: ../../ref/models/instances.txt:547
@@ -939,12 +948,18 @@ msgid ""
 "return different values before and after the instance is saved, but changing "
 "the ``__hash__`` value of an instance `is forbidden in Python`_)."
 msgstr ""
+"Метод ``__hash__`` использует значение первичного ключа. На самом деле "
+"выполняется ``hash(obj.pk)``. Если первичный ключ не определен, будет "
+"вызвано исключение ``TypeError`` (иначе ``__hash__`` разные значения перед и "
+"после сохранения объекта, что `запрещено в Python <https://docs.python.org/2/"
+"reference/datamodel.html#object.__hash__>`_)."
 
 # e9b3eb5672fd40509235cd750229c4c2
 #: ../../ref/models/instances.txt:556
 msgid ""
 "In previous versions instance's without primary key value were hashable."
 msgstr ""
+"В предыдущих версиях объекты без первичного ключа можно было хешировать."
 
 # 7be347663638442f8bf2f6a99674af1d
 #: ../../ref/models/instances.txt:562
@@ -1029,7 +1044,6 @@ msgstr ""
 
 # 2b5c045aaa9a42faa0fac63212011858
 #: ../../ref/models/instances.txt:615
-#, fuzzy
 msgid ""
 "The string you return from ``get_absolute_url()`` **must** contain only "
 "ASCII characters (required by the URI specification, :rfc:`2396`) and be URL-"
