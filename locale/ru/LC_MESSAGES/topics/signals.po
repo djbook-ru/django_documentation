@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-11 11:43+0300\n"
-"PO-Revision-Date: 2014-07-14 15:55+0300\n"
+"PO-Revision-Date: 2014-09-18 10:49+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -141,7 +141,6 @@ msgstr "Прослушивание сигналов"
 
 # dc46276797a747fc9d4364e439e3b207
 #: ../../topics/signals.txt:50
-#, fuzzy
 msgid ""
 "To receive a signal, you need to register a *receiver* function that gets "
 "called when the signal is sent by using the :meth:`Signal.connect` method:"
@@ -156,6 +155,8 @@ msgid ""
 "The callback function which will be connected to this signal. See :ref:"
 "`receiver-functions` for more information."
 msgstr ""
+"Функция, которая будет привязана к этому сигналу. Смотрите :ref:`receiver-"
+"functions`."
 
 # bfeaf566df3b405586abfa6632e5f1f1
 #: ../../topics/signals.txt:58
@@ -163,6 +164,8 @@ msgid ""
 "Specifies a particular sender to receive signals from. See :ref:`connecting-"
 "to-specific-signals` for more information."
 msgstr ""
+"Указывает конкретного отправителя. Смотрите :ref:`connecting-to-specific-"
+"signals`."
 
 # 2ea1a2a56d674b1387f39af8221e5941
 #: ../../topics/signals.txt:61
@@ -171,6 +174,10 @@ msgid ""
 "receiver is a local function, it may be garbage collected. To prevent this, "
 "pass ``weak=False`` when you call the signal's ``connect()`` method."
 msgstr ""
+"Django сохраняет обработчики сигналов используя слабые ссылки(weak "
+"references). По этому, если функция-обработчик является локальной функцией, "
+"сборщик мусора может удалить ее. Чтобы избежать этого, передайте "
+"``weak=False`` в ``connect()``."
 
 # 98be0b8b23c84a189a33ff316c3991f2
 #: ../../topics/signals.txt:66
@@ -178,6 +185,9 @@ msgid ""
 "A unique identifier for a signal receiver in cases where duplicate signals "
 "may be sent. See :ref:`preventing-duplicate-signals` for more information."
 msgstr ""
+"Уникальный идентификатор получателя сигнала. На случай, если назначение "
+"обработчика может вызываться несколько раз. Смотрите :ref:`preventing-"
+"duplicate-signals`."
 
 # a2af84686e054a5c9b35290c85602202
 #: ../../topics/signals.txt:70
@@ -259,22 +269,20 @@ msgstr ""
 
 # e926cfa5e44b428b8e12e409920b9685
 #: ../../topics/signals.txt:117
-#, fuzzy
 msgid "Alternatively, you can use a :func:`receiver` decorator:"
 msgstr ""
-"Кроме того, вы можете использовать декоратор ``receiver`` при определении "
-"вашего получателя:"
+"Кроме того, вы можете использовать декоратор :func:`receiver` при "
+"определении вашего получателя:"
 
 # 595ae5fd166042f9a9cd12798187736b
 #: ../../topics/signals.txt:121
-#, fuzzy
 msgid "A signal or a list of signals to connect a function to."
-msgstr "``receiver`` может также принимать список сигналов."
+msgstr "Сигнал или список обрабатываемых сигналов."
 
 # 943c645f28244411930071d0ebe80957
 #: ../../topics/signals.txt:123
 msgid "Here's how you connect with the decorator:"
-msgstr ""
+msgstr "Вот как можно использовать декоратор:"
 
 # 0804e201f6984fc9bd5edb1714713d22
 #: ../../topics/signals.txt:134
@@ -288,7 +296,7 @@ msgstr ""
 # b9a341b042e94003a8d9a20e59f42c6c
 #: ../../topics/signals.txt:0
 msgid "Where should this code live?"
-msgstr ""
+msgstr "Куда положить этот код?"
 
 # a362ca35868941ff9ed31815d545ea4a
 #: ../../topics/signals.txt:139
@@ -297,6 +305,9 @@ msgid ""
 "you like, although it's recommended to avoid the application's root module "
 "and its ``models`` module to minimize side-effects of importing code."
 msgstr ""
+"Код обработчиков сигналов и подключения может находиться где угодно. Но мы "
+"рекомендуем избегать корневого модуля приложения и ``models``, чтобы "
+"сократить побочный эффект при импорте приложения."
 
 # 7d3977ab15704d8a94e8671d10a0ee8f
 #: ../../topics/signals.txt:143
@@ -307,6 +318,11 @@ msgid ""
 "class. If you're using the :func:`receiver` decorator, simply import the "
 "``signals`` submodule inside :meth:`~django.apps.AppConfig.ready`."
 msgstr ""
+"На практике, обработчики сигналов лежат в модуле ``signals`` приложения, к "
+"которому они относятся. Подключение к сигналам выполняется в методе :meth:"
+"`~django.apps.AppConfig.ready` конфигурационного класса приложения. При "
+"использовании декоратора :func:`receiver` просто импортируйте модуль "
+"``signals`` в :meth:`~django.apps.AppConfig.ready`."
 
 # c2a8d157a9ff496cb4bff7b8324f8617
 #: ../../topics/signals.txt:152
@@ -314,6 +330,9 @@ msgid ""
 "Since :meth:`~django.apps.AppConfig.ready` didn't exist in previous versions "
 "of Django, signal registration usually happened in the ``models`` module."
 msgstr ""
+"Т.к. :meth:`~django.apps.AppConfig.ready` не существует в предыдущих версиях "
+"Django, регистрацию обработчиков сигналов обычно выполняют в модуле "
+"``models``."
 
 # 41e8a0544ebc4b71826e0b64b63fdc68
 #: ../../topics/signals.txt:159
@@ -375,7 +394,6 @@ msgstr "Предотвращение дублирования сигналов"
 
 # 2847d49930604b3ab4fc10cee303c802
 #: ../../topics/signals.txt:194
-#, fuzzy
 msgid ""
 "In some circumstances, the code connecting receivers to signals may run "
 "multiple times. This can cause your receiver function to be registered more "
@@ -470,7 +488,6 @@ msgstr "В Django существует два способа отправки с
 
 # 229c517baa6c43a185c16699c7a3518e
 #: ../../topics/signals.txt:249
-#, fuzzy
 msgid ""
 "To send a signal, call either :meth:`Signal.send` or :meth:`Signal."
 "send_robust`. You must provide the ``sender`` argument (which is a class "
@@ -478,8 +495,9 @@ msgid ""
 "like."
 msgstr ""
 "Для отправки сигнала необходимо вызвать  :meth:`Signal.send` или :meth:"
-"`Signal.send_robust`. Вы обязательно должны указать аргумент ``sender``, "
-"кроме того можно указать сколько угодно других именованных аргументов."
+"`Signal.send_robust`. Вы обязательно должны указать аргумент "
+"``sender``(обычно это класс), кроме того можно указать сколько угодно других "
+"именованных аргументов."
 
 # 13e9903325a94edeac7efaa12341f282
 #: ../../topics/signals.txt:253

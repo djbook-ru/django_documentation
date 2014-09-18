@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-11 11:43+0300\n"
-"PO-Revision-Date: 2014-07-14 15:42+0300\n"
+"PO-Revision-Date: 2014-09-18 10:33+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -97,7 +97,6 @@ msgstr "Использование начальных данных с набор
 
 # 3e081548bfab44e4ac715706ec74ecc1
 #: ../../topics/forms/formsets.txt:56
-#, fuzzy
 msgid ""
 "Initial data is what drives the main usability of a formset. As shown above "
 "you can define the number of extra forms. What this means is that you are "
@@ -189,16 +188,15 @@ msgstr ""
 
 # 9eef208feaaf4320b8cd80a74d9c124f
 #: ../../topics/forms/formsets.txt:123
-#, fuzzy
 msgid ""
 "The ``validate_max`` parameter was added to :func:`~django.forms.formsets."
 "formset_factory`.  Also, the behavior of ``FormSet`` was brought in line "
 "with that of ``ModelFormSet`` so that it displays initial data regardless of "
 "``max_num``."
 msgstr ""
-"Если передать ``validate_max=True`` в :func:`~django.forms.formsets."
-"formset_factory`, при валидации будет проверенно, что общее количество форм, "
-"без учета помеченных для удаления, не больше чем ``max_num``."
+"Был добавлен параметр ``validate_max`` для :func:`~django.forms.formsets."
+"formset_factory`. ``FormSet`` теперь отображает начальные данные так же, как "
+"и ``ModelFormSet`` -- показываются все данные, не зависимо от ``max_num``."
 
 # 414593e0dc1c48678ffa9a2c9a47dfb5
 #: ../../topics/forms/formsets.txt:129
@@ -389,19 +387,19 @@ msgstr "Проверка количества форм"
 
 # 7d43eceba0fd40439e88a98ecdb29b08
 #: ../../topics/forms/formsets.txt:301
-#, fuzzy
 msgid ""
 "Django provides a couple ways to validate the minimum or maximum number of "
 "submitted forms. Applications which need more customizable validation of the "
 "number of forms should use custom formset validation."
 msgstr ""
-"Если вам нужна более сложная валидация, используйте собственную валидацию "
-"для набора форм."
+"Django предоставляет несколько способов валидации минимального и максимально "
+"количества отправленных форм. Если вам нужна более сложная валидация, "
+"используйте собственную валидацию для набора форм."
 
 # 79d1ba6aed2449aab5b4fc8ee8cae71d
 #: ../../topics/forms/formsets.txt:306
 msgid "``validate_max``"
-msgstr ""
+msgstr "``validate_max``"
 
 # 9eef208feaaf4320b8cd80a74d9c124f
 #: ../../topics/forms/formsets.txt:308
@@ -447,24 +445,25 @@ msgid ""
 "The ``validate_max`` parameter was added to :func:`~django.forms.formsets."
 "formset_factory`."
 msgstr ""
+"Параметр ``validate_max`` был добавлен для :func:`~django.forms.formsets."
+"formset_factory`."
 
 # 100671c598d44c31acf4030c17c9b266
 #: ../../topics/forms/formsets.txt:353
 msgid "``validate_min``"
-msgstr ""
+msgstr "``validate_min``"
 
 # 9eef208feaaf4320b8cd80a74d9c124f
 #: ../../topics/forms/formsets.txt:357
-#, fuzzy
 msgid ""
 "If ``validate_min=True`` is passed to :func:`~django.forms.formsets."
 "formset_factory`, validation will also check that the number of forms in the "
 "data set, minus those marked for deletion, is greater than or equal to "
 "``min_num``."
 msgstr ""
-"Если передать ``validate_max=True`` в :func:`~django.forms.formsets."
+"Если передать ``validate_min=True`` в :func:`~django.forms.formsets."
 "formset_factory`, при валидации будет проверенно, что общее количество форм, "
-"без учета помеченных для удаления, не больше чем ``max_num``."
+"без учета помеченных для удаления, больше или равно ``min_num``."
 
 # 3de1f6d596744ba782bb58ff027c6710
 #: ../../topics/forms/formsets.txt:385
@@ -472,6 +471,8 @@ msgid ""
 "The ``min_num`` and ``validate_min`` parameters were added to :func:`~django."
 "forms.formsets.formset_factory`."
 msgstr ""
+"Параметры ``min_num`` и ``validate_min`` были добавлены для :func:`~django."
+"forms.formsets.formset_factory`."
 
 # 4061749cafbc4fbc963f34eb40f506b5
 #: ../../topics/forms/formsets.txt:389
@@ -549,6 +550,9 @@ msgid ""
 "BaseModelFormSet>`, model instances for deleted forms will be deleted when "
 "you call ``formset.save()``."
 msgstr ""
+"Если вы используете :class:`ModelFormSet<django.forms.models."
+"BaseModelFormSet>`, объекты удаленных форм будут удалены при выполнении "
+"``formset.save()``."
 
 # cb607b371ead47d0afcc0000ef2db4c4
 #: ../../topics/forms/formsets.txt:516
@@ -558,6 +562,10 @@ msgid ""
 "`formset.deleted_objects <django.forms.models.BaseModelFormSet."
 "deleted_objects>` to actually delete them::"
 msgstr ""
+"Если выполнить ``formset.save(commit=False)``, объекты не будут удалены "
+"автоматически. Вам необходимо вызвать ``delete()`` для каждого объекта из :"
+"attr:`formset.deleted_objects <django.forms.models.BaseModelFormSet."
+"deleted_objects>`::"
 
 # 64108561f7214e5bb22ee3ef5a354c59
 #: ../../topics/forms/formsets.txt:526
@@ -565,21 +573,19 @@ msgid ""
 "If you want to maintain backwards compatibility with Django 1.6 and earlier, "
 "you can do something like this::"
 msgstr ""
+"Если вам нужно совместимость с Django 1.6 и ниже, можете использовать "
+"следующий подход::"
 
 # 8ed38c5866c94026a47a8c67df4be502
 #: ../../topics/forms/formsets.txt:538
-#, fuzzy
 msgid ""
 "On the other hand, if you are using a plain ``FormSet``, it's up to you to "
 "handle ``formset.deleted_forms``, perhaps in your formset's ``save()`` "
 "method, as there's no general notion of what it means to delete a form."
 msgstr ""
-"Если вы используете :class:`ModelFormSet<django.forms.models."
-"BaseModelFormSet>`, то экземпляры моделей для удалённых форм будут "
-"уничтожены при вызове ``formset.save()``. С другой стороны, если вы "
-"используете простой ``FormSet``, то вам потребуется явно обрабатывать "
-"``formset.deleted_forms``, например в методе ``save()`` набора форм, т.к. "
-"нет общих рекомендаций по удалению форм."
+"Если же вы используете просто ``FormSet``, можете делать что хотите с "
+"``formset.deleted_forms``, возможно в переопределенном методе ``save()``. "
+"Django просто не знает что должно произойти при удалении таких форм."
 
 # 9b08a759b89a415b8ffd3c232141fcf2
 #: ../../topics/forms/formsets.txt:543
@@ -623,7 +629,6 @@ msgstr "Шаблон ``manage_articles.html`` может выглядеть та
 
 # 5dfe5fd391054671a81510a913c5dbd3
 #: ../../topics/forms/formsets.txt:603
-#, fuzzy
 msgid ""
 "However there's a slight shortcut for the above by letting the formset "
 "itself deal with the management form:"
