@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-11 11:43+0300\n"
-"PO-Revision-Date: 2014-09-18 23:47+0300\n"
+"PO-Revision-Date: 2014-09-19 18:49+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -542,7 +542,6 @@ msgstr "Определение ``error_messages``"
 
 # 36d03675ef464af6aea872fe2ca3b778
 #: ../../topics/forms/modelforms.txt:266
-#, fuzzy
 msgid ""
 "Error messages defined at the :attr:`form field <django.forms.Field."
 "error_messages>` level or at the :ref:`form Meta <modelforms-overriding-"
@@ -553,27 +552,20 @@ msgstr ""
 "Сообщения ошибки из :attr:`form field <django.forms.Field.error_messages>` "
 "или :ref:`form Meta <modelforms-overriding-default-fields>` имеют приоритет "
 "над сообщениями ошибок из :attr:`model field <django.db.models.Field."
-"error_messages>`. Ошибки из :attr:`model fields <django.db.models.Field."
-"error_messages>` используются для ``ValidationError``, если ошибка была "
-"вызвана при :ref:`валидации модели <validating-objects>` и в форме не "
-"определенно сообщения для этой ошибки."
+"error_messages>`."
 
 # 36d03675ef464af6aea872fe2ca3b778
 #: ../../topics/forms/modelforms.txt:272
-#, fuzzy
 msgid ""
 "Error messages  defined on :attr:`model fields <django.db.models.Field."
 "error_messages>` are only used when the ``ValidationError`` is raised during "
 "the :ref:`model validation <validating-objects>` step and no corresponding "
 "error messages are defined at the form level."
 msgstr ""
-"Сообщения ошибки из :attr:`form field <django.forms.Field.error_messages>` "
-"или :ref:`form Meta <modelforms-overriding-default-fields>` имеют приоритет "
-"над сообщениями ошибок из :attr:`model field <django.db.models.Field."
-"error_messages>`. Ошибки из :attr:`model fields <django.db.models.Field."
-"error_messages>` используются для ``ValidationError``, если ошибка была "
-"вызвана при :ref:`валидации модели <validating-objects>` и в форме не "
-"определенно сообщения для этой ошибки."
+" Ошибки из :attr:`model fields <django.db.models.Field.error_messages>` "
+"используются для ``ValidationError``, если ошибка была вызвана при :ref:"
+"`валидации модели <validating-objects>` и в форме не определенно сообщения "
+"для этой ошибки."
 
 # 6659101ddd3740c2a26e6ef9d20accc5
 #: ../../topics/forms/modelforms.txt:280
@@ -583,6 +575,10 @@ msgid ""
 "NON_FIELD_ERRORS` key to the ``error_messages`` dictionary of the "
 "``ModelForm``’s inner ``Meta`` class::"
 msgstr ""
+"Вы можете переопределить сообщения об ошибке для ``NON_FIELD_ERRORS``, "
+"который были вызваны при валидации модели, определив ключ :data:`~django."
+"core.exceptions.NON_FIELD_ERRORS` в атрибут ``error_messages`` класса "
+"``ModelForm.Meta``::"
 
 # f0ab2badb7ed4ef6bc676508638ed111
 #: ../../topics/forms/modelforms.txt:296
@@ -756,7 +752,6 @@ msgstr ""
 
 # 98d3e8ed99a64c71aed78c134b8e0716
 #: ../../topics/forms/modelforms.txt:414
-#, fuzzy
 msgid ""
 "Set the ``exclude`` attribute of the ``ModelForm``’s inner ``Meta`` class to "
 "a list of fields to be excluded from the form."
@@ -803,6 +798,10 @@ msgid ""
 "``exclude`` is now deprecated, but will continue to work as before until "
 "version 1.8"
 msgstr ""
+"До 1.6, ``'__all__'`` не существовал, но отсутствие атрибута ``fields`` "
+"приводило к аналогичному эффекту. Отсутствие ``fields`` и ``exclude`` "
+"одновременно считается устаревшим способом, который будет работать только до "
+"1.8"
 
 # 9315e8685d854d4d9bea2c4bdd273879
 #: ../../topics/forms/modelforms.txt:446
@@ -907,6 +906,7 @@ msgstr ""
 msgid ""
 "The ``labels``, ``help_texts`` and ``error_messages`` options were added."
 msgstr ""
+"Были добавлены параметры ``labels``, ``help_texts`` и ``error_messages``."
 
 # 659d76100fe648a297653a1fa74d9885
 #: ../../topics/forms/modelforms.txt:513
@@ -1135,6 +1135,9 @@ msgid ""
 "the MRO. This is because these classes rely on different metaclasses and a "
 "class can only have one metaclass."
 msgstr ""
+"Можно унаследоваться одновременно от ``Form`` и ``ModelForm``, однако, "
+"``ModelForm`` должен быть первым в MRO. Т.к. эти классы используют разные "
+"мета-классы, а класс может использовать только один метакласс."
 
 # d40cd9562c4b4fac8f340502bab959a6
 #: ../../topics/forms/modelforms.txt:677
@@ -1142,6 +1145,8 @@ msgid ""
 "It's possible to declaratively remove a ``Field`` inherited from a parent "
 "class by setting the name to be ``None`` on the subclass."
 msgstr ""
+"Можно декларативно удалить ``Field`` родительского класса, указав в названии "
+"``None`` в дочернем классе."
 
 # ffe8899d68a84376bae10d6667c165ab
 #: ../../topics/forms/modelforms.txt:680
@@ -1151,6 +1156,10 @@ msgid ""
 "metaclass from generating a default field. To opt-out from default fields, "
 "see :ref:`controlling-fields-with-fields-and-exclude`."
 msgstr ""
+"Таким способом можно исключить только те поля, которые были декларативно "
+"описаны в родительском классе. Поля ``ModelForm`` будет в любом случае "
+"созданы мета-классом. Чтобы переопределить их, используйте метод описанный "
+"в :ref:`controlling-fields-with-fields-and-exclude`."
 
 # 2a05f43c6779479b92cad5459cf34526
 #: ../../topics/forms/modelforms.txt:688
@@ -1274,9 +1283,8 @@ msgstr ""
 
 # dd188a6bbbe74719849843964c4c9303
 #: ../../topics/forms/modelforms.txt:783
-#, fuzzy
 msgid "Changing the ``form``"
-msgstr "Изменение выборки"
+msgstr "Настройка ``form``"
 
 # f9237bc99a3e4e2ebb50c05c13471a5e
 #: ../../topics/forms/modelforms.txt:785
@@ -1286,12 +1294,14 @@ msgid ""
 "be useful to specify a custom model form. For example, you can create a "
 "custom model form that has custom validation::"
 msgstr ""
+"По умолчанию, когда вы используете ``modelformset_factory``, форма будет "
+"создана с помощью :func:`~django.forms.models.modelform_factory`. Часто "
+"необходимо указать свою форму. Например, форму с собственной валидацией::"
 
 # 1181dd5182424a82ae06fb8db0a48b37
 #: ../../topics/forms/modelforms.txt:799
-#, fuzzy
 msgid "Then, pass your model form to the factory function::"
-msgstr "Теперь передадим ваш класс ``BaseAuthorFormSet`` в функцию фабрики::"
+msgstr "Для этого передайте вашу форму в функцию фабрики::"
 
 # b052e29b3bef4f8dad65bd17a08441f7
 #: ../../topics/forms/modelforms.txt:803
@@ -1300,6 +1310,9 @@ msgid ""
 "``modelformset_factory`` function has several arguments which are passed "
 "through to ``modelform_factory``, which are described below."
 msgstr ""
+"Вам не обязательно создавать свою форму. Функция ``modelformset_factory`` "
+"принимает различный аргументы, которые будут переданы в "
+"``modelform_factory``."
 
 # 7dd39290b9a94f009b4254221714541a
 #: ../../topics/forms/modelforms.txt:810
@@ -1337,7 +1350,6 @@ msgstr "Указываем виджеты полей с помощью ``widgets
 
 # 47b2bf4f28cb4aa1b76e8313263f5fb9
 #: ../../topics/forms/modelforms.txt:828
-#, fuzzy
 msgid ""
 "Using the ``widgets`` parameter, you can specify a dictionary of values to "
 "customize the ``ModelForm``’s widget class for a particular field. This "
@@ -1448,6 +1460,8 @@ msgid ""
 "After calling ``save()``, your model formset will have three new attributes "
 "containing the formset's changes:"
 msgstr ""
+"После вызова ``save()``, в класс набора форм будут добавлены атрибуты, "
+"содержащие все изменения:"
 
 # 4374320a015d4c68b2d908fd78bb3654
 #: ../../topics/forms/modelforms.txt:907
@@ -1551,6 +1565,9 @@ msgid ""
 "modify a value in ``ModelFormSet.clean()`` you must modify ``form."
 "instance``::"
 msgstr ""
+"На этом этапе уже будут созданы экземпляры модели для каждой формы. Поменяв "
+"``form.cleaned_data``, вы не поменяете сохраняемые значения. Для этого в "
+"``ModelFormSet.clean()`` необходимо изменить ``form.instance``::"
 
 # f8171973e5ed403ab552ded4ef0672da
 #: ../../topics/forms/modelforms.txt:1008
