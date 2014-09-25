@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-07-14 14:48+0300\n"
+"PO-Revision-Date: 2014-09-25 17:35+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -119,6 +119,9 @@ msgid ""
 "optional note may be inserted in the first tag. For example, this is useful "
 "when commenting out code for documenting why the code was disabled."
 msgstr ""
+"Игнорирует содержимое между ``{% comment %}`` и ``{% endcomment %}``. Можно "
+"добавить заметку в первый тег. Например, добавить комментарий, описывающий "
+"почему код был закомментирован."
 
 # 5dd91b21d615419c9308345405aa463f
 #: ../../ref/templates/builtins.txt:65
@@ -466,20 +469,20 @@ msgstr ""
 
 # 68610d252f37403eb319a82eb424bd91
 #: ../../ref/templates/builtins.txt:308
-#, fuzzy
 msgid ""
 "To improve safety, future versions of ``firstof`` will automatically escape "
 "their output. You're encouraged to activate this behavior by loading "
 "``firstof`` from the ``future`` template library::"
 msgstr ""
-"Для безопасности в следующих версиях ``cycle`` будет экранировать свой "
-"вывод. Вы можете использовать это уже сейчас загрузив тег ``cycle`` из "
+"Для безопасности в следующих версиях ``firstof`` будет экранировать свой "
+"вывод. Вы можете использовать это уже сейчас загрузив тег ``firstof`` из "
 "библиотеки тегов ``future``::"
 
 # a0551a0f8bc44853bc51555edad7d264
 #: ../../ref/templates/builtins.txt:320
 msgid "Or if only some variables should be escaped, you can use::"
 msgstr ""
+"Если только некоторые переменные должны быть экранированы, используйте::"
 
 # 32d54ef618f349aa90b37df725e24475
 #: ../../ref/templates/builtins.txt:327
@@ -1053,6 +1056,9 @@ msgid ""
 "a context. This allows you to reference a compiled ``Template`` in your "
 "context."
 msgstr ""
+"Можно передать любой объект с методом ``render()``, который принимает "
+"контекст. Это позволяет указать скомпилированные объекты ``Template`` из "
+"контекста."
 
 # cfc7fe2af4d6472e85172a5188ebc20d
 #: ../../ref/templates/builtins.txt:712
@@ -1479,12 +1485,11 @@ msgstr ""
 
 # e54c507fc50343c29c2c720ac474c39a
 #: ../../ref/templates/builtins.txt:962
-#, fuzzy
 msgid ""
 "If the optional ``parsed`` parameter is given, the contents of the included "
 "file are evaluated as template code, within the current context::"
 msgstr ""
-"Если используется необязательный параметр \"parsed\", содержимое включаемого "
+"Если используется необязательный параметр ``parsed``, содержимое включаемого "
 "файла будет выполнено как код шаблона, используя текущий контекст::"
 
 # abb27fbdf95d483b883634edfb35260e
@@ -1504,6 +1509,10 @@ msgid ""
 "process. This means it's not possible for example to define blocks or alter "
 "the context in the current page using the included file."
 msgstr ""
+"При использовании параметра ``parsed`` в теге :ttag:`ssi`, включенный шаблон "
+"никак не влияет на другие шаблоны. Все процессы рендеринга полностью "
+"независимы. Это означает, что нельзя добавить блок или изменить контекст "
+"текущей страницы, используя подключаемые файлы."
 
 # 01e190f8319a4d22a2ff8da8e214662f
 #: ../../ref/templates/builtins.txt:978
@@ -1633,14 +1642,12 @@ msgstr "url"
 
 # 6779852a481e4af2978436406509cf06
 #: ../../ref/templates/builtins.txt:1014
-#, fuzzy
 msgid ""
 "Returns an absolute path reference (a URL without the domain name) matching "
 "a given view function and optional parameters."
 msgstr ""
 "Возвращает абсолютную ссылку (URL без имени домена) соответствующую "
-"указанному представлению с необязательными аргументами. Этот способ выводить "
-"ссылки без \"хардкодинга\" в шаблоне, чтобы не нарушать принцип DRY::"
+"указанному представлению с необязательными аргументами."
 
 # c1120e6e16454b55b3cd79b4800ae1d9
 #: ../../ref/templates/builtins.txt:1019
@@ -1648,17 +1655,17 @@ msgid ""
 "Any special characters in the resulting path will be encoded using :func:"
 "`~django.utils.encoding.iri_to_uri`."
 msgstr ""
+"Все спец-символы результата будут экранированы с использованием :func:"
+"`~django.utils.encoding.iri_to_uri`."
 
 # 6779852a481e4af2978436406509cf06
 #: ../../ref/templates/builtins.txt:1022
-#, fuzzy
 msgid ""
 "This is a way to output links without violating the DRY principle by having "
 "to hard-code URLs in your templates::"
 msgstr ""
-"Возвращает абсолютную ссылку (URL без имени домена) соответствующую "
-"указанному представлению с необязательными аргументами. Этот способ выводить "
-"ссылки без \"хардкодинга\" в шаблоне, чтобы не нарушать принцип DRY::"
+"Этот способ выводить ссылки без \"хардкодинга\" в шаблоне, чтобы не нарушать "
+"принцип DRY::"
 
 # a9521b327f624f079c8663fa94b2efe2
 #: ../../ref/templates/builtins.txt:1027
@@ -1747,6 +1754,8 @@ msgid ""
 "The scope of the variable created by the  ``as var`` syntax is the ``{% "
 "block %}`` in which the ``{% url %}`` tag appears."
 msgstr ""
+"Переменная, созданная ``as var``, будет доступна только в ``{% block %}``, в "
+"котором используется тег ``{% url %}``."
 
 # 8ecd4a3bd4544759b40d5135c85e7585
 #: ../../ref/templates/builtins.txt:1078
@@ -1780,11 +1789,12 @@ msgstr ""
 
 # 3cf5f20b4ac1432fac056c9841ff28d8
 #: ../../ref/templates/builtins.txt:1096
-#, fuzzy
 msgid ""
 "Don't forget to put quotes around the function path or pattern name, "
 "otherwise the value will be interpreted as a context variable!"
-msgstr "Не забудьте взять в кавычки путь до функции или имя шаблона!"
+msgstr ""
+"Не забудьте взять в кавычки путь до функции или имя шаблона, иначе значение "
+"будет интерпретировано как переменная!"
 
 # 6511c051d8a1473fa2c1d40ec6d7c62b
 #: ../../ref/templates/builtins.txt:1102
@@ -1922,6 +1932,9 @@ msgid ""
 "In some cases you might want to capture the result of ``widthratio`` in a "
 "variable. It can be useful, for instance, in a :ttag:`blocktrans` like this::"
 msgstr ""
+"В некоторых случаях необходимо сохранить результат ``widthratio`` в "
+"переменную. Это может быть полезно, например, при использовании тега :ttag:"
+"`blocktrans`::"
 
 # 2367d1046fb84ef68317873c56fd2bb9
 #: ../../ref/templates/builtins.txt:1148
@@ -2759,14 +2772,14 @@ msgstr "От ``-43200`` до ``43200``"
 
 # 688d0063431a44fdbc142f5411916995
 #: ../../ref/templates/builtins.txt:1360
-#, fuzzy
 msgid ""
 "If ``value`` is a :py:class:`~datetime.datetime` object (e.g., the result of "
 "``datetime.datetime.now()``), the output will be the string ``'Wed 09 Jan "
 "2008'``."
 msgstr ""
-"Если ``value`` равно объекту ``datetime`` (например, результат выполнения "
-"``datetime.datetime.now()``), будет выведено значение ``'Wed 09 Jan 2008'``."
+"Если ``value`` равно объекту :py:class:`~datetime.datetime` (например, "
+"результат выполнения ``datetime.datetime.now()``), будет выведено значение "
+"``'Wed 09 Jan 2008'``."
 
 # e44cfcbf635b42608e524018fa5c61ae
 #: ../../ref/templates/builtins.txt:1364
@@ -2823,6 +2836,8 @@ msgid ""
 "You can combine ``date`` with the :tfilter:`time` filter to render a full "
 "representation of a ``datetime`` value. E.g.::"
 msgstr ""
+"Вы можете использовать ``date`` с фильтром :tfilter:`time`, чтобы получить "
+"полное представление значения ``datetime``. Например::"
 
 # 9bb81e7b17c44ce1942221477d2e18aa
 #: ../../ref/templates/builtins.txt:1393
@@ -2902,19 +2917,17 @@ msgstr "будет возвращено:"
 # 50fac6b258fa4d48a98ffe53bb963b05
 #: ../../ref/templates/builtins.txt:1453
 msgid "You can also do more complicated things like::"
-msgstr ""
+msgstr "Вы также можете делать более сложные вещи::"
 
 # 6c90097a760b41c8b180add40f779a6f
 #: ../../ref/templates/builtins.txt:1459
-#, fuzzy
 msgid "If ``books`` is:"
-msgstr "Если ``value`` равно:"
+msgstr "Если ``books`` равно:"
 
 # dbce3c59a45844f2bb945769a53073cc
 #: ../../ref/templates/builtins.txt:1469
-#, fuzzy
 msgid "then the output would be::"
-msgstr "будет возвращено:"
+msgstr "будет возвращено::"
 
 # a6b07671862d4d1ab17837cde623490c
 #: ../../ref/templates/builtins.txt:1478
@@ -3067,7 +3080,7 @@ msgstr "Если ``value`` равно 123456789, будет выведено ``1
 # 06b80b3965684265b2b030dd003a0fbc
 #: ../../ref/templates/builtins.txt:0
 msgid "File sizes and SI units"
-msgstr ""
+msgstr "Размер файла и Международная система единиц"
 
 # ce49ddd17ac44417b78d7cdd56492c81
 #: ../../ref/templates/builtins.txt:1558
@@ -3117,7 +3130,7 @@ msgstr ""
 # 5c8775eb849643c88bf77c7a8a88ed90
 #: ../../ref/templates/builtins.txt:1587
 msgid "This filter has been deprecated and will be removed in Django 1.8."
-msgstr ""
+msgstr "Этот фильтр устарел и будет удален в Django 1.8."
 
 # 823d3aad91c846578749b8618b9f0a14
 #: ../../ref/templates/builtins.txt:1590
@@ -3729,13 +3742,13 @@ msgstr ""
 
 # 46200ba4431147db9df5a749e73fe90a
 #: ../../ref/templates/builtins.txt:1944
-#, fuzzy
 msgid ""
 "If ``value`` is ``\"<b>Joel</b> <button>is</button> a <span>slug</span>\"`` "
 "the unescaped output will be ``\"Joel <button>is</button> a slug\"``."
 msgstr ""
 "Если ``value`` равно ``\"<b>Joel</b> <button>is</button> a <span>slug</span>"
-"\"``, будет возвращено ``\"Joel <button>is</button> a slug\"``."
+"\"``, будет возвращено не экранированное ``\"Joel <button>is</button> a slug"
+"\"``."
 
 # 5fb41cc36cff46e5918bfb12d6c2b3c8
 #: ../../ref/templates/builtins.txt:1947
@@ -3744,18 +3757,18 @@ msgstr "Этот фильтр регистрозависимый."
 
 # 26eb5731261a4b7eb70af8f1f5a1fcc8
 #: ../../ref/templates/builtins.txt:1949
-#, fuzzy
 msgid ""
 "If ``value`` is ``\"<B>Joel</B> <button>is</button> a <span>slug</span>\"`` "
 "the unescaped output will be ``\"<B>Joel</B> <button>is</button> a slug\"``."
 msgstr ""
 "Если ``value`` равно ``\"<B>Joel</B> <button>is</button> a <span>slug</span>"
-"\"``, будет выведено ``\"<B>Joel</B> <button>is</button> a slug\"``."
+"\"``, будет выведено не экранированное ``\"<B>Joel</B> <button>is</button> a "
+"slug\"``."
 
 # de542a19596d477f8394768aff766b2c
 #: ../../ref/templates/builtins.txt:0
 msgid "No safety guarantee"
-msgstr ""
+msgstr "Безопасность не гарантируется"
 
 # 7996649a6f82403c93cecae647212fda
 #: ../../ref/templates/builtins.txt:1954
@@ -3768,6 +3781,14 @@ msgid ""
 "looking for something more robust, you can use the ``bleach`` Python "
 "library, notably its `clean`_ method."
 msgstr ""
+"Обратите внимание ``removetags`` не гарантирует, что результат будет "
+"безопасным для вставки в HTML. Он также не работает рекурсивно, и ``"
+"\"<sc<script>ript>alert('XSS')</sc</script>ript>\"`` не будет безопасен, "
+"даже если использовать ``|removetags:\"script\"``. По этому, если данные "
+"передаются пользователем, **НИКОГДА** не применяйте фильтр ``safe`` к "
+"результату ``removetags``. Если вам нужна более надежная проверка, "
+"используйте библиотеку ``bleach`` Python, а точнее метод `clean <http://"
+"bleach.readthedocs.org/en/latest/clean.html>`_."
 
 # a2e8d70d61be4df591ebefacbfa4a81a
 #: ../../ref/templates/builtins.txt:1967
@@ -3923,7 +3944,7 @@ msgstr "striptags"
 # 2649eb50f25840988d8e4535f00b3282
 #: ../../ref/templates/builtins.txt:2067
 msgid "Makes all possible efforts to strip all [X]HTML tags."
-msgstr ""
+msgstr "Пытается удалить все [X]HTML теги."
 
 # 9cb360e44d76444992dbd6463ad2dcf4
 #: ../../ref/templates/builtins.txt:2073
@@ -3943,6 +3964,12 @@ msgid ""
 "more robust, you can use the ``bleach`` Python library, notably its `clean`_ "
 "method."
 msgstr ""
+"Обратите внимание ``striptags`` не гарантирует, что результат будет "
+"безопасным для вставки в HTML, особенно при передаче неправильного HTML. По "
+"этому, если данные передаются пользователем, **НИКОГДА** не применяйте "
+"фильтр ``safe`` к результату ``striptags``. Если вам нужна более надежная "
+"проверка, используйте библиотеку ``bleach`` Python, а точнее метод `clean "
+"<http://bleach.readthedocs.org/en/latest/clean.html>`_."
 
 # 9989da25275e4fbdb7c12374932d011f
 #: ../../ref/templates/builtins.txt:2089
@@ -4000,16 +4027,16 @@ msgstr ""
 
 # d15306d396534a698985c73560d4ed53
 #: ../../ref/templates/builtins.txt:2114
-#, fuzzy
 msgid ""
 "The ``time`` filter will only accept parameters in the format string that "
 "relate to the time of day, not the date (for obvious reasons). If you need "
 "to format a ``date`` value, use the :tfilter:`date` filter instead (or along "
 "``time`` if you need to render a full :py:class:`~datetime.datetime` value)."
 msgstr ""
-"Фильтр принимает только параметры в строке формата, которые относятся к "
+"Фильтр ``time`` принимает только строку формата, который относится к "
 "времени, а не дате (по понятным причинам). Если вам нужно отформатировать "
-"дату, используйте фильтр  :tfilter:`date`."
+"дату, используйте фильтр  :tfilter:`date` (или вместе с ``time``, если "
+"необходимо вывести полное значение :py:class:`~datetime.datetime`)."
 
 # ede865f190bd41b7a7a85776f7833293
 #: ../../ref/templates/builtins.txt:2119
@@ -4020,6 +4047,11 @@ msgid ""
 "accept the timezone-related :ref:`format specifiers <date-and-time-"
 "formatting-specifiers>` ``'e'``, ``'O'`` , ``'T'`` and ``'Z'``."
 msgstr ""
+"Есть одно исключение: если передано значение ``datetime`` с указанным "
+"часовым поясом (:ref:`time-zone-aware <naive_vs_aware_datetimes>` "
+"``datetime`` объект) фильтр ``time`` принимает :ref:`параметры "
+"форматирования <date-and-time-formatting-specifiers>` для часового пояса, "
+"такие как ``'e'``, ``'O'`` , ``'T'`` и ``'Z'``."
 
 # 4553db499a08488297e5ede4a1a44b71
 #: ../../ref/templates/builtins.txt:2129
@@ -4036,6 +4068,8 @@ msgid ""
 "The ability to receive and act on values with attached timezone information "
 "was added in Django 1.7."
 msgstr ""
+"В Django 1.7 была добавлена возможность форматировать информацию о часовом "
+"поясе."
 
 # 0994c187903f4338a78e64f349bdea7c
 #: ../../ref/templates/builtins.txt:2140
@@ -4167,30 +4201,27 @@ msgstr "Если ``value`` равно ``\"Joel is a slug\"``, вернет ``\"J
 
 # 131338f1989845a29c5609404ffd807a
 #: ../../ref/templates/builtins.txt:2212
-#, fuzzy
 msgid "truncatechars_html"
-msgstr "truncatechars"
+msgstr "truncatechars_html"
 
 # ab987496451e41c380f3fc1da18138a1
 #: ../../ref/templates/builtins.txt:2216
-#, fuzzy
 msgid ""
 "Similar to :tfilter:`truncatechars`, except that it is aware of HTML tags. "
 "Any tags that are opened in the string and not closed before the truncation "
 "point are closed immediately after the truncation."
 msgstr ""
-"Аналогичен :tfilter:`truncatewords`, но учитывает наличие HTML-тегов. Теги, "
-"которые остались открыты в стоке после обрезания, будут немедленно закрыты."
+"Аналогичен :tfilter:`truncatechars`, но учитывает наличие HTML-тегов. Теги, "
+"которые остались открыты в строке после обрезания, будут немедленно закрыты."
 
 # 338103a4cfe5432b91b05563dc03b2cd
 #: ../../ref/templates/builtins.txt:2224
-#, fuzzy
 msgid ""
 "If ``value`` is ``\"<p>Joel is a slug</p>\"``, the output will be ``"
 "\"<p>Joel i...</p>\"``."
 msgstr ""
-"Если ``value`` равно ``\"<p>Joel is a slug</p>\"``, вернет ``\"<p>Joel is ..."
-"</p>\"``."
+"Если ``value`` равно ``\"<p>Joel is a slug</p>\"``, вернет ``\"<p>Joel i...</"
+"p>\"``."
 
 # d37a2d47b3a84aba84c02dc0cc3b17fc
 #: ../../ref/templates/builtins.txt:2227 ../../ref/templates/builtins.txt:2265
@@ -4238,7 +4269,7 @@ msgid ""
 "point, are closed immediately after the truncation."
 msgstr ""
 "Аналогичен :tfilter:`truncatewords`, но учитывает наличие HTML-тегов. Теги, "
-"которые остались открыты в стоке после обрезания, будут немедленно закрыты."
+"которые остались открыты в строке после обрезания, будут немедленно закрыты."
 
 # bc0247761a434df9b1164f871a741d18
 #: ../../ref/templates/builtins.txt:2255
@@ -4770,7 +4801,6 @@ msgstr ""
 
 # 947482651db64e34a690db49f9d39361
 #: ../../ref/templates/builtins.txt:2546
-#, fuzzy
 msgid ""
 "The :mod:`staticfiles<django.contrib.staticfiles>` contrib app also ships "
 "with a :ttag:`static template tag<staticfiles-static>` which uses "
@@ -4783,7 +4813,7 @@ msgstr ""
 "Приложение :mod:`staticfiles<django.contrib.staticfiles>` содержит тег :ttag:"
 "`static <staticfiles-static>`, который использует настройку :setting:"
 "`STATICFILES_STORAGE` для генерации URL к указанному файлу(а не просто "
-"использует :func:`urlparse.urljoin` переданного значения и :setting:"
+"использует :func:`urllib.parse.urljoin` переданного значения и :setting:"
 "`STATIC_URL`). Используйте его, если, например, вы :ref:`используете "
 "облачный сервис для хранения файлов <staticfiles-from-cdn>`::"
 
@@ -4794,15 +4824,14 @@ msgstr "get_static_prefix"
 
 # 96fe41fc650740819e99d8d368341d51
 #: ../../ref/templates/builtins.txt:2564
-#, fuzzy
 msgid ""
 "You should prefer the :ttag:`static` template tag, but if you need more "
 "control over exactly where and how :setting:`STATIC_URL` is injected into "
 "the template, you can use the :ttag:`get_static_prefix` template tag::"
 msgstr ""
-"Если вы не используете :class:`~django.template.RequestContext`, или вам "
-"необходимо больше контроля, где и как использовать :setting:`STATIC_URL` в "
-"шаблоне, применяйте тег :ttag:`get_static_prefix`::"
+"Лучше использовать :ttag:`static`, но, если вам необходимо больше контроля, "
+"где и как использовать :setting:`STATIC_URL` в шаблоне, применяйте тег :ttag:"
+"`get_static_prefix`::"
 
 # f94face4c5af4a9d9eece90231529cfd
 #: ../../ref/templates/builtins.txt:2571
