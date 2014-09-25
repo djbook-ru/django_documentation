@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-07-14 17:18+0300\n"
+"PO-Revision-Date: 2014-09-25 15:42+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -159,16 +159,22 @@ msgid ""
 "specify the ``file_permissions_mode`` and/or ``directory_permissions_mode`` "
 "parameters, respectively. For example::"
 msgstr ""
+"По умолчанию, созданные файлы получают права доступа из :setting:"
+"`FILE_UPLOAD_PERMISSIONS`, а каталоги из :setting:"
+"`FILE_UPLOAD_DIRECTORY_PERMISSIONS`. Если вы хотите использовать другие "
+"права доступа для файлов и/или каталогов, вы можете создать дочерний класс :"
+"ref:`бэкенда статических файлов <staticfiles-storages>` и указать "
+"``file_permissions_mode`` и/или ``directory_permissions_mode`` параметры "
+"соответственно. Например::"
 
 # effa5a47424445f4b21af14a0a56fe18
 #: ../../ref/contrib/staticfiles.txt:78
-#, fuzzy
 msgid ""
 "Then set the :setting:`STATICFILES_STORAGE` setting to ``'path.to."
 "MyStaticFilesStorage'``."
 msgstr ""
-"указать в :setting:`STATICFILES_STORAGE` ``'django.contrib.staticfiles."
-"storage.CachedStaticFilesStorage'``"
+"Теперь поменяйте настройку :setting:`STATICFILES_STORAGE` на ``'path.to."
+"MyStaticFilesStorage'``."
 
 # a046c15267f04525989ac81915ccb8c5
 #: ../../ref/contrib/staticfiles.txt:83
@@ -178,6 +184,10 @@ msgid ""
 "permissions always used :setting:`FILE_UPLOAD_PERMISSIONS` and the directory "
 "permissions always used :setting:`FILE_UPLOAD_DIRECTORY_PERMISSIONS`."
 msgstr ""
+"Возможность переопределить ``file_permissions_mode`` и "
+"``directory_permissions_mode`` была добавлена в Django 1.7. Раньше всегда "
+"использовались права доступа из настроек :setting:`FILE_UPLOAD_PERMISSIONS` "
+"и :setting:`FILE_UPLOAD_DIRECTORY_PERMISSIONS`."
 
 # dd347b7957f34fe79c9517cbffc1743f
 #: ../../ref/contrib/staticfiles.txt:90
@@ -285,18 +295,17 @@ msgstr ""
 
 # 8a25c68536aa49e1947c9b3a2592d5e0
 #: ../../ref/contrib/staticfiles.txt:165
-#, fuzzy
 msgid ""
 "On the other hand, by setting the :djadminopt:`--verbosity` flag to 2, you "
 "can get all the directories which were searched::"
 msgstr ""
-"Установив :djadminopt:`--verbosity` флаг в 0, вы можете отфильтровать лишний "
-"вывод и получить только пути к файлам::"
+"Установив же :djadminopt:`--verbosity` флаг в 2, вы можете увидеть все "
+"каталоги, в которых выполняется поиск::"
 
 # a13e0e849fec428fbe8efb66187d46e4
 #: ../../ref/contrib/staticfiles.txt:179
 msgid "The additional output of which directories were searched was added."
-msgstr ""
+msgstr "Был добавлен вывод каталогов, в которых выполняется поиск."
 
 # 1925c91448cf4e1da3fbddb7aab89e81
 #: ../../ref/contrib/staticfiles.txt:184
@@ -401,13 +410,11 @@ msgstr ""
 
 # 5786fe40eb8d4080a71458c0159e456d
 #: ../../ref/contrib/staticfiles.txt:245
-#, fuzzy
 msgid "ManifestStaticFilesStorage"
-msgstr "StaticFilesStorage"
+msgstr "ManifestStaticFilesStorage"
 
 # e6424898c59b43aa906749c3b61acde1
 #: ../../ref/contrib/staticfiles.txt:251
-#, fuzzy
 msgid ""
 "A subclass of the :class:`~django.contrib.staticfiles.storage."
 "StaticFilesStorage` storage backend which stores the file names it handles "
@@ -437,7 +444,6 @@ msgstr ""
 
 # 06cb4867d7f34defa66f00574a35b68e
 #: ../../ref/contrib/staticfiles.txt:262
-#, fuzzy
 msgid ""
 "The storage backend automatically replaces the paths found in the saved "
 "files matching other saved files with the path of the cached copy (using "
@@ -447,43 +453,43 @@ msgid ""
 "default covers the `@import`_ rule and `url()`_ statement of `Cascading "
 "Style Sheets`_. For example, the ``'css/styles.css'`` file with the content"
 msgstr ""
-"Бекенд автоматом заменяет путя найденые в статических файлах, которые "
+"Бэкенд автоматом заменяет пути, найденные в статических файлах, которые "
 "указывают на другие статические файлы, на кешированные версии (используя "
 "метод :meth:`~django.contrib.staticfiles.storage.StaticFilesStorage."
-"post_process`). Регулряки, которые использутся для этого (``django.contrib."
-"staticfiles.storage.CachedStaticFilesStorage.cached_patterns``), по "
-"умолчанию заменяют `@import`_ и `url()`_ в `Cascading Style Sheets`_. "
-"Например, ``'css/styles.css'`` содержащий"
+"post_process`). Регулярки, которые используются для этого (``django.contrib."
+"staticfiles.storage.HashedFilesMixin.patterns``), по умолчанию заменяют "
+"`@import`_ и `url()`_ в `Cascading Style Sheets`_. Например, ``'css/styles."
+"css'``, содержащий"
 
 # 2e660b4b35c64913b428e0adb731f437
 #: ../../ref/contrib/staticfiles.txt:275
-#, fuzzy
 msgid ""
 "would be replaced by calling the :meth:`~django.core.files.storage.Storage."
 "url` method of the ``ManifestStaticFilesStorage`` storage backend, "
 "ultimately saving a ``'css/styles.55e7cbb9ba48.css'`` file with the "
 "following content:"
-msgstr "будет сохранен как ``'css/styles.55e7cbb9ba48.css'`` содержащий:"
+msgstr ""
+"был бы заменен вызовом метода :meth:`~django.core.files.storage.Storage.url` "
+"бэкенда ``ManifestStaticFilesStorage``, и сохранен как ``'css/"
+"styles.55e7cbb9ba48.css'``, содержащий:"
 
 # fe25484be635446cb8cebf390b06a2ed
 #: ../../ref/contrib/staticfiles.txt:284
-#, fuzzy
 msgid ""
 "To enable the ``ManifestStaticFilesStorage`` you have to make sure the "
 "following requirements are met:"
 msgstr ""
-"Чтобы включить ``CachedStaticFilesStorage`` необходимо выполнить следующие "
-"действия:"
+"Чтобы включить ``ManifestStaticFilesStorage``, необходимо выполнить "
+"следующие действия:"
 
 # effa5a47424445f4b21af14a0a56fe18
 #: ../../ref/contrib/staticfiles.txt:287
-#, fuzzy
 msgid ""
 "the :setting:`STATICFILES_STORAGE` setting is set to ``'django.contrib."
 "staticfiles.storage.ManifestStaticFilesStorage'``"
 msgstr ""
 "указать в :setting:`STATICFILES_STORAGE` ``'django.contrib.staticfiles."
-"storage.CachedStaticFilesStorage'``"
+"storage.ManifestStaticFilesStorage'``"
 
 # fd72b76a319f40dabef4c14102bab1e8
 #: ../../ref/contrib/staticfiles.txt:289
@@ -508,7 +514,6 @@ msgstr "вы собрали статические файлы командой :
 
 # 94b03d678a0e47a4ac3a76f447db9653
 #: ../../ref/contrib/staticfiles.txt:295
-#, fuzzy
 msgid ""
 "Since creating the MD5 hash can be a performance burden to your website "
 "during runtime, ``staticfiles`` will automatically store the mapping with "
@@ -517,23 +522,22 @@ msgid ""
 "command."
 msgstr ""
 "Т.к. вычисление MD5 хеша может понизить производительность приложения, "
-"``staticfiles`` пытается автоматом закешировать хеши используя :doc:"
-"`кеширование Django </topics/cache>`. Если вы хотите переопределить "
-"параметры кеширования, просто создайте настройки в :setting:`CACHES` с "
-"названием ``'staticfiles'``. По умолчанию используются настройки кеша "
-"``'default'``."
+"``staticfiles`` автоматически сохраняет соответствия названий файлов с "
+"новыми в файле ``staticfiles.json`. Это выполняется один раз при вызове "
+"команды :djadmin:`collectstatic`."
 
 # 6e6fcbb1f52c41e59cc448e6dbb7391e
 #: ../../ref/contrib/staticfiles.txt:303
-#, fuzzy
 msgid ""
 "The method that is used when creating the hashed name of a file. Needs to "
 "return a hash for the given file name and content. By default it calculates "
 "a MD5 hash from the content's chunks as mentioned above. Feel free to "
 "override this method to use your own hashing algorithm."
 msgstr ""
-"Метод, который вычисляет хеш для файла. По умолчанию вычисляет MD5 хеш "
-"содержимого файла."
+"Метод, который вычисляет хеш для файла. Должен вернуть хеш названия и "
+"содержимого файла. По умолчанию вычисляет MD5 хеш содержимого файла, как "
+"описано выше. Вы можете переопределить этот метод и использовать собственный "
+"алгоритм хеширования."
 
 # 4cc863a201dd4fcebbad1cfb5fbc2328
 #: ../../ref/contrib/staticfiles.txt:315
@@ -550,20 +554,20 @@ msgid ""
 "``staticfiles.json``. This is mostly useful for situations in which you "
 "don't have access to the file system."
 msgstr ""
+"``CachedStaticFilesStorage`` аналогичен :class:`~django.contrib.staticfiles."
+"storage.ManifestStaticFilesStorage`, но использует :doc:`кеш</topics/cache>` "
+"Django, для сохранения названий файлов, вместо ``staticfiles.json``. Это "
+"может быть полезно, если у вас нет доступа к файловой системе."
 
 # 94b03d678a0e47a4ac3a76f447db9653
 #: ../../ref/contrib/staticfiles.txt:326
-#, fuzzy
 msgid ""
 "If you want to override certain options of the cache backend the storage "
 "uses, simply specify a custom entry in the :setting:`CACHES` setting named "
 "``'staticfiles'``. It falls back to using the ``'default'`` cache backend."
 msgstr ""
-"Т.к. вычисление MD5 хеша может понизить производительность приложения, "
-"``staticfiles`` пытается автоматом закешировать хеши используя :doc:"
-"`кеширование Django </topics/cache>`. Если вы хотите переопределить "
-"параметры кеширования, просто создайте настройки в :setting:`CACHES` с "
-"названием ``'staticfiles'``. По умолчанию используются настройки кеша "
+"Если вы хотите настроить кеш, используйте запись в настройке :setting:"
+"`CACHES` с ключом ``'staticfiles'``. По умолчанию используется кеш "
 "``'default'``."
 
 # 7522ad3bbf2341d1bbc5f864fb6d0359
@@ -608,7 +612,7 @@ msgstr "Если вы хотите получить URL не выводя его
 # 64de1514e45947afaceddbd56e4596f6
 #: ../../ref/contrib/staticfiles.txt:363
 msgid "Finders Module"
-msgstr ""
+msgstr "Модуль поиска файлов"
 
 # 7db67149f8a941d0877356723aff50db
 #: ../../ref/contrib/staticfiles.txt:365
@@ -616,11 +620,14 @@ msgid ""
 "``staticfiles`` finders has a ``searched_locations`` attribute which is a "
 "list of directory paths in which the finders searched. Example usage::"
 msgstr ""
+"Модуль поиска файлов ``staticfiles`` содержит атрибут "
+"``searched_locations``, который содержит список каталогов, где происходит "
+"поиск файлов. Например::"
 
 # f017f69353484d299d07ba167819789d
 #: ../../ref/contrib/staticfiles.txt:375
 msgid "The ``searched_locations`` attribute was added."
-msgstr ""
+msgstr "Был добавлен атрибут ``searched_locations``."
 
 # 0b82e73c22094c49934d4bc4f37e20a9
 #: ../../ref/contrib/staticfiles.txt:378
@@ -722,6 +729,9 @@ msgid ""
 "of :exc:`~django.core.exceptions.ImproperlyConfigured` when :setting:`DEBUG` "
 "is ``False``."
 msgstr ""
+"Это представление теперь вызывает исключение :exc:`~django.http.Http404` "
+"вместо :exc:`~django.core.exceptions.ImproperlyConfigured`, если :setting:"
+"`DEBUG` равна ``False``."
 
 # 4323909222d747d8a3366c097884b007
 #: ../../ref/contrib/staticfiles.txt:434
@@ -806,7 +816,7 @@ msgstr ""
 # 999f94b5af434f679cbae951ecd5bc32
 #: ../../ref/contrib/staticfiles.txt:488
 msgid "Specialized test case to support 'live testing'"
-msgstr ""
+msgstr "Специальный test case для \"живого тестирования\""
 
 # 26cd8a388f814afe94871d49ce129c59
 #: ../../ref/contrib/staticfiles.txt:492
@@ -814,6 +824,8 @@ msgid ""
 "This unittest TestCase subclass extends :class:`django.test."
 "LiveServerTestCase`."
 msgstr ""
+"Этот unittest TestCase является дочерним классом :class:`django.test."
+"LiveServerTestCase`."
 
 # e86c9d0c26be41adb4623bb92b6059f9
 #: ../../ref/contrib/staticfiles.txt:494
@@ -823,6 +835,8 @@ msgid ""
 "Selenium, PhantomJS, etc.), because of which it's needed that the static "
 "assets are also published."
 msgstr ""
+"Как и родительский класс, позволяет писать тесты с использованием Selenium, "
+"PhantomJS, и др., для которых необходим доступ к статическим файлам."
 
 # ae368c29bf594e42b9055140754e82f1
 #: ../../ref/contrib/staticfiles.txt:499
@@ -833,6 +847,9 @@ msgid ""
 "This means you don't need to run :djadmin:`collectstatic` before or as a "
 "part of your tests setup."
 msgstr ""
+"Для раздачи статики использует :func:`django.contrib.staticfiles.views."
+"serve`. По этому вам не нужно выполнять :djadmin:`collectstatic` перед "
+"запуском тестов."
 
 # 50ce954b40264a99a0dc39cb2ffcdcf8
 #: ../../ref/contrib/staticfiles.txt:507
@@ -840,6 +857,8 @@ msgid ""
 "``StaticLiveServerTestCase`` is new in Django 1.7. Previously its "
 "functionality was provided by :class:`django.test.LiveServerTestCase`."
 msgstr ""
+"``StaticLiveServerTestCase`` добавлен в Django 1.7. Раньше этот функционал "
+"был в :class:`django.test.LiveServerTestCase`."
 
 # d93d83f4cf6b4d7caba32045ad9656f0
 #~ msgid "The following settings control the behavior of the staticfiles app."

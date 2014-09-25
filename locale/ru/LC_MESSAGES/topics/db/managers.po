@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-30 13:35+0300\n"
-"PO-Revision-Date: 2014-07-14 15:27+0300\n"
+"PO-Revision-Date: 2014-09-25 14:37+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -165,7 +165,6 @@ msgstr "Изменение базового QuerySets менеджера"
 
 # 98d182820abf498fbd132b2e102716a6
 #: ../../topics/db/managers.txt:103
-#, fuzzy
 msgid ""
 "A ``Manager``’s base ``QuerySet`` returns all objects in the system. For "
 "example, using this model::"
@@ -182,7 +181,6 @@ msgstr "... ``Book.objects.all()`` вернет все книги из базы 
 
 # db8584cc89f6473bb1fe78208834b62b
 #: ../../topics/db/managers.txt:114
-#, fuzzy
 msgid ""
 "You can override a ``Manager``’s base ``QuerySet`` by overriding the "
 "``Manager.get_queryset()`` method. ``get_queryset()`` should return a "
@@ -242,12 +240,11 @@ msgstr "Например::"
 
 # 5e838ecd7df54ddba974cfe05aaf9ef3
 #: ../../topics/db/managers.txt:169
-#, fuzzy
 msgid ""
 "This example allows you to request ``Person.authors.all()``, ``Person."
 "editors.all()``, and ``Person.people.all()``, yielding predictable results."
 msgstr ""
-"Этот пример позволяет выполнить ``Person.men.all()``, ``Person.women."
+"Этот пример позволяет выполнить ``Person.authors.all()``, ``Person.editors."
 "all()``, и ``Person.people.all()`` для получения соответствующего результата."
 
 # 0510fbadbf384944acd75afd4b53a43c
@@ -274,7 +271,7 @@ msgstr ""
 # 6577b39b8d9a45c7b48872caf4d0f75f
 #: ../../topics/db/managers.txt:184
 msgid "The ``get_queryset`` method was previously named ``get_query_set``."
-msgstr ""
+msgstr "Метод ``get_queryset`` ранее назывался ``get_query_set``."
 
 # 04a59d1b7d54470f99cb87a7ef34aa99
 #: ../../topics/db/managers.txt:189
@@ -313,7 +310,7 @@ msgstr ""
 # cfffd1fc6f2a4ae1a7f15133a6e0f643
 #: ../../topics/db/managers.txt:207
 msgid "Calling custom ``QuerySet`` methods from the ``Manager``"
-msgstr ""
+msgstr "Вызов собственных методов ``QuerySet`` из ``Manager``"
 
 # 549bcd9343934337839058c26cc9c88e
 #: ../../topics/db/managers.txt:209
@@ -322,6 +319,9 @@ msgid ""
 "from the ``Manager``, this is only the case for the extra methods defined on "
 "a custom ``QuerySet`` if you also implement them on the ``Manager``::"
 msgstr ""
+"Т.к. большинство методом стандартного ``QuerySet`` доступны из ``Manager``, "
+"следующий подход необходимо использовать только для собственных методов "
+"переопределенного ``QuerySet``::"
 
 # e7e875769c8a414c993c3fa27a0248ce
 #: ../../topics/db/managers.txt:236
@@ -329,11 +329,13 @@ msgid ""
 "This example allows you to call both ``authors()`` and ``editors()`` "
 "directly from the manager ``Person.people``."
 msgstr ""
+"Этот пример позволяет вызывать ``authors()`` и ``editors()`` непосредственно "
+"из менеджера ``Person.people``."
 
 # 86f250222c7a42a488ae601afaf66a1e
 #: ../../topics/db/managers.txt:242
 msgid "Creating ``Manager`` with ``QuerySet`` methods"
-msgstr ""
+msgstr "Создание ``Manager`` с методами ``QuerySet``"
 
 # a9575a8c69104e99a08adc8d90e9c30a
 #: ../../topics/db/managers.txt:246
@@ -343,6 +345,10 @@ msgid ""
 "models.query.QuerySet.as_manager>` can be used to create an instance of "
 "``Manager`` with a copy of a custom ``QuerySet``’s methods::"
 msgstr ""
+"Вместо подхода, описанного выше, который требует дублирования методов в "
+"``QuerySet`` и ``Manager``, :meth:`QuerySet.as_manager() <django.db.models."
+"query.QuerySet.as_manager>` позволяет создать экземпляр ``Manager`` со всеми "
+"методами ``QuerySet``::"
 
 # 210881b248ce48259c62a0851649f4c6
 #: ../../topics/db/managers.txt:255
@@ -351,6 +357,9 @@ msgid ""
 "models.query.QuerySet.as_manager>` will be virtually identical to the "
 "``PersonManager`` from the previous example."
 msgstr ""
+"Экземпляр ``Manager``, созданный :meth:`QuerySet.as_manager() <django.db."
+"models.query.QuerySet.as_manager>`, предоставляет интерфейс аналогичный "
+"``PersonManager`` из примера выше."
 
 # 5c6b774e86d34e818c3d42cd3878de5f
 #: ../../topics/db/managers.txt:259
@@ -360,22 +369,27 @@ msgid ""
 "models.query.QuerySet.delete>` method from being copied onto the ``Manager`` "
 "class."
 msgstr ""
+"Не каждый метод ``QuerySet`` следует добавлять в ``Manager``. Например, "
+"метод :meth:`QuerySet.delete() <django.db.models.query.QuerySet.delete>` "
+"намерено не добавляется в класс ``Manager``."
 
 # 9e966217a5fc4d66a156342b7f56af07
 #: ../../topics/db/managers.txt:264
 msgid "Methods are copied according to the following rules:"
-msgstr ""
+msgstr "Методы копируются в соответствии со следующими правилами:"
 
 # 2e015f4f91854e59a0233885f218e321
 #: ../../topics/db/managers.txt:266
 msgid "Public methods are copied by default."
-msgstr ""
+msgstr "Публичные методы копируются по умолчанию."
 
 # 725398a4a9ca482ca42fac1e1094fd2e
 #: ../../topics/db/managers.txt:267
 msgid ""
 "Private methods (starting with an underscore) are not copied by default."
 msgstr ""
+"Приватные методы (которые начинаются с подчеркивания) не копируются по "
+"умолчанию."
 
 # bb8785762a914037ac000e36f25bed42
 #: ../../topics/db/managers.txt:268
@@ -383,17 +397,19 @@ msgid ""
 "Methods with a ``queryset_only`` attribute set to ``False`` are always "
 "copied."
 msgstr ""
+"Методы с атрибутом ``queryset_only`` равным ``False`` всегда копируются."
 
 # a55a58a936e34733a1f983458c1f12c0
 #: ../../topics/db/managers.txt:269
 msgid ""
 "Methods with a ``queryset_only`` attribute set to ``True`` are never copied."
 msgstr ""
+"Методы с атрибутом ``queryset_only`` равным ``True`` никогда не копируются."
 
 # c2eff6ac3b8f43089f4d6c181267bed8
 #: ../../topics/db/managers.txt:293
 msgid "from_queryset"
-msgstr ""
+msgstr "from_queryset"
 
 # c840835c06ac4db0a89eb8dbbd9e744d
 #: ../../topics/db/managers.txt:297
@@ -403,11 +419,15 @@ msgid ""
 "returns a *subclass* of your base ``Manager`` with a copy of the custom "
 "``QuerySet`` methods::"
 msgstr ""
+"В некоторых случаях вы можете создать собственные ``Manager`` и "
+"``QuerySet``. Вы можете вызвать ``Manager.from_queryset()``, который вернет "
+"*дочерний класс* вашего базового ``Manager`` с копией методов вашего "
+"``QuerySet``::"
 
 # 50d2008cdb014b00be083cc4343d1536
 #: ../../topics/db/managers.txt:313
 msgid "You may also store the generated class into a variable::"
-msgstr ""
+msgstr "Созданный класс можно сохранить в переменной::"
 
 # 791f89fd06434976b913c8dd0d7275ce
 #: ../../topics/db/managers.txt:323
@@ -690,7 +710,7 @@ msgstr ""
 # b19ba8e8a1664648b054acba19515c8a
 #: ../../topics/db/managers.txt:0
 msgid "Historical Note"
-msgstr ""
+msgstr "Историческая справка"
 
 # b120df99300441f3a13a836b55d762c8
 #: ../../topics/db/managers.txt:483

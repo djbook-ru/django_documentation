@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-06-25 16:07+0300\n"
+"PO-Revision-Date: 2014-09-25 14:16+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none <>\n"
 "Language: ru\n"
@@ -157,14 +157,15 @@ msgstr ""
 
 # 2131c6232aef4c4296e7f82b79bc6bc7
 #: ../../topics/db/models.txt:79
-#, fuzzy
 msgid ""
 "When you add new apps to :setting:`INSTALLED_APPS`, be sure to run :djadmin:"
 "`manage.py migrate <migrate>`, optionally making migrations for them first "
 "with :djadmin:`manage.py makemigrations <makemigrations>`."
 msgstr ""
 "После добавления приложения в :setting:`INSTALLED_APPS`, не забудьте "
-"выполнить :djadmin:`manage.py syncdb <syncdb>`."
+"выполнить :djadmin:`manage.py migrate <syncdb>`. Возможно, нужно будет "
+"создать сначала миграции, выполнив :djadmin:`manage.py makemigrations "
+"<makemigrations>`."
 
 # 2478275f7df740429dbba2499c0470de
 #: ../../topics/db/models.txt:84
@@ -785,14 +786,14 @@ msgstr ""
 
 # 62262b63a1db4820b7072b2826d56b87
 #: ../../topics/db/models.txt:436
-#, fuzzy
 msgid ""
 "When you set up the intermediary model, you explicitly specify foreign keys "
 "to the models that are involved in the many-to-many relationship. This "
 "explicit declaration defines how the two models are related."
 msgstr ""
 "В промежуточной модели необходимо добавить внешние ключи на модели, "
-"связанные отношением многое-ко-многому."
+"связанные отношением многое-ко-многому. Эти ключи указывают как связаны "
+"модели."
 
 # b471d98666dd47d78ceb759e381f6afb
 #: ../../topics/db/models.txt:440
@@ -811,10 +812,16 @@ msgid ""
 "similar restriction applies to the foreign key to the target model (this "
 "would be ``Person`` in our example)."
 msgstr ""
+"Промежуточная модель должна содержать *только* одну связь с исходной моделью "
+"(в нашем примере -- это ``Group``), или вы должны явно указать Django какую "
+"связь использовать через параметр :attr:`ManyToManyField.through_fields "
+"<ManyToManyField.through_fields>`. Если промежуточная модель содержит "
+"несколько связей с исходной модель и ``through_fields`` не указан, будет "
+"вызвана ошибка валидации. Аналогичные правила выполняются и для связанной "
+"модели (в нашем примере -- ``Person``)."
 
 # 1476c27c9acf4e96a33798b7b3f1f781
 #: ../../topics/db/models.txt:451
-#, fuzzy
 msgid ""
 "For a model which has a many-to-many relationship to itself through an "
 "intermediary model, two foreign keys to the same model are permitted, but "
@@ -826,7 +833,8 @@ msgstr ""
 "Исключение - промежуточная модель для рекурсивной связи. В таком случае у "
 "промежуточной модели будет два внешних ключа на одну модель, но в таком "
 "случае они будут восприниматься как две различных стороны связи многое-ко-"
-"многому."
+"многому. Если промежуточная модель содержит *больше* двух связей, необходимо "
+"указать ``through_fields``, иначе получите ошибку валидации."
 
 # 2081c71652b940e7afcca5ee17b322c8
 #: ../../topics/db/models.txt:458
@@ -847,6 +855,8 @@ msgid ""
 "foreign key to any of the models involved in the many-to-many relationship "
 "used to be prohibited."
 msgstr ""
+"В Django 1.6 и ниже был запрещено использовать промежуточную модель, которая "
+"имела несколько связей со связываемой моделью."
 
 # 01725049cc294503b91f8a3313edbf8d
 #: ../../topics/db/models.txt:469
@@ -1162,14 +1172,13 @@ msgstr ""
 
 # 681baad9d12b42888bab919eabd7ca0d
 #: ../../topics/db/models.txt:677
-#, fuzzy
 msgid "Model attributes"
-msgstr "Связь моделей из разных модулей"
+msgstr "Атрибуты модели"
 
 # aee664e8fa7e434085593dc480fb388f
 #: ../../topics/db/models.txt:685
 msgid "``objects``"
-msgstr ""
+msgstr "``objects``"
 
 # 4c1091a8511840c38db5a11a98f0c9e1
 #: ../../topics/db/models.txt:680
@@ -1181,6 +1190,11 @@ msgid ""
 "defined, the default name is ``objects``. Managers are only accessible via "
 "model classes, not the model instances."
 msgstr ""
+"Самый важный атрибут модели -- :class:`~django.db.models.Manager`. Это "
+"интерфейс, через который Django выполняет запросы к базе данных и :ref:"
+"`получает объекты <retrieving-objects>`. Если собственный ``Manager`` не "
+"указан, название по умолчанию будет ``objects``. Менеджеры доступны только "
+"через класс модели, они не доступны в экземплярах модели."
 
 # fa822af1e2764fc3a663e0cb71e6749f
 #: ../../topics/db/models.txt:690
@@ -1364,6 +1378,8 @@ msgstr ""
 #: ../../topics/db/models.txt:0
 msgid "Overridden model methods are not called on bulk operations"
 msgstr ""
+"Переопределенные методы модели не вызываются при множественных "
+"операциях(bulk)"
 
 # d10ca11283834eaabf10de7c7c8bdf81
 #: ../../topics/db/models.txt:808
@@ -1374,11 +1390,11 @@ msgid ""
 "executed, you can use :data:`~django.db.models.signals.pre_delete` and/or :"
 "data:`~django.db.models.signals.post_delete` signals."
 msgstr ""
-"Учтите что метод :meth:`~Model.delete()` не вызывается при :ref:`удалении "
-"объектов через QuerySet<topics-db-queries-delete>`. Для гарантированного "
-"выполнения действий после удаления объекта используйте сигналы :data:"
-"`~django.db.models.signals.pre_delete` и/или :data:`~django.db.models."
-"signals.post_delete`."
+"Учтите, метод :meth:`~Model.delete()` не вызывается при :ref:`массовом "
+"удалении объектов через QuerySet<topics-db-queries-delete>`. Для "
+"гарантированного выполнения действий после удаления объекта используйте "
+"сигналы :data:`~django.db.models.signals.pre_delete` и/или :data:`~django.db."
+"models.signals.post_delete`."
 
 # 8a5aa20983df4612807fbbc1867f5c0d
 #: ../../topics/db/models.txt:814
@@ -1424,21 +1440,23 @@ msgid ""
 "should still be followed. That means the base class should subclass :class:"
 "`django.db.models.Model`."
 msgstr ""
+"Наследование моделей в Django работает почти так же, как и наследование "
+"классов в Python, но следует соблюдать правила, описанные выше. Это "
+"означает, что базовый класс должен наследоваться от :class:`django.db.models."
+"Model`."
 
 # 5d0f522f2dad47f1a79fff497061d9cf
 #: ../../topics/db/models.txt:838
-#, fuzzy
 msgid ""
 "The only decision you have to make is whether you want the parent models to "
 "be models in their own right (with their own database tables), or if the "
 "parents are just holders of common information that will only be visible "
 "through the child models."
 msgstr ""
-"Наследование моделей в Django работает почти так же, как и наследование "
-"классов в Python. Единственное что вам нужно определить, это должна ли "
-"родительская модель быть независимой моделью (с собственной таблицей в базе "
-"данных), или же родительская модель просто контейнер для хранения информации "
-"доступной только через дочерние модели."
+"Единственное что вам нужно определить, это должна ли родительская модель "
+"быть независимой моделью (с собственной таблицей в базе данных), или же "
+"родительская модель просто контейнер для хранения информации доступной "
+"только через дочерние модели."
 
 # 622d456b641c456f93db612633dc82e6
 #: ../../topics/db/models.txt:843
@@ -1656,7 +1674,6 @@ msgstr "И еще другое ``rare/models.py``::"
 
 # 74cf8b09934842baa3363d70abbd01c3
 #: ../../topics/db/models.txt:972
-#, fuzzy
 msgid ""
 "The reverse name of the ``common.ChildA.m2m`` field will be "
 "``common_childa_related``, whilst the reverse name of the ``common.ChildB."
@@ -1671,8 +1688,8 @@ msgstr ""
 "``common_childb_related``, а для ``rare.ChildB.m2m`` - "
 "``rare_childb_related``. Вы можете использовать ``'%(class)s'`` и "
 "``'%(app_label)s`` как вам угодно для создания названия,  но если вы "
-"забудете о них, Django вызовет исключение при проверке модели (или при :"
-"djadmin:`syncdb`)."
+"забудете о них, Django вызовет исключение при проверке проекта (или при :"
+"djadmin:`migrate`)."
 
 # 44e39271527e48f9a91e7937097c7652
 #: ../../topics/db/models.txt:980
@@ -1737,7 +1754,6 @@ msgstr ""
 
 # abc97764e172404b8bd083ab31e6a268
 #: ../../topics/db/models.txt:1027
-#, fuzzy
 msgid ""
 "However, if ``p`` in the above example was *not* a ``Restaurant`` (it had "
 "been created directly as a ``Place`` object or was the parent of some other "
@@ -1746,7 +1762,7 @@ msgid ""
 msgstr ""
 "Но, если ``p`` в примере выше *не* ``Restaurant`` (был создан "
 "непосредственно как объект ``Place`` или был родителем другой модели), "
-"использование ``p.restaurant`` вызовет ошибку Restaurant.DoesNotExist."
+"использование ``p.restaurant`` вызовет ошибку ``Restaurant.DoesNotExist``."
 
 # 76d9a43a2a0e4fea8c6afa325018a32f
 #: ../../topics/db/models.txt:1033
@@ -1800,7 +1816,6 @@ msgstr "Наследование и обратные связи"
 
 # c11a08bb6aef4be7b7e4b74513b1d4b5
 #: ../../topics/db/models.txt:1061
-#, fuzzy
 msgid ""
 "Because multi-table inheritance uses an implicit :class:`~django.db.models."
 "OneToOneField` to link the child and the parent, it's possible to move from "
@@ -1820,8 +1835,7 @@ msgstr ""
 "`~django.db.models.ManyToManyField`.  Если вы используете такие связи на "
 "дочернюю модель с аналогичным предком, вы **должны** определить :attr:"
 "`~django.db.models.ForeignKey.related_name` для каждого такого поля. Иначе "
-"Django вызовет исключение при выполнении команды :djadmin:`validate` и :"
-"djadmin:`syncdb`."
+"Django вызовет исключение."
 
 # b6bb8021f39c4c9ebb8b43d8016066a0
 #: ../../topics/db/models.txt:1073
@@ -1835,7 +1849,7 @@ msgstr ""
 # e378397b83114d8191b86beffd88ec32
 #: ../../topics/db/models.txt:1079
 msgid "This results in the error::"
-msgstr ""
+msgstr "Это приведет к ошибке::"
 
 # ac4c1c7c9d5f4e59a9d6ac7079852322
 #: ../../topics/db/models.txt:1087
@@ -1843,6 +1857,8 @@ msgid ""
 "Adding ``related_name`` to the ``customers`` field as follows would resolve "
 "the error: ``models.ManyToManyField(Place, related_name='provider')``."
 msgstr ""
+"Добавление ``related_name`` для поля ``customers`` -- ``models."
+"ManyToManyField(Place, related_name='provider')`` -- решит эту проблему."
 
 # 6b7c685d836847928a3a0395a90ac4ed
 #: ../../topics/db/models.txt:1091
@@ -2209,6 +2225,10 @@ msgid ""
 "example, consider these models (which no longer validate due to the clashing "
 "``id`` fields)::"
 msgstr ""
+"До Django 1.7, наследование от нескольких моделей, которые содержат "
+"первичный ключ ``id``, не вызывало ошибки, но могло привести к потере "
+"данных. Например, возьмем следующие модели (которые уже не работают из-за "
+"конфликта полей ``id``)::"
 
 # 1f708b52559f45618c53c5edbf1d83a1
 #: ../../topics/db/models.txt:1305
@@ -2216,6 +2236,8 @@ msgid ""
 "This snippet demonstrates how creating a child object overwrote the value of "
 "a previously created parent object::"
 msgstr ""
+"Следующий код показывает, как создание дочернего объекта может перезаписать "
+"данные в родительском::"
 
 # b08d3c1deaee46cb8dcdcb6190f83816
 #: ../../topics/db/models.txt:1321
@@ -2223,12 +2245,16 @@ msgid ""
 "To properly use multiple inheritance, you can use an explicit :class:"
 "`~django.db.models.AutoField` in the base models::"
 msgstr ""
+"Чтобы избежать этой проблемы, можно явно указать :class:`~django.db.models."
+"AutoField` поля в базовых моделях::"
 
 # 98c18961c5eb439eb86bc0f0aa666982
 #: ../../topics/db/models.txt:1335
 msgid ""
 "Or use a common ancestor to hold the :class:`~django.db.models.AutoField`::"
 msgstr ""
+"Или использовать общего предка, который содержит поле :class:`~django.db."
+"models.AutoField`::"
 
 # c40aca9df47e4e0fb62cb95e72451eb7
 #: ../../topics/db/models.txt:1350
