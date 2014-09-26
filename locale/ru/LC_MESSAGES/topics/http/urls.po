@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-09-25 18:20+0300\n"
+"PO-Revision-Date: 2014-09-26 14:59+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -1244,6 +1244,11 @@ msgid ""
 "since multiple instances of a single application will share named URLs, "
 "namespaces provide a way to tell these named URLs apart."
 msgstr ""
+"Пространства имен позволяют получить URL по :ref:`названию URL-шаблона "
+"<naming-url-patterns>` даже, если несколько приложений используют одинаковые "
+"названия. Для сторонних приложений использование пространств имен -- хорошая "
+"практика (как мы и делали в учебнике). Аналогично можно получить URL, если "
+"несколько экземпляров одного приложения подключены в конфигурацию URL-ов."
 
 # f45c9433068a418cabc807b77ba949c6
 #: ../../topics/http/urls.txt:754
@@ -1257,6 +1262,13 @@ msgid ""
 "serve the same functionality to two different audiences (authors and "
 "publishers)."
 msgstr ""
+"Django приложения, правильно используя пространство имен для URL, могут "
+"использоваться в нескольких экземплярах на проекте. Например, :mod:`django."
+"contrib.admin` содержит класс :class:`~django.contrib.admin.AdminSite`, "
+"который легко позволяет :ref:`подключить несколько интерфейсов "
+"администратора <multiple-admin-sites>`. Ниже мы опишем как сделать "
+"аналогично для нашего приложения опросов, чтобы можно было создать несколько "
+"интерфейсов (для авторов и издателей)."
 
 # 8564d4d0edcc4355b741c81fbfee8b44
 #: ../../topics/http/urls.txt:762
@@ -1267,7 +1279,7 @@ msgstr ""
 # 47cabbd5e4094a26beac814978deef10
 #: ../../topics/http/urls.txt:765
 msgid "application namespace"
-msgstr ""
+msgstr "application namespace"
 
 # 04864b70a0ad4532a65d972beaabcee9
 #: ../../topics/http/urls.txt:767
@@ -1283,13 +1295,11 @@ msgstr ""
 
 # 92f63802982e425a83b2ea2cf0e45444
 #: ../../topics/http/urls.txt:771
-#, fuzzy
 msgid "instance namespace"
-msgstr "Пространства имен в конфигурации URL-ов"
+msgstr "instance namespace"
 
 # 343b9502cdac4e0f971dec04a743cd9a
 #: ../../topics/http/urls.txt:773
-#, fuzzy
 msgid ""
 "This identifies a specific instance of an application. Instance namespaces "
 "should be unique across your entire project. However, an instance namespace "
@@ -1317,15 +1327,15 @@ msgstr ""
 
 # dd0beb185dda4037a57e82d5dc638d0d
 #: ../../topics/http/urls.txt:783
-#, fuzzy
 msgid ""
 "Namespaces can also be nested. The named URL ``'sports:polls:index'`` would "
 "look for a pattern named ``'index'`` in the namespace ``'polls'`` that is "
 "itself defined within the top-level namespace ``'sports'``."
 msgstr ""
-"Пространства имен могут быть вложенными. Название URL-а ``'foo:bar:whiz'`` "
-"означает именованный URL-шаблон с названием ``'whiz'`` в пространстве имен "
-"``'bar'``, которое было определенно в другом пространстве имен - ``'foo'``."
+"Пространства имен могут быть вложенными. Название URL-а ``'sports:polls:"
+"index'`` означает именованный URL-шаблон с названием ``'index'`` в "
+"пространстве имен ``'polls'``, которое было определенно в другом "
+"пространстве имен - ``'sports'``."
 
 # 9be6dca660e946dc96bef98ac8b5713d
 #: ../../topics/http/urls.txt:790
@@ -1334,30 +1344,27 @@ msgstr "Поиск URL-а по шаблону с пространством им
 
 # 83542e06d4c0423ab8f1bd4a83ef08eb
 #: ../../topics/http/urls.txt:792
-#, fuzzy
 msgid ""
 "When given a namespaced URL (e.g. ``'polls:index'``) to resolve, Django "
 "splits the fully qualified name into parts and then tries the following "
 "lookup:"
 msgstr ""
 "Если необходимо найти URL по названию с пространством имен (например, "
-"``'myapp:index'``), Django разбивает название на части и следует такому "
+"``'polls:index'``), Django разбивает название на части и следует такому "
 "алгоритму:"
 
 # 8961ae51f16347ff8b70c775b996abb6
 #: ../../topics/http/urls.txt:795
-#, fuzzy
 msgid ""
 "First, Django looks for a matching :term:`application namespace` (in this "
 "example, ``'polls'``). This will yield a list of instances of that "
 "application."
 msgstr ""
 "Первым делом, Django проверяет :term:`название(пространсву имен) приложения` "
-"(например, ``myapp``).  Django получает список экземпляров приложения."
+"(например, ``polls``).  Django получает список экземпляров приложения."
 
 # 998245c1af554383854ef043ca51ae28
 #: ../../topics/http/urls.txt:799
-#, fuzzy
 msgid ""
 "If there is a *current* application defined, Django finds and returns the "
 "URL resolver for that instance. The *current* application can be specified "
@@ -1367,25 +1374,24 @@ msgid ""
 "is used to render a template."
 msgstr ""
 "Если указан *текущий* экземпляр приложения, Django вернет \"URL resolver\" "
-"для этого экземпляра. *Текущий* экземпляр приложения можно указать используя "
-"атрибут ``current_app`` контекста шаблона. Приложения, которые будут "
-"использоваться в нескольких экземплярах в одном проекте, должны всегда "
-"определять атрибут ``current_app`` для ``Context`` или ``RequestContext``, "
-"который используется для выполнения шаблона."
+"для этого экземпляра. *Текущий* экземпляр приложения можно указать, "
+"используя атрибут ``current_app`` контекста шаблона. Приложения, которые "
+"будут использоваться в нескольких экземплярах в одном проекте, должны всегда "
+"определять атрибут ``current_app`` для :class:`~django.template.Context` "
+"или :class:`~django.template.RequestContext`, который используется для "
+"выполнения шаблона."
 
 # 225786f8ff194241a0870be14b65103b
 #: ../../topics/http/urls.txt:806
-#, fuzzy
 msgid ""
 "The current application can also be specified manually as an argument to "
 "the :func:`~django.core.urlresolvers.reverse` function."
 msgstr ""
 "Текущей экземпляр приложения можно также определить используя аргумент при "
-"вызове функции :func:`django.core.urlresolvers.reverse`."
+"вызове функции :func:`~django.core.urlresolvers.reverse`."
 
 # 6c884ad3de5542f8a98cf56e9687b0d7
 #: ../../topics/http/urls.txt:809
-#, fuzzy
 msgid ""
 "If there is no current application. Django looks for a default application "
 "instance. The default application instance is the instance that has an :term:"
@@ -1394,8 +1400,8 @@ msgid ""
 msgstr ""
 "Если текущий экземпляр приложения не найден, Django попытается использовать "
 "экземпляр по-умолчанию. Экземпляр по-умолчанию -- это экземпляр, у которого :"
-"term:`название приложения` и :term:`название экземпляра приложения` "
-"совпадают (в нашем примере это экземпляр ``myapp`` с названием ``myapp``)."
+"term:`instance namespace` и :term:`application namespace` совпадают (в нашем "
+"примере это экземпляр ``polls`` с названием ``polls``)."
 
 # 86ca11bff43f4a3daabeabc0a7c7e2e5
 #: ../../topics/http/urls.txt:814
@@ -1431,7 +1437,6 @@ msgstr ""
 
 # d2932e82a8ff4612bf131f254d4e1662
 #: ../../topics/http/urls.txt:828
-#, fuzzy
 msgid ""
 "To show this resolution strategy in action, consider an example of two "
 "instances of the ``polls`` application from the tutorial: one called "
@@ -1439,19 +1444,21 @@ msgid ""
 "enhanced that application so that it takes the instance namespace into "
 "consideration when creating and displaying polls."
 msgstr ""
-"Разберем небольшой пример. У нас есть два экземпляра приложения ``myapp``: "
-"один назван ``foo``, другой - ``bar``. ``myapp`` содержит главную страницу с "
-"названием URL-а `index`. Возможны  такие ситуации:"
+"Разберем небольшой пример. У нас есть два экземпляра приложения ``polls``: "
+"один назван ``'author-polls'``, другой - ``'publisher-polls'``. Предположим, "
+"что мы уже изменили код приложения и оно учитывает текущее пространство имен "
+"при создании страниц."
 
 # 5f0ee97ba11b438596687a6513dc280e
 #: ../../topics/http/urls.txt:857
 msgid "Using this setup, the following lookups are possible:"
 msgstr ""
+"Для таких настроек URL-ов возможны следующие варианты поиска URL-а по "
+"названию:"
 
 # c4f1a0672065409a8b32ff890d82afec
 # 28c4f462d1ee427c8f23024192015366
 #: ../../topics/http/urls.txt:859
-#, fuzzy
 msgid ""
 "If one of the instances is current - say, if we were rendering the detail "
 "page in the instance ``'author-polls'`` - ``'polls:index'`` will resolve to "
@@ -1459,18 +1466,19 @@ msgid ""
 "following will result in ``\"/author-polls/\"``."
 msgstr ""
 "Если один из экземпляров указан как текущий - например, мы выполняем шаблон "
-"в экземпляре ``bar`` - поиск URL-а по ``myapp:index`` вернет URL на главную "
-"страницу экземпляра приложения ``bar``."
+"в экземпляре ``'author-polls'`` - поиск URL-а по ``'polls:index'`` вернет "
+"URL на главную страницу экземпляра приложения ``'author-polls'``. То есть мы "
+"получим ``\"/author-polls/\"`` для двух, приведенных ниже, примеров."
 
 # a3667553394f4c88b35dfd277c668847
 #: ../../topics/http/urls.txt:864
 msgid "In the method of a class-based view::"
-msgstr ""
+msgstr "В методе представления::"
 
 # e1e69aa698fc491981575eb878d3e980
 #: ../../topics/http/urls.txt:868
 msgid "and in the template:"
-msgstr ""
+msgstr "и в шаблоне:"
 
 # b8b5d72d231144fea32a45406f3bab35
 #: ../../topics/http/urls.txt:874
@@ -1478,10 +1486,11 @@ msgid ""
 "Note that reversing in the template requires the ``current_app`` be added as "
 "an attribute to the template context like this::"
 msgstr ""
+"Обратите внимание, поиск URL-а в шаблоне требует, чтобы мы определили "
+"``current_app`` следующим образом::"
 
 # cccee5e92f1c426db57088f0800e0336
 #: ../../topics/http/urls.txt:881
-#, fuzzy
 msgid ""
 "If there is no current instance - say, if we were rendering a page somewhere "
 "else on the site - ``'polls:index'`` will resolve to the last registered "
@@ -1491,20 +1500,21 @@ msgid ""
 "in the ``urlpatterns``."
 msgstr ""
 "Если текущий экземпляр приложения не указан - например, мы ищем URL в другом "
-"приложении -  поиск по ``'myapp:index'`` вернет URL для последнего "
-"добавленного экземпляра ``'myapp'``. Это может быть ``'foo'`` или ``'bar'``, "
-"в зависимости от того, в каком порядке они были добавлены в URL-шаблоны "
-"проекта."
+"приложении -  поиск по ``'polls:index'`` вернет URL для последнего "
+"добавленного экземпляра ``'polls'``. Т.к. у нас не определен экземпляр "
+"приложения по умолчанию (с instance namespace равным ``'polls'``), будет "
+"использоваться последний добавленный экземпляр ``polls``. Это будет "
+"``'publisher-polls'`` т.к. он последний в ``urlpatterns``."
 
 # 4ad351cd6e984156a65909f3aedcb529
 #: ../../topics/http/urls.txt:888
-#, fuzzy
 msgid ""
 "``'author-polls:index'`` will always resolve to the index page of the "
 "instance ``'author-polls'`` (and likewise for ``'publisher-polls'``) ."
 msgstr ""
-"Поиск по ``'foo:index'`` всегда вернет ссылку на главную страницу экземпляра "
-"приложения ``'foo'``."
+"Поиск по ``'author-polls:index'`` всегда вернет ссылку на главную страницу "
+"экземпляра приложения ``'author-polls'`` (аналогично и для ``'publisher-"
+"polls'``)."
 
 # 025895eadcfa4c719caf3b5e507080be
 #: ../../topics/http/urls.txt:891
@@ -1515,6 +1525,11 @@ msgid ""
 "would resolve to the index page of the default instance instead of the "
 "instance declared last in ``urlpatterns``."
 msgstr ""
+"Если бы у нас был экземпляр приложения по умолчанию -- то есть с instance "
+"name ``'polls'`` -- у нас бы поменялся результат только для тех случаев, где "
+"не указан текущий экземпляр (второй пункт в списке выше). В этом случае для "
+"``'polls:index'`` мы бы получили ссылку на главную страницу экземпляра "
+"приложения по умолчанию, а не для последнего в ``urlpatterns``."
 
 # 01957d91166c45828a3d39607c2e00f7
 #: ../../topics/http/urls.txt:900
@@ -1528,30 +1543,29 @@ msgstr "Пространство имен URL можно определить д
 
 # 41bbb924087e465ab7351becb2036397
 #: ../../topics/http/urls.txt:904
-#, fuzzy
 msgid ""
 "Firstly, you can provide the :term:`application <application namespace>` "
 "and :term:`instance <instance namespace>` namespaces as arguments to :func:"
 "`~django.conf.urls.include()` when you construct your URL patterns. For "
 "example,::"
 msgstr ""
-"Первый, передав в качестве аргументов при вызове :func:`django.conf.urls."
+"Первый, передав названия :term:`приложения <application namespace>` и :term:"
+"`экземпляра <instance namespace>` аргументами в :func:`~django.conf.urls."
 "include()`. Например::"
 
 # 1f9f3e7cb8a8476a876fb9f9957d0813
 #: ../../topics/http/urls.txt:911
-#, fuzzy
 msgid ""
 "This will include the URLs defined in ``polls.urls`` into the :term:"
 "`application namespace` ``'polls'``, with the :term:`instance namespace` "
 "``'author-polls'``."
 msgstr ""
-"Этот код добавляет URL-шаблоны определенные в ``apps.help.urls``, используя "
-"название приложения ``'bar'`` и название экземпляра ``'foo'``."
+"Этот код добавляет URL-шаблоны определенные в ``polls.urls``, используя :"
+"term:`application namespace` ``'polls'`` и :term:`instance namespace` "
+"``'author-polls'``."
 
 # 939460af658044779d58aa573dc8705b
 #: ../../topics/http/urls.txt:915
-#, fuzzy
 msgid ""
 "Secondly, you can include an object that contains embedded namespace data. "
 "If you ``include()`` a list of :func:`~django.conf.urls.url` instances, the "
@@ -1559,10 +1573,9 @@ msgid ""
 "However, you can also ``include()`` a 3-tuple containing::"
 msgstr ""
 "Второй, вы можете добавить объект, который содержит все необходимые данные. "
-"Если использовать результат :func:`~django.conf.urls.patterns` при вызове "
-"функции ``include()``, он будет добавлен в глобальное пространство имен. "
-"Однако, в ``include()`` можно передать 3-элементный кортеж, который "
-"содержит::"
+"Если добавить через ``include()`` список :func:`~django.conf.urls.url`, они "
+"будет добавлены в глобальное пространство имен. Однако, в ``include()`` "
+"можно передать 3-элементный кортеж, который содержит::"
 
 # 1f9f3e7cb8a8476a876fb9f9957d0813
 #: ../../topics/http/urls.txt:935
@@ -1575,7 +1588,6 @@ msgstr ""
 
 # 0fcd3c782822428996639208c2087345
 #: ../../topics/http/urls.txt:938
-#, fuzzy
 msgid ""
 "For example, the Django admin is deployed as instances of :class:`~django."
 "contrib.admin.AdminSite`.  ``AdminSite`` objects have a ``urls`` attribute: "
@@ -1584,12 +1596,12 @@ msgid ""
 "instance. It is this ``urls`` attribute that you ``include()`` into your "
 "projects ``urlpatterns`` when you deploy an admin instance."
 msgstr ""
-"Такой подход используется при подключении приложения интерфейса "
-"администратора(``admin``) Django. Для подключения используется экземпляр :"
+"Например, для подключения интерфейса администратора используется экземпляр :"
 "class:`~django.contrib.admin.AdminSite`, каждый из которых содержит свойство "
-"``urls``. Оно возвращает URL-шаблоны, которые доступные для этого "
-"экземпляра. Это то свойство, которое вы добавляете, используя ``include()``, "
-"в  ``urlpatterns`` вашего проекта при установке приложения администратора."
+"``urls``: 3-х элементный кортеж, который содержит все URL-шаблоны, название "
+"приложения ``'admin'`` и название экземпляра приложения. Это то свойство, "
+"которое вы добавляете, используя ``include()``, в  ``urlpatterns`` вашего "
+"проекта при установке приложения администратора."
 
 # ca97749b5e2544caa607081aa2567335
 #: ../../topics/http/urls.txt:945
@@ -1600,6 +1612,11 @@ msgid ""
 "will be the instance namespace and ``'author-polls'`` will be the "
 "application namespace instead of vice versa."
 msgstr ""
+"Убедитесь, что вы передаете кортеж в ``include()``. Если вы просто "
+"передадите три аргумента ``include(polls_patterns, 'polls', 'author-"
+"polls')``, Django не вызовет исключения из-за сигнатуры ``include()``, но "
+"``'polls'`` будет названием экземпляра, а ``'author-polls'`` -- названием "
+"приложения, а не наоборот."
 
 # b3167eb0046e483f8202f5f0a3034a6e
 #~ msgid "Passing callable objects instead of strings"

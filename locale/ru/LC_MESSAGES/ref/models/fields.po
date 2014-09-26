@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-07-14 16:33+0300\n"
+"PO-Revision-Date: 2014-09-26 16:15+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -27,7 +27,6 @@ msgstr "Справочник по полям модели"
 
 # bf5836b84ffa41dea84a87ed1603e8ad
 #: ../../ref/models/fields.txt:10
-#, fuzzy
 msgid ""
 "This document contains all the API references of :class:`Field` including "
 "the `field options`_ and `field types`_ Django offers."
@@ -90,7 +89,6 @@ msgstr ""
 
 # 746d1969e15243ac924113ffee5bfa3e
 #: ../../ref/models/fields.txt:42
-#, fuzzy
 msgid ""
 "Avoid using :attr:`~Field.null` on string-based fields such as :class:"
 "`CharField` and :class:`TextField` because empty string values will always "
@@ -101,27 +99,24 @@ msgid ""
 "string, not ``NULL``."
 msgstr ""
 "Избегайте использования :attr:`~Field.null` для строковых полей таких, как :"
-"class:`CharField` и :class:`TextField`, если только у вас нет причин для "
-"этого. Если строковое поле содержит ``null=True``, это означает, что оно "
-"может содержать два возможных \"пустых\" значения: ``NULL`` и пустую строку. "
-"В большинстве случаев избыточно иметь два варианты \"пустых\" значений. "
-"Правило Django использовать пустую строку, вместо ``NULL``."
+"class:`CharField` и :class:`TextField`, т.к. пустое значение всегда будет "
+"сохранено как пустая строка, а не ``NULL``. Если строковое поле содержит "
+"``null=True``, это означает, что оно может содержать два возможных \"пустых"
+"\" значения: ``NULL`` и пустую строку. В большинстве случаев избыточно иметь "
+"два варианты \"пустых\" значений. Правило Django использовать пустую строку, "
+"вместо ``NULL``."
 
 # 299c9454fa224fce9ffd2932e94b7ee0
 #: ../../ref/models/fields.txt:49
-#, fuzzy
 msgid ""
 "For both string-based and non-string-based fields, you will also need to set "
 "``blank=True`` if you wish to permit empty values in forms, as the :attr:"
 "`~Field.null` parameter only affects database storage (see :attr:`~Field."
 "blank`)."
 msgstr ""
-"Заметим, что пустая строка всегда сохраняется как пустая строка, а не как "
-"``NULL``. Используйте ``null=True`` только для не строковых полей, таких как "
-"числовые, булевы и даты. Для всех типов полей, вы также должны указать "
-"``blank=True`` если вы хотите разрешить пустые значения в формах, т.к. "
-"параметр :attr:`~Field.null` влияет только на сохранение в базе данных "
-"(смотрите :attr:`~Field.blank`)."
+"Для всех типов полей, вы также должны указать ``blank=True`` если вы хотите "
+"разрешить пустые значения в формах, т.к. параметр :attr:`~Field.null` влияет "
+"только на сохранение в базе данных (смотрите :attr:`~Field.blank`)."
 
 # 9f35d8792c6540219ee6ef19225344a6
 #: ../../ref/models/fields.txt:56
@@ -186,14 +181,13 @@ msgstr ""
 
 # 06b3378ed2e84d00a25066994511c71f
 #: ../../ref/models/fields.txt:86
-#, fuzzy
 msgid ""
 "The first element in each tuple is the actual value to be set on the model, "
 "and the second element is the human-readable name. For example::"
 msgstr ""
-"Первый элемент -- это значение, которое будет сохранено в базе данных. "
-"Второй элемент -- название, которое будет отображаться для пользователей. "
-"Например::"
+"Первый элемент каждого кортежа -- это значение, которое будет сохранено в "
+"базе данных. Второй элемент -- название, которое будет отображаться для "
+"пользователей. Например::"
 
 # 7e59d10e970145238c2d46b69156f9f5
 #: ../../ref/models/fields.txt:96
@@ -251,7 +245,6 @@ msgstr ""
 
 # 1ac62f308271409fb2ccb1481d849071
 #: ../../ref/models/fields.txt:153
-#, fuzzy
 msgid ""
 "Note that choices can be any iterable object -- not necessarily a list or "
 "tuple. This lets you construct choices dynamically. But if you find yourself "
@@ -259,7 +252,7 @@ msgid ""
 "using a proper database table with a :class:`ForeignKey`. :attr:`~Field."
 "choices` is meant for static data that doesn't change much, if ever."
 msgstr ""
-"Отметим что в качестве списка вариантов значений  может быть любой итератор "
+"Отметим что в качестве списка вариантов значений может быть любой итератор "
 "-- не обязательно список или кортеж. Это позволяет определять варианты "
 "значений динамически. Но, если вам необходимо использовать динамический :"
 "attr:`~Field.choices`, возможно вам следует использовать правильную "
@@ -276,6 +269,12 @@ msgid ""
 "Alternatively, you can use an empty string instead of ``None`` where this "
 "makes sense - such as on a :class:`~django.db.models.CharField`."
 msgstr ""
+"Если поле содержит :attr:`blank=False<Field.blank>`, но :attr:`~Field."
+"default` не определен, в поле выбора будет добавлено значение с названием ``"
+"\"---------\"``. Чтобы это изменить, добавьте в ``choices`` элемент с "
+"``None``, например, ``(None, 'Your String For Display')``. Также можно "
+"использовать пустую строку вместо ``None``, где это имеет смысл, например, "
+"для :class:`~django.db.models.CharField`."
 
 # 4c0fd3c3453b4abebfe2e64d1007a2e6
 #: ../../ref/models/fields.txt:169
@@ -353,7 +352,6 @@ msgstr ""
 
 # ef2a2a52a0f54d58947685a918ca2403
 #: ../../ref/models/fields.txt:208
-#, fuzzy
 msgid ""
 "The default cannot be a mutable object (model instance, list, set, etc.), as "
 "a reference to the same instance of that object would be used as the default "
@@ -362,10 +360,11 @@ msgid ""
 "specify a dictionary as the default, use a function as follows::"
 msgstr ""
 "Значение по умолчанию не может быть изменяемым значением (экземпляр модели, "
-"список и т.д.), т.к. все объекты модели будут ссылаться на этот объект. "
-"Вместо этого укажите функцию, которая возвращает нужное значение.  Например, "
-"если у вас есть собственное поле ``JSONField`` и вы хотите указать словарь "
-"как значение по умолчанию, используйте ``lambda`` следующим образом::"
+"список, множество и т.д.), т.к. все объекты модели будут ссылаться на этот "
+"объект и использовать его как значение по умолчанию. Вместо этого укажите "
+"функцию, которая возвращает нужное значение.  Например, если у вас есть "
+"собственное поле ``JSONField`` и вы хотите указать словарь как значение по "
+"умолчанию, используйте следующую функцию::"
 
 # 3312d1b1acb94a00b737119c64013917
 #: ../../ref/models/fields.txt:219
@@ -374,6 +373,9 @@ msgid ""
 "because they cannot be :ref:`serialized by migrations <migration-"
 "serializing>`. See that documentation for other caveats."
 msgstr ""
+"Обратите внимание, ``lambda`` нельзя использовать в качестве значения для "
+"``default`` т.к. она не может быть :ref:`сериализована для миграций "
+"<migration-serializing>`. Подробности смотрите в соответствующем разделе."
 
 # 750eb18dc5034be3ac51a5db175f3c2b
 #: ../../ref/models/fields.txt:224
@@ -382,14 +384,14 @@ msgstr "``editable``"
 
 # 7c3627d3daaa459b8889099957a25618
 #: ../../ref/models/fields.txt:228
-#, fuzzy
 msgid ""
 "If ``False``, the field will not be displayed in the admin or any other :"
 "class:`~django.forms.ModelForm`. They are also skipped during :ref:`model "
 "validation <validating-objects>`. Default is ``True``."
 msgstr ""
-"При ``False``, поле будет не редактируемое в :class:`~django.forms."
-"ModelForm` для модели. Значение по умолчанию -- ``True``."
+"При ``False``, поле не будет отображаться в админке или любой другой :class:"
+"`~django.forms.ModelForm` для модели. Такие поля также пропускаются при :ref:"
+"`валидации модели <validating-objects>`. Значение по умолчанию -- ``True``."
 
 # 6e65b2b6c34947a59d781de6605a92b4
 #: ../../ref/models/fields.txt:233
@@ -408,21 +410,20 @@ msgstr ""
 
 # 39febea652b5492d9d74801ea19ee1a9
 #: ../../ref/models/fields.txt:241
-#, fuzzy
 msgid ""
 "Error message keys include ``null``, ``blank``, ``invalid``, "
 "``invalid_choice``, ``unique``, and ``unique_for_date``. Additional error "
 "message keys are specified for each field in the `Field types`_ section "
 "below."
 msgstr ""
-"Ключи ошибок такие: ``null``, ``blank``, ``invalid``, ``invalid_choice`` и "
-"``unique``. Дополнительные ошибки указаны для каждого :ref:`типа поля "
-"ниже<model-field-types>`."
+"Ключи ошибок такие: ``null``, ``blank``, ``invalid``, ``invalid_choice``, "
+"``unique`` и ``unique_for_date`. Дополнительные ошибки указаны для каждого :"
+"ref:`типа поля ниже<model-field-types>`."
 
 # 7fd2cd6c4d804bcbb976f65ca4821579
 #: ../../ref/models/fields.txt:247
 msgid "The ``unique_for_date`` error message key was added."
-msgstr ""
+msgstr "Было добавлено сообщение об ошибке ``unique_for_date``."
 
 # e21a3bb0e16d454cb6229717eb7796e2
 #: ../../ref/models/fields.txt:250
@@ -451,14 +452,14 @@ msgstr ""
 
 # 580032aedb9b4beeab09ffd1e206acbe
 #: ../../ref/models/fields.txt:263
-#, fuzzy
 msgid ""
 "Alternatively you can use plain text and ``django.utils.html.escape()`` to "
 "escape any HTML special characters. Ensure that you escape any help text "
 "that may come from untrusted users to avoid a cross-site scripting attack."
 msgstr ""
 "Также вы можете использовать обычный текст и ``django.utils.html.escape()``, "
-"чтобы экранировать HTML."
+"чтобы экранировать HTML. Убедитесь, что вы экранируете все подсказки, "
+"которые могут определять непроверенные пользователи, чтобы избежать XSS атак."
 
 # ccb13b4516194e24a9ad1349ee5cf320
 #: ../../ref/models/fields.txt:269
@@ -651,7 +652,7 @@ msgstr ""
 # 9f56b6848bcf4fbabb1c4f62ab2fafba
 #: ../../ref/models/fields.txt:359
 msgid "Registering and fetching lookups"
-msgstr ""
+msgstr "Регистрация и загрузка операторов для фильтрации"
 
 # c293fdd9207c47f4baf57e02cd26bc89
 #: ../../ref/models/fields.txt:361
@@ -660,6 +661,9 @@ msgid ""
 "api>`. The API can be used to customize which lookups are available for a "
 "field class, and how lookups are fetched from a field."
 msgstr ""
+"``Field`` предоставляет :ref:`API для регистрации своих операторов "
+"фильтрации <lookup-registration-api>`. Этот API позволяет добавить свои "
+"варианты фильтрации по полю."
 
 # 18b963e82b4546918406f0f304af94eb
 #: ../../ref/models/fields.txt:368
@@ -691,7 +695,6 @@ msgstr "``BigIntegerField``"
 
 # 5ec28ef1e8e642deb0da59abb230a9c0
 #: ../../ref/models/fields.txt:387
-#, fuzzy
 msgid ""
 "A 64 bit integer, much like an :class:`IntegerField` except that it is "
 "guaranteed to fit numbers from ``-9223372036854775808`` to "
@@ -699,9 +702,8 @@ msgid ""
 "`~django.forms.TextInput`."
 msgstr ""
 "64-битное целочисленное, аналогично :class:`IntegerField` но позволяет "
-"хранить числа от -9223372036854775808 до 9223372036854775807. Форма будет "
-"использовать ``<input type=\"text\">`` (одно строчное поле ввода) для "
-"отображения."
+"хранить числа от ``-9223372036854775808`` до ``9223372036854775807``. Форма "
+"будет использовать :class:`~django.forms.TextInput` для отображения."
 
 # 85f1d44cd44143a0855fb1a1dc492c4a
 #: ../../ref/models/fields.txt:393
@@ -721,9 +723,8 @@ msgstr ""
 
 # 85f1d44cd44143a0855fb1a1dc492c4a
 #: ../../ref/models/fields.txt:0
-#, fuzzy
 msgid "Abusing ``BinaryField``"
-msgstr "``BinaryField``"
+msgstr "Злоупотребление ``BinaryField``"
 
 # bf4154b3cee04acf8119a340e9223b9b
 #: ../../ref/models/fields.txt:405
@@ -768,6 +769,8 @@ msgid ""
 "The default value of ``BooleanField`` was changed from ``False`` to ``None`` "
 "when :attr:`Field.default` isn't defined."
 msgstr ""
+"Значение по умолчанию для ``BooleanField`` было изменено с ``False`` на "
+"``None``, если :attr:`Field.default` не указан."
 
 # 85f1d44cd44143a0855fb1a1dc492c4a
 #: ../../ref/models/fields.txt:428
@@ -827,7 +830,7 @@ msgstr ""
 # 8e9d7627143842ae8fe8397053092d6d
 #: ../../ref/models/fields.txt:0
 msgid "MySQL users"
-msgstr ""
+msgstr "Пользователям MySQL"
 
 # 373efc2a709d4fa1b99b8f496b63d5bf
 #: ../../ref/models/fields.txt:454
@@ -971,12 +974,11 @@ msgstr "Количество знаков после запятой."
 
 # 4e32207e096e49c29e7577574ed3633c
 #: ../../ref/models/fields.txt:528
-#, fuzzy
 msgid ""
 "For example, to store numbers up to ``999`` with a resolution of 2 decimal "
 "places, you'd use::"
 msgstr ""
-"Например, для хранения числа до 999 с двумя знаками после запятой, "
+"Например, для хранения числа до ``999`` с двумя знаками после запятой, "
 "используйте::"
 
 # 9aca9a3a948f44259a57f69ba3c15981
@@ -1011,7 +1013,7 @@ msgstr "Поле :class:`CharField` для хранения правильног
 # 484439867537456fadbef6d49b2ef960
 #: ../../ref/models/fields.txt:0
 msgid "Incompliance to RFCs"
-msgstr ""
+msgstr "Несоответствие с RFC"
 
 # 42783823cba74640825d684c9e31dec2
 #: ../../ref/models/fields.txt:555
@@ -1049,14 +1051,13 @@ msgstr ""
 
 # f2df786f57d547b39cf855f10e9c4a8a
 #: ../../ref/models/fields.txt:573
-#, fuzzy
 msgid "Has two optional arguments:"
-msgstr "Также принимается один дополнительный параметр:"
+msgstr "Также принимается два дополнительных параметра:"
 
 # 2017001d940541d89017b92f99c634d0
 #: ../../ref/models/fields.txt:579
 msgid "``upload_to`` was required in older versions of Django."
-msgstr ""
+msgstr "``upload_to`` был обязателен в предыдущих версиях Django."
 
 # 75c345765fc6430cb35099252d85fc21
 #: ../../ref/models/fields.txt:581
@@ -1145,21 +1146,20 @@ msgstr ""
 
 # 79ba275a2ca349e88c2e118052f87601
 #: ../../ref/models/fields.txt:615
-#, fuzzy
 msgid ""
 "A storage object, which handles the storage and retrieval of your files. "
 "See :doc:`/topics/files` for details on how to provide this object."
 msgstr ""
-"Необязателен. Объект \"storage\", который отвечает за хранение и получение "
-"файлов. Смотрите :doc:`/topics/files` для подробной информации."
+"Объект \"storage\", который отвечает за хранение и получение файлов. "
+"Смотрите :doc:`/topics/files` для подробной информации."
 
 # a2c46f513a22423a9b4bb537b35fe226
 #: ../../ref/models/fields.txt:618 ../../ref/models/fields.txt:862
-#, fuzzy
 msgid ""
 "The default form widget for this field is a :class:`~django.forms."
 "ClearableFileInput`."
-msgstr "Виджет форма для этого поля - :class:`~django.forms.FileInput`."
+msgstr ""
+"Виджет форма для этого поля - :class:`~django.forms.ClearableFileInput`."
 
 # 0644b76ce62441aaa7f0cd15a92c9a27
 #: ../../ref/models/fields.txt:621
@@ -1188,15 +1188,14 @@ msgstr ""
 
 # 7e466f2d372b4bc295d8ef8ca77cd635
 #: ../../ref/models/fields.txt:630
-#, fuzzy
 msgid ""
 "Add the :class:`FileField` or :class:`ImageField` to your model, defining "
 "the :attr:`~FileField.upload_to` option to specify a subdirectory of :"
 "setting:`MEDIA_ROOT` to use for uploaded files."
 msgstr ""
-"Добавьте :class:`FileField` или :class:`ImageField` к модели, убедитесь что "
-"определили :attr:`~FileField.upload_to`, чтобы указать DJango в каком под-"
-"каталоге в :setting:`MEDIA_ROOT` должны быть сохранены файлы."
+"Добавьте :class:`FileField` или :class:`ImageField` к модели, определите :"
+"attr:`~FileField.upload_to`, чтобы указать Django в каком под-каталоге в :"
+"setting:`MEDIA_ROOT` должны быть сохранены файлы."
 
 # 2b93b64f17ef4548b5a447c10fb61f18
 #: ../../ref/models/fields.txt:634
@@ -1554,9 +1553,8 @@ msgstr "Число с плавающей точкой представленно
 
 # a845530191a544dcb5ba3624790feb2d
 #: ../../ref/models/fields.txt:0
-#, fuzzy
 msgid "``FloatField`` vs. ``DecimalField``"
-msgstr "``DecimalField``"
+msgstr "``FloatField`` или ``DecimalField``"
 
 # 1a919f175dce4b58bae1e6ab899292b9
 #: ../../ref/models/fields.txt:823
@@ -1627,9 +1625,8 @@ msgstr ""
 
 # 8f8a360c12304295a8be9d4c944007fb
 #: ../../ref/models/fields.txt:854
-#, fuzzy
 msgid "Requires the `Pillow`_ library."
-msgstr "Требуется `Python Imaging Library`_."
+msgstr "Требуется библиотека `Pillow`_."
 
 # 693103d12f804a60afad1589f7412835
 #: ../../ref/models/fields.txt:858
@@ -1649,12 +1646,13 @@ msgstr "``IntegerField``"
 
 # 8ff59a1ad1714952be0166a7b1267e7c
 #: ../../ref/models/fields.txt:870
-#, fuzzy
 msgid ""
 "An integer. Values from ``-2147483648`` to ``2147483647`` are safe in all "
 "databases supported by Django. The default form widget for this field is a :"
 "class:`~django.forms.TextInput`."
-msgstr "Число. Форма использует виджет :class:`~django.forms.TextInput`."
+msgstr ""
+"Число. Значение от ``-2147483648`` до ``2147483647`` для всех поддерживаемых "
+"баз данных Django. Форма использует виджет :class:`~django.forms.TextInput`."
 
 # c7e236a1ca364e4cb5bed0841e9a4938
 #: ../../ref/models/fields.txt:875
@@ -1667,6 +1665,8 @@ msgid ""
 "This field has been deprecated in favor of :class:`~django.db.models."
 "GenericIPAddressField`."
 msgstr ""
+"Это поле устарело. Используйте :class:`~django.db.models."
+"GenericIPAddressField`."
 
 # 6f5c0727235843fdbd8d5b19c45c167c
 #: ../../ref/models/fields.txt:883
@@ -1760,14 +1760,14 @@ msgstr "``PositiveIntegerField``"
 
 # 4068d3aefae14d06afca8debfa591e7c
 #: ../../ref/models/fields.txt:931
-#, fuzzy
 msgid ""
 "Like an :class:`IntegerField`, but must be either positive or zero (``0``). "
 "Values from ``0`` to ``2147483647`` are safe in all databases supported by "
 "Django. The value ``0`` is accepted for backward compatibility reasons."
 msgstr ""
 "Как и поле :class:`IntegerField`, но значение должно быть больше или равно "
-"нулю (`0`). Значение `0` принимается для обратной совместимости."
+"нулю (`0`). Можно использовать значение от ``0`` до ``2147483647``. Значение "
+"`0` принимается для обратной совместимости."
 
 # 8aeb8e6539d3496fb8386a1d98e107be
 #: ../../ref/models/fields.txt:936
@@ -1776,7 +1776,6 @@ msgstr "``PositiveSmallIntegerField``"
 
 # 45c7cd2886f148ffa8bd561ab732e191
 #: ../../ref/models/fields.txt:940
-#, fuzzy
 msgid ""
 "Like a :class:`PositiveIntegerField`, but only allows values under a certain "
 "(database-dependent) point. Values from ``0`` to ``32767`` are safe in all "
@@ -1784,7 +1783,7 @@ msgid ""
 msgstr ""
 "Как и поле :class:`PositiveIntegerField`, но принимает значения в "
 "определенном диапазоне(зависит от типа базы данных). Для баз данных "
-"поддерживаемых Django можно использовать значения до 32767."
+"поддерживаемых Django можно использовать значения от ``0`` до ``32767``."
 
 # 528a021487b44adba07404ac592151b9
 #: ../../ref/models/fields.txt:945
@@ -1841,7 +1840,6 @@ msgstr "``SmallIntegerField``"
 
 # 8f4d2afa4d564e20bac96947ab99aa55
 #: ../../ref/models/fields.txt:969
-#, fuzzy
 msgid ""
 "Like an :class:`IntegerField`, but only allows values under a certain "
 "(database-dependent) point. Values from ``-32768`` to ``32767`` are safe in "
@@ -1849,7 +1847,7 @@ msgid ""
 msgstr ""
 "Как и поле :class:`IntegerField`, но принимает значения в определенном "
 "диапазоне(зависит от типа базы данных). Для баз данных поддерживаемых Django "
-"можно использовать значения от -32768 до 32767."
+"можно использовать значения от ``-32768`` до ``32767``."
 
 # 7e9ffe6139cf4afb91b92e2de31373ab
 #: ../../ref/models/fields.txt:974
@@ -1873,6 +1871,9 @@ msgid ""
 "However it is not enforced at the model or database level. Use a :class:"
 "`CharField` for that."
 msgstr ""
+"Если указать атрибут ``max_length``, это повлияет на поле, создаваемое "
+"виджетом :class:`~django.forms.Textarea`. Но не учитывается на уровне модели "
+"или базы данных. Для этого используйте :class:`CharField`."
 
 # b0cfac2022804d58a432f9c0e98ff372
 #: ../../ref/models/fields.txt:990
@@ -2017,6 +2018,9 @@ msgid ""
 "migrations to an app with migrations. See the :ref:`dependencies "
 "documentation <unmigrated-dependencies>` for more details."
 msgstr ""
+"Не рекомендуется использовать ``ForeignKey`` из приложения без миграций к "
+"приложению с миграциями. Смотрите :ref:`раздел о зависимостях "
+"миграций<unmigrated-dependencies>`."
 
 # 02d578ada9c4485b98e2f47c12adc0ac
 # dcce012faebf4d0396e2b2a96dd8ec51
@@ -2065,11 +2069,15 @@ msgid ""
 "models.Q` object, or a callable returning a dictionary or :class:`~django.db."
 "models.Q` object can be used."
 msgstr ""
+"Ограничивает доступные значения для поля при создании ``ModelForm`` или в "
+"админке (по умолчанию можно выбрать любой объект связанной модели). Можно "
+"передать словарь, объект :class:`~django.db.models.Q` или функцию, которая "
+"возвращает словарь или объект :class:`~django.db.models.Q`."
 
 # 0e7f2b72867d45599018565a3073968d
 #: ../../ref/models/fields.txt:1108
 msgid "For example::"
-msgstr ""
+msgstr "Например::"
 
 # 06ce3525c21d4e99bc9022ae6fe72512
 #: ../../ref/models/fields.txt:1112
@@ -2077,6 +2085,8 @@ msgid ""
 "causes the corresponding field on the ``ModelForm`` to list only ``Users`` "
 "that have ``is_staff=True``. This may be helpful in the Django admin."
 msgstr ""
+"указывает полю ``ModelForm`` показывать только объекты ``Users``, которые "
+"соответствуют ``is_staff=True``. Может быть полезно в админке."
 
 # 096065ade36040b99b0bf22ca5a63e4a
 #: ../../ref/models/fields.txt:1115
@@ -2085,10 +2095,11 @@ msgid ""
 "with the Python ``datetime`` module to limit selections by date range. For "
 "example::"
 msgstr ""
+"Указание функции может быть полезно, если используется объект Python "
+"``datetime`` для фильтрации. Например::"
 
 # f2f109ca071141c79cd3d6e9527976b8
 #: ../../ref/models/fields.txt:1124
-#, fuzzy
 msgid ""
 "If ``limit_choices_to`` is or returns a :class:`Q object <django.db.models."
 "Q>`, which is useful for :ref:`complex queries <complex-lookups-with-q>`, "
@@ -2096,11 +2107,12 @@ msgid ""
 "the field is not listed in :attr:`~django.contrib.admin.ModelAdmin."
 "raw_id_fields` in the ``ModelAdmin`` for the model."
 msgstr ""
-"Вместо словаря можете использовать объект :class:`~django.db.models.Q` для :"
-"ref:`сложных запросов <complex-lookups-with-q>`. Однако, если "
-"``limit_choices_to`` объект :class:`~django.db.models.Q`, он будет "
-"использован в интерфейсе администратора, только если поле не находится в "
-"``raw_id_fields`` класса ``ModelAdmin`` для этой модели."
+"Вместо словаря можете использовать объект :class:`~django.db.models.Q` или "
+"функцию, которая возвращает такой объект, для создания :ref:`сложных "
+"запросов <complex-lookups-with-q>`. Однако, если ``limit_choices_to`` "
+"объект :class:`~django.db.models.Q`, он будет использован в интерфейсе "
+"администратора, только если поле не находится в ``raw_id_fields`` класса "
+"``ModelAdmin`` для этой модели."
 
 # 730056eb30064b4c896626ea92f5912f
 #: ../../ref/models/fields.txt:1133
@@ -2108,6 +2120,8 @@ msgid ""
 "Previous versions of Django do not allow passing a callable as a value for "
 "``limit_choices_to``."
 msgstr ""
+"В предыдущих версиях Django нельзя было указывать функцию в "
+"``limit_choices_to``."
 
 # 288e527fc2b14766b8971db47228bbc1
 #: ../../ref/models/fields.txt:1138
@@ -2119,6 +2133,10 @@ msgid ""
 "multiple times, so there is a possibility your callable may be invoked "
 "several times."
 msgstr ""
+"Если используется функция для ``limit_choices_to``, она будет вызываться при "
+"каждом создании формы. Также она может быть вызвана при валидации модели, "
+"например, командой или админкой. Админка может вызывать эту функцию "
+"несколько раз при проверке данных."
 
 # 55230a57e9df458e9ef33a0b029aa87c
 #: ../../ref/models/fields.txt:1147
