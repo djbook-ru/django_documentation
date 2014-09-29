@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-09-26 18:27+0300\n"
+"PO-Revision-Date: 2014-09-29 15:01+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -2316,6 +2316,12 @@ msgid ""
 "the relationship will be stored in the migration using a reference to the "
 "setting, not to the model directly."
 msgstr ""
+"Управляет поведением миграций, если :class:`ForeignKey` ссылается на "
+"подменяемую(swappable) модель. При ``True`` - значение по умолчанию - если :"
+"class:`ForeignKey` ссылается на модель, указанную через ``settings."
+"AUTH_USER_MODEL`` (или другую настройку, определяющую какую модель "
+"использовать), связь в миграции будет использовать настройку, а не саму "
+"модель."
 
 # e2dd73d038de4266ae7898016d055ec3
 # ab915931aa9e4517b948fa1287d8cdad
@@ -2325,12 +2331,18 @@ msgid ""
 "should always point towards the swapped-in model - for example, if it is a "
 "profile model designed specifically for your custom user model."
 msgstr ""
+"Вам может понадобится значение ``False`` только, если связь должна указывать "
+"на какую-то конкретную модель, игнорируя настройку - например, если это "
+"модель профиля пользователя для какой-то конкретной модели пользователя и не "
+"будет работать с любой моделью из настройки."
 
 # 60379d827a3a44268886dc9979d7af77
 # 9c1e57b47ef94f7ab43feceb506dc997
 #: ../../ref/models/fields.txt:1271 ../../ref/models/fields.txt:1465
 msgid "If in doubt, leave it to its default of ``True``."
 msgstr ""
+"Если вы не уверены какое значение выбрать, используйте значение по умолчанию "
+"``True``."
 
 # ea27a02a3b6c43f4bbd64075e142ad5f
 #: ../../ref/models/fields.txt:1276
@@ -2365,6 +2377,9 @@ msgid ""
 "migrations to an app with migrations. See the :ref:`dependencies "
 "documentation <unmigrated-dependencies>` for more details."
 msgstr ""
+"Не рекомендуется использовать ``ManyToManyField`` из приложения без миграций "
+"к приложению с миграциями. Смотрите :ref:`раздел о зависимостях в миграциях "
+"<unmigrated-dependencies>`."
 
 # a20b2447d01a493eb260a80cf11a1b00
 #: ../../ref/models/fields.txt:1297
@@ -2484,6 +2499,9 @@ msgid ""
 "implicit ``through`` model class you can use to directly access the table "
 "created to hold the association. It has three fields:"
 msgstr ""
+"Если вы не указали ``through`` модель, вы все равно может обратиться к "
+"неявно промежуточной модели, которая была автоматически создана. Она "
+"содержит три поля:"
 
 # c9014c14bbc34b37bc7e551859db8b90
 #: ../../ref/models/fields.txt:1369
@@ -2496,6 +2514,8 @@ msgid ""
 "``<containing_model>_id``: the ``id`` of the model that declares the "
 "``ManyToManyField``."
 msgstr ""
+"``<containing_model>_id``: ``id`` модели, которая содержит поле "
+"``ManyToManyField``."
 
 # 566e26d2e88248aeafbfcdcca561c444
 #: ../../ref/models/fields.txt:1372
@@ -2503,13 +2523,15 @@ msgid ""
 "``<other_model>_id``: the ``id`` of the model that the ``ManyToManyField`` "
 "points to."
 msgstr ""
+"``<other_model>_id``: ``id`` модели, на которую ссылается "
+"``ManyToManyField``."
 
 # e56086a031aa4f30acabdd5e12748dde
 #: ../../ref/models/fields.txt:1375
 msgid ""
 "This class can be used to query associated records for a given model "
 "instance like a normal model."
-msgstr ""
+msgstr "Этот класс может использоваться для получения связей."
 
 # 6399a749517a4d50924d78f2316c2861
 #: ../../ref/models/fields.txt:1382
@@ -2519,6 +2541,9 @@ msgid ""
 "establish a many-to-many relationship automatically. However, consider the "
 "following models::"
 msgstr ""
+"Используется, если явно указана промежуточная модель для связи многое-ко-"
+"многим. Обычно Django самостоятельно определяется какие поля использовать "
+"для создания связи. Однако, возьмем такой пример::"
 
 # 4864f82d09fb4e47a8beb49bb4beb9f1
 #: ../../ref/models/fields.txt:1402
@@ -2528,6 +2553,10 @@ msgid ""
 "which one to use. In this case, you must explicitly specify which foreign "
 "keys Django should use using ``through_fields``, as in the example above."
 msgstr ""
+"``Membership`` содержит *два* внешних ключа на ``Person`` (``person`` и "
+"``inviter``). В таком случае Django не знает какой ключ использовать для "
+"создания связи. В таком случае необходимо явно указать Django, какой внешний "
+"ключ правильный, используя параметр ``through_fields``, как в примере выше."
 
 # 516c02e5bdcc4b30aa4577cdfead2566
 #: ../../ref/models/fields.txt:1408
@@ -2537,6 +2566,11 @@ msgid ""
 "`ManyToManyField` is defined on (``group`` in this case), and ``field2`` the "
 "name of the foreign key to the target model (``person`` in this case)."
 msgstr ""
+"``through_fields`` принимает двух-элементный кортеж ``('field1', "
+"'field2')``, где ``field1`` -- название внешнего ключа, который ссылается на "
+"модель, которая содержит :class:`ManyToManyField` (в нашем примере "
+"``group``), а ``field2`` -- внешний ключ, который ссылается на целевую "
+"модель (в нашем примере ``person``)."
 
 # 7d87e8ffb819413dbea78f629ef92ade
 #: ../../ref/models/fields.txt:1414
@@ -2548,6 +2582,11 @@ msgid ""
 "and there are more than two foreign keys to the model, or you want to "
 "explicitly specify which two Django should use."
 msgstr ""
+"Если промежуточная модель содержит несколько внешний ключей на одну из "
+"моделей связи (или обе модели), вы *должны* указать ``through_fields``. Это "
+"также относится и к :ref:`рекурсивной связи <recursive-relationships>`, если "
+"используется своя промежуточная модель, в которой больше двух связей на "
+"модель, или вы хотите явно указать Django, какие внешние ключи использовать."
 
 # 1dfe32418a9645ff9b2694c95f5d31d7
 #: ../../ref/models/fields.txt:1422
@@ -2558,6 +2597,11 @@ msgid ""
 "\"target\". In that case ``'field1'`` will be treated as the \"source\" of "
 "the relationship and ``'field2'`` as the \"target\"."
 msgstr ""
+"Рекурсивные связи, использующие промежуточную модель, всегда считаются "
+"несимметричными -- то есть с :attr:`symmetrical=False <ManyToManyField."
+"symmetrical>` -- по этому существуют понятия \"источник\" и \"цель\" связи. "
+"В этом случае ``'field1'`` будет \"источником\" связи, а ``'field2'`` -- "
+"\"целью\"."
 
 # 3fe1e19d86be4840a482c7d645842ccd
 #: ../../ref/models/fields.txt:1430
@@ -2600,6 +2644,12 @@ msgid ""
 "setting) the relationship will be stored in the migration using a reference "
 "to the setting, not to the model directly."
 msgstr ""
+"Управляет поведением миграций, если :class:`ManyToManyField` ссылается на "
+"подменяемую(swappable) модель. При ``True`` - значение по умолчанию - если :"
+"class:`ManyToManyField` ссылается на модель, указанную через ``settings."
+"AUTH_USER_MODEL`` (или другую настройку, определяющую какую модель "
+"использовать), связь в миграции будет использовать настройку, а не саму "
+"модель."
 
 # 13a32ac5c4184542b884d2bb36eb12b1
 #: ../../ref/models/fields.txt:1471
@@ -2667,6 +2717,9 @@ msgid ""
 "relationship if an entry in the related table doesn't exist. For example, if "
 "a user doesn't have a supervisor designated by ``MySpecialUser``::"
 msgstr ""
+"При получении связанного объекта через обратную связь, если такой объект не "
+"существует, будет вызвано исключение ``DoesNotExist``. Например, если "
+"пользователь не имеет соответствующего экземпляра в ``MySpecialUser``::"
 
 # d6506538d1bc4daf9348d818541abf56
 #: ../../ref/models/fields.txt:1521
