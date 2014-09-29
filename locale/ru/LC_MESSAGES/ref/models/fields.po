@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-09-29 15:01+0300\n"
+"PO-Revision-Date: 2014-09-29 16:03+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -2766,6 +2766,11 @@ msgid ""
 "`to_python`), and to apply :doc:`/ref/models/lookups` (:meth:"
 "`get_prep_lookup`)."
 msgstr ""
+"``Field`` -- абстрактный класс, отображающий поле в таблице в базе данных. "
+"Django используется поля для создания таблицы в базе данных (:meth:"
+"`db_type`), для преобразования типов Python в типа в базе данных (:meth:"
+"`get_prep_value`) и наоборот (:meth:`to_python`), и для применения :doc:`/"
+"ref/models/lookups` (:meth:`get_prep_lookup`)."
 
 # da8bd1dc21b84595987aa90a5adb72b1
 #: ../../ref/models/fields.txt:1546
@@ -2774,6 +2779,9 @@ msgid ""
 "class:`models <django.db.models.Model>` and :class:`querysets <django.db."
 "models.query.QuerySet>`."
 msgstr ""
+"Таким образом поле является фундаментальной частью различных API Django, в "
+"частности, :class:`models <django.db.models.Model>` и :class:`querysets "
+"<django.db.models.query.QuerySet>`."
 
 # e9bff669d3fc4f4cbf248bb66332f5ac
 #: ../../ref/models/fields.txt:1550
@@ -2783,6 +2791,10 @@ msgid ""
 "such as :attr:`null` and :attr:`unique`, and methods that Django uses to map "
 "the field value to database-specific values."
 msgstr ""
+"В модели экземпляр поля добавляется как атрибут класса и представляет "
+"определенное поле таблицы, смотрите :doc:`/topics/db/models`. Оно содержит "
+"атрибуты, такие как :attr:`null` и :attr:`unique`, и методы, которые Django "
+"используется для преобразования значения поля в значение в базе данных."
 
 # c9f33685f4634767b9b5436f74cb46a2
 #: ../../ref/models/fields.txt:1555
@@ -2793,6 +2805,11 @@ msgid ""
 "``QuerySet``\\s (e.g. ``field_name__exact=\"foo\"``). All :ref:`built-in "
 "lookups <field-lookups>` are registered by default."
 msgstr ""
+"``Field`` -- дочерний класс :class:`~django.db.models.lookups."
+"RegisterLookupMixin`, что позволяет регистрировать :class:`~django.db.models."
+"Transform` и :class:`~django.db.models.Lookup`, чтобы использовать в "
+"``QuerySet`` (например, ``field_name__exact=\"foo\"``). Все :ref:`встроенные "
+"фильтры <field-lookups>` зарегистрированы по умолчанию."
 
 # 38acf621ec30427da4492976ad0c3e91
 #: ../../ref/models/fields.txt:1562
@@ -2802,6 +2819,10 @@ msgid ""
 "subclass any of the built-in fields or write a ``Field``` from scratch. In "
 "either case, see :doc:`/howto/custom-model-fields`."
 msgstr ""
+"Все встроенные поля Django, например :class:`CharField` -- наследуются от "
+"``Field``. Если вы хотите создать свое поле, можно унаследоваться от "
+"встроенного поля или от ``Field``. Подробности смотрите в :doc:`/howto/"
+"custom-model-fields`."
 
 # edddb3ddeddd4fc384b56d08d17dd567
 #: ../../ref/models/fields.txt:1569
@@ -2809,22 +2830,26 @@ msgid ""
 "A verbose description of the field, e.g. for the :mod:`django.contrib."
 "admindocs` application."
 msgstr ""
+"Читабельное описание поля, например, для приложения :mod:`django.contrib."
+"admindocs`."
 
 # 78db34ea58d641c799f01275c7edbeff
 #: ../../ref/models/fields.txt:1572
 msgid "The description can be of the form::"
-msgstr ""
+msgstr "Может использовать форматирование::"
 
 # d13f6d08e03740f98886d72130a59e4b
 #: ../../ref/models/fields.txt:1576
 msgid "where the arguments are interpolated from the field's ``__dict__``."
-msgstr ""
+msgstr "Аргументы будут подставляется из значений ``__dict__`` поля."
 
 # 554f870703e54f48aa7a23777bfaee2d
 #: ../../ref/models/fields.txt:1578
 msgid ""
 "To map a ``Field`` to a database-specific type, Django exposes two methods:"
 msgstr ""
+"Для преобразования типа ``Field`` в тип базы данных Django используется два "
+"метода:"
 
 # 6b122acf5f614bbb8e05af9ae514cc62
 #: ../../ref/models/fields.txt:1582
@@ -2832,11 +2857,15 @@ msgid ""
 "Returns a string naming this field for backend specific purposes. By "
 "default, it returns the class name."
 msgstr ""
+"Возвращает текстовое название типа поля для использования в бэкендах баз "
+"данных. По умолчанию возвращает название класса."
 
 # e9a7ca72408147728194fcf3f406dcfc
 #: ../../ref/models/fields.txt:1585
 msgid "See :ref:`emulating-built-in-field-types` for usage in custom fields."
 msgstr ""
+"Смотрите :ref:`emulating-built-in-field-types`, как использовать в "
+"собственных полях модели."
 
 # 0f52ad5f0ea3493a9d076d6b1374ad18
 #: ../../ref/models/fields.txt:1589
@@ -2844,11 +2873,14 @@ msgid ""
 "Returns the database column data type for the :class:`Field`, taking into "
 "account the ``connection``."
 msgstr ""
+"Возвращает тип поля в базе данных :class:`Field`, учитывая ``connection``."
 
 # 72f0d506966d4c55bd4b7293824b2845
 #: ../../ref/models/fields.txt:1592
 msgid "See :ref:`custom-database-types` for usage in custom fields."
 msgstr ""
+"Смотрите :ref:`custom-database-types`, как использовать в собственных полях "
+"модели."
 
 # 48d0a83f2cc84ec78c716e49ef7762f2
 #: ../../ref/models/fields.txt:1594
@@ -2856,28 +2888,37 @@ msgid ""
 "There are three main situations where Django needs to interact with the "
 "database backend and fields:"
 msgstr ""
+"Существует три основных ситуации, когда Django используется преобразование "
+"типа поля:"
 
 # 340463a7c8584aa2a7fcc45c9984faf7
 #: ../../ref/models/fields.txt:1597
 msgid "when it queries the database (Python value -> database backend value)"
 msgstr ""
+"при запросе как базе данных (значение Python -> значение бэкенда базы данных)"
 
 # ef78b57a1d89416c85e2593e75a3990c
 #: ../../ref/models/fields.txt:1598
 msgid ""
 "when it loads data from the database (database backend value -> Python value)"
 msgstr ""
+"при загрузке данных из базы данных (значение бэкенда базы данных -> значение "
+"Python)"
 
 # 09e390bb7fda483caf2175d0b20a9a92
 #: ../../ref/models/fields.txt:1600
 msgid "when it saves to the database (Python value -> database backend value)"
 msgstr ""
+"при сохранении в базу данных (значение Python -> значение бэкенда базы "
+"данных)"
 
 # b8abd28640fe4ec5873a92a220464e23
 #: ../../ref/models/fields.txt:1602
 msgid ""
 "When querying, :meth:`get_db_prep_value` and :meth:`get_prep_value` are used:"
 msgstr ""
+"При запросе используются методы :meth:`get_db_prep_value` и :meth:"
+"`get_prep_value`:"
 
 # faab913a1aa44bcf9fe296ba33cc3e51
 #: ../../ref/models/fields.txt:1606
@@ -2886,11 +2927,13 @@ msgid ""
 "should return data in a format that has been prepared for use as a parameter "
 "in a query."
 msgstr ""
+"``value`` -- значение атрибута поля модели. Метод должен вернуть значение, "
+"которое можно использовать как параметр в запросе."
 
 # af5859a7c8ce43fa918fa30afbb82386
 #: ../../ref/models/fields.txt:1610
 msgid "See :ref:`converting-python-objects-to-query-values` for usage."
-msgstr ""
+msgstr "Смотрите :ref:`converting-python-objects-to-query-values`."
 
 # 4cf77f3736a24165814c066b313a13ba
 #: ../../ref/models/fields.txt:1614
@@ -2899,16 +2942,19 @@ msgid ""
 "``value`` if ``prepared=True`` and :meth:`~Field.get_prep_value` if is "
 "``False``."
 msgstr ""
+"Преобразует ``value`` в значение для бэкенда базы данных. По умолчанию "
+"возвращает ``value``, если ``prepared=True``, иначе -- результат :meth:"
+"`~Field.get_prep_value`."
 
 # 5637e777a97e4ac58c5c83bb48433f76
 #: ../../ref/models/fields.txt:1618
 msgid "See :ref:`converting-query-values-to-database-values` for usage."
-msgstr ""
+msgstr "Смотрите :ref:`converting-query-values-to-database-values`."
 
 # 146a096cf7f3444fb3d69e5290604335
 #: ../../ref/models/fields.txt:1620
 msgid "When loading data, :meth:`to_python` is used:"
-msgstr ""
+msgstr "При загрузке данных используется :meth:`to_python`:"
 
 # 850bb75ffd7746b1b2ab8746913db68a
 #: ../../ref/models/fields.txt:1624
@@ -2916,6 +2962,8 @@ msgid ""
 "Converts a value as returned by the database (or a serializer) to a Python "
 "object. It is the reverse of :meth:`get_prep_value`."
 msgstr ""
+"Преобразует значение из базы данных (или сериалайзера) в объект Python. "
+"Метод обратный :meth:`get_prep_value`."
 
 # 6a0fdd0fd7f348c08671caf567415cf6
 #: ../../ref/models/fields.txt:1627
@@ -2923,16 +2971,20 @@ msgid ""
 "The default implementation returns ``value``, which is the common case when "
 "the database backend already returns the correct Python type."
 msgstr ""
+"По умолчанию возвращает ``value``, что обычно подходит, если бэкенд уже "
+"возвращает правильный объект Python."
 
 # 720a48ea675e401f81c5ad703c57311a
 #: ../../ref/models/fields.txt:1630
 msgid "See :ref:`converting-database-values-to-python-objects` for usage."
-msgstr ""
+msgstr "Смотрите :ref:`converting-database-values-to-python-objects`."
 
 # 812e69b2121342b9abb1b8e8453042f3
 #: ../../ref/models/fields.txt:1632
 msgid "When saving, :meth:`pre_save` and :meth:`get_db_prep_save` are used:"
 msgstr ""
+"При сохранении используются методы :meth:`pre_save` и :meth:"
+"`get_db_prep_save`:"
 
 # 3fab4a46f83144298fc70299381b3dc4
 #: ../../ref/models/fields.txt:1636
@@ -2940,6 +2992,9 @@ msgid ""
 "Same as the :meth:`get_db_prep_value`, but called when the field value must "
 "be *saved* to the database. By default returns :meth:`get_db_prep_value`."
 msgstr ""
+"Аналогичен :meth:`get_db_prep_value`, но используется при *сохранении* "
+"значения в базу данных. По умолчанию возвращает результат :meth:"
+"`get_db_prep_value`."
 
 # 4e30dcef04074080a59f5e4285ed93c2
 #: ../../ref/models/fields.txt:1642
@@ -2947,6 +3002,8 @@ msgid ""
 "Method called prior to :meth:`get_db_prep_save` to prepare the value before "
 "being saved (e.g. for :attr:`DateField.auto_now`)."
 msgstr ""
+"Метод вызывается перед :meth:`get_db_prep_save`, чтобы подготовить значение "
+"перед сохранением (например, при :attr:`DateField.auto_now`)."
 
 # cef444cd4445404e8681f71f4a589ac5
 #: ../../ref/models/fields.txt:1645
@@ -2954,6 +3011,8 @@ msgid ""
 "``model_instance`` is the instance this field belongs to and ``add`` is "
 "whether the instance is being saved to the database for the first time."
 msgstr ""
+"``model_instance`` -- объект модели, к которому принадлежит поле, ``add`` -- "
+"указывает сохраняется ли объект первый раз в базу данных."
 
 # 16a340ad21e74fb69b99ac016cdcfcc4
 #: ../../ref/models/fields.txt:1649
@@ -2962,11 +3021,14 @@ msgid ""
 "``model_instance`` for this field. The attribute name is in ``self.attname`` "
 "(this is set up by :class:`~django.db.models.Field`)."
 msgstr ""
+"Должен вернуть значение соответствующего этому полю атрибута "
+"``model_instance``. Название атрибута можно получить из ``self.attname`` "
+"(устанавливается :class:`~django.db.models.Field`)."
 
 # 22dcf534066c4b3180338673873a4927
 #: ../../ref/models/fields.txt:1653
 msgid "See :ref:`preprocessing-values-before-saving` for usage."
-msgstr ""
+msgstr "Смотрите :ref:`preprocessing-values-before-saving`."
 
 # 4b4ed3d3c4c04f44b2d702c829ca11b3
 #: ../../ref/models/fields.txt:1655
@@ -2974,16 +3036,19 @@ msgid ""
 "Besides saving to the database, the field also needs to know how to "
 "serialize its value (inverse of :meth:`to_python`):"
 msgstr ""
+"Кроме сохранения в базу данных, поле также должно знать как сериализовать "
+"свое значение (процесс обратный :meth:`to_python`):"
 
 # 1656197ea011492183bbc4969040db1d
 #: ../../ref/models/fields.txt:1660
 msgid "Converts ``obj`` to a string. Used to serialize the value of the field."
 msgstr ""
+"Преобразует ``obj`` в строку. Используется при сериализации значения поля."
 
 # 0592d1c176b145eea071e422415593ce
 #: ../../ref/models/fields.txt:1662
 msgid "See :ref:`converting-model-field-to-serialization` for usage."
-msgstr ""
+msgstr "Смотрите :ref:`converting-model-field-to-serialization`."
 
 # e2a2fd90f6db4ccca80089bedc2be53e
 #: ../../ref/models/fields.txt:1664
@@ -2991,6 +3056,8 @@ msgid ""
 "When a lookup is used on a field, the value may need to be \"prepared\". "
 "Django exposes two methods for this:"
 msgstr ""
+"При использовании фильтрации по полю, может быть необходимо \"приготовить\" "
+"значение. Django используется для этого два метода:"
 
 # ba597668c0b047c6aad63e9bed1d4483
 #: ../../ref/models/fields.txt:1669
@@ -3003,6 +3070,13 @@ msgid ""
 "\"year\"``, ``\"month\"``, ``\"day\"``, ``\"isnull\"``, ``\"search\"``, ``"
 "\"regex\"``, and ``\"iregex\"``."
 msgstr ""
+"Преобразует ``value`` для использования в фильтрации в соответствии с "
+"используемой базой данных. ``lookup_type`` может быть одним из фильтров "
+"Django: ``\"exact\"``, ``\"iexact\"``, ``\"contains\"``, ``\"icontains\"``, "
+"``\"gt\"``, ``\"gte\"``, ``\"lt\"``, ``\"lte\"``, ``\"in\"``, ``\"startswith"
+"\"``, ``\"istartswith\"``, ``\"endswith\"``, ``\"iendswith\"``, ``\"range"
+"\"``, ``\"year\"``, ``\"month\"``, ``\"day\"``, ``\"isnull\"``, ``\"search"
+"\"``, ``\"regex\"`` и ``\"iregex\"``."
 
 # 3a469dca0e4a470f929595eb1dc9575f
 #: ../../ref/models/fields.txt:1679
@@ -3010,16 +3084,18 @@ msgid ""
 "If you are using :doc:`Custom lookups </ref/models/lookups>` the "
 "``lookup_type`` can be any ``lookup_name`` registered in the field."
 msgstr ""
+"Если вы используете :doc:`собственные фильтры </ref/models/lookups>`, "
+"``lookup_type`` может быть любым ``lookup_name``, зарегистрированным в поле."
 
 # 50c5935bc2cd4d7495ade6c0b9b0e93c
 #: ../../ref/models/fields.txt:1682
 msgid "See :ref:`preparing-values-for-use-in-database-lookups` for usage."
-msgstr ""
+msgstr "Смотрите :ref:`preparing-values-for-use-in-database-lookups`."
 
 # 4fe2e05f98fd454bbff68fb80e6741f0
 #: ../../ref/models/fields.txt:1686
 msgid "Similar to :meth:`get_db_prep_value`, but for performing a lookup."
-msgstr ""
+msgstr "Аналогичен :meth:`get_db_prep_value`, но используется при фильтрации."
 
 # 7af904ebf45041e79ffb42e80235001f
 #: ../../ref/models/fields.txt:1688
@@ -3029,6 +3105,10 @@ msgid ""
 "describes whether the value has already been prepared with :meth:"
 "`get_prep_lookup`."
 msgstr ""
+"Как и :meth:`get_db_prep_value`, используемое для запроса подключение "
+"передается в аргументе ``connection``. Дополнительно передается аргумент "
+"``prepared``, который указывает было ли значение преобразовано с помощью :"
+"meth:`get_prep_lookup`."
 
 # 1e65f50222aa497b8a5b894f56765a56
 #: ../../ref/models/fields.txt:1693
@@ -3036,6 +3116,8 @@ msgid ""
 "When using :class:`model forms <django.forms.ModelForm>`, the ``Field`` "
 "needs to know which form field it should be represented by:"
 msgstr ""
+"При использовании :class:`django.forms.ModelForm` ``Field`` должно указать, "
+"какое поле формы необходимо использовать для его представления в форме:"
 
 # ebb7457df0b646a98fa6c05394bc5050
 # 5a49337e18f64618b252f334bbd41efb
@@ -3056,21 +3138,24 @@ msgid ""
 "it uses :class:`~django.forms.CharField`; if ``choices_form_class`` is "
 "given, it returns :class:`~django.forms.TypedChoiceField`."
 msgstr ""
+"По умолчанию, если ``form_class`` и ``choices_form_class`` равны ``None``, "
+"возвращает :class:`~django.forms.CharField`. Если указан "
+"``choices_form_class``, вернет :class:`~django.forms.TypedChoiceField`."
 
 # 5ecdb4addc3e4cafbe6337ffd0edf59e
 #: ../../ref/models/fields.txt:1706
 msgid "See :ref:`specifying-form-field-for-model-field` for usage."
-msgstr ""
+msgstr "Смотрите :ref:`specifying-form-field-for-model-field`."
 
 # e43e74983b254f1ba8f13aa1a214ccd1
 #: ../../ref/models/fields.txt:1712
 msgid "Returns a 4-tuple with enough information to recreate the field:"
-msgstr ""
+msgstr "Возвращает 4-х элементный кортеж с информацией, как воссоздать поле:"
 
 # c691ffe8a30a42f4abb6cb78eaf4bc86
 #: ../../ref/models/fields.txt:1714
 msgid "The name of the field on the model."
-msgstr ""
+msgstr "Название поля в модели."
 
 # 341075539a654020a5062b11819fd1c4
 #: ../../ref/models/fields.txt:1715
@@ -3078,6 +3163,9 @@ msgid ""
 "The import path of the field (e.g. ``\"django.db.models.IntegerField\"``). "
 "This should be the most portable version, so less specific may be better."
 msgstr ""
+"Путь для импорта класса поля (например, ``\"django.db.models.IntegerField"
+"\"``). Должен возвращаться максимально переносимый между платформами и "
+"версиями вариант."
 
 # f2df786f57d547b39cf855f10e9c4a8a
 #: ../../ref/models/fields.txt:1717
@@ -3087,7 +3175,7 @@ msgstr "Список позиционных аргументов."
 # e2c4ffe049d04f0c8d26b5615e16ad7d
 #: ../../ref/models/fields.txt:1718
 msgid "A dict of keyword arguments."
-msgstr ""
+msgstr "Словарь именованных аргументов."
 
 # 5e59f6bbcd0947e88b382641c3d92bf3
 #: ../../ref/models/fields.txt:1720
@@ -3095,6 +3183,8 @@ msgid ""
 "This method must be added to fields prior to 1.7 to migrate its data using :"
 "doc:`/topics/migrations`."
 msgstr ""
+"Этот метод должен быть добавлен полям, созданным до 1.7, для использования :"
+"doc:`/topics/migrations`."
 
 # 6010854b282b4f9bb639fb34bcb4632e
 #~ msgid "Has one **required** argument:"

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-07-14 17:18+0300\n"
+"PO-Revision-Date: 2014-09-29 18:19+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -253,7 +253,7 @@ msgstr ""
 # f1598950c2274242bb23dd75d8e12821
 #: ../../ref/models/querysets.txt:0
 msgid "You can't share pickles between versions"
-msgstr ""
+msgstr "нельзя переносить \"pickles\" между версиями"
 
 # 5138d41bc219471096f24197c2187b31
 #: ../../ref/models/querysets.txt:113
@@ -277,7 +277,7 @@ msgstr "QuerySet API"
 # 62561c601ce546a8b371220d4bac8e8d
 #: ../../ref/models/querysets.txt:124
 msgid "Here's the formal declaration of a ``QuerySet``:"
-msgstr ""
+msgstr "Вот документированное объявление ``QuerySet``:"
 
 # 53e27b9c3de54a2fbd32c666d6c04e4d
 #: ../../ref/models/querysets.txt:128
@@ -622,6 +622,8 @@ msgid ""
 "without incurring the cost of a JOIN, by referring to the ``_id`` of the "
 "related field::"
 msgstr ""
+"Обратите внимание, можно использовать сортировку по внешнему ключу без "
+"использования ``JOIN``::"
 
 # 0b0c59c51c0841ac9e6768b430ecd9ee
 #: ../../ref/models/querysets.txt:309
@@ -900,6 +902,11 @@ msgid ""
 "``Blog`` model defined an :attr:`~django.db.models.Options.ordering` by "
 "``name``::"
 msgstr ""
+"Обратите внимание, :meth:`order_by` используется сортировку, которая указана "
+"в связанной модели. Возможно вам понадобится явно отсортировать по внешнему "
+"ключу, или полю связанной модели, чтобы ``DISTINCT ON`` использовал поле "
+"аналогичное первому полю в ``ORDER BY``. Например, если модель ``Blog`` "
+"определена с :attr:`~django.db.models.Options.ordering` равным ``name``::"
 
 # 9bbc7283cda9457a93bb29e100c3d4d2
 #: ../../ref/models/querysets.txt:460
@@ -909,6 +916,10 @@ msgid ""
 "by the relation `_id` field (``blog_id`` in this case) or the referenced one "
 "(``blog__pk``) to make sure both expressions match."
 msgstr ""
+"...не будет работать т.к. запрос отсортирует по ``blog__name``, что не "
+"соответствует полю в ``DISTINCT ON``. Вам необходимо явно отсортировать по "
+"внешнему ключу (``blog_id`` в этому случае), или полю связанной модели "
+"(``blog__pk``), чтобы поля совпадали."
 
 # af5851511053417684d907a9326d9023
 #: ../../ref/models/querysets.txt:466
@@ -1018,6 +1029,8 @@ msgid ""
 "Calling :meth:`only()` and :meth:`defer()` after ``values()`` doesn't make "
 "sense, so doing so will raise a ``NotImplementedError``."
 msgstr ""
+"Вызов :meth:`only()` или :meth:`defer()` после ``values()`` не имеет смысла. "
+"В таком случае будет вызвано исключение ``NotImplementedError``."
 
 # 5a3f90d25b7b44c098e57cce9fd1d623
 #: ../../ref/models/querysets.txt:537
@@ -1026,6 +1039,9 @@ msgid ""
 "`defer()` after ``values()`` was allowed, but it either crashed or returned "
 "incorrect results."
 msgstr ""
+"Было добавлено поведение из последнего пункта. Ранее вызов :meth:`only()` "
+"или :meth:`defer()` после ``values()`` был разрешен, но он приводил к ошибке "
+"или возвращал не верный результат."
 
 # 1015bea283fc4547a2248e39469a320e
 #: ../../ref/models/querysets.txt:541
@@ -1041,15 +1057,14 @@ msgstr ""
 
 # e0be586998f34c22a49475475a9f6309
 #: ../../ref/models/querysets.txt:546
-#, fuzzy
 msgid ""
 "Finally, note that a ``ValuesQuerySet`` is a subclass of ``QuerySet`` and it "
 "implements most of the same methods. You can call ``filter()`` on it, "
 "``order_by()``, etc. That means that these two calls are identical::"
 msgstr ""
-"Заметим, что ``ValuesQuerySet`` подкласс ``QuerySet``, и содержит все методы "
-"``QuerySet``. Вы можете вызвать ``filter()`` или ``order_by()``, или любой "
-"другой метод. Это означает, что эти два куска кода идентичны::"
+"Заметим, что ``ValuesQuerySet`` подкласс ``QuerySet``, и содержит почти все "
+"методы ``QuerySet``. Вы можете вызвать ``filter()`` или ``order_by()``, или "
+"любой другой метод. Это означает, что эти два куска кода идентичны::"
 
 # d65a646eb811447a9b6958db3e21d60b
 #: ../../ref/models/querysets.txt:553
@@ -1165,6 +1180,8 @@ msgstr ""
 #: ../../ref/models/querysets.txt:617
 msgid "``dates`` used to return a list of :class:`datetime.datetime` objects."
 msgstr ""
+"``dates`` используется, чтобы получить список объектов :class:`datetime."
+"datetime`."
 
 # 4c676dfb14b54e969e866cc4eb76811d
 #: ../../ref/models/querysets.txt:619
@@ -1174,7 +1191,7 @@ msgstr "``field`` -- название поля модели типа ``DateField
 # af4c1ae4d2b647c596651163f56f0d46
 #: ../../ref/models/querysets.txt:623
 msgid "``dates`` used to accept operating on a ``DateTimeField``."
-msgstr ""
+msgstr "``dates`` может использоваться для ``DateTimeField``."
 
 # 7a8b45479ff14c29a5adbde580e97125
 #: ../../ref/models/querysets.txt:625
@@ -1354,6 +1371,10 @@ msgid ""
 "since a ``QuerySet`` was evaluated, you can get updated results for the same "
 "query by calling ``all()`` on a previously evaluated ``QuerySet``."
 msgstr ""
+"Если ``QuerySet`` был :ref:`выполнен <when-querysets-are-evaluated>`, он "
+"кэширует результат. Если данные в базе данных поменялись после выполнения "
+"``QuerySet``, вы можете получить обновленный результат запроса, вызывав "
+"``all()`` уже выполненного ``QuerySet``."
 
 # c49b527e87f04a66adda31c1a3327a74
 #: ../../ref/models/querysets.txt:730
@@ -1362,7 +1383,6 @@ msgstr "select_related"
 
 # 2dbb0260148b4133baccddfbf37f18eb
 #: ../../ref/models/querysets.txt:734
-#, fuzzy
 msgid ""
 "Returns a ``QuerySet`` that will \"follow\" foreign-key relationships, "
 "selecting additional related-object data when it executes its query. This is "
@@ -1370,9 +1390,8 @@ msgid ""
 "later use of foreign-key relationships won't require database queries."
 msgstr ""
 "Возвращает ``QuerySet`` который автоматически включает в выборку данные "
-"связанных объектов при выполнении запроса. Повышает производительность, но "
-"увеличивает(иногда значительно) объем получаемых данных, в результате, при "
-"доступе к связанным объектам через модель, не потребуются дополнительные "
+"связанных объектов при выполнении запроса. Повышает производительность, т.к. "
+"при доступе к связанным объектам через модель не потребуются дополнительные "
 "запросы в базу данных."
 
 # f4caa3922bd7491d99841d4199f56b42
@@ -1391,23 +1410,21 @@ msgstr "И с ``select_related``::"
 
 # e3f6354104e0493a9a828ef9334fdeea
 #: ../../ref/models/querysets.txt:757
-#, fuzzy
 msgid ""
 "You can follow foreign keys in a similar way to querying them. If you have "
 "the following models::"
 msgstr ""
-"``select_related()`` выбирает связанные объекты максимально доступной "
-"вложенности. Например, у нас есть такие модели::"
+"Можно указывать поля связанных моделей как и при запросе. Например, у нас "
+"есть такие модели::"
 
 # 26ababe5af374ddab78c493810a3d259
 #: ../../ref/models/querysets.txt:774
-#, fuzzy
 msgid ""
 "... then a call to ``Book.objects.select_related('person__city').get(id=4)`` "
 "will cache the related ``Person`` *and* the related ``City``::"
 msgstr ""
-"...тогда вызов ``Book.objects.select_related().get(id=4)`` получит данные "
-"связанных ``Person`` *и* связанных ``City``::"
+"...тогда вызов ``Book.objects.select_related('person__city').get(id=4)`` "
+"получит данные связанных ``Person`` *и* связанных ``City``::"
 
 # 7658fa95c6cc469d8ad2cc333a17d849
 #: ../../ref/models/querysets.txt:785
@@ -1416,6 +1433,8 @@ msgid ""
 "`~django.db.models.OneToOneField` relation in the list of fields passed to "
 "``select_related()``."
 msgstr ""
+"Вы можете указать любое :class:`~django.db.models.ForeignKey` или :class:"
+"`~django.db.models.OneToOneField` поле в ``select_related()``."
 
 # f0695e8976554521ad36bd94ee905e2b
 #: ../../ref/models/querysets.txt:789
@@ -1444,6 +1463,12 @@ msgid ""
 "is likely to make the underlying query more complex, and return more data, "
 "than is actually needed."
 msgstr ""
+"В некоторых ситуациях вам может понадобится указать большое количество полей "
+"в ``select_related()``, или вы просто не знаете всех связей. В таком случае "
+"можно использовать ``select_related()`` без аргументов. Будут использовать "
+"все связи кроме связей с ``null=True``, такие связи необходимо указывать "
+"явно. Такой способ не рекомендуется т.к. может привести к очень сложному "
+"запросу и получению большого количества ненужных данных."
 
 # 5782a17c48c4436e999a91a12322d796
 #: ../../ref/models/querysets.txt:805
@@ -1462,6 +1487,10 @@ msgid ""
 "``select_related('foo').select_related('bar')``. Previously the latter would "
 "have been equivalent to ``select_related('bar')``."
 msgstr ""
+"Несколько вызовов ``select_related`` теперь работает как и для других "
+"методов -- то есть ``select_related('foo', 'bar')`` аналогично "
+"``select_related('foo').select_related('bar')``. Ранее использовались поля "
+"только из последнего вызова."
 
 # c88e911f60014854a17560028894701a
 #: ../../ref/models/querysets.txt:818
@@ -1506,7 +1535,6 @@ msgstr ""
 
 # d3ca3301d5f04a74adc64b849150dec0
 #: ../../ref/models/querysets.txt:836
-#, fuzzy
 msgid ""
 "``prefetch_related``, on the other hand, does a separate lookup for each "
 "relationship, and does the 'joining' in Python. This allows it to prefetch "
@@ -1521,8 +1549,8 @@ msgstr ""
 "могут быть обработаны связи многое-ко-многим и многое-к-одному, которые не "
 "обрабатывает ``select_related``, в том числе и внешние ключи и связь один-к-"
 "одному поддерживаемые ``select_related``. Также поддерживается "
-"предварительная выборка для :class:`~django.contrib.contenttypes.generic."
-"GenericRelation` и :class:`~django.contrib.contenttypes.generic."
+"предварительная выборка для :class:`~django.contrib.contenttypes.fields."
+"GenericRelation` и :class:`~django.contrib.contenttypes.fields."
 "GenericForeignKey`."
 
 # 008a1928e12d487aa0ede700f59f8cb2
@@ -1537,14 +1565,13 @@ msgstr "и выполняется такой код::"
 
 # 753863380a5a47199cd6d3d853437c53
 #: ../../ref/models/querysets.txt:864
-#, fuzzy
 msgid ""
 "The problem with this is that every time ``Pizza.__str__()`` asks for ``self."
 "toppings.all()`` it has to query the database, so ``Pizza.objects.all()`` "
 "will run a query on the Toppings table for **every** item in the Pizza "
 "``QuerySet``."
 msgstr ""
-"Проблема в том, что ``Pizza.__unicode__()`` вызывая ``self.toppings.all()`` "
+"Проблема в том, что ``Pizza.__str__()`` вызывая ``self.toppings.all()`` "
 "выполняет запрос к базе данных, и ``Pizza.objects.all()`` выполнит запрос к "
 "таблице Toppings для **каждого** объекта Pizza в ``QuerySet``."
 
@@ -1692,7 +1719,6 @@ msgstr ""
 
 # 89590e17c2a44ebd8b013ceaf3c4d642
 #: ../../ref/models/querysets.txt:938
-#, fuzzy
 msgid ""
 "Chaining ``prefetch_related`` calls will accumulate the lookups that are "
 "prefetched. To clear any ``prefetch_related`` behavior, pass ``None`` as a "
@@ -1700,7 +1726,7 @@ msgid ""
 msgstr ""
 "Использование нескольких вызовов ``prefetch_related`` соберет вместе все "
 "предварительно загружаемые поля. Чтобы их обнулить, вызовите метод "
-"``prefetch_related`` с аргументом `None`::"
+"``prefetch_related`` с аргументом ``None``::"
 
 # 46a774303a8e4a7fa40a14a9936f9a7b
 #: ../../ref/models/querysets.txt:944
@@ -1768,6 +1794,8 @@ msgid ""
 "You can use the :class:`~django.db.models.Prefetch` object to further "
 "control the prefetch operation."
 msgstr ""
+"Вы можете использовать объект :class:`~django.db.models.Prefetch` для "
+"большего контроля предварительной загрузкой."
 
 # 4051bb4846aa42149f3f9710a874b24a
 #: ../../ref/models/querysets.txt:972
@@ -1775,6 +1803,8 @@ msgid ""
 "In its simplest form ``Prefetch`` is equivalent to the traditional string "
 "based lookups:"
 msgstr ""
+"В самом простом варианте ``Prefetch`` аналогичен обычному строковому "
+"аргументу:"
 
 # 442d1008dc0b4b28ad65f8d8187313ca
 #: ../../ref/models/querysets.txt:977
@@ -1782,6 +1812,8 @@ msgid ""
 "You can provide a custom queryset with the optional ``queryset`` argument. "
 "This can be used to change the default ordering of the queryset:"
 msgstr ""
+"Вы можете указать свой ``QuerySet`` в необязательном аргументе ``queryset``. "
+"Это позволяет переопределить сортировку по умолчанию:"
 
 # 0957cd7231384b5090623ddc85668277
 #: ../../ref/models/querysets.txt:983
@@ -1789,6 +1821,8 @@ msgid ""
 "Or to call :meth:`~django.db.models.query.QuerySet.select_related()` when "
 "applicable to reduce the number of queries even further:"
 msgstr ""
+"Или вызывать при возможности :meth:`~django.db.models.query.QuerySet."
+"select_related()`, чтобы уменьшить количество запросов еще больше:"
 
 # 552ab47663c54d8d9ecdf6263324fe4c
 #: ../../ref/models/querysets.txt:989
@@ -1796,6 +1830,8 @@ msgid ""
 "You can also assign the prefetched result to a custom attribute with the "
 "optional ``to_attr`` argument. The result will be stored directly in a list."
 msgstr ""
+"Можно также результат сохранить другом атрибуте, указав название в аргументе "
+"``to_attr``. Результат будет сохранен непосредственно в списке."
 
 # 3eca0cf340e047e7b0fb9411a2a290be
 #: ../../ref/models/querysets.txt:992
@@ -1803,6 +1839,8 @@ msgid ""
 "This allows prefetching the same relation multiple times with a different "
 "``QuerySet``; for instance:"
 msgstr ""
+"Это позволяет выполнить предварительную загрузку несколько раз для одной "
+"связи, используя разные ``QuerySet``. Например:"
 
 # 2c3696c3231149a8b6868c4d8b08da90
 #: ../../ref/models/querysets.txt:1000
@@ -1810,6 +1848,8 @@ msgid ""
 "Lookups created with custom ``to_attr`` can still be traversed as usual by "
 "other lookups:"
 msgstr ""
+"Результат с собственным ``to_attr`` может использоваться в аргументах "
+"запроса:"
 
 # e2ca428d3ff04e25aaa4a40b4f62659d
 #: ../../ref/models/querysets.txt:1008
@@ -1818,6 +1858,9 @@ msgid ""
 "it is less ambiguous than storing a filtered result in the related manager's "
 "cache:"
 msgstr ""
+"Использование ``to_attr`` рекомендуется при фильтрации результата "
+"предварительной загрузки т.к. это менее двусмысленно, чем сохранение "
+"результата фильтрации в кэше связывающего менеджера:"
 
 # b6dd7215109649ba9aca0759fdd2e57c
 #: ../../ref/models/querysets.txt:1023
@@ -1827,6 +1870,10 @@ msgid ""
 "`select_related()` for these relations, but there are a number of cases "
 "where prefetching with a custom ``QuerySet`` is useful:"
 msgstr ""
+"Предварительная загрузка работает и для связей один ко многим, таких как "
+"``ForeignKey`` или ``OneToOneField``. Обычно для них используется :meth:"
+"`select_related()`, но есть несколько случаев, когда может быть полезна "
+"предварительная загрузка с собственным ``QuerySet``:"
 
 # d003fd311a38423d9efc0db46a261c9a
 #: ../../ref/models/querysets.txt:1028
@@ -1834,11 +1881,13 @@ msgid ""
 "You want to use a ``QuerySet`` that performs further prefetching on related "
 "models."
 msgstr ""
+"Вы хотите использовать ``QuerySet``, который выполняет предварительную "
+"загрузку для связанной модели."
 
 # 5cc1d74b4d0b4c69818f569f2b0df3d7
 #: ../../ref/models/querysets.txt:1031
 msgid "You want to prefetch only a subset of the related objects."
-msgstr ""
+msgstr "Вы хотите загрузить только часть связанных объектов."
 
 # b6db7bd0b7e04a8f841bd7d1cd31cf81
 #: ../../ref/models/querysets.txt:1033
@@ -1846,17 +1895,17 @@ msgid ""
 "You want to use performance optimization techniques like :meth:`deferred "
 "fields <defer()>`:"
 msgstr ""
+"Вы хотите оптимизировать запрос, :meth:`отфильтровав часть полей <defer()>`:"
 
 # 8f7c4b1b400b4120b9e1e8f2056704fa
 #: ../../ref/models/querysets.txt:1043
 msgid "The ordering of lookups matters."
-msgstr ""
+msgstr "Порядок аргументов имеет значение."
 
 # 248e3fa46c6d4b0f803835cc5e32b274
 #: ../../ref/models/querysets.txt:1045
-#, fuzzy
 msgid "Take the following examples:"
-msgstr "Возьмем следующие модели::"
+msgstr "Возьмем следующие примеры::"
 
 # f8829ccd114f49cdb0961858f7b27778
 #: ../../ref/models/querysets.txt:1049
@@ -1865,6 +1914,8 @@ msgid ""
 "contains all the needed information, therefore the second argument "
 "``'pizzas'`` is actually redundant."
 msgstr ""
+"В это примере ``'pizzas__toppings'`` уже получает всю необходимую "
+"информацию, поэтому ``'pizzas'`` лишний. (FIXME)"
 
 # 054c62e9a0bd4a89a777c3c2bc5c18d7
 #: ../../ref/models/querysets.txt:1055
@@ -1874,6 +1925,9 @@ msgid ""
 "created to traverse ``'pizzas'`` as part of the ``'pizzas__toppings'`` "
 "lookup."
 msgstr ""
+"Вызовет ``ValueError`` при попытке подменить ``QuerySet`` предыдущей "
+"перезагрузки. Обратите внимание, неявно был создан ``QuerySet`` ``'pizzas'`` "
+"для ``'pizzas__toppings'``."
 
 # 9c0cf7801dec47b2a38a9daf95f42d86
 #: ../../ref/models/querysets.txt:1062
@@ -1881,6 +1935,8 @@ msgid ""
 "This will trigger an ``AttributeError`` because ``'pizza_list'`` doesn't "
 "exist yet when ``'pizza_list__toppings'`` is being processed."
 msgstr ""
+"Вызовет ``AttributeError`` т.к. ``'pizza_list'`` еще не существует при "
+"обработке ``'pizza_list__toppings'``."
 
 # 41b2758567d94e2bb7d35903d192feed
 #: ../../ref/models/querysets.txt:1065
@@ -1890,6 +1946,10 @@ msgid ""
 "order to avoid creating extra queries; therefore it's recommended to always "
 "carefully order ``prefetch_related`` arguments."
 msgstr ""
+"Эти замечания относятся не только к использованию объектов ``Prefetch``. "
+"Продвинутые запросы требуют внимания, чтобы избежать лишних запросов. Но "
+"особенно внимательно следует относится к порядку аргументов для "
+"``prefetch_related``."
 
 # 3de60b9d93e9467288b16597a3aeafd4
 #: ../../ref/models/querysets.txt:1071
@@ -1917,6 +1977,10 @@ msgid ""
 "``params`` in order to protect against SQL injection attacks . Please read "
 "more about :ref:`SQL injection protection <sql-injection-protection>`."
 msgstr ""
+"Вы должны быть предельно осторожны при использовании ``extra()``. Необходимо "
+"экранировать все аргументы с помощью ``params``, которые передает "
+"пользователь, чтобы избежать SQL-инъекций. Смотрите раздел о :ref:`защите от "
+"SQL-инъекций <sql-injection-protection>`."
 
 # 06b847bf877049b8b0e89f52e3b22595
 #: ../../ref/models/querysets.txt:1087
@@ -2016,7 +2080,6 @@ msgstr ""
 
 # c8f82a29773e419780c274f05434651e
 #: ../../ref/models/querysets.txt:1139
-#, fuzzy
 msgid ""
 "In some rare cases, you might wish to pass parameters to the SQL fragments "
 "in ``extra(select=...)``. For this purpose, use the ``select_params`` "
@@ -2031,8 +2094,8 @@ msgstr ""
 "``select_params``. Так как ``select_params`` это последовательность, а "
 "атрибут ``select`` словарь, необходима некоторая внимательность, чтобы "
 "параметры корректно были добавлены в оператор ``SELECT``. В этом случае "
-"следует использовать a :class:`django.utils.datastructures.SortedDict` для "
-"значения ``select``, вместо обычного словаря Python."
+"следует использовать a :class:`collections.OrderedDict` для значения "
+"``select``, вместо обычного словаря Python."
 
 # 1923cc211ba8437b90a6ca5321cef560
 #: ../../ref/models/querysets.txt:1147
@@ -2221,6 +2284,12 @@ msgid ""
 "query for ``WHERE mycolumn=0``, both rows will match. To prevent this, "
 "perform the correct typecasting before using the value in a query."
 msgstr ""
+"Выполняя запрос в MySQL, обратите внимание на преобразование типов. Если  вы "
+"выполняете запрос по текстовому полю, но используете числовое значение, "
+"MySQL преобразует все значения поля в число перед сравнением. Например, если "
+"таблица содержит значения ``'abc'``, ``'def'`` и в запросе ``WHERE "
+"mycolumn=0``, обе строки попадут в результат. Чтобы избежать этого, "
+"используйте значение правильного типа в запросе."
 
 # 3afdacafdbad455b9e1e7a53ec7b6031
 #: ../../ref/models/querysets.txt:1254
@@ -2439,6 +2508,8 @@ msgid ""
 "Using :meth:`only` and omitting a field requested using :meth:"
 "`select_related` is an error as well."
 msgstr ""
+"При использовании :meth:`only` без полей, указанных в :meth:"
+"`select_related`, будет вызвано исключение."
 
 # be693002305d4620b81f6195a5f605e7
 #: ../../ref/models/querysets.txt:1379
@@ -2514,14 +2585,13 @@ msgstr ""
 
 # 07555036d70443c1abefc233b4f6a63e
 #: ../../ref/models/querysets.txt:1424
-#, fuzzy
 msgid ""
 "Passing ``nowait=True`` to ``select_for_update()`` using database backends "
 "that do not support ``nowait``, such as MySQL, will cause a :exc:`~django.db."
 "DatabaseError` to be raised. This is in order to prevent code unexpectedly "
 "blocking."
 msgstr ""
-"Использование ``nowait=True`` в ``select_for_update`` для базы данных, "
+"Использование ``nowait=True`` в ``select_for_update()`` для базы данных, "
 "которая не поддерживает ``nowait``, такой как MySQL, вызовет исключение :exc:"
 "`~django.db.DatabaseError`. Это делается чтобы предотвратить непредвиденную "
 "блокировку кода."
@@ -2535,16 +2605,21 @@ msgid ""
 "corruption and could easily be caused by calling code that expects to be run "
 "in a transaction outside of one."
 msgstr ""
+"Выполнение выборки с ``select_for_update()`` в autocommit режиме вызовет :"
+"exc:`~django.db.transaction.TransactionManagementError` т.к. строки не будут "
+"заблокированы в этом случае. Если разрешить такое выполнение, это может "
+"привести к повреждению данных т.к. код рассчитывает, что будет выполнен в "
+"транзакции, хотя это не так."
 
 # 468b0dff8e6147dbafa260f11136e211
 #: ../../ref/models/querysets.txt:1435
-#, fuzzy
 msgid ""
 "Using ``select_for_update()`` on backends which do not support ``SELECT ... "
 "FOR UPDATE`` (such as SQLite) will have no effect."
 msgstr ""
-"Использование ``select_for_update`` с базой данных, которая не поддерживает "
-"``SELECT ... FOR UPDATE`` (например, SQLite) не будет иметь никакого эффекта."
+"Использование ``select_for_update()`` с базой данных, которая не "
+"поддерживает ``SELECT ... FOR UPDATE`` (например, SQLite) не будет иметь "
+"никакого эффекта."
 
 # e560ebec387645f3b04d3e19f39214ca
 #: ../../ref/models/querysets.txt:1440
@@ -2552,6 +2627,8 @@ msgid ""
 "It is now an error to execute a query with ``select_for_update()`` in "
 "autocommit mode. With earlier releases in the 1.6 series it was a no-op."
 msgstr ""
+"Использовании ``select_for_update()`` в autocommit режиме теперь вызывает "
+"исключение."
 
 # 2928727d46b24614b5bf42f8e9d0790d
 #: ../../ref/models/querysets.txt:1445
@@ -2564,11 +2641,18 @@ msgid ""
 "``select_for_update()`` you should use :class:`~django.test."
 "TransactionTestCase`."
 msgstr ""
+"Хотя ``select_for_update()`` вызывает ошибку в autocommit режиме, т.к. :"
+"class:`~django.test.TestCase` автоматически использует транзакцию для "
+"каждого теста, вызов ``select_for_update()`` в ``TestCase`` даже вне блока :"
+"func:`~django.db.transaction.atomic()` будет выполнен без ошибки "
+"``TransactionManagementError``. Для правильного тестирования "
+"``select_for_update()`` используйте :class:`~django.test."
+"TransactionTestCase`."
 
 # 96754e30161f42b88fca1f5ba08ab429
 #: ../../ref/models/querysets.txt:1454
 msgid "raw"
-msgstr ""
+msgstr "raw"
 
 # 2d663e00e4fd40f1b9b9d8ffee9e7065
 #: ../../ref/models/querysets.txt:1460
@@ -2576,6 +2660,8 @@ msgid ""
 "``raw`` was moved to the ``QuerySet`` class. It was previously only on :"
 "class:`~django.db.models.Manager`."
 msgstr ""
+"``raw`` был перенесен в класс ``QuerySet``. Ранее был доступен только в :"
+"class:`~django.db.models.Manager`."
 
 # 3b007fe3fd6b4dd5b3a9de99e751d6c8
 #: ../../ref/models/querysets.txt:1463
@@ -2584,11 +2670,14 @@ msgid ""
 "RawQuerySet`` instance. This ``RawQuerySet`` instance can be iterated over "
 "just like an normal ``QuerySet`` to provide object instances."
 msgstr ""
+"Принимает SQL запрос, выполняет его и возвращает объект ``django.db.models."
+"query.RawQuerySet``. Этот объект ``RawQuerySet`` может быть проитерирован "
+"как и обычный ``QuerySet`` для получения объектов результата."
 
 # 3b801ed5ae9f4abca0ea2789f911b6ea
 #: ../../ref/models/querysets.txt:1467
 msgid "See the :doc:`/topics/db/sql` for more information."
-msgstr ""
+msgstr "Смотрите :doc:`/topics/db/sql`."
 
 # 933fcb87ad454b12b772fd4a2c7d47b8
 #: ../../ref/models/querysets.txt:1471
@@ -2597,6 +2686,9 @@ msgid ""
 "filtering. As such, it should generally be called from the ``Manager`` or "
 "from a fresh ``QuerySet`` instance."
 msgstr ""
+"``raw()`` всегда выполняет новый запрос к базе данных и игнорирует "
+"предыдущую фильтрацию. По этому следует вызывать его из ``Manager`` или "
+"чистого объекта ``QuerySet``."
 
 # cf54942aad72476b975aeab0c6d46b05
 #: ../../ref/models/querysets.txt:1476
@@ -2728,7 +2820,7 @@ msgstr ""
 # b014e830075744ff8728686028c73565
 #: ../../ref/models/querysets.txt:1548
 msgid "Older versions of Django required ``kwargs``."
-msgstr ""
+msgstr "Предыдущие версии Django требуют ``kwargs``."
 
 # 0b3c276a1737474fa728a52a3e7d52f1
 #: ../../ref/models/querysets.txt:1550
@@ -2855,7 +2947,6 @@ msgstr ""
 
 # 5ac92a346afa45b5b51f2c59c4dd87e3
 #: ../../ref/models/querysets.txt:1615
-#, fuzzy
 msgid ""
 "Finally, a word on using ``get_or_create()`` in Django views. Please make "
 "sure to use it only in ``POST`` requests unless you have a good reason not "
@@ -2864,12 +2955,11 @@ msgid ""
 "more, see `Safe methods`_ in the HTTP spec."
 msgstr ""
 "Наконец, несколько слов об использовании``get_or_create()`` в представлениях "
-"Django. Если вам нужно использовать ``get_or_create()`` в представлении, "
-"пожалуйста используйте его только для ``POST`` запросов, если только у вас "
-"нет основательных причин не делать этого. Запросы ``GET`` не должны влиять "
-"на данные; используйте запрос ``POST`` для изменения данных. Подробнее "
-"смотрите раздел о `безопасных методах <http://www.w3.org/Protocols/rfc2616/"
-"rfc2616-sec9.html#sec9.1.1>`_ в спецификации HTTP."
+"Django. Пожалуйста используйте его только для ``POST`` запросов, если только "
+"у вас нет основательных причин не делать этого. Запросы ``GET`` не должны "
+"влиять на данные; используйте запрос ``POST`` для изменения данных. "
+"Подробнее смотрите раздел о `безопасных методах <http://www.w3.org/Protocols/"
+"rfc2616/rfc2616-sec9.html#sec9.1.1>`_ в спецификации HTTP."
 
 # cf17f1902a8b46578d58abff9d2123b3
 #: ../../ref/models/querysets.txt:1625
@@ -2913,33 +3003,30 @@ msgstr ""
 
 # 733254dc1264496dbe4cb36d871b2d9b
 #: ../../ref/models/querysets.txt:1658
-#, fuzzy
 msgid "update_or_create"
-msgstr "get_or_create"
+msgstr "update_or_create"
 
 # e3c560b3981d4cfcbf09766623b6825e
 #: ../../ref/models/querysets.txt:1664
-#, fuzzy
 msgid ""
 "A convenience method for updating an object with the given ``kwargs``, "
 "creating a new one if necessary. The ``defaults`` is a dictionary of (field, "
 "value) pairs used to update the object."
 msgstr ""
-"Удобный метод для поиска объекта по заданным параметрам поиска ``kwargs`` "
-"(может быть пустым, если все поля содержат значения по умолчанию), и "
-"создания нового при необходимости."
+"Удобный метод для обновления объекта по заданным параметрам поиска "
+"``kwargs`` и создания нового при необходимости. ``defaults`` -- словарь "
+"полей и значений для обновления объекта."
 
 # 0b3c276a1737474fa728a52a3e7d52f1
 #: ../../ref/models/querysets.txt:1668
-#, fuzzy
 msgid ""
 "Returns a tuple of ``(object, created)``, where ``object`` is the created or "
 "updated object and ``created`` is a boolean specifying whether a new object "
 "was created."
 msgstr ""
 "Возвращает кортеж ``(object, created)``, где ``object`` полученный или "
-"созданный объект и ``created`` -- булево значение, указывающее был ли создан "
-"объект."
+"обновленный объект и ``created`` -- булево значение, указывающее был ли "
+"создан объект."
 
 # 499e8dd424e549158b7bc6ca71b74aa5
 #: ../../ref/models/querysets.txt:1672
@@ -2948,17 +3035,19 @@ msgid ""
 "on the given ``kwargs``. If a match is found, it updates the fields passed "
 "in the ``defaults`` dictionary."
 msgstr ""
+"Метод ``update_or_create`` пытается получить объект из базы данных, "
+"используя ``kwargs``. Если объект найден, он обновляет поля указанные в "
+"``defaults``."
 
 # 69f33df6b87b42b1850c128fb7f06ed9
 #: ../../ref/models/querysets.txt:1688
-#, fuzzy
 msgid ""
 "This pattern gets quite unwieldy as the number of fields in a model goes up. "
 "The above example can be rewritten using ``update_or_create()`` like so::"
 msgstr ""
 "Такой способ становится весьма громоздким при увеличении количества полей "
 "модели. Пример выше может быть переписан с использованием метода "
-"``get_or_create()``::"
+"``update_or_create()``::"
 
 # cbd620b00d9346008453667ed128eb09
 #: ../../ref/models/querysets.txt:1694
@@ -2966,6 +3055,8 @@ msgid ""
 "For detailed description how names passed in ``kwargs`` are resolved see :"
 "meth:`get_or_create`."
 msgstr ""
+"Подробности о том, как обрабатывается ``kwargs``, смотрите в описании :meth:"
+"`get_or_create`."
 
 # 3e07a1346a154a9bb6616717d126c70c
 #: ../../ref/models/querysets.txt:1697
@@ -2974,6 +3065,9 @@ msgid ""
 "condition which can result in multiple rows being inserted simultaneously if "
 "uniqueness is not enforced at the database level."
 msgstr ""
+"Как описано выше в :meth:`get_or_create`, этот метод подвержен состоянию "
+"гонки, что может привести к созданию одинаковых строк в базе данных, если "
+"уникальность полей не контролируется на уровне базы данных."
 
 # d429abc1e645455c940147c50ab985cd
 #: ../../ref/models/querysets.txt:1702
@@ -3023,11 +3117,10 @@ msgstr ""
 # 16f0d7804f364b7c9a9eb9380bf1fb63
 #: ../../ref/models/querysets.txt:1723
 msgid "It does not work with many-to-many relationships."
-msgstr ""
+msgstr "Не работает со связями многое-ко-многим."
 
 # f65561fbfeb84c8a9d7f34247b36b679
 #: ../../ref/models/querysets.txt:1725
-#, fuzzy
 msgid ""
 "The ``batch_size`` parameter controls how many objects are created in single "
 "query. The default is to create all objects in one batch, except for SQLite "
@@ -3587,13 +3680,12 @@ msgstr ""
 
 # d1fdf64b1c9344908c5be2a25a0fdec0
 #: ../../ref/models/querysets.txt:2064
-#, fuzzy
 msgid ""
 "ForeignKeys which are set to :attr:`~django.db.models.ForeignKey.on_delete` "
 "``DO_NOTHING`` do not prevent taking the fast-path in deletion."
 msgstr ""
 "Внешние ключи со значением :attr:`~django.db.models.ForeignKey.on_delete` "
-"DO_NOTHING не мешают быстрому удалению."
+"``DO_NOTHING`` не мешают быстрому удалению."
 
 # 8dcfa05df51b4108ac3173385f3f448d
 #: ../../ref/models/querysets.txt:2067
@@ -3607,7 +3699,7 @@ msgstr ""
 # a58a0f02305d4c7ea1a0570c703e261d
 #: ../../ref/models/querysets.txt:2071
 msgid "as_manager"
-msgstr ""
+msgstr "as_manager"
 
 # f3bf567b6bad4befa362bcd7f10e9fee
 #: ../../ref/models/querysets.txt:2077
@@ -3616,6 +3708,9 @@ msgid ""
 "with a copy of the ``QuerySet``’s methods. See :ref:`create-manager-with-"
 "queryset-methods` for more details."
 msgstr ""
+"Метод класса, который возвращает экземпляр :class:`~django.db.models."
+"Manager`, который содержит копию методов ``QuerySet``. Смотрите :ref:`create-"
+"manager-with-queryset-methods`."
 
 # 6f7c8ae944d44149a7f4ff47bcd9d252
 #: ../../ref/models/querysets.txt:2084
@@ -3648,6 +3743,8 @@ msgid ""
 "Django's inbuilt lookups are listed below. It is also possible to write :doc:"
 "`custom lookups </howto/custom-lookups>` for model fields."
 msgstr ""
+"Встроенные фильтры Django представлены ниже. Также можно создать :doc:"
+"`собственный фильтр </howto/custom-lookups>` для поля модели."
 
 # 3576bdef87c64b289729f7109a0d0888
 #: ../../ref/models/querysets.txt:2096
@@ -3655,6 +3752,8 @@ msgid ""
 "As a convenience when no lookup type is provided (like in ``Entry.objects."
 "get(id=14)``) the lookup type is assumed to be :lookup:`exact`."
 msgstr ""
+"По умолчанию, если тип фильтра явно не указан (например, ``Entry.objects."
+"get(id=14)``), подразумевается :lookup:`exact`."
 
 # bca209d42092487e9964c7652b9a211b
 #: ../../ref/models/querysets.txt:2102
@@ -3682,7 +3781,7 @@ msgstr "Аналог SQL::"
 # d336d94e2981416cab4f703c9a8b483a
 #: ../../ref/models/querysets.txt:0
 msgid "MySQL comparisons"
-msgstr ""
+msgstr "Сравнение в MySQL"
 
 # 56ead27abcc8461283aa4cf1d6797f50
 #: ../../ref/models/querysets.txt:2119
@@ -3712,24 +3811,21 @@ msgstr "Регистронезависимое точное совпадение
 
 # a9234d56d6b84edbbf3b8d8794028b17
 #: ../../ref/models/querysets.txt:2135
-#, fuzzy
 msgid ""
 "If the value provided for comparison is ``None``, it will be interpreted as "
 "an SQL ``NULL`` (see :lookup:`isnull` for more details)."
 msgstr ""
-"Точное совпадение. Если передано значение ``None``, оно будет "
-"интерпретировано как SQL ``NULL`` (смотрите подробности в описании :lookup:"
-"`isnull`)."
+"Если передано значение ``None``, оно будет интерпретировано как SQL ``NULL`` "
+"(смотрите подробности в описании :lookup:`isnull`)."
 
 # 24fc5adf9f7c4fafab99fa1468e29d2b
 #: ../../ref/models/querysets.txt:2148
-#, fuzzy
 msgid ""
 "Note the first query will match ``'Beatles Blog'``, ``'beatles blog'``, "
 "``'BeAtLes BLoG'``, etc."
 msgstr ""
-"Заметим что будет найден ``'Beatles Blog'``, ``'beatles blog'``, ``'BeAtLes "
-"BLoG'`` и тд."
+"Обратите внимание, будет найден ``'Beatles Blog'``, ``'beatles blog'``, "
+"``'BeAtLes BLoG'`` и тд."
 
 # 5721949e947344ab938e482a15c53876
 # 753c500df00346ea825479d890567eb0
@@ -3739,7 +3835,7 @@ msgstr ""
 # cdeef32237c64a06ba3c4d8d28eccddd
 #: ../../ref/models/querysets.txt:0
 msgid "SQLite users"
-msgstr ""
+msgstr "Пользователям SQLite"
 
 # 31922d4f9efd46af950059bc8e326b70
 #: ../../ref/models/querysets.txt:2153
@@ -3878,7 +3974,7 @@ msgstr ""
 # 85c53b20156f42f7b4521042293c1446
 #: ../../ref/models/querysets.txt:0
 msgid "Performance considerations"
-msgstr ""
+msgstr "О производительности"
 
 # 1894acc1d7c04b8da51f2a490e298bef
 #: ../../ref/models/querysets.txt:2248
@@ -4323,7 +4419,7 @@ msgstr ""
 # caee78aebf2f4f4e9c8957d01ae7fe68
 #: ../../ref/models/querysets.txt:0
 msgid "Note"
-msgstr ""
+msgstr "Внимание"
 
 # 010ff6e66c4649f3acae157f5ada54e1
 #: ../../ref/models/querysets.txt:2679
@@ -4333,6 +4429,10 @@ msgid ""
 "``0`` if the ``QuerySet`` contains no entries. An exception is ``Count``, "
 "which does return ``0`` if the ``QuerySet`` is empty."
 msgstr ""
+"Функция агрегации вернет ``None``, если используется для пустого "
+"``QuerySet``. Например, ``Sum`` вернет ``None`` вместо ``0``, если "
+"``QuerySet`` не содержит записей. Исключением является ``Count``, который "
+"вернет ``0`` для пустого ``QuerySet``."
 
 # b62b96d46a654d3491ba4da2641de110
 #: ../../ref/models/querysets.txt:2685
@@ -4464,7 +4564,7 @@ msgstr ""
 # 1560d8b820ba4d34836a95d0a611ed4d
 #: ../../ref/models/querysets.txt:0
 msgid "SQLite"
-msgstr ""
+msgstr "SQLite"
 
 # 3e965735e1444d8885183edd5981400c
 #: ../../ref/models/querysets.txt:2751
