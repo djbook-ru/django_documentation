@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-10-03 19:29+0300\n"
+"PO-Revision-Date: 2014-10-05 11:56+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -131,6 +131,10 @@ msgid ""
 "it should be sent using the HTTP mechanism specified by the ``method`` "
 "attribute - ``post``."
 msgstr ""
+"Форма также говорит браузеру, что данные должны оправляться на URL, "
+"указанный в атрибуте ``action`` тега ``<form>`` - ``/admin/`` - и для "
+"отправки необходимо использовать HTTP метод, указанный атрибуте ``method`` - "
+"``post``."
 
 # 0492b3af633d4202b28744dcf2605457
 #: ../../topics/forms/index.txt:53
@@ -138,11 +142,13 @@ msgid ""
 "When the ``<input type=\"submit\" value=\"Log in\">`` element is triggered, "
 "the data is returned to ``/admin/``."
 msgstr ""
+"При нажатии на элемент ``<input type=\"submit\" value=\"Log in\">`` данные "
+"будут отправлены на ``/admin/``."
 
 # fad9595e61f74471978059b0fcb76105
 #: ../../topics/forms/index.txt:57
 msgid "``GET`` and ``POST``"
-msgstr ""
+msgstr "``GET`` или ``POST``"
 
 # 4a857df04ca743038538a0840bb822d4
 #: ../../topics/forms/index.txt:59
@@ -150,6 +156,8 @@ msgid ""
 "``GET`` and ``POST`` are the only HTTP methods to use when dealing with "
 "forms."
 msgstr ""
+"``GET`` и ``POST`` -- единственные HTTP методы, которые используются для "
+"форм."
 
 # 62d4f4e81a5e4a38a0e0dbbceb07df10
 #: ../../topics/forms/index.txt:61
@@ -158,6 +166,9 @@ msgid ""
 "browser bundles up the form data, encodes it for transmission, sends it back "
 "to the server, and then receives its response."
 msgstr ""
+"Форма авторизации в Django использует ``POST`` метод. При отправке формы "
+"браузер собирает все данные формы, кодирует для отправки, отправляет на "
+"сервер и получает ответ."
 
 # 850df24608ed437a808cf681030cc64d
 #: ../../topics/forms/index.txt:65
@@ -168,11 +179,16 @@ msgid ""
 "do a search in the Django documentation, which will produce a URL of the "
 "form ``https://docs.djangoproject.com/search/?q=forms&release=1``."
 msgstr ""
+"При ``GET``, в отличии от ``POST``, данные собираются в строку и передаются "
+"в URL. URL содержит адрес, куда отправлять данные, и данные для отправки. "
+"Пример работы можно посмотреть на странице поиска по документации Django. "
+"При оправке формы поиска, вы будете перенаправлены на URL ``https://docs."
+"djangoproject.com/search/?q=forms&release=1``."
 
 # 237321139f5b4c51816fffd62e2939ad
 #: ../../topics/forms/index.txt:71
 msgid "``GET`` and ``POST`` are typically used for different purposes."
-msgstr ""
+msgstr "``GET`` и ``POST`` обычно используются для разных действий."
 
 # 19968e980156498eb77381cc7f769399
 #: ../../topics/forms/index.txt:73
@@ -182,6 +198,9 @@ msgid ""
 "``GET`` should be used only for requests that do not affect the state of the "
 "system."
 msgstr ""
+"Любой запрос, который может изменить состояние системы - например, который "
+"изменяет данные в базе данных - должен использовать ``POST``. ``GET`` должен "
+"использоваться для запросов, которые не влияют на состояние системы."
 
 # a4bd777610994ddaa8c2cfe1a5141669
 #: ../../topics/forms/index.txt:77
@@ -195,6 +214,14 @@ msgid ""
 "system. ``POST``, coupled with other protections like Django's :doc:`CSRF "
 "protection </ref/contrib/csrf/>` offers more control over access."
 msgstr ""
+"Не следует использовать ``GET`` для формы с паролем, т.к. пароль появится в "
+"URL, а следовательно в истории браузера и логах сервера. Также он не "
+"подходит для отправки большого количества данных или бинарных данных, "
+"например, изображения. Web-приложение, которое использует ``GET`` запросы в "
+"админке, подвержено атакам: не сложно подделать форму для запроса на сервер "
+"и получить важные данные о системе. ``POST`` использует дополнительные "
+"механизмы защиты, например, :doc:`CSRF защиту </ref/contrib/csrf/>`, и "
+"предоставляет больше контроля за доступом к данным."
 
 # 96f1e46fe1d54f9ba665cdc1f3a40feb
 #: ../../topics/forms/index.txt:86
@@ -203,11 +230,14 @@ msgid ""
 "because the URLs that represent a ``GET`` request can easily be bookmarked, "
 "shared, or resubmitted."
 msgstr ""
+"``GET`` удобен для таких вещей, как форма поиска, т.к. URL, который "
+"представляет ``GET`` запрос, можно легко сохранить в избранное или отправить "
+"по почте."
 
 # f6517f956ec34e2aa5a8722711a69a8f
 #: ../../topics/forms/index.txt:91
 msgid "Django's role in forms"
-msgstr ""
+msgstr "Роль Django в формах"
 
 # df311049b0974a74acffe86d4729ccb0
 #: ../../topics/forms/index.txt:93
@@ -218,6 +248,11 @@ msgid ""
 "interface, returned to the server, validated and cleaned up, and then saved "
 "or passed on for further processing."
 msgstr ""
+"Работа с формами -- довольно не простая задача. Возьмем админку Django. "
+"Необходимо подготовить для отображения в форме большое количество данных "
+"разного типа, отобразить форму в HTML, создать удобный интерфейс для "
+"редактирования, получить данные на сервере, проверить и преобразовать в "
+"нужный формат, и в конце сохранить или передать для дальнейшей обработки."
 
 # f399c7f7595c49839d73a7f6a8357329
 #: ../../topics/forms/index.txt:99
@@ -226,26 +261,29 @@ msgid ""
 "work, and can also do it more securely than most programmers would be able "
 "to do in code they wrote themselves."
 msgstr ""
+"Формы Django могут упростить и автоматизировать большую часть этого "
+"процесса, и могут сделать это проще и надежнее, чем код, написанный "
+"большинством программистов."
 
 # 931dd9496d1c42b2b4bd0c00f69450dc
 #: ../../topics/forms/index.txt:103
 msgid "Django handles three distinct parts of the work involved in forms:"
-msgstr ""
+msgstr "Django позволяет:"
 
 # ae667d63e56e4ecdbf1d2f26df02b6a8
 #: ../../topics/forms/index.txt:105
 msgid "preparing and restructuring data ready for rendering"
-msgstr ""
+msgstr "подготовить данные для отображения в форме"
 
 # 97c23017598049ed87b4612c6cd3b2e1
 #: ../../topics/forms/index.txt:106
 msgid "creating HTML forms for the data"
-msgstr ""
+msgstr "создать HTML формы для данных"
 
 # 5030482ba3d74caf87b59fb932b67c6a
 #: ../../topics/forms/index.txt:107
 msgid "receiving and processing submitted forms and data from the client"
-msgstr ""
+msgstr "получить и обработать отправленные формой данные"
 
 # fadb775b8f7544de92f4919b6abab402
 #: ../../topics/forms/index.txt:109
@@ -253,11 +291,13 @@ msgid ""
 "It is *possible* to write code that does all of this manually, but Django "
 "can take care of it all for you."
 msgstr ""
+"Вы *можете* написать код, который все это будет делать, но Django может "
+"выполнить большую часть самостоятельно."
 
 # 1e8c4ef364db42639d0964de23be7f37
 #: ../../topics/forms/index.txt:113
 msgid "Forms in Django"
-msgstr ""
+msgstr "Формы в Django"
 
 # a6bca728cd124ce2b3f5d84eceac34bf
 #: ../../topics/forms/index.txt:115
@@ -265,6 +305,8 @@ msgid ""
 "We've described HTML forms briefly, but an HTML ``<form>`` is just one part "
 "of the machinery required."
 msgstr ""
+"Мы уже описали HTML формы, но HTML ``<form>`` только часть необходимого "
+"механизма."
 
 # 3776c405ab764664adbcd68607d90fb0
 #: ../../topics/forms/index.txt:118
@@ -274,11 +316,14 @@ msgid ""
 "structured data returned when it is submitted, or to the end-to-end working "
 "collection of these parts."
 msgstr ""
+"В контексте Web приложения 'form' может означать HTML ``<form>``, или класс "
+"Django :class:`Form`, который создает HTML формы, или данне, которые "
+"передаются при отправке формы, или ко всему механизму вместе."
 
 # cfc2fb3540844723aa06c19999d05716
 #: ../../topics/forms/index.txt:124
 msgid "The Django :class:`Form` class"
-msgstr ""
+msgstr "Класс Django :class:`Form`"
 
 # aeafbb144f5549e18fd2d9445ef6b991
 #: ../../topics/forms/index.txt:126
@@ -288,6 +333,9 @@ msgid ""
 "an object, its behavior, and the way its parts are represented to us, a :"
 "class:`Form` class describes a form and determines how it works and appears."
 msgstr ""
+"Сердце всего механизма -- класс :class:`Form`. Как и модель в Django, "
+"которая описывает структуру объекта, его поведение и представление, :class:"
+"`Form` описывает форму, как она работает и показывается пользователю."
 
 # 6dc5be1347094ba88f45398a07dd1996
 #: ../../topics/forms/index.txt:131
@@ -297,6 +345,10 @@ msgid ""
 "maps a model class's fields to HTML form ``<input>`` elements via a :class:"
 "`Form`; this is what the Django admin is based upon.)"
 msgstr ""
+"Как поля модели представляют поля в базе данных, поля формы представляют "
+"HTML ``<input>`` элементы. (:class:`ModelForm` отображает поля модели в виде "
+"HTML ``<input>`` элементов, используя :class:`Form`. Используется в админке "
+"Django.)"
 
 # 4e93ca1fc48d4004b146f8dc48fd1eda
 #: ../../topics/forms/index.txt:136
@@ -306,6 +358,9 @@ msgid ""
 "`FileField` handle very different kinds of data and have to do different "
 "things with it."
 msgstr ""
+"Поля формы сами являются классами. Они управляют данными формы и выполняют "
+"их проверку при отправке формы. Например, :class:`DateField` и :class:"
+"`FileField` работают с разными данными и выполняют разные действия с ними."
 
 # 2b1d7cbc37af4e2f984f7eb1e66ea0ec
 #: ../../topics/forms/index.txt:141
@@ -315,38 +370,41 @@ msgid ""
 "default :doc:`Widget class </ref/forms/widgets/>`, but these can be "
 "overridden as required."
 msgstr ""
+"Поле формы представлено в браузере HTML \"виджетом\" - компонент интерфейса. "
+"Каждый тип поля представлен по умолчанию определенным :doc:`классом Widget </"
+"ref/forms/widgets/>`, который можно переопределить при необходимости."
 
 # 7658435064af462fa5ad14c6b8a07729
 #: ../../topics/forms/index.txt:147
 msgid "Instantiating, processing, and rendering forms"
-msgstr ""
+msgstr "Создание, обработка и рендеринг форм"
 
 # f30ce1853cf54b969f1ba9febb7de265
 #: ../../topics/forms/index.txt:149
 msgid "When rendering an object in Django, we generally:"
-msgstr ""
+msgstr "При рендеринге объекта в Django мы обычно:"
 
 # 2fed16a1748f49209f37b7b2d48dff88
 #: ../../topics/forms/index.txt:151
 msgid "get hold of it in the view (fetch it from the database, for example)"
-msgstr ""
+msgstr "получаем его в представлении (например, загружаем из базы данных)"
 
 # 502d3feb04404ab18a365eb6b71a02a8
 #: ../../topics/forms/index.txt:152
 msgid "pass it to the template context"
-msgstr ""
+msgstr "передаем в контекст шаблона"
 
 # fb03363cb2954dd0af8752079f8aac09
 #: ../../topics/forms/index.txt:153
 msgid "expand it to HTML markup using template variables"
-msgstr ""
+msgstr "представляем в виде HTML в шаблоне, используя переменные контекста"
 
 # 7cdeca82c4ed4c8b8933f4ea9c9621be
 #: ../../topics/forms/index.txt:155
 msgid ""
 "Rendering a form in a template involves nearly the same work as rendering "
 "any other kind of object, but there are some key differences."
-msgstr ""
+msgstr "Рендеринг форм происходит аналогичным образом с некоторыми отличиями."
 
 # dc6f58f279584b9f9b5382b04da47636
 #: ../../topics/forms/index.txt:158
@@ -356,6 +414,8 @@ msgid ""
 "makes perfect sense to render an unpopulated form - that's what we do when "
 "we want the user to populate it."
 msgstr ""
+"В случае с моделями, вряд ли нам может понадобится пустая модель в шаблоне. "
+"Для форм же нормально показывать пустую форму для пользователя."
 
 # 15dbbb27cfcf44d3a8bfa3b17e932597
 #: ../../topics/forms/index.txt:163
@@ -364,6 +424,9 @@ msgid ""
 "the database. When we're dealing with a form we typically instantiate it in "
 "the view."
 msgstr ""
+"Экземпляр модели, который используется в представлении, обычно загружается "
+"из базы данных. При работе с формой мы обычно создаем экземпляр формы в "
+"представлении."
 
 # d20b3cb7327e41668fd68704decd7d7c
 #: ../../topics/forms/index.txt:167
@@ -371,22 +434,24 @@ msgid ""
 "When we instantiate a form, we can opt to leave it empty or pre-populate it, "
 "for example with:"
 msgstr ""
+"При создании формы мы может оставить её пустой, или добавить начальные "
+"данные, например:"
 
 # 615871c57c5e4feca161a9e06418a308
 #: ../../topics/forms/index.txt:170
 msgid ""
 "data from a saved model instance (as in the case of admin forms for editing)"
-msgstr ""
+msgstr "сохраненного ранее объекта модели (для редактирования их в админке)"
 
 # 91c5835fff4d4c5c9802ca4b66f48771
 #: ../../topics/forms/index.txt:171
 msgid "data that we have collated from other sources"
-msgstr ""
+msgstr "полученные из других источников"
 
 # 99e5f6e444924cc2bcedd49ecd890cdd
 #: ../../topics/forms/index.txt:172
 msgid "data received from a previous HTML form submission"
-msgstr ""
+msgstr "получение из предыдущей отправки формы"
 
 # 2ffa633adcf449edb54b0e1d2d33dc39
 #: ../../topics/forms/index.txt:174
@@ -395,16 +460,18 @@ msgid ""
 "possible for users not just to read a Web site, but to send information back "
 "to it too."
 msgstr ""
+"Последний случай самый интересный, т.к. позволяет пользователям не только "
+"читать сайт, но и отправлять ему информацию."
 
 # d0cabd6e7c3c44ca84c7b6754ab991b9
 #: ../../topics/forms/index.txt:179
 msgid "Building a form"
-msgstr ""
+msgstr "Создание формы"
 
 # edd1c8539f014ff7bf749d457ec99d3e
 #: ../../topics/forms/index.txt:182
 msgid "The work that needs to be done"
-msgstr ""
+msgstr "Что необходимо сделать"
 
 # 49f978df19ab42bdac8f07ae68555fff
 #: ../../topics/forms/index.txt:184
