@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-10-06 18:58+0300\n"
+"PO-Revision-Date: 2014-10-06 23:21+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -543,23 +543,24 @@ msgid ""
 "form is submitted; we might want to use much more complex fields, that allow "
 "the user to do things like pick dates from a calendar and so on."
 msgstr ""
+"Вам может понадобится валидация на стороне браузера, или более сложные "
+"конролы, например, позволить пользователю выбрать дату из календаря."
 
 # 8a0412a2c3874160b722f5de957957c3
 #: ../../topics/forms/index.txt:218
 msgid ""
 "At this point it's much easier to get Django to do most of this work for us."
-msgstr ""
+msgstr "На много легче позволить Django сделать эту работу за нас."
 
 # 8bf1919e080246a38fe8dd8bda60e5fa
 #: ../../topics/forms/index.txt:221
-#, fuzzy
 msgid "Building a form in Django"
-msgstr "Использование формы в представлении"
+msgstr "Создание форм в Django"
 
 # 18030ffe7f2d4070a1f8850b4e6407ad
 #: ../../topics/forms/index.txt:224
 msgid "The :class:`Form` class"
-msgstr ""
+msgstr "Класс :class:`Form`"
 
 # ca6b222ab3804a67b5be66a931db7840
 #: ../../topics/forms/index.txt:226
@@ -567,6 +568,8 @@ msgid ""
 "We already know what we want our HTML form to look like. Our starting point "
 "for it in Django is this:"
 msgstr ""
+"Мы уже знаем какую форму хотим получить в HTML. Для начала нам понадобится "
+"следующий класс формы:"
 
 # 79e5a18b6eb242a4ab891940efebabbf
 #: ../../topics/forms/index.txt:236
@@ -577,6 +580,11 @@ msgid ""
 "label` we specified is actually the same one that would be generated "
 "automatically if we had omitted it)."
 msgstr ""
+"Этот код создает класс :class:`Form` с одним полем (``your_name``). Мы "
+"добавили читабельное название поля, которое будет добавлено в тег "
+"``<label>`` при рендеринге поля (на самом деле мы могли не добавлять :attr:"
+"`~Field.label` т.к. аналогичное название Django сгенерировал бы "
+"самостоятельно)."
 
 # 13e96dcefdce44bdbe085ad7f969396d
 #: ../../topics/forms/index.txt:242
@@ -588,6 +596,12 @@ msgid ""
 "Django receives the form back from the browser, it will validate the length "
 "of the data."
 msgstr ""
+"Максимальное количество символом в значении мы указали с помощью параметра :"
+"attr:`~CharField.max_length`. Он используется для двух вещей. Будет добавлен "
+"атрибут ``maxlength=\"100\"`` в HTML тег ``<input>`` (теперь браузер не "
+"позволит пользователю ввести больше символов, чем мы указали). Также Django "
+"выполнит проверку введенного значения, когда получит запрос с браузера с "
+"введенными данными."
 
 # c6110fa9f5d24524ae7a122ffd5739ad
 #: ../../topics/forms/index.txt:249
@@ -596,21 +610,23 @@ msgid ""
 "validation routines for all its fields. When this method is called, if all "
 "fields contain valid data, it will:"
 msgstr ""
+"Экземпляр :class:`Form` содержит метод :meth:`~Form.is_valid()`, который "
+"выполняет проверку всех полей формы. Если все данные правильные, это метод:"
 
 # e2163340fc164550b7eefd4d50e04468
 #: ../../topics/forms/index.txt:253
 msgid "return ``True``"
-msgstr ""
+msgstr "вернет ``True``"
 
 # 91304618d95e4e66b40bc316932ea84d
 #: ../../topics/forms/index.txt:254
 msgid "place the form's data in its :attr:`~Form.cleaned_data` attribute."
-msgstr ""
+msgstr "добавит данные формы в атрибут :attr:`~Form.cleaned_data`."
 
 # 2c1d3f2bbc044b6780f243fc2a027d42
 #: ../../topics/forms/index.txt:256
 msgid "The whole form, when rendered for the first time, will look like:"
-msgstr ""
+msgstr "После рендеринга наша форма будет выглядеть следующим образом:"
 
 # 3ab5f31684cb491783207fd549f8d04d
 #: ../../topics/forms/index.txt:263
@@ -618,12 +634,13 @@ msgid ""
 "Note that it **does not** include the ``<form>`` tags, or a submit button. "
 "We'll have to provide those ourselves in the template."
 msgstr ""
+"Обратите внимание, она **не** содержит тег ``<form>``, или кнопку отправки. "
+"Вам необходимо самостоятельно их добавить в шаблоне."
 
 # 595d715fa1aa46cc882221fe19cf5f37
 #: ../../topics/forms/index.txt:269
-#, fuzzy
 msgid "The view"
-msgstr "Введение"
+msgstr "Представление"
 
 # 4b64e29de56b4d29a2b69ca90e62b7bc
 #: ../../topics/forms/index.txt:271
@@ -632,6 +649,9 @@ msgid ""
 "the same view which published the form. This allows us to reuse some of the "
 "same logic."
 msgstr ""
+"Данные формы отправляются обратно в Django и обрабатываются представлением, "
+"обычно тем же, которое и создает форму. Это позволяет повторно использовать "
+"часть кода."
 
 # 013eab01149a41e58f4afaf27cfb7a54
 #: ../../topics/forms/index.txt:275
@@ -639,6 +659,8 @@ msgid ""
 "To handle the form we need to instantiate it in the view for the URL where "
 "we want it to be published:"
 msgstr ""
+"Для обработки данных формой нам необходимо создать ее в представлении, "
+"которое обрабатывает URL, на который браузер отправляет данные формы:"
 
 # 5709a857971642e68d00c93497c415a3
 #: ../../topics/forms/index.txt:301
@@ -647,6 +669,9 @@ msgid ""
 "form instance and place it in the template context to be rendered. This is "
 "what we can expect to happen the first time we visit the URL."
 msgstr ""
+"Если в представление пришел ``GET`` запрос, будет создана пустая форма и "
+"добавлена в контекст шаблона для последующего рендеринга. Это мы и ожидаем "
+"получить первый раз открыв страницу с формой."
 
 # b0da364d38244425ab3487bc184b6d0f
 #: ../../topics/forms/index.txt:305
@@ -656,6 +681,9 @@ msgid ""
 "NameForm(request.POST)`` This is called \"binding data to the form\" (it is "
 "now a *bound* form)."
 msgstr ""
+"Если форма отправлена через ``POST`` запрос, представление создаст форму с "
+"данными из запроса: ``form = NameForm(request.POST)`` Это называется "
+"\"привязать данные к форме\" (теперь это *связанная с данными* форма)."
 
 # aa2f308e7e62474cb0332e66d87cbece
 #: ../../topics/forms/index.txt:310
@@ -665,6 +693,10 @@ msgid ""
 "(*unbound*) so the HTML form will be populated with the data previously "
 "submitted, where it can be edited and corrected as required."
 msgstr ""
+"Мы вызываем метод ``is_valid()`` формы. Если получили не ``True``, снова "
+"рендерим шаблон, передав нашу форму. Теперь форма не пустая (*не связана с "
+"данными*) и HTML форма будет содержать ранее отправленные данные, их можно "
+"повторно отредактировать и отправить снова."
 
 # 20ec5f116c234668a12bc51b74856493
 #: ../../topics/forms/index.txt:315
@@ -674,18 +706,22 @@ msgid ""
 "the database or do other processing before sending an HTTP redirect to the "
 "browser telling it where to go next."
 msgstr ""
+"Если ``is_valid()`` вернет ``True``, мы можем найти проверенные данные в "
+"атрибуте ``cleaned_data``. Мы можем сохранить эти данные в базе данных, или "
+"выполнить какие-то другие действия над ними, перед тем, как сделать редирект "
+"на другую страницу."
 
 # 49d3cd64293a4b698a77f6f57c70142d
 #: ../../topics/forms/index.txt:323
 msgid "The template"
-msgstr ""
+msgstr "Шаблон"
 
 # 9a320a776142402eabf611e4dfc5d9c1
 #: ../../topics/forms/index.txt:325
 msgid ""
 "We don't need to do much in our ``name.html`` template. The simplest example "
 "is:"
-msgstr ""
+msgstr "Наш ``name.html`` шаблон может быть довольно простым:"
 
 # 8f64f49dcf954be7b385c77f8f79a983
 #: ../../topics/forms/index.txt:336
@@ -693,15 +729,16 @@ msgid ""
 "All the form's fields and their attributes will be unpacked into HTML markup "
 "from that ``{{ form }}`` by Django's template language."
 msgstr ""
+"Все поля формы и их атрибуты будут добавлены в HTML из ``{{ form }}`` при "
+"рендеринге шаблона."
 
 # 1190622a58a9487581e4b8800203d4e2
 #: ../../topics/forms/index.txt:0
 msgid "Forms and Cross Site Request Forgery protection"
-msgstr ""
+msgstr "Формы и CSRF защита"
 
 # a845262370ab42f996e12a74af9626b7
 #: ../../topics/forms/index.txt:341
-#, fuzzy
 msgid ""
 "Django ships with an easy-to-use :doc:`protection against Cross Site Request "
 "Forgeries </ref/contrib/csrf>`. When submitting a form via ``POST`` with "
@@ -711,16 +748,16 @@ msgid ""
 "in this document."
 msgstr ""
 "Django поставляется с :doc:`защитой против Cross Site Request Forgeries </"
-"ref/contrib/csrf>`. Для отправки формы через POST при включенной защите от "
-"CSRF вы должны использовать шаблонный тег :ttag:`csrf_token`, как показано в "
-"предыдущем примере. Тем не менее, раз CSRF-защита не обязательна для "
-"применения в шаблонах при оформлении формы, этот тег опущен в последующих "
-"примерах."
+"ref/contrib/csrf>`. Для отправки формы через ``POST`` при включенной защите "
+"от CSRF вы должны использовать шаблонный тег :ttag:`csrf_token`, как "
+"показано в предыдущем примере. Тем не менее, раз CSRF-защита не обязательна "
+"для применения в шаблонах при оформлении формы, этот тег опущен в "
+"последующих примерах."
 
 # a9c9550681c94525a7abbbb13b078db0
 #: ../../topics/forms/index.txt:0
 msgid "HTML5 input types and browser validation"
-msgstr ""
+msgstr "HTML5 поля и проверка в браузере"
 
 # 87af910406b342a5937ae3b072a083cf
 #: ../../topics/forms/index.txt:350
@@ -733,6 +770,13 @@ msgid ""
 "attribute on the ``form`` tag, or specify a different widget on the field, "
 "like :class:`TextInput`."
 msgstr ""
+"Если ваша форма содержит :class:`~django.forms.URLField`, :class:`~django."
+"forms.EmailField` или одно из числовых полей, Django будет использовать "
+"``url``, ``email`` и ``number`` поля ввода HTML5. По умолчанию браузеры "
+"могут выполнять собственную проверку для этих полей, некоторые проверки "
+"могут быть более строгие чем в Django. Если вы хотите отключить это, "
+"добавьте `novalidate` атрибут в тег ``form``, или используйте другой виджет "
+"для этих полей, например :class:`TextInput`."
 
 # 238aa3bbffb547e6a82e5a329e95e756
 #: ../../topics/forms/index.txt:358
@@ -740,6 +784,9 @@ msgid ""
 "We now have a working web form, described by a Django :class:`Form`, "
 "processed by a view, and rendered as an HTML ``<form>``."
 msgstr ""
+"Теперь у нас есть полностью рабочая форма, созданная классом :class:`Form`, "
+"обрабатываемая представлением, и представленная на странице как HTML "
+"``<form>``."
 
 # 594219161a994e23ae3c3cc6eb3cd9e1
 #: ../../topics/forms/index.txt:361
@@ -749,11 +796,14 @@ msgid ""
 "above, you should be aware of what else is readily available in the forms "
 "system and know a little bit about some of the underlying machinery."
 msgstr ""
+"Это все что вам нужно для начала, но формы в Django предоставляют на много "
+"больше возможностей. Как только вы разберетесь со всем, что описано выше, "
+"можете приступать к изучению всех возможностей, которые предоставляет Django."
 
 # 62f5703d5da64de79572cb4f3ec2a821
 #: ../../topics/forms/index.txt:367
 msgid "More about Django :class:`Form` classes"
-msgstr ""
+msgstr "Дополнительные возможности Django :class:`Form`"
 
 # db2f86ac69484ac090b538791810a119
 #: ../../topics/forms/index.txt:369
@@ -762,29 +812,32 @@ msgid ""
 "including the :doc:`ModelForm </topics/forms/modelforms>`, which you "
 "encounter in Django's admin."
 msgstr ""
+"Все формы являются дочерними классами :class:`django.forms.Form`, включая :"
+"doc:`ModelForm </topics/forms/modelforms>`, которые вы можете увидеть в "
+"админке Django."
 
 # fd70074da7e54447af4c0bfc10a96266
 #: ../../topics/forms/index.txt:0
 msgid "Models and Forms"
-msgstr ""
+msgstr "Модели и формы"
 
 # 78d4ddb7d4de4c90805138b3d565e653
 #: ../../topics/forms/index.txt:375
-#, fuzzy
 msgid ""
 "In fact if your form is going to be used to directly add or edit a Django "
 "model, a :doc:`ModelForm </topics/forms/modelforms>` can save you a great "
 "deal of time, effort, and code, because it will build a form, along with the "
 "appropriate fields and their attributes, from a ``Model`` class."
 msgstr ""
-"Если ваша форма будет использоваться для прямого доступа к модели Django, вы "
-"можете использовать  :doc:`ModelForm </topics/forms/modelforms>`, чтобы "
-"исключить дублирование описания вашей модели."
+"Если ваша форма будет использоваться для создания или редактирования объекта "
+"модели, вы можете использовать  :doc:`ModelForm </topics/forms/modelforms>`. "
+"Она поможет сэкономить много времени и кода, т.к. позволяет создать форму по "
+"классу модели."
 
 # 5ebecb82f8f644789ea764f8dac5ae07
 #: ../../topics/forms/index.txt:381
 msgid "Bound and unbound form instances"
-msgstr ""
+msgstr "Связанные и не связанные с данными экземпляры формы"
 
 # baf64a6a7a914ef393065f268146e6ed
 #: ../../topics/forms/index.txt:383
@@ -821,25 +874,24 @@ msgid ""
 "The form's ``is_bound()`` method will tell you whether a form has data bound "
 "to it or not."
 msgstr ""
+"Метод ``is_bound()`` формы позволяет узнать связана форма с данными или нет."
 
 # 335994cd5d58459c902695007a2a3273
 #: ../../topics/forms/index.txt:396
 msgid "More on fields"
-msgstr ""
+msgstr "Поля формы"
 
 # a617e11c4a3b4538a38f0e83f0f41bde
 #: ../../topics/forms/index.txt:398
-#, fuzzy
 msgid ""
 "Consider a more useful form than our minimal example above, which we could "
 "use to implement \"contact me\" functionality on a personal Web site:"
 msgstr ""
 "Например, рассмотрим форму, созданную для реализации функционала \"свяжитесь "
-"со мной\" на личном веб сайте:"
+"с нами\" на личном веб сайте:"
 
 # 50eb1e5efc254d9589c5d3e5a09c4de4
 #: ../../topics/forms/index.txt:411
-#, fuzzy
 msgid ""
 "Our earlier form used a single field, ``your_name``, a :class:`CharField`. "
 "In this case, our form has four fields: ``subject``, ``message``, ``sender`` "
@@ -847,16 +899,16 @@ msgid ""
 "`BooleanField` are just three of the available field types; a full list can "
 "be found in :doc:`/ref/forms/fields`."
 msgstr ""
-"Форма составлена из объектов ``Field``. В нашем случае, форма содержит "
-"четыре поля: ``subject``, ``message``, ``sender`` и ``cc_myself``. "
-"``CharField``, ``EmailField`` и ``BooleanField`` -- это просто три "
-"стандартных типа поля; полный список полей может быть найден в  :doc:`/ref/"
-"forms/fields`."
+"Наша первая форма содержала только одно поле ``your_name`` типа :class:"
+"`CharField`. В этом случае, форма содержит четыре поля: ``subject``, "
+"``message``, ``sender`` и ``cc_myself``. :class:`CharField`, :class:"
+"`EmailField` и :class:`BooleanField` -- это просто три стандартных типа "
+"поля; полный список полей может быть найден в  :doc:`/ref/forms/fields`."
 
 # 31b71629160b49a7bbc221dc9caff045
 #: ../../topics/forms/index.txt:418
 msgid "Widgets"
-msgstr ""
+msgstr "Виджеты"
 
 # 27a9a7803532409a993ded7706d18d47
 #: ../../topics/forms/index.txt:420
@@ -865,6 +917,9 @@ msgid ""
 ">`, which in turn corresponds to an HTML form widget such as ``<input type="
 "\"text\">``."
 msgstr ""
+"Каждое поле формы содержит соответствующий :doc:`класс Widget </ref/forms/"
+"widgets/>`, который отвечает за создание HTML кода, представляющего поле, "
+"например ``<input type=\"text\">``."
 
 # d0a8f54043c842e68861e0173d8f1952
 #: ../../topics/forms/index.txt:424
@@ -875,16 +930,19 @@ msgid ""
 "type=\"textarea\">`` instead, you'd specify the appropriate widget when "
 "defining your form field, as we have done for the ``message`` field."
 msgstr ""
+"В большинстве случаев поле уже содержит подходящий виджет. Например, по "
+"умолчанию поле :class:`CharField` представлено виджетом :class:`TextInput`, "
+"который создает тег ``<input type=\"text\">`` в HTML. Если вам необходим "
+"``<input type=\"textarea\">``, вы можете указать подходящий виджет, как мы "
+"сделали для поля ``message``."
 
 # 3916a285b64c4c4caa730542fb158def
 #: ../../topics/forms/index.txt:431
-#, fuzzy
 msgid "Field data"
-msgstr "Правильные данные"
+msgstr "Данные поля"
 
 # ac8b288fc7b444b291ccfd01f561fa7d
 #: ../../topics/forms/index.txt:433
-#, fuzzy
 msgid ""
 "Whatever the data submitted with a form, once it has been successfully "
 "validated by calling ``is_valid()`` (and ``is_valid()`` has returned "
@@ -892,9 +950,10 @@ msgid ""
 "dictionary. This data will have been nicely converted into Python types for "
 "you."
 msgstr ""
-"Если ``is_valid()`` возвратила ``True``, то проверенные данные будут "
-"располагаться в словаре ``form.cleaned_data``. Все значения этого словаря "
-"приведены к соответствующему типу данных."
+"Когда в форму добавлены данные, и она проверена методом ``is_valid()`` (и "
+"``is_valid()`` вернул ``True``), проверенные данные будут добавлены в "
+"словарь ``form.cleaned_data``. Эти данные будет преобразованы в подходящий "
+"тип Python."
 
 # a2dc0584c61642539e7f27830a82bad7
 #: ../../topics/forms/index.txt:440
@@ -907,22 +966,22 @@ msgstr ""
 
 # a1922bca4159423cb0c2fc3697773abe
 #: ../../topics/forms/index.txt:443
-#, fuzzy
 msgid ""
 "In the contact form example above, ``cc_myself`` will be a boolean value. "
 "Likewise, fields such as :class:`IntegerField` and :class:`FloatField` "
 "convert values to a Python ``int`` and ``float`` respectively."
 msgstr ""
 "В приведённом ранее примере, ``cc_myself`` будет булевым значением. "
-"Аналогично, такие поля как ``IntegerField`` и ``FloatField`` преобразовывают "
-"свои значения в типы Python int и float соответственно."
+"Аналогично, такие поля как :class:`IntegerField` и :class:`FloatField` "
+"преобразовывают свои значения в типы Python ``int`` и ``float`` "
+"соответственно."
 
 # 5c0cfc5cb35743cf9c3c333096bdcc08
 #: ../../topics/forms/index.txt:447
 msgid ""
 "Here's how the form data could be processed in the view that handles this "
 "form:"
-msgstr ""
+msgstr "Вот небольшой пример как можно использовать данные этой формы:"
 
 # 36f8d70fd4d44fc297854735310b18e8
 #: ../../topics/forms/index.txt:468
@@ -939,12 +998,14 @@ msgid ""
 "from ``request.FILES``, rather than ``request.POST``). For details of how to "
 "handle file uploads with your form, see :ref:`binding-uploaded-files`."
 msgstr ""
+"Некоторые поля требуют дополнительной обработки. Например, загруженные файлы "
+"необходимо обрабатывать по другому (их можно получить из ``request.FILES``, "
+"а не ``request.POST``). Подробности смотрите в :ref:`binding-uploaded-files`."
 
 # 3548e5028bb843b7b7b156dff3a4d711
 #: ../../topics/forms/index.txt:476
-#, fuzzy
 msgid "Working with form templates"
-msgstr "Работа с формами"
+msgstr "Работа с шаблонами формы"
 
 # 11e79f21638a486db0df6c3024d48947
 #: ../../topics/forms/index.txt:478
@@ -954,16 +1015,19 @@ msgid ""
 "the context, ``{{ form }}`` will render its ``<label>`` and ``<input>`` "
 "elements appropriately."
 msgstr ""
+"Чтобы получить доступ к форме в шаблоне, просто передайте экземпляр в "
+"контекст шаблона. Если ваша форма добавлена в контекст как ``form``, "
+"``{{ form }}`` создаст необходимые теги ``<label>`` и ``<input>``."
 
 # 996e20cb20204253a7c5f134ce836c85
 #: ../../topics/forms/index.txt:484
 msgid "Form rendering options"
-msgstr ""
+msgstr "Настройки рендеринга формы"
 
 # 704c5d10ed4e400b95aa672948905fbb
 #: ../../topics/forms/index.txt:0
 msgid "Additional form template furniture"
-msgstr ""
+msgstr "Что еще необходимо при рендеринге формы"
 
 # b62ed383ee66452cb3861f9a0caf65b5
 #: ../../topics/forms/index.txt:488
@@ -972,29 +1036,32 @@ msgid ""
 "``<form>`` tags, or the form's ``submit`` control. You will have to provide "
 "these yourself."
 msgstr ""
+"Обратите внимание, форма *не* добавляет тег ``<form>`` и ``submit`` кнопку. "
+"Вы должны добавить их самостоятельно."
 
 # 2f2414f013764c2da3fe8d86ba2f27df
 #: ../../topics/forms/index.txt:492
 msgid ""
 "There are other output options though for the ``<label>``/``<input>`` pairs:"
 msgstr ""
+"Вы можете использовать следующие варианты рендеринга ``<label>``/``<input>``:"
 
 # ac86e2b6d3694e268ea46948efd04188
 #: ../../topics/forms/index.txt:494
 msgid ""
 "``{{ form.as_table }}`` will render them as table cells wrapped in ``<tr>`` "
 "tags"
-msgstr ""
+msgstr "``{{ form.as_table }}`` выведет их в таблице, в ячейках тега ``<tr>``"
 
 # eec8920ef87749aeb41ee8cc5de1be3d
 #: ../../topics/forms/index.txt:497
 msgid "``{{ form.as_p }}`` will render them wrapped in ``<p>`` tags"
-msgstr ""
+msgstr "``{{ form.as_p }}`` обернет их в тег ``<p>``"
 
 # 90271d6f81014cd59baa6a1ff713a751
 #: ../../topics/forms/index.txt:499
 msgid "``{{ form.as_ul }}`` will render them wrapped in ``<li>`` tags"
-msgstr ""
+msgstr "``{{ form.as_ul }}`` выведет в теге ``<li>``"
 
 # 5a6ea0aa51564946bbc002a3a403ae41
 #: ../../topics/forms/index.txt:501
@@ -1002,16 +1069,16 @@ msgid ""
 "Note that you'll have to provide the surrounding ``<table>`` or ``<ul>`` "
 "elements yourself."
 msgstr ""
+"Обратите внимание, тег ``<table>`` или ``<ul>`` вы должны добавить сами."
 
 # 5ada8d2566444fb69985839358100f48
 #: ../../topics/forms/index.txt:504
 msgid ""
 "Here's the output of ``{{ form.as_p }}`` for our ``ContactForm`` instance:"
-msgstr ""
+msgstr "Вот результат ``{{ form.as_p }}`` для нашей формы ``ContactForm``:"
 
 # 5d49b8a5614140fbb8ffd629360ca453
 #: ../../topics/forms/index.txt:517
-#, fuzzy
 msgid ""
 "Note that each form field has an ID attribute set to ``id_<field-name>``, "
 "which is referenced by the accompanying label tag. This is important in "
@@ -1028,12 +1095,12 @@ msgstr ""
 # 2d1bdbfc5d0d4153ba1e108ab96ed4dc
 #: ../../topics/forms/index.txt:523
 msgid "See :ref:`ref-forms-api-outputting-html` for more on this."
-msgstr ""
+msgstr "Смотрите :ref:`ref-forms-api-outputting-html`."
 
 # 2cb86d4066d4484d881d3c0af386a167
 #: ../../topics/forms/index.txt:526
 msgid "Rendering fields manually"
-msgstr ""
+msgstr "Рендеринг полей вручную"
 
 # 42cb41cf64ac45ee9aad9d69312c7a14
 #: ../../topics/forms/index.txt:528
@@ -1043,11 +1110,14 @@ msgid ""
 "available as an attribute of the form using ``{{ form.name_of_field }}``, "
 "and in a Django template, will be rendered appropriately. For example:"
 msgstr ""
+"Мы можем не использовать полный рендеринг формы и отрендерить каждое поле "
+"отдельно (например, чтобы поменять порядок полей). Каждое поле формы можно "
+"получить через атрибут формы ``{{ form.name_of_field }}``. Например:"
 
 # 8cff750307b542089cf68fb4871024df
 #: ../../topics/forms/index.txt:558
 msgid "Rendering form error messages"
-msgstr ""
+msgstr "Рендеринг ошибок проверки"
 
 # 4ce5612af7a84483ba439dd2adf3ef74
 #: ../../topics/forms/index.txt:560
@@ -1059,23 +1129,23 @@ msgid ""
 "non_field_errors }}`` at the top of the form and the template lookup for "
 "errors on each field."
 msgstr ""
+"За гибкость мы платим количеством кода. До этого мы не заботились о выводе "
+"ошибок проверки, т.к. Django делал это за нас. В этом примере нам пришлось "
+"явно выводить ошибки проверки для каждого поля и для всей формы. Обратите "
+"внимание на ``{{ form.non_field_errors }}`` в начале в формы и вывод ошибок "
+"для каждого поля."
 
 # 4fd086364ead4e0d841d81ef593c1d7f
 #: ../../topics/forms/index.txt:566
-#, fuzzy
 msgid ""
 "Using ``{{ form.name_of_field.errors }}`` displays a list of form errors, "
 "rendered as an unordered list. This might look like:"
 msgstr ""
-"Каждое именованное поле формы может быть выведено в шаблоне с помощью тега "
-"``{{ form.name_of_field }}``, который создаст HTML-код, необходимый для "
-"отображения виджета. Использование тега ``{{ form.name_of_field.errors }}`` "
-"отобразит список ошибок поля формы в виде ненумерованного списка. Результат "
-"может быть таким::"
+"Список ошибок можно вывести используя ``{{ form.name_of_field.errors }}``. "
+"Они будут выглядеть приблизительно как:"
 
 # 7aa879ce5ac04fe1a34b35ea4d89e3b0
 #: ../../topics/forms/index.txt:575
-#, fuzzy
 msgid ""
 "The list has a CSS class of ``errorlist`` to allow you to style its "
 "appearance. If you wish to further customize the display of errors you can "
@@ -1083,7 +1153,7 @@ msgid ""
 msgstr ""
 "Списку назначен  CSS-класс ``errorlist``, что позволяет вам настроить "
 "параметры его отображения. Если потребуется более тонкая настройка "
-"отображения ошибок, вы можете это организовать с помощью цикла по ним::"
+"отображения ошибок, вы можете это организовать с помощью цикла по ним:"
 
 # 4899019d654f4b57a28aaec4cd3eed7e
 #: ../../topics/forms/index.txt:589
@@ -1091,6 +1161,8 @@ msgid ""
 "See :doc:`/ref/forms/api` for more on errors, styling, and working with form "
 "attributes in templates."
 msgstr ""
+"Подробности о выводе ошибок, стилях и атрибутах смотрите в :doc:`/ref/forms/"
+"api`."
 
 # 3dad1b00ccaa41c7946d85ae678f6936
 #: ../../topics/forms/index.txt:593
@@ -1099,7 +1171,6 @@ msgstr "Цикл по полям формы"
 
 # c657a3e1408849fdb0d02115af17d717
 #: ../../topics/forms/index.txt:595
-#, fuzzy
 msgid ""
 "If you're using the same HTML for each of your form fields, you can reduce "
 "duplicate code by looping through each field in turn using a ``{% for %}`` "
@@ -1107,12 +1178,12 @@ msgid ""
 msgstr ""
 "Если вы используете однотипный HTML для каждого поля формы, вы можете "
 "избежать дублирования кода, используя тег ``{% for %}`` для прохода по полям "
-"формы::"
+"формы:"
 
 # 7585429f5ed744aab75f44994b2de99f
 #: ../../topics/forms/index.txt:608
 msgid "Useful attributes on ``{{ field }}`` include:"
-msgstr ""
+msgstr "Полезные атрибуты ``{{ field }}``:"
 
 # 2abbef4263824fc49077c4be053711b3
 #: ../../topics/forms/index.txt:611
@@ -1140,6 +1211,8 @@ msgid ""
 "This includes the form's :attr:`~django.forms.Form.label_suffix`. For "
 "example, the default ``label_suffix`` is a colon::"
 msgstr ""
+"Этот атрибут включает :attr:`~django.forms.Form.label_suffix`. По умолчанию "
+"``label_suffix`` равен двоеточию, например::"
 
 # 2abbef4263824fc49077c4be053711b3
 #: ../../topics/forms/index.txt:627
@@ -1148,7 +1221,6 @@ msgstr "``{{ field.id_for_label }}``"
 
 # f34c186ea97a47fa884a2ac19b8a898f
 #: ../../topics/forms/index.txt:624
-#, fuzzy
 msgid ""
 "The ID that will be used for this field (``id_email`` in the example above). "
 "If you are constructing the label manually, you may want to use this in lieu "
@@ -1167,9 +1239,8 @@ msgstr "``{{ field.value }}``"
 
 # 5bf862eec06a42c991fc4b7588938125
 #: ../../topics/forms/index.txt:630
-#, fuzzy
 msgid "The value of the field. e.g ``someone@example.com``."
-msgstr "Значение поля, т.е. ``someone@example.com``."
+msgstr "Значение поля, напрмеир ``someone@example.com``."
 
 # e14194e35acf4683ae1e775b952c1d52
 #: ../../topics/forms/index.txt:634
@@ -1220,7 +1291,6 @@ msgstr "``{{ field.is_hidden }}``"
 
 # 8eaf036bdfae4b29b89ef7ae3e78e6cf
 #: ../../topics/forms/index.txt:647
-#, fuzzy
 msgid ""
 "This attribute is ``True`` if the form field is a hidden field and ``False`` "
 "otherwise. It's not particularly useful as a template variable, but could be "
@@ -1228,7 +1298,7 @@ msgid ""
 msgstr ""
 "Значение этого атрибута равно ``True``, если поле является скрытым, и "
 "``False`` в противном случае. Данный атрибут обычно не используется при "
-"выводе формы, но может быть полезен в условиях подобных этому::"
+"выводе формы, но может быть полезен в условиях подобных этому:"
 
 # 6ead6cb4b29e424bb99ca3d99a0bf586
 #: ../../topics/forms/index.txt:661
@@ -1237,7 +1307,6 @@ msgstr "``{{ field.field }}``"
 
 # 2ba7fe7567074b98b6ff90083c94015a
 #: ../../topics/forms/index.txt:658
-#, fuzzy
 msgid ""
 "The :class:`~django.forms.Field` instance from the form class that this :"
 "class:`~django.forms.BoundField` wraps. You can use it to access :class:"
@@ -1245,7 +1314,7 @@ msgid ""
 msgstr ""
 "Экземпляр :class:`~django.forms.Field` из класса формы, который обёрнут с "
 "помощью :class:`~django.forms.BoundField`. Он предоставляет доступ к "
-"атрибутам :class:`~django.forms.Field`, т.е. ``{{ char_field.field."
+"атрибутам :class:`~django.forms.Field`, например ``{{ char_field.field."
 "max_length }}``."
 
 # 2b1592ca173b4905bbaead99d71b622b
@@ -1255,7 +1324,6 @@ msgstr "Цикл по скрытым и отображаемым полям"
 
 # 4c21c8bb22aa482fbe0a401e63bed636
 #: ../../topics/forms/index.txt:666
-#, fuzzy
 msgid ""
 "If you're manually laying out a form in a template, as opposed to relying on "
 "Django's default form layout, you might want to treat ``<input type=\"hidden"
@@ -1272,17 +1340,16 @@ msgstr ""
 
 # d719c68fcf534d11a027ec5cb36f49f7
 #: ../../topics/forms/index.txt:673
-#, fuzzy
 msgid ""
 "Django provides two methods on a form that allow you to loop over the hidden "
 "and visible fields independently: ``hidden_fields()`` and "
 "``visible_fields()``. Here's a modification of an earlier example that uses "
 "these two methods:"
 msgstr ""
-"Django предоставляет два метода класса формы, которые позволяют организовать "
-"раздельные циклы по скрытым и отображаемым полям: ``hidden_fields()`` и "
+"Django предоставляет два метода, которые позволяют организовать раздельные "
+"циклы по скрытым и отображаемым полям: ``hidden_fields()`` и "
 "``visible_fields()``. Покажем как изменится наш пример, если воспользоваться "
-"этими методами::"
+"этими методами:"
 
 # 3ce789f362c64c84b3a8615d559c10fd
 #: ../../topics/forms/index.txt:692
@@ -1304,7 +1371,6 @@ msgstr "Повторное использование шаблонов форм"
 
 # c1f95572e8874ed5baca4bc5e8f3f880
 #: ../../topics/forms/index.txt:700
-#, fuzzy
 msgid ""
 "If your site uses the same rendering logic for forms in multiple places, you "
 "can reduce duplication by saving the form's loop in a standalone template "
@@ -1312,11 +1378,10 @@ msgid ""
 msgstr ""
 "Если на вашем сайте используется однотипная логика отображения форм, вы "
 "можете избежать дублирования кода, сохранив цикл по полям формы в отдельном "
-"шаблоне и подключая его в другие шаблоны с помощью тега :ttag:`include`::"
+"шаблоне и подключая его в другие шаблоны с помощью тега :ttag:`include`:"
 
 # 29a2f047ffd54e67b2ecd8c8ab3328ad
 #: ../../topics/forms/index.txt:717
-#, fuzzy
 msgid ""
 "If the form object passed to a template has a different name within the "
 "context, you can alias it using the ``with`` argument of the :ttag:`include` "
@@ -1324,7 +1389,7 @@ msgid ""
 msgstr ""
 "Если объект формы, переданный в шаблон, имеет другое имя в контексте, вы "
 "можете создать для него псевдоним, используя аргумент ``with`` тега :ttag:"
-"`include`::"
+"`include`:"
 
 # 9a204fe0ad9b4d8684269984ca3aee28
 #: ../../topics/forms/index.txt:725
