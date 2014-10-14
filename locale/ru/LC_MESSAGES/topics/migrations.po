@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-10-13 18:42+0300\n"
+"PO-Revision-Date: 2014-10-14 11:16+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -479,6 +479,10 @@ msgid ""
 "guarantee; any other apps that need to be used to get dependencies correct "
 "will be."
 msgstr ""
+"Такое поведение зависимостей влияет на большинство миграционных операций, "
+"которые ограничивают вас одним приложением. Ограничить работу команд до "
+"одного приложения (в ``makemigrations`` или ``migrate``) было самым "
+"оптимальным вариантом."
 
 # 37093d6b9dbd45ed884f64a969bf5ffb
 #: ../../topics/migrations.txt:214
@@ -1257,6 +1261,8 @@ msgid ""
 "``kwargs`` should be a dict of keyword arguments to pass to your class' "
 "``__init__`` method. Every value should itself be serializable."
 msgstr ""
+"``kwargs`` - список именованных аргументов, которые необходимо передать в "
+"метод ``__init__``. Аргументы также должны быть сериализируемыми."
 
 # f00919bbd84045d783b7c4fdf0fb1c34
 #: ../../topics/migrations.txt:587
@@ -1265,6 +1271,9 @@ msgid ""
 "custom fields <custom-field-deconstruct-method>` which returns a tuple of "
 "four items."
 msgstr ""
+"Метод ``deconstruct()`` :ref:`собственных полей <custom-field-deconstruct-"
+"method>` немного отличается, он должен возвращать кортеж из четырех "
+"элементов."
 
 # 9b59414e533a418fbe719f49f202c836
 #: ../../topics/migrations.txt:591
@@ -1273,6 +1282,9 @@ msgid ""
 "given arguments, similar to the way it writes out references to Django "
 "fields."
 msgstr ""
+"Django запишет полученное значение, как инициализацию для всего класса с "
+"заданными аргументами, аналогично тому, как это делается для встроенных "
+"полей."
 
 # 9025384595b24055a0a4eeb44186c79e
 #: ../../topics/migrations.txt:594
@@ -1281,6 +1293,9 @@ msgid ""
 "serializable, you can just use the ``@deconstructible`` class decorator from "
 "``django.utils.deconstruct`` to add the method::"
 msgstr ""
+"Если все аргументы вашего класса сериализируемые, вы можете использовать "
+"декоратор класса ``@deconstructible`` из ``django.utils.deconstruct``, чтобы "
+"автоматически создать метод::"
 
 # 9f6ea85914344b83b692ecbb472af7b3
 #: ../../topics/migrations.txt:606
@@ -1289,11 +1304,13 @@ msgid ""
 "into your constructor, and then returns those arguments exactly when "
 "deconstruct() is called."
 msgstr ""
+"Декоратор сохраняет все аргументы, передаваемые в конструктор, и возвращает "
+"их при вызове ``deconstruct()``."
 
 # 32c8c625df184822ad2fd29bc2a4017a
 #: ../../topics/migrations.txt:613
 msgid "Upgrading from South"
-msgstr ""
+msgstr "Обновление с South"
 
 # 4fadb49cdb774d48ab51f6765e906e44
 #: ../../topics/migrations.txt:615
@@ -1302,11 +1319,14 @@ msgid ""
 "south.aeracode.org>`_, then the upgrade process to use ``django.db."
 "migrations`` is quite simple:"
 msgstr ""
+"Если вы уже используете `South <http://south.aeracode.org>`_ для миграций, "
+"обновиться до ``django.db.migrations`` будет просто:"
 
 # 45e05114b12c443f816deae28e6fe7e0
 #: ../../topics/migrations.txt:619
 msgid "Ensure all installs are fully up-to-date with their migrations"
 msgstr ""
+"Убедитесь, что все установки проекте используют последнюю версию миграций"
 
 # ae5d850c67f7479b9d6870a305000b48
 #: ../../topics/migrations.txt:620
@@ -1314,6 +1334,8 @@ msgid ""
 "Delete all your (numbered) migration files, but not the directory or "
 "``__init__.py`` - make sure you remove the ``.pyc`` files too."
 msgstr ""
+"Удалите все ваши файлы с миграциями (пронумерованные), но не удаляйте "
+"каталог и файл ``__init__.py``. Не забудьте удалить файлы ``.pyc``."
 
 # 7c2887daf39c4167938ac2127917c5a4
 #: ../../topics/migrations.txt:622
@@ -1321,6 +1343,8 @@ msgid ""
 "Run ``python manage.py makemigrations``. Django should see the empty "
 "migration directories and make new initial migrations in the new format."
 msgstr ""
+"Выполните ``python manage.py makemigrations``. Django увидит пустой каталог "
+"с миграциями и создаст новые начальные миграции в новом формате."
 
 # 16af3c30b8e64f8e8bbf7f175735bcb2
 #: ../../topics/migrations.txt:624
@@ -1329,6 +1353,8 @@ msgid ""
 "initial migrations already exist and mark them as applied without running "
 "them."
 msgstr ""
+"Выполните ``python manage.py migrate``. Django увидит, что все таблицы в "
+"базе данных соответствуют начальным миграциям и пометит их как выполненные."
 
 # 65b3045a520c4d2299efe1697fe565b1
 #: ../../topics/migrations.txt:628
@@ -1337,11 +1363,14 @@ msgid ""
 "of foreign keys; in this case, ``makemigrations`` might make more than one "
 "initial migration, and you'll need to mark them all as applied using::"
 msgstr ""
+"Это все! Единственной проблемой могут стать циклические внешние ключи. В "
+"этом случае ``makemigrations`` может создать несколько начальных миграций и "
+"вам необходимо самостоятельно пометить их как выполненные::"
 
 # dd0e45ee4bb744f2a394e116b33fa524
 #: ../../topics/migrations.txt:635
 msgid "Libraries/Third-party Apps"
-msgstr ""
+msgstr "Сторонние библиотеки и приложения"
 
 # a2738a0e271c498086f4927a6585035b
 #: ../../topics/migrations.txt:637
@@ -1351,6 +1380,9 @@ msgid ""
 "above) you should keep two parallel migration sets in your app, one in each "
 "format."
 msgstr ""
+"Если вы разрабатываете библиотеку или приложение, и хотите поддерживать и "
+"миграции South (для Django 1.6 и ниже) и Django (для 1.7 и выше), вам "
+"необходимо предоставлять параллельно два набора миграций в вашем приложении."
 
 # 73beb343404948e99d472e66a5f8776f
 #: ../../topics/migrations.txt:641
@@ -1362,6 +1394,10 @@ msgid ""
 "``south_migrations`` directory and your Django migrations in the "
 "``migrations`` directory."
 msgstr ""
+"Для этого South 1.0 сначала будет искать South-миграции в каталоге "
+"``south_migrations``, а затем в ``migrations``. Проект пользователя будет "
+"использовать правильный набор миграций пока South миграции находятся в "
+"каталоге ``south_migrations``, а миграции Django в каталоге ``migrations``."
 
 # 2379038b2edb410fb315877627d359e7
 #: ../../topics/migrations.txt:647
@@ -1369,3 +1405,5 @@ msgid ""
 "More information is available in the `South 1.0 release notes <http://south."
 "readthedocs.org/en/latest/releasenotes/1.0.html#library-migration-path>`_."
 msgstr ""
+"Подробности смотрите в `списке обновлений South 1.0 <http://south."
+"readthedocs.org/en/latest/releasenotes/1.0.html#library-migration-path>`_."
