@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated, 2012.
+# Automatically generated <>, 2012, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-11 11:43+0300\n"
-"PO-Revision-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2014-10-16 18:45+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -17,11 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 # 417115376353433eb0d09692b1e0c5e0
 #: ../../topics/http/middleware.txt:3
 msgid "Middleware"
-msgstr ""
+msgstr "Промежуточный слой (Middleware)"
 
 # 4a27a8d770ed43b7a4df994a590fd6e2
 #: ../../topics/http/middleware.txt:5
@@ -30,6 +31,9 @@ msgid ""
 "processing. It's a light, low-level \"plugin\" system for globally altering "
 "Django's input or output."
 msgstr ""
+"Промежуточный слой -- это механизм \"хуков\" для обработки запросов и "
+"ответов в Django. Это простая низкоуровневая система \"плагинов\", которая "
+"глобально влияет на ввод и вывод в Django."
 
 # 5d13896c83b340fa91e4996e17a8d9dd
 #: ../../topics/http/middleware.txt:9
@@ -39,6 +43,10 @@ msgid ""
 "middleware.transaction.TransactionMiddleware`, that wraps the processing of "
 "each HTTP request in a database transaction."
 msgstr ""
+"Каждый компонент промежуточного слоя отвечает за определенный функционал. "
+"Например, Django предоставляет :class:`~django.middleware.transaction."
+"TransactionMiddleware`, который оборачивает обработку каждого HTTP запроса в "
+"транзакцию базы данных."
 
 # 5e8b98e961b24934a7fe7d105101aadc
 #: ../../topics/http/middleware.txt:14
@@ -48,11 +56,15 @@ msgid ""
 "middleware you can use right out of the box. They're documented in the :doc:"
 "`built-in middleware reference </ref/middleware>`."
 msgstr ""
+"Этот раздел описывает как работают промежуточные слои, как активировать их, "
+"и как создать собственные. Django предоставляет набор встроенных "
+"промежуточных слоев, которые можно использовать в проекте. Они описаны в "
+"разделе о :doc:`встроенных промежуточных слоях </ref/middleware>`."
 
 # a3d4917dd30a40898417f88e7a4c7137
 #: ../../topics/http/middleware.txt:20
 msgid "Activating middleware"
-msgstr ""
+msgstr "Подключение промежуточных слоёв"
 
 # 4e0960bd92554a6d92e85f9113a44a02
 #: ../../topics/http/middleware.txt:22
@@ -60,6 +72,8 @@ msgid ""
 "To activate a middleware component, add it to the :setting:"
 "`MIDDLEWARE_CLASSES` tuple in your Django settings."
 msgstr ""
+"Чтобы подключить промежуточный слой, добавьте его в кортеж :setting:"
+"`MIDDLEWARE_CLASSES` в настройках Django."
 
 # ff702c496c8547539bdb8da35260497e
 #: ../../topics/http/middleware.txt:25
@@ -69,6 +83,10 @@ msgid ""
 "example, here's the default value created by :djadmin:`django-admin.py "
 "startproject <startproject>`::"
 msgstr ""
+"В :setting:`MIDDLEWARE_CLASSES` каждый промежуточный слой представлен "
+"строкой: полный путь для импорта класса промежуточного слоя. Например, вот "
+"значение настройки по умолчанию для проекта, который создает :djadmin:"
+"`django-admin.py startproject <startproject>`::"
 
 # 4d1e962758b14a32b948f4fa03a6ecc0
 #: ../../topics/http/middleware.txt:39
@@ -78,6 +96,9 @@ msgid ""
 "suggested that you at least use :class:`~django.middleware.common."
 "CommonMiddleware`."
 msgstr ""
+"Django не требует никаких промежуточных слоёв для своей работы — :setting:"
+"`MIDDLEWARE_CLASSES` может быть пустым — но мы настоятельно рекомендуем "
+"использовать хотя бы :class:`~django.middleware.common.CommonMiddleware`."
 
 # 119b053851984d52bdc2246961a9e7da
 #: ../../topics/http/middleware.txt:44
@@ -89,11 +110,17 @@ msgid ""
 "middleware.SessionMiddleware`. See :ref:`middleware-ordering` for some "
 "common hints about ordering of Django middleware classes."
 msgstr ""
+"Порядок :setting:`MIDDLEWARE_CLASSES` важен, т.к. один промежуточный слой "
+"может зависеть от другого. Например, :class:`~django.contrib.auth.middleware."
+"AuthenticationMiddleware` сохраняет текущего пользователя в сессии, поэтому "
+"должен срабатывать после :class:`~django.contrib.sessions.middleware."
+"SessionMiddleware`. Смотрите советы, как лучше упорядочить промежуточные "
+"слои, в :ref:`middleware-ordering`."
 
 # 5cbc54358bf044cbbeebfb64a1fa4198
 #: ../../topics/http/middleware.txt:53
 msgid "Hooks and application order"
-msgstr ""
+msgstr "\"Хуки\" и порядок обработки"
 
 # f99add29d5cf4c6f98dcebb0a572d5b9
 #: ../../topics/http/middleware.txt:55
@@ -102,16 +129,19 @@ msgid ""
 "in the order it's defined in :setting:`MIDDLEWARE_CLASSES`, top-down. Two "
 "hooks are available:"
 msgstr ""
+"Во время обработки запроса, перед вызовом представления, Django применяет "
+"промежуточные слои в порядке указанном в :setting:`MIDDLEWARE_CLASSES`, "
+"сверху вниз. Доступны два \"хука\":"
 
 # 880ba98ddb1848fead77fc34143e5069
 #: ../../topics/http/middleware.txt:59
 msgid ":meth:`process_request`"
-msgstr ""
+msgstr ":meth:`process_request`"
 
 # 21b4d3a7e2d846baa8f35448ffb0c2ef
 #: ../../topics/http/middleware.txt:60
 msgid ":meth:`process_view`"
-msgstr ""
+msgstr ":meth:`process_view`"
 
 # b131a3fcec9e4ec5bfa20e3dabfc9ebc
 #: ../../topics/http/middleware.txt:62
@@ -119,21 +149,24 @@ msgid ""
 "During the response phase, after calling the view, middleware are applied in "
 "reverse order, from the bottom up. Three hooks are available:"
 msgstr ""
+"На этапе обработки ответа, после вызова представления, промежуточные слои "
+"применяются в обратном порядке, снизу вверх. Доступны три \"хука\":"
 
 # 1c4ed4afe46a43279dd5030d947fd2ec
 #: ../../topics/http/middleware.txt:65
 msgid ":meth:`process_exception` (only if the view raised an exception)"
 msgstr ""
+":meth:`process_exception` (только, если представление вызвало исключение)"
 
 # 1a1b3cdb81a541639d656a3d34107a77
 #: ../../topics/http/middleware.txt:66
 msgid ":meth:`process_template_response` (only for template responses)"
-msgstr ""
+msgstr ":meth:`process_template_response` (только для ответа с шаблоном)"
 
 # 4a9f3567893f49389a4e23033878f834
 #: ../../topics/http/middleware.txt:67
 msgid ":meth:`process_response`"
-msgstr ""
+msgstr ":meth:`process_response`"
 
 # a2e56d2611b24a8388f56171cbaa9e99
 #: ../../topics/http/middleware.txt:74
@@ -141,16 +174,18 @@ msgid ""
 "If you prefer, you can also think of it like an onion: each middleware class "
 "is a \"layer\" that wraps the view."
 msgstr ""
+"Можете смотреть на это, как на луковицу: каждый промежуточный слой "
+"оборачивает представление."
 
 # 701b67bbff604970b3884769778fbe0b
 #: ../../topics/http/middleware.txt:77
 msgid "The behavior of each hook is described below."
-msgstr ""
+msgstr "Поведение каждого \"хука\" описано ниже."
 
 # 4103ae15c4df4e579f0b56cfbc38613b
 #: ../../topics/http/middleware.txt:80
 msgid "Writing your own middleware"
-msgstr ""
+msgstr "Создание собственного промежуточного слоя"
 
 # 0a668593921e4ab5b2b70b29bb6bc5de
 #: ../../topics/http/middleware.txt:82
@@ -158,16 +193,18 @@ msgid ""
 "Writing your own middleware is easy. Each middleware component is a single "
 "Python class that defines one or more of the following methods:"
 msgstr ""
+"Создать свой промежуточный слой очень просто. Это просто класс Python, "
+"который предоставляет один или несколько методов:"
 
 # a4b71a34535c4134b7007005b28ded88
 #: ../../topics/http/middleware.txt:88
 msgid "``process_request``"
-msgstr ""
+msgstr "``process_request``"
 
 # 571bf4c2ebdc4bb686a5cb889de96f7f
 #: ../../topics/http/middleware.txt:92
 msgid "``request`` is an :class:`~django.http.HttpRequest` object."
-msgstr ""
+msgstr "``request`` -- это объект :class:`~django.http.HttpRequest`."
 
 # 398a6b7bda154d639f43f9c9f08240a2
 #: ../../topics/http/middleware.txt:94
@@ -175,6 +212,8 @@ msgid ""
 "``process_request()`` is called on each request, before Django decides which "
 "view to execute."
 msgstr ""
+"``process_request()`` вызывается для каждого запроса перед тем, как Django "
+"решит какое представление вызывать."
 
 # 6cd3db7186f041af846d342f015b15a3
 #: ../../topics/http/middleware.txt:97
@@ -188,11 +227,18 @@ msgid ""
 "view; it'll apply response middleware to that :class:`~django.http."
 "HttpResponse`, and return the result."
 msgstr ""
+"Метод должен вернуть ``None`` или объект an :class:`~django.http."
+"HttpResponse`. Если вернул ``None``, Django продолжит обработку запроса, "
+"вызывая ``process_request()`` других промежуточных слоёв, затем метод "
+"``process_view()`` промежуточного слоя, и в конце представление. Если вернул "
+"объект :class:`~django.http.HttpResponse`, Django остановит обработку "
+"запроса, применит промежуточные слои для объекта :class:`~django.http."
+"HttpResponse`, и вернет результат."
 
 # f61cc5c1a2104797a18a8efcd1a96723
 #: ../../topics/http/middleware.txt:109
 msgid "``process_view``"
-msgstr ""
+msgstr "``process_view``"
 
 # 475cd1b6909d48f9a507d6fc5b696566
 #: ../../topics/http/middleware.txt:113
@@ -205,11 +251,18 @@ msgid ""
 "Neither ``view_args`` nor ``view_kwargs`` include the first view argument "
 "(``request``)."
 msgstr ""
+"``request`` -- объект :class:`~django.http.HttpRequest`. ``view_func``-- "
+"функция представления, которую Django собирается вызвать бля обработки "
+"запроса. (Это объект функции, а не название.) ``view_args`` -- список "
+"позиционных аргументов, которые будут переданы в функцию представления, "
+"``view_kwargs`` -- словарь именованных аргументов. Ни ``view_args``, ни "
+"``view_kwargs`` не включают первый аргумент представления (``request``)."
 
 # 5b64a357145d45a0a8314e4910f66464
 #: ../../topics/http/middleware.txt:121
 msgid "``process_view()`` is called just before Django calls the view."
 msgstr ""
+"``process_view()`` вызывается непосредственно перед вызовом представления."
 
 # 1c7c872a3c67466c951a3191d8cee89b
 #: ../../topics/http/middleware.txt:123
@@ -222,6 +275,12 @@ msgid ""
 "or the appropriate view; it'll apply response middleware to that :class:"
 "`~django.http.HttpResponse`, and return the result."
 msgstr ""
+"Метод должен вернуть ``None`` или объект :class:`~django.http.HttpResponse`. "
+"Если вернул ``None``, Django продолжит обработку запроса, вызывая "
+"``process_view()`` других промежуточных слоёв, а затем представление. Если "
+"вернул объект :class:`~django.http.HttpResponse`, Django остановит обработку "
+"запроса, применит промежуточные слои для объекта :class:`~django.http."
+"HttpResponse`, и вернет результат."
 
 # a0d78985134941b1a3612a92bfe9f317
 #: ../../topics/http/middleware.txt:133
@@ -233,6 +292,11 @@ msgid ""
 "request <modifying_upload_handlers_on_the_fly>`, and should normally be "
 "avoided."
 msgstr ""
+"Обращение к :attr:`request.POST <django.http.HttpRequest.POST>` или :attr:"
+"`request.REQUEST <django.http.HttpRequest.REQUEST>` в промежуточном слое в "
+"методе ``process_request`` или ``process_view``, не позволит в "
+"представлении :ref:`изменять обработчики загрузки файлов "
+"<modifying_upload_handlers_on_the_fly>`. Мы советуем так не делать."
 
 # 11bb5a5222894158b83f63a0f8b22440
 #: ../../topics/http/middleware.txt:140

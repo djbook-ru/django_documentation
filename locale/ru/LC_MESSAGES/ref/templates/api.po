@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-10-15 18:51+0300\n"
+"PO-Revision-Date: 2014-10-16 17:27+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -614,6 +614,8 @@ msgid ""
 "Using a ``Context`` as a stack comes in handy in some custom template tags, "
 "as you'll see below."
 msgstr ""
+"Использовать ``Context``, как стек, удобно в собственных тегах. Ниже мы "
+"покажем пример."
 
 # 61e9db3ead914d7a8e655258945a11f4
 #: ../../ref/templates/api.txt:400
@@ -621,6 +623,8 @@ msgid ""
 "Using ``flatten()`` method you can get whole ``Context`` stack as one "
 "dictionary including builtin variables."
 msgstr ""
+"Метод ``flatten()`` возвращает весь стек ``Context`` одним словарём, включая "
+"встроенные переменные."
 
 # 97c6dfca57f641fbb7b2234b0decd0ef
 #: ../../ref/templates/api.txt:410
@@ -628,6 +632,8 @@ msgid ""
 "A ``flatten()`` method is also internally used to make ``Context`` objects "
 "comparable."
 msgstr ""
+"Метод ``flatten()`` также используется для сравнения объектов ``Context`` "
+"внутри системы шаблонов."
 
 # a3808b43e3e441319c1465fa1d16ec67
 #: ../../ref/templates/api.txt:421
@@ -635,11 +641,13 @@ msgid ""
 "Result from ``flatten()`` can be useful in unit tests to compare ``Context`` "
 "against ``dict``::"
 msgstr ""
+"Результат ``flatten()`` можно использовать в тестах для сравнения "
+"``Context`` и ``dict``::"
 
 # b3cfecf2edf84488aea9f62878ef6a9a
 #: ../../ref/templates/api.txt:436
 msgid "Subclassing Context: RequestContext"
-msgstr ""
+msgstr "Классы наследники Context: RequestContext"
 
 # 794c75488db84963a4a2df2eb1408c38
 #: ../../ref/templates/api.txt:440
@@ -649,6 +657,10 @@ msgid ""
 "template.Context``. The first difference is that it takes an :class:`~django."
 "http.HttpRequest` as its first argument. For example::"
 msgstr ""
+"Django предоставляет специальный класс ``Context``, ``django.template."
+"RequestContext``, которые немного отличается от обычного ``django.template."
+"Context``. Первое отличие -- он принимает :class:`~django.http.HttpRequest` "
+"первым аргументом. Например::"
 
 # 36600bf9272b490a8f22225c32c90645
 #: ../../ref/templates/api.txt:449
@@ -657,6 +669,8 @@ msgid ""
 "few variables, according to your :setting:`TEMPLATE_CONTEXT_PROCESSORS` "
 "setting."
 msgstr ""
+"Еще одно отличие -- он автоматически добавляет различные переменные в "
+"соответствии с настройкой :setting:`TEMPLATE_CONTEXT_PROCESSORS`."
 
 # d81ca0560a544e65b007c7936c5d9c2f
 #: ../../ref/templates/api.txt:452
@@ -666,6 +680,11 @@ msgid ""
 "argument and return a dictionary of items to be merged into the context. By "
 "default, :setting:`TEMPLATE_CONTEXT_PROCESSORS` is set to::"
 msgstr ""
+"Настройка :setting:`TEMPLATE_CONTEXT_PROCESSORS` содержит кортеж функций, "
+"которые называются **процессорами контекста**. Они принимают объект запроса "
+"в качестве аргумента и возвращают словарь переменных, которые будут "
+"добавлены в контекст. По умолчанию :setting:`TEMPLATE_CONTEXT_PROCESSORS` "
+"равна::"
 
 # accd1f784a8e4727923bbc2a1fcb421a
 #: ../../ref/templates/api.txt:465
@@ -676,6 +695,11 @@ msgid ""
 "misconfiguration, it is deliberately hardcoded in and cannot be turned off "
 "by the :setting:`TEMPLATE_CONTEXT_PROCESSORS` setting."
 msgstr ""
+"Кроме этого ``RequestContext`` всегда использует ``django.core."
+"context_processors.csrf``. Этот процессор контекста используется для "
+"безопасности админкой и другими встроенными приложениями. Чтобы исключить "
+"его случайное отключение, он захардкоден и не может быть выключен с помощью "
+"настройки :setting:`TEMPLATE_CONTEXT_PROCESSORS`."
 
 # e3c6eff88d9147f6a2ff50c8ca76a65a
 #: ../../ref/templates/api.txt:471
@@ -685,11 +709,14 @@ msgid ""
 "name, the second will override the first. The default processors are "
 "explained below."
 msgstr ""
+"Процессоры контекста применяются по очереди. Это означает, что один "
+"процессор может перетереть переменную, которую добавил предыдущий. "
+"Процессоры по умолчанию описаны ниже."
 
 # 67c9890d0fc04471a9e1584fa2c50daf
 #: ../../ref/templates/api.txt:0
 msgid "When context processors are applied"
-msgstr ""
+msgstr "Когда применяются процессоры контекста"
 
 # 95c50fe560ff4cb08240345fb03de958
 #: ../../ref/templates/api.txt:478
@@ -699,6 +726,10 @@ msgid ""
 "your ``Context`` or ``RequestContext``, so take care to avoid variable names "
 "that overlap with those supplied by your context processors."
 msgstr ""
+"Процессоры контекста применяются *после* инициализации контекста. То есть "
+"процессор может перезаписать переменную, которую вы добавили в ``Context`` "
+"или ``RequestContext``. По этому избегайте названий переменных, которые "
+"используются процессорами."
 
 # 277c1ac702d4493eb42bcd33fdaa9682
 #: ../../ref/templates/api.txt:484
@@ -707,6 +738,9 @@ msgid ""
 "the optional, third positional argument, ``processors``. In this example, "
 "the ``RequestContext`` instance gets a ``ip_address`` variable::"
 msgstr ""
+"Также в ``RequestContext`` можно передать список дополнительных процессоров "
+"контекста, используя третий необязательный аргумент ``processors``. В это "
+"примере в ``RequestContext`` будет добавлена переменная ``ip_address``::"
 
 # 2c01ea357f9948d481caebeae0d9f320
 #: ../../ref/templates/api.txt:503
@@ -719,6 +753,11 @@ msgid ""
 "render_to_response()`: a ``RequestContext`` instance. Your code might look "
 "like this::"
 msgstr ""
+"Если вы используете встроенную в Django функцию :func:`~django.shortcuts."
+"render_to_response()` для рендеринга шаблона, в шаблон будет передан "
+"экземпляр ``Context`` (не ``RequestContext``). Чтобы использовать "
+"``RequestContext``, передайте третьим аргументом в :func:`~django.shortcuts."
+"render_to_response()` экземпляр ``RequestContext``. Например::"
 
 # 1eb3ef40e1c64a7fb2b87fe0375c58ad
 #: ../../ref/templates/api.txt:520
@@ -727,6 +766,9 @@ msgid ""
 "the same as a call to :func:`~django.shortcuts.render_to_response()` with a "
 "context_instance argument that forces the use of a ``RequestContext``."
 msgstr ""
+"Еще можно использовать функцию :meth:`~django.shortcuts.render()`, которая "
+"работает аналогично :func:`~django.shortcuts.render_to_response()`, но "
+"использует ``RequestContext``."
 
 # 1ff5ce34e85d490dbe9fae802b3dc660
 #: ../../ref/templates/api.txt:524
@@ -735,16 +777,19 @@ msgid ""
 "this example) will take precedence over any variables supplied by context "
 "processors or the ``RequestContext``."
 msgstr ""
+"Обратите внимание, переменные из передаваемого словаря "
+"(``my_data_dictionary`` в нашем примере) будут иметь приоритет над "
+"переменными процессоров контекста или ``RequestContext``."
 
 # 67a7f24f7c234c958535ea79c218237a
 #: ../../ref/templates/api.txt:528
 msgid "Here's what each of the default processors does:"
-msgstr ""
+msgstr "Вот список процессоров контекста по умолчанию:"
 
 # 4f74c55c8ffb45b0b8ba336076dbd8d5
 #: ../../ref/templates/api.txt:531
 msgid "django.contrib.auth.context_processors.auth"
-msgstr ""
+msgstr "django.contrib.auth.context_processors.auth"
 
 # 46663a355dbf4721b6853eb24490fa14
 #: ../../ref/templates/api.txt:533
@@ -752,6 +797,8 @@ msgid ""
 "If :setting:`TEMPLATE_CONTEXT_PROCESSORS` contains this processor, every "
 "``RequestContext`` will contain these variables:"
 msgstr ""
+"Если :setting:`TEMPLATE_CONTEXT_PROCESSORS` содержит этот процессор, в "
+"``RequestContext`` будут добавлены следующие переменные:"
 
 # 2099f68b2f5e48b28426eba03ba71aed
 #: ../../ref/templates/api.txt:536
@@ -759,6 +806,8 @@ msgid ""
 "``user`` -- An ``auth.User`` instance representing the currently logged-in "
 "user (or an ``AnonymousUser`` instance, if the client isn't logged in)."
 msgstr ""
+"``user`` -- объект ``auth.User`` текущего авторизованного пользователя или "
+"объект ``AnonymousUser``, если пользователь не авторизованный)."
 
 # df4a1fc2c560491a89c4b3c257fe4c39
 #: ../../ref/templates/api.txt:540
@@ -767,11 +816,13 @@ msgid ""
 "PermWrapper``, representing the permissions that the currently logged-in "
 "user has."
 msgstr ""
+"``perms`` -- объект ``django.contrib.auth.context_processors.PermWrapper``, "
+"которые содержит права доступа текущего пользователя."
 
 # b6966b419065485c982913cd7f637d4f
 #: ../../ref/templates/api.txt:547
 msgid "django.core.context_processors.debug"
-msgstr ""
+msgstr "django.core.context_processors.debug"
 
 # a782b2b8c6fd44ba917bcfbbdf44e825
 #: ../../ref/templates/api.txt:549
@@ -781,6 +832,10 @@ msgid ""
 "setting:`DEBUG` setting is set to ``True`` and the request's IP address "
 "(``request.META['REMOTE_ADDR']``) is in the :setting:`INTERNAL_IPS` setting:"
 msgstr ""
+"Если :setting:`TEMPLATE_CONTEXT_PROCESSORS` содержит этот процессор, в "
+"``RequestContext`` будут добавлены следующие переменные, но только при :"
+"setting:`DEBUG` равном ``True`` и, если IP адрес запроса (``request."
+"META['REMOTE_ADDR']``) указан в :setting:`INTERNAL_IPS`:"
 
 # 6271cf99e53345d49968b2696f57c449
 #: ../../ref/templates/api.txt:554
@@ -788,6 +843,8 @@ msgid ""
 "``debug`` -- ``True``. You can use this in templates to test whether you're "
 "in :setting:`DEBUG` mode."
 msgstr ""
+"``debug`` -- ``True``. Вы можете использовать эту переменную, чтобы "
+"определить :setting:`DEBUG` режим в шаблоне."
 
 # 88c3d9db22e145de9770af0ccb2e2cff
 #: ../../ref/templates/api.txt:556
@@ -796,11 +853,14 @@ msgid ""
 "representing every SQL query that has happened so far during the request and "
 "how long it took. The list is in order by query."
 msgstr ""
+"``sql_queries`` -- список словарей ``{'sql': ..., 'time': ...}``, который "
+"содержит все SQL запросы и время их выполнения, которые были выполнены при "
+"обработке запроса. Список отсортирован в порядке выполнения SQL запроса."
 
 # 40b3281520c24cd3b9f25692a7eb1e66
 #: ../../ref/templates/api.txt:561
 msgid "django.core.context_processors.i18n"
-msgstr ""
+msgstr "django.core.context_processors.i18n"
 
 # 13192c07fd7f4886978238bd1647af92
 #: ../../ref/templates/api.txt:563 ../../ref/templates/api.txt:606
@@ -808,11 +868,13 @@ msgid ""
 "If :setting:`TEMPLATE_CONTEXT_PROCESSORS` contains this processor, every "
 "``RequestContext`` will contain these two variables:"
 msgstr ""
+"Если :setting:`TEMPLATE_CONTEXT_PROCESSORS` содержит этот процессор, в "
+"``RequestContext`` будут добавлены следующие переменные:"
 
 # fd018e6040574d409ffe9e8f6821ce22
 #: ../../ref/templates/api.txt:566
 msgid "``LANGUAGES`` -- The value of the :setting:`LANGUAGES` setting."
-msgstr ""
+msgstr "``LANGUAGES`` -- значение настройки :setting:`LANGUAGES`."
 
 # db178c2698da4a83acd2ae7a47dd4c2d
 #: ../../ref/templates/api.txt:567
@@ -820,16 +882,18 @@ msgid ""
 "``LANGUAGE_CODE`` -- ``request.LANGUAGE_CODE``, if it exists. Otherwise, the "
 "value of the :setting:`LANGUAGE_CODE` setting."
 msgstr ""
+"``LANGUAGE_CODE`` -- ``request.LANGUAGE_CODE``, если существует. Иначе "
+"значение :setting:`LANGUAGE_CODE`."
 
 # 7e82e3a962514a29bc03b9c1d8f887cc
 #: ../../ref/templates/api.txt:570
 msgid "See :doc:`/topics/i18n/index` for more."
-msgstr ""
+msgstr "Смотрите :doc:`/topics/i18n/index`."
 
 # fc4072670a644ed4a02af0c52d98c520
 #: ../../ref/templates/api.txt:573
 msgid "django.core.context_processors.media"
-msgstr ""
+msgstr "django.core.context_processors.media"
 
 # 12e09d53127e4245a94bd154e7c386a3
 #: ../../ref/templates/api.txt:575
@@ -838,11 +902,14 @@ msgid ""
 "``RequestContext`` will contain a variable ``MEDIA_URL``, providing the "
 "value of the :setting:`MEDIA_URL` setting."
 msgstr ""
+"Если :setting:`TEMPLATE_CONTEXT_PROCESSORS` содержит этот процессор, в "
+"``RequestContext`` будет добавлена переменная ``MEDIA_URL``, которая "
+"содержит значение :setting:`MEDIA_URL`."
 
 # 0df2d136ed844df4a50afee535e871cf
 #: ../../ref/templates/api.txt:580
 msgid "django.core.context_processors.static"
-msgstr ""
+msgstr "django.core.context_processors.static"
 
 # f3d32a76ba94481da1d0d32d26f18845
 #: ../../ref/templates/api.txt:584
@@ -851,11 +918,14 @@ msgid ""
 "``RequestContext`` will contain a variable ``STATIC_URL``, providing the "
 "value of the :setting:`STATIC_URL` setting."
 msgstr ""
+"Если :setting:`TEMPLATE_CONTEXT_PROCESSORS` содержит этот процессор, в "
+"``RequestContext`` будет добавлена переменная ``STATIC_URL``, которая "
+"содержит значение :setting:`STATIC_URL`."
 
 # e6fe13fc616949f4bae7a8c5d2ae2d25
 #: ../../ref/templates/api.txt:589
 msgid "django.core.context_processors.csrf"
-msgstr ""
+msgstr "django.core.context_processors.csrf"
 
 # 076ae19c926d4ab18330243dae9b902c
 #: ../../ref/templates/api.txt:591
@@ -864,11 +934,13 @@ msgid ""
 "template tag for protection against :doc:`Cross Site Request Forgeries </ref/"
 "contrib/csrf>`."
 msgstr ""
+"Этот процессор добавляет токен, который используется тегом :ttag:"
+"`csrf_token` для защиты от :doc:`CSRF атак </ref/contrib/csrf>`."
 
 # d72b464bbbc54949b59c36334dc7feaf
 #: ../../ref/templates/api.txt:596
 msgid "django.core.context_processors.request"
-msgstr ""
+msgstr "django.core.context_processors.request"
 
 # 98fac01ff9c94f6abbdd64330987bc5b
 #: ../../ref/templates/api.txt:598
@@ -878,11 +950,15 @@ msgid ""
 "current :class:`~django.http.HttpRequest`. Note that this processor is not "
 "enabled by default; you'll have to activate it."
 msgstr ""
+"Если :setting:`TEMPLATE_CONTEXT_PROCESSORS` содержит этот процессор, в "
+"``RequestContext`` будет добавлена переменная ``request``, содержащая "
+"текущий :class:`~django.http.HttpRequest`. Обратите внимание, этот процессор "
+"не включен по умолчанию."
 
 # 9f9382901d7a46d192a2fa172846980b
 #: ../../ref/templates/api.txt:604
 msgid "django.contrib.messages.context_processors.messages"
-msgstr ""
+msgstr "django.contrib.messages.context_processors.messages"
 
 # 093618ab1c0444b69851d6ee73afaf60
 #: ../../ref/templates/api.txt:609
@@ -890,6 +966,8 @@ msgid ""
 "``messages`` -- A list of messages (as strings) that have been set via the :"
 "doc:`messages framework </ref/contrib/messages>`."
 msgstr ""
+"``messages`` -- список сообщений (строки), которые были добавлены с помощью :"
+"doc:`фреймворка сообщений </ref/contrib/messages>`."
 
 # 8378ef0e3f044f5abf7957024fe47468
 #: ../../ref/templates/api.txt:611
@@ -897,16 +975,18 @@ msgid ""
 "``DEFAULT_MESSAGE_LEVELS`` -- A mapping of the message level names to :ref:"
 "`their numeric value <message-level-constants>`."
 msgstr ""
+"``DEFAULT_MESSAGE_LEVELS`` -- словарь приоритетов сообщений и :ref:`их "
+"числовых кодов <message-level-constants>`."
 
 # d06dfea5b49b4d8281abf98eab374c33
 #: ../../ref/templates/api.txt:616
 msgid "The ``DEFAULT_MESSAGE_LEVELS`` variable was added."
-msgstr ""
+msgstr "Была добавлена переменная ``DEFAULT_MESSAGE_LEVELS``."
 
 # 1fcde39b1ac443d8b4163bef8893de09
 #: ../../ref/templates/api.txt:619
 msgid "Writing your own context processors"
-msgstr ""
+msgstr "Как создать свой процессор контекста"
 
 # 2e07708a63e24295b61c5c28b7a42378
 #: ../../ref/templates/api.txt:621
@@ -916,6 +996,10 @@ msgid ""
 "returns a dictionary that gets added to the template context. Each context "
 "processor *must* return a dictionary."
 msgstr ""
+"Интерфейс процессора контекста очень простой: это функция Python, которая "
+"принимает один аргумент, объект :class:`~django.http.HttpRequest`, и "
+"возвращает словарь, которая будет добавлен в контекст шаблона. Процессор "
+"контекста *обязательно* должен возвращать словарь."
 
 # 6b0ac5e3f8d34d8db46cc759c9fbadaa
 #: ../../ref/templates/api.txt:626
@@ -924,11 +1008,13 @@ msgid ""
 "cares about is that your custom context processors are pointed-to by your :"
 "setting:`TEMPLATE_CONTEXT_PROCESSORS` setting."
 msgstr ""
+"Код процессора может находится где угодно. Главное не забыть указать его в "
+"настройке :setting:`TEMPLATE_CONTEXT_PROCESSORS`."
 
 # d81d691eb3f547c1977948b7ce189443
 #: ../../ref/templates/api.txt:631
 msgid "Loading templates"
-msgstr ""
+msgstr "Загрузка шаблонов"
 
 # 9769e4cc33644631ac451b17ef9ad14f
 #: ../../ref/templates/api.txt:633
@@ -937,6 +1023,9 @@ msgid ""
 "using the low-level ``Template`` API yourself. Save templates in a directory "
 "specified as a **template directory**."
 msgstr ""
+"Обычно при разработке проекта шаблоны хранятся в файлах, а не создаются с "
+"помощью API ``Template``. Сохраняйте их в каталоге, который называют "
+"**каталог с шаблонами**."
 
 # 9b644db389ab4622988041bbfbb06311
 #: ../../ref/templates/api.txt:637
@@ -946,11 +1035,14 @@ msgid ""
 "basic way of specifying template directories is by using the :setting:"
 "`TEMPLATE_DIRS` setting."
 msgstr ""
+"Django ищет каталоги с шаблонами в соответствии с настройками загрузки "
+"шаблонов (смотрите \"Типа загрузчиков\" (FIXME) ниже). Самый простой способ "
+"-- указать каталоги с шаблонами в настройке :setting:`TEMPLATE_DIRS`."
 
 # e0741e1950ef4699ba6f4cac63ff138f
 #: ../../ref/templates/api.txt:643
 msgid "The TEMPLATE_DIRS setting"
-msgstr ""
+msgstr "Настройка TEMPLATE_DIRS"
 
 # b963a6780eb34ebd8c8372a2b3020080
 #: ../../ref/templates/api.txt:645
@@ -960,6 +1052,9 @@ msgid ""
 "or tuple of strings that contain full paths to your template directory(ies). "
 "Example::"
 msgstr ""
+"Вы можете указать Django каталоги с шаблонами через настройку :setting:"
+"`TEMPLATE_DIRS` в файле настроек проекта. Настройка должна содержать список "
+"или кортеж полных путей к каталогам. Например::"
 
 # 0be6659172bd4a05befb3397349badb6
 #: ../../ref/templates/api.txt:655
@@ -968,23 +1063,30 @@ msgid ""
 "templates are readable by the Web server. They can have any extension you "
 "want, such as ``.html`` or ``.txt``, or they can have no extension at all."
 msgstr ""
+"Шаблоны могут находиться где угодно, главное, чтобы у Web-сервера были права "
+"на чтение. Расширение файла может быть любым, ``.html`` или ``.txt``, или "
+"вообще без расширения."
 
 # 1f5dbb2948f54aab8299117d1382f8db
 #: ../../ref/templates/api.txt:659
 msgid ""
 "Note that these paths should use Unix-style forward slashes, even on Windows."
 msgstr ""
+"Обратите внимание, пути должны быть Unix-стиле, даже для Windows (то есть "
+"использовать ``/``)."
 
 # e3a1efffc99c4aeeaa973c966f5b60c7
 #: ../../ref/templates/api.txt:664
 msgid "The Python API"
-msgstr ""
+msgstr "Python API"
 
 # 0215f38d94004d7ab391b4642132659c
 #: ../../ref/templates/api.txt:668
 msgid ""
 "``django.template.loader`` has two functions to load templates from files:"
 msgstr ""
+"``django.template.loader`` содержит две функции для загрузки шаблонов с "
+"файла:"
 
 # 982ca7c6f779465eb43bdd4fd9732676
 #: ../../ref/templates/api.txt:672
@@ -993,6 +1095,9 @@ msgid ""
 "the template with the given name. If the template doesn't exist, it raises "
 "``django.template.TemplateDoesNotExist``."
 msgstr ""
+"``get_template`` возвращает скомпилированный шаблон (объект ``Template``) "
+"для указанного названия шаблона. Если шаблон не найден, будет вызвано "
+"исключение ``django.template.TemplateDoesNotExist``."
 
 # d32a0e9b06714446a005b8b861d34987
 # 37574e2467b74e26875da184b256c198
@@ -1001,12 +1106,14 @@ msgid ""
 "To override the :setting:`TEMPLATE_DIRS` setting, use the ``dirs`` "
 "parameter. The ``dirs`` parameter may be a tuple or list."
 msgstr ""
+"Чтобы переопределить настройку :setting:`TEMPLATE_DIRS`, используйте "
+"аргумент ``dirs``. Аргумент ``dirs`` может быть списком или кортежем."
 
 # 2b7bc73d3b6a4a659b522027cfbe1dac
 # 6a6aa759374d427fbae438f7138f704e
 #: ../../ref/templates/api.txt:681 ../../ref/templates/api.txt:693
 msgid "The ``dirs`` parameter was added."
-msgstr ""
+msgstr "Был добавлен аргумент ``dirs``."
 
 # 1d9e88c402fa41e283ac3ada1911811e
 #: ../../ref/templates/api.txt:685
@@ -1014,6 +1121,8 @@ msgid ""
 "``select_template`` is just like ``get_template``, except it takes a list of "
 "template names. Of the list, it returns the first template that exists."
 msgstr ""
+"``select_template`` похож на ``get_template``, но принимает список шаблонов. "
+"Возвращает первый доступный шаблон из списка."
 
 # 423a741d62074cbe81e9757a0624ca70
 #: ../../ref/templates/api.txt:695
@@ -1022,18 +1131,21 @@ msgid ""
 "above :setting:`TEMPLATE_DIRS` setting, here are the files Django will look "
 "for, in order:"
 msgstr ""
+"Например, для ``get_template('story_detail.html')``, при настройке :setting:"
+"`TEMPLATE_DIRS` из примера выше, Django будет проверять такие файлы в "
+"следующем порядке:"
 
 # 2e0ee63e3f0d4f21a2fafc6b7bbec8ad
 # 1803a692346042ccb14e8d305eac6522
 #: ../../ref/templates/api.txt:699 ../../ref/templates/api.txt:707
 msgid "``/home/html/templates/lawrence.com/story_detail.html``"
-msgstr ""
+msgstr "``/home/html/templates/lawrence.com/story_detail.html``"
 
 # 16242f67738e44a2994ac1725d6b969d
 # 2bef4fb42a9c438ca1540f3dad1b64f6
 #: ../../ref/templates/api.txt:700 ../../ref/templates/api.txt:708
 msgid "``/home/html/templates/default/story_detail.html``"
-msgstr ""
+msgstr "``/home/html/templates/default/story_detail.html``"
 
 # 61cffbed641149579be89541913953e7
 #: ../../ref/templates/api.txt:702
@@ -1041,26 +1153,28 @@ msgid ""
 "If you call ``select_template(['story_253_detail.html', 'story_detail."
 "html'])``, here's what Django will look for:"
 msgstr ""
+"Для ``select_template(['story_253_detail.html', 'story_detail.html'])``, "
+"Django будет искать:"
 
 # 8568200fc8bb4647b408b1434db37912
 #: ../../ref/templates/api.txt:705
 msgid "``/home/html/templates/lawrence.com/story_253_detail.html``"
-msgstr ""
+msgstr "``/home/html/templates/lawrence.com/story_253_detail.html``"
 
 # 2159ec691c6a4b09a395e8267f3b36bd
 #: ../../ref/templates/api.txt:706
 msgid "``/home/html/templates/default/story_253_detail.html``"
-msgstr ""
+msgstr "``/home/html/templates/default/story_253_detail.html``"
 
 # 2d0f63d34b6e47fa88e74ea50017018f
 #: ../../ref/templates/api.txt:710
 msgid "When Django finds a template that exists, it stops looking."
-msgstr ""
+msgstr "Как только Django найдет шаблон, поиск будет остановлен."
 
 # 3d5d4dc50d404f95a2f5cb5daa03f311
 #: ../../ref/templates/api.txt:0
 msgid "Tip"
-msgstr ""
+msgstr "Совет"
 
 # f00cde4cb9ab4dd189d37d269c964575
 #: ../../ref/templates/api.txt:714
@@ -1072,11 +1186,17 @@ msgid ""
 "template for an individual story, with a fallback template for stories that "
 "don't have custom templates."
 msgstr ""
+"Вы можете использовать ``select_template()`` для супер-гибкой структуры "
+"шаблонов. Например, если у вас есть новости и вы хотите для некоторых "
+"использовать собственный шаблон, используйте следующий код "
+"``select_template(['story_%s_detail.html' % story.id, 'story_detail."
+"html'])``. Такой подход позволит использовать собственный шаблон для "
+"некоторых новостей и шаблон по умолчанию для всех остальных."
 
 # 8011a261467e46178cd9ddab3aaeb8c7
 #: ../../ref/templates/api.txt:722
 msgid "Using subdirectories"
-msgstr ""
+msgstr "Использование под-каталогов"
 
 # 0591f24d108f4428930f19b7c28027e6
 #: ../../ref/templates/api.txt:724
@@ -1085,6 +1205,9 @@ msgid ""
 "of the template directory. The convention is to make a subdirectory for each "
 "Django app, with subdirectories within those subdirectories as needed."
 msgstr ""
+"Вы можете организовать хранение шаблонов в под-каталогах в каталоге шаблонов "
+"и мы рекомендуем использовать такой подход. Существует неписанное соглашение "
+"разделять шаблоны по под-каталогам для каждого приложения Django."
 
 # cddaa40c34254f36b25d4ab157828ca5
 #: ../../ref/templates/api.txt:728
@@ -1092,12 +1215,14 @@ msgid ""
 "Do this for your own sanity. Storing all templates in the root level of a "
 "single directory gets messy."
 msgstr ""
+"Используйте это для собственного удобства. Хранение всех шаблонов в одном "
+"каталоге может привести к беспорядку в коде."
 
 # 8cbe197b72964bfd9c37e2ef0914a6d5
 #: ../../ref/templates/api.txt:731
 msgid ""
 "To load a template that's within a subdirectory, just use a slash, like so::"
-msgstr ""
+msgstr "Чтобы загрузить шаблон из под-каталога, используйте слеш::"
 
 # 6b704e28322e4943a4cf3bc4d38fc99b
 #: ../../ref/templates/api.txt:735
@@ -1105,21 +1230,23 @@ msgid ""
 "Using the same :setting:`TEMPLATE_DIRS` setting from above, this example "
 "``get_template()`` call will attempt to load the following templates:"
 msgstr ""
+"Для настройки :setting:`TEMPLATE_DIRS` из примера выше этот вызов "
+"``get_template()`` будет искать следующие шаблоны:"
 
 # e1cf406e1d9e465997c40f4eafce6755
 #: ../../ref/templates/api.txt:738
 msgid "``/home/html/templates/lawrence.com/news/story_detail.html``"
-msgstr ""
+msgstr "``/home/html/templates/lawrence.com/news/story_detail.html``"
 
 # f49d19997fdf4c8cb1f5faec6152fdc2
 #: ../../ref/templates/api.txt:739
 msgid "``/home/html/templates/default/news/story_detail.html``"
-msgstr ""
+msgstr "``/home/html/templates/default/news/story_detail.html``"
 
 # f5de52746ee64836bff2111256443442
 #: ../../ref/templates/api.txt:744
 msgid "Loader types"
-msgstr ""
+msgstr "Типы загрузчиков"
 
 # a3e1a45cce4049b7b9236c6b951c0373
 #: ../../ref/templates/api.txt:746
@@ -1128,6 +1255,9 @@ msgid ""
 "with a few other template loaders, which know how to load templates from "
 "other sources."
 msgstr ""
+"По умолчанию Django использует загрузчик шаблонов с файловой системы, но "
+"Django предоставляет и другие загрузчики шаблонов, которые позволяют "
+"загружать шаблоны с других источников."
 
 # b2bb78e6164e46e2abcf47d3af2a37d6
 #: ../../ref/templates/api.txt:750
@@ -1138,11 +1268,15 @@ msgid ""
 "represents a template loader class. Here are the template loaders that come "
 "with Django:"
 msgstr ""
+"Некоторые из них выключены по умолчанию, но вы можете активировать их "
+"изменив настройку :setting:`TEMPLATE_LOADERS`. :setting:`TEMPLATE_LOADERS` "
+"содержит кортеж строк, каждая из которых представляет класс загрузчика "
+"шаблонов. Вот список загрузчиков, которые предоставляет Django:"
 
 # 5edff49860f9475dac1d179479ec492c
 #: ../../ref/templates/api.txt:757
 msgid "``django.template.loaders.filesystem.Loader``"
-msgstr ""
+msgstr "``django.template.loaders.filesystem.Loader``"
 
 # 51b2227ae0f0440da206259e90aa40d0
 #: ../../ref/templates/api.txt:761
@@ -1150,11 +1284,13 @@ msgid ""
 "Loads templates from the filesystem, according to :setting:`TEMPLATE_DIRS`. "
 "This loader is enabled by default."
 msgstr ""
+"Загружает шаблоны с файловой системы в соответствии с настройкой :setting:"
+"`TEMPLATE_DIRS`. Включен по умолчанию."
 
 # 2aba8252bf3a4176a6e476db0436377a
 #: ../../ref/templates/api.txt:764
 msgid "``django.template.loaders.app_directories.Loader``"
-msgstr ""
+msgstr "``django.template.loaders.app_directories.Loader``"
 
 # b8ee5b981d6b452ab14eca16e8f331c9
 #: ../../ref/templates/api.txt:768
@@ -1163,6 +1299,9 @@ msgid ""
 "`INSTALLED_APPS`, the loader looks for a ``templates`` subdirectory. If the "
 "directory exists, Django looks for templates in there."
 msgstr ""
+"Загружает шаблоны из каталога приложения Django. Для каждого приложения в :"
+"setting:`INSTALLED_APPS` загрузчик ищет под-каталог ``templates``. Если под-"
+"каталог найден, Django ищет в нем шаблон."
 
 # 48d7074334514cb0ac403327830e08eb
 #: ../../ref/templates/api.txt:772
@@ -1170,11 +1309,13 @@ msgid ""
 "This means you can store templates with your individual apps. This also "
 "makes it easy to distribute Django apps with default templates."
 msgstr ""
+"Это означает, что вы можете хранить шаблоны вместе с приложением. Таким "
+"образом легко распространять приложение Django с шаблонами по умолчанию."
 
 # 38bd1c8504a045629583779a4c3cc2c2
 #: ../../ref/templates/api.txt:775
 msgid "For example, for this setting::"
-msgstr ""
+msgstr "Например для следующих настроек::"
 
 # 13b7c3f588f946c194badd32f9fe6e9e
 #: ../../ref/templates/api.txt:779
@@ -1182,21 +1323,23 @@ msgid ""
 "...then ``get_template('foo.html')`` will look for ``foo.html`` in these "
 "directories, in this order:"
 msgstr ""
+"... ``get_template('foo.html')`` будет искать ``foo.html`` в таких каталогах "
+"в указанном порядке:"
 
 # 9a2e4b2c7fc74f2eb4e473aebe4b8370
 #: ../../ref/templates/api.txt:782
 msgid "``/path/to/myproject/polls/templates/``"
-msgstr ""
+msgstr "``/path/to/myproject/polls/templates/``"
 
 # 4721bf0cdd62448090a615210f2b9966
 #: ../../ref/templates/api.txt:783
 msgid "``/path/to/myproject/music/templates/``"
-msgstr ""
+msgstr "``/path/to/myproject/music/templates/``"
 
 # 9cd1a5e2f14c451a9faa0f58d853f60e
 #: ../../ref/templates/api.txt:785
 msgid "... and will use the one it finds first."
-msgstr ""
+msgstr "... и будет использовать первый найденный."
 
 # 5dffd0ec00e2469cae7d6abc2e491c13
 #: ../../ref/templates/api.txt:787
@@ -1209,6 +1352,12 @@ msgid ""
 "admin`` in :setting:`INSTALLED_APPS`, otherwise ``django.contrib.admin``’s "
 "will be loaded first and yours will be ignored."
 msgstr ""
+"Порядок :setting:`INSTALLED_APPS` -- важен! Например, вы хотите "
+"переопределить шаблон админки Django, например ``admin/base_site.html`` из "
+"``django.contrib.admin``, заменив на ``admin/base_site.html`` из ``myproject."
+"polls``. Вы должны указать ``myproject.polls`` *перед* ``django.contrib."
+"admin`` в :setting:`INSTALLED_APPS`, иначе шаблон из ``django.contrib."
+"admin`` будет загружен первым, а ваш проигнорирован."
 
 # 1c097e92dfc14918a7737e12a63bf559
 #: ../../ref/templates/api.txt:795
@@ -1217,16 +1366,19 @@ msgid ""
 "caches a list of which :setting:`INSTALLED_APPS` packages have a "
 "``templates`` subdirectory."
 msgstr ""
+"Обратите внимание, загрузчик выполняет некоторую оптимизацию при первом "
+"импорте: он кеширует список приложений из :setting:`INSTALLED_APPS`, которые "
+"содержат под-каталог ``templates``."
 
 # 49e0044590b840ceb79bd35f885a2831
 #: ../../ref/templates/api.txt:799
 msgid "This loader is enabled by default."
-msgstr ""
+msgstr "Загрузчик включен по умолчанию."
 
 # 18220eec191c479fbbbb0c1a7e385d3b
 #: ../../ref/templates/api.txt:801
 msgid "``django.template.loaders.eggs.Loader``"
-msgstr ""
+msgstr "``django.template.loaders.eggs.Loader``"
 
 # ce2a25b669ee4bf08a984f1dd31d7ec9
 #: ../../ref/templates/api.txt:805
@@ -1234,17 +1386,19 @@ msgid ""
 "Just like ``app_directories`` above, but it loads templates from Python eggs "
 "rather than from the filesystem."
 msgstr ""
+"Аналогичен ``app_directories``, но загружает шаблоны из Python eggs, а не "
+"файловой системы."
 
 # efc4aa376af64478925271255c365323
 # 20bb1c0bcb424e0ab796724346461155
 #: ../../ref/templates/api.txt:808 ../../ref/templates/api.txt:843
 msgid "This loader is disabled by default."
-msgstr ""
+msgstr "Загрузчик выключен по умолчанию."
 
 # 247a952199d94495809c6ab2cbd21a14
 #: ../../ref/templates/api.txt:810
 msgid "``django.template.loaders.cached.Loader``"
-msgstr ""
+msgstr "``django.template.loaders.cached.Loader``"
 
 # 0537a19bb307473d8d7fefaf136432c5
 #: ../../ref/templates/api.txt:814
@@ -1253,6 +1407,10 @@ msgid ""
 "time they need to be rendered. While the Django templating system is quite "
 "fast, the overhead from reading and compiling templates can add up."
 msgstr ""
+"По умолчанию система шаблонов читает и компилирует ваш шаблон при каждом "
+"рендеринге шаблона. Хотя система шаблонов Django работает достаточно быстро, "
+"но общие накладные расходы на чтение и компилирование шаблонов могут быть "
+"существенны."
 
 # 13c13aee0e9b455eaf2f4900ba60a41a
 #: ../../ref/templates/api.txt:818
@@ -1263,6 +1421,11 @@ msgid ""
 "then stores the compiled ``Template`` in memory. The cached ``Template`` "
 "instance is returned for subsequent requests to load the same template."
 msgstr ""
+"Кеширующий загрузчик шаблонов принимает список загрузчиков Он будет "
+"использовать их для поиска неизвестных шаблонов, которые загружаются первый "
+"раз. Затем скомпилированные ``Template`` сохраняются в памяти. "
+"Закешированный объект ``Template`` возвращается при повторном поиске уже "
+"загруженного шаблона."
 
 # 516fe45b918b4719b19990806f80c661
 #: ../../ref/templates/api.txt:824
@@ -1270,6 +1433,8 @@ msgid ""
 "For example, to enable template caching with the ``filesystem`` and "
 "``app_directories`` template loaders you might use the following settings::"
 msgstr ""
+"Например, чтобы включить кеширование с загрузчиками ``filesystem`` и "
+"``app_directories``, используйте следующие настройки::"
 
 # 524f570e0dad476b999724a81d0afd81
 #: ../../ref/templates/api.txt:836
@@ -1280,6 +1445,10 @@ msgid ""
 "implementation for each tag is thread-safe. For more information, see :ref:"
 "`template tag thread safety considerations<template_tag_thread_safety>`."
 msgstr ""
+"Все встроенные теги Django можно использовать с кеширующим загрузчиком, но "
+"теги сторонних приложений, или ваши собственные, должны использовать "
+"потокобезопасный код при использовании класса ``Node``. Смотрите :ref:"
+"`Потокобезопасные шаблонные теги<template_tag_thread_safety>`."
 
 # eeea2eb077de42bd9852eb0866145e05
 #: ../../ref/templates/api.txt:845
@@ -1287,11 +1456,14 @@ msgid ""
 "Django uses the template loaders in order according to the :setting:"
 "`TEMPLATE_LOADERS` setting. It uses each loader until a loader finds a match."
 msgstr ""
+"Django использует загрузчики шаблонов в порядке указанном в настройке :"
+"setting:`TEMPLATE_LOADERS`. Загрузчики используются пока один из них не "
+"найдет шаблон."
 
 # f50582e848c742668750b398e5eb6c3e
 #: ../../ref/templates/api.txt:852
 msgid "Template origin"
-msgstr ""
+msgstr "Расположение шаблона"
 
 # c9cb538fd5cd44b8a46433abba7149d7
 #: ../../ref/templates/api.txt:856
@@ -1299,6 +1471,8 @@ msgid ""
 "When :setting:`TEMPLATE_DEBUG` is ``True`` template objects will have an "
 "``origin`` attribute depending on the source they are loaded from."
 msgstr ""
+"При :setting:`TEMPLATE_DEBUG` равном ``True`` объект шаблона содержит "
+"атрибут ``origin``, который указывает на расположение шаблона."
 
 # 3d79c7873bb94fa1a588fb55f56d7bb9
 #: ../../ref/templates/api.txt:861
@@ -1306,6 +1480,8 @@ msgid ""
 "Templates created from a template loader will use the ``django.template."
 "loader.LoaderOrigin`` class."
 msgstr ""
+"Шаблоны, загруженные с помощью загрузчика шаблонов, будут использовать класс "
+"``django.template.loader.LoaderOrigin`` как значение этого атрибута."
 
 # e00e01fdf4e344019090411ed5fae6d5
 #: ../../ref/templates/api.txt:866
@@ -1313,11 +1489,13 @@ msgid ""
 "The path to the template as returned by the template loader. For loaders "
 "that read from the file system, this is the full path to the template."
 msgstr ""
+"Путь к шаблону, который вернул загрузчик шаблонов. Для загрузчиков, которые "
+"ищут в файловой системе, это будет полный путь к файлу шаблона."
 
 # a206db0de1834dbf9d65e06f2f4e0caf
 #: ../../ref/templates/api.txt:872
 msgid "The relative path to the template as passed into the template loader."
-msgstr ""
+msgstr "Относительный путь к шаблону, которые передается в загрузчик шаблонов."
 
 # 7b5b3bc62d4a4850bc7331e3b7b5ed25
 #: ../../ref/templates/api.txt:877
@@ -1325,16 +1503,18 @@ msgid ""
 "Templates created from a ``Template`` class will use the ``django.template."
 "StringOrigin`` class."
 msgstr ""
+"Шаблоны созданные классом ``Template`` будут использовать класс ``django."
+"template.StringOrigin``."
 
 # 95f439a87e5c4e0c9b2cc62ed5344b1e
 #: ../../ref/templates/api.txt:882
 msgid "The string used to create the template."
-msgstr ""
+msgstr "Строка, которая использовалась для создания шаблона."
 
 # 54b77857e724476c829d200888ceecbc
 #: ../../ref/templates/api.txt:885
 msgid "The ``render_to_string`` shortcut"
-msgstr ""
+msgstr "Функция ``render_to_string``"
 
 # c9b323809de74788a855878589b920aa
 #: ../../ref/templates/api.txt:889
@@ -1344,6 +1524,9 @@ msgid ""
 "``render_to_string()`` in :mod:`django.template.loader`, which loads a "
 "template, renders it and returns the resulting string::"
 msgstr ""
+"Для удобства загрузки и ренедеринга шаблон Django предоставляет функцию, "
+"которая упрощает это процесс: ``render_to_string()`` из :mod:`django."
+"template.loader`. Она загружает шаблон, рендерит его и возвращает строку::"
 
 # 7d1ccbdb8f384a33b92c27ca41b68891
 #: ../../ref/templates/api.txt:898
@@ -1353,11 +1536,15 @@ msgid ""
 "render (or a list of template names, in which case Django will use the first "
 "template in the list that exists) -- and two optional arguments:"
 msgstr ""
+"``render_to_string`` принимает один обязательный аргумент -- "
+"``template_name``, который указывает название шаблона, который необходимо "
+"загрузить и отрендерить (или список шаблонов, Django будет использовать "
+"первый найденный шаблон) -- и два необязательных:"
 
 # 3e7ae697fec14b89bca23571eefe1a82
 #: ../../ref/templates/api.txt:906
 msgid "dictionary"
-msgstr ""
+msgstr "dictionary"
 
 # 0633e44d6a314835bce68844bc39a569
 #: ../../ref/templates/api.txt:904
@@ -1365,11 +1552,13 @@ msgid ""
 "A dictionary to be used as variables and values for the template's context. "
 "This can also be passed as the second positional argument."
 msgstr ""
+"Словарь с переменными, который будет добавлен в контекст при рендеринге. "
+"Можно передавать как второй позиционный аргумент."
 
 # 7b4223f9a7814bf79d3ba0b9d1621600
 #: ../../ref/templates/api.txt:911
 msgid "context_instance"
-msgstr ""
+msgstr "context_instance"
 
 # 07b5417c1796444baf5205333b8da78c
 #: ../../ref/templates/api.txt:909
@@ -1378,6 +1567,10 @@ msgid ""
 "instance of :class:`~django.template.RequestContext`) to use as the "
 "template's context. This can also be passed as the third positional argument."
 msgstr ""
+"Экземпляр :class:`~django.template.Context` или под-класса (например "
+"экземпляр :class:`~django.template.RequestContext`), который будет "
+"использоваться как контекст. Можно передавать как третий позиционный "
+"аргумент."
 
 # cf8d59a123e84504b351826b4304c0f1
 #: ../../ref/templates/api.txt:913
@@ -1386,11 +1579,14 @@ msgid ""
 "calls ``render_to_string`` and feeds the result into an :class:`~django.http."
 "HttpResponse` suitable for returning directly from a view."
 msgstr ""
+"Смотрите также :func:`~django.shortcuts.render_to_response()`. Она вызывает "
+"``render_to_string`` и передает в :class:`~django.http.HttpResponse`, "
+"который можно вернуть из представления."
 
 # f770006c4081468e8d776053a86e9107
 #: ../../ref/templates/api.txt:918
 msgid "Configuring the template system in standalone mode"
-msgstr ""
+msgstr "Настройка системы шаблонов в стороннем приложении"
 
 # 03a65f3e05234e26825dca20e92ca495
 #: ../../ref/templates/api.txt:922
@@ -1399,6 +1595,9 @@ msgid ""
 "as an output component in another application. If you're using the template "
 "system as part of a Django application, nothing here applies to you."
 msgstr ""
+"Этот раздел для тех, кто хочет использовать систему шаблонов в стороннем "
+"приложении. Если вы используете Django для создания приложений, можете "
+"пропустить этот раздел."
 
 # f78697993cdb4fb6a21d15e5b00c0cb5
 #: ../../ref/templates/api.txt:927
@@ -1412,6 +1611,13 @@ msgid ""
 "application rather than dealing with settings files and pointing to them via "
 "environment variables."
 msgstr ""
+"Обычно Django загружает настройки из внутреннего файлы настроек, который "
+"содержит настройки по умолчанию, затем дополняет настройками из модуля, "
+"который указан в переменной окружения :envvar:`DJANGO_SETTINGS_MODULE`. Если "
+"вы хотите использовать систему шаблонов без Django, использовать переменную "
+"окружения не очень удобно, т.к. скорее всего вы захотите настраивать систему "
+"шаблонов как и остальную часть приложения, а не выносить отдельно настройки "
+"и указывать их через переменную окружения."
 
 # 881a440b420b4a84b1fcfdde8cd5c32b
 #: ../../ref/templates/api.txt:935
@@ -1429,11 +1635,22 @@ msgid ""
 "`settings documentation </ref/settings>`, and any setting starting with "
 "``TEMPLATE_`` is of obvious interest."
 msgstr ""
+"Для этого вы должны использовать явную настройку, описанную в :ref:`settings-"
+"without-django-settings-module`. Просто импортируйте необходимый модуль "
+"системы шаблонов, затем, *перед* использованием какого либо функционала, "
+"вызовите :func:`django.conf.settings.configure()` с необходимыми "
+"настройками. В первую очередь вам следует указать :setting:`TEMPLATE_DIRS` "
+"(если вы хотите использовать загрузчики шаблонов), :setting:"
+"`DEFAULT_CHARSET` (если ``utf-8`` по умолчанию вас не устраивает) и :setting:"
+"`TEMPLATE_DEBUG`. Если вы планируете использовать тег :ttag:`url`, "
+"необходимо указать :setting:`ROOT_URLCONF`. Все доступные настройки указаны "
+"в :doc:`разделе о настройках Django </ref/settings>`, в первую очередь "
+"обратите внимание на настройки, которые начинают с префикса ``TEMPLATE_``."
 
 # 7a0e4a2f481d4aeb8d460c4e4b3506ba
 #: ../../ref/templates/api.txt:950
 msgid "Using an alternative template language"
-msgstr ""
+msgstr "Использование других языков разметки шаблонов"
 
 # b8886e9c4f554c94bda8403017890369
 #: ../../ref/templates/api.txt:952
@@ -1446,6 +1663,13 @@ msgid ""
 "useful Django features like the Django ``Context`` object and handy "
 "shortcuts like :func:`~django.shortcuts.render_to_response()`."
 msgstr ""
+"Классы ``Template`` и ``Loader`` предоставляют простой API для загрузки и "
+"рендеринга шаблонов. Реализовав этот API вы можете использовать сторонние "
+"системы шаблонов, например `Jinja2 <http://jinja.pocoo.org/docs/>`_ или "
+"`Cheetah <http://www.cheetahtemplate.org/>`_. Это позволяет использовать "
+"различные языки разметки шаблон вместе с полезным функционалом Django, "
+"например объекты ``Context`` и функцию :func:`~django.shortcuts."
+"render_to_response()`."
 
 # c761273a76c24f8795b698c47b5ad833
 #: ../../ref/templates/api.txt:960
@@ -1456,6 +1680,10 @@ msgid ""
 "``render()`` method that takes a :class:`~django.template.Context` object "
 "and returns a string containing the rendered response."
 msgstr ""
+"Главный компонент системы шаблонов Django -- класс ``Template``. Этот класс "
+"предоставляет очень простой интерфейс: его конструктор принимает строку "
+"шаблона, а метод ``render()`` принимает объект :class:`~django.template."
+"Context`и возвращает отрендеренный шаблон."
 
 # cf5c429e2374405885de45b6191482ae
 #: ../../ref/templates/api.txt:966
@@ -1465,6 +1693,10 @@ msgid ""
 "object. We can write a simple wrapper that implements the Django "
 "``Template`` interface::"
 msgstr ""
+"Предположим мы используем систему шаблонов, которая предоставляет объект "
+"``Template`` с методом ``render()``, который принимает словарь вместо "
+"объекта ``Context``. Мы может создать простой класс-обертку, который "
+"реализует интерфейс класса ``Template`` Django::"
 
 # 03648e77ce7d4457918a89fe9183aaad
 #: ../../ref/templates/api.txt:979
@@ -1472,6 +1704,8 @@ msgid ""
 "That's all that's required to make our fictional ``Template`` class "
 "compatible with the Django loading and rendering system!"
 msgstr ""
+"Это все что необходимо, чтобы наш класс ``Template`` работал с загрузкой и "
+"рендерингом шаблонов Django!"
 
 # 19af1eb9afab482da382654eb5dbed66
 #: ../../ref/templates/api.txt:982
@@ -1483,6 +1717,13 @@ msgid ""
 "which takes a ``template_name`` argument, loads the template from disk (or "
 "elsewhere), and returns a tuple: ``(template_string, template_origin)``."
 msgstr ""
+"Следующий шаг -- создать класс ``Loader``, который возвращает экземпляры "
+"нашего класса, а не стандартного :class:`~django.template.Template`. Наш "
+"класс ``Loader`` должен наследоваться от ``django.template.loader."
+"BaseLoader`` и переопределять метод ``load_template_source()``, который "
+"принимает аргумент ``template_name``, загружает шаблон с файловой системы "
+"(или другого источника), и возвращает кортеж: ``(template_string, "
+"template_origin)``."
 
 # 49b9f30483244915a7e7398162a8471b
 #: ../../ref/templates/api.txt:989
@@ -1496,6 +1737,13 @@ msgid ""
 "app_directories.Loader` to take advantage of the ``load_template_source()`` "
 "method implemented there::"
 msgstr ""
+"Метод ``load_template()`` класса ``Loader`` загружает содержимое шаблона, "
+"используя ``load_template_source()``, создает экземпляр ``Template`` с этим "
+"содержимым, и возвращает кортеж: ``(template, template_origin)``. Т.к. этот "
+"метод создает экземпляр ``Template``, нам необходимо переопределить его, "
+"чтобы использовать наш класс. Мы может наследоваться от :class:`django."
+"template.loaders.app_directories.Loader`, чтобы использовать возможности его "
+"метода ``load_template_source()``::"
 
 # 968ec19b83d144c783db3ac24f333baf
 #: ../../ref/templates/api.txt:1006
@@ -1505,3 +1753,6 @@ msgid ""
 "template language while continuing to use the rest of the Django templating "
 "system."
 msgstr ""
+"Теперь осталось поправить настройки проекта, указав Django использовать наш "
+"загрузчик шаблонов. Теперь мы можем использовать собственный язык разметки "
+"шаблонов вместе с остальным функционалом Django."
