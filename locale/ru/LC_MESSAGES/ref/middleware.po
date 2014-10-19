@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-30 13:35+0300\n"
-"PO-Revision-Date: 2014-10-18 14:43+0300\n"
+"PO-Revision-Date: 2014-10-20 01:21+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -31,16 +31,19 @@ msgid ""
 "information on how to use them and how to write your own middleware, see "
 "the :doc:`middleware usage guide </topics/http/middleware>`."
 msgstr ""
+"Этот раздел описывает промежуточные слои, которые предоставляет Django. Как "
+"использовать и создавать свои промежуточные слои, смотрите :doc:"
+"`соответствующий раздел </topics/http/middleware>`."
 
 # 526ed97ef4a54a4bae160d10c94d4d80
 #: ../../ref/middleware.txt:13
 msgid "Available middleware"
-msgstr ""
+msgstr "Доступные промежуточные слои"
 
 # 84d27f523d884f749cda53bbe7fcd28e
 #: ../../ref/middleware.txt:16
 msgid "Cache middleware"
-msgstr ""
+msgstr "Кэширующий промежуточный слой"
 
 # 865142ad762040e3af0ab3dfb44b7335
 #: ../../ref/middleware.txt:25
@@ -49,16 +52,20 @@ msgid ""
 "will be cached for as long as the :setting:`CACHE_MIDDLEWARE_SECONDS` "
 "setting defines. See the :doc:`cache documentation </topics/cache>`."
 msgstr ""
+"Активирует кэширование для всего сайта. При это все страницы, которые "
+"генерируются Django, будут закэшированы на время, указанное в настройке :"
+"setting:`CACHE_MIDDLEWARE_SECONDS`. Смотрите :doc:`раздел о кэшировании</"
+"topics/cache>`."
 
 # 3572fd4055d74fe9a0627f4eaa36525e
 #: ../../ref/middleware.txt:30
 msgid "\"Common\" middleware"
-msgstr ""
+msgstr "\"Common\" промежуточный слой"
 
 # 4d76534edbe54f379c1fad5bbbc9caa2
 #: ../../ref/middleware.txt:37
 msgid "Adds a few conveniences for perfectionists:"
-msgstr ""
+msgstr "Добавляет несколько полезностей для перфекционистов:"
 
 # 7d639094433b49e7859c8d93575fba95
 #: ../../ref/middleware.txt:39
@@ -66,6 +73,9 @@ msgid ""
 "Forbids access to user agents in the :setting:`DISALLOWED_USER_AGENTS` "
 "setting, which should be a list of compiled regular expression objects."
 msgstr ""
+"Ограничивает доступ для клиентов, которые указанны в настройке :setting:"
+"`DISALLOWED_USER_AGENTS`. Настройка должна содержать список скомпилированных "
+"регулярных выражений."
 
 # 0cbc29e00fa144a0bef39b7c8aab9a1a
 #: ../../ref/middleware.txt:42
@@ -73,6 +83,8 @@ msgid ""
 "Performs URL rewriting based on the :setting:`APPEND_SLASH` and :setting:"
 "`PREPEND_WWW` settings."
 msgstr ""
+"Меняет URL в соответствии с настройками :setting:`APPEND_SLASH` и :setting:"
+"`PREPEND_WWW`."
 
 # 3d83e4724bc541a1ad9d5b2176c25c57
 #: ../../ref/middleware.txt:45
@@ -83,6 +95,10 @@ msgid ""
 "Django redirects the request to this new URL. Otherwise, the initial URL is "
 "processed as usual."
 msgstr ""
+"Если :setting:`APPEND_SLASH` равна ``True`` и вызванный URL не оканчивается "
+"на слеш, и он не найден в URLconf, создается новый URL путем добавления "
+"слеша в конец. Если новый URL найден в URLconf, Django отправляет "
+"перенаправление на этот URL. Иначе начальный URL обрабатывается как обычно."
 
 # 791d6be53467448ba5dd69cc26f0ddde
 #: ../../ref/middleware.txt:51
@@ -91,6 +107,8 @@ msgid ""
 "don't have a valid URL pattern for ``foo.com/bar`` but *do* have a valid "
 "pattern for ``foo.com/bar/``."
 msgstr ""
+"Например, ``foo.com/bar`` будет перенаправлен на ``foo.com/bar/``, если нет "
+"URL-шаблона для ``foo.com/bar``, но *есть* для ``foo.com/bar/``."
 
 # 870a4f25aee441d6bda4c20addbcd456
 #: ../../ref/middleware.txt:55
@@ -98,6 +116,8 @@ msgid ""
 "If :setting:`PREPEND_WWW` is ``True``, URLs that lack a leading \"www.\" "
 "will be redirected to the same URL with a leading \"www.\""
 msgstr ""
+"Если :setting:`PREPEND_WWW` равна ``True``, URL-ы без \"www.\" будут "
+"перенаправлены на URL с добавлением \"www.\""
 
 # ad519af5417649d595a5e33cdc4a0cf6
 #: ../../ref/middleware.txt:58
@@ -107,6 +127,10 @@ msgid ""
 "com/bar`` is distinct from ``foo.com/bar/`` -- a search-engine indexer would "
 "treat them as separate URLs -- so it's best practice to normalize URLs."
 msgstr ""
+"Обе эти настройки предназначены для нормализации URL-ов. Философия такая -- "
+"URL должен быть уникальным и единым. Технически URL ``foo.com/bar`` "
+"отличается от ``foo.com/bar/`` -- поисковик проиндексирует их как отдельные "
+"URL-ы -- по этому хорошей практикой является нормализация URL-ов."
 
 # cf92223a2d12401f955d7d6a72f17437
 #: ../../ref/middleware.txt:64
@@ -116,6 +140,10 @@ msgid ""
 "request by MD5-hashing the page content, and it'll take care of sending "
 "``Not Modified`` responses, if appropriate."
 msgstr ""
+"Обрабатываете ETag с учетом настройки :setting:`USE_ETAGS`. Если :setting:"
+"`USE_ETAGS` равна ``True``, Django вычислит ETag для каждого запроса, "
+"используя MD5-хеш содержимого страницы, и отправит ответ ``Not Modified`` "
+"при возможности."
 
 # 696eda3aff3c435d83537341b253a020
 #: ../../ref/middleware.txt:71
@@ -123,11 +151,13 @@ msgid ""
 "Sends broken link notification emails to :setting:`MANAGERS` (see :doc:`/"
 "howto/error-reporting`)."
 msgstr ""
+"Отсылает уведомления о сломанных ссылках на :setting:`MANAGERS` (смотрите :"
+"doc:`/howto/error-reporting`)."
 
 # 60f4baadd2ef4389ac9392416ed5b07b
 #: ../../ref/middleware.txt:75
 msgid "GZip middleware"
-msgstr ""
+msgstr "GZip промежуточный слой"
 
 # cc5f9dbf7fa647c599ce1fd619d01c81
 #: ../../ref/middleware.txt:84
@@ -141,6 +171,14 @@ msgid ""
 "you're affected, you should avoid using ``GZipMiddleware``. For more "
 "details, see the `the BREACH paper (PDF)`_ and `breachattack.com`_."
 msgstr ""
+"Исследователи безопасности определили, что при применении сжатия на сайте "
+"(включая ``GZipMiddleware``), ваш сайт становится уязвим к некоторым типам "
+"атак. Они могут использоваться для обхода CSRF защиты. Перед использованием "
+"``GZipMiddleware`` обдумайте на сколько это критично для вас. Если у вас "
+"есть *малейшие* сомнений, не используйте ``GZipMiddleware``. Подробности "
+"смотрите в `исследовании BREACH (PDF) <http://breachattack.com/resources/"
+"BREACH%20-%20SSL,%20gone%20in%2030%20seconds.pdf>`_ и `breachattack.com "
+"<http://breachattack.com/>`_."
 
 # c7a10081ef354548a70c637f74fbdde2
 #: ../../ref/middleware.txt:96
@@ -148,6 +186,8 @@ msgid ""
 "Compresses content for browsers that understand GZip compression (all modern "
 "browsers)."
 msgstr ""
+"Сжимает ответ для браузеров, которые поддерживают GZip (все современные "
+"браузеры)."
 
 # 461e3ae1b31b44dda63c2e9450bbbe3f
 #: ../../ref/middleware.txt:99
@@ -155,21 +195,24 @@ msgid ""
 "This middleware should be placed before any other middleware that need to "
 "read or write the response body so that compression happens afterward."
 msgstr ""
+"Этот промежуточный слой должен находится перед любым другим промежуточный "
+"слоем, который читает или пишет содержимое ответа, чтобы сжатие происходило "
+"в самом конце."
 
 # 555975971b0b4b8785bb20ac5e07e476
 #: ../../ref/middleware.txt:102
 msgid "It will NOT compress content if any of the following are true:"
-msgstr ""
+msgstr "Содержимое ответа НЕ будет сжато при следующих условиях:"
 
 # 25501ea892574b9ba352d83f22ae138f
 #: ../../ref/middleware.txt:104
 msgid "The content body is less than 200 bytes long."
-msgstr ""
+msgstr "Содержимое ответа меньше 200 байтов."
 
 # 65658c2a08c6478b9efb0a2f9580999c
 #: ../../ref/middleware.txt:106
 msgid "The response has already set the ``Content-Encoding`` header."
-msgstr ""
+msgstr "Ответ уже содержит заголовок ``Content-Encoding``."
 
 # 2bf00508daeb407badf9c64f979d4227
 #: ../../ref/middleware.txt:108
@@ -177,6 +220,8 @@ msgid ""
 "The request (the browser) hasn't sent an ``Accept-Encoding`` header "
 "containing ``gzip``."
 msgstr ""
+"Браузер не отослал в запросе заголовок ``Accept-Encoding``, который содержит "
+"``gzip``."
 
 # 646dae2ba2144e2db03d7cd371e1ddcd
 #: ../../ref/middleware.txt:111
@@ -186,6 +231,10 @@ msgid ""
 "this to avoid a bug in early versions of IE that caused decompression not to "
 "be performed on certain content types."
 msgstr ""
+"Запрос от Internet Explorer и заголовок ``Content-Type`` содержит "
+"``javascript``, или начинается не с ``text/``. Это связано с багом в IE, "
+"который приводит к неправильной обработке сжатого ответа для некоторых типов "
+"ответа."
 
 # 71fcd8d8fe684f568a505555e8615371
 #: ../../ref/middleware.txt:116
@@ -193,11 +242,13 @@ msgid ""
 "You can apply GZip compression to individual views using the :func:`~django."
 "views.decorators.gzip.gzip_page()` decorator."
 msgstr ""
+"Вы можете добавить GZip сжатие для определенных представлений, используя "
+"декоратор :func:`~django.views.decorators.gzip.gzip_page()`."
 
 # ad30761246d44dcd9c30eed0ec182bcd
 #: ../../ref/middleware.txt:120
 msgid "Conditional GET middleware"
-msgstr ""
+msgstr "Промежуточный слой для обработки условных GET-запросов"
 
 # f7bf15ee1fdb40179e3361b91e370334
 #: ../../ref/middleware.txt:127
@@ -207,16 +258,20 @@ msgid ""
 "Since``, the response is replaced by an :class:`~django.http."
 "HttpResponseNotModified`."
 msgstr ""
+"Обрабатывает условные GET операции. Если ответ содержит заголовки ``ETag`` "
+"или ``Last-Modified``, и запрос содержит ``If-None-Match`` или ``If-Modified-"
+"Since``, ответ заменяется на :class:`~django.http.HttpResponseNotModified`."
 
 # 65fae428adc84d54b21ba9a94b5794a6
 #: ../../ref/middleware.txt:132
 msgid "Also sets the ``Date`` and ``Content-Length`` response-headers."
 msgstr ""
+"Также устанавливает для ответа заголовки ``Date`` и ``Content-Length``."
 
 # 41887ac5ff31457aabd29232dd43beec
 #: ../../ref/middleware.txt:135
 msgid "Locale middleware"
-msgstr ""
+msgstr "Промежуточный слой локализации"
 
 # 15c331900cbd4f27a221030cfda4749f
 #: ../../ref/middleware.txt:142
@@ -225,6 +280,9 @@ msgid ""
 "content for each user. See the :doc:`internationalization documentation </"
 "topics/i18n/translation>`."
 msgstr ""
+"Выполняет выбор текущего языка на основе данных из запроса. Меняет "
+"содержимое для каждого пользователя отдельно. Смотрите :doc:`раздел об "
+"интернационализации </topics/i18n/translation>`."
 
 # 50f26f259e3e45dbba3787cb3dcf1957
 #: ../../ref/middleware.txt:148
@@ -233,11 +291,14 @@ msgid ""
 "``LocaleMiddleware`` and override the attribute to customize the redirects "
 "issued by the middleware."
 msgstr ""
+"По умолчанию :class:`~django.http.HttpResponseRedirect`. Можете создать "
+"класс наследник ``LocaleMiddleware`` и переопределить класс ответа, который "
+"используется для перенаправления."
 
 # 537e361f00a84de59134ec53e025381b
 #: ../../ref/middleware.txt:153
 msgid "Message middleware"
-msgstr ""
+msgstr "Промежуточный слой сообщений"
 
 # 3bd3782328c14c33809f67ea301d74d9
 #: ../../ref/middleware.txt:160
@@ -245,11 +306,13 @@ msgid ""
 "Enables cookie- and session-based message support. See the :doc:`messages "
 "documentation </ref/contrib/messages>`."
 msgstr ""
+"Добавляет поддержку сообщений на основе кук или сессии. Смотрите :doc:"
+"`раздел о сообщениях </ref/contrib/messages>`."
 
 # 68000ca74f614849a26149ca86f2e6b1
 #: ../../ref/middleware.txt:164
 msgid "Session middleware"
-msgstr ""
+msgstr "Промежуточный слой сессии"
 
 # 045e1d81a5cc46edbd86a8d01d73a446
 #: ../../ref/middleware.txt:171
@@ -257,11 +320,13 @@ msgid ""
 "Enables session support. See the :doc:`session documentation </topics/http/"
 "sessions>`."
 msgstr ""
+"Включает поддержку сессии. Смотрите :doc:`раздел о сессии </topics/http/"
+"sessions>`."
 
 # b1779e87aacc40be8f00ca11950b17c7
 #: ../../ref/middleware.txt:175
 msgid "Site middleware"
-msgstr ""
+msgstr "Промежуточный слой определения текущего сайта"
 
 # 19c8eafdeaa9425fa4d716e46e0a3219
 #: ../../ref/middleware.txt:184
@@ -269,11 +334,14 @@ msgid ""
 "Adds the ``site`` attribute representing the current site to every incoming "
 "``HttpRequest`` object. See the :ref:`sites documentation <site-middleware>`."
 msgstr ""
+"Добавляет атрибут ``site``, который указывает текущий сайт для каждого "
+"объекта ``HttpRequest``. Смотрите :ref:`раздел о поддержке нескольких сайтов "
+"<site-middleware>`."
 
 # c10995e4640b47b18072464cfa8c273f
 #: ../../ref/middleware.txt:188
 msgid "Authentication middleware"
-msgstr ""
+msgstr "Промежуточный слой авторизации"
 
 # 3ae3b9a115d846989edf2159f77fe7ad
 #: ../../ref/middleware.txt:195
@@ -282,6 +350,9 @@ msgid ""
 "every incoming ``HttpRequest`` object. See :ref:`Authentication in Web "
 "requests <auth-web-requests>`."
 msgstr ""
+"Добавляет атрибут ``user``, который указывает текущего авторизованного "
+"пользователя, для каждого объекта ``HttpRequest``. Смотрите :ref:`раздел об "
+"авторизации <auth-web-requests>`."
 
 # 4a9b3c94fc894b60b677b55a81eff210
 #: ../../ref/middleware.txt:201
