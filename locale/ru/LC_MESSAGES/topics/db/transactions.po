@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-11 11:43+0300\n"
-"PO-Revision-Date: 2014-10-21 01:16+0300\n"
+"PO-Revision-Date: 2014-10-21 12:20+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -30,8 +30,8 @@ msgstr "Управление транзакциями базы данных"
 msgid ""
 "Django gives you a few ways to control how database transactions are managed."
 msgstr ""
-"Django предоставляет несколько способов использования механизма транзакций, "
-"который может предоставлять база данных."
+"Django предоставляет несколько инструментов для управления транзакциями базы "
+"данных."
 
 # 4cc932d9ef744290bc400ca2a669cae6
 #: ../../topics/db/transactions.txt:10
@@ -50,9 +50,9 @@ msgid ""
 "immediately committed to the database, unless a transaction is active. :ref:"
 "`See below for details <autocommit-details>`."
 msgstr ""
-"По умолчанию Django использует \"autocommit mode\". Каждый запрос сразу "
-"фиксируется в базе данных, если не используется транзакция. :ref:`Смотрите "
-"ниже <autocommit-details>`."
+"По умолчанию Django использует режим автоматической фиксации(\"autocommit"
+"\"). Каждый запрос сразу фиксируется в базе данных, если не используется "
+"транзакция. :ref:`Смотрите ниже <autocommit-details>`."
 
 # dd0c1128d07d465aab1481a0094dbc4c
 #: ../../topics/db/transactions.txt:19
@@ -62,10 +62,9 @@ msgid ""
 "`delete() <topics-db-queries-delete>` and :ref:`update() <topics-db-queries-"
 "update>` queries."
 msgstr ""
-"Django использует транзакции, или точки сохранения, автоматически для "
-"операций ORM, которые требуют нескольких запросов, особенно для :ref:"
-"`delete() <topics-db-queries-delete>` и :ref:`update() <topics-db-queries-"
-"update>`."
+"Django автоматически использует транзакции или точки сохранения для операций "
+"ORM, которые требуют нескольких запросов, особенно для :ref:`delete() "
+"<topics-db-queries-delete>` и :ref:`update() <topics-db-queries-update>`."
 
 # 9e657551bcff42248329196b88a57d14
 #: ../../topics/db/transactions.txt:24
@@ -111,10 +110,10 @@ msgid ""
 "the transaction. If the view produces an exception, Django rolls back the "
 "transaction."
 msgstr ""
-"Это работает следующим образом: При получении запроса Django начинает "
-"транзакцию. Если отклик был создан без возникновения ошибок, Django "
-"фиксирует все ожидающие транзакции. Если функция представления вызывает "
-"исключение, Django откатывает все ожидающие транзакции."
+"Это работает следующим образом: при получении запроса Django начинает "
+"транзакцию. Если ответ был создан без возникновения ошибок, Django фиксирует "
+"все ожидающие транзакции. Если функция представления вызывает исключение, "
+"Django откатывает все ожидающие транзакции."
 
 # 37dd5811322448dc82611ff8d83607fa
 #: ../../topics/db/transactions.txt:47
@@ -125,8 +124,8 @@ msgid ""
 msgstr ""
 "Вы можете выполнять частичную фиксацию или откат изменений в коде "
 "представления, обычно с помощью менеджера контекста :func:`atomic`. Но в "
-"конце выполнения представления буду зафиксированы все изменения, или не одно "
-"из них."
+"конце выполнения представления будут зафиксированы все изменения, или не "
+"одно из них."
 
 # 66611132c8a84a379831a542f77c0247
 #: ../../topics/db/transactions.txt:53
@@ -157,7 +156,7 @@ msgid ""
 msgstr ""
 "Когда представление возвращает :class:`~django.http.StreamingHttpResponse`, "
 "чтение содержимого ответа выполняет некоторый код для его ответа. Т.к. "
-"представление уже отработало, этот код будет выполняться вне транзации."
+"представление уже отработало, этот код будет выполняться вне транзакции."
 
 # 74c944f9b5ad437bb484de515f25d7c1
 #: ../../topics/db/transactions.txt:65
@@ -186,8 +185,8 @@ msgid ""
 "template responses."
 msgstr ""
 "Обратите внимание, только представления оборачиваются в транзакцию. "
-"Промежуточные слои выполняются вне транзакции, аналогично выполняется и "
-"рендеринг ответа."
+"Промежуточные слои(middleware) выполняются вне транзакции, аналогично "
+"выполняется и рендеринг ответа."
 
 # 8b4e840f905a467aa9761219f8cda533
 #: ../../topics/db/transactions.txt:76
@@ -277,8 +276,7 @@ msgid ""
 "Wrapping ``atomic`` in a try/except block allows for natural handling of "
 "integrity errors::"
 msgstr ""
-"Обернув ``atomic`` в блок ``try/except``, можно выполнить обычную обработку "
-"ошибок::"
+"Обернув ``atomic`` в блок ``try/except``, можно выполнить обработку ошибок::"
 
 # 61ce2d08657d40b09de1caa2c112dfcc
 #: ../../topics/db/transactions.txt:161
@@ -292,10 +290,11 @@ msgid ""
 "necessary."
 msgstr ""
 "В этом примере, вы можете выполнить запросы в ``add_children()``, даже если "
-"``generate_relationships()`` вызывал ошибку, и изменения из "
-"``create_parent()`` никуда не денутся. Обратите внимание, любые операции из "
-"``generate_relationships()`` уже будут отменены, и при обработке ошибки в "
-"``handle_exception()`` можно безопасно выполнять запросы к базе данных."
+"``generate_relationships()`` вызывал ошибку, также никуда не денутся "
+"изменения, выполненные в ``create_parent()``. Обратите внимание, любые "
+"операции из ``generate_relationships()`` уже будут отменены, и при обработке "
+"ошибки в ``handle_exception()`` можно безопасно выполнять запросы к базе "
+"данных."
 
 # 1378fc3be5ab43298b3c9aac698d58c8
 #: ../../topics/db/transactions.txt:0
@@ -311,7 +310,7 @@ msgid ""
 "from Django the fact that a problem has happened. This can result in "
 "unexpected behavior."
 msgstr ""
-"При выходе из блока ``atomic``, Django определяет произошла ли ошибка, чтобы "
+"При выходе из блока ``atomic`` Django определяет произошла ли ошибка, чтобы "
 "понять фиксировать изменения или отменить их. Если вы перехватите исключение "
 "и обработаете его в блоке ``atomic``, вы можете скрыть от Django наличие "
 "проблемы. Это может привести к непредвиденному поведению."
@@ -333,7 +332,7 @@ msgstr ""
 "блока ``atomic``. Если вы попытаетесь выполнить запросы перед отменой "
 "изменений, Django вызовет исключение :class:`~django.db.transaction."
 "TransactionManagementError`. Подобное поведение может произойти, если "
-"обработчик сигналов из ORM вызовет исключение."
+"обработчик сигналов ORM вызовет исключение."
 
 # 67ffad60eab84079b178e1fe16b7e36b
 #: ../../topics/db/transactions.txt:186
@@ -365,9 +364,9 @@ msgid ""
 "connection within an ``atomic`` block will raise an exception."
 msgstr ""
 "Чтобы гарантировать атомарность, ``atomic`` блокирует некоторые функции. При "
-"попытке внутри блока ``atomic`` явно зафиксировать или отменить изменения, "
-"или изменить статус \"autocommit\" подключения к базе данных, будет вызвано "
-"исключение."
+"попытке явно зафиксировать или отменить изменения, или изменить статус "
+"\"autocommit\" подключения к базе данных внутри блока ``atomic``, будет "
+"вызвано исключение."
 
 # b5761afe39df4f1880ca5a1d2fd66c1b
 #: ../../topics/db/transactions.txt:198
@@ -421,7 +420,7 @@ msgstr ""
 "аргументе ``savepoint`` ``False``. При исключении Django выполнит отмену "
 "изменений при выходе из первого попавшегося блока, который создает точку "
 "сохранения, или же самого последнего блока. Атомарность внешних транзакций "
-"все также гарантирована. Такой подход должен использоваться, только для "
+"все также гарантирована. Такой подход должен использоваться только для "
 "оптимизации создания точек сохранения, т.к. нарушает обработку ошибок, как "
 "было описано выше."
 
@@ -433,7 +432,7 @@ msgid ""
 "the outermost block is declared with ``savepoint=False``."
 msgstr ""
 "Вы можете использовать ``atomic`` при выключенном \"autocommit\". Он создаст "
-"точки сохранения, даже для самого внешнего блока, и вызовет исключение, если "
+"точки сохранения даже для самого внешнего блока, и вызовет исключение, если "
 "самый внешний блок указан с ``savepoint=False``."
 
 # 445150fe52704409a295ee1103f29015
@@ -463,7 +462,7 @@ msgstr "Autocommit"
 # 40a191800eb04cfd8ae4eb35f729f373
 #: ../../topics/db/transactions.txt:234
 msgid "Why Django uses autocommit"
-msgstr "Почему Django использует autocommit"
+msgstr "Почему Django использует автоматическую фиксацию"
 
 # b4958f77d5bc4cdaa5b63ceae1c86264
 #: ../../topics/db/transactions.txt:236
@@ -472,7 +471,7 @@ msgid ""
 "already active. Such transactions must then be explicitly committed or "
 "rolled back."
 msgstr ""
-"По стандартам SQL каждый SQL запрос начинается с транзакции, если она еще не "
+"По стандартам SQL каждый SQL-запрос начинается с транзакции, если она еще не "
 "создана. Эти транзакции должны быть явно зафиксированы или отменены."
 
 # 5c6e4d330a8344d88deb613c8ec8dac7
@@ -486,10 +485,11 @@ msgid ""
 "back, depending on whether the query succeeded."
 msgstr ""
 "Это не всегда удобно при разработке приложения. Чтобы решить эту проблему, "
-"большинство баз данных поддерживает \"autocommit\" режим. При включенном "
-"\"autocommit\", если транзакция не активна, каждый SQL запрос обернут в "
-"транзакцию. То есть транзакция для каждого запроса не только создается, но и "
-"автоматически фиксируется, если запросы был успешно выполнен."
+"большинство баз данных поддерживает режим автоматической "
+"фиксации(autocommit). При включенном \"autocommit\", если транзакция не "
+"активна, каждый SQL запрос обернут в транзакцию. То есть транзакция для "
+"каждого запроса не только создается, но и автоматически фиксируется, если "
+"запросы был успешно выполнен."
 
 # 58cb5ef7fcc44f1a92e8c6834032c1e1
 #: ../../topics/db/transactions.txt:247
@@ -498,9 +498,9 @@ msgid ""
 "to be initially turned off. Django overrides this default and turns "
 "autocommit on."
 msgstr ""
-":pep:`249`, спецификация о Python Database API v2.0, требует чтобы "
-"autocommit по умолчанию был выключен. Django переопределяет это поведение и "
-"autocommit по умолчанию включен."
+":pep:`249`, спецификация Python о Database API v2.0, требует чтобы "
+"\"autocommit\" по умолчанию был выключен. Django переопределяет это "
+"поведение и \"autocommit\" по умолчанию включен."
 
 # dddcb751cf644452995d5a5369060c71
 #: ../../topics/db/transactions.txt:251
@@ -517,8 +517,8 @@ msgid ""
 "Before Django 1.6, autocommit was turned off, and it was emulated by forcing "
 "a commit after write operations in the ORM."
 msgstr ""
-"До Django 1.6 autocommit был выключен, и эмулировался явным фиксированием "
-"изменений после каждой операции записи ORM."
+"До Django 1.6 \"autocommit\" был выключен, и эмулировался явным "
+"фиксированием изменений после каждой операции записи ORM."
 
 # 9803f47b47444902b7c3ea61078bbab1
 #: ../../topics/db/transactions.txt:262
@@ -536,7 +536,7 @@ msgid ""
 msgstr ""
 "Вы можете отключить управление транзакциями Django для определенной базы "
 "данных, установив :setting:`AUTOCOMMIT <DATABASE-AUTOCOMMIT>` в ``False`` в "
-"её настройках. При этом Django отключит autocommit и не будет выполнять "
+"её настройках. При этом Django отключит \"autocommit\" и не будет выполнять "
 "фиксирование изменений. Все будут работать в соответствии с библиотекой, "
 "которая используется для работы с базой данных."
 
@@ -569,8 +569,9 @@ msgid ""
 "Always prefer :func:`atomic` if possible at all. It accounts for the "
 "idiosyncrasies of each database and prevents invalid operations."
 msgstr ""
-"При любой возможности используйте :func:`atomic`. Он учитывает особенности "
-"различных баз данных и предотвращает использование недоступных операций."
+"При любой возможности используйте :func:`atomic`. Эта функция учитывает "
+"особенности различных баз данных и предотвращает использование недоступных "
+"операций."
 
 # 09c8ec95affb488eaa07626c4c2e9385
 #: ../../topics/db/transactions.txt:287
@@ -578,7 +579,7 @@ msgid ""
 "The low level APIs are only useful if you're implementing your own "
 "transaction management."
 msgstr ""
-"Низкоуровневый API полезет только при реализации собственного управления "
+"Низкоуровневый API полезен только при реализации собственного управления "
 "транзакциями."
 
 # 3725507756be4f7393dadcaa8fefa300
@@ -606,7 +607,7 @@ msgid ""
 "Autocommit is initially turned on. If you turn it off, it's your "
 "responsibility to restore it."
 msgstr ""
-"Autocommit по умолчанию включен. Если вы выключили его, на вашей "
+"\"autocommit\" по умолчанию включен. Если вы выключили его, на вашей "
 "ответственности и его включение."
 
 # b038616bc55a47b08a19d323d3dd965d
@@ -617,11 +618,11 @@ msgid ""
 "pep:`249`, implementations of adapters aren't always consistent with one "
 "another. Review the documentation of the adapter you're using carefully."
 msgstr ""
-"При выключении autocommit, вы получаете поведение по умолчанию библиотеки, "
-"которая используется для работы с базой данных, и Django ничем вам не "
-"поможет. Это поведение описано в :pep:`249`, но реализация в различных "
-"библиотеках может отличаться. Вам следует изучить документацию используемой "
-"библиотеки."
+"При выключении \"autocommit\", вы получаете поведение по умолчанию "
+"библиотеки, которая используется для работы с базой данных, и Django ничем "
+"вам не поможет. Это поведение описано в :pep:`249`, но реализация в "
+"различных библиотеках может отличаться. Вам следует изучить документацию "
+"используемой библиотеки."
 
 # 3b4b0bc8d4e44319ab38784e2ce03adf
 #: ../../topics/db/transactions.txt:315
@@ -629,8 +630,8 @@ msgid ""
 "You must ensure that no transaction is active, usually by issuing a :func:"
 "`commit` or a :func:`rollback`, before turning autocommit back on."
 msgstr ""
-"Перед включением autocommit вы должны убедиться, что транзакция не активна, "
-"обычно выполнив :func:`commit` или :func:`rollback`."
+"Перед включением \"autocommit\" вы должны убедиться, что транзакция не "
+"активна, обычно выполнив :func:`commit` или :func:`rollback`."
 
 # 60e04e3b15fc491da1a0fe99ee18d362
 #: ../../topics/db/transactions.txt:318
@@ -638,8 +639,8 @@ msgid ""
 "Django will refuse to turn autocommit off when an :func:`atomic` block is "
 "active, because that would break atomicity."
 msgstr ""
-"Django не позволит выключить autocommit, если активен блок :func:`atomic`, т."
-"к. это нарушит атомарность."
+"Django не позволит выключить \"autocommit\", если активен блок :func:"
+"`atomic`, т.к. это нарушит атомарность."
 
 # 1cd9d1e6b3e74602a5909fa7b987370b
 #: ../../topics/db/transactions.txt:322
@@ -663,8 +664,8 @@ msgid ""
 "Django doesn't provide an API to start a transaction. The expected way to "
 "start a transaction is to disable autocommit with :func:`set_autocommit`."
 msgstr ""
-"Django не предоставляет API для создания транзакции. Чтобы создать "
-"транзакцию, отключите autocommit с помощью :func:`set_autocommit`."
+"Django не предоставляет API для явного создания транзакции. Чтобы создать "
+"транзакцию, отключите \"autocommit\" с помощью :func:`set_autocommit`."
 
 # 5d887f79d8714e008e44b8b9d3401dad
 #: ../../topics/db/transactions.txt:331
@@ -674,9 +675,9 @@ msgid ""
 "with :func:`rollback`. These functions are defined in :mod:`django.db."
 "transaction`."
 msgstr ""
-"Оказавшись в транзакции можно зафиксировать выполненные изменения, используя "
-"функцию :func:`commit`, или отменить из через функцию :func:`rollback`. Эти "
-"функции находятся в модуле :mod:`django.db.transaction`."
+"Оказавшись в транзакции, можно зафиксировать выполненные изменения, "
+"используя функцию :func:`commit`, или отменить их через функцию :func:"
+"`rollback`. Эти функции находятся в модуле :mod:`django.db.transaction`."
 
 # eb8a266b3d2e46aca5bd1ddac0005c63
 #: ../../topics/db/transactions.txt:342
@@ -719,7 +720,7 @@ msgid ""
 "than the full rollback that would be performed by ``transaction.rollback()``."
 msgstr ""
 "Точки сохранения бесполезны, если вы используете стандартное поведение "
-"Django -- autocommit. Тем не менее, при создании транзакции через :func:"
+"Django -- \"autocommit\". Тем не менее, при создании транзакции через :func:"
 "`atomic`, каждая открытая транзакция выполняет ряд операций в базе данных, "
 "ожидая фиксации или отката транзакции. Если вы выполните откат транзакции, "
 "то будет выполнен откат всей транзакции. Точки сохранения предоставляют "
@@ -755,7 +756,7 @@ msgstr ""
 msgid ""
 "Savepoints are controlled by three functions in :mod:`django.db.transaction`:"
 msgstr ""
-"Точки сохранения управляются тремя фукнциями из :mod:`django.db.transaction`:"
+"Точки сохранения управляются тремя функциями из :mod:`django.db.transaction`:"
 
 # 9bcb1bc5d14549e2a097ee02ccabb141
 #: ../../topics/db/transactions.txt:378
@@ -787,7 +788,7 @@ msgid ""
 "is in autocommit mode."
 msgstr ""
 "Эти функции ничего не делают, если точки сохранения не поддерживаются базой "
-"данных, или если база данных в режиме autocommit."
+"данных, или если база данных в режиме \"autocommit\"."
 
 # e15f2b7fe0d04a56b669216a3035bdd0
 #: ../../topics/db/transactions.txt:393
@@ -870,11 +871,11 @@ msgid ""
 "fact, it commits before any statement other than ``SELECT``, ``INSERT``, "
 "``UPDATE``, ``DELETE`` and ``REPLACE``.) This bug has two consequences:"
 msgstr ""
-"При включенном autocommit точки сохранения не имеют смысла. При отключенном "
-"-- :mod:`sqlite3` неявно фиксирует изменения перед созданием точки "
-"сохранения. (На самом деле фиксация выполняет перед любой операцией отличной "
-"от ``SELECT``, ``INSERT``, ``UPDATE``, ``DELETE`` и ``REPLACE``.) Этот баг "
-"приводит к следующим особенностям:"
+"При включенном \"autocommit\" точки сохранения не имеют смысла. При "
+"отключенном -- :mod:`sqlite3` неявно фиксирует изменения перед созданием "
+"точки сохранения. (На самом деле фиксация выполняет перед любой операцией "
+"отличной от ``SELECT``, ``INSERT``, ``UPDATE``, ``DELETE`` и ``REPLACE``.) "
+"Этот баг приводит к следующим особенностям:"
 
 # fe884406c15f4e69810a94616b7dc27a
 #: ../../topics/db/transactions.txt:459
@@ -888,7 +889,7 @@ msgstr ""
 # 10b6615e29574834b4c20cdd683ff422
 #: ../../topics/db/transactions.txt:461
 msgid "It's impossible to use :func:`atomic` when autocommit is turned off."
-msgstr "Невозможно использовать :func:`atomic` при выключенном autocommit."
+msgstr "Невозможно использовать :func:`atomic` при выключенном \"autocommit\"."
 
 # 1cd9d1e6b3e74602a5909fa7b987370b
 #: ../../topics/db/transactions.txt:464
@@ -922,7 +923,7 @@ msgstr ""
 "Если ваша настройка MySQL *не поддерживает* транзакции, тогда Django будет "
 "работать в режиме автоматической фиксации: Операторы будут выполняться и "
 "сразу же фиксироваться. Если же ваша настройка MySQL *поддерживает* "
-"транзакции, Django будет обрабатывать транзакции, как это описано выше."
+"транзакции, Django будет обрабатывать транзакции как описано выше."
 
 # 1235948529204a689b68d888fbd47cfa
 #: ../../topics/db/transactions.txt:480
@@ -963,7 +964,7 @@ msgstr ""
 # 41c03d7594854df4bb16214fa841e61c
 #: ../../topics/db/transactions.txt:496
 msgid "There are several ways to recover from this sort of error."
-msgstr "Существует несколько способов выхода из этого вида ошибок."
+msgstr "Существует несколько способов избежать таких ошибок."
 
 # 84f83f8b04894213abd824dbfe043ab5
 #: ../../topics/db/transactions.txt:499
@@ -973,7 +974,7 @@ msgstr "Откат транзакции"
 # 43a06ad2083a4674b0c28d089fbe1270
 #: ../../topics/db/transactions.txt:501
 msgid "The first option is to roll back the entire transaction. For example::"
-msgstr "Позволяет выполнить полный откат транзакции. Например::"
+msgstr "Первый способ -- выполнить отмену всей транзакции. Например::"
 
 # 5bbb7fec588b4173ba34cd29b42f567e
 #: ../../topics/db/transactions.txt:510
@@ -983,8 +984,8 @@ msgid ""
 "made by ``a.save()`` would be lost, even though that operation raised no "
 "error itself."
 msgstr ""
-"Вызов ``transaction.rollback()`` откатывает всю транзакцию. Все "
-"незафиксированные в базе данных операции будут потеряны. В этом примере "
+"Вызов ``transaction.rollback()`` откатывает всю транзакцию. Все не "
+"зафиксированные в базе данных операции будут потеряны. В этом примере "
 "изменения, сделанные с помощью ``a.save()`` будут потеряны, несмотря на то, "
 "что эта операция прошла без ошибок."
 
@@ -1002,10 +1003,10 @@ msgid ""
 "you can roll back the single offending operation, rather than the entire "
 "transaction. For example::"
 msgstr ""
-"Вы можете использовать :ref:`промежуточные точки <topics-db-transactions-"
+"Вы можете использовать :ref:`точки сохранения <topics-db-transactions-"
 "savepoints>` для управления глубиной отката. Перед выполнением действия над "
 "базой данных, которое может завершиться ошибкой, вы можете установить или "
-"обновить промежуточную точку. Впоследствии, если выполняемое действие "
+"обновить точку сохранения. Впоследствии, если выполняемое действие "
 "завершится ошибкой, вы можете откатить только изменения, созданные этим "
 "действием, не оказывая влияние на всю транзакцию в целом. Например::"
 
@@ -1079,8 +1080,8 @@ msgid ""
 "within the function at that point. If the function raises an exception, "
 "though, Django will roll back the transaction."
 msgstr ""
-"Если функция отрабатывает без ошибок, то Django фиксирует все изменения, "
-"которые она создала. Если функция вызывает исключение, то Django откатывает "
+"Если функция отрабатывает без ошибок, Django зафиксирует все изменения, "
+"которые она создала. Если функция вызывает исключение, Django откатывает "
 "изменения, созданные в транзакции."
 
 # 74bbb5f9366246139ca0ec1b0d1c5724
@@ -1097,10 +1098,10 @@ msgid ""
 "the database because ``SELECT`` statements may call functions which modify "
 "tables, and thus it is impossible to know if any data has been modified."
 msgstr ""
-"При записи или чтении с базы данных, необходимо явно выполнить ``commit()`` "
+"При записи или чтении с базы данных необходимо явно выполнить ``commit()`` "
 "или ``rollback()``, иначе Django вызовет исключение :exc:"
-"`TransactionManagementError`. Это необходимо при чтении с базы данных т.к. "
-"``SELECT`` может вызывать функции изменяющие таблицы и нет возможность "
+"`TransactionManagementError`. Это необходимо при чтении с базы данных, т.к. "
+"``SELECT`` может вызывать функции, изменяющие таблицы и нет возможность "
 "узнать были изменены какие либо данные или нет."
 
 # 84f83f8b04894213abd824dbfe043ab5
@@ -1116,7 +1117,7 @@ msgid ""
 "available until Django 1.8."
 msgstr ""
 "Три функции, описанные выше, используют концепцию, которая называется "
-"\"состояния транзакций\". Этот механизм устарел в Django 1.6, но все еще "
+"\"состояние транзакции\". Этот механизм устарел в Django 1.6, но все еще "
 "доступен до Django 1.8."
 
 # f2b183309d6448d79bb3aad57d96bb69
@@ -1163,9 +1164,9 @@ msgid ""
 "entering the block of code it controls; when exiting the block, it commits "
 "or rollbacks, and switches back to auto mode."
 msgstr ""
-"Например, :func:`commit_on_success` активирует ручной режим, при входе в "
-"контролируемый блок кода; при выходе из блока, фиксирует или отменяет "
-"изменения, и активирует ручной режим."
+"Например, :func:`commit_on_success` при входе в контролируемый блок кода "
+"активирует ручной режим, при выходе из блока -- фиксирует или отменяет "
+"изменения и активирует ручной режим."
 
 # b6543eb45f8d43a6917ea40c30beb173
 #: ../../topics/db/transactions.txt:604
@@ -1176,7 +1177,7 @@ msgid ""
 "transaction semantics. Most often, the inner block will commit, breaking the "
 "atomicity of the outer block."
 msgstr ""
-"Таким образом :func:`commit_on_success` на самом деле выполняет два "
+"Таким образом, :func:`commit_on_success` на самом деле выполняет два "
 "действия: изменяет состояния транзакции и создает блок транзакции. "
 "Вложенность приведет к ожидаемому результату в контексте состояний "
 "транзакции, но не с точки зрения семантики транзакций. В большинстве случаев "
@@ -1226,7 +1227,7 @@ msgstr ""
 "<DATABASE-ATOMIC_REQUESTS>` использует :func:`atomic`, которая обеспечивает "
 "атомарность, теперь это не доступно. Однако, на более высоком уровне вы "
 "можете исключить создание транзакции для представления. Для этого оберните "
-"представлени декоратором :func:`non_atomic_requests` вместо :func:"
+"представление декоратором :func:`non_atomic_requests` вместо :func:"
 "`autocommit`."
 
 # 1ed9e60e2d5d4673bbe1f25afc4621c1
@@ -1239,9 +1240,9 @@ msgid ""
 "applies to the view itself."
 msgstr ""
 "Промежуточный слой транзакций влияет не только на функции представления, но "
-"и на все последующие промежуточные слои. Таким образом, если прослойка "
-"сессий указана после прослойки транзакций, то создание сессии будет частью "
-"транзакции. :setting:`ATOMIC_REQUESTS <DATABASE-ATOMIC_REQUESTS>` "
+"и на все последующие промежуточные слои. Таким образом, если промежуточный "
+"слой сессии указан после прослойки транзакций, то создание сессии будет "
+"частью транзакции. :setting:`ATOMIC_REQUESTS <DATABASE-ATOMIC_REQUESTS>` "
 "применяется только для представления."
 
 # 4cc932d9ef744290bc400ca2a669cae6
@@ -1348,9 +1349,9 @@ msgid ""
 "Previously, it implemented application-level autocommit by triggering a "
 "commit after each ORM write."
 msgstr ""
-"Начиная с 1.6 Django использует autocommit на уровне базы данных. Ранее "
-"использовался autocommit на уровне приложения, вызывая фиксирование "
-"изменения при операциях записи в ORM."
+"Начиная с 1.6 Django использует \"autocommit\" на уровне базы данных. Ранее "
+"использовался \"autocommit\" на уровне приложения, вызывая фиксирование "
+"изменения при операциях записи ORM."
 
 # e4efcaececb24fbaac274b2fd5f3eb37
 #: ../../topics/db/transactions.txt:698
@@ -1359,8 +1360,8 @@ msgid ""
 "transaction that lasted until the next ORM write. Such \"automatic "
 "transactions\" no longer exist in Django 1.6."
 msgstr ""
-"В результате каждый запрос к базе данных (например запрос записи в ORM) "
-"начинает транзакцию, которая длится до операции записи в ORM. Такие "
+"В результате каждый запрос к базе данных (например, запрос записи в ORM) "
+"начинает транзакцию, которая длится до операции записи ORM. Такие "
 "\"автоматические транзакции\" больше не существуют в Django 1.6."
 
 # b58bbb23fd0a4b0294a49e5ccf661f16
@@ -1383,7 +1384,7 @@ msgstr ""
 # a51008b8c14c4236ab04dcf918070cab
 #: ../../topics/db/transactions.txt:708
 msgid "Sequences of custom SQL queries"
-msgstr "Последовательность собсетвенных SQL запросов"
+msgstr "Последовательность собственных SQL запросов"
 
 # 9ee674a5d7fd4433a264dad6c3cfa377
 #: ../../topics/db/transactions.txt:710
@@ -1393,11 +1394,11 @@ msgid ""
 "same \"automatic transaction\". If you need to enforce atomicity, you must "
 "wrap the sequence of queries in :func:`atomic`."
 msgstr ""
-"Если вы выполняете несколько :ref:`собственных SQL запросов <executing-"
-"custom-sql>` подряд, теперь каждый из них будет в собственной транзакции, "
-"ранее они выполнялись в одной \"автоматической транзакции\". Для старого "
-"поведения, чтобы заключить последовательность таких запросов в атомарный "
-"блок, используйте :func:`atomic`."
+"Теперь, если вы выполняете несколько :ref:`собственных SQL запросов "
+"<executing-custom-sql>` подряд, каждый из них будет в собственной "
+"транзакции, ранее они выполнялись в одной \"автоматической транзакции\". Для "
+"старого поведения, чтобы заключить последовательность таких запросов в "
+"атомарный блок, используйте :func:`atomic`."
 
 # 87edc024f5b642dba718ca18b1ae940a
 #: ../../topics/db/transactions.txt:715
@@ -1413,7 +1414,7 @@ msgstr ""
 # f49908b01e34490d8d172b18a5033b06
 #: ../../topics/db/transactions.txt:720
 msgid "Select for update"
-msgstr "Select for update"
+msgstr "Запрос выборки для обновления"
 
 # f9d984a9fd054b2ebae40bf51385beeb
 #: ../../topics/db/transactions.txt:722
@@ -1437,7 +1438,7 @@ msgstr ""
 # cbc37bac7bef4ad4bbe66586c221b631
 #: ../../topics/db/transactions.txt:731
 msgid "Using a high isolation level"
-msgstr ""
+msgstr "Использование уровней изоляции транзакций"
 
 # dc3fe6c1c0884d5e9a21280b71928719
 #: ../../topics/db/transactions.txt:733
@@ -1447,6 +1448,11 @@ msgid ""
 "successive reads, the new behavior might be backwards-incompatible. To "
 "enforce consistency, you must wrap such sequences in :func:`atomic`."
 msgstr ""
+"Если вы используете \"repeatable read\" уровень изоляции или выше, и вы "
+"предполагаете, что \"автоматическая транзакция\" обеспечит согласованность "
+"нескольких последовательных запросов на чтение, новое поведение транзакций "
+"может нарушить эту логику. Чтобы явно обеспечить согласованность "
+"последовательности запросов на чтение, используйте :func:`atomic`."
 
 # c229c8c04b5e4be6837d705362c43722
 #: ../../topics/db/transactions.txt:738
@@ -1454,6 +1460,8 @@ msgid ""
 "MySQL defaults to \"repeatable read\" and SQLite to \"serializable\"; they "
 "may be affected by this problem."
 msgstr ""
+"MySQL по умолчанию использует \"repeatable read\", а SQLite \"serializable"
+"\". При использовании этих баз данных можно столкнуться с такой проблемой."
 
 # 2a3097eaa3304be78520854efcec422d
 #: ../../topics/db/transactions.txt:741
@@ -1461,6 +1469,8 @@ msgid ""
 "At the \"read committed\" isolation level or lower, \"automatic transactions"
 "\" have no effect on the semantics of any sequence of ORM operations."
 msgstr ""
+"При уровне изоляции \"read committed\" и ниже, \"автоматические транзакции\" "
+"не влияют на работу последовательных операций ORM."
 
 # 16640ca76b3649dfb503a2f9c889641a
 #: ../../topics/db/transactions.txt:744
@@ -1468,11 +1478,13 @@ msgid ""
 "PostgreSQL and Oracle default to \"read committed\" and aren't affected, "
 "unless you changed the isolation level."
 msgstr ""
+"PostgreSQL и Oracle по умолчанию используют \"read committed\" и не "
+"подвержены этой проблеме, если только вы не меняли уровень изоляции."
 
 # 23974022d4f14b27ae3e6f86ae8ae2fb
 #: ../../topics/db/transactions.txt:748
 msgid "Using unsupported database features"
-msgstr "Использование неподдерживаемых функций базы данных"
+msgstr "Использование не поддерживаемых функций базы данных"
 
 # c7d691451edd4f14b5e4daadf6c73857
 #: ../../topics/db/transactions.txt:750
@@ -1484,10 +1496,10 @@ msgid ""
 "integrity."
 msgstr ""
 "При использовании тригеров, представлений(VIEW), или функций в базе данных, "
-"для операций чтения ORM можно вызывать операции изменения на уровне базы "
-"данных. В Django 1.5 и ниже эти ситуации никак не обрабатывались. "
-"Теоретически это может привести к неоднозначному поведению в Django 1.6 и "
-"выше. В случае сомнений используйте :func:`atomic`."
+"операции чтения ORM могут вызывать операции изменения на уровне базы данных. "
+"В Django 1.5 и ниже эти ситуации никак не обрабатывались. Теоретически это "
+"может привести к неоднозначному поведению в Django 1.6 и выше. В случае "
+"используйте func :atomic:`сомнений`."
 
 # 671fdefd331e4b37b4a41f471bec31cb
 #~ msgid ""
