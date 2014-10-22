@@ -10,6 +10,7 @@ from docutils.parsers.rst import directives
 
 from sphinx import addnodes, __version__ as sphinx_ver
 from sphinx.builders.html import StandaloneHTMLBuilder
+from sphinx.locale import l_
 from sphinx.writers.html import SmartyPantsHTMLTranslator
 from sphinx.util.console import bold
 from sphinx.util.compat import Directive
@@ -269,8 +270,8 @@ class DjangoHTMLTranslator(SmartyPantsHTMLTranslator):
     # that work.
     #
     version_text = {
-        'versionchanged': 'Changed in Django %s',
-        'versionadded': 'New in Django %s',
+        'versionchanged': l_('Changed in Django %s'),
+        'versionadded': l_('New in Django %s'),
     }
 
     def visit_versionmodified(self, node):
