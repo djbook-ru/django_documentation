@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-07-14 15:27+0300\n"
+"PO-Revision-Date: 2014-10-25 18:18+0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -83,7 +83,6 @@ msgstr ""
 
 # 68d2b5bc84c841ceb7579353316b58cc
 #: ../../topics/db/multi-db.txt:46
-#, fuzzy
 msgid ""
 "If the concept of a ``default`` database doesn't make sense in the context "
 "of your project, you need to be careful to always specify the database that "
@@ -98,8 +97,11 @@ msgstr ""
 "Если концепция стандартной (``default``) базы данных не соответствует "
 "контексту вашего проекта, вам потребуется быть аккуратным, каждый раз "
 "указывая какую именно базу данных следует использовать в каждом случае. "
-"Django требует наличия записи ``default`` в конфигурации баз данных, но этот "
-"параметр можно оставить пустым, если вы не планируете его использовать. "
+"Django требует наличия записи ``default`` в конфигурации баз данных, но "
+"словарь его параметров можно оставить пустым, если вы не планируете его "
+"использовать. Вы должны настроить :setting:`DATABASE_ROUTERS` для всех "
+"моделей выших приложений, включая те, которые расположены в сторонних "
+"приложениях, чтобы ни один запрос не был отправлен в стандартную базу. "
 "Следующий пример ``settings.py`` определяет две дополнительных базы данных, "
 "оставляя запись ``default`` пустой::"
 
@@ -121,7 +123,6 @@ msgstr "Синхронизация ваших баз данных"
 
 # 95e12d2636b948f9b6b81858c8bf3cc9
 #: ../../topics/db/multi-db.txt:79
-#, fuzzy
 msgid ""
 "The :djadmin:`migrate` management command operates on one database at a "
 "time. By default, it operates on the ``default`` database, but by providing "
@@ -129,11 +130,12 @@ msgid ""
 "synchronize a different database. So, to synchronize all models onto all "
 "databases in our example, you would need to call::"
 msgstr ""
-"Команда :djadmin:`syncdb` работает только с одной базой данных. По "
-"умолчанию, она работает с базой данных ``default``, но добавив аргумент :"
-"djadminopt:`--database`, вы можете указать команде, что надо работать с "
-"другой базой данных. Таким образом, для того, чтобы синхронизировать все "
-"модели со всеми базами данных, вам потребуется сделать::"
+"Команда :djadmin:`migrate` работает единовременно только с одной базой "
+"данных. По умолчанию, она работает с базой данных ``default``, но добавив "
+"аргумент :djadminopt:`--database`, вы можете указать команде, что надо "
+"работать с другой базой данных. Таким образом, для того, чтобы "
+"синхронизировать все модели со всеми базами данных в нашем примере, вам "
+"потребуется вызвать::"
 
 # 5011b97dd9e04ced98c10edc1cac8c98
 #: ../../topics/db/multi-db.txt:88
@@ -154,7 +156,6 @@ msgstr "Использование других команд"
 
 # 129b927ced0b4213a495b5c27e38f26d
 #: ../../topics/db/multi-db.txt:96
-#, fuzzy
 msgid ""
 "The other ``django-admin.py`` commands that interact with the database "
 "operate in the same way as :djadmin:`migrate` -- they only ever operate on "
@@ -162,7 +163,7 @@ msgid ""
 "database used."
 msgstr ""
 "Остальные команды ``django-admin.py``, работающие с базой данных, "
-"аналогичны :djadmin:`syncdb` -- т.е., только с одной базой данных за раз. "
+"аналогичны :djadmin:`migrate` -- т.е., только с одной базой данных за раз. "
 "Добавляйте :djadminopt:`--database`, чтобы указать какую базу данных следует "
 "использовать."
 
@@ -233,7 +234,7 @@ msgstr ""
 "Если операция над базой данных может предоставить любую дополнительную "
 "информацию, которая может помочь в выборе базы данных, она будет "
 "предоставлена в словаре ``hints`` (подсказки). Подробности на правильные "
-"подсказки предоставлена ref:`далее <topics-db-multi-db-hints>`."
+"подсказки предоставлена :ref:`далее <topics-db-multi-db-hints>`."
 
 # a45d02c7fc8a4704bb190a3d662151fd
 # 4f9e2c34e3a1450c9803ea66affa85d7
@@ -247,7 +248,7 @@ msgid ""
 "Suggest the database that should be used for writes of objects of type Model."
 msgstr ""
 "Выбирает базу данных, которая должна использоваться для операций записи "
-"объектов типа Model."
+"объектов типа ``model``."
 
 # 35af379fbb3d4945ab81eb1420e4fdca
 #: ../../topics/db/multi-db.txt:149
@@ -265,7 +266,6 @@ msgstr ""
 
 # 1c3cf101aec0411a8049c6fbde3daece
 #: ../../topics/db/multi-db.txt:157
-#, fuzzy
 msgid ""
 "Determine if the ``model`` should have tables/indexes created in the "
 "database with alias ``db``. Return True if the model should be migrated, "
@@ -273,10 +273,10 @@ msgid ""
 "This method can be used to determine the availability of a model on a given "
 "database."
 msgstr ""
-"Определяет должна ли ``model`` синхронизироваться в БД с префиксом ``db``. "
-"Возвращает True, если должна, False, если нет, и None - если роутер не может "
-"определить. Этот метод позволяет определить доступна ли модель в указанной "
-"базе данных."
+"Определяет должна ли ``model`` иметь таблицы/индексы в базе данных с именем "
+"``db``. Возвращает ``True``, если модель подлежит миграции, ``False``, если "
+"нет, или ``None`` - если роутер не может определить, что с ней делать. Этот "
+"метод позволяет определить доступна ли модель в указанной базе данных."
 
 # c36074da13294ec0befd94c2836d4094
 #: ../../topics/db/multi-db.txt:163
@@ -286,6 +286,10 @@ msgid ""
 "ForeignKeys, extra tables or missing tables if you change it once you have "
 "applied some migrations."
 msgstr ""
+"Следует отметить, что миграции будут тихо проигнорированы для модели, "
+"которая получит ``False``. Это может привести к сломанным внешним ключам, к "
+"появлению лишних таблиц или к отсутствию таблиц, if you change it once you "
+"have applied some migrations. (непонятно, что тут имеется в виду)."
 
 # f05fbd08a3274c8f85435287062235ac
 #: ../../topics/db/multi-db.txt:168
@@ -294,6 +298,9 @@ msgid ""
 "models>`, and thus not have any custom attributes, methods or managers. You "
 "should only rely on ``_meta``."
 msgstr ""
+"Значение, переданное для ``model`` может быть :ref:`исторической моделью "
+"<historical-models>` и, следовательно, не иметь никаких своих атрибутов, "
+"методов или менеджеров. Вы должны принимать во внимание только ``_meta``."
 
 # d18b25a565c74c41a577b5b80fc36ea4
 #: ../../topics/db/multi-db.txt:172
@@ -308,7 +315,7 @@ msgstr ""
 # 93f5dc7a46494a24973b44ee2e2faa64
 #: ../../topics/db/multi-db.txt:179
 msgid "Hints"
-msgstr "Hints"
+msgstr "Подсказки"
 
 # 64fbc03f3ea047f9b434ee267ade60ed
 #: ../../topics/db/multi-db.txt:181
@@ -377,12 +384,12 @@ msgstr ""
 # e4a6b47937454b10b570b6fdd10e4697
 #: ../../topics/db/multi-db.txt:210
 msgid "An example"
-msgstr "Например"
+msgstr "Пример"
 
 # f17bd0c2814f415d8f44ca4c2a7bbce4
 #: ../../topics/db/multi-db.txt:0
 msgid "Example purposes only!"
-msgstr ""
+msgstr "Только в целях примера!"
 
 # a298ae7107a54b2194b7d2940444ac02
 #: ../../topics/db/multi-db.txt:214
@@ -404,9 +411,9 @@ msgid ""
 "integrity problems that Django can't currently handle."
 msgstr ""
 "Этот пример не будет работать, если какая-либо модель из ``myapp`` содержит "
-"связи с моделями не из ``other`` БД. :ref:`Связи между разными БД "
+"связи с моделями не из ``other`` БД. Раздел :ref:`Связи между разными БД "
 "<no_cross_database_relations>` описывает проблемы таких связей, которые "
-"Django может решить."
+"Django пока не может обрабатывать."
 
 # 5211c6fb22b44d39bb3e8cdf5284f164
 #: ../../topics/db/multi-db.txt:225
@@ -417,8 +424,11 @@ msgid ""
 "propagate to the slaves). It also doesn't consider the interaction of "
 "transactions with the database utilization strategy."
 msgstr ""
-"Описанные настройка master/slave не учитывают некоторые проблемы. Например, "
-"несогласованность данных при записи из-за задержки записи на slave, и др."
+"Описанные настройка master/slave не учитывают некоторые проблемы. Она не "
+"предоставляет никакого решения для обработки задержек в репликации (т.е. "
+"нарушение целостности запросов из-за времени, затраченного на рассылку "
+"данных на подчинённые базы данных). Она также не рассматривает "
+"взаимодействие транзакций со стратегией использования базы данных."
 
 # 2e6ec892940247b4ab36d286827957a9
 #: ../../topics/db/multi-db.txt:231
@@ -428,6 +438,10 @@ msgid ""
 "application, and all other apps using a master/slave setup with two read "
 "slaves. Here are the settings specifying these databases::"
 msgstr ""
+"Таким образом, что же это означает на практике? Давайте рассмотрим другую "
+"конфигурацию. В ней будет несколько баз данных: одна для приложения "
+"``auth``, все остальные приложения используют master/slave настройку, с "
+"двумя читающими слейвами. Покажем настройки для этих баз данных::"
 
 # 69447b67daba42aa98fee2c6790757db
 #: ../../topics/db/multi-db.txt:264
@@ -435,6 +449,8 @@ msgid ""
 "Now we'll need to handle routing. First we want a router that knows to send "
 "queries for the ``auth`` app to ``auth_db``::"
 msgstr ""
+"Теперь нам надо настроить роутинг. Сначала опишем роутер, который будет "
+"слать запросы от приложения ``auth`` в базу данных ``auth_db``::"
 
 # 160e817653d5480aaa8be3b6816f7e85
 #: ../../topics/db/multi-db.txt:308
@@ -442,6 +458,9 @@ msgid ""
 "And we also want a router that sends all other apps to the master/slave "
 "configuration, and randomly chooses a slave to read from::"
 msgstr ""
+"Также нам нужен роутер, который будет слать запросы всех остальных "
+"приложений в конфигурацию master/slave и случайно выбирать слейв для чтения "
+"из него::"
 
 # e03de57bece744c7b3623b7473bb084b
 #: ../../topics/db/multi-db.txt:343
@@ -450,6 +469,8 @@ msgid ""
 "`` with the actual python path to the module(s) where the routers are "
 "defined)::"
 msgstr ""
+"Наконец, в файле конфигурации мы добавим следующее (подставим ``path.to`` с "
+"реальным путём к модулю(-ям), в которых определены роутеры)::"
 
 # 46b30ee88d794f4ca99f6510bae0527f
 #: ../../topics/db/multi-db.txt:349
@@ -464,16 +485,24 @@ msgid ""
 "all nature of the MasterSlaveRouter implementation would mean that all "
 "models would be available on all databases."
 msgstr ""
+"Порядок применения роутеров имеет важное значение. Роутеры вызываются в "
+"порядке, в котором они перечислены в параметре конфигурации :setting:"
+"`DATABASE_ROUTERS`. В этом примере ``AuthRouter`` применяется до "
+"``MasterSlaveRouter`` и в результате, решение по модели в ``auth`` "
+"принимается до всех остальных решений. Если же поменять порядок роутеров, то "
+"``MasterSlaveRouter.allow_migrate()`` будет применено. Сущность \"принимаем "
+"всё\" реализации этого роутера приведёт к тому, что все модели будут "
+"доступны во всех базах данных."
 
 # 97c12a233dfa428cbcf86ebc9111ee40
 #: ../../topics/db/multi-db.txt:360
 msgid "With this setup installed, lets run some Django code::"
-msgstr ""
+msgstr "Используя вышеприведённую конфигурацию, выполним следующий код::"
 
 # 05c0f317efbd4d28962e6b3ce4ceb203
 #: ../../topics/db/multi-db.txt:387
 msgid "Manually selecting a database"
-msgstr ""
+msgstr "Ручное указание базы данных"
 
 # fbc0eb82c3394156828fe4fd7374aa80
 #: ../../topics/db/multi-db.txt:389
@@ -482,11 +511,14 @@ msgid ""
 "over database usage in your code. A manually specified database allocation "
 "will take priority over a database allocated by a router."
 msgstr ""
+"Django также предоставляет API, которое позволяет вам получить полный "
+"контроль над использованием баз данных в вашем коде. Ручное указание базы "
+"данных имеет приоритет над действиями роутера."
 
 # aeadcd3980a643fbaf100534de0720fc
 #: ../../topics/db/multi-db.txt:394
 msgid "Manually selecting a database for a ``QuerySet``"
-msgstr ""
+msgstr "Ручное выбор базы данных для ``QuerySet``"
 
 # 96e8706a60c043cb855b7fa0c70f47dc
 #: ../../topics/db/multi-db.txt:396
@@ -495,6 +527,9 @@ msgid ""
 "``QuerySet`` \"chain.\" Just call ``using()`` on the ``QuerySet`` to get "
 "another ``QuerySet`` that uses the specified database."
 msgstr ""
+"Вы можете выбрать базу данных для ``QuerySet`` в любой точке его цепочки. "
+"Для этого надо применить метод ``using()``, который изменит базу данных, к "
+"которой будет выполнен запрос."
 
 # 9d0afe0f900342c0a7c52697e7bdaa34
 #: ../../topics/db/multi-db.txt:400
@@ -502,11 +537,13 @@ msgid ""
 "``using()`` takes a single argument: the alias of the database on which you "
 "want to run the query. For example::"
 msgstr ""
+"Метод ``using()`` принимает псевдоним базы данных в качестве единственного "
+"аргумента. Например::"
 
 # a62409f5bd4c4589ae6ec37fe81f8ec8
 #: ../../topics/db/multi-db.txt:413
 msgid "Selecting a database for ``save()``"
-msgstr ""
+msgstr "Выбор базы данных для ``save()``"
 
 # baf49f6b61a140c2a39d928d603f9f4c
 #: ../../topics/db/multi-db.txt:415
@@ -514,6 +551,8 @@ msgid ""
 "Use the ``using`` keyword to ``Model.save()`` to specify to which database "
 "the data should be saved."
 msgstr ""
+"Используйте именованный аргумент ``using`` для метода ``Model.save()``, "
+"чтобы указать базу данных, в которую должны быть записаны данные."
 
 # 9ca9cdb4925549099f31956baf734100
 #: ../../topics/db/multi-db.txt:418
@@ -521,6 +560,8 @@ msgid ""
 "For example, to save an object to the ``legacy_users`` database, you'd use "
 "this::"
 msgstr ""
+"Например, для сохранения объекта в базе данных ``legacy_users``, вам "
+"потребуется сделать::"
 
 # cbbd04662ed54ee1ade638309bee50df
 #: ../../topics/db/multi-db.txt:423
@@ -528,11 +569,13 @@ msgid ""
 "If you don't specify ``using``, the ``save()`` method will save into the "
 "default database allocated by the routers."
 msgstr ""
+"Если вы не укажете ``using`` в методе ``save()``, то запись будет "
+"произведена в стандартную базу данных, которую выберет роутер."
 
 # dfeae7b21f944c88b530302f9450a1bd
 #: ../../topics/db/multi-db.txt:427
 msgid "Moving an object from one database to another"
-msgstr ""
+msgstr "Перемещение объекта между базами данных"
 
 # 163a8d0a0fde429fa74cbaccaa6774d3
 #: ../../topics/db/multi-db.txt:429
@@ -542,11 +585,16 @@ msgid ""
 "However, if you don't take appropriate steps, this could have some "
 "unexpected consequences."
 msgstr ""
+"При сохранении экземпляра данных в одну базу данных, может показаться "
+"заманчивым использовать ``save(using=...)`` в качестве способа переноса "
+"экземпляра данных в новую базу данных. Однако, если вы не предприняли "
+"соответствующих действий, такой подход может привести к неожиданным "
+"последствиям."
 
 # aae75878ae5043c58a56044fa5b63264
 #: ../../topics/db/multi-db.txt:434
 msgid "Consider the following example::"
-msgstr ""
+msgstr "Рассмотрим следующий пример::"
 
 # ed854a299d8f4777a137b88b6cab1600
 #: ../../topics/db/multi-db.txt:440
@@ -556,6 +604,10 @@ msgid ""
 "``INSERT`` statement. This creates a primary key, and Django assigns that "
 "primary key to ``p``."
 msgstr ""
+"В первом операторе создаётся новый объект ``Person`` в базе данных "
+"``first``. В этот момент ``p`` не обладает первичным ключом, поэтому Djangо "
+"выполняет SQL запрос ``INSERT``. Запрос создаёт первичный ключ и Django "
+"назначает его для ``p``."
 
 # e5e58f03afa64671afd7a2e7a090f6d5
 #: ../../topics/db/multi-db.txt:445
@@ -565,6 +617,11 @@ msgid ""
 "primary key value isn't in use in the ``second`` database, then you won't "
 "have any problems -- the object will be copied to the new database."
 msgstr ""
+"При сохранении объекта во втором операторе, ``p`` уже обладает первичным "
+"ключом и Django попытается использовать его для новой базы данных. Если "
+"значение первичного ключа ещё не было использовано в базе данных ``second``, "
+"то вы не заметите никаких проблем, объект будет скопирован в новую базу "
+"данных."
 
 # 6fe8e2a8670f4471b39ce677bb225148
 #: ../../topics/db/multi-db.txt:451
@@ -573,6 +630,9 @@ msgid ""
 "database, the existing object in the ``second`` database will be overridden "
 "when ``p`` is saved."
 msgstr ""
+"Тем не менее, если первичный ключ ``p`` уже используется в базе данных "
+"``second``, то произойдёт перезапись объекта с таким ключом данными объекта "
+"``p``."
 
 # 122197f5c3984fb09a9e116fe2c10147
 #: ../../topics/db/multi-db.txt:455
@@ -581,6 +641,9 @@ msgid ""
 "instance. If an object has no primary key, Django will treat it as a new "
 "object, avoiding any loss of data on the ``second`` database::"
 msgstr ""
+"Этого можно избежать двумя способами. Первый, вы можете очищать значение "
+"первичного ключа в экземпляре. Если объект не имеет первичного ключа, Django "
+"считает его новым, не позволяя потерь данных в базе ``second``::"
 
 # 5ed2f5d95ff1420ea361263d2dd61e2b
 #: ../../topics/db/multi-db.txt:465
@@ -588,6 +651,8 @@ msgid ""
 "The second option is to use the ``force_insert`` option to ``save()`` to "
 "ensure that Django does an SQL ``INSERT``::"
 msgstr ""
+"Вторым способом будет использование параметра ``force_insert`` метода ``save"
+"()``, чтобы явно заставить Django использовать SQL запрос ``INSERT``::"
 
 # 1f8ef3b43a80445b852ac082cd59d4a9
 #: ../../topics/db/multi-db.txt:472
@@ -596,11 +661,14 @@ msgid ""
 "key on both databases. If that primary key is already in use when you try to "
 "save onto the ``second`` database, an error will be raised."
 msgstr ""
+"Это обеспечит одинаковое значение первичного ключа для персоны ``Fred`` в "
+"обоих базах данных. Если такой первичный ключ уже используется в базе данных "
+"``second``, то будет выброшена ошибка."
 
 # a8ec9ce8fd464bab93e909dc8c373c2b
 #: ../../topics/db/multi-db.txt:478
 msgid "Selecting a database to delete from"
-msgstr ""
+msgstr "Выбор базы для удаления данных"
 
 # c4128abae09141859b8720c7b6064f09
 #: ../../topics/db/multi-db.txt:480
@@ -608,6 +676,8 @@ msgid ""
 "By default, a call to delete an existing object will be executed on the same "
 "database that was used to retrieve the object in the first place::"
 msgstr ""
+"По-умолчанию, удаление существующего объекта будет выполнено в той же базе "
+"данных из которой объект был получен::"
 
 # f8907d036b024ee1885a4f0f89b655bc
 #: ../../topics/db/multi-db.txt:487
@@ -616,6 +686,9 @@ msgid ""
 "keyword argument to the ``Model.delete()`` method. This argument works just "
 "like the ``using`` keyword argument to ``save()``."
 msgstr ""
+"Для указания базы данных из которой должна быть удалена модель, передайте "
+"именованный аргумент ``using`` в метод ``Model.delete()``. Этот аргумент "
+"работает аналогично такому же аргументу метода ``save()``."
 
 # 1640abb55c4c4cc186c0416888340146
 #: ../../topics/db/multi-db.txt:491
@@ -623,11 +696,13 @@ msgid ""
 "For example, if you're migrating a user from the ``legacy_users`` database "
 "to the ``new_users`` database, you might use these commands::"
 msgstr ""
+"Например, если вы перемещаете пользователя из базы данных ``legacy_users`` в "
+"базу данных ``new_users``, вы можете использовать эти команды::"
 
 # fb2a0a235b50425f99eafe809a0b33a1
 #: ../../topics/db/multi-db.txt:498
 msgid "Using managers with multiple databases"
-msgstr ""
+msgstr "Использование менеджеров с множеством баз данных"
 
 # d2035829ba124f6ab46d67ef95fd81e6
 #: ../../topics/db/multi-db.txt:500
@@ -635,18 +710,27 @@ msgid ""
 "Use the ``db_manager()`` method on managers to give managers access to a non-"
 "default database."
 msgstr ""
+"Используйте ``db_manager()`` метод менеджеров, чтобы дать им доступ к "
+"нестандартной базе данных."
 
 # 68413b8257174b0e93fccf2a6431048c
 #: ../../topics/db/multi-db.txt:503
 msgid ""
 "For example, say you have a custom manager method that touches the database "
 "-- ``User.objects.create_user()``. Because ``create_user()`` is a manager "
-"method, not a ``QuerySet`` method, you can't do ``User.objects."
-"using('new_users').create_user()``. (The ``create_user()`` method is only "
+"method, not a ``QuerySet`` method, you can't do ``User.objects.using"
+"('new_users').create_user()``. (The ``create_user()`` method is only "
 "available on ``User.objects``, the manager, not on ``QuerySet`` objects "
 "derived from the manager.) The solution is to use ``db_manager()``, like "
 "this::"
 msgstr ""
+"Например, у вас есть свой метод менеджера, который изменяет данные в базе -- "
+"``User.objects.create_user()``. Так как ``create_user()`` является методом "
+"менеджера, а не запроса, вы не можете сделать ``User.objects.using"
+"('new_users').create_user()``. (Метод ``create_user()`` доступен только в "
+"``User.objects``, в менеджере, а не в объектах запроса, полученных из "
+"менеджера.) Решением будет использование метода ``db_manager()``, например "
+"так::"
 
 # cf7883d81c944642b385716ea9f299f1
 #: ../../topics/db/multi-db.txt:513
@@ -654,11 +738,12 @@ msgid ""
 "``db_manager()`` returns a copy of the manager bound to the database you "
 "specify."
 msgstr ""
+"``db_manager()`` возвращает копию менеджера для указанной вами базы данных."
 
 # 8b21bcdff92e489ab3d088893192371f
 #: ../../topics/db/multi-db.txt:516
 msgid "Using ``get_queryset()`` with multiple databases"
-msgstr ""
+msgstr "Использование ``get_queryset()`` с множеством баз данных"
 
 # 855da973a2d64f1c8a2463204edf713c
 #: ../../topics/db/multi-db.txt:518
@@ -668,6 +753,10 @@ msgid ""
 "handling of the ``_db`` attribute on the manager (a string containing the "
 "name of the database to use)."
 msgstr ""
+"Если вы переопределяете ``get_queryset()`` в вашем менеджере, "
+"удостоверьтесь, что вызываете метод родительского объекта (через ``super()"
+"``) или выполняйте соответствующую обработку атрибута ``_db`` в менеджере "
+"(строка, содержащая имя используемой базы данных)."
 
 # 513ec3a7b9fa43c59aeca199468aa594
 #: ../../topics/db/multi-db.txt:523
@@ -675,11 +764,13 @@ msgid ""
 "For example, if you want to return a custom ``QuerySet`` class from the "
 "``get_queryset`` method, you could do this::"
 msgstr ""
+"Например, если требуется вернуть свой класс ``QuerySet`` из метода "
+"``get_queryset()``, то можно поступить так::"
 
 # ea86ba305e074356ac930b8c828e511c
 #: ../../topics/db/multi-db.txt:534
 msgid "Exposing multiple databases in Django's admin interface"
-msgstr ""
+msgstr "Использование множества баз данных в интерфейсе администратора"
 
 # 9556109aaef040d3917666687e522f3f
 #: ../../topics/db/multi-db.txt:536
@@ -690,6 +781,11 @@ msgid ""
 "`~django.contrib.admin.ModelAdmin` classes that will direct the admin to use "
 "a specific database for content."
 msgstr ""
+"Интерфейс администратора Django не имеет явной поддержки для использования "
+"множества баз данных. Если вам требуется предоставить интерфейс для модели в "
+"базе данных, отличной от указанной в вашей цепочке роутеров, то потребуется "
+"написать свои классы :class:`~django.contrib.admin.ModelAdmin`, которые "
+"будут обеспечивать доступ к требуемой базе данных."
 
 # 87a53aecfeb74918a25506848827bafe
 #: ../../topics/db/multi-db.txt:542
@@ -697,6 +793,8 @@ msgid ""
 "``ModelAdmin`` objects have five methods that require customization for "
 "multiple-database support::"
 msgstr ""
+"Объекты ``ModelAdmin`` имеют пять методов, которые требуют внесения "
+"изменений для поддержки множества баз данных::"
 
 # 549cfb825cec40118e901cf229a830b8
 #: ../../topics/db/multi-db.txt:571
@@ -707,13 +805,18 @@ msgid ""
 "databases is more complex, your ``ModelAdmin`` will need to reflect that "
 "strategy."
 msgstr ""
+"Данная реализация обеспечивает мульти-БД стратегий, где все объекты "
+"определённого типа хранятся в указанной базе данных (т.е. все объекты "
+"``User`` хранятся в базе данных ``other``). Если ваша конфигурация множества "
+"баз данных более сложна, тогда ваши ``ModelAdmin`` должны соответствовать "
+"вашей стратегии."
 
 # 9aeac70f95884fc6826146203dcfab6f
 #: ../../topics/db/multi-db.txt:577
 msgid ""
 "Inlines can be handled in a similar fashion. They require three customized "
 "methods::"
-msgstr ""
+msgstr "Инлайны могут обрабатываться аналогично. Они требуют три метода::"
 
 # 584e76d919ff44f3bcd6c59cf1a570af
 #: ../../topics/db/multi-db.txt:596
@@ -721,6 +824,8 @@ msgid ""
 "Once you've written your model admin definitions, they can be registered "
 "with any ``Admin`` instance::"
 msgstr ""
+"После создания определений для ваших моделей, они могут быть "
+"зарегистрированы в любом экземпляре ``Admin``::"
 
 # 5bbfe64b0f8043f7856ff283cc18b59a
 #: ../../topics/db/multi-db.txt:614
@@ -730,11 +835,15 @@ msgid ""
 "inline showing books published by that publisher. The second site exposes "
 "just publishers, without the inlines."
 msgstr ""
+"Этот пример настраивает два административных сайта. На первом отображаются "
+"объекты ``Author`` и ``Publisher``. Объекты ``Publisher`` имеют табличный "
+"инлайн, показывающий книги данного издателя. Второй сайт отображает просто "
+"издателей, без инлайнов."
 
 # 8c1b9d49627c4ae09be2be97b0cd6c15
 #: ../../topics/db/multi-db.txt:621
 msgid "Using raw cursors with multiple databases"
-msgstr ""
+msgstr "Использование raw курсоров с множеством баз данных"
 
 # 0d8f03cf5527443482bc4a30fe1be898
 #: ../../topics/db/multi-db.txt:623
@@ -744,16 +853,20 @@ msgid ""
 "``django.db.connections`` is a dictionary-like object that allows you to "
 "retrieve a specific connection using its alias::"
 msgstr ""
+"При использовании нескольких баз данных вы можете применять ``django.db."
+"connections`` для получения соединения (и курсора) с указанной базой данных. "
+"Объект ``django.db.connections`` является словарным объектом, который "
+"позволяет вам получать нужное соединение, указав его псевдоним::"
 
 # 139b54192cca4548ac87b9582a3bf590
 #: ../../topics/db/multi-db.txt:633
 msgid "Limitations of multiple databases"
-msgstr ""
+msgstr "Ограничения в использовании множества баз данных"
 
 # 3ef1d67b7b8b498b9ced094e5a696765
 #: ../../topics/db/multi-db.txt:638
 msgid "Cross-database relations"
-msgstr ""
+msgstr "Связи между базами данных"
 
 # bbc8612e03de4985b2d28a37ab5574d6
 #: ../../topics/db/multi-db.txt:640
@@ -763,6 +876,11 @@ msgid ""
 "partition models to different databases, any foreign key and many-to-many "
 "relationships defined by those models must be internal to a single database."
 msgstr ""
+"В настоящее время Django не предоставляет поддержки для внешних ключей и "
+"связей многие-ко-многим между множеством баз данных. Если вы используете "
+"роутер для распределения моделей по различным базам данных, любой внешний "
+"ключ и связи многие-ко-многим, определённые для этих моделей, должны быть "
+"выполнены внутри одной базы данных."
 
 # 6ee3d3c9ff5749a1ae3c4b18590ddbf3
 #: ../../topics/db/multi-db.txt:646
@@ -772,6 +890,11 @@ msgid ""
 "of the related object is valid. If the primary key is stored on a separate "
 "database, it's not possible to easily evaluate the validity of a primary key."
 msgstr ""
+"Всему причиной является ссылочная целостность. Для того, чтобы осуществлять "
+"связь между двумя объектами, Django должно знать, что первичный ключ "
+"связанного объекта является верным. Если первичный ключ сохранён в отдельной "
+"базе данных, не существует возможности простого вычисления верности этого "
+"первичного ключа."
 
 # 130c2cf8e0a14720922a0f3ec78b1851
 #: ../../topics/db/multi-db.txt:652
@@ -780,6 +903,9 @@ msgid ""
 "the database integrity level -- database level key constraints prevent the "
 "creation of relations that can't be validated."
 msgstr ""
+"При использовании Postgres, Oracle или MySQL с движком InnoDB, это "
+"выполняется на уровне целостности базы данных - ограничения на ключи на "
+"уровне базы данных не допускают создание связей, которые нельзя проверить."
 
 # 9c61bdcf428844b0a05e46f0560da50e
 #: ../../topics/db/multi-db.txt:656
@@ -789,11 +915,15 @@ msgid ""
 "database foreign keys. However, this configuration is not officially "
 "supported by Django."
 msgstr ""
+"Тем не менее, если вы используете SQLite или MySQL с движком MyISAM, никакой "
+"ссылочной целостности нет. В результате, вы можете создавать \"плюшевые\" "
+"внешние ключи между базами данных. Однако, эта конфигурация не попадает в "
+"список официально поддерживаемых Django."
 
 # 3d8a837622bf4f9781ce3cc2bac9e6b0
 #: ../../topics/db/multi-db.txt:664
 msgid "Behavior of contrib apps"
-msgstr ""
+msgstr "Поведение contrib приложений"
 
 # 90157813c65b4f029669692eea4c9956
 #: ../../topics/db/multi-db.txt:666
@@ -802,6 +932,10 @@ msgid ""
 "cross-database relationships are impossible, this creates some restrictions "
 "on how you can split these models across databases:"
 msgstr ""
+"Несколько поставляемых приложений содержат модели, а некоторые приложения "
+"зависят от других. Так как невозможно достичь меж-БД целостности, это "
+"создаёт некоторые ограничения на распределение этих моделей между базами "
+"данных:"
 
 # d0a1644b71f74e3f8d822ac6ae7bb645
 #: ../../topics/db/multi-db.txt:670
@@ -809,6 +943,9 @@ msgid ""
 "each one of ``contenttypes.ContentType``, ``sessions.Session`` and ``sites."
 "Site`` can be stored in any database, given a suitable router."
 msgstr ""
+"каждый элемент ``contenttypes.ContentType``, ``sessions.Session`` и ``sites."
+"Site`` может быть сохранён в любой базе данных, используя соответствующий "
+"роутер."
 
 # 115d14c495ab4fb6af2e07391369d240
 #: ../../topics/db/multi-db.txt:672
@@ -817,6 +954,9 @@ msgid ""
 "together and linked to ``ContentType``, so they must be stored in the same "
 "database as ``ContentType``."
 msgstr ""
+"Модели приложения ``auth`` — ``User``, ``Group`` и ``Permission`` — "
+"соединены друг с другом и с ``ContentType``, таким образом, они должны быть "
+"сохранены в той же базе данных, что и ``ContentType``."
 
 # 6fc01e00859c44bc8e41e48ad90ff12b
 #: ../../topics/db/multi-db.txt:675
@@ -824,6 +964,9 @@ msgid ""
 "``admin`` and ``comments`` depend on ``auth``, so their models must be in "
 "the same database as ``auth``."
 msgstr ""
+"Приложения ``admin`` и ``comments`` зависят от приложения ``auth``, таким "
+"образом, их модели должны располагаться в той же базе данных, что и модели "
+"приложения ``auth``."
 
 # c1564a3c4ab8461a93ae5e80092adc07
 #: ../../topics/db/multi-db.txt:677
@@ -831,6 +974,9 @@ msgid ""
 "``flatpages`` and ``redirects`` depend on ``sites``, so their models must be "
 "in the same database as ``sites``."
 msgstr ""
+"Приложения ``flatpages`` и ``redirects`` зависят от приложения ``sites``, "
+"таким образом их модели должны располагаться в той же базе данных, что и "
+"модели приложения ``sites``."
 
 # b1b08c9c3f564c4bbc856fbe94a49413
 #: ../../topics/db/multi-db.txt:680
@@ -838,11 +984,13 @@ msgid ""
 "In addition, some objects are automatically created just after :djadmin:"
 "`migrate` creates a table to hold them in a database:"
 msgstr ""
+"В дополнение, некотороые объекты автоматически создаются после того как :"
+"djadmin:`migrate` создаёт таблицу для их хранения в базе данных:"
 
 # 9d0040c83e88441db7d85153fe3c125f
 #: ../../topics/db/multi-db.txt:683
 msgid "a default ``Site``,"
-msgstr ""
+msgstr "стандартный ``Site``,"
 
 # 71a8819220a2484c8dcee243f345bf16
 #: ../../topics/db/multi-db.txt:684
@@ -850,6 +998,8 @@ msgid ""
 "a ``ContentType`` for each model (including those not stored in that "
 "database),"
 msgstr ""
+"``ContentType`` для каждой модели (включая те, что не сохранены в базе "
+"данных),"
 
 # 2b3b82fb60c0475ebb70a4fc98c42a8b
 #: ../../topics/db/multi-db.txt:686
@@ -857,6 +1007,8 @@ msgid ""
 "three ``Permission`` for each model (including those not stored in that "
 "database)."
 msgstr ""
+"три ``Permission`` для каждой модели (включая те, что не сохранены в базе "
+"данных)."
 
 # 89e351d8928644e98fae284bb4e9e929
 #: ../../topics/db/multi-db.txt:689
@@ -868,6 +1020,14 @@ msgid ""
 "these three models to only one database. Use the same approach for contrib "
 "and third-party apps that don't need their tables in multiple databases."
 msgstr ""
+"В стандартных конфигурациях с множеством баз данных, не будет полезным "
+"распределять эти объекты по разным базам данных. Стандартные конфигурации "
+"включают в себя главную базу данных и реплики, а также подключение к внешним "
+"базам данных. В этом случае рекомендуется создать :ref:`роутер<topics-db-"
+"multi-db-routing>`, который позволит синхронизировать эти три модели в одной "
+"базе данных. Используйте аналогичный подход для поставляемых (contrib) "
+"приложения и сторонних приложения, которые не требуют распределение своих "
+"моделей по нескольким базам данных."
 
 # 407d1a64372a4408bf200ede38224ef9
 #: ../../topics/db/multi-db.txt:698
@@ -876,6 +1036,9 @@ msgid ""
 "that their primary keys may not match across databases. This may result in "
 "data corruption or data loss."
 msgstr ""
+"Если вы синхронизируете типы контента по нескольким базам данных, обеспечьте "
+"уникальность их первичных ключей на уровне всех баз данных. Иначе вы можете "
+"столкнуться с потерей или порчей данных."
 
 # eac0ffc7172d47d186381a7a5b506398
 #~ msgid ""
