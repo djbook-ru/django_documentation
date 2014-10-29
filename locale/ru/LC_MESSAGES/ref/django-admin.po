@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-10-27 00:50+0200\n"
+"PO-Revision-Date: 2014-10-29 09:29+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -996,6 +996,8 @@ msgid ""
 "Just be aware that this logic will disable the signals whenever fixtures are "
 "deserialized, not just during ``loaddata``."
 msgstr ""
+"Учитывайте, что этот код отключает обработку сигналов при любой загрузке "
+"фикстур, а не только для команды ``loaddata``."
 
 # 46eb9e31e0a84c66bc705aada4ef0900
 #: ../../ref/django-admin.txt:487
@@ -1006,6 +1008,11 @@ msgid ""
 "supports row-level constraints, these constraints will be checked at the end "
 "of the transaction."
 msgstr ""
+"Обратите внимание, не известно в каком порядке будут загружены фикстуры. Но "
+"все данные будут добавлены в базу данных в одной транзакции, и данные из "
+"одной фикстуры могут ссылаться на данные из другой фикстуры. Если база "
+"данных содержит проверку внешних ключей, она будет выполнена в конце "
+"транзакции."
 
 # 4108dbe079e94269a5fb273a98828e66
 #: ../../ref/django-admin.txt:493
@@ -1013,11 +1020,13 @@ msgid ""
 "The :djadmin:`dumpdata` command can be used to generate input for "
 "``loaddata``."
 msgstr ""
+"Для генерации фикстур для ``loaddata`` можно использовать команду :djadmin:"
+"`dumpdata`."
 
 # 1fcfba754cf746bbb60f65076aea62b4
 #: ../../ref/django-admin.txt:496
 msgid "Compressed fixtures"
-msgstr ""
+msgstr "Сжатые фикстуры"
 
 # e185c4153feb4751afbe2572bf65ac0a
 #: ../../ref/django-admin.txt:498
@@ -1025,6 +1034,7 @@ msgid ""
 "Fixtures may be compressed in ``zip``, ``gz``, or ``bz2`` format. For "
 "example::"
 msgstr ""
+"Фикстуры могут быть сжаты в ``zip``, ``gz`` или ``bz2`` архив. Например::"
 
 # f146f826afa24dfc8a3b7d75e980cdf2
 #: ../../ref/django-admin.txt:502
@@ -1033,6 +1043,8 @@ msgid ""
 "gz``, or ``mydata.json.bz2``. The first file contained within a zip-"
 "compressed archive is used."
 msgstr ""
+"будет искать ``mydata.json``, ``mydata.json.zip``, ``mydata.json.gz`` или "
+"``mydata.json.bz2``. Первый файл из архива будет загружен как фикстура."
 
 # 2cf02dc53918456c9e45ba9bd4c4afb2
 #: ../../ref/django-admin.txt:506
@@ -1043,11 +1055,15 @@ msgid ""
 "any data installed in the call to ``loaddata`` will be removed from the "
 "database."
 msgstr ""
+"Обратите внимание, если найдено две фикстуры с одинаковым именем, но разного "
+"формата (например, ``mydata.json`` и ``mydata.xml.gz`` были найдены в одном "
+"каталоге), загрузка фикстур будет остановлена, и загруженные ``loaddata`` до "
+"этого данные будет удалены из базы данных."
 
 # 1ee4b2c2314a4299b5728cc355882a39
 #: ../../ref/django-admin.txt:0
 msgid "MySQL with MyISAM and fixtures"
-msgstr ""
+msgstr "MySQL с MyISAM и фикстуры"
 
 # 1c20d8cbdaa847429f8db63a8a4849db
 #: ../../ref/django-admin.txt:514
@@ -1056,6 +1072,10 @@ msgid ""
 "constraints, so if you use MyISAM, you won't get validation of fixture data, "
 "or a rollback if multiple transaction files are found."
 msgstr ""
+"Хранилище MyISAM в MySQL не поддерживает транзакции и проверку внешних "
+"ключей. Если вы используйете MyISAM, проверка данных из фикстур не будет "
+"выполнена, как и откат изменений, если было найдено несколько фикстур с "
+"одинаковыми названиями."
 
 # 039ee734bfe74f97adccbf1c9a74f416
 #: ../../ref/django-admin.txt:519
