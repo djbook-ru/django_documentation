@@ -31,18 +31,25 @@
             <label class="checkbox"><input type="checkbox" id="unfinished"> незаконченные</label>
         </div>
     </div>
-    {% for name, perc, untranslated_count in statistic|sort %}
-        <div class="row po-row {% if untranslated_count and perc %}unfinished{% endif %}"
-            data-untranslated-count="{{ untranslated_count }}">
+    {% for name, translated_perc, untranslated_perc, fuzzy_perc, need_fix in statistic|sort %}
+        <div class="row po-row {% if need_fix and translated_perc %}unfinished{% endif %}"
+            data-untranslated-count="{{ need_fix }}">
             {% if name %}
             <div class="span5"><a href=".{{ name|replace('.po', '.html') }}">{{ name }}</a></div>
             <div class="span7">
-                <div class="progress {% if perc != 100 %}progress-danger{% endif %}">
-                    <div class="bar" style="width: {{ perc }}%;">
-                        {{ perc }}%
-                        {% if untranslated_count %}<span style="font-size: 0.9em">({{ untranslated_count }}){% endif %}</span>
+                <div class="progress {% if translated_perc != 100 %}progress-info1{% endif %}">
+                    <div class="bar bar-success" style="width: {{ translated_perc }}%;" title="translated">
+                        {{ translated_perc }}%
+                        {% if need_fix %}<span style="font-size: 0.9em">({{ need_fix }}){% endif %}</span>
                     </div>
+                    {% if fuzzy_perc %}
+                        <div class="bar bar-warning" style="width: {{ fuzzy_perc }}%;" title="fuzzy"></div>
+                    {% endif %}
+                    {% if untranslated_perc %}
+                        <div class="bar bar-danger" style="width: {{ untranslated_perc }}%;" title="untranslated"></div>
+                    {% endif %}
                 </div>
+
             </div>
             {% endif %}
         </div>
@@ -68,7 +75,7 @@
                     } else {
                         return 0;
                     }
-                })
+                });
 
                 $('.main.container').append(items);
 

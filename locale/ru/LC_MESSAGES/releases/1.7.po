@@ -1,0 +1,3203 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-09 11:16+0300\n"
+"PO-Revision-Date: 2014-07-11 11:43+0300\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 489b43b7646f43d191081bfdac268ae8
+#: ../../releases/1.7.txt:3
+msgid "Django 1.7 release notes"
+msgstr ""
+
+# 2f1eedc77d354b8895a6d2887ca5b2fe
+#: ../../releases/1.7.txt:5
+msgid "*September 2, 2014*"
+msgstr ""
+
+# 262f4470b73140f389a43c1fda8f339e
+#: ../../releases/1.7.txt:7
+msgid "Welcome to Django 1.7!"
+msgstr ""
+
+# c948942b2a444faaa8d9ec99288df5c9
+#: ../../releases/1.7.txt:9
+msgid ""
+"These release notes cover the `new features`_, as well as some `backwards "
+"incompatible changes`_ you'll want to be aware of when upgrading from Django "
+"1.6 or older versions. We've also dropped some features, which are detailed "
+"in :ref:`our deprecation plan <deprecation-removed-in-1.7>`, we've `begun "
+"the deprecation process for some features`_, and some features have reached "
+"the end of their deprecation process and `have been removed`_."
+msgstr ""
+
+# 453a786fafa547eb8b880715fb127961
+#: ../../releases/1.7.txt:22
+msgid "Python compatibility"
+msgstr ""
+
+# 7007d28adc554013b2f5e6b862e04e37
+#: ../../releases/1.7.txt:24
+msgid ""
+"Django 1.7 requires Python 2.7 or above, though we **highly recommend** the "
+"latest minor release. Support for Python 2.6 has been dropped and support "
+"for Python 3.4 has been added."
+msgstr ""
+
+# 27ec26cf6ddf405ea9e9cae25b9ec4bd
+#: ../../releases/1.7.txt:28
+msgid ""
+"This change should affect only a small number of Django users, as most "
+"operating-system vendors today are shipping Python 2.7 or newer as their "
+"default version. If you're still using Python 2.6, however, you'll need to "
+"stick to Django 1.6 until you can upgrade your Python version. Per :doc:`our "
+"support policy </internals/release-process>`, Django 1.6 will continue to "
+"receive security support until the release of Django 1.8."
+msgstr ""
+
+# 7e10ba96397a4bd7bdec4153481d1af3
+#: ../../releases/1.7.txt:36
+msgid "What's new in Django 1.7"
+msgstr ""
+
+# 1147d337c4214f3295a9d7b7f188eb2c
+#: ../../releases/1.7.txt:39
+msgid "Schema migrations"
+msgstr ""
+
+# 23e5850ef8624093ac34a35d880db317
+#: ../../releases/1.7.txt:41
+msgid ""
+"Django now has built-in support for schema migrations. It allows models to "
+"be updated, changed, and deleted by creating migration files that represent "
+"the model changes and which can be run on any development, staging or "
+"production database."
+msgstr ""
+
+# 24c2323694db4b119da810eda8d5e8a1
+#: ../../releases/1.7.txt:46
+msgid ""
+"Migrations are covered in :doc:`their own documentation</topics/"
+"migrations>`, but a few of the key features are:"
+msgstr ""
+
+# ccfc977fe0c5464fbeeb23119a4c670d
+#: ../../releases/1.7.txt:49
+msgid ""
+"``syncdb`` has been deprecated and replaced by ``migrate``. Don't worry - "
+"calls to ``syncdb`` will still work as before."
+msgstr ""
+
+# e1c36b3c1c0d4065a0925b7151b2797a
+#: ../../releases/1.7.txt:52
+msgid ""
+"A new ``makemigrations`` command provides an easy way to autodetect changes "
+"to your models and make migrations for them."
+msgstr ""
+
+# d396a5ea32aa40d4b2acf9dbc1dfd22d
+#: ../../releases/1.7.txt:55
+msgid ""
+":data:`~django.db.models.signals.pre_syncdb` and :data:`~django.db.models."
+"signals.post_syncdb` have been deprecated, to be replaced by :data:`~django."
+"db.models.signals.pre_migrate` and :data:`~django.db.models.signals."
+"post_migrate` respectively. These new signals have slightly different "
+"arguments. Check the documentation for details."
+msgstr ""
+
+# e9e14318162f431c84f61b9ac9a4630b
+#: ../../releases/1.7.txt:62
+msgid ""
+"The ``allow_syncdb`` method on database routers is now called "
+"``allow_migrate``, but still performs the same function. Routers with "
+"``allow_syncdb`` methods will still work, but that method name is deprecated "
+"and you should change it as soon as possible (nothing more than renaming is "
+"required)."
+msgstr ""
+
+# 08cbfd3bce754c3d8d5513b8fa6870ac
+#: ../../releases/1.7.txt:67
+msgid ""
+"``initial_data`` fixtures are no longer loaded for apps with migrations; if "
+"you want to load initial data for an app, we suggest you do it in a "
+"migration."
+msgstr ""
+
+# 7a86ce1059a44d41a2fbba8397b4191f
+#: ../../releases/1.7.txt:70
+msgid ""
+"Test rollback behavior is different for apps with migrations; in particular, "
+"Django will no longer emulate rollbacks on non-transactional databases or "
+"inside ``TransactionTestCase`` :ref:`unless specifically requested <test-"
+"case-serialized-rollback>`."
+msgstr ""
+
+# b6ab4ff4e7db4edc8626e26dfdf5d086
+#: ../../releases/1.7.txt:75
+msgid ""
+"It is not advised to have apps without migrations depend on (have a :ref:"
+"`ForeignKey <ref-foreignkey>` or :ref:`ManyToManyField <ref-manytomany>` to) "
+"apps with migrations. Read the :ref:`dependencies documentation <unmigrated-"
+"dependencies>` for more."
+msgstr ""
+
+# b58f2537aaec4e858eca4c9df296e2cc
+#: ../../releases/1.7.txt:80
+msgid ""
+"If you are upgrading from South, see our :ref:`upgrading-from-south` "
+"documentation, and third-party app authors should read the `South 1.0 "
+"release notes <http://south.readthedocs.org/en/latest/releasenotes/1.0."
+"html#library-migration-path>`_ for details on how to support South and "
+"Django migrations simultaneously."
+msgstr ""
+
+# d1a37076331c440ba5a9522a53886e40
+#: ../../releases/1.7.txt:88
+msgid "App-loading refactor"
+msgstr ""
+
+# 9ae681b7a8344ecfbed55e15e3dd65cb
+#: ../../releases/1.7.txt:90
+msgid ""
+"Historically, Django applications were tightly linked to models. A singleton "
+"known as the \"app cache\" dealt with both installed applications and "
+"models. The models module was used as an identifier for applications in many "
+"APIs."
+msgstr ""
+
+# c375a2b5bd5f41efa1f9f147d211624e
+#: ../../releases/1.7.txt:94
+msgid ""
+"As the concept of :doc:`Django applications </ref/applications>` matured, "
+"this code showed some shortcomings. It has been refactored into an \"app "
+"registry\" where models modules no longer have a central role and where it's "
+"possible to attach configuration data to applications."
+msgstr ""
+
+# 8a024967840e4e76ab1534ffc1914ade
+#: ../../releases/1.7.txt:99
+msgid "Improvements thus far include:"
+msgstr ""
+
+# 49bcccea6918494281cc13a8df00a332
+#: ../../releases/1.7.txt:101
+msgid ""
+"Applications can run code at startup, before Django does anything else, with "
+"the :meth:`~django.apps.AppConfig.ready` method of their configuration."
+msgstr ""
+
+# 83c7b288784b4fe88b2873b48635c23e
+#: ../../releases/1.7.txt:104
+msgid ""
+"Application labels are assigned correctly to models even when they're "
+"defined outside of ``models.py``. You don't have to set :attr:`~django.db."
+"models.Options.app_label` explicitly any more."
+msgstr ""
+
+# e8ebe6ebc98b42df8f180f9e6d6b9c5d
+#: ../../releases/1.7.txt:108
+msgid ""
+"It is possible to omit ``models.py`` entirely if an application doesn't have "
+"any models."
+msgstr ""
+
+# 3db3957e15c643f1a6e492f670ca62e4
+#: ../../releases/1.7.txt:111
+msgid ""
+"Applications can be relabeled with the :attr:`~django.apps.AppConfig.label` "
+"attribute of application configurations, to work around label conflicts."
+msgstr ""
+
+# 5cf31d749a8348c6a1bce370b446dccf
+#: ../../releases/1.7.txt:114
+msgid ""
+"The name of applications can be customized in the admin with the :attr:"
+"`~django.apps.AppConfig.verbose_name` of application configurations."
+msgstr ""
+
+# acc8123dd43b4543b6889542a7dbf577
+#: ../../releases/1.7.txt:117
+msgid ""
+"The admin automatically calls :func:`~django.contrib.admin.autodiscover()` "
+"when Django starts. You can consequently remove this line from your URLconf."
+msgstr ""
+
+# 93f4a626aec547d2af63817818a74da8
+#: ../../releases/1.7.txt:121
+msgid ""
+"Django imports all application configurations and models as soon as it "
+"starts, through a deterministic and straightforward process. This should "
+"make it easier to diagnose import issues such as import loops."
+msgstr ""
+
+# 880dc47148704773b25a70df036db140
+#: ../../releases/1.7.txt:126
+msgid "New method on Field subclasses"
+msgstr ""
+
+# 97fac4efb9964129aeaf5d1aa39f8129
+#: ../../releases/1.7.txt:128
+msgid ""
+"To help power both schema migrations and to enable easier addition of "
+"composite keys in future releases of Django, the :class:`~django.db.models."
+"Field` API now has a new required method: ``deconstruct()``."
+msgstr ""
+
+# e1ecb09117b948d192d5b241372f2601
+#: ../../releases/1.7.txt:133
+msgid "This method takes no arguments, and returns a tuple of four items:"
+msgstr ""
+
+# 855a68d4b39049bb91299e9e8035e1b5
+#: ../../releases/1.7.txt:135
+msgid ""
+"``name``: The field's attribute name on its parent model, or None if it is "
+"not part of a model"
+msgstr ""
+
+# 0680f75c858142f6bf98f5afa922b558
+#: ../../releases/1.7.txt:136
+msgid ""
+"``path``: A dotted, Python path to the class of this field, including the "
+"class name."
+msgstr ""
+
+# 96339b949ac24ed38467492786505be7
+#: ../../releases/1.7.txt:137
+msgid "``args``: Positional arguments, as a list"
+msgstr ""
+
+# d504356204124f8c9b23c94fde415938
+#: ../../releases/1.7.txt:138
+msgid "``kwargs``: Keyword arguments, as a dict"
+msgstr ""
+
+# 72016d1d9d904620a8154a3d6247e3ca
+#: ../../releases/1.7.txt:140
+msgid ""
+"These four values allow any field to be serialized into a file, as well as "
+"allowing the field to be copied safely, both essential parts of these new "
+"features."
+msgstr ""
+
+# 8820ab5bdf4f40b1a16ff85bce94c573
+#: ../../releases/1.7.txt:143
+msgid ""
+"This change should not affect you unless you write custom Field subclasses; "
+"if you do, you may need to reimplement the ``deconstruct()`` method if your "
+"subclass changes the method signature of ``__init__`` in any way. If your "
+"field just inherits from a built-in Django field and doesn't override "
+"``__init__``, no changes are necessary."
+msgstr ""
+
+# 1c4353877653445dbc83f7216920a7a3
+#: ../../releases/1.7.txt:149
+msgid ""
+"If you do need to override ``deconstruct()``, a good place to start is the "
+"built-in Django fields (``django/db/models/fields/__init__.py``) as several "
+"fields, including ``DecimalField`` and ``DateField``, override it and show "
+"how to call the method on the superclass and simply add or remove extra "
+"arguments."
+msgstr ""
+
+# e3fcd92703d1469f827ecfc1d8b8343a
+#: ../../releases/1.7.txt:154
+msgid ""
+"This also means that all arguments to fields must themselves be "
+"serializable; to see what we consider serializable, and to find out how to "
+"make your own classes serializable, read the :ref:`migration serialization "
+"documentation <migration-serializing>`."
+msgstr ""
+
+# afeb78d4208a4952952626ee14eea711
+#: ../../releases/1.7.txt:160
+msgid "Calling custom ``QuerySet`` methods from the ``Manager``"
+msgstr ""
+
+# 20b0642c4ff94d4b8d0ac7f68985eac6
+#: ../../releases/1.7.txt:162
+msgid ""
+"Historically, the recommended way to make reusable model queries was to "
+"create methods on a custom ``Manager`` class. The problem with this approach "
+"was that after the first method call, you'd get back a ``QuerySet`` instance "
+"and couldn't call additional custom manager methods."
+msgstr ""
+
+# 38b5242786d14482ab695b98b6a8c1e3
+#: ../../releases/1.7.txt:167
+msgid ""
+"Though not documented, it was common to work around this issue by creating a "
+"custom ``QuerySet`` so that custom methods could be chained; but the "
+"solution had a number of drawbacks:"
+msgstr ""
+
+# 1c9c3c9f09cf46bd961dd79338c6b45f
+#: ../../releases/1.7.txt:171
+msgid ""
+"The custom ``QuerySet`` and its custom methods were lost after the first "
+"call to ``values()`` or ``values_list()``."
+msgstr ""
+
+# de83b39655524f7f994ba02c3b468d5e
+#: ../../releases/1.7.txt:174
+msgid ""
+"Writing a custom ``Manager`` was still necessary to return the custom "
+"``QuerySet`` class and all methods that were desired on the ``Manager`` had "
+"to be proxied to the ``QuerySet``. The whole process went against the DRY "
+"principle."
+msgstr ""
+
+# 8eb441d321d242ae80caa277ce70bb3f
+#: ../../releases/1.7.txt:179
+msgid ""
+"The :meth:`QuerySet.as_manager() <django.db.models.query.QuerySet."
+"as_manager>` class method can now directly :ref:`create Manager with "
+"QuerySet methods <create-manager-with-queryset-methods>`::"
+msgstr ""
+
+# 9e3ad1a11bf84f75b0880fb73b8a82f6
+#: ../../releases/1.7.txt:198
+msgid "Using a custom manager when traversing reverse relations"
+msgstr ""
+
+# 7f0b9a42651c44b99e51a9e140670a42
+#: ../../releases/1.7.txt:200
+msgid ""
+"It is now possible to :ref:`specify a custom manager <using-custom-reverse-"
+"manager>` when traversing a reverse relationship::"
+msgstr ""
+
+# fdc9287bc80d479cbf7b41af1b0b8772
+#: ../../releases/1.7.txt:216
+msgid "New system check framework"
+msgstr ""
+
+# 700b84960ce54297be44243b6da23f4a
+#: ../../releases/1.7.txt:218
+msgid ""
+"We've added a new :doc:`System check framework </ref/checks>` for detecting "
+"common problems (like invalid models) and providing hints for resolving "
+"those problems. The framework is extensible so you can add your own checks "
+"for your own apps and libraries."
+msgstr ""
+
+# ca0c02cb802942d3ad3c6c7a7019a27e
+#: ../../releases/1.7.txt:223
+msgid ""
+"To perform system checks, you use the :djadmin:`check` management command. "
+"This command replaces the older :djadmin:`validate` management command."
+msgstr ""
+
+# 77ba577718bd41b1953317884aa38c39
+#: ../../releases/1.7.txt:227
+msgid "New ``Prefetch`` object for advanced ``prefetch_related`` operations."
+msgstr ""
+
+# 950b652939af4b0692589cf52d34c481
+#: ../../releases/1.7.txt:229
+msgid ""
+"The new :class:`~django.db.models.Prefetch` object allows customizing "
+"prefetch operations."
+msgstr ""
+
+# af284f5ba2f84d15801edda4297ac61e
+#: ../../releases/1.7.txt:232
+msgid ""
+"You can specify the ``QuerySet`` used to traverse a given relation or "
+"customize the storage location of prefetch results."
+msgstr ""
+
+# 110f8312decf4553acdebbe7cb281077
+#: ../../releases/1.7.txt:235
+msgid ""
+"This enables things like filtering prefetched relations, calling :meth:"
+"`~django.db.models.query.QuerySet.select_related()` from a prefetched "
+"relation, or prefetching the same relation multiple times with different "
+"querysets. See :meth:`~django.db.models.query.QuerySet.prefetch_related()` "
+"for more details."
+msgstr ""
+
+# a787fd9fc84949aea1048c84f369d3eb
+#: ../../releases/1.7.txt:242
+msgid "Admin shortcuts support time zones"
+msgstr ""
+
+# 59f76428e814478e930c50575e15ddd0
+#: ../../releases/1.7.txt:244
+msgid ""
+"The \"today\" and \"now\" shortcuts next to date and time input widgets in "
+"the admin are now operating in the :ref:`current time zone <default-current-"
+"time-zone>`. Previously, they used the browser time zone, which could result "
+"in saving the wrong value when it didn't match the current time zone on the "
+"server."
+msgstr ""
+
+# 4d8666066d9f49b1ac071088a6a64b80
+#: ../../releases/1.7.txt:250
+msgid ""
+"In addition, the widgets now display a help message when the browser and "
+"server time zone are different, to clarify how the value inserted in the "
+"field will be interpreted."
+msgstr ""
+
+# 383d23e8746c4584b1e7920f02c22466
+#: ../../releases/1.7.txt:255
+msgid "Using database cursors as context managers"
+msgstr ""
+
+# 89682b0d48da4465a1ca5159acf848c9
+#: ../../releases/1.7.txt:257
+msgid ""
+"Prior to Python 2.7, database cursors could be used as a context manager. "
+"The specific backend's cursor defined the behavior of the context manager. "
+"The behavior of magic method lookups was changed with Python 2.7 and cursors "
+"were no longer usable as context managers."
+msgstr ""
+
+# 6923887175ff4bbfbb16049495965a66
+#: ../../releases/1.7.txt:262
+msgid ""
+"Django 1.7 allows a cursor to be used as a context manager. That is, the "
+"following can be used::"
+msgstr ""
+
+# 6c71f634cda049aca664b1adc970e5c8
+#: ../../releases/1.7.txt:268
+msgid "instead of::"
+msgstr ""
+
+# f29a1088001f498e99f2887ebca8eb8a
+#: ../../releases/1.7.txt:277
+msgid "Custom lookups"
+msgstr ""
+
+# 3c7782e3d0d34850b0ee65c30e4a2014
+#: ../../releases/1.7.txt:279
+msgid ""
+"It is now possible to write custom lookups and transforms for the ORM. "
+"Custom lookups work just like Django's inbuilt lookups (e.g. ``lte``, "
+"``icontains``) while transforms are a new concept."
+msgstr ""
+
+# 2ebb92f863fe4d29818b793b588f80ee
+#: ../../releases/1.7.txt:283
+msgid ""
+"The :class:`django.db.models.Lookup` class provides a way to add lookup "
+"operators for model fields. As an example it is possible to add ``day_lte`` "
+"operator for ``DateFields``."
+msgstr ""
+
+# 0807b6daa7874b139f7562b216621171
+#: ../../releases/1.7.txt:287
+msgid ""
+"The :class:`django.db.models.Transform` class allows transformations of "
+"database values prior to the final lookup. For example it is possible to "
+"write a ``year`` transform that extracts year from the field's value. "
+"Transforms allow for chaining. After the ``year`` transform has been added "
+"to ``DateField`` it is possible to filter on the transformed value, for "
+"example ``qs.filter(author__birthdate__year__lte=1981)``."
+msgstr ""
+
+# d0e5d002484e44bdac5cfba57ba28631
+#: ../../releases/1.7.txt:294
+msgid ""
+"For more information about both custom lookups and transforms refer to the :"
+"doc:`custom lookups </howto/custom-lookups>` documentation."
+msgstr ""
+
+# 940713a0fde84f528699fb876d235ca6
+#: ../../releases/1.7.txt:298
+msgid "Improvements to ``Form`` error handling"
+msgstr ""
+
+# 186135c9f9514e0bb03344ca2dd2dbcd
+#: ../../releases/1.7.txt:301
+msgid "``Form.add_error()``"
+msgstr ""
+
+# a116ae2040834311aa923a69009e939a
+#: ../../releases/1.7.txt:303
+msgid "Previously there were two main patterns for handling errors in forms:"
+msgstr ""
+
+# c1b3dc8d537c4ac791ae6a404acaee23
+#: ../../releases/1.7.txt:305
+msgid ""
+"Raising a :exc:`~django.core.exceptions.ValidationError` from within certain "
+"functions (e.g. ``Field.clean()``, ``Form.clean_<fieldname>()``, or ``Form."
+"clean()`` for non-field errors.)"
+msgstr ""
+
+# 1e82dd6db7e845b09c20de0d80a6999c
+#: ../../releases/1.7.txt:309
+msgid ""
+"Fiddling with ``Form._errors`` when targeting a specific field in ``Form."
+"clean()`` or adding errors from outside of a \"clean\" method (e.g. directly "
+"from a view)."
+msgstr ""
+
+# 8d26199ecf444c26ada6e4690f3384d3
+#: ../../releases/1.7.txt:313
+msgid ""
+"Using the former pattern was straightforward since the form can guess from "
+"the context (i.e. which method raised the exception) where the errors belong "
+"and automatically process them. This remains the canonical way of adding "
+"errors when possible. However the latter was fiddly and error-prone, since "
+"the burden of handling edge cases fell on the user."
+msgstr ""
+
+# 7befc197dcd24f2a8ea7cf3a6e9ca23c
+#: ../../releases/1.7.txt:319
+msgid ""
+"The new :meth:`~django.forms.Form.add_error()` method allows adding errors "
+"to specific form fields from anywhere without having to worry about the "
+"details such as creating instances of ``django.forms.utils.ErrorList`` or "
+"dealing with ``Form.cleaned_data``. This new API replaces manipulating "
+"``Form._errors`` which now becomes a private API."
+msgstr ""
+
+# 0ba6b3132a1147139531a71694a04235
+#: ../../releases/1.7.txt:325
+msgid ""
+"See :ref:`validating-fields-with-clean` for an example using ``Form."
+"add_error()``."
+msgstr ""
+
+# 5c59334032cf4d8c9e9920e077dcf8f5
+#: ../../releases/1.7.txt:329
+msgid "Error metadata"
+msgstr ""
+
+# dee8d0612371439b822cd7078ce102be
+#: ../../releases/1.7.txt:331
+msgid ""
+"The :exc:`~django.core.exceptions.ValidationError` constructor accepts "
+"metadata such as error ``code`` or ``params`` which are then available for "
+"interpolating into the error message (see :ref:`raising-validation-error` "
+"for more details); however, before Django 1.7 those metadata were discarded "
+"as soon as the errors were added to :attr:`Form.errors <django.forms.Form."
+"errors>`."
+msgstr ""
+
+# 1496ebce05cf439f8480de9b5bf42e73
+#: ../../releases/1.7.txt:337
+msgid ""
+":attr:`Form.errors <django.forms.Form.errors>` and ``django.forms.utils."
+"ErrorList`` now store the ``ValidationError`` instances so these metadata "
+"can be retrieved at any time through the new :meth:`Form.errors.as_data "
+"<django.forms.Form.errors.as_data()>` method."
+msgstr ""
+
+# 976da6850322435294ec4f9786de2239
+#: ../../releases/1.7.txt:342
+msgid ""
+"The retrieved ``ValidationError`` instances can then be identified thanks to "
+"their error ``code`` which enables things like rewriting the error's message "
+"or writing custom logic in a view when a given error is present. It can also "
+"be used to serialize the errors in a custom format such as XML."
+msgstr ""
+
+# 6a485d552f5d44e6af9abab2e5a678ce
+#: ../../releases/1.7.txt:347
+msgid ""
+"The new :meth:`Form.errors.as_json() <django.forms.Form.errors.as_json()>` "
+"method is a convenience method which returns error messages along with error "
+"codes serialized as JSON. ``as_json()`` uses ``as_data()`` and gives an idea "
+"of how the new system could be extended."
+msgstr ""
+
+# 5c192581d6244b048d3088dce521957f
+#: ../../releases/1.7.txt:353
+msgid "Error containers and backward compatibility"
+msgstr ""
+
+# e0f72e5ae54346439f481a6f1774293c
+#: ../../releases/1.7.txt:355
+msgid ""
+"Heavy changes to the various error containers were necessary in order to "
+"support the features above, specifically :attr:`Form.errors <django.forms."
+"Form.errors>`, ``django.forms.utils.ErrorList``, and the internal storages "
+"of :exc:`~django.core.exceptions.ValidationError`. These containers which "
+"used to store error strings now store ``ValidationError`` instances and "
+"public APIs have been adapted to make this as transparent as possible, but "
+"if you've been using private APIs, some of the changes are backwards "
+"incompatible; see :ref:`validation-error-constructor-and-internal-storage` "
+"for more details."
+msgstr ""
+
+# d0d19e9083f446109a88cc29af1ea351
+#: ../../releases/1.7.txt:366
+msgid "Minor features"
+msgstr ""
+
+# fad46f03a99f49dda97ecbc0ee963006
+#: ../../releases/1.7.txt:369
+msgid ":mod:`django.contrib.admin`"
+msgstr ""
+
+# ca1fd08b96ef445696235c956c980a8c
+#: ../../releases/1.7.txt:371
+msgid ""
+"You can now implement :attr:`~django.contrib.admin.AdminSite.site_header`, :"
+"attr:`~django.contrib.admin.AdminSite.site_title`, and :attr:`~django."
+"contrib.admin.AdminSite.index_title` attributes on a custom :class:`~django."
+"contrib.admin.AdminSite` in order to easily change the admin site's page "
+"title and header text. No more needing to override templates!"
+msgstr ""
+
+# a0fc120ba04742368b3a034eca6efb8b
+#: ../../releases/1.7.txt:377
+msgid ""
+"Buttons in :mod:`django.contrib.admin` now use the ``border-radius`` CSS "
+"property for rounded corners rather than GIF background images."
+msgstr ""
+
+# b7bb871380504ad5bff936d2db780676
+#: ../../releases/1.7.txt:380
+msgid ""
+"Some admin templates now have ``app-<app_name>`` and ``model-<model_name>`` "
+"classes in their ``<body>`` tag to allow customizing the CSS per app or per "
+"model."
+msgstr ""
+
+# 768d2ec6e93f40fba027cf779c991f7f
+#: ../../releases/1.7.txt:384
+msgid ""
+"The admin changelist cells now have a ``field-<field_name>`` class in the "
+"HTML to enable style customizations."
+msgstr ""
+
+# 8ffe92c54b8241bb830472e9e4afd6d3
+#: ../../releases/1.7.txt:387
+msgid ""
+"The admin's search fields can now be customized per-request thanks to the "
+"new :meth:`django.contrib.admin.ModelAdmin.get_search_fields` method."
+msgstr ""
+
+# f99c0a19680946929f2d2ec37372c642
+#: ../../releases/1.7.txt:390
+msgid ""
+"The :meth:`ModelAdmin.get_fields() <django.contrib.admin.ModelAdmin."
+"get_fields>` method may be overridden to customize the value of :attr:"
+"`ModelAdmin.fields <django.contrib.admin.ModelAdmin.fields>`."
+msgstr ""
+
+# 6d20485270e94c3e87f7bfeaf3f7367d
+#: ../../releases/1.7.txt:395
+msgid ""
+"In addition to the existing ``admin.site.register`` syntax, you can use the "
+"new :func:`~django.contrib.admin.register` decorator to register a :class:"
+"`~django.contrib.admin.ModelAdmin`."
+msgstr ""
+
+# 84d96db22b4f4e70864de68b0f9ed7de
+#: ../../releases/1.7.txt:399
+msgid ""
+"You may specify :meth:`ModelAdmin.list_display_links <django.contrib.admin."
+"ModelAdmin.list_display_links>` ``= None`` to disable links on the change "
+"list page grid."
+msgstr ""
+
+# b8c2632cf33f40879e0e88a496966bc8
+#: ../../releases/1.7.txt:403
+msgid ""
+"You may now specify :attr:`ModelAdmin.view_on_site <django.contrib.admin."
+"ModelAdmin.view_on_site>` to control whether or not to display the \"View on "
+"site\" link."
+msgstr ""
+
+# 1b2f778274ca4b799d83a73ef02a251e
+#: ../../releases/1.7.txt:407
+msgid ""
+"You can specify a descending ordering for a :attr:`ModelAdmin.list_display "
+"<django.contrib.admin.ModelAdmin.list_display>` value by prefixing the "
+"``admin_order_field`` value with a hyphen."
+msgstr ""
+
+# 17ab5eaab0764f1f9d4c868fdcb05ebb
+#: ../../releases/1.7.txt:411
+msgid ""
+"The :meth:`ModelAdmin.get_changeform_initial_data() <django.contrib.admin."
+"ModelAdmin.get_changeform_initial_data>` method may be overridden to define "
+"custom behavior for setting initial change form data."
+msgstr ""
+
+# fe149337f1c2495c9d76fde07e835664
+#: ../../releases/1.7.txt:416
+msgid ":mod:`django.contrib.auth`"
+msgstr ""
+
+# 5fb5fc26f4464870beb347a07c50d1f9
+#: ../../releases/1.7.txt:418
+msgid ""
+"Any ``**kwargs`` passed to :meth:`~django.contrib.auth.models.User."
+"email_user()` are passed to the underlying :meth:`~django.core.mail."
+"send_mail()` call."
+msgstr ""
+
+# 88095181a7c84759b53f783f3e382bda
+#: ../../releases/1.7.txt:422
+msgid ""
+"The :func:`~django.contrib.auth.decorators.permission_required` decorator "
+"can take a list of permissions as well as a single permission."
+msgstr ""
+
+# 75b03ba6491c455395cad00ded4e6619
+#: ../../releases/1.7.txt:425
+msgid ""
+"You can override the new :meth:`AuthenticationForm.confirm_login_allowed() "
+"<django.contrib.auth.forms.AuthenticationForm.confirm_login_allowed>` method "
+"to more easily customize the login policy."
+msgstr ""
+
+# c8bf46418f774e7bb85da1669176d7e4
+#: ../../releases/1.7.txt:429
+msgid ""
+":func:`django.contrib.auth.views.password_reset` takes an optional "
+"``html_email_template_name`` parameter used to send a multipart HTML email "
+"for password resets."
+msgstr ""
+
+# 39eeff8b4402401c8303edfe81ca4375
+#: ../../releases/1.7.txt:433
+msgid ""
+"The :meth:`AbstractBaseUser.get_session_auth_hash() <django.contrib.auth."
+"models.AbstractBaseUser.get_session_auth_hash>` method was added and if "
+"your :setting:`AUTH_USER_MODEL` inherits from :class:`~django.contrib.auth."
+"models.AbstractBaseUser`, changing a user's password now invalidates old "
+"sessions if the :class:`~django.contrib.auth.middleware."
+"SessionAuthenticationMiddleware` is enabled. See :ref:`session-invalidation-"
+"on-password-change` for more details including upgrade considerations when "
+"enabling this new middleware."
+msgstr ""
+
+# 738a32372c784768901fd2b3c9ae9461
+#: ../../releases/1.7.txt:443
+msgid ":mod:`django.contrib.formtools`"
+msgstr ""
+
+# e6a3b93ceee34b71b50668e610b780d4
+#: ../../releases/1.7.txt:445
+msgid ""
+"Calls to :meth:`WizardView.done() <django.contrib.formtools.wizard.views."
+"WizardView.done>` now include a ``form_dict`` to allow easier access to "
+"forms by their step name."
+msgstr ""
+
+# 3169e5130525488d99d48e36ec35347a
+#: ../../releases/1.7.txt:450
+msgid ":mod:`django.contrib.gis`"
+msgstr ""
+
+# 83167b46fbb64d90b069e85930def441
+#: ../../releases/1.7.txt:452
+msgid ""
+"The default OpenLayers library version included in widgets has been updated "
+"from 2.11 to 2.13."
+msgstr ""
+
+# f11be5e184e04225ac3a0010d1b2783b
+#: ../../releases/1.7.txt:455
+msgid ""
+"Prepared geometries now also support the ``crosses``, ``disjoint``, "
+"``overlaps``, ``touches`` and ``within`` predicates, if GEOS 3.3 or later is "
+"installed."
+msgstr ""
+
+# a8876be0f8b34847a65c3e891535df57
+#: ../../releases/1.7.txt:460
+msgid ":mod:`django.contrib.messages`"
+msgstr ""
+
+# c1b11637e7cb4b46b9a84ca944a505f3
+#: ../../releases/1.7.txt:462
+msgid ""
+"The backends for :mod:`django.contrib.messages` that use cookies, will now "
+"follow the :setting:`SESSION_COOKIE_SECURE` and :setting:"
+"`SESSION_COOKIE_HTTPONLY` settings."
+msgstr ""
+
+# f222bd1f588844eebd6588c22aeef289
+#: ../../releases/1.7.txt:466
+msgid ""
+"The :ref:`messages context processor <message-displaying>` now adds a "
+"dictionary of default levels under the name ``DEFAULT_MESSAGE_LEVELS``."
+msgstr ""
+
+# a3ad863ba9a645449251d7db7327d2bb
+#: ../../releases/1.7.txt:469
+msgid ""
+":class:`~django.contrib.messages.storage.base.Message` objects now have a "
+"``level_tag`` attribute that contains the string representation of the "
+"message level."
+msgstr ""
+
+# 19057af185bd4a93842a21d965e60314
+#: ../../releases/1.7.txt:474
+msgid ":mod:`django.contrib.redirects`"
+msgstr ""
+
+# 35ac00cbab984370bffe9b18a58731af
+#: ../../releases/1.7.txt:476
+msgid ""
+":class:`~django.contrib.redirects.middleware.RedirectFallbackMiddleware` has "
+"two new attributes (:attr:`~django.contrib.redirects.middleware."
+"RedirectFallbackMiddleware.response_gone_class` and :attr:`~django.contrib."
+"redirects.middleware.RedirectFallbackMiddleware.response_redirect_class`) "
+"that specify the types of :class:`~django.http.HttpResponse` instances the "
+"middleware returns."
+msgstr ""
+
+# 882508e53d354bc3822e5b1bd0c00123
+#: ../../releases/1.7.txt:485
+msgid ":mod:`django.contrib.sessions`"
+msgstr ""
+
+# 5eac774b50d6463d907dc7c8182f95bf
+#: ../../releases/1.7.txt:487
+msgid ""
+"The ``\"django.contrib.sessions.backends.cached_db\"`` session backend now "
+"respects :setting:`SESSION_CACHE_ALIAS`. In previous versions, it always "
+"used the `default` cache."
+msgstr ""
+
+# 84d948aad0b741a4b6ea3c6d799f6df3
+#: ../../releases/1.7.txt:492
+msgid ":mod:`django.contrib.sitemaps`"
+msgstr ""
+
+# d92dedeb22ea46e9af332acff58384cd
+#: ../../releases/1.7.txt:494
+msgid ""
+"The :mod:`sitemap framework<django.contrib.sitemaps>` now makes use of :attr:"
+"`~django.contrib.sitemaps.Sitemap.lastmod` to set a ``Last-Modified`` header "
+"in the response. This makes it possible for the :class:`~django.middleware."
+"http.ConditionalGetMiddleware` to handle conditional ``GET`` requests for "
+"sitemaps which set ``lastmod``."
+msgstr ""
+
+# 4dd040a16c48401abb57a23ae0a8ca50
+#: ../../releases/1.7.txt:501
+msgid ":mod:`django.contrib.sites`"
+msgstr ""
+
+# 223c27c4220c4bfa8d51557f8cb99327
+#: ../../releases/1.7.txt:503
+msgid ""
+"The new :class:`django.contrib.sites.middleware.CurrentSiteMiddleware` "
+"allows setting the current site on each request."
+msgstr ""
+
+# ea3b8b6ec58540189147626c01e1905f
+#: ../../releases/1.7.txt:507
+msgid ":mod:`django.contrib.staticfiles`"
+msgstr ""
+
+# aeb84a8c9fa94e26affc9a5fad918189
+#: ../../releases/1.7.txt:509
+msgid ""
+"The :ref:`static files storage classes <staticfiles-storages>` may be "
+"subclassed to override the permissions that collected static files and "
+"directories receive by setting the :attr:`~django.core.files.storage."
+"FileSystemStorage.file_permissions_mode` and :attr:`~django.core.files."
+"storage.FileSystemStorage.directory_permissions_mode` parameters. See :"
+"djadmin:`collectstatic` for example usage."
+msgstr ""
+
+# c846fb2ae47b4f209fef6ab4881f98ee
+#: ../../releases/1.7.txt:516
+msgid ""
+"The :class:`~django.contrib.staticfiles.storage.CachedStaticFilesStorage` "
+"backend gets a sibling class called :class:`~django.contrib.staticfiles."
+"storage.ManifestStaticFilesStorage` that doesn't use the cache system at all "
+"but instead a JSON file called ``staticfiles.json`` for storing the mapping "
+"between the original file name (e.g. ``css/styles.css``) and the hashed file "
+"name (e.g. ``css/styles.55e7cbb9ba48.css``. The ``staticfiles.json`` file is "
+"created when running the :djadmin:`collectstatic` management command and "
+"should be a less expensive alternative for remote storages such as Amazon S3."
+msgstr ""
+
+# 5d1978be5d9f4faa9d39437b5de9ce0d
+#: ../../releases/1.7.txt:526
+msgid ""
+"See the :class:`~django.contrib.staticfiles.storage."
+"ManifestStaticFilesStorage` docs for more information."
+msgstr ""
+
+# fe2608d981884f85b72eb40c6f353b15
+#: ../../releases/1.7.txt:529
+msgid ""
+":djadmin:`findstatic` now accepts verbosity flag level 2, meaning it will "
+"show the relative paths of the directories it searched. See :djadmin:"
+"`findstatic` for example output."
+msgstr ""
+
+# 8e11abd77ce14fb893d6e8d9685a466e
+#: ../../releases/1.7.txt:534
+msgid ":mod:`django.contrib.syndication`"
+msgstr ""
+
+# 942cdb220fa1409b8f790c326e981bde
+#: ../../releases/1.7.txt:536
+msgid ""
+"The :class:`~django.utils.feedgenerator.Atom1Feed` syndication feed's "
+"``updated`` element now utilizes ``updateddate`` instead of ``pubdate``, "
+"allowing the ``published`` element to be included in the feed (which relies "
+"on ``pubdate``)."
+msgstr ""
+
+# 0dc3215bd5f04069bcb3c3da7e8d11af
+#: ../../releases/1.7.txt:542
+msgid "Cache"
+msgstr ""
+
+# 32bc96353ba2476fa85916f500ab9878
+#: ../../releases/1.7.txt:544
+msgid ""
+"Access to caches configured in :setting:`CACHES` is now available via :data:"
+"`django.core.cache.caches`. This dict-like object provides a different "
+"instance per thread. It supersedes :func:`django.core.cache.get_cache` which "
+"is now deprecated."
+msgstr ""
+
+# c5bc26679deb4282aabfa19a67f70826
+#: ../../releases/1.7.txt:549
+msgid ""
+"If you instantiate cache backends directly, be aware that they aren't thread-"
+"safe any more, as :data:`django.core.cache.caches` now yields different "
+"instances per thread."
+msgstr ""
+
+# 9b8ec903cdf8460996ddc463c86ad238
+#: ../../releases/1.7.txt:553
+msgid ""
+"Defining the :setting:`TIMEOUT <CACHES-TIMEOUT>` argument of the :setting:"
+"`CACHES` setting as ``None`` will set the cache keys as \"non-expiring\" by "
+"default. Previously, it was only possible to pass ``timeout=None`` to the "
+"cache backend's ``set()`` method."
+msgstr ""
+
+# 5ef27bf5112d4867a167b8934402db2e
+#: ../../releases/1.7.txt:559
+msgid "Cross Site Request Forgery"
+msgstr ""
+
+# 4c0808cadc994e60aa8d6c70eb5eef2e
+#: ../../releases/1.7.txt:561
+msgid ""
+"The :setting:`CSRF_COOKIE_AGE` setting facilitates the use of session-based "
+"CSRF cookies."
+msgstr ""
+
+# 7d91a8819557417b8308b1b608638ffb
+#: ../../releases/1.7.txt:565
+msgid "Email"
+msgstr ""
+
+# 76608572ebcb4ec2b463bfd22fa48580
+#: ../../releases/1.7.txt:567
+msgid ""
+":func:`~django.core.mail.send_mail` now accepts an ``html_message`` "
+"parameter for sending a multipart ``text/plain`` and ``text/html`` email."
+msgstr ""
+
+# 64ee41ca1bcd4788ade74a2e603b75b2
+#: ../../releases/1.7.txt:569
+msgid ""
+"The SMTP :class:`~django.core.mail.backends.smtp.EmailBackend` now accepts "
+"a :attr:`~django.core.mail.backends.smtp.EmailBackend.timeout` parameter."
+msgstr ""
+
+# 225eb4dc2ff04c31ae3b71077850469d
+#: ../../releases/1.7.txt:573
+msgid "File Storage"
+msgstr ""
+
+# d1311a07b8c2473f948e6a24065836e6
+#: ../../releases/1.7.txt:575
+msgid ""
+"File locking on Windows previously depended on the PyWin32 package; if it "
+"wasn't installed, file locking failed silently. That dependency has been "
+"removed, and file locking is now implemented natively on both Windows and "
+"Unix."
+msgstr ""
+
+# 987b5fd7373f42f9a94754bf783f56fe
+#: ../../releases/1.7.txt:581
+msgid "File Uploads"
+msgstr ""
+
+# 19421021ebac45b4a9e879aad1b097a4
+#: ../../releases/1.7.txt:583
+msgid ""
+"The new :attr:`UploadedFile.content_type_extra <django.core.files."
+"uploadedfile.UploadedFile.content_type_extra>` attribute contains extra "
+"parameters passed to the ``content-type`` header on a file upload."
+msgstr ""
+
+# 7f10d98d813f4a118380c11f823b42ad
+#: ../../releases/1.7.txt:588
+msgid ""
+"The new :setting:`FILE_UPLOAD_DIRECTORY_PERMISSIONS` setting controls the "
+"file system permissions of directories created during file upload, like :"
+"setting:`FILE_UPLOAD_PERMISSIONS` does for the files themselves."
+msgstr ""
+
+# 38ca436e360149fe8ddb241059650473
+#: ../../releases/1.7.txt:592
+msgid ""
+"The :attr:`FileField.upload_to <django.db.models.FileField.upload_to>` "
+"attribute is now optional. If it is omitted or given ``None`` or an empty "
+"string, a subdirectory won't be used for storing the uploaded files."
+msgstr ""
+
+# a52bd173a27f4b3daa0085beb828ac8a
+#: ../../releases/1.7.txt:596
+msgid ""
+"Uploaded files are now explicitly closed before the response is delivered to "
+"the client. Partially uploaded files are also closed as long as they are "
+"named ``file`` in the upload handler."
+msgstr ""
+
+# b79dbe45c0254620bd0dec0a123b1884
+#: ../../releases/1.7.txt:600
+msgid ""
+":meth:`Storage.get_available_name() <django.core.files.storage.Storage."
+"get_available_name>` now appends an underscore plus a random 7 character "
+"alphanumeric string (e.g. ``\"_x3a1gho\"``), rather than iterating through "
+"an underscore followed by a number (e.g. ``\"_1\"``, ``\"_2\"``, etc.) to "
+"prevent a denial-of-service attack. This change was also made in the 1.6.6, "
+"1.5.9, and 1.4.14 security releases."
+msgstr ""
+
+# 4fffed0d27544f19aeb8a6e4d3fc9916
+#: ../../releases/1.7.txt:608
+msgid "Forms"
+msgstr ""
+
+# 3345f672f7e54c3baa42b1df1449d71d
+#: ../../releases/1.7.txt:610
+msgid ""
+"The ``<label>`` and ``<input>`` tags rendered by :class:`~django.forms."
+"RadioSelect` and :class:`~django.forms.CheckboxSelectMultiple` when looping "
+"over the radio buttons or checkboxes now include ``for`` and ``id`` "
+"attributes, respectively. Each radio button or checkbox includes an "
+"``id_for_label`` attribute to output the element's ID."
+msgstr ""
+
+# 937c6194fe81411d8aa593e52e4a69f4
+#: ../../releases/1.7.txt:617
+msgid ""
+"The ``<textarea>`` tags rendered by :class:`~django.forms.Textarea` now "
+"include a ``maxlength`` attribute if the :class:`~django.db.models."
+"TextField` model field has a ``max_length``."
+msgstr ""
+
+# 1abde05932a44c9c8d894d354d513296
+#: ../../releases/1.7.txt:621
+msgid ""
+":attr:`Field.choices<django.db.models.Field.choices>` now allows you to "
+"customize the \"empty choice\" label by including a tuple with an empty "
+"string or ``None`` for the key and the custom label as the value. The "
+"default blank option ``\"----------\"`` will be omitted in this case."
+msgstr ""
+
+# ca9faa7fada6494183d901c32439c23f
+#: ../../releases/1.7.txt:626
+msgid ""
+":class:`~django.forms.MultiValueField` allows optional subfields by setting "
+"the ``require_all_fields`` argument to ``False``. The ``required`` attribute "
+"for each individual field will be respected, and a new ``incomplete`` "
+"validation error will be raised when any required fields are empty."
+msgstr ""
+
+# 0a61f4f8d61443058313d65b49eda214
+#: ../../releases/1.7.txt:631
+msgid ""
+"The :meth:`~django.forms.Form.clean` method on a form no longer needs to "
+"return ``self.cleaned_data``. If it does return a changed dictionary then "
+"that will still be used."
+msgstr ""
+
+# 2b2689f4cd4d4210a415df5a23b774e5
+#: ../../releases/1.7.txt:635
+msgid ""
+"After a temporary regression in Django 1.6, it's now possible again to make :"
+"class:`~django.forms.TypedChoiceField` ``coerce`` method return an arbitrary "
+"value."
+msgstr ""
+
+# 18b915f2c59f47349febc2810770d077
+#: ../../releases/1.7.txt:639
+msgid ""
+":attr:`SelectDateWidget.months <django.forms.extras.widgets.SelectDateWidget."
+"months>` can be used to customize the wording of the months displayed in the "
+"select widget."
+msgstr ""
+
+# fab4532ac3734cad9d044d147a16513f
+#: ../../releases/1.7.txt:643
+msgid ""
+"The ``min_num`` and ``validate_min`` parameters were added to :func:`~django."
+"forms.formsets.formset_factory` to allow validating a minimum number of "
+"submitted forms."
+msgstr ""
+
+# e7e1775b0ea54cc8928bd03092798e9d
+#: ../../releases/1.7.txt:647
+msgid ""
+"The metaclasses used by ``Form`` and ``ModelForm`` have been reworked to "
+"support more inheritance scenarios. The previous limitation that prevented "
+"inheriting from both ``Form`` and ``ModelForm`` simultaneously have been "
+"removed as long as ``ModelForm`` appears first in the MRO."
+msgstr ""
+
+# ae747766c61f49cb8e86b7ecb8b1e2f8
+#: ../../releases/1.7.txt:652
+msgid ""
+"It's now possible to remove a field from a ``Form`` when subclassing by "
+"setting the name to ``None``."
+msgstr ""
+
+# 57b3b89e39d54f4d857e61d5e8ef4994
+#: ../../releases/1.7.txt:655
+msgid ""
+"It's now possible to customize the error messages for ``ModelForm``’s "
+"``unique``, ``unique_for_date``, and ``unique_together`` constraints. In "
+"order to support ``unique_together`` or any other ``NON_FIELD_ERROR``, "
+"``ModelForm`` now looks for the ``NON_FIELD_ERROR`` key in the "
+"``error_messages`` dictionary of the ``ModelForm``’s inner ``Meta`` class. "
+"See :ref:`considerations regarding model's error_messages <considerations-"
+"regarding-model-errormessages>` for more details."
+msgstr ""
+
+# 98a77d8b57f340b6adca2c7f792b95f6
+#: ../../releases/1.7.txt:664
+msgid "Internationalization"
+msgstr ""
+
+# caf1aa2e22f9463697068445f618d101
+#: ../../releases/1.7.txt:666
+msgid ""
+"The :attr:`django.middleware.locale.LocaleMiddleware."
+"response_redirect_class` attribute allows you to customize the redirects "
+"issued by the middleware."
+msgstr ""
+
+# 0ba73fc4ea014dfb8d1edb3d66648c81
+#: ../../releases/1.7.txt:669
+msgid ""
+"The :class:`~django.middleware.locale.LocaleMiddleware` now stores the "
+"user's selected language with the session key ``_language``. This should "
+"only be accessed using the :data:`~django.utils.translation."
+"LANGUAGE_SESSION_KEY` constant. Previously it was stored with the key "
+"``django_language`` and the ``LANGUAGE_SESSION_KEY`` constant did not exist, "
+"but keys reserved for Django should start with an underscore. For backwards "
+"compatibility ``django_language`` is still read from in 1.7. Sessions will "
+"be migrated to the new key as they are written."
+msgstr ""
+
+# 1e89e49c26b0446789bcd42a0ecc150a
+#: ../../releases/1.7.txt:678
+msgid ""
+"The :ttag:`blocktrans` tag now supports a ``trimmed`` option. This option "
+"will remove newline characters from the beginning and the end of the content "
+"of the ``{% blocktrans %}`` tag, replace any whitespace at the beginning and "
+"end of a line and merge all lines into one using a space character to "
+"separate them. This is quite useful for indenting the content of a ``{% "
+"blocktrans %}`` tag without having the indentation characters end up in the "
+"corresponding entry in the PO file, which makes the translation process "
+"easier."
+msgstr ""
+
+# f933c089a86f4b52847b0e5a46276222
+#: ../../releases/1.7.txt:687
+msgid ""
+"When you run :djadmin:`makemessages` from the root directory of your "
+"project, any extracted strings will now be automatically distributed to the "
+"proper app or project message file. See :ref:`how-to-create-language-files` "
+"for details."
+msgstr ""
+
+# 4177b1e0a7aa41f081928673fe841f6b
+#: ../../releases/1.7.txt:692
+msgid ""
+"The :djadmin:`makemessages` command now always adds the ``--previous`` "
+"command line flag to the ``msgmerge`` command, keeping previously translated "
+"strings in po files for fuzzy strings."
+msgstr ""
+
+# dd5d999e99be431bb49670496f05902d
+#: ../../releases/1.7.txt:696
+msgid ""
+"The following settings to adjust the language cookie options were "
+"introduced: :setting:`LANGUAGE_COOKIE_AGE`, :setting:"
+"`LANGUAGE_COOKIE_DOMAIN` and :setting:`LANGUAGE_COOKIE_PATH`."
+msgstr ""
+
+# 32c92146a89842c792b388a4d4a4d06b
+#: ../../releases/1.7.txt:700
+msgid "Added :ref:`format definitions <format-localization>` for Esperanto."
+msgstr ""
+
+# 935659d6a4a64c67977a0c79e55f85d0
+#: ../../releases/1.7.txt:703
+msgid "Management Commands"
+msgstr ""
+
+# 22894400681e43a6a122b41d1ae7d494
+#: ../../releases/1.7.txt:705
+msgid ""
+"The :djadminopt:`--no-color` option for ``django-admin.py`` allows you to "
+"disable the colorization of management command output."
+msgstr ""
+
+# 46435a20e08142489a247bc444ea9e95
+#: ../../releases/1.7.txt:708
+msgid ""
+"The new :djadminopt:`--natural-foreign` and :djadminopt:`--natural-primary` "
+"options for :djadmin:`dumpdata`, and the new ``use_natural_foreign_keys`` "
+"and ``use_natural_primary_keys`` arguments for ``serializers.serialize()``, "
+"allow the use of natural primary keys when serializing."
+msgstr ""
+
+# 77f9f3a2575a4e79943ee08c2df7746d
+#: ../../releases/1.7.txt:713
+msgid ""
+"It is no longer necessary to provide the cache table name or the :djadminopt:"
+"`--database` option for the :djadmin:`createcachetable` command. Django "
+"takes this information from your settings file. If you have configured "
+"multiple caches or multiple databases, all cache tables are created."
+msgstr ""
+
+# accdae9686e04b32a41e10d19b6907d3
+#: ../../releases/1.7.txt:718
+msgid "The :djadmin:`runserver` command received several improvements:"
+msgstr ""
+
+# 0346218fa29b41c2acff6cbe2e788b5b
+#: ../../releases/1.7.txt:720
+msgid ""
+"On Linux systems, if pyinotify_ is installed, the development server will "
+"reload immediately when a file is changed. Previously, it polled the "
+"filesystem for changes every second. That caused a small delay before "
+"reloads and reduced battery life on laptops."
+msgstr ""
+
+# 8b8a687b7aef4db7b33bd13e8aa3d76e
+#: ../../releases/1.7.txt:727
+msgid ""
+"In addition, the development server automatically reloads when a translation "
+"file is updated, i.e. after running :djadmin:`compilemessages`."
+msgstr ""
+
+# bc32e0023fdb4bf189b6d18d806067f4
+#: ../../releases/1.7.txt:731
+msgid ""
+"All HTTP requests are logged to the console, including requests for static "
+"files or ``favicon.ico`` that used to be filtered out."
+msgstr ""
+
+# 3b9fd879fbd4448b98121afdb5e10c9a
+#: ../../releases/1.7.txt:734
+msgid ""
+"Management commands can now produce syntax colored output under Windows if "
+"the ANSICON third-party tool is installed and active."
+msgstr ""
+
+# 54426486c40e4463be685682a8ca8759
+#: ../../releases/1.7.txt:737
+msgid ""
+":djadmin:`collectstatic` command with symlink option is now supported on "
+"Windows NT 6 (Windows Vista and newer)."
+msgstr ""
+
+# 9f308a22984c47f294cc7ad480022039
+#: ../../releases/1.7.txt:740
+msgid ""
+":ref:`initial-sql` now works better if the sqlparse_ Python library is "
+"installed."
+msgstr ""
+
+# 3682522da7a743fdbab93394c84d7423
+#: ../../releases/1.7.txt:743
+msgid ""
+"Note that it's deprecated in favor of the :class:`~django.db.migrations."
+"operations.RunSQL` operation of migrations, which benefits from the improved "
+"behavior."
+msgstr ""
+
+# 789336187e0244acbb4f846a445c6901
+#: ../../releases/1.7.txt:750
+msgid "Models"
+msgstr ""
+
+# 37f66012d17e498dae903256cbcb3d19
+#: ../../releases/1.7.txt:752
+msgid ""
+"The :meth:`QuerySet.update_or_create() <django.db.models.query.QuerySet."
+"update_or_create>` method was added."
+msgstr ""
+
+# 0d9a43b0cbc949e297988c13efd8c579
+#: ../../releases/1.7.txt:755
+msgid ""
+"The new :attr:`~django.db.models.Options.default_permissions` model ``Meta`` "
+"option allows you to customize (or disable) creation of the default add, "
+"change, and delete permissions."
+msgstr ""
+
+# 804b54372c2a4535ba1e68bb7a1345dc
+#: ../../releases/1.7.txt:759
+msgid ""
+"Explicit :class:`~django.db.models.OneToOneField` for :ref:`multi-table-"
+"inheritance` are now discovered in abstract classes."
+msgstr ""
+
+# 3800febf100a438a85d72e64e61bb8fe
+#: ../../releases/1.7.txt:762
+msgid ""
+"Is it now possible to avoid creating a backward relation for :class:`~django."
+"db.models.OneToOneField` by setting its :attr:`~django.db.models.ForeignKey."
+"related_name` to ``'+'`` or ending it with ``'+'``."
+msgstr ""
+
+# 215d0d078445469b889960567f7b47dd
+#: ../../releases/1.7.txt:767
+msgid ""
+":class:`F expressions <django.db.models.F>` support the power operator "
+"(``**``)."
+msgstr ""
+
+# 48e9b435f19f45e0977d4d9b179176ba
+#: ../../releases/1.7.txt:770
+msgid ""
+"The ``remove()`` and ``clear()`` methods of the related managers created by "
+"``ForeignKey`` and ``GenericForeignKey`` now accept the ``bulk`` keyword "
+"argument to control whether or not to perform operations in bulk (i.e. using "
+"``QuerySet.update()``). Defaults to ``True``."
+msgstr ""
+
+# 355d5139197245eb9008752d9ce2a826
+#: ../../releases/1.7.txt:775
+msgid ""
+"It is now possible to use ``None`` as a query value for the :lookup:`iexact` "
+"lookup."
+msgstr ""
+
+# 893c367f97a34eaaa540fcec25bc6d11
+#: ../../releases/1.7.txt:778
+msgid ""
+"It is now possible to pass a callable as value for the attribute :attr:"
+"`~django.db.models.ForeignKey.limit_choices_to` when defining a "
+"``ForeignKey`` or ``ManyToManyField``."
+msgstr ""
+
+# a188f4f385f6464da0ed7cae8a662a69
+#: ../../releases/1.7.txt:782
+msgid ""
+"Calling :meth:`only() <django.db.models.query.QuerySet.only>` and :meth:"
+"`defer() <django.db.models.query.QuerySet.defer>` on the result of :meth:"
+"`QuerySet.values() <django.db.models.query.QuerySet.values>` now raises an "
+"error (before that, it would either result in a database error or incorrect "
+"data)."
+msgstr ""
+
+# 0dcc3a324f4d4b028c0c41de062ee87d
+#: ../../releases/1.7.txt:788
+msgid ""
+"You can use a single list for :attr:`~django.db.models.Options."
+"index_together` (rather than a list of lists) when specifying a single set "
+"of fields."
+msgstr ""
+
+# 91123924681a4a96b8f70f0ae006c274
+#: ../../releases/1.7.txt:791
+msgid ""
+"Custom intermediate models having more than one foreign key to any of the "
+"models participating in a many-to-many relationship are now permitted, "
+"provided you explicitly specify which foreign keys should be used by setting "
+"the new :attr:`ManyToManyField.through_fields <django.db.models."
+"ManyToManyField.through_fields>` argument."
+msgstr ""
+
+# f734d152bb9d4e1eb63d0e26e9a42451
+#: ../../releases/1.7.txt:797
+msgid ""
+"Assigning a model instance to a non-relation field will now throw an error. "
+"Previously this used to work if the field accepted integers as input as it "
+"took the primary key."
+msgstr ""
+
+# 0419ab2fd024440ab4dbb04e5a5348b3
+#: ../../releases/1.7.txt:801
+msgid ""
+"Integer fields are now validated against database backend specific min and "
+"max values based on their :meth:`internal_type <django.db.models.Field."
+"get_internal_type>`. Previously model field validation didn't prevent values "
+"out of their associated column data type range from being saved resulting in "
+"an integrity error."
+msgstr ""
+
+# b66b734fcfbd4fb5a301e99eef3a029e
+#: ../../releases/1.7.txt:806
+msgid ""
+"It is now possible to explicitly :meth:`~django.db.models.query.QuerySet."
+"order_by` a relation ``_id`` field by using its attribute name."
+msgstr ""
+
+# 7c45657cc96546b69702d63e4a3666b7
+#: ../../releases/1.7.txt:810
+msgid "Signals"
+msgstr ""
+
+# 6192a18c006445bb92200b4ee9827a79
+#: ../../releases/1.7.txt:812
+msgid ""
+"The ``enter`` argument was added to the :data:`~django.test.signals."
+"setting_changed` signal."
+msgstr ""
+
+# 03e6a46e386e4caaa53a084bb5d7e5e7
+#: ../../releases/1.7.txt:815
+msgid ""
+"The model signals can be now be connected to using a ``str`` of the "
+"``'app_label.ModelName'`` form – just like related fields – to lazily "
+"reference their senders."
+msgstr ""
+
+# 94fe51abcebb412580c83df28ed05d23
+#: ../../releases/1.7.txt:820
+msgid "Templates"
+msgstr ""
+
+# 9ba1eda4cc0b47039321f1b5c83e419a
+#: ../../releases/1.7.txt:822
+msgid ""
+"The :meth:`Context.push() <django.template.Context.push>` method now returns "
+"a context manager which automatically calls :meth:`pop() <django.template."
+"Context.pop>` upon exiting the ``with`` statement. Additionally, :meth:"
+"`push() <django.template.Context.push>` now accepts parameters that are "
+"passed to the ``dict`` constructor used to build the new context level."
+msgstr ""
+
+# 8a25e6065c284c2a923e2aea874234cf
+#: ../../releases/1.7.txt:829
+msgid ""
+"The new :meth:`Context.flatten() <django.template.Context.flatten>` method "
+"returns a ``Context``'s stack as one flat dictionary."
+msgstr ""
+
+# 9bbcd80e0d3a4593b7a20d7a5af053c8
+#: ../../releases/1.7.txt:832
+msgid ""
+"``Context`` objects can now be compared for equality (internally, this uses :"
+"meth:`Context.flatten() <django.template.Context.flatten>` so the internal "
+"structure of each ``Context``'s stack doesn't matter as long as their "
+"flattened version is identical)."
+msgstr ""
+
+# ccdee03c2dc642cf89446970a0c44fb9
+#: ../../releases/1.7.txt:837
+msgid ""
+"The :ttag:`widthratio` template tag now accepts an ``\"as\"`` parameter to "
+"capture the result in a variable."
+msgstr ""
+
+# 67fcb881da68435ca88c547a412038da
+#: ../../releases/1.7.txt:840
+msgid ""
+"The :ttag:`include` template tag will now also accept anything with a "
+"``render()`` method (such as a ``Template``) as an argument. String "
+"arguments will be looked up using :func:`~django.template.loader."
+"get_template` as always."
+msgstr ""
+
+# 7de7e72f2bac4c6dbe8e7ffb70c23c10
+#: ../../releases/1.7.txt:845
+msgid "It is now possible to :ttag:`include` templates recursively."
+msgstr ""
+
+# fc70446d8560459385c8be3de74bb79f
+#: ../../releases/1.7.txt:847
+msgid ""
+"Template objects now have an origin attribute set when :setting:"
+"`TEMPLATE_DEBUG` is ``True``. This allows template origins to be inspected "
+"and logged outside of the ``django.template`` infrastructure."
+msgstr ""
+
+# eb6e3442f425459fbbf4665d7e19ea7c
+#: ../../releases/1.7.txt:851
+msgid ""
+"``TypeError`` exceptions are no longer silenced when raised during the "
+"rendering of a template."
+msgstr ""
+
+# 6d63cb1179c64492a1c0cbd2785a747d
+#: ../../releases/1.7.txt:854
+msgid ""
+"The following functions now accept a ``dirs`` parameter which is a list or "
+"tuple to override :setting:`TEMPLATE_DIRS`:"
+msgstr ""
+
+# f403841a51984877ba23713c18edaed9
+#: ../../releases/1.7.txt:857
+msgid ":func:`django.template.loader.get_template()`"
+msgstr ""
+
+# cd96c9232e704d7da4fb437edf672201
+#: ../../releases/1.7.txt:858
+msgid ":func:`django.template.loader.select_template()`"
+msgstr ""
+
+# bb7cef38ad1348b8aa9d65a438e106df
+#: ../../releases/1.7.txt:859
+msgid ":func:`django.shortcuts.render()`"
+msgstr ""
+
+# 0084054710c942548670501a4252ed3b
+#: ../../releases/1.7.txt:860
+msgid ":func:`django.shortcuts.render_to_response()`"
+msgstr ""
+
+# 0ba2224009ed45f0b94867c864d39c3c
+#: ../../releases/1.7.txt:862
+msgid ""
+"The :tfilter:`time` filter now accepts timezone-related :ref:`format "
+"specifiers <date-and-time-formatting-specifiers>` ``'e'``, ``'O'`` , ``'T'`` "
+"and ``'Z'`` and is able to digest :ref:`time-zone-aware "
+"<naive_vs_aware_datetimes>` ``datetime`` instances performing the expected "
+"rendering."
+msgstr ""
+
+# 1bac23bbc78a43159728ef6799e81c15
+#: ../../releases/1.7.txt:868
+msgid ""
+"The :ttag:`cache` tag will now try to use the cache called "
+"\"template_fragments\" if it exists and fall back to using the default cache "
+"otherwise. It also now accepts an optional ``using`` keyword argument to "
+"control which cache it uses."
+msgstr ""
+
+# 6b1c4333050f435ba062eb6e41ba24d2
+#: ../../releases/1.7.txt:873
+msgid ""
+"The new :tfilter:`truncatechars_html` filter truncates a string to be no "
+"longer than the specified number of characters, taking HTML into account."
+msgstr ""
+
+# cac26a3cbea642c8b39e58cfbb53d16d
+#: ../../releases/1.7.txt:877
+msgid "Requests and Responses"
+msgstr ""
+
+# a278d454e8be4806be67df7768ae4350
+#: ../../releases/1.7.txt:879
+msgid ""
+"The new :attr:`HttpRequest.scheme <django.http.HttpRequest.scheme>` "
+"attribute specifies the scheme of the request (``http`` or ``https`` "
+"normally)."
+msgstr ""
+
+# 3b60dc5652cf4e3f96a64c0b651fa7d6
+#: ../../releases/1.7.txt:883
+msgid ""
+"The shortcut :func:`redirect() <django.shortcuts.redirect>` now supports "
+"relative URLs."
+msgstr ""
+
+# 7882fb61bef3400682efaa2034527bb8
+#: ../../releases/1.7.txt:886
+msgid ""
+"The new :class:`~django.http.JsonResponse` subclass of :class:`~django.http."
+"HttpResponse` helps easily create JSON-encoded responses."
+msgstr ""
+
+# 22e6ff2afa0845e1b3b7469f577b2188
+#: ../../releases/1.7.txt:890
+msgid "Tests"
+msgstr ""
+
+# 362330b5b8844153be283756c108901f
+#: ../../releases/1.7.txt:892
+msgid ""
+":class:`~django.test.runner.DiscoverRunner` has two new attributes, :attr:"
+"`~django.test.runner.DiscoverRunner.test_suite` and :attr:`~django.test."
+"runner.DiscoverRunner.test_runner`, which facilitate overriding the way "
+"tests are collected and run."
+msgstr ""
+
+# 530f7b96496043db82b184ddc638f113
+#: ../../releases/1.7.txt:897
+msgid ""
+"The ``fetch_redirect_response`` argument was added to :meth:`~django.test."
+"SimpleTestCase.assertRedirects`. Since the test client can't fetch externals "
+"URLs, this allows you to use ``assertRedirects`` with redirects that aren't "
+"part of your Django app."
+msgstr ""
+
+# cdbe1f7df01c48d9812d25f03e75d8a2
+#: ../../releases/1.7.txt:902
+msgid ""
+"Correct handling of scheme when making comparisons in :meth:`~django.test."
+"SimpleTestCase.assertRedirects`."
+msgstr ""
+
+# e111230ec2764e128069dc60e874d145
+#: ../../releases/1.7.txt:905
+msgid ""
+"The ``secure`` argument was added to all the request methods of :class:"
+"`~django.test.Client`. If ``True``, the request will be made through HTTPS."
+msgstr ""
+
+# e5e7b0286eb140ba9aea6e9cbb9d3f7c
+#: ../../releases/1.7.txt:909
+msgid ""
+":meth:`~django.test.TransactionTestCase.assertNumQueries` now prints out the "
+"list of executed queries if the assertion fails."
+msgstr ""
+
+# 7e33c8da84944c50a522d43a888723fe
+#: ../../releases/1.7.txt:912
+msgid ""
+"The ``WSGIRequest`` instance generated by the test handler is now attached "
+"to the :attr:`django.test.Response.wsgi_request` attribute."
+msgstr ""
+
+# 392817dba606453e9ace8c4ee8279fa8
+#: ../../releases/1.7.txt:915
+msgid ""
+"The database settings for testing have been collected into a dictionary "
+"named :setting:`TEST <DATABASE-TEST>`."
+msgstr ""
+
+# 48e857121a3c416f82d53f938c98bac9
+#: ../../releases/1.7.txt:919
+msgid "Utilities"
+msgstr ""
+
+# 54a3a7f22255445dae58255af955638a
+#: ../../releases/1.7.txt:921
+msgid ""
+"Improved :func:`~django.utils.html.strip_tags` accuracy (but it still cannot "
+"guarantee an HTML-safe result, as stated in the documentation)."
+msgstr ""
+
+# 7d9b9d32ad67436ea9448ab467710366
+#: ../../releases/1.7.txt:925
+msgid "Validators"
+msgstr ""
+
+# a4ac1e6f84ca4ac8a20966f477017e06
+#: ../../releases/1.7.txt:927
+msgid ""
+":class:`~django.core.validators.RegexValidator` now accepts the optional :"
+"attr:`~django.core.validators.RegexValidator.flags` and Boolean :attr:"
+"`~django.core.validators.RegexValidator.inverse_match` arguments. The :attr:"
+"`~django.core.validators.RegexValidator.inverse_match` attribute determines "
+"if the :exc:`~django.core.exceptions.ValidationError` should be raised when "
+"the regular expression pattern matches (``True``) or does not match "
+"(``False``, by default) the provided ``value``. The :attr:`~django.core."
+"validators.RegexValidator.flags` attribute sets the flags used when "
+"compiling a regular expression string."
+msgstr ""
+
+# 7cfce6594bea43f5a1c54d92c77cc72f
+#: ../../releases/1.7.txt:937
+msgid ""
+":class:`~django.core.validators.URLValidator` now accepts an optional "
+"``schemes`` argument which allows customization of the accepted URI schemes "
+"(instead of the defaults ``http(s)`` and ``ftp(s)``)."
+msgstr ""
+
+# 606c9d46ace8424b84f11b646d1186dd
+#: ../../releases/1.7.txt:941
+msgid ""
+":func:`~django.core.validators.validate_email` now accepts addresses with "
+"IPv6 literals, like ``example@[2001:db8::1]``, as specified in RFC 5321."
+msgstr ""
+
+# 36230d0612bd4f2f9bd18cb730e47b4b
+#: ../../releases/1.7.txt:945
+msgid "Backwards incompatible changes in 1.7"
+msgstr ""
+
+# 0383ded86506473889c04eb08abe0988
+#: ../../releases/1.7.txt:949
+msgid ""
+"In addition to the changes outlined in this section, be sure to review the :"
+"ref:`deprecation plan <deprecation-removed-in-1.7>` for any features that "
+"have been removed. If you haven't updated your code within the deprecation "
+"timeline for a given feature, its removal may appear as a backwards "
+"incompatible change."
+msgstr ""
+
+# 45ed7d516b3640f385666bf6454632e1
+#: ../../releases/1.7.txt:956
+msgid "allow_syncdb/allow_migrate"
+msgstr ""
+
+# f4523683adc74900b86d3f8042c802a1
+#: ../../releases/1.7.txt:958
+msgid ""
+"While Django will still look at ``allow_syncdb`` methods even though they "
+"should be renamed to ``allow_migrate``, there is a subtle difference in "
+"which models get passed to these methods."
+msgstr ""
+
+# bbeec7c6f5704f91a8fc9451ccba8b32
+#: ../../releases/1.7.txt:962
+msgid ""
+"For apps with migrations, ``allow_migrate`` will now get passed :ref:"
+"`historical models <historical-models>`, which are special versioned models "
+"without custom attributes, methods or managers. Make sure your "
+"``allow_migrate`` methods are only referring to fields or other items in "
+"``model._meta``."
+msgstr ""
+
+# 6d13e773ab25472e95af59dba8d971ac
+#: ../../releases/1.7.txt:968
+msgid "initial_data"
+msgstr ""
+
+# 986994f222d9468e9e8e4f0811044630
+#: ../../releases/1.7.txt:970
+msgid ""
+"Apps with migrations will not load ``initial_data`` fixtures when they have "
+"finished migrating. Apps without migrations will continue to load these "
+"fixtures during the phase of ``migrate`` which emulates the old ``syncdb`` "
+"behavior, but any new apps will not have this support."
+msgstr ""
+
+# dd4badde53a5496b8a5cf4c92ddc4686
+#: ../../releases/1.7.txt:975
+msgid ""
+"Instead, you are encouraged to load initial data in migrations if you need "
+"it (using the ``RunPython`` operation and your model classes); this has the "
+"added advantage that your initial data will not need updating every time you "
+"change the schema."
+msgstr ""
+
+# f2a1cdef17244828aa296c7eaf5bd057
+#: ../../releases/1.7.txt:980
+msgid ""
+"Additionally, like the rest of Django's old ``syncdb`` code, "
+"``initial_data`` has been started down the deprecation path and will be "
+"removed in Django 1.9."
+msgstr ""
+
+# c017ec937adc4f13b5c95a87349d0be4
+#: ../../releases/1.7.txt:984
+msgid "deconstruct() and serializability"
+msgstr ""
+
+# ea4fe56c229d43afbbe99015f7fbdf1c
+#: ../../releases/1.7.txt:986
+msgid ""
+"Django now requires all Field classes and all of their constructor arguments "
+"to be serializable. If you modify the constructor signature in your custom "
+"Field in any way, you'll need to implement a deconstruct() method; we've "
+"expanded the custom field documentation with :ref:`instructions on "
+"implementing this method <custom-field-deconstruct-method>`."
+msgstr ""
+
+# 98423fe92ba74cc28852c8a1afac009a
+#: ../../releases/1.7.txt:992
+msgid ""
+"The requirement for all field arguments to be :ref:`serializable <migration-"
+"serializing>` means that any custom class instances being passed into Field "
+"constructors - things like custom Storage subclasses, for instance - need to "
+"have a :ref:`deconstruct method defined on them as well <custom-deconstruct-"
+"method>`, though Django provides a handy class decorator that will work for "
+"most applications."
+msgstr ""
+
+# cceac7bce911458caf6cd03f46369385
+#: ../../releases/1.7.txt:1000
+msgid "App-loading changes"
+msgstr ""
+
+# fdb53df3f5aa4f94b6beaff26d214fa5
+#: ../../releases/1.7.txt:1003
+msgid "Start-up sequence"
+msgstr ""
+
+# b07824a99fa74f67a7f6f23b2d10889b
+#: ../../releases/1.7.txt:1005
+msgid ""
+"Django 1.7 loads application configurations and models as soon as it starts. "
+"While this behavior is more straightforward and is believed to be more "
+"robust, regressions cannot be ruled out. See :ref:`applications-"
+"troubleshooting` for solutions to some problems you may encounter."
+msgstr ""
+
+# 11f54916010a411e92f6436c05daa860
+#: ../../releases/1.7.txt:1011
+msgid "Standalone scripts"
+msgstr ""
+
+# 478bdbabef884d1e9171619ab224a885
+#: ../../releases/1.7.txt:1013
+msgid ""
+"If you're using Django in a plain Python script — rather than a management "
+"command — and you rely on the :envvar:`DJANGO_SETTINGS_MODULE` environment "
+"variable, you must now explicitly initialize Django at the beginning of your "
+"script with::"
+msgstr ""
+
+# 748df80b711947aebfb99f4f576f276c
+#: ../../releases/1.7.txt:1021
+msgid "Otherwise, you will hit an ``AppRegistryNotReady`` exception."
+msgstr ""
+
+# 4949f344446e49d186e077869aa82901
+#: ../../releases/1.7.txt:1024
+msgid "App registry consistency"
+msgstr ""
+
+# 17ec4a20c29f409ab396499e49b10320
+#: ../../releases/1.7.txt:1026
+msgid ""
+"It is no longer possible to have multiple installed applications with the "
+"same label. In previous versions of Django, this didn't always work "
+"correctly, but didn't crash outright either."
+msgstr ""
+
+# eb992bc0543c46028bd69813ba57e42c
+#: ../../releases/1.7.txt:1030
+msgid ""
+"If you have two apps with the same label, you should create an :class:"
+"`~django.apps.AppConfig` for one of them and override its :class:`~django."
+"apps.AppConfig.label` there. You should then adjust your code wherever it "
+"references this application or its models with the old label."
+msgstr ""
+
+# 46be4435bb934fc9a079eab8d58b85ee
+#: ../../releases/1.7.txt:1035
+msgid ""
+"It isn't possible to import the same model twice through different paths any "
+"more. As of Django 1.6, this may happen only if you're manually putting a "
+"directory and a subdirectory on :envvar:`PYTHONPATH`. Refer to the section "
+"on the new project layout in the :doc:`1.4 release notes </releases/1.4>` "
+"for migration instructions."
+msgstr ""
+
+# 8684c7cae7bb4dfeb307c378cbec0358
+#: ../../releases/1.7.txt:1041
+msgid "You should make sure that:"
+msgstr ""
+
+# 6c7b88e45aac4c5eb4fe1ea7ee7fc56e
+#: ../../releases/1.7.txt:1043
+msgid ""
+"All models are defined in applications that are listed in :setting:"
+"`INSTALLED_APPS` or have an explicit :attr:`~django.db.models.Options."
+"app_label`."
+msgstr ""
+
+# b614ca57ac4841358815467d053dbdde
+#: ../../releases/1.7.txt:1047
+msgid ""
+"Models aren't imported as a side-effect of loading their application. "
+"Specifically, you shouldn't import models in the root module of an "
+"application nor in the module that define its configuration class."
+msgstr ""
+
+# a94c9a27962f47ed8226608b070a8e2c
+#: ../../releases/1.7.txt:1051
+msgid ""
+"Django will enforce these requirements as of version 1.9, after a "
+"deprecation period."
+msgstr ""
+
+# 2c73125417a342a286d9b50809ae1a21
+#: ../../releases/1.7.txt:1055
+msgid "Subclassing AppCommand"
+msgstr ""
+
+# 2176e78ce9ca40cdb08faf1ac4c0a7c4
+#: ../../releases/1.7.txt:1057
+msgid ""
+"Subclasses of :class:`~django.core.management.AppCommand` must now implement "
+"a :meth:`~django.core.management.AppCommand.handle_app_config` method "
+"instead of ``handle_app()``. This method receives an :class:`~django.apps."
+"AppConfig` instance instead of a models module."
+msgstr ""
+
+# 8be445b5f1d748bd8d45a38240294ff7
+#: ../../releases/1.7.txt:1063
+msgid "Introspecting applications"
+msgstr ""
+
+# df26efcdd91a422c9c0e3061381b6392
+#: ../../releases/1.7.txt:1065
+msgid ""
+"Since :setting:`INSTALLED_APPS` now supports application configuration "
+"classes in addition to application modules, you should review code that "
+"accesses this setting directly and use the app registry (:attr:`django.apps."
+"apps`) instead."
+msgstr ""
+
+# 6ab2a57c5220438e84a565cb063ad9fd
+#: ../../releases/1.7.txt:1069
+msgid ""
+"The app registry has preserved some features of the old app cache. Even "
+"though the app cache was a private API, obsolete methods and arguments will "
+"be removed through a standard deprecation path, with the exception of the "
+"following changes that take effect immediately:"
+msgstr ""
+
+# 40b73cc6519e401a8cf393f5688e5afe
+#: ../../releases/1.7.txt:1074
+msgid ""
+"``get_model`` raises :exc:`LookupError` instead of returning ``None`` when "
+"no model is found."
+msgstr ""
+
+# 4b45f222ad604f29ae35968398867214
+#: ../../releases/1.7.txt:1077
+msgid ""
+"The ``only_installed`` argument of ``get_model`` and ``get_models`` no "
+"longer exists, nor does the ``seed_cache`` argument of ``get_model``."
+msgstr ""
+
+# 562b48445350437498e046cd7e5024d6
+#: ../../releases/1.7.txt:1081
+msgid "Management commands and order of :setting:`INSTALLED_APPS`"
+msgstr ""
+
+# 70887c9265b74cee9e878c0e54e52a70
+#: ../../releases/1.7.txt:1083
+msgid ""
+"When several applications provide management commands with the same name, "
+"Django loads the command from the application that comes first in :setting:"
+"`INSTALLED_APPS`. Previous versions loaded the command from the application "
+"that came last."
+msgstr ""
+
+# 22153e19c3f94160bc979b05342b4e5a
+#: ../../releases/1.7.txt:1088
+msgid ""
+"This brings discovery of management commands in line with other parts of "
+"Django that rely on the order of :setting:`INSTALLED_APPS`, such as static "
+"files, templates, and translations."
+msgstr ""
+
+# a5f4edd51d1b4bcaa7f71014ddc6311c
+#: ../../releases/1.7.txt:1095
+msgid "``ValidationError`` constructor and internal storage"
+msgstr ""
+
+# a23fdd6bf2534a7088fa350ecb0a2428
+#: ../../releases/1.7.txt:1097
+msgid ""
+"The behavior of the ``ValidationError`` constructor has changed when it "
+"receives a container of errors as an argument (e.g. a ``list`` or an "
+"``ErrorList``):"
+msgstr ""
+
+# 5b8dbc5f7e314ed8822a494b19fe247b
+#: ../../releases/1.7.txt:1101
+msgid ""
+"It converts any strings it finds to instances of ``ValidationError`` before "
+"adding them to its internal storage."
+msgstr ""
+
+# 053a3c9c40be4b639a7c2d39ed6543f6
+#: ../../releases/1.7.txt:1104
+msgid ""
+"It doesn't store the given container but rather copies its content to its "
+"own internal storage; previously the container itself was added to the "
+"``ValidationError`` instance and used as internal storage."
+msgstr ""
+
+# c1a25490e7e14a66b65201d505b4fe97
+#: ../../releases/1.7.txt:1108
+msgid ""
+"This means that if you access the ``ValidationError`` internal storages, "
+"such as ``error_list``; ``error_dict``; or the return value of "
+"``update_error_dict()`` you may find instances of ``ValidationError`` where "
+"you would have previously found strings."
+msgstr ""
+
+# 3f62979aaa8a44c49fd0f8d5ba6fa64d
+#: ../../releases/1.7.txt:1113
+msgid ""
+"Also if you directly assigned the return value of ``update_error_dict()`` to "
+"``Form._errors`` you may inadvertently add `list` instances where "
+"``ErrorList`` instances are expected. This is a problem because unlike a "
+"simple `list`, an ``ErrorList`` knows how to handle instances of "
+"``ValidationError``."
+msgstr ""
+
+# dcdb0f07cfd74b0b99d3b9bf17de46d9
+#: ../../releases/1.7.txt:1119
+msgid ""
+"Most use-cases that warranted using these private APIs are now covered by "
+"the newly introduced :meth:`Form.add_error() <django.forms.Form."
+"add_error()>` method::"
+msgstr ""
+
+# 51f903c8bc29414ea34a28cba536c3bb
+#: ../../releases/1.7.txt:1135
+msgid ""
+"If you need both Django <= 1.6 and 1.7 compatibility you can't use :meth:"
+"`Form.add_error() <django.forms.Form.add_error()>` since it wasn't available "
+"before Django 1.7, but you can use the following workaround to convert any "
+"``list`` into ``ErrorList``::"
+msgstr ""
+
+# e150ea1694354ab4965bea9470fd1a13
+#: ../../releases/1.7.txt:1152
+msgid "Behavior of ``LocMemCache`` regarding pickle errors"
+msgstr ""
+
+# 75228ccd414e4c8bb74bf83e0c7b6aba
+#: ../../releases/1.7.txt:1154
+msgid ""
+"An inconsistency existed in previous versions of Django regarding how pickle "
+"errors are handled by different cache backends. ``django.core.cache.backends."
+"locmem.LocMemCache`` used to fail silently when such an error occurs, which "
+"is inconsistent with other backends and leads to cache-specific errors. This "
+"has been fixed in Django 1.7, see `Ticket #21200`_ for more details."
+msgstr ""
+
+# e6b55405565349e8a4c219ac737bed95
+#: ../../releases/1.7.txt:1164
+msgid "Cache keys are now generated from the request's absolute URL"
+msgstr ""
+
+# f397b961ac8547b3903e7103b9ddf37c
+#: ../../releases/1.7.txt:1166
+msgid ""
+"Previous versions of Django generated cache keys using a request's path and "
+"query string but not the scheme or host. If a Django application was serving "
+"multiple subdomains or domains, cache keys could collide. In Django 1.7, "
+"cache keys vary by the absolute URL of the request including scheme, host, "
+"path, and query string. For example, the URL portion of a cache key is now "
+"generated from ``http://www.example.com/path/to/?key=val`` rather than ``/"
+"path/to/?key=val``. The cache keys generated by Django 1.7 will be different "
+"from the keys generated by older versions of Django. After upgrading to "
+"Django 1.7, the first request to any previously cached URL will be a cache "
+"miss ."
+msgstr ""
+
+# d9ee05113b2046148ff490e52ac8433f
+#: ../../releases/1.7.txt:1177
+msgid "Passing ``None`` to ``Manager.db_manager()``"
+msgstr ""
+
+# eb6ab55fa4064e1697cc252204e7ccb1
+#: ../../releases/1.7.txt:1179
+msgid ""
+"In previous versions of Django, it was possible to use "
+"``db_manager(using=None)`` on a model manager instance to obtain a manager "
+"instance using default routing behavior, overriding any manually specified "
+"database routing. In Django 1.7, a value of ``None`` passed to db_manager "
+"will produce a router that *retains* any manually assigned database routing "
+"-- the manager will *not* be reset. This was necessary to resolve an "
+"inconsistency in the way routing information cascaded over joins. See "
+"`Ticket #13724`_ for more details."
+msgstr ""
+
+# e1ef6d542dde41bdbcbe12c32fcf9981
+#: ../../releases/1.7.txt:1191
+msgid "pytz may be required"
+msgstr ""
+
+# 3b5c2f393a844df7ae1d8230c358170a
+#: ../../releases/1.7.txt:1193
+msgid ""
+"If your project handles datetimes before 1970 or after 2037 and Django "
+"raises a :exc:`ValueError` when encountering them, you will have to install "
+"pytz_. You may be affected by this problem if you use Django's time zone-"
+"related date formats or :mod:`django.contrib.syndication`."
+msgstr ""
+
+# 0bd69803e1a8486781cbc34777b410e2
+#: ../../releases/1.7.txt:1201
+msgid "``remove()`` and ``clear()`` methods of related managers"
+msgstr ""
+
+# 88b27d47bcfd45409ca3e3a143c0c726
+#: ../../releases/1.7.txt:1203
+msgid ""
+"The ``remove()`` and ``clear()`` methods of the related managers created by "
+"``ForeignKey``, ``GenericForeignKey``, and ``ManyToManyField`` suffered from "
+"a number of issues. Some operations ran multiple data modifying queries "
+"without wrapping them in a transaction, and some operations didn't respect "
+"default filtering when it was present (i.e. when the default manager on the "
+"related model implemented a custom ``get_queryset()``)."
+msgstr ""
+
+# 29edb09ec58543aeb41070181652bc82
+#: ../../releases/1.7.txt:1210
+msgid "Fixing the issues introduced some backward incompatible changes:"
+msgstr ""
+
+# 418ceb22235d46929b689f574f2de443
+#: ../../releases/1.7.txt:1212
+msgid ""
+"The default implementation of ``remove()`` for ``ForeignKey`` related "
+"managers changed from a series of ``Model.save()`` calls to a single "
+"``QuerySet.update()`` call. The change means that ``pre_save`` and "
+"``post_save`` signals aren't sent anymore. You can use the ``bulk=False`` "
+"keyword argument to revert to the previous behavior."
+msgstr ""
+
+# c675161474484c0285902b9a7c1222d9
+#: ../../releases/1.7.txt:1218
+msgid ""
+"The ``remove()`` and ``clear()`` methods for ``GenericForeignKey`` related "
+"managers now perform bulk delete. The ``Model.delete()`` method isn't called "
+"on each instance anymore. You can use the ``bulk=False`` keyword argument to "
+"revert to the previous behavior."
+msgstr ""
+
+# 0265cf9337874518b84ddb4e5ca13654
+#: ../../releases/1.7.txt:1223
+msgid ""
+"The ``remove()`` and ``clear()`` methods for ``ManyToManyField`` related "
+"managers perform nested queries when filtering is involved, which may or may "
+"not be an issue depending on your database and your data itself. See :ref:"
+"`this note <nested-queries-performance>` for more details."
+msgstr ""
+
+# 4f7a1dcf364b47a3a5a2e8525947ac02
+#: ../../releases/1.7.txt:1229
+msgid "Admin login redirection strategy"
+msgstr ""
+
+# 870a97f27c3542c1a7fa9e01a9936300
+#: ../../releases/1.7.txt:1231
+msgid ""
+"Historically, the Django admin site passed the request from an unauthorized "
+"or unauthenticated user directly to the login view, without HTTP "
+"redirection. In Django 1.7, this behavior changed to conform to a more "
+"traditional workflow where any unauthorized request to an admin page will be "
+"redirected (by HTTP status code 302) to the login page, with the ``next`` "
+"parameter set to the referring path. The user will be redirected there after "
+"a successful login."
+msgstr ""
+
+# 5a35a7a91f6045d29bb6216dcf33d1d6
+#: ../../releases/1.7.txt:1238
+msgid ""
+"Note also that the admin login form has been updated to not contain the "
+"``this_is_the_login_form`` field (now unused) and the ``ValidationError`` "
+"code has been set to the more regular ``invalid_login`` key."
+msgstr ""
+
+# 74d26593195047bf853ae8ee0b1204f1
+#: ../../releases/1.7.txt:1243
+msgid "``select_for_update()`` requires a transaction"
+msgstr ""
+
+# f45774dd439146c68e45117dcf9d9198
+#: ../../releases/1.7.txt:1245
+msgid ""
+"Historically, queries that use :meth:`~django.db.models.query.QuerySet."
+"select_for_update()` could be executed in autocommit mode, outside of a "
+"transaction. Before Django 1.6, Django's automatic transactions mode allowed "
+"this to be used to lock records until the next write operation. Django 1.6 "
+"introduced database-level autocommit; since then, execution in such a "
+"context voids the effect of ``select_for_update()``. It is, therefore, "
+"assumed now to be an error and raises an exception."
+msgstr ""
+
+# f59d8978dbbd4edc80ab647d683cd14a
+#: ../../releases/1.7.txt:1254
+msgid ""
+"This change was made because such errors can be caused by including an app "
+"which expects global transactions (e.g. :setting:`ATOMIC_REQUESTS <DATABASE-"
+"ATOMIC_REQUESTS>` set to ``True``), or Django's old autocommit behavior, in "
+"a project which runs without them; and further, such errors may manifest as "
+"data-corruption bugs. It was also made in Django 1.6.3."
+msgstr ""
+
+# 45accc4b160447af8884e57bb20f9d3b
+#: ../../releases/1.7.txt:1261
+msgid ""
+"This change may cause test failures if you use ``select_for_update()`` in a "
+"test class which is a subclass of :class:`~django.test.TransactionTestCase` "
+"rather than :class:`~django.test.TestCase`."
+msgstr ""
+
+# f81319d17cca43989397884a7aac4ec6
+#: ../../releases/1.7.txt:1267
+msgid "Contrib middleware removed from default :setting:`MIDDLEWARE_CLASSES`"
+msgstr ""
+
+# b1c7db3d51904dca9ad94bf791a0671e
+#: ../../releases/1.7.txt:1269
+msgid ""
+"The :ref:`app-loading refactor <app-loading-refactor-17-release-note>` "
+"deprecated using models from apps which are not part of the :setting:"
+"`INSTALLED_APPS` setting. This exposed an incompatibility between the "
+"default :setting:`INSTALLED_APPS` and :setting:`MIDDLEWARE_CLASSES` in the "
+"global defaults (``django.conf.global_settings``). To bring these settings "
+"in sync and prevent deprecation warnings when doing things like testing "
+"reusable apps with minimal settings, :class:`~django.contrib.sessions."
+"middleware.SessionMiddleware`, :class:`~django.contrib.auth.middleware."
+"AuthenticationMiddleware`, and :class:`~django.contrib.messages.middleware."
+"MessageMiddleware` were removed from the defaults. These classes will still "
+"be included in the default settings generated by :djadmin:`startproject`. "
+"Most projects will not be affected by this change but if you were not "
+"previously declaring the :setting:`MIDDLEWARE_CLASSES` in your project "
+"settings and relying on the global default you should ensure that the new "
+"defaults are in line with your project's needs. You should also check for "
+"any code that accesses ``django.conf.global_settings.MIDDLEWARE_CLASSES`` "
+"directly."
+msgstr ""
+
+# c466f5578ded4108988cce3296f03570
+#: ../../releases/1.7.txt:1288
+msgid "Miscellaneous"
+msgstr ""
+
+# 8a1efac665f44f28bc4f96eaaa15e326
+#: ../../releases/1.7.txt:1290
+msgid ""
+"The :meth:`django.core.files.uploadhandler.FileUploadHandler.new_file()` "
+"method is now passed an additional ``content_type_extra`` parameter. If you "
+"have a custom :class:`~django.core.files.uploadhandler.FileUploadHandler` "
+"that implements ``new_file()``, be sure it accepts this new parameter."
+msgstr ""
+
+# 5da03f64c52f422f8b332050a0f92125
+#: ../../releases/1.7.txt:1295
+msgid ""
+":class:`ModelFormSet<django.forms.models.BaseModelFormSet>`\\s no longer "
+"delete instances when ``save(commit=False)`` is called. See :attr:`~django."
+"forms.formsets.BaseFormSet.can_delete` for instructions on how to manually "
+"delete objects from deleted forms."
+msgstr ""
+
+# 26b1de48a2da4c82b615b6bb1f6acdb7
+#: ../../releases/1.7.txt:1300
+msgid ""
+"Loading empty fixtures emits a ``RuntimeWarning`` rather than raising :class:"
+"`~django.core.management.CommandError`."
+msgstr ""
+
+# 38c6a0e717794980b67a1263e8a508c4
+#: ../../releases/1.7.txt:1303
+msgid ""
+":func:`django.contrib.staticfiles.views.serve` will now raise an :exc:"
+"`~django.http.Http404` exception instead of :exc:`~django.core.exceptions."
+"ImproperlyConfigured` when :setting:`DEBUG` is ``False``. This change "
+"removes the need to conditionally add the view to your root URLconf, which "
+"in turn makes it safe to reverse by name. It also removes the ability for "
+"visitors to generate spurious HTTP 500 errors by requesting static files "
+"that don't exist or haven't been collected yet."
+msgstr ""
+
+# 1dc674fc2b074794acde549452ea4d18
+#: ../../releases/1.7.txt:1311
+msgid ""
+"The :meth:`django.db.models.Model.__eq__` method is now defined in a way "
+"where instances of a proxy model and its base model are considered equal "
+"when primary keys match. Previously only instances of exact same class were "
+"considered equal on primary key match."
+msgstr ""
+
+# 5ca90896c079488394484120d93b4d2f
+#: ../../releases/1.7.txt:1316
+msgid ""
+"The :meth:`django.db.models.Model.__eq__` method has changed such that two "
+"``Model`` instances without primary key values won't be considered equal "
+"(unless they are the same instance)."
+msgstr ""
+
+# 0a956495838e4e158005d408ec7852f8
+#: ../../releases/1.7.txt:1320
+msgid ""
+"The :meth:`django.db.models.Model.__hash__` method will now raise "
+"``TypeError`` when called on an instance without a primary key value. This "
+"is done to avoid mutable ``__hash__`` values in containers."
+msgstr ""
+
+# 06cff13b7aa94d878ba8d5331808d137
+#: ../../releases/1.7.txt:1324
+msgid ""
+":class:`~django.db.models.AutoField` columns in SQLite databases will now be "
+"created using the ``AUTOINCREMENT`` option, which guarantees monotonic "
+"increments. This will cause primary key numbering behavior to change on "
+"SQLite, becoming consistent with most other SQL databases. This will only "
+"apply to newly created tables. If you have a database created with an older "
+"version of Django, you will need to migrate it to take advantage of this "
+"feature. For example, you could do the following:"
+msgstr ""
+
+# a6a4a501a5a146d4bb2006d8f7b22543
+#: ../../releases/1.7.txt:1332
+msgid "Use :djadmin:`dumpdata` to save your data."
+msgstr ""
+
+# 7e7ffeaca8414699bd581f199cf42fdf
+#: ../../releases/1.7.txt:1333
+msgid "Rename the existing database file (keep it as a backup)."
+msgstr ""
+
+# 7de5454cbd70451a93338e546259f136
+#: ../../releases/1.7.txt:1334
+msgid "Run :djadmin:`migrate` to create the updated schema."
+msgstr ""
+
+# bd2cf44d24b84746badf7a1eda147130
+#: ../../releases/1.7.txt:1335
+msgid "Use :djadmin:`loaddata` to import the fixtures you exported in (1)."
+msgstr ""
+
+# 16350bd8009c4943a03fc6e8ae74391b
+#: ../../releases/1.7.txt:1337
+msgid ""
+"``django.contrib.auth.models.AbstractUser`` no longer defines a :meth:"
+"`~django.db.models.Model.get_absolute_url()` method. The old definition "
+"returned  ``\"/users/%s/\" % urlquote(self.username)`` which was arbitrary "
+"since applications may or may not define such a url in ``urlpatterns``. "
+"Define a ``get_absolute_url()`` method on your own custom user object or "
+"use :setting:`ABSOLUTE_URL_OVERRIDES` if you want a URL for your user."
+msgstr ""
+
+# 18e7f5a76b1e43c792f28978c950c74c
+#: ../../releases/1.7.txt:1344
+msgid ""
+"The static asset-serving functionality of the :class:`django.test."
+"LiveServerTestCase` class has been simplified: Now it's only able to serve "
+"content already present in :setting:`STATIC_ROOT` when tests are run. The "
+"ability to transparently serve all the static assets (similarly to what one "
+"gets with :setting:`DEBUG = True <DEBUG>` at development-time) has been "
+"moved to a new class that lives in the ``staticfiles`` application (the one "
+"actually in charge of such feature): :class:`django.contrib.staticfiles."
+"testing.StaticLiveServerTestCase`. In other words, ``LiveServerTestCase`` "
+"itself is less powerful but at the same time has less magic."
+msgstr ""
+
+# e2e34f8b92494caba9df95a6c8a8f06a
+#: ../../releases/1.7.txt:1355
+msgid ""
+"Rationale behind this is removal of dependency of non-contrib code on "
+"contrib applications."
+msgstr ""
+
+# e5a85475d1e84010b4fabead9d0a1882
+#: ../../releases/1.7.txt:1358
+msgid ""
+"The old cache URI syntax (e.g. ``\"locmem://\"``) is no longer supported. It "
+"still worked, even though it was not documented or officially supported. If "
+"you're still using it, please update to the current :setting:`CACHES` syntax."
+msgstr ""
+
+# 3c33142522ed4dcab457ab4aa542eb28
+#: ../../releases/1.7.txt:1362
+msgid ""
+"The default ordering of ``Form`` fields in case of inheritance has changed "
+"to follow normal Python MRO. Fields are now discovered by iterating through "
+"the MRO in reverse with the topmost class coming last. This only affects you "
+"if you relied on the default field ordering while having fields defined on "
+"both the current class *and* on a parent ``Form``."
+msgstr ""
+
+# c8d362263220470e9df18b576ee7aa97
+#: ../../releases/1.7.txt:1368
+msgid ""
+"The ``required`` argument of :class:`~django.forms.extras.widgets."
+"SelectDateWidget` has been removed. This widget now respects the form "
+"field's ``is_required`` attribute like other widgets."
+msgstr ""
+
+# e91e1db031f74c92b3c73899218621af
+#: ../../releases/1.7.txt:1373
+msgid ""
+"``Widget.is_hidden`` is now a read-only property, getting its value by "
+"introspecting the presence of ``input_type == 'hidden'``."
+msgstr ""
+
+# f44ed7c1fa8b423bade6ba3a9da2e9ea
+#: ../../releases/1.7.txt:1376
+msgid ""
+":meth:`~django.db.models.query.QuerySet.select_related` now chains in the "
+"same way as other similar calls like ``prefetch_related``. That is, "
+"``select_related('foo', 'bar')`` is equivalent to ``select_related('foo')."
+"select_related('bar')``. Previously the latter would have been equivalent to "
+"``select_related('bar')``."
+msgstr ""
+
+# abef48b209464ad791f5ea84fe8741a9
+#: ../../releases/1.7.txt:1382
+msgid "GeoDjango dropped support for GEOS < 3.1."
+msgstr ""
+
+# fa412b99bed54666a77721d24bcb1233
+#: ../../releases/1.7.txt:1384
+msgid ""
+"The ``init_connection_state`` method of database backends now executes in "
+"autocommit mode (unless you set :setting:`AUTOCOMMIT <DATABASE-AUTOCOMMIT>` "
+"to ``False``). If you maintain a custom database backend, you should check "
+"that method."
+msgstr ""
+
+# a82b3e4ebd9844189a50be69df8261b8
+#: ../../releases/1.7.txt:1389
+msgid ""
+"The ``django.db.backends.BaseDatabaseFeatures.allows_primary_key_0`` "
+"attribute has been renamed to ``allows_auto_pk_0`` to better describe it. "
+"It's ``True`` for all database backends included with Django except MySQL "
+"which does allow primary keys with value 0. It only forbids *autoincrement* "
+"primary keys with value 0."
+msgstr ""
+
+# d94aacf46c334753a96b39bd70b786d6
+#: ../../releases/1.7.txt:1395
+msgid ""
+"Shadowing model fields defined in a parent model has been forbidden as this "
+"creates ambiguity in the expected model behavior. In addition, any clashing "
+"fields in the model inheritance hierarchy results in a system check error. "
+"For example, if you use multi-inheritance, you need to define custom primary "
+"key fields on parent models, otherwise the default ``id`` fields will clash. "
+"See :ref:`model-multiple-inheritance-topic` for details."
+msgstr ""
+
+# c5f3147f2ca64a668a9d39eea65e2e66
+#: ../../releases/1.7.txt:1402
+msgid ""
+"``django.utils.translation.parse_accept_lang_header()`` now returns "
+"lowercase locales, instead of the case as it was provided. As locales should "
+"be treated case-insensitive this allows us to speed up locale detection."
+msgstr ""
+
+# a7e2593489b34dd1a0ef8dd855197f0a
+#: ../../releases/1.7.txt:1406
+msgid ""
+"``django.utils.translation.get_language_from_path()`` and ``django.utils."
+"translation.trans_real.get_supported_language_variant()`` now no longer have "
+"a ``supported`` argument."
+msgstr ""
+
+# 10e62e924de3421fb69b8bb4b9965ab4
+#: ../../releases/1.7.txt:1410
+msgid ""
+"The ``shortcut`` view in ``django.contrib.contenttypes.views`` now supports "
+"protocol-relative URLs (e.g. ``//example.com``)."
+msgstr ""
+
+# 816f378ed63e42248d755b94c2ff8b8e
+#: ../../releases/1.7.txt:1413
+msgid ""
+":class:`~django.contrib.contenttypes.fields.GenericRelation` now supports an "
+"optional ``related_query_name`` argument. Setting ``related_query_name`` "
+"adds a relation from the related object back to the content type for "
+"filtering, ordering and other query operations."
+msgstr ""
+
+# d3ffc2b15fd242c187c3c239e3f0b2b3
+#: ../../releases/1.7.txt:1418
+msgid ""
+"When running tests on PostgreSQL, the :setting:`USER` will need read access "
+"to the built-in ``postgres`` database. This is in lieu of the previous "
+"behavior of connecting to the actual non-test database."
+msgstr ""
+
+# a70e7849032944ff9951c5d6518ba699
+#: ../../releases/1.7.txt:1422
+msgid ""
+"As part of the :doc:`System check framework </ref/checks>`, :ref:`fields, "
+"models, and model managers <field-checking>` all implement a ``check()`` "
+"method that is registered with the check framework. If you have an existing "
+"method called ``check()`` on one of these objects, you will need to rename "
+"it."
+msgstr ""
+
+# 6c5f0ab2d60a4d6280e1d26ebead59ec
+#: ../../releases/1.7.txt:1427
+msgid ""
+"As noted above in the \"Cache\" section of \"Minor Features\", defining the :"
+"setting:`TIMEOUT <CACHES-TIMEOUT>` argument of the :setting:`CACHES` setting "
+"as ``None`` will set the cache keys as \"non-expiring\". Previously, with "
+"the memcache backend, a :setting:`TIMEOUT <CACHES-TIMEOUT>` of ``0`` would "
+"set non-expiring keys, but this was inconsistent with the set-and-expire (i."
+"e. no caching) behavior of ``set(\"key\", \"value\", timeout=0)``. If you "
+"want non-expiring keys, please update your settings to use ``None`` instead "
+"of ``0`` as the latter now designates set-and-expire in the settings as well."
+msgstr ""
+
+# 4aa3543a9498499dba072ab830798406
+#: ../../releases/1.7.txt:1437
+msgid ""
+"The ``sql*`` management commands now respect the ``allow_migrate()`` method "
+"of :setting:`DATABASE_ROUTERS`. If you have models synced to non-default "
+"databases, use the :djadminopt:`--database` flag to get SQL for those models "
+"(previously they would always be included in the output)."
+msgstr ""
+
+# d7164ce3e187498e9c864ca2f804982b
+#: ../../releases/1.7.txt:1442
+msgid ""
+"Decoding the query string from URLs now falls back to the ISO-8859-1 "
+"encoding when the input is not valid UTF-8."
+msgstr ""
+
+# a286a601a5504908b64fa58ca86cd4cf
+#: ../../releases/1.7.txt:1448
+msgid "Features deprecated in 1.7"
+msgstr ""
+
+# ca7dbeed4c684b5884d2e1246983d77a
+#: ../../releases/1.7.txt:1451
+msgid "``django.core.cache.get_cache``"
+msgstr ""
+
+# 067d4d517dcf478eb1a23616b5959d48
+#: ../../releases/1.7.txt:1453
+msgid ""
+":func:`django.core.cache.get_cache` has been supplanted by :data:`django."
+"core.cache.caches`."
+msgstr ""
+
+# 1e7032315b6e4e349fdba804f4f88215
+#: ../../releases/1.7.txt:1457
+msgid "``django.utils.dictconfig``/``django.utils.importlib``"
+msgstr ""
+
+# 6581707cf8384196bbfb54d29bc2e982
+#: ../../releases/1.7.txt:1459
+msgid ""
+"``django.utils.dictconfig`` and ``django.utils.importlib`` were copies of "
+"respectively :mod:`logging.config` and :mod:`importlib` provided for Python "
+"versions prior to 2.7. They have been deprecated."
+msgstr ""
+
+# da06b871c99643a2bc3eefae10b38101
+#: ../../releases/1.7.txt:1464
+msgid "``django.utils.module_loading.import_by_path``"
+msgstr ""
+
+# 239f667039e14b51a0c71c96f72f84cd
+#: ../../releases/1.7.txt:1466
+msgid ""
+"The current :meth:`~django.utils.module_loading.import_by_path` function "
+"catches ``AttributeError``, ``ImportError`` and ``ValueError`` exceptions, "
+"and re-raises :exc:`~django.core.exceptions.ImproperlyConfigured`. Such "
+"exception masking makes it needlessly hard to diagnose circular import "
+"problems, because it makes it look like the problem comes from inside "
+"Django. It has been deprecated in favor of :meth:`~django.utils."
+"module_loading.import_string`."
+msgstr ""
+
+# efa164863b824192b9d8ee9f6ddb3471
+#: ../../releases/1.7.txt:1475
+msgid "``django.utils.tzinfo``"
+msgstr ""
+
+# 7d044084c1304bb9964c6f039fd29abd
+#: ../../releases/1.7.txt:1477
+msgid ""
+"``django.utils.tzinfo`` provided two :class:`~datetime.tzinfo` subclasses, "
+"``LocalTimezone`` and ``FixedOffset``. They've been deprecated in favor of "
+"more correct alternatives provided by :mod:`django.utils.timezone`, :func:"
+"`django.utils.timezone.get_default_timezone` and :func:`django.utils."
+"timezone.get_fixed_timezone`."
+msgstr ""
+
+# c572c625882c436b934bd61511a99dd5
+#: ../../releases/1.7.txt:1484
+msgid "``django.utils.unittest``"
+msgstr ""
+
+# 4a3df939125d46b699d1acb869bf5701
+#: ../../releases/1.7.txt:1486
+msgid ""
+"``django.utils.unittest`` provided uniform access to the ``unittest2`` "
+"library on all Python versions. Since ``unittest2`` became the standard "
+"library's :mod:`unittest` module in Python 2.7, and Django 1.7 drops support "
+"for older Python versions, this module isn't useful anymore. It has been "
+"deprecated. Use :mod:`unittest` instead."
+msgstr ""
+
+# 6ddd860c0bb04a24ad9c4cb72776d28f
+#: ../../releases/1.7.txt:1493
+msgid "``django.utils.datastructures.SortedDict``"
+msgstr ""
+
+# 4064339ba4dd456e86254ba0280189a5
+#: ../../releases/1.7.txt:1495
+msgid ""
+"As :class:`~collections.OrderedDict` was added to the standard library in "
+"Python 2.7, :class:`~django.utils.datastructures.SortedDict` is no longer "
+"needed and has been deprecated."
+msgstr ""
+
+# 3e32810f754f4affb172514b4b8d30a5
+#: ../../releases/1.7.txt:1500
+msgid "Custom SQL location for models package"
+msgstr ""
+
+# bda35f322d644cabaaed1453e50faaed
+#: ../../releases/1.7.txt:1502
+msgid ""
+"Previously, if models were organized in a package (``myapp/models/``) rather "
+"than simply ``myapp/models.py``, Django would look for :ref:`initial SQL "
+"data <initial-sql>` in ``myapp/models/sql/``. This bug has been fixed so "
+"that Django will search ``myapp/sql/`` as documented. The old location will "
+"continue to work until Django 1.9. After this issue was fixed, migrations "
+"were added which deprecates initial SQL data. Thus, while this change still "
+"exists, the deprecation is somewhat irrelevant as the entire feature will be "
+"removed in Django 2.0 when migrations become compulsory for all applications."
+msgstr ""
+
+# c9be8efea1664fb295ce0c931335810d
+#: ../../releases/1.7.txt:1512
+msgid "Reorganization of ``django.contrib.sites``"
+msgstr ""
+
+# 0a965c0d796343b1855b7d86910d7730
+#: ../../releases/1.7.txt:1514
+msgid ""
+"``django.contrib.sites`` provides reduced functionality when it isn't in :"
+"setting:`INSTALLED_APPS`. The app-loading refactor adds some constraints in "
+"that situation. As a consequence, two objects were moved, and the old "
+"locations are deprecated:"
+msgstr ""
+
+# f2b0ded443ab4408a6e939f97838c117
+#: ../../releases/1.7.txt:1519
+msgid ""
+":class:`~django.contrib.sites.requests.RequestSite` now lives in ``django."
+"contrib.sites.requests``."
+msgstr ""
+
+# 9ed3d98b15bc484c837312ca10c30da6
+#: ../../releases/1.7.txt:1521
+msgid ""
+":func:`~django.contrib.sites.shortcuts.get_current_site` now lives in "
+"``django.contrib.sites.shortcuts``."
+msgstr ""
+
+# ffa00a310e15430da5db0232420d0a42
+#: ../../releases/1.7.txt:1525
+msgid "``declared_fieldsets`` attribute on ``ModelAdmin``"
+msgstr ""
+
+# bcfbe0893d274a3084210eda0d573b14
+#: ../../releases/1.7.txt:1527
+msgid ""
+"``ModelAdmin.declared_fieldsets`` has been deprecated. Despite being a "
+"private API, it will go through a regular deprecation path. This attribute "
+"was mostly used by methods that bypassed ``ModelAdmin.get_fieldsets()`` but "
+"this was considered a bug and has been addressed."
+msgstr ""
+
+# 233812e9dbdd41ca946ae0b6404cf5b0
+#: ../../releases/1.7.txt:1533
+msgid "Reorganization of ``django.contrib.contenttypes``"
+msgstr ""
+
+# 239708ba5d2542da84c518a869900dd6
+#: ../../releases/1.7.txt:1535
+msgid ""
+"Since ``django.contrib.contenttypes.generic`` defined both admin and model "
+"related objects an import of this module could trigger unexpected side "
+"effects. As a consequence, its contents were split into :mod:`~django."
+"contrib.contenttypes` submodules and the ``django.contrib.contenttypes."
+"generic`` module is deprecated:"
+msgstr ""
+
+# 3c8abd4d844b4046902f040930d25e00
+#: ../../releases/1.7.txt:1540
+msgid ""
+":class:`~django.contrib.contenttypes.fields.GenericForeignKey` and :class:"
+"`~django.contrib.contenttypes.fields.GenericRelation` now live in :mod:"
+"`~django.contrib.contenttypes.fields`."
+msgstr ""
+
+# 58e7a61ec47c44938c8f337da1aa331e
+#: ../../releases/1.7.txt:1543
+msgid ""
+":class:`~django.contrib.contenttypes.forms.BaseGenericInlineFormSet` and :"
+"func:`~django.contrib.contenttypes.forms.generic_inlineformset_factory` now "
+"live in :mod:`~django.contrib.contenttypes.forms`."
+msgstr ""
+
+# 2b45e9e753034b659089b9d79437306e
+#: ../../releases/1.7.txt:1546
+msgid ""
+":class:`~django.contrib.contenttypes.admin.GenericInlineModelAdmin`, :class:"
+"`~django.contrib.contenttypes.admin.GenericStackedInline` and :class:"
+"`~django.contrib.contenttypes.admin.GenericTabularInline` now live in :mod:"
+"`~django.contrib.contenttypes.admin`."
+msgstr ""
+
+# bac79d56717942ba9a116a64b4438309
+#: ../../releases/1.7.txt:1552
+msgid "``syncdb``"
+msgstr ""
+
+# e8a4da4974d344168bedb57ffab3f169
+#: ../../releases/1.7.txt:1554
+msgid ""
+"The :djadmin:`syncdb` command has been deprecated in favor of the new :"
+"djadmin:`migrate` command. ``migrate`` takes the same arguments as "
+"``syncdb`` used to plus a few more, so it's safe to just change the name "
+"you're calling and nothing else."
+msgstr ""
+
+# 3d3eae60fa2b408ab5d09902e6e8078c
+#: ../../releases/1.7.txt:1559
+msgid "``util`` modules renamed to ``utils``"
+msgstr ""
+
+# 45ffc9f491534117916a2f4ce7f9bf09
+#: ../../releases/1.7.txt:1561
+msgid ""
+"The following instances of ``util.py`` in the Django codebase have been "
+"renamed to ``utils.py`` in an effort to unify all util and utils references:"
+msgstr ""
+
+# 5965790020b749fb9bd435ee178e3b1e
+#: ../../releases/1.7.txt:1564
+msgid "``django.contrib.admin.util``"
+msgstr ""
+
+# f5b0dd0bed8544639fc8be32c5a02e68
+#: ../../releases/1.7.txt:1565
+msgid "``django.contrib.gis.db.backends.util``"
+msgstr ""
+
+# ac757ff100614164b08a8fdda8a0ff8e
+#: ../../releases/1.7.txt:1566
+msgid "``django.db.backends.util``"
+msgstr ""
+
+# 23614f9ac5f54aa49aebb44f67d9f2bc
+#: ../../releases/1.7.txt:1567
+msgid "``django.forms.util``"
+msgstr ""
+
+# 783c9ec5a0934978b8fe2502e552ea7a
+#: ../../releases/1.7.txt:1570
+msgid "``get_formsets`` method on ``ModelAdmin``"
+msgstr ""
+
+# bd694e44ecd041e4854b5e77619dd4e8
+#: ../../releases/1.7.txt:1572
+msgid ""
+"``ModelAdmin.get_formsets`` has been deprecated in favor of the new :meth:"
+"`~django.contrib.admin.ModelAdmin.get_formsets_with_inlines`, in order to "
+"better handle the case of selectively showing inlines on a ``ModelAdmin``."
+msgstr ""
+
+# 3d9a194f085742bcb12550f77410e76f
+#: ../../releases/1.7.txt:1577
+msgid "``IPAddressField``"
+msgstr ""
+
+# 80663459f1954484a2da70c5ee0ab910
+#: ../../releases/1.7.txt:1579
+msgid ""
+"The :class:`django.db.models.IPAddressField` and :class:`django.forms."
+"IPAddressField` fields have been deprecated in favor of :class:`django.db."
+"models.GenericIPAddressField` and :class:`django.forms."
+"GenericIPAddressField`."
+msgstr ""
+
+# 65b54e5058dd4d86936b4041657869d2
+#: ../../releases/1.7.txt:1585
+msgid "``BaseMemcachedCache._get_memcache_timeout`` method"
+msgstr ""
+
+# b342f9d4928d4c9bafbd18f106ca807b
+#: ../../releases/1.7.txt:1587
+msgid ""
+"The ``BaseMemcachedCache._get_memcache_timeout()`` method has been renamed "
+"to ``get_backend_timeout()``. Despite being a private API, it will go "
+"through the normal deprecation."
+msgstr ""
+
+# d37be99379e24cfb9e9492b232837dd7
+#: ../../releases/1.7.txt:1592
+msgid "Natural key serialization options"
+msgstr ""
+
+# db004808b4904f1aa94105c0f0d615a7
+#: ../../releases/1.7.txt:1594
+msgid ""
+"The ``--natural`` and ``-n`` options for :djadmin:`dumpdata` have been "
+"deprecated. Use :djadminopt:`--natural-foreign` instead."
+msgstr ""
+
+# 3c4ec4befa7f4cbfbc4cf15c677451ef
+#: ../../releases/1.7.txt:1597
+msgid ""
+"Similarly, the ``use_natural_keys`` argument for ``serializers.serialize()`` "
+"has been deprecated. Use ``use_natural_foreign_keys`` instead."
+msgstr ""
+
+# f09babc63c4b472799331a99b6990570
+#: ../../releases/1.7.txt:1601
+msgid "Merging of ``POST`` and ``GET`` arguments into ``WSGIRequest.REQUEST``"
+msgstr ""
+
+# ed34c6879b544fa489df2ab2e68c641d
+#: ../../releases/1.7.txt:1603
+msgid ""
+"It was already strongly suggested that you use ``GET`` and ``POST`` instead "
+"of ``REQUEST``, because the former are more explicit. The property "
+"``REQUEST`` is deprecated and will be removed in Django 1.9."
+msgstr ""
+
+# 9d36a4182e9945bbbf567c0bcb85f302
+#: ../../releases/1.7.txt:1608
+msgid "``django.utils.datastructures.MergeDict`` class"
+msgstr ""
+
+# 802ed2a54b6a4ef4ad76681e43edb299
+#: ../../releases/1.7.txt:1610
+msgid ""
+"``MergeDict`` exists primarily to support merging ``POST`` and ``GET`` "
+"arguments into a ``REQUEST`` property on ``WSGIRequest``. To merge "
+"dictionaries, use ``dict.update()`` instead. The class ``MergeDict`` is "
+"deprecated and will be removed in Django 1.9."
+msgstr ""
+
+# 542ac31f712b464e9ef61bc242c21af2
+#: ../../releases/1.7.txt:1616
+msgid "Language codes ``zh-cn``, ``zh-tw`` and ``fy-nl``"
+msgstr ""
+
+# 5a0bfff593b44afe9e9bd8c72a25ce42
+#: ../../releases/1.7.txt:1618
+msgid ""
+"The currently used language codes for Simplified Chinese ``zh-cn``, "
+"Traditional Chinese ``zh-tw`` and (Western) Frysian ``fy-nl`` are deprecated "
+"and should be replaced by the language codes ``zh-hans``, ``zh-hant`` and "
+"``fy`` respectively. If you use these language codes, you should rename the "
+"locale directories and update your settings to reflect these changes. The "
+"deprecated language codes will be removed in Django 1.9."
+msgstr ""
+
+# 7c68bf6c3ebf42e78557ada552f6d8d4
+#: ../../releases/1.7.txt:1626
+msgid "``django.utils.functional.memoize`` function"
+msgstr ""
+
+# bf01e891d99b4246abe9893b244b1025
+#: ../../releases/1.7.txt:1628
+msgid ""
+"The function ``memoize`` is deprecated and should be replaced by the "
+"``functools.lru_cache`` decorator (available from Python 3.2 onwards)."
+msgstr ""
+
+# 177e46c43ead4927ab0ed3c33b6d4935
+#: ../../releases/1.7.txt:1631
+msgid ""
+"Django ships a backport of this decorator for older Python versions and it's "
+"available at ``django.utils.lru_cache.lru_cache``. The deprecated function "
+"will be removed in Django 1.9."
+msgstr ""
+
+# ac966cc92c7a455896e1746aad4e8754
+#: ../../releases/1.7.txt:1636
+msgid "Geo Sitemaps"
+msgstr ""
+
+# bac831afeda345cf8c38d553d98d8d09
+#: ../../releases/1.7.txt:1638
+msgid ""
+"Google has retired support for the Geo Sitemaps format. Hence Django support "
+"for Geo Sitemaps is deprecated and will be removed in Django 1.8."
+msgstr ""
+
+# 67423e71b6d64f68b4c100ff378a7b12
+#: ../../releases/1.7.txt:1642
+msgid "Passing callable arguments to queryset methods"
+msgstr ""
+
+# 389af37a3eaa457a97d8f3f44294d7e3
+#: ../../releases/1.7.txt:1644
+msgid ""
+"Callable arguments for querysets were an undocumented feature that was "
+"unreliable. It's been deprecated and will be removed in Django 1.9."
+msgstr ""
+
+# 76a7fe84d3a14ec9a920a844fb9d8151
+#: ../../releases/1.7.txt:1647
+msgid ""
+"Callable arguments were evaluated when a queryset was constructed rather "
+"than when it was evaluated, thus this feature didn't offer any benefit "
+"compared to evaluating arguments before passing them to queryset and created "
+"confusion that the arguments may have been evaluated at query time."
+msgstr ""
+
+# dd1a0e6cb1cb48c9b61e12a04711d359
+#: ../../releases/1.7.txt:1653
+msgid "``ADMIN_FOR`` setting"
+msgstr ""
+
+# fdea71178d5346a58855174936f27ddb
+#: ../../releases/1.7.txt:1655
+msgid ""
+"The ``ADMIN_FOR`` feature, part of the admindocs, has been removed. You can "
+"remove the setting from your configuration at your convenience."
+msgstr ""
+
+# 3611081f6b0b4266855adb1e9762853f
+#: ../../releases/1.7.txt:1659
+msgid "``SplitDateTimeWidget`` with ``DateTimeField``"
+msgstr ""
+
+# 8dfb5caa3dab4111b0e5b6b28cfe5ca3
+#: ../../releases/1.7.txt:1661
+msgid ""
+"``SplitDateTimeWidget`` support in :class:`~django.forms.DateTimeField` is "
+"deprecated, use ``SplitDateTimeWidget`` with :class:`~django.forms."
+"SplitDateTimeField` instead."
+msgstr ""
+
+# 3328ad25463247d3bb1760c11735a2bb
+#: ../../releases/1.7.txt:1666
+msgid "``validate``"
+msgstr ""
+
+# 50382e92871744a5a4af2581b7b0cd08
+#: ../../releases/1.7.txt:1668
+msgid ""
+":djadmin:`validate` command is deprecated in favor of :djadmin:`check` "
+"command."
+msgstr ""
+
+# fb743b90f390425c84042a1185205d03
+#: ../../releases/1.7.txt:1671
+msgid "``django.core.management.BaseCommand``"
+msgstr ""
+
+# 66b824dc5e7b48a59adada23ed262e02
+#: ../../releases/1.7.txt:1673
+msgid ""
+"``requires_model_validation`` is deprecated in favor of a new "
+"``requires_system_checks`` flag. If the latter flag is missing, then the "
+"value of the former flag is used. Defining both ``requires_system_checks`` "
+"and ``requires_model_validation`` results in an error."
+msgstr ""
+
+# aa2d80fe56f94a30bd1280b2ad583f64
+#: ../../releases/1.7.txt:1678
+msgid "The ``check()`` method has replaced the old ``validate()`` method."
+msgstr ""
+
+# 5913f244d05b4e2fa3d4f977bb9a4787
+#: ../../releases/1.7.txt:1681
+msgid "``ModelAdmin.validator``"
+msgstr ""
+
+# b9dc55edb61f43c5a6f8a824637f809e
+#: ../../releases/1.7.txt:1683
+msgid ""
+"``ModelAdmin.validator`` is deprecated in favor of new ``checks`` attribute."
+msgstr ""
+
+# fb5527c2364d41a2a662a35f43bbf8bc
+#: ../../releases/1.7.txt:1686
+msgid "``django.db.backends.DatabaseValidation.validate_field``"
+msgstr ""
+
+# db5fa0dbe8c243fea68b11093cab82f2
+#: ../../releases/1.7.txt:1688
+msgid ""
+"This method is deprecated in favor of a new ``check_field`` method. The "
+"functionality required by ``check_field()`` is the same as that provided by "
+"``validate_field()``, but the output format is different. Third-party "
+"database backends needing this functionality should modify their backends to "
+"provide an implementation of ``check_field()``."
+msgstr ""
+
+# d50f573da6664e508cfa02a292c223b0
+#: ../../releases/1.7.txt:1695
+msgid "Loading ``ssi`` and ``url`` template tags from ``future`` library"
+msgstr ""
+
+# 7825bddcb53e45ff8583d4f7c03e9f66
+#: ../../releases/1.7.txt:1697
+msgid ""
+"Django 1.3 introduced ``{% load ssi from future %}`` and ``{% load url from "
+"future %}`` syntax for forward compatibility of the :ttag:`ssi` and :ttag:"
+"`url` template tags. This syntax is now deprecated and will be removed in "
+"Django 1.9. You can simply remove the ``{% load ... from future %}`` tags."
+msgstr ""
+
+# 3a014f789cdc4bce8706adb738d0d92d
+#: ../../releases/1.7.txt:1704
+msgid "``django.utils.text.javascript_quote``"
+msgstr ""
+
+# 73c8a86aaa3342a8b7ecc4ea4e7c0e16
+#: ../../releases/1.7.txt:1706
+msgid ""
+"``javascript_quote()`` was an undocumented function present in ``django."
+"utils.text``. It was used internally in the :ref:`javascript_catalog view "
+"<javascript_catalog-view>` whose implementation was changed to make use of "
+"``json.dumps()`` instead. If you were relying on this function to provide "
+"safe output from untrusted strings, you should use ``django.utils.html."
+"escapejs`` or the :tfilter:`escapejs` template filter. If all you need is to "
+"generate valid javascript strings, you can simply use ``json.dumps()``."
+msgstr ""
+
+# b11747e885ae4bc5be768802f5b0c078
+#: ../../releases/1.7.txt:1716
+msgid "``fix_ampersands`` utils method and template filter"
+msgstr ""
+
+# 51c66f2806e041b786186b6affbe482c
+#: ../../releases/1.7.txt:1718
+msgid ""
+"The ``django.utils.html.fix_ampersands`` method and the :tfilter:"
+"`fix_ampersands` template filter are deprecated, as the escaping of "
+"ampersands is already taken care of by Django's standard HTML escaping "
+"features. Combining this with ``fix_ampersands`` would either result in "
+"double escaping, or, if the output is assumed to be safe, a risk of "
+"introducing XSS vulnerabilities. Along with ``fix_ampersands``, ``django."
+"utils.html.clean_html`` is deprecated, an undocumented function that calls "
+"``fix_ampersands``. As this is an accelerated deprecation, "
+"``fix_ampersands`` and ``clean_html`` will be removed in Django 1.8."
+msgstr ""
+
+# 398f7a01822f4036b7495e3dde68a630
+#: ../../releases/1.7.txt:1729
+msgid "Reorganization of database test settings"
+msgstr ""
+
+# fc4ce35d0329470996854ac052abb179
+#: ../../releases/1.7.txt:1731
+msgid ""
+"All database settings with a ``TEST_`` prefix have been deprecated in favor "
+"of entries in a :setting:`TEST <DATABASE-TEST>` dictionary in the database "
+"settings. The old settings will be supported until Django 1.9. For backwards "
+"compatibility with older versions of Django, you can define both versions of "
+"the settings as long as they match."
+msgstr ""
+
+# a0f77ed8a31246d6ac44cda8e2a8a76a
+#: ../../releases/1.7.txt:1738
+msgid "FastCGI support"
+msgstr ""
+
+# bc41cc99c303476c832ef3614d28ce58
+#: ../../releases/1.7.txt:1740
+msgid ""
+"FastCGI support via the ``runfcgi`` management command will be removed in "
+"Django 1.9. Please deploy your project using WSGI."
+msgstr ""
+
+# f0567667ee0b485b9e3a4cb262791fab
+#: ../../releases/1.7.txt:1746
+msgid "Features removed in 1.7"
+msgstr ""
+
+# 0862dca78a604118b6526ace963fbfd1
+#: ../../releases/1.7.txt:1748
+msgid ""
+"These features have reached the end of their :ref:`deprecation cycle "
+"<deprecation-removed-in-1.7>` and so have been removed in Django 1.7 (please "
+"see the :ref:`deprecation timeline <deprecation-removed-in-1.7>` for more "
+"details):"
+msgstr ""
+
+# 02c79c176c07463fa32deaa605a3529b
+#: ../../releases/1.7.txt:1754
+msgid "``django.utils.simplejson`` is removed."
+msgstr ""
+
+# fe5d088ba2914e61be9964a08b0bef60
+#: ../../releases/1.7.txt:1756
+msgid "``django.utils.itercompat.product`` is removed."
+msgstr ""
+
+# acb22addbb1347c29d52a5253af59721
+#: ../../releases/1.7.txt:1758
+msgid ""
+"INSTALLED_APPS and TEMPLATE_DIRS are no longer corrected from a plain string "
+"into a tuple."
+msgstr ""
+
+# 132bcedae159419d849d1c85f8487f82
+#: ../../releases/1.7.txt:1761
+msgid ""
+":class:`~django.http.HttpResponse`, :class:`~django.template.response."
+"SimpleTemplateResponse`, :class:`~django.template.response."
+"TemplateResponse`, :func:`~django.shortcuts.render_to_response`, :func:"
+"`~django.contrib.sitemaps.views.index`, and :func:`~django.contrib.sitemaps."
+"views.sitemap` no longer take a ``mimetype`` argument"
+msgstr ""
+
+# 9a811288873b4f2caac88b8922df7f3e
+#: ../../releases/1.7.txt:1769
+msgid ""
+":class:`~django.http.HttpResponse` immediately consumes its content if it's "
+"an iterator."
+msgstr ""
+
+# c1089ae501c247d78ece557b798f0982
+#: ../../releases/1.7.txt:1772
+msgid ""
+"The ``AUTH_PROFILE_MODULE`` setting, and the ``get_profile()`` method on the "
+"User model are removed."
+msgstr ""
+
+# 2af16d92aa214090a460473d0e36add7
+#: ../../releases/1.7.txt:1775
+msgid "The ``cleanup`` management command is removed."
+msgstr ""
+
+# fad914f18fd04720a6c53cc0a032ee12
+#: ../../releases/1.7.txt:1777
+msgid "The ``daily_cleanup.py`` script is removed."
+msgstr ""
+
+# 4ca74ec9ec1c4f49b8965e4b00e25c5e
+#: ../../releases/1.7.txt:1779
+msgid ""
+":meth:`~django.db.models.query.QuerySet.select_related` no longer has a "
+"``depth`` keyword argument."
+msgstr ""
+
+# 165186b573c74510a5de8246199083a2
+#: ../../releases/1.7.txt:1782
+msgid ""
+"The ``get_warnings_state()``/``restore_warnings_state()`` functions from :"
+"mod:`django.test.utils` and the ``save_warnings_state()``/ "
+"``restore_warnings_state()`` :ref:`django.test.*TestCase <django-testcase-"
+"subclasses>` are removed."
+msgstr ""
+
+# f9a05683bdf04622958bad2ed2bdee17
+#: ../../releases/1.7.txt:1787
+msgid ""
+"The ``check_for_test_cookie`` method in :class:`~django.contrib.auth.forms."
+"AuthenticationForm` is removed."
+msgstr ""
+
+# 2a3d122ec588400c9b15d0794d465940
+#: ../../releases/1.7.txt:1790
+msgid ""
+"The version of :func:`django.contrib.auth.views.password_reset_confirm` that "
+"supports base36 encoded user IDs (``django.contrib.auth.views."
+"password_reset_confirm_uidb36``) is removed."
+msgstr ""
+
+# 745eccfae0954040b4883bff1b724583
+#: ../../releases/1.7.txt:1794
+msgid "The ``django.utils.encoding.StrAndUnicode`` mix-in is removed."
+msgstr ""

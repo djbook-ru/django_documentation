@@ -65,9 +65,25 @@ Visit https://github.com/django/django, find required tag. Run:
 
     $ ./translator.py update <tag>
 
-Then update .po files:
+Also there is a little hack to translate hard-coded text.
+Add `from sphinx.locale import l_` to `_ext/djangodocs.py` and wrap `version_text` with `l_`.
+You may need update localization, see description under.
 
-    $ ./translator.py makemessages
+========================
+Translate hardcoded text
+========================
+
+Create _ext/locale/django.pot:
+
+    pybabel extract -k _ -k l_ -k lazy_gettext -o djbook/sphinx.pot  _ext/
+
+Update locale catalog:
+
+    pybabel update -i djbook/sphinx.pot -d locale/ -l ru -D sphinx
+
+Create locale catalog(already created):
+
+    pybabel init -i djbook/sphinx.pot -d locale/ -l ru -D sphinx
 
 =====
 Notes

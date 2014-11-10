@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2014-04-07 00:02+0300\n"
+"POT-Creation-Date: 2014-07-11 11:43+0300\n"
+"PO-Revision-Date: 2014-09-17 01:18+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 # d365214a179c4e22a4ee83cad28871cc
 #: ../../topics/db/sql.txt:3
@@ -40,13 +41,26 @@ msgstr ""
 "queries>`, или вообще не использовать модели и :ref:`напрямую выполнить SQL "
 "запрос <executing-custom-sql>`."
 
+# 2006ca2fd44c4c90b8653325860b196e
+#: ../../topics/db/sql.txt:18
+msgid ""
+"You should be very careful whenever you write raw SQL. Every time you use "
+"it, you should properly escape any parameters that the user can control by "
+"using ``params`` in order to protect against SQL injection attacks. Please "
+"read more about :ref:`SQL injection protection <sql-injection-protection>`."
+msgstr ""
+"Вы должны быть предельно осторожны, используя SQL. Экранируйте все "
+"параметры, контролируемые пользователем, используя ``params``, чтобы "
+"защитится от SQL инъекции. Больше о :ref:`защите от SQL инъекций <sql-"
+"injection-protection>`."
+
 # 627f540faf3140fdbcbd4abc520f7517
-#: ../../topics/db/sql.txt:19
+#: ../../topics/db/sql.txt:27
 msgid "Performing raw queries"
 msgstr "Выполнение чистых запросов"
 
 # 225156bf4dde459c835075571eeb0958
-#: ../../topics/db/sql.txt:21
+#: ../../topics/db/sql.txt:29
 msgid ""
 "The ``raw()`` manager method can be used to perform raw SQL queries that "
 "return model instances:"
@@ -55,31 +69,32 @@ msgstr ""
 "возврата объектов модели:"
 
 # 469e5687a634474aa610614ca198c9d6
-#: ../../topics/db/sql.txt:26
+#: ../../topics/db/sql.txt:34
 msgid ""
-"This method method takes a raw SQL query, executes it, and returns a "
-"``django.db.models.query.RawQuerySet`` instance. This ``RawQuerySet`` "
-"instance can be iterated over just like an normal QuerySet to provide object "
-"instances."
+"This method takes a raw SQL query, executes it, and returns a ``django.db."
+"models.query.RawQuerySet`` instance. This ``RawQuerySet`` instance can be "
+"iterated over just like a normal :class:`~django.db.models.query.QuerySet` "
+"to provide object instances."
 msgstr ""
 "Этот метод принимает чистый SQL запрос, выполняет его, и возвращает "
 "экземпляр ``django.db.models.query.RawQuerySet``. Экземпляр ``RawQuerySet`` "
-"может быть проитерирован как и обычный QuerySet для получения объектов."
+"может быть проитерирован как и обычный :class:`~django.db.models.query."
+"QuerySet` для получения объектов."
 
 # f6a47f7c25e2489381a74ce0f02f9541
-#: ../../topics/db/sql.txt:30
+#: ../../topics/db/sql.txt:39
 msgid ""
-"This is best illustrated with an example. Suppose you've got the following "
+"This is best illustrated with an example. Suppose you have the following "
 "model::"
 msgstr "Лучше посмотрим на пример. Предположим у нас есть такая модель::"
 
 # 8f99810cf930406299eaa5d1d5fd59dd
-#: ../../topics/db/sql.txt:37
+#: ../../topics/db/sql.txt:46
 msgid "You could then execute custom SQL like so::"
 msgstr "Вы можете выполнить следующий SQL::"
 
 # f9804a1f541043a58ba8f647a2a20823
-#: ../../topics/db/sql.txt:44
+#: ../../topics/db/sql.txt:53
 msgid ""
 "Of course, this example isn't very exciting -- it's exactly the same as "
 "running ``Person.objects.all()``. However, ``raw()`` has a bunch of other "
@@ -89,13 +104,18 @@ msgstr ""
 "``Person.objects.all()``. Однако, ``raw()`` принимает ряд дополнительных "
 "параметров, что делает его очень полезным."
 
+# 8c2d2f24b3ac4df698551580d3b94a47
+#: ../../topics/db/sql.txt:0
+msgid "Model table names"
+msgstr "Названия таблиц для моделей"
+
 # c23b5906efa84836923b7356b69db3b6
-#: ../../topics/db/sql.txt:50
+#: ../../topics/db/sql.txt:59
 msgid "Where'd the name of the ``Person`` table come from in that example?"
 msgstr "Откуда берется название таблицы для модели ``Person``?"
 
 # 0fa27d526bf64d4c87acc3fa14129260
-#: ../../topics/db/sql.txt:52
+#: ../../topics/db/sql.txt:61
 msgid ""
 "By default, Django figures out a database table name by joining the model's "
 "\"app label\" -- the name you used in ``manage.py startapp`` -- to the "
@@ -103,15 +123,15 @@ msgid ""
 "assumed that the ``Person`` model lives in an app named ``myapp``, so its "
 "table would be ``myapp_person``."
 msgstr ""
-"По умолчанию Django создает название таблицы объединив название приложения"
-"(название которое вы использовали при вызове ``manage.py startapp``), в "
-"котором находиться модель, и название модели с нижним подчеркиванием между "
-"ними. В нашем примере модель ``Person`` предположительно находится в "
-"приложение ``myapp``, по этому название таблицы в базе данных будет "
-"``myapp_person``."
+"По умолчанию Django создает название таблицы объединив название "
+"приложения(название которое вы использовали при вызове ``manage.py "
+"startapp``), в котором находиться модель, и название модели с нижним "
+"подчеркиванием между ними. В нашем примере модель ``Person`` "
+"предположительно находится в приложение ``myapp``, поэтому название таблицы "
+"в базе данных будет ``myapp_person``."
 
 # af84b86e32134699a59305b01392e3b6
-#: ../../topics/db/sql.txt:58
+#: ../../topics/db/sql.txt:67
 msgid ""
 "For more details check out the documentation for the :attr:`~Options."
 "db_table` option, which also lets you manually set the database table name."
@@ -120,7 +140,7 @@ msgstr ""
 "которая также позволяет явно указать название таблицы."
 
 # a1d664c2d6f44c4d95ad63ba09aab40d
-#: ../../topics/db/sql.txt:64
+#: ../../topics/db/sql.txt:73
 msgid ""
 "No checking is done on the SQL statement that is passed in to ``.raw()``. "
 "Django expects that the statement will return a set of rows from the "
@@ -131,19 +151,57 @@ msgstr ""
 "вернет набор записей с результатом, но никак не принуждает к этому. Если "
 "запрос возвращает не набор записей, вы получите ошибку."
 
+# ef6d7fd50d6d40f59fb4d5f58500ff4c
+#: ../../topics/db/sql.txt:80
+msgid ""
+"If you are performing queries on MySQL, note that MySQL's silent type "
+"coercion may cause unexpected results when mixing types. If you query on a "
+"string type column, but with an integer value, MySQL will coerce the types "
+"of all values in the table to an integer before performing the comparison. "
+"For example, if your table contains the values ``'abc'``, ``'def'`` and you "
+"query for ``WHERE mycolumn=0``, both rows will match. To prevent this, "
+"perform the correct typecasting before using the value in a query."
+msgstr ""
+"Выполняя запрос в MySQL, обратите внимание на преобразование типов. Если  вы "
+"выполняете запрос по текстовому полю, но используете числовое значение, "
+"MySQL преобразует все значения поля в число перед сравнением. Например, если "
+"таблица содержит значения ``'abc'``, ``'def'`` и в запросе ``WHERE "
+"mycolumn=0``, обе строки попадут в результат. Чтобы избежать этого, "
+"используйте значение правильного типа в запросе."
+
+# 5ed4c3daa8c24a92b5178b0f48371fa9
+#: ../../topics/db/sql.txt:90
+msgid ""
+"While a ``RawQuerySet`` instance can be iterated over like a normal :class:"
+"`~django.db.models.query.QuerySet`, ``RawQuerySet`` doesn't implement all "
+"methods you can use with ``QuerySet``. For example, ``__bool__()`` and "
+"``__len__()`` are not defined in ``RawQuerySet``, and thus all "
+"``RawQuerySet`` instances are considered ``True``. The reason these methods "
+"are not implemented in ``RawQuerySet`` is that implementing them without "
+"internal caching would be a performance drawback and adding such caching "
+"would be backward incompatible."
+msgstr ""
+"Хотя ``RawQuerySet`` и можно проитерировать как :class:`~django.db.models."
+"query.QuerySet`, ``RawQuerySet`` не предоставляет все методы ``QuerySet``. "
+"Например, ``__bool__()`` и ``__len__()`` не определены в ``RawQuerySet``, "
+"все экземпляры ``RawQuerySet`` равны ``True``. Они не определены в "
+"``RawQuerySet``, потому что их реализация без внутреннего кеширования может "
+"вызвать большие проблемы с производительностью, а добавление такого кеша "
+"повредило бы обратной совместимости."
+
 # 7168bcb8e867443a9faefbdcbf96ea7a
-#: ../../topics/db/sql.txt:70
+#: ../../topics/db/sql.txt:100
 msgid "Mapping query fields to model fields"
 msgstr "Соответствие полей ответа и полей модели"
 
 # 9f72293519c94a2aa77f8f49eea0a8d4
-#: ../../topics/db/sql.txt:72
+#: ../../topics/db/sql.txt:102
 msgid ""
 "``raw()`` automatically maps fields in the query to fields on the model."
 msgstr "``raw()`` автоматически сопоставляет поля ответа и поля модели."
 
 # f024e864810b4017a867c5b4a4cb172f
-#: ../../topics/db/sql.txt:74
+#: ../../topics/db/sql.txt:104
 msgid ""
 "The order of fields in your query doesn't matter. In other words, both of "
 "the following queries work identically::"
@@ -152,7 +210,7 @@ msgstr ""
 "идентичны::"
 
 # 2b3d5b8dd46d4b009500d79dff783437
-#: ../../topics/db/sql.txt:82
+#: ../../topics/db/sql.txt:112
 msgid ""
 "Matching is done by name. This means that you can use SQL's ``AS`` clauses "
 "to map fields in the query to model fields. So if you had some other table "
@@ -165,13 +223,13 @@ msgstr ""
 "можете легко сопоставить ее с моделью ``Person`` при запросе::"
 
 # 6b85120350504f36b11665c1d6ca24dd
-#: ../../topics/db/sql.txt:92
+#: ../../topics/db/sql.txt:122
 msgid ""
 "As long as the names match, the model instances will be created correctly."
 msgstr "Пока названия полей совпадают, экземпляр модели будет успешно создан."
 
 # b592b24ebb5c493aa5a0774b7d7e4681
-#: ../../topics/db/sql.txt:94
+#: ../../topics/db/sql.txt:124
 msgid ""
 "Alternatively, you can map fields in the query to model fields using the "
 "``translations`` argument to ``raw()``. This is a dictionary mapping names "
@@ -184,12 +242,12 @@ msgstr ""
 "выполнен следующим образом::"
 
 # 4e86fb276b774c5bb54686d7ae10aab4
-#: ../../topics/db/sql.txt:103
+#: ../../topics/db/sql.txt:133
 msgid "Index lookups"
 msgstr "Индексирование"
 
 # b1866270bef440b09bfd030cb0da9167
-#: ../../topics/db/sql.txt:105
+#: ../../topics/db/sql.txt:135
 msgid ""
 "``raw()`` supports indexing, so if you need only the first result you can "
 "write::"
@@ -198,28 +256,28 @@ msgstr ""
 "результата, вы можете сделать следующее::"
 
 # 4ede67da26cf4329a2fc6d07c63116eb
-#: ../../topics/db/sql.txt:110
+#: ../../topics/db/sql.txt:140
 msgid ""
 "However, the indexing and slicing are not performed at the database level. "
-"If you have a big amount of ``Person`` objects in your database, it is more "
-"efficient to limit the query at the SQL level::"
+"If you have a large number of ``Person`` objects in your database, it is "
+"more efficient to limit the query at the SQL level::"
 msgstr ""
 "Однако, индексирование и \"slicing\" выполняется не на уровне базы данных. "
 "Если база данных содержит большое количество записей ``Person``, эффективнее "
 "ограничить результат выборки на уровне SQL::"
 
 # 82dbac07263c4232b77508cc194cf1e3
-#: ../../topics/db/sql.txt:117
+#: ../../topics/db/sql.txt:147
 msgid "Deferring model fields"
 msgstr "Отложенная загрузка полей"
 
 # 47a2ba6ce7b3403ea6fee377a3440121
-#: ../../topics/db/sql.txt:119
+#: ../../topics/db/sql.txt:149
 msgid "Fields may also be left out::"
 msgstr "Часть полей при запросе может быть опущена::"
 
 # d6be296f2e784543b3b19bda5c89ac6e
-#: ../../topics/db/sql.txt:123
+#: ../../topics/db/sql.txt:153
 msgid ""
 "The ``Person`` objects returned by this query will be deferred model "
 "instances (see :meth:`~django.db.models.query.QuerySet.defer()`). This means "
@@ -232,7 +290,7 @@ msgstr ""
 "обращении к ним. Например::"
 
 # 7419ece7bf1d41e5a6fa4cfec35b7730
-#: ../../topics/db/sql.txt:134
+#: ../../topics/db/sql.txt:164
 msgid ""
 "From outward appearances, this looks like the query has retrieved both the "
 "first name and last name. However, this example actually issued 3 queries. "
@@ -244,7 +302,7 @@ msgstr ""
 "``raw()`` -- фамилия была получена при обращении к полю для двух объектов."
 
 # 4accffc728f741a4ab9803dda01acb56
-#: ../../topics/db/sql.txt:139
+#: ../../topics/db/sql.txt:169
 msgid ""
 "There is only one field that you can't leave out - the primary key field. "
 "Django uses the primary key to identify model instances, so it must always "
@@ -257,29 +315,29 @@ msgstr ""
 "будет вызвано исключение ``InvalidQuery``."
 
 # be02e783e817422d90fe5783f6ce5132
-#: ../../topics/db/sql.txt:145
+#: ../../topics/db/sql.txt:175
 msgid "Adding annotations"
 msgstr "Добавление аннотации"
 
 # a5aea20c19c2414db94d95c9bc3cb691
-#: ../../topics/db/sql.txt:147
+#: ../../topics/db/sql.txt:177
 msgid ""
 "You can also execute queries containing fields that aren't defined on the "
 "model. For example, we could use `PostgreSQL's age() function`__ to get a "
 "list of people with their ages calculated by the database::"
 msgstr ""
 "Вы можете выполнять запросы, которые возвращают поля отсутствующие в модели. "
-"Например, мы может использовать `функцию PostgreSQL age() <http://www."
+"Например, мы можем использовать `функцию PostgreSQL age() <http://www."
 "postgresql.org/docs/8.4/static/functions-datetime.html>`__, чтобы получить "
 "список людей и их возраст вычисленный базой данных::"
 
 # 7cb40e1d06aa4ea98ddbea047a638c09
-#: ../../topics/db/sql.txt:161
+#: ../../topics/db/sql.txt:191
 msgid "Passing parameters into ``raw()``"
 msgstr "Передача параметров в ``raw()``"
 
 # f0ef377e43e6463294ca26e5f7cb9c04
-#: ../../topics/db/sql.txt:163
+#: ../../topics/db/sql.txt:193
 msgid ""
 "If you need to perform parameterized queries, you can use the ``params`` "
 "argument to ``raw()``::"
@@ -288,7 +346,7 @@ msgstr ""
 "``params``::"
 
 # d1ccff552786443cbf71206cc93c66b3
-#: ../../topics/db/sql.txt:169
+#: ../../topics/db/sql.txt:199
 msgid ""
 "``params`` is a list or dictionary of parameters. You'll use ``%s`` "
 "placeholders in the query string for a list, or ``%(key)s`` placeholders for "
@@ -302,12 +360,12 @@ msgstr ""
 "запроса будут подставлены значения из списка ``params``."
 
 # f40bb00def4f4d0a81dc6709033ca4aa
-#: ../../topics/db/sql.txt:176
+#: ../../topics/db/sql.txt:206
 msgid "Dictionary params not supported with SQLite"
 msgstr "Параметры из словаря не поддерживаются SQLite"
 
 # e5c795e606204dca9a8d53cfc374ddc3
-#: ../../topics/db/sql.txt:178
+#: ../../topics/db/sql.txt:208
 msgid ""
 "Dictionary params are not supported with the SQLite backend; with this "
 "backend, you must pass parameters as a list."
@@ -316,22 +374,22 @@ msgstr ""
 "список."
 
 # 67537d8af9fc4a5f9622c0c9feac352a
-#: ../../topics/db/sql.txt:183
+#: ../../topics/db/sql.txt:213
 msgid "**Do not use string formatting on raw queries!**"
 msgstr "**Не используйте форматирование строк в запросе!**"
 
 # 37bebbcd691648e88c9fd4d3011db9b4
-#: ../../topics/db/sql.txt:185
+#: ../../topics/db/sql.txt:215
 msgid "It's tempting to write the above query as::"
 msgstr "Очень заманчиво написать запрос следующим образом::"
 
 # 6d6024d7dcb946c7a1603872d7b95bb8
-#: ../../topics/db/sql.txt:190
+#: ../../topics/db/sql.txt:220
 msgid "**Don't.**"
 msgstr "**Не делайте этого.**"
 
 # d26883ab7d38404fa63ca94186c35d92
-#: ../../topics/db/sql.txt:192
+#: ../../topics/db/sql.txt:222
 msgid ""
 "Using the ``params`` argument completely protects you from `SQL injection "
 "attacks`__, a common exploit where attackers inject arbitrary SQL into your "
@@ -345,13 +403,24 @@ msgstr ""
 "непосредственно в строку запроса, рано или поздно вы станете жертвой атаки. "
 "Используя аргумент ``params`` вы обезопасите себя от этого."
 
+# 7a368a466533465eb293f00cceae3bf3
+#: ../../topics/db/sql.txt:232
+msgid ""
+"In Django 1.5 and earlier, you could pass parameters as dictionaries when "
+"using PostgreSQL or MySQL, although this wasn't documented. Now you can also "
+"do this when using Oracle, and it is officially supported."
+msgstr ""
+"В Django 1.5 и ниже можно было передавать аргументы словарем для PostgreSQL "
+"или MySQL, однако, это не было задокументировано. Теперь это можно "
+"использовать и для Oracle, и такая возможность официально поддерживается."
+
 # a3f6386003184a438fa817a3ee5f75b3
-#: ../../topics/db/sql.txt:210
+#: ../../topics/db/sql.txt:240
 msgid "Executing custom SQL directly"
 msgstr "Непосредственное выполнение SQL запроса"
 
 # dc53b738ed8f41a58586887c0ec4ef9e
-#: ../../topics/db/sql.txt:212
+#: ../../topics/db/sql.txt:242
 msgid ""
 "Sometimes even :meth:`Manager.raw` isn't quite enough: you might need to "
 "perform queries that don't map cleanly to models, or directly execute "
@@ -362,7 +431,7 @@ msgstr ""
 "запросы ``UPDATE``, ``INSERT`` или ``DELETE``."
 
 # 57f671e0b9a543ae864b97ee2e406eda
-#: ../../topics/db/sql.txt:216
+#: ../../topics/db/sql.txt:246
 msgid ""
 "In these cases, you can always access the database directly, routing around "
 "the model layer entirely."
@@ -371,7 +440,7 @@ msgstr ""
 "моделей."
 
 # ee0f2a5bf7524a5fb495608716c544ee
-#: ../../topics/db/sql.txt:219
+#: ../../topics/db/sql.txt:249
 msgid ""
 "The object ``django.db.connection`` represents the default database "
 "connection. To use the database connection, call ``connection.cursor()`` to "
@@ -386,12 +455,25 @@ msgstr ""
 "или ``cursor.fetchall()`` для получения результата. "
 
 # 0149a687358840a9baa97cbc048b51bd
-#: ../../topics/db/sql.txt:225
+#: ../../topics/db/sql.txt:255
 msgid "For example::"
 msgstr "Например::"
 
+# e371cbd5304340d88dda65aeaa900b55
+#: ../../topics/db/sql.txt:271
+msgid ""
+"In Django 1.5 and earlier, after performing a data changing operation, you "
+"had to call ``transaction.commit_unless_managed()`` to ensure your changes "
+"were committed to the database. Since Django now defaults to database-level "
+"autocommit, this isn't necessary any longer."
+msgstr ""
+"В Django 1.5 и ниже, поесле операций, которые изменяют данные, необходимо "
+"было вызвать``transaction.commit_unless_managed()`` для коммита изменений в "
+"базу данных. Теперь Django на уровне базы данных использует autocommit и в "
+"этом нет необходимости."
+
 # 197a362594b04e75b6786b7e9865383d
-#: ../../topics/db/sql.txt:246
+#: ../../topics/db/sql.txt:276
 msgid ""
 "Note that if you want to include literal percent signs in the query, you "
 "have to double them in the case you are passing parameters::"
@@ -399,7 +481,7 @@ msgstr ""
 "Если необходимо вставить символ процента, необходимо его продублировать::"
 
 # 4871c2ebadcc4dbca7f725dd583f8320
-#: ../../topics/db/sql.txt:252
+#: ../../topics/db/sql.txt:282
 msgid ""
 "If you are using :doc:`more than one database </topics/db/multi-db>`, you "
 "can use ``django.db.connections`` to obtain the connection (and cursor) for "
@@ -412,7 +494,7 @@ msgstr ""
 "позволяющий получить подключение по псевдониму базы данных::"
 
 # 5f519b956e5447219236bf3db748bf72
-#: ../../topics/db/sql.txt:262
+#: ../../topics/db/sql.txt:292
 msgid ""
 "By default, the Python DB API will return results without their field names, "
 "which means you end up with a ``list`` of values, rather than a ``dict``. At "
@@ -424,17 +506,17 @@ msgstr ""
 "производительности вы можете получить словарь следующим образом::"
 
 # 0485eb426ffe48e59250e1f3304c3bcf
-#: ../../topics/db/sql.txt:275
+#: ../../topics/db/sql.txt:305
 msgid "Here is an example of the difference between the two::"
 msgstr "Пример показывающий разницу между двумя методами::"
 
 # be44bce06957408b9cef2609c74b5e57
-#: ../../topics/db/sql.txt:286
+#: ../../topics/db/sql.txt:316
 msgid "Connections and cursors"
 msgstr "Подключения и указатель"
 
 # 15cedf8ada6b4e28ae13085fe7c48ed7
-#: ../../topics/db/sql.txt:288
+#: ../../topics/db/sql.txt:318
 msgid ""
 "``connection`` and ``cursor`` mostly implement the standard Python DB-API "
 "described in :pep:`249` — except when it comes to :doc:`transaction handling "
@@ -445,7 +527,7 @@ msgstr ""
 "transactions>`."
 
 # f48db64db511477a812e99e1e1d7cbb2
-#: ../../topics/db/sql.txt:292
+#: ../../topics/db/sql.txt:322
 msgid ""
 "If you're not familiar with the Python DB-API, note that the SQL statement "
 "in ``cursor.execute()`` uses placeholders, ``\"%s\"``, rather than adding "
@@ -460,7 +542,7 @@ msgstr ""
 "экранирует параметры."
 
 # f134b90e2f484d9d9ce6a08fc865f49d
-#: ../../topics/db/sql.txt:297
+#: ../../topics/db/sql.txt:327
 msgid ""
 "Also note that Django expects the ``\"%s\"`` placeholder, *not* the ``\"?"
 "\"`` placeholder, which is used by the SQLite Python bindings. This is for "
@@ -469,6 +551,30 @@ msgstr ""
 "Также заметим, что Django принимает ``\"%s\"``, *не*  ``\"?\"``, который "
 "использует библиотекой для SQLite в Python. Так сделано для "
 "последовательности и удобства."
+
+# 7265e03edbb243d992b7e7998f54646c
+#: ../../topics/db/sql.txt:333
+msgid ""
+":pep:`249` does not state whether a cursor should be usable as a context "
+"manager. Prior to Python 2.7, a cursor was usable as a context manager due "
+"an unexpected behavior in magic method lookups (`Python ticket #9220`_). "
+"Django 1.7 explicitly added support to allow using a cursor as context "
+"manager."
+msgstr ""
+":pep:`249` не определяет должен ли курсор поддерживать интерфейс "
+"контекстного менеджера. До Python 2.7 курсор можно было использовать как "
+"контекстный менеджер из-за странного поведения магических методов (`Python "
+"ticket #9220`_). Django 1.7 явно предоставляет эту возможность."
+
+# 710f20cf02fa42c3a83e1772aaf6b439
+#: ../../topics/db/sql.txt:341
+msgid "Using a cursor as a context manager:"
+msgstr "Использование курсора как контекстный менеджер:"
+
+# ce9b35f1daee48988c4b22285e92f725
+#: ../../topics/db/sql.txt:348
+msgid "is equivalent to:"
+msgstr "эквивалентно:"
 
 # db6f1acd82324f1db1c8280b3b581ff1
 #~ msgid "Transactions and raw SQL"

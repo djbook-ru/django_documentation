@@ -10,7 +10,7 @@ from djbook.cliff_utils import GithubCommandMixin
 
 class Command(GithubCommandMixin, BaseCommand):
     """
-    Get authors from git history
+    Generate page with authors from git history
     """
     log = logging.getLogger(__name__)
 
@@ -23,7 +23,6 @@ class Command(GithubCommandMixin, BaseCommand):
             })
         except GithubException as e:
             print e
-            print dir(e)
 
     def save_to_file(self, context):
         env = Environment(loader=FileSystemLoader(self.app.templates_path))

@@ -244,8 +244,7 @@ model to represent this data::
         objects = models.GeoManager()
 
         # Returns the string representation of the model.
-        # On Python 3: def __str__(self):
-        def __unicode__(self):
+        def __str__(self):              # __unicode__ on Python 2
             return self.name
 
 Please note two important things:
@@ -262,14 +261,25 @@ argument. Use an integer representing the coordinate system's EPSG code.
 
 __ http://en.wikipedia.org/wiki/SRID
 
-Run ``syncdb``
---------------
+Run ``migrate``
+---------------
 
 After defining your model, you need to sync it with the database. First,
-let's look at the SQL that will generate the table for the
-``WorldBorder`` model::
+create a database migration:
 
-    $ python manage.py sqlall world
+.. code-block:: bash
+
+    $ python manage.py makemigrations
+    Migrations for 'world':
+      0001_initial.py:
+        - Create model WorldBorder
+
+Let's look at the SQL that will generate the table for the ``WorldBorder``
+model:
+
+.. code-block:: bash
+
+    $ python manage.py sqlmigrate world 0001
 
 This command should produce the following output:
 
@@ -289,21 +299,29 @@ This command should produce the following output:
         "subregion" integer NOT NULL,
         "lon" double precision NOT NULL,
         "lat" double precision NOT NULL
+        "mpoly" geometry(MULTIPOLYGON,4326) NOT NULL
     )
     ;
-    SELECT AddGeometryColumn('world_worldborder', 'mpoly', 4326, 'MULTIPOLYGON', 2);
-    ALTER TABLE "world_worldborder" ALTER "mpoly" SET NOT NULL;
-    CREATE INDEX "world_worldborder_mpoly_id" ON "world_worldborder" USING GIST ( "mpoly" GIST_GEOMETRY_OPS );
+    CREATE INDEX "world_worldborder_mpoly_id" ON "world_worldborder" USING GIST ( "mpoly" );
     COMMIT;
 
-If this looks correct, run ``syncdb`` to create this table in the database::
+.. note::
 
-    $ python manage.py syncdb
-    Creating table world_worldborder
-    Installing custom SQL for world.WorldBorder model
+    With PostGIS < 2.0, the output is slightly different. The ``mpoly`` geometry
+    column is added through a separate ``SELECT AddGeometryColumn(...)``
+    statement.
 
-The ``syncdb`` command may also prompt you to create an admin user. Either
-do so now, or later by running ``django-admin.py createsuperuser``.
+If this looks correct, run :djadmin:`migrate` to create this table in the
+database:
+
+.. code-block:: bash
+
+    $ python manage.py migrate
+    Operations to perform:
+      Apply all migrations: admin, world, contenttypes, auth, sessions
+    Running migrations:
+      ...
+      Applying world.0001_initial... OK
 
 Importing Spatial Data
 ======================
@@ -729,25 +747,29 @@ Next, edit your ``urls.py`` in the ``geodjango`` application folder as follows::
     from django.conf.urls import patterns, url, include
     from django.contrib.gis import admin
 
-    admin.autodiscover()
-
     urlpatterns = patterns('',
         url(r'^admin/', include(admin.site.urls)),
     )
 
-Start up the Django development server:
+Create an admin user:
+
+.. code-block:: bash
+
+    $ python manage.py createsuperuser
+
+Next, start up the Django development server:
 
 .. code-block:: bash
 
     $ python manage.py runserver
 
-Finally, browse to ``http://localhost:8000/admin/``, and log in with the admin
-user created after running ``syncdb``.  Browse to any of the ``WorldBorder``
-entries -- the borders may be edited by clicking on a polygon and dragging
-the vertexes to the desired position.
+Finally, browse to ``http://localhost:8000/admin/``, and log in with the user
+you just created. Browse to any of the ``WorldBorder`` entries -- the borders
+may be edited by clicking on a polygon and dragging the vertexes to the desired
+position.
 
 .. _OpenLayers: http://openlayers.org/
-.. _Open Street Map: http://openstreetmap.org/
+.. _Open Street Map: http://www.openstreetmap.org/
 .. _Vector Map Level 0: http://earth-info.nga.mil/publications/vmap0.html
 .. _OSGeo: http://www.osgeo.org
 

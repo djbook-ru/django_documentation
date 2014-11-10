@@ -30,7 +30,7 @@ or CheetahTemplate_, you should feel right at home with Django's templates.
     </howto/custom-template-tags>` to the template language as needed).
 
 .. _`The Django template language: For Python programmers`: ../templates_python/
-.. _Smarty: http://smarty.php.net/
+.. _Smarty: http://www.smarty.net/
 .. _CheetahTemplate: http://www.cheetahtemplate.org/
 
 Templates
@@ -95,13 +95,15 @@ Use a dot (``.``) to access attributes of a variable.
     following lookups, in this order:
 
     * Dictionary lookup
-    * Attribute lookup
-    * Method call
-    * List-index lookup
+    * Attribute or method lookup
+    * Numeric index lookup
 
-    This can cause some unexpected behavior with objects that override
-    dictionary lookup. For example, consider the following code snippet that
-    attempts to loop over a ``collections.defaultdict``::
+    If the resulting value is callable, it is called with no arguments. The
+    result of the call becomes the template value.
+
+    This lookup order can cause some unexpected behavior with objects that
+    override dictionary lookup. For example, consider the following code snippet
+    that attempts to loop over a ``collections.defaultdict``::
 
         {% for k, v in defaultdict.iteritems %}
             Do something with k and v here...
@@ -211,18 +213,23 @@ tags:
         {% endfor %}
         </ul>
 
-:ttag:`if` and ``else``
+:ttag:`if`, ``elif``, and ``else``
     Evaluates a variable, and if that variable is "true" the contents of the
     block are displayed::
 
         {% if athlete_list %}
             Number of athletes: {{ athlete_list|length }}
+        {% elif athlete_in_locker_room_list %}
+            Athletes should be out of the locker room soon!
         {% else %}
             No athletes.
         {% endif %}
 
     In the above, if ``athlete_list`` is not empty, the number of athletes
-    will be displayed by the ``{{ athlete_list|length }}`` variable.
+    will be displayed by the ``{{ athlete_list|length }}`` variable. Otherwise,
+    if ``athlete_in_locker_room_list`` is not empty, the message "Athletes
+    should be out..." will be displayed. If both lists are empty,
+    "No athletes." will be displayed.
 
     You can also use filters and various operators in the :ttag:`if` tag::
 
@@ -432,7 +439,7 @@ template fragment::
     Hello, {{ name }}.
 
 At first, this seems like a harmless way to display a user's name, but consider
-what would happen if the user entered his name as this::
+what would happen if the user entered their name as this::
 
     <script>alert('hello')</script>
 
@@ -542,9 +549,10 @@ disabled. Here is an example template::
 
 The auto-escaping tag passes its effect onto templates that extend the
 current one as well as templates included via the :ttag:`include` tag,
-just like all block tags. For example::
+just like all block tags. For example:
 
-    # base.html
+.. snippet::
+    :filename: base.html
 
     {% autoescape off %}
     <h1>{% block title %}{% endblock %}</h1>
@@ -552,18 +560,18 @@ just like all block tags. For example::
     {% endblock %}
     {% endautoescape %}
 
-
-    # child.html
+.. snippet::
+    :filename: child.html
 
     {% extends "base.html" %}
-    {% block title %}This & that{% endblock %}
+    {% block title %}This &amp; that{% endblock %}
     {% block content %}{{ greeting }}{% endblock %}
 
 Because auto-escaping is turned off in the base template, it will also be
 turned off in the child template, resulting in the following rendered
 HTML when the ``greeting`` variable contains the string ``<b>Hello!</b>``::
 
-    <h1>This & that</h1>
+    <h1>This &amp; that</h1>
     <b>Hello!</b>
 
 Notes
@@ -599,9 +607,9 @@ This means you would write ::
 
     {{ data|default:"3 &lt; 2" }}
 
-...rather than ::
+...rather than::
 
-    {{ data|default:"3 < 2" }}  <-- Bad! Don't do this.
+    {{ data|default:"3 < 2" }}  {# Bad! Don't do this. #}
 
 This doesn't affect what happens to data coming from the variable itself.
 The variable's contents are still automatically escaped, if necessary, because
@@ -631,14 +639,18 @@ of all comments related to the current task with::
     {{ task.comment_set.all.count }}
 
 And of course you can easily access methods you've explicitly defined on your
-own models::
+own models:
 
-    # In model
+.. snippet::
+    :filename: models.py
+
     class Task(models.Model):
         def foo(self):
             return "bar"
 
-    # In template
+.. snippet::
+    :filename: template.html
+
     {{ task.foo }}
 
 Because Django intentionally limits the amount of logic processing available

@@ -100,17 +100,12 @@ TemplateView
     Renders a given template, with the context containing parameters captured
     in the URL.
 
-    .. versionchanged:: 1.5
-
-        The context used to be populated with a ``{{ params }}`` dictionary of
-        the parameters captured in the URL. Now those parameters are first-level
-        context variables.
-
     **Ancestors (MRO)**
 
     This view inherits methods and attributes from the following views:
 
     * :class:`django.views.generic.base.TemplateResponseMixin`
+    * :class:`django.views.generic.base.ContextMixin`
     * :class:`django.views.generic.base.View`
 
     **Method Flowchart**
@@ -146,8 +141,8 @@ TemplateView
 
     **Context**
 
-    * ``params``: The dictionary of keyword arguments captured from the URL
-      pattern that served the view.
+    * Populated (through :class:`~django.views.generic.base.ContextMixin`) with
+      the keyword arguments captured from the URL pattern that served the view.
 
 RedirectView
 ------------
@@ -191,7 +186,7 @@ RedirectView
             pattern_name = 'article-detail'
 
             def get_redirect_url(self, *args, **kwargs):
-                article = get_object_or_404(Article, pk=pk)
+                article = get_object_or_404(Article, pk=kwargs['pk'])
                 article.update_counter()
                 return super(ArticleCounterRedirectView, self).get_redirect_url(*args, **kwargs)
 
@@ -239,12 +234,23 @@ RedirectView
 
     **Methods**
 
-    .. method:: get_redirect_url(**kwargs)
+    .. method:: get_redirect_url(*args, **kwargs)
 
         Constructs the target URL for redirection.
 
+        .. versionchanged:: 1.6
+
+            The signature of this method was changed to include ``*args``.
+
         The default implementation uses :attr:`url` as a starting
-        string, performs expansion of ``%`` parameters in that string, as well
-        as the appending of query string if requested by :attr:`query_string`.
+        string and performs expansion of ``%`` named parameters in that string
+        using the named groups captured in the URL.
+
+        If :attr:`url` is not set, ``get_redirect_url()`` tries to reverse the
+        :attr:`pattern_name` using what was captured in the URL (both named and
+        unnamed groups are used).
+
+        If requested by :attr:`query_string`, it will also append the query
+        string to the generated URL.
         Subclasses may implement any behavior they wish, as long as the method
         returns a redirect-ready URL string.

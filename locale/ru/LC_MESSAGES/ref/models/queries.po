@@ -1,0 +1,271 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-30 13:35+0300\n"
+"PO-Revision-Date: 2014-07-11 11:43+0300\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 074f18b12e444d5696dec15fdd84cc97
+#: ../../ref/models/queries.txt:3
+msgid "Query-related classes"
+msgstr ""
+
+# 0bf3f5d2f5c84b50a8d6a88135fa5548
+#: ../../ref/models/queries.txt:7
+msgid ""
+"This document provides reference material for query-related tools not "
+"documented elsewhere."
+msgstr ""
+
+# 05219ad8bcfd461db334919ab11458e5
+#: ../../ref/models/queries.txt:11
+msgid "``F()`` expressions"
+msgstr ""
+
+# d0317fb2e8624e6bb3c6dd568c1891f5
+#: ../../ref/models/queries.txt:15
+msgid ""
+"An ``F()`` object represents the value of a model field. It makes it "
+"possible to refer to model field values and perform database operations "
+"using them without actually having to pull them out of the database into "
+"Python memory."
+msgstr ""
+
+# 4d8b35e601f1464b9656f1b4cf74fa57
+#: ../../ref/models/queries.txt:19
+msgid ""
+"Instead, Django uses the ``F()`` object to generate a SQL expression that "
+"describes the required operation at the database level."
+msgstr ""
+
+# f98b4c54f9b6402d875251b382705e85
+#: ../../ref/models/queries.txt:22
+msgid ""
+"This is easiest to understand through an example. Normally, one might do "
+"something like this::"
+msgstr ""
+
+# 380b379423a144c5b1ad4296fa85de9c
+#: ../../ref/models/queries.txt:30
+msgid ""
+"Here, we have pulled the value of ``reporter.stories_filed`` from the "
+"database into memory and manipulated it using familiar Python operators, and "
+"then saved the object back to the database. But instead we could also have "
+"done::"
+msgstr ""
+
+# d12a757d22cf423e98d8cf36b6379f5d
+#: ../../ref/models/queries.txt:39
+msgid ""
+"Although ``reporter.stories_filed = F('stories_filed') + 1`` looks like a "
+"normal Python assignment of value to an instance attribute, in fact it's an "
+"SQL construct describing an operation on the database."
+msgstr ""
+
+# 4bd0a95de2334824815ee31b95739782
+#: ../../ref/models/queries.txt:43
+msgid ""
+"When Django encounters an instance of ``F()``, it overrides the standard "
+"Python operators to create an encapsulated SQL expression; in this case, one "
+"which instructs the database to increment the database field represented by "
+"``reporter.stories_filed``."
+msgstr ""
+
+# 3bd171f0b53d46bf9a2dc3c2db27236d
+#: ../../ref/models/queries.txt:48
+msgid ""
+"Whatever value is or was on ``reporter.stories_filed``, Python never gets to "
+"know about it - it is dealt with entirely by the database. All Python does, "
+"through Django's ``F()`` class, is create the SQL syntax to refer to the "
+"field and describe the operation."
+msgstr ""
+
+# b7327c47f4534f4db1b9fbc1bcf3dd1f
+#: ../../ref/models/queries.txt:55
+msgid ""
+"In order to access the new value that has been saved in this way, the object "
+"will need to be reloaded::"
+msgstr ""
+
+# c56d52081b8647ef9b8dbb6fb3a73308
+#: ../../ref/models/queries.txt:60
+msgid ""
+"As well as being used in operations on single instances as above, ``F()`` "
+"can be used on ``QuerySets`` of object instances, with ``update()``. This "
+"reduces the two queries we were using above - the ``get()`` and the :meth:"
+"`~Model.save()` - to just one::"
+msgstr ""
+
+# 191b66b7e3c5475ca83b9af11534407b
+#: ../../ref/models/queries.txt:68
+msgid ""
+"We can also use :meth:`~django.db.models.query.QuerySet.update()` to "
+"increment the field value on multiple objects - which could be very much "
+"faster than pulling them all into Python from the database, looping over "
+"them, incrementing the field value of each one, and saving each one back to "
+"the database::"
+msgstr ""
+
+# dc40949f428d4db0a5fec5e815d875ea
+#: ../../ref/models/queries.txt:75
+msgid "``F()`` therefore can offer performance advantages by:"
+msgstr ""
+
+# cbe820f6f7974dd5aea77d09316b0675
+#: ../../ref/models/queries.txt:77
+msgid "getting the database, rather than Python, to do work"
+msgstr ""
+
+# b1e3a003076c4630b7e4e7ec38d3e580
+#: ../../ref/models/queries.txt:78
+msgid "reducing the number of queries some operations require"
+msgstr ""
+
+# 1142669faa91475d9e207dbc0e3dba3c
+#: ../../ref/models/queries.txt:83
+msgid "Avoiding race conditions using ``F()``"
+msgstr ""
+
+# 452902f97d9b428fa21a46d445dc8ffd
+#: ../../ref/models/queries.txt:85
+msgid ""
+"Another useful benefit of ``F()`` is that having the database - rather than "
+"Python - update a field's value avoids a *race condition*."
+msgstr ""
+
+# 223e9cbb30e442419ba51b5c942b5054
+#: ../../ref/models/queries.txt:88
+msgid ""
+"If two Python threads execute the code in the first example above, one "
+"thread could retrieve, increment, and save a field's value after the other "
+"has retrieved it from the database. The value that the second thread saves "
+"will be based on the original value; the work of the first thread will "
+"simply be lost."
+msgstr ""
+
+# 31d2cbf280a346eeb17670503335446d
+#: ../../ref/models/queries.txt:93
+msgid ""
+"If the database is responsible for updating the field, the process is more "
+"robust: it will only ever update the field based on the value of the field "
+"in the database when the :meth:`~Model.save()` or ``update()`` is executed, "
+"rather than based on its value when the instance was retrieved."
+msgstr ""
+
+# 84cb53c33a0840ed9a71b61e16eaa234
+#: ../../ref/models/queries.txt:99
+msgid "Using ``F()`` in filters"
+msgstr ""
+
+# f2f88721ca9846adb15321d5d3071d34
+#: ../../ref/models/queries.txt:101
+msgid ""
+"``F()`` is also very useful in ``QuerySet`` filters, where they make it "
+"possible to filter a set of objects against criteria based on their field "
+"values, rather than on Python values."
+msgstr ""
+
+# 216e9ac7569841c381dc30c3f10d7564
+#: ../../ref/models/queries.txt:105
+msgid ""
+"This is documented in :ref:`using F() expressions in queries <using-f-"
+"expressions-in-filters>`"
+msgstr ""
+
+# d728149633ea4d49bf872c4b4464d950
+#: ../../ref/models/queries.txt:109
+msgid "Supported operations with ``F()``"
+msgstr ""
+
+# 9c7eedeb5cca47dd8192a96b22dbcaaf
+#: ../../ref/models/queries.txt:111
+msgid ""
+"As well as addition, Django supports subtraction, multiplication, division, "
+"and modulo arithmetic with ``F()`` objects, using Python constants, "
+"variables, and even other ``F()`` objects."
+msgstr ""
+
+# 004eda3ad22d4491a2ec564fd34b2f6e
+#: ../../ref/models/queries.txt:117
+msgid "The power operator ``**`` is also supported."
+msgstr ""
+
+# 18ccea95b4c44ef3ae348bc9c94096a4
+#: ../../ref/models/queries.txt:120
+msgid "``Q()`` objects"
+msgstr ""
+
+# 0d0f4766697a4a26ac2469688d369fa8
+#: ../../ref/models/queries.txt:124
+msgid ""
+"A ``Q()`` object, like an :class:`~django.db.models.F` object, encapsulates "
+"a SQL expression in a Python object that can be used in database-related "
+"operations."
+msgstr ""
+
+# 803d3d987af8464c99ea7bab7e0c1918
+#: ../../ref/models/queries.txt:128
+msgid ""
+"In general, ``Q() objects`` make it possible to define and reuse conditions. "
+"This permits the :ref:`construction of complex database queries <complex-"
+"lookups-with-q>` using ``|`` (``OR``) and ``&`` (``AND``) operators; in "
+"particular, it is not otherwise possible to use ``OR`` in ``QuerySets``."
+msgstr ""
+
+# 97aff391693f4143980d3495763a2c5d
+#: ../../ref/models/queries.txt:134
+msgid "``Prefetch()`` objects"
+msgstr ""
+
+# 152f05fe4a264c1a89815604cf7d4cee
+#: ../../ref/models/queries.txt:140
+msgid ""
+"The ``Prefetch()`` object can be used to control the operation of :meth:"
+"`~django.db.models.query.QuerySet.prefetch_related()`."
+msgstr ""
+
+# daacd09ad1d04965bc2aa8742db4b7cf
+#: ../../ref/models/queries.txt:143
+msgid ""
+"The ``lookup`` argument describes the relations to follow and works the same "
+"as the string based lookups passed to :meth:`~django.db.models.query."
+"QuerySet.prefetch_related()`."
+msgstr ""
+
+# 9901dc87f34d44968c99e6fbc2d6c4a1
+#: ../../ref/models/queries.txt:147
+msgid ""
+"The ``queryset`` argument supplies a base ``QuerySet`` for the given lookup. "
+"This is useful to further filter down the prefetch operation, or to call :"
+"meth:`~django.db.models.query.QuerySet.select_related()` from the prefetched "
+"relation, hence reducing the number of queries even further."
+msgstr ""
+
+# 848a11282159420c9dade8e65e2a37af
+#: ../../ref/models/queries.txt:152
+msgid ""
+"The ``to_attr`` argument sets the result of the prefetch operation to a "
+"custom attribute."
+msgstr ""
+
+# a3e15c5212e845d189e17669acf9ec19
+#: ../../ref/models/queries.txt:157
+msgid ""
+"When using ``to_attr`` the prefetched result is stored in a list. This can "
+"provide a significant speed improvement over traditional "
+"``prefetch_related`` calls which store the cached result within a "
+"``QuerySet`` instance."
+msgstr ""

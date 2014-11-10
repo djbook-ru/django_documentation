@@ -55,8 +55,6 @@ interface to working with templates in class-based views.
     override this to provide more flexible defaults when dealing with actual
     objects.
 
-.. versionadded:: 1.5
-
 :class:`~django.views.generic.base.ContextMixin`
     Every built in view which needs context data, such as for rendering a
     template (including ``TemplateResponseMixin`` above), should call
@@ -119,7 +117,7 @@ overriding
 :meth:`~django.views.generic.base.TemplateResponseMixin.get_template_names()`
 as discussed above. It actually provides a fairly sophisticated set of options,
 but the main one that most people are going to use is
-``<app_label>/<object_name>_detail.html``. The ``_detail`` part can be changed
+``<app_label>/<model_name>_detail.html``. The ``_detail`` part can be changed
 by setting
 :attr:`~django.views.generic.detail.SingleObjectTemplateResponseMixin.template_name_suffix`
 on a subclass to something else. (For instance, the :doc:`generic edit
@@ -165,12 +163,12 @@ as with :class:`~django.views.generic.detail.SingleObjectTemplateResponseMixin`
 above, this overrides ``get_template_names()`` to provide :meth:`a range of
 options <django.views.generic.list.MultipleObjectTemplateResponseMixin>`,
 with the most commonly-used being
-``<app_label>/<object_name>_list.html``, with the ``_list`` part again
+``<app_label>/<model_name>_list.html``, with the ``_list`` part again
 being taken from the
 :attr:`~django.views.generic.list.MultipleObjectTemplateResponseMixin.template_name_suffix`
 attribute. (The date based generic views use suffixes such as ``_archive``,
 ``_archive_year`` and so on to use different templates for the various
-specialised date-based list views.)
+specialized date-based list views.)
 
 Using Django's class-based view mixins
 ======================================
@@ -221,7 +219,7 @@ processing to work on a particular object, identified from the URL,
 we'll want the functionality provided by
 :class:`~django.views.generic.detail.SingleObjectMixin`.
 
-We'll demonstrate this with the publisher modelling we used in the
+We'll demonstrate this with the ``Author`` model we used in the
 :doc:`generic class-based views introduction<generic-display>`.
 
 .. code-block:: python
@@ -288,7 +286,7 @@ object. In order to do this, we need to have two different querysets:
 
 ``Book`` queryset for use by :class:`~django.views.generic.list.ListView`
     Since we have access to the ``Publisher`` whose books we want to list, we
-    simply override ``get_queryset()`` and use the ``Publisher``'s
+    simply override ``get_queryset()`` and use the ``Publisher``’s
     :ref:`reverse foreign key manager<backwards-related-objects>`.
 
 ``Publisher`` queryset for use in :meth:`~django.views.generic.detail.SingleObjectMixin.get_object()`
@@ -305,7 +303,7 @@ object. In order to do this, we need to have two different querysets:
     Since both :class:`~django.views.generic.detail.SingleObjectMixin` and
     :class:`ListView` will
     put things in the context data under the value of
-    ``context_object_name`` if it's set, we'll instead explictly
+    ``context_object_name`` if it's set, we'll instead explicitly
     ensure the ``Publisher`` is in the context data. :class:`ListView`
     will add in the suitable ``page_obj`` and ``paginator`` for us
     providing we remember to call ``super()``.
@@ -610,8 +608,7 @@ conversion to JSON once.
 
 For example, a simple JSON mixin might look something like this::
 
-    import json
-    from django.http import HttpResponse
+    from django.http import JsonResponse
 
     class JSONResponseMixin(object):
         """
@@ -621,19 +618,20 @@ For example, a simple JSON mixin might look something like this::
             """
             Returns a JSON response, transforming 'context' to make the payload.
             """
-            return HttpResponse(
-                self.convert_context_to_json(context),
-                content_type='application/json',
+            return JsonResponse(
+                self.get_data(context),
                 **response_kwargs
             )
 
-        def convert_context_to_json(self, context):
-            "Convert the context dictionary into a JSON object"
+        def get_data(self, context):
+            """
+            Returns an object that will be serialized as JSON by json.dumps().
+            """
             # Note: This is *EXTREMELY* naive; in reality, you'll need
             # to do much more complex handling to ensure that arbitrary
             # objects -- such as Django model instances or querysets
             # -- can be serialized as JSON.
-            return json.dumps(context)
+            return context
 
 .. note::
 

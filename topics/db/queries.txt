@@ -23,16 +23,14 @@ models, which comprise a Weblog application:
         name = models.CharField(max_length=100)
         tagline = models.TextField()
 
-        # On Python 3: def __str__(self):
-        def __unicode__(self):
+        def __str__(self):              # __unicode__ on Python 2
             return self.name
 
     class Author(models.Model):
         name = models.CharField(max_length=50)
         email = models.EmailField()
 
-        # On Python 3: def __str__(self):
-        def __unicode__(self):
+        def __str__(self):              # __unicode__ on Python 2
             return self.name
 
     class Entry(models.Model):
@@ -46,8 +44,7 @@ models, which comprise a Weblog application:
         n_pingbacks = models.IntegerField()
         rating = models.IntegerField()
 
-        # On Python 3: def __str__(self):
-        def __unicode__(self):
+        def __str__(self):              # __unicode__ on Python 2
             return self.headline
 
 Creating objects
@@ -59,10 +56,6 @@ class represents a particular record in the database table.
 
 To create an object, instantiate it using keyword arguments to the model class,
 then call :meth:`~django.db.models.Model.save` to save it to the database.
-
-You import the model class from wherever it lives on the Python path, as you
-may expect. (We point this out here because previous Django versions required
-funky model importing.)
 
 Assuming models live in a file ``mysite/blog/models.py``, here's an example::
 
@@ -93,8 +86,8 @@ To save changes to an object that's already in the database, use
 Given a ``Blog`` instance ``b5`` that has already been saved to the database,
 this example changes its name and updates its record in the database::
 
-    >> b5.name = 'New name'
-    >> b5.save()
+    >>> b5.name = 'New name'
+    >>> b5.save()
 
 This performs an ``UPDATE`` SQL statement behind the scenes. Django doesn't hit
 the database until you explicitly call :meth:`~django.db.models.Model.save`.
@@ -135,6 +128,8 @@ go, include multiple arguments in the call to
     >>> entry.authors.add(john, paul, george, ringo)
 
 Django will complain if you try to assign or add an object of the wrong type.
+
+.. _retrieving-objects:
 
 Retrieving objects
 ==================
@@ -254,9 +249,9 @@ stored, used and reused.
 
 Example::
 
-    >> q1 = Entry.objects.filter(headline__startswith="What")
-    >> q2 = q1.exclude(pub_date__gte=datetime.date.today())
-    >> q3 = q1.filter(pub_date__gte=datetime.date.today())
+    >>> q1 = Entry.objects.filter(headline__startswith="What")
+    >>> q2 = q1.exclude(pub_date__gte=datetime.date.today())
+    >>> q3 = q1.filter(pub_date__gte=datetime.date.today())
 
 These three ``QuerySets`` are separate. The first is a base
 :class:`~django.db.models.query.QuerySet` containing all entries that contain a
@@ -397,7 +392,9 @@ Basic lookups keyword arguments take the form ``field__lookuptype=value``.
 
     >>> Entry.objects.filter(pub_date__lte='2006-01-01')
 
-translates (roughly) into the following SQL::
+translates (roughly) into the following SQL:
+
+.. code-block:: sql
 
     SELECT * FROM blog_entry WHERE pub_date <= '2006-01-01';
 
@@ -415,7 +412,7 @@ can specify the field name suffixed with ``_id``. In this case, the value
 parameter is expected to contain the raw value of the foreign model's primary
 key. For example:
 
-    >>> Entry.objects.filter(blog_id__exact=4)
+    >>> Entry.objects.filter(blog_id=4)
 
 If you pass an invalid keyword argument, a lookup function will raise
 ``TypeError``.
@@ -452,8 +449,8 @@ probably use:
 
         >>> Blog.objects.get(name__iexact="beatles blog")
 
-    Would match a ``Blog`` titled "Beatles Blog", "beatles blog", or even
-    "BeAtlES blOG".
+    Would match a ``Blog`` titled ``"Beatles Blog"``, ``"beatles blog"``, or
+    even ``"BeAtlES blOG"``.
 
 :lookup:`contains`
     Case-sensitive containment test. For example::
@@ -493,7 +490,7 @@ want.
 This example retrieves all ``Entry`` objects with a ``Blog`` whose ``name``
 is ``'Beatles Blog'``::
 
-    >>> Entry.objects.filter(blog__name__exact='Beatles Blog')
+    >>> Entry.objects.filter(blog__name='Beatles Blog')
 
 This spanning can be as deep as you'd like.
 
@@ -592,18 +589,16 @@ relation). Conditions in subsequent
 :meth:`~django.db.models.query.QuerySet.exclude` calls that refer to the same
 relation may end up filtering on different linked objects.
 
-.. _query-expressions:
+.. _using-f-expressions-in-filters:
 
 Filters can reference fields on the model
 -----------------------------------------
-
-.. class:: F
 
 In the examples given so far, we have constructed filters that compare
 the value of a model field with a constant. But what if you want to compare
 the value of a model field with another field on the same model?
 
-Django provides the :ref:`F() expressions <query-expressions>` to allow such
+Django provides :class:`F expressions <django.db.models.F>` to allow such
 comparisons. Instances of ``F()`` act as a reference to a model field within a
 query. These references can then be used in query filters to compare the values
 of two different fields on the same model instance.
@@ -616,11 +611,15 @@ and use that ``F()`` object in the query::
     >>> Entry.objects.filter(n_comments__gt=F('n_pingbacks'))
 
 Django supports the use of addition, subtraction, multiplication,
-division and modulo arithmetic with ``F()`` objects, both with constants
+division, modulo, and power arithmetic with ``F()`` objects, both with constants
 and with other ``F()`` objects. To find all the blog entries with more than
 *twice* as many comments as pingbacks, we modify the query::
 
     >>> Entry.objects.filter(n_comments__gt=F('n_pingbacks') * 2)
+
+.. versionadded:: 1.7
+
+    The power operator ``**`` was added.
 
 To find all the entries where the rating of the entry is less than the
 sum of the pingback count and comment count, we would issue the
@@ -643,19 +642,10 @@ that were modified more than 3 days after they were published::
     >>> from datetime import timedelta
     >>> Entry.objects.filter(mod_date__gt=F('pub_date') + timedelta(days=3))
 
-.. versionadded:: 1.5
-
-    ``.bitand()`` and ``.bitor()``
-
-The ``F()`` objects now support bitwise operations by ``.bitand()`` and
+The ``F()`` objects support bitwise operations by ``.bitand()`` and
 ``.bitor()``, for example::
 
     >>> F('somefield').bitand(16)
-
-.. versionchanged:: 1.5
-
-    The previously undocumented operators ``&`` and ``|`` no longer produce
-    bitwise operations, use ``.bitand()`` and ``.bitor()`` instead.
 
 The pk lookup shortcut
 ----------------------
@@ -724,7 +714,7 @@ efficient code.
 In a newly created :class:`~django.db.models.query.QuerySet`, the cache is
 empty. The first time a :class:`~django.db.models.query.QuerySet` is evaluated
 -- and, hence, a database query happens -- Django saves the query results in
-the :class:`~django.db.models.query.QuerySet`\'s cache and returns the results
+the :class:`~django.db.models.query.QuerySet`’s cache and returns the results
 that have been explicitly requested (e.g., the next element, if the
 :class:`~django.db.models.query.QuerySet` is being iterated over). Subsequent
 evaluations of the :class:`~django.db.models.query.QuerySet` reuse the cached
@@ -792,15 +782,11 @@ being evaluated and therefore populate the cache::
 Complex lookups with Q objects
 ==============================
 
-.. class:: Q
-
 Keyword argument queries -- in :meth:`~django.db.models.query.QuerySet.filter`,
 etc. -- are "AND"ed together. If you need to execute more complex queries (for
-example, queries with ``OR`` statements), you can use ``Q`` objects.
+example, queries with ``OR`` statements), you can use :class:`Q objects <django.db.models.Q>`.
 
-.. comment: Link to Q does not work, since this documentation does not exist yet.
-
-A :class:`~django.db.models.Q` object (``django.db.models.Q``) is an object
+A :class:`Q object <django.db.models.Q>` (``django.db.models.Q``) is an object
 used to encapsulate a collection of keyword arguments. These keyword arguments
 are specified as in "Field lookups" above.
 
@@ -1032,10 +1018,10 @@ over them and call :meth:`~django.db.models.Model.save`::
     for item in my_queryset:
         item.save()
 
-Calls to update can also use :ref:`F() objects <query-expressions>` to update
-one field based on the value of another field in the model. This is especially
-useful for incrementing counters based upon their current value. For example, to
-increment the pingback count for every entry in the blog::
+Calls to update can also use :class:`F expressions <django.db.models.F>` to
+update one field based on the value of another field in the model. This is
+especially useful for incrementing counters based upon their current value. For
+example, to increment the pingback count for every entry in the blog::
 
     >>> Entry.objects.all().update(n_pingbacks=F('n_pingbacks') + 1)
 
@@ -1157,6 +1143,39 @@ above example code would look like this::
     >>> b.entries.filter(headline__contains='Lennon')
     >>> b.entries.count()
 
+.. _using-custom-reverse-manager:
+
+Using a custom reverse manager
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 1.7
+
+By default the :class:`~django.db.models.fields.related.RelatedManager` used
+for reverse relations is a subclass of the :ref:`default manager <manager-names>`
+for that model. If you would like to specify a different manager for a given
+query you can use the following syntax::
+
+    from django.db import models
+
+    class Entry(models.Model):
+        #...
+        objects = models.Manager()  # Default Manager
+        entries = EntryManager()    # Custom Manager
+
+    b = Blog.objects.get(id=1)
+    b.entry_set(manager='entries').all()
+
+If ``EntryManager`` performed default filtering in its ``get_queryset()``
+method, that filtering would apply to the ``all()`` call.
+
+Of course, specifying a custom reverse manager also enables you to call its
+custom methods::
+
+    b.entry_set(manager='entries').is_published()
+
+Additional methods to handle related objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 In addition to the :class:`~django.db.models.query.QuerySet` methods defined in
 "Retrieving objects" above, the :class:`~django.db.models.ForeignKey`
 :class:`~django.db.models.Manager` has additional methods used to handle the
@@ -1270,11 +1289,16 @@ relationship on one end.
 But how is this possible, given that a model class doesn't know which other
 model classes are related to it until those other model classes are loaded?
 
-The answer lies in the :setting:`INSTALLED_APPS` setting. The first time any
-model is loaded, Django iterates over every model in :setting:`INSTALLED_APPS`
-and creates the backward relationships in memory as needed. Essentially, one of
-the functions of :setting:`INSTALLED_APPS` is to tell Django the entire model
-domain.
+The answer lies in the :data:`app registry <django.apps.apps>`. When Django
+starts, it imports each application listed in :setting:`INSTALLED_APPS`, and
+then the ``models`` module inside each application. Whenever a new model class
+is created, Django adds backward-relationships to any related models. If the
+related models haven't been imported yet, Django keeps tracks of the
+relationships and adds them when the related models eventually are imported.
+
+For this reason, it's particularly important that all the models you're using
+be defined in applications listed in :setting:`INSTALLED_APPS`. Otherwise,
+backwards relations may not work properly.
 
 Queries over related objects
 ----------------------------

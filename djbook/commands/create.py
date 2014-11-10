@@ -13,3 +13,4 @@ class Command(BaseCommand):
         self.app.run_subcommand(['compilemessages'])
         self.app.run_subcommand(['buildhtml'])
         self.app.run_subcommand(['statistic'])
+        self.app.run_subcommand(['sitemap'])

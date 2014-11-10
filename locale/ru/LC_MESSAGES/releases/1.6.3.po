@@ -1,0 +1,370 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-30 13:35+0300\n"
+"PO-Revision-Date: 2014-07-11 11:43+0300\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 0d7c0199fced44d8b6e71d7a6d4f7cff
+#: ../../releases/1.6.3.txt:3
+msgid "Django 1.6.3 release notes"
+msgstr ""
+
+# 48bb14a3c1394577859fbf801b5aa090
+#: ../../releases/1.6.3.txt:5
+msgid "*April 21, 2014*"
+msgstr ""
+
+# d25bfd154bec49398068d5fcd3147004
+#: ../../releases/1.6.3.txt:7
+msgid ""
+"Django 1.6.3 fixes several bugs in 1.6.2, including three security issues, "
+"and makes one backwards-incompatible change:"
+msgstr ""
+
+# 46114246d4314231a3c7a52fdde6f0ab
+#: ../../releases/1.6.3.txt:11
+msgid "Unexpected code execution using ``reverse()``"
+msgstr ""
+
+# 0d582a676c72499299b27f3c2628efd9
+#: ../../releases/1.6.3.txt:13
+msgid ""
+"Django's URL handling is based on a mapping of regex patterns (representing "
+"the URLs) to callable views, and Django's own processing consists of "
+"matching a requested URL against those patterns to determine the appropriate "
+"view to invoke."
+msgstr ""
+
+# c7a122be5b7346888b96a894d38bafe5
+#: ../../releases/1.6.3.txt:18
+msgid ""
+"Django also provides a convenience function -- :func:`~django.core."
+"urlresolvers.reverse` -- which performs this process in the opposite "
+"direction. The ``reverse()`` function takes information about a view and "
+"returns a URL which would invoke that view. Use of ``reverse()`` is "
+"encouraged for application developers, as the output of ``reverse()`` is "
+"always based on the current URL patterns, meaning developers do not need to "
+"change other code when making changes to URLs."
+msgstr ""
+
+# 4238e0a036ce48ecbf9f34a10fc33373
+#: ../../releases/1.6.3.txt:27
+msgid ""
+"One argument signature for ``reverse()`` is to pass a dotted Python path to "
+"the desired view. In this situation, Django will import the module indicated "
+"by that dotted path as part of generating the resulting URL. If such a "
+"module has import-time side effects, those side effects will occur."
+msgstr ""
+
+# 4c02939cbef6492c982477b2b4791d15
+#: ../../releases/1.6.3.txt:33
+msgid ""
+"Thus it is possible for an attacker to cause unexpected code execution, "
+"given the following conditions:"
+msgstr ""
+
+# 7e543581afa4467cb23cbd70a87e820d
+#: ../../releases/1.6.3.txt:36
+msgid ""
+"One or more views are present which construct a URL based on user input "
+"(commonly, a \"next\" parameter in a querystring indicating where to "
+"redirect upon successful completion of an action)."
+msgstr ""
+
+# 74d9aa68fe59423586bcdd61a8702cdd
+#: ../../releases/1.6.3.txt:40
+msgid ""
+"One or more modules are known to an attacker to exist on the server's Python "
+"import path, which perform code execution with side effects on importing."
+msgstr ""
+
+# 07efedcf6cd044e08b1af71d58ace156
+#: ../../releases/1.6.3.txt:44
+msgid ""
+"To remedy this, ``reverse()`` will now only accept and import dotted paths "
+"based on the view-containing modules listed in the project's :doc:`URL "
+"pattern configuration </topics/http/urls>`, so as to ensure that only "
+"modules the developer intended to be imported in this fashion can or will be "
+"imported."
+msgstr ""
+
+# 15489ebecd32496e81e3f64eb9e49d7a
+#: ../../releases/1.6.3.txt:50
+msgid "Caching of anonymous pages could reveal CSRF token"
+msgstr ""
+
+# ed15041ad49947c9849ea27043716a02
+#: ../../releases/1.6.3.txt:52
+msgid ""
+"Django includes both a :doc:`caching framework </topics/cache>` and a system "
+"for :doc:`preventing cross-site request forgery (CSRF) attacks </ref/contrib/"
+"csrf/>`. The CSRF-protection system is based on a random nonce sent to the "
+"client in a cookie which must be sent by the client on future requests and, "
+"in forms, a hidden value which must be submitted back with the form."
+msgstr ""
+
+# 2590fd21cdb440efb69633191906cebc
+#: ../../releases/1.6.3.txt:59
+msgid ""
+"The caching framework includes an option to cache responses to anonymous (i."
+"e., unauthenticated) clients."
+msgstr ""
+
+# 6de59329be914d568700779d8fde520e
+#: ../../releases/1.6.3.txt:62
+msgid ""
+"When the first anonymous request to a given page is by a client which did "
+"not have a CSRF cookie, the cache framework will also cache the CSRF cookie "
+"and serve the same nonce to other anonymous clients who do not have a CSRF "
+"cookie. This can allow an attacker to obtain a valid CSRF cookie value and "
+"perform attacks which bypass the check for the cookie."
+msgstr ""
+
+# 21fbccd60f58427aa7be9d668e85f42d
+#: ../../releases/1.6.3.txt:69
+msgid ""
+"To remedy this, the caching framework will no longer cache such responses. "
+"The heuristic for this will be:"
+msgstr ""
+
+# 801ec959767d44a0bf9c05741dd7a015
+#: ../../releases/1.6.3.txt:72
+msgid "If the incoming request did not submit any cookies, and"
+msgstr ""
+
+# 29cf643643844620821d1850edffbb75
+#: ../../releases/1.6.3.txt:74
+msgid "If the response did send one or more cookies, and"
+msgstr ""
+
+# d1697ebe81f64e87863ce903cb83d1d1
+#: ../../releases/1.6.3.txt:76
+msgid ""
+"If the ``Vary: Cookie`` header is set on the response, then the response "
+"will not be cached."
+msgstr ""
+
+# e7cb2b8154034523b97ce1ee0cce274c
+#: ../../releases/1.6.3.txt:80
+msgid "MySQL typecasting"
+msgstr ""
+
+# f4248d676d2145248b2f54c7cc574c79
+#: ../../releases/1.6.3.txt:82
+msgid ""
+"The MySQL database is known to \"typecast\" on certain queries; for example, "
+"when querying a table which contains string values, but using a query which "
+"filters based on an integer value, MySQL will first silently coerce the "
+"strings to integers and return a result based on that."
+msgstr ""
+
+# bfbbff1efdc748d298da2f76b85e6aff
+#: ../../releases/1.6.3.txt:87
+msgid ""
+"If a query is performed without first converting values to the appropriate "
+"type, this can produce unexpected results, similar to what would occur if "
+"the query itself had been manipulated."
+msgstr ""
+
+# dcb7e0a7b93f4b41951553e3245d4907
+#: ../../releases/1.6.3.txt:91
+msgid ""
+"Django's model field classes are aware of their own types and most such "
+"classes perform explicit conversion of query arguments to the correct "
+"database-level type before querying. However, three model field classes did "
+"not correctly convert their arguments:"
+msgstr ""
+
+# 5009ece36c37401195ac9ad6ec5c103a
+#: ../../releases/1.6.3.txt:96
+msgid ":class:`~django.db.models.FilePathField`"
+msgstr ""
+
+# 08ad1e8cf73e4689a8cd3db2af34ffaa
+#: ../../releases/1.6.3.txt:97
+msgid ":class:`~django.db.models.GenericIPAddressField`"
+msgstr ""
+
+# 6603ebb638b9488bba58ea86ad85f888
+#: ../../releases/1.6.3.txt:98
+msgid ":class:`~django.db.models.IPAddressField`"
+msgstr ""
+
+# 3079fa6a49674adabfcc5982d07575f0
+#: ../../releases/1.6.3.txt:100
+msgid ""
+"These three fields have been updated to convert their arguments to the "
+"correct types before querying."
+msgstr ""
+
+# 019732f3b3a44768b1e63784e52eba44
+#: ../../releases/1.6.3.txt:103
+msgid ""
+"Additionally, developers of custom model fields are now warned via "
+"documentation to ensure their custom field classes will perform appropriate "
+"type conversions, and users of the :meth:`raw() <django.db.models.query."
+"QuerySet.raw>` and :meth:`extra() <django.db.models.query.QuerySet.extra>` "
+"query methods -- which allow the developer to supply raw SQL or SQL "
+"fragments -- will be advised to ensure they perform appropriate manual type "
+"conversions prior to executing queries."
+msgstr ""
+
+# 87f88aeb4ca740d2a3764de364c5e16e
+#: ../../releases/1.6.3.txt:112
+msgid "``select_for_update()`` requires a transaction"
+msgstr ""
+
+# bb73c79d3f804d9c91196ad2b3920471
+#: ../../releases/1.6.3.txt:114
+msgid ""
+"Historically, queries that use :meth:`~django.db.models.query.QuerySet."
+"select_for_update()` could be executed in autocommit mode, outside of a "
+"transaction. Before Django 1.6, Django's automatic transactions mode allowed "
+"this to be used to lock records until the next write operation. Django 1.6 "
+"introduced database-level autocommit; since then, execution in such a "
+"context voids the effect of ``select_for_update()``. It is, therefore, "
+"assumed now to be an error and raises an exception."
+msgstr ""
+
+# 7aece7bc6f194438994340f7843e1639
+#: ../../releases/1.6.3.txt:123
+msgid ""
+"This change was made because such errors can be caused by including an app "
+"which expects global transactions (e.g. :setting:`ATOMIC_REQUESTS <DATABASE-"
+"ATOMIC_REQUESTS>` set to ``True``), or Django's old autocommit behavior, in "
+"a project which runs without them; and further, such errors may manifest as "
+"data-corruption bugs."
+msgstr ""
+
+# abba6b5d05a14811b792b9081d75e9ed
+#: ../../releases/1.6.3.txt:129
+msgid ""
+"This change may cause test failures if you use ``select_for_update()`` in a "
+"test class which is a subclass of :class:`~django.test.TransactionTestCase` "
+"rather than :class:`~django.test.TestCase`."
+msgstr ""
+
+# c3829cf0edc14f9baa1ad2c231c065fa
+#: ../../releases/1.6.3.txt:135
+msgid "Other bugfixes and changes"
+msgstr ""
+
+# 81c53067815846e19e3a2d87e976dfe4
+#: ../../releases/1.6.3.txt:137
+msgid ""
+"Content retrieved from the GeoIP library is now properly decoded from its "
+"default ``iso-8859-1`` encoding (`#21996 <http://code.djangoproject.com/"
+"ticket/21996>`_)."
+msgstr ""
+
+# 0adef07aab804b4798e1c5b18c4d03b0
+#: ../../releases/1.6.3.txt:141
+msgid ""
+"Fixed ``AttributeError`` when using :meth:`~django.db.models.query.QuerySet."
+"bulk_create` with ``ForeignObject`` (`#21566 <http://code.djangoproject.com/"
+"ticket/21566>`_)."
+msgstr ""
+
+# d28e5c148cc44db59d64d77ea8a1fdfb
+#: ../../releases/1.6.3.txt:145
+msgid ""
+"Fixed crash of ``QuerySet``\\s that use ``F() + timedelta()`` when their "
+"query was compiled more once (`#21643 <http://code.djangoproject.com/"
+"ticket/21643>`_)."
+msgstr ""
+
+# 58f323845a6545c7b31f9ef198d0767b
+#: ../../releases/1.6.3.txt:149
+msgid ""
+"Prevented custom ``widget`` class attribute of :class:`~django.forms."
+"IntegerField` subclasses from being overwritten by the code in their "
+"``__init__`` method (`#22245 <http://code.djangoproject.com/ticket/22245>`_)."
+msgstr ""
+
+# 0c6c4c7bd0ed442c9800be911766fe61
+#: ../../releases/1.6.3.txt:154
+msgid ""
+"Improved :func:`~django.utils.html.strip_tags` accuracy (but it still cannot "
+"guarantee an HTML-safe result, as stated in the documentation)."
+msgstr ""
+
+# 6c702c231ce44b849355ce29456fa3cb
+#: ../../releases/1.6.3.txt:157
+msgid ""
+"Fixed a regression in the :mod:`django.contrib.gis` SQL compiler for non-"
+"concrete fields (`#22250 <http://code.djangoproject.com/ticket/22250>`_)."
+msgstr ""
+
+# eba5e9243a81403ba4f4ae46bccf3304
+#: ../../releases/1.6.3.txt:160
+msgid ""
+"Fixed :attr:`ModelAdmin.preserve_filters <django.contrib.admin.ModelAdmin."
+"preserve_filters>` when running a site with a URL prefix (`#21795 <http://"
+"code.djangoproject.com/ticket/21795>`_)."
+msgstr ""
+
+# 2a6c5d6d9396473d9c2b50c7d3fd20b1
+#: ../../releases/1.6.3.txt:164
+msgid ""
+"Fixed a crash in the ``find_command`` management utility when the ``PATH`` "
+"environment variable wasn't set (`#22256 <http://code.djangoproject.com/"
+"ticket/22256>`_)."
+msgstr ""
+
+# a6ea8005d85d449c91a0d551de0b553d
+#: ../../releases/1.6.3.txt:168
+msgid ""
+"Fixed :djadmin:`changepassword` on Windows (`#22364 <https://code."
+"djangoproject.com/ticket/22364>`_)."
+msgstr ""
+
+# a73e3402b2504c97bd0bbeaf468106a4
+#: ../../releases/1.6.3.txt:171
+msgid ""
+"Avoided shadowing deadlock exceptions on MySQL (`#22291 <https://code."
+"djangoproject.com/ticket/22291>`_)."
+msgstr ""
+
+# 0e2ecc70e1b8493390b2d118aedd4234
+#: ../../releases/1.6.3.txt:174
+msgid ""
+"Wrapped database exceptions in ``_set_autocommit`` (`#22321 <https://code."
+"djangoproject.com/ticket/22321>`_)."
+msgstr ""
+
+# db13f2edd29f47b29f23f9912545c4ba
+#: ../../releases/1.6.3.txt:177
+msgid ""
+"Fixed atomicity when closing a database connection or when the database "
+"server disconnects (`#21239 <https://code.djangoproject.com/ticket/21239>`_ "
+"and `#21202 <https://code.djangoproject.com/ticket/21202>`_)"
+msgstr ""
+
+# cdeadb72675743ee8896edb5f2c66fbf
+#: ../../releases/1.6.3.txt:181
+msgid ""
+"Fixed regression in ``prefetch_related`` that caused the related objects "
+"query to include an unnecessary join (`#21760 <https://code.djangoproject."
+"com/ticket/21760>`_)."
+msgstr ""
+
+# 17845a014f9f4854a88c9b57aeadc3a2
+#: ../../releases/1.6.3.txt:185
+msgid ""
+"Additionally, Django's vendored version of six, :mod:`django.utils.six` has "
+"been upgraded to the latest release (1.6.1)."
+msgstr ""

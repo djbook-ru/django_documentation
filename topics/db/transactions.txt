@@ -13,13 +13,16 @@ Django's default transaction behavior
 -------------------------------------
 
 Django's default behavior is to run in autocommit mode. Each query is
-immediately committed to the database. :ref:`See below for details
-<autocommit-details>`.
+immediately committed to the database, unless a transaction is active.
+:ref:`See below for details <autocommit-details>`.
 
 Django uses transactions or savepoints automatically to guarantee the
 integrity of ORM operations that require multiple queries, especially
 :ref:`delete() <topics-db-queries-delete>` and :ref:`update()
 <topics-db-queries-update>` queries.
+
+Django's :class:`~django.test.TestCase` class also wraps each test in a
+transaction for performance reasons.
 
 .. versionchanged:: 1.6
 
@@ -41,7 +44,7 @@ transaction. If the response is produced without problems, Django commits the
 transaction. If the view produces an exception, Django rolls back the
 transaction.
 
-You may perfom partial commits and rollbacks in your view code, typically with
+You may perform partial commits and rollbacks in your view code, typically with
 the :func:`atomic` context manager. However, at the end of the view, either
 all the changes will be committed, or none of them.
 
@@ -219,7 +222,7 @@ Django provides a single API to control database transactions.
 
     Open transactions have a performance cost for your database server. To
     minimize this overhead, keep your transactions as short as possible. This
-    is especially important of you're using :func:`atomic` in long-running
+    is especially important if you're using :func:`atomic` in long-running
     processes, outside of Django's request / response cycle.
 
 Autocommit
@@ -231,13 +234,15 @@ Why Django uses autocommit
 --------------------------
 
 In the SQL standards, each SQL query starts a transaction, unless one is
-already in progress. Such transactions must then be committed or rolled back.
+already active. Such transactions must then be explicitly committed or rolled
+back.
 
 This isn't always convenient for application developers. To alleviate this
 problem, most databases provide an autocommit mode. When autocommit is turned
-on, each SQL query is wrapped in its own transaction. In other words, the
-transaction is not only automatically started, but also automatically
-committed.
+on and no transaction is active, each SQL query gets wrapped in its own
+transaction. In other words, not only does each such query start a
+transaction, but the transaction also gets automatically committed or rolled
+back, depending on whether the query succeeded.
 
 :pep:`249`, the Python Database API Specification v2.0, requires autocommit to
 be initially turned off. Django overrides this default and turns autocommit
@@ -469,7 +474,7 @@ function in autocommit mode: statements will be executed and committed as soon
 as they're called. If your MySQL setup *does* support transactions, Django
 will handle transactions as explained in this document.
 
-.. _information on MySQL transactions: http://dev.mysql.com/doc/refman/5.0/en/sql-syntax-transactions.html
+.. _information on MySQL transactions: http://dev.mysql.com/doc/refman/5.6/en/sql-syntax-transactions.html
 
 Handling exceptions within PostgreSQL transactions
 --------------------------------------------------
@@ -617,7 +622,7 @@ behavior is the same, there are two differences.
 With the previous API, it was possible to switch to autocommit or to commit
 explicitly anywhere inside a view. Since :setting:`ATOMIC_REQUESTS
 <DATABASE-ATOMIC_REQUESTS>` relies on :func:`atomic` which enforces atomicity,
-this isn't allowed any longer. However, at the toplevel, it's still possible
+this isn't allowed any longer. However, at the top level, it's still possible
 to avoid wrapping an entire view in a transaction. To achieve this, decorate
 the view with :func:`non_atomic_requests` instead of :func:`autocommit`.
 
@@ -644,7 +649,7 @@ context managers breaks atomicity.
 Managing autocommit
 ~~~~~~~~~~~~~~~~~~~
 
-Django 1.6 introduces an explicit :ref:`API for mananging autocommit
+Django 1.6 introduces an explicit :ref:`API for managing autocommit
 <managing-autocommit>`.
 
 To disable autocommit temporarily, instead of::
@@ -717,7 +722,10 @@ Select for update
 If you were relying on "automatic transactions" to provide locking between
 :meth:`~django.db.models.query.QuerySet.select_for_update` and a subsequent
 write operation — an extremely fragile design, but nonetheless possible — you
-must wrap the relevant code in :func:`atomic`.
+must wrap the relevant code in :func:`atomic`. Since Django 1.6.3, executing
+a query with :meth:`~django.db.models.query.QuerySet.select_for_update` in
+autocommit mode will raise a
+:exc:`~django.db.transaction.TransactionManagementError`.
 
 Using a high isolation level
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,8 +1,8 @@
 .. _Generic views:
 
-=========================
-Class-based generic views
-=========================
+==================================
+Built-in Class-based generic views
+==================================
 
 Writing Web applications can be monotonous, because we repeat certain patterns
 again and again. Django tries to take away some of that monotony at the model
@@ -89,8 +89,7 @@ We'll be using these models::
         class Meta:
             ordering = ["-name"]
 
-        # On Python 3: def __str__(self):
-        def __unicode__(self):
+        def __str__(self):              # __unicode__ on Python 2
             return self.name
 
     class Author(models.Model):
@@ -99,8 +98,7 @@ We'll be using these models::
         email = models.EmailField()
         headshot = models.ImageField(upload_to='author_headshots')
 
-        # On Python 3: def __str__(self):
-        def __unicode__(self):
+        def __str__(self):              # __unicode__ on Python 2
             return self.name
 
     class Book(models.Model):
@@ -191,7 +189,7 @@ specifies the context variable to use::
 
     class PublisherList(ListView):
         model = Publisher
-        context_object_name = 'my_favourite_publishers'
+        context_object_name = 'my_favorite_publishers'
 
 Providing a useful ``context_object_name`` is always a good idea. Your
 coworkers who design templates will thank you.

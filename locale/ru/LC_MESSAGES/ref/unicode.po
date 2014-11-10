@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 10:34\n"
-"PO-Revision-Date: 2012-02-15 15:13\n"
-"Last-Translator: Automatically generated\n"
+"POT-Creation-Date: 2014-09-09 11:16+0300\n"
+"PO-Revision-Date: 2014-10-25 21:17+0200\n"
+"Last-Translator: Sergey Karpenko <serg.karpenko@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -17,11 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.6.10\n"
 
 # 71f84f41706a4129b84d011ecab7c52d
 #: ../../ref/unicode.txt:3
 msgid "Unicode data"
-msgstr ""
+msgstr "Данные Unicode"
 
 # 97e497a37cb74467b3d0b7c9efe02f78
 #: ../../ref/unicode.txt:5
@@ -30,6 +31,9 @@ msgid ""
 "can somehow store the data, you can safely pass around Unicode strings to "
 "templates, models and the database."
 msgstr ""
+"Django изначально полноценно поддерживает Unicode данные.  Предоставляя "
+"вашей базе данных возможность хранить данные как угодно, вы можете безопасно "
+"передавать Unicode строки в шаблоны, модели и базу данных."
 
 # 5ef09130e9c649c7ad084e4e5b0c6736
 #: ../../ref/unicode.txt:9
@@ -37,11 +41,14 @@ msgid ""
 "This document tells you what you need to know if you're writing applications "
 "that use data or templates that are encoded in something other than ASCII."
 msgstr ""
+"Этот документ расскажет вам, что вы должны знать, если вы пишете приложения, "
+"которые используют данные или шаблоны, закодированные, в что-то отличное от "
+"ASCII."
 
 # 61bcff32399b45ffb5d8c07829704756
 #: ../../ref/unicode.txt:13
 msgid "Creating the database"
-msgstr ""
+msgstr "Создание базы данных"
 
 # fbab3d0211b347c5b46a9e94ab1ebc38
 #: ../../ref/unicode.txt:15
@@ -52,13 +59,20 @@ msgid ""
 "won't be able to store certain characters in the database, and information "
 "will be lost."
 msgstr ""
+"Убедитесь, что ваша база данных настроена с учетом возможности хранить "
+"произвольные строковые данные. Обычно, это значит хранение в кодировке UTF-8 "
+"или UTF-16. Если вы используете более строгие кодировки -- к примеру latin1 "
+"(iso8859-1) -- вы не сможете хранить определенные символы, и информация "
+"будет утеряна."
 
-# 7adb45438ff943df9a5b7cb9c727de40
+# 77af29d713db4607bf1e1ee1257d5c91
 #: ../../ref/unicode.txt:20
 msgid ""
-"MySQL users, refer to the `MySQL manual`_ (section 9.1.3.2 for MySQL 5.1) "
-"for details on how to set or alter the database character set encoding."
+"MySQL users, refer to the `MySQL manual`_ for details on how to set or alter "
+"the database character set encoding."
 msgstr ""
+"Пользователи MySQL могут обратиться к `MySQL manual`_ за подробностями, как "
+"установить или изменить кодировку базы данных."
 
 # 96ec8576a11940f7837f707c33c9584d
 #: ../../ref/unicode.txt:23
@@ -66,6 +80,9 @@ msgid ""
 "PostgreSQL users, refer to the `PostgreSQL manual`_ (section 22.3.2 in "
 "PostgreSQL 9) for details on creating databases with the correct encoding."
 msgstr ""
+"Пользователи PostgreSQL могут обратиться к `PostgreSQL manual`_ (раздел "
+"22.3.2 in PostgreSQL 9) за подробностями по созданию баз данных с правильной "
+"кодировкой."
 
 # fba02cc224574f3d8eb5d75a480807d1
 #: ../../ref/unicode.txt:26
@@ -73,6 +90,8 @@ msgid ""
 "SQLite users, there is nothing you need to do. SQLite always uses UTF-8 for "
 "internal encoding."
 msgstr ""
+"Пользователи SQLite могут ничего не делать. SQLite всегда использует UTF-8 в "
+"качестве внутренней кодировки."
 
 # ff2fd663d84847018522d23bbabb7282
 #: ../../ref/unicode.txt:32
@@ -83,16 +102,21 @@ msgid ""
 "Unicode strings. You don't even need to tell Django what encoding your "
 "database uses: that is handled transparently."
 msgstr ""
+"Все бекенды баз данных в Django  автоматически конвертируют Unicode строки в "
+"соответствующую кодировку для передачи в базу данных. Они также "
+"автоматически конвертируют строки, полученные из базы данных в строки Python "
+"Unicode. Вам даже не нужно говорить Django, какую кодировку использует ваша "
+"база данных: это прозрачно обрабатывается."
 
 # 15d7447521fa4d3a8f759a5d9652f230
 #: ../../ref/unicode.txt:38
 msgid "For more, see the section \"The database API\" below."
-msgstr ""
+msgstr "Подробнее смотрите раздел \"API базы данных\" ниже."
 
 # af5f8049c13e44d98199ed0ceceafe98
 #: ../../ref/unicode.txt:41
 msgid "General string handling"
-msgstr ""
+msgstr "Общая обработка строк"
 
 # eb245fe5d1294e41acf0af8573e05c4d
 #: ../../ref/unicode.txt:43
@@ -102,32 +126,78 @@ msgid ""
 "strings. You can use Unicode strings, or you can use normal strings "
 "(sometimes called \"bytestrings\") that are encoded using UTF-8."
 msgstr ""
+"Всякий раз когда вы используете строки в Django -- к примеру, в поиске по "
+"базе данных, рендеринге шаблонов или где-нибудь еще  -- вы имеете два "
+"варианта для кодирования таких строк. Вы можете использовать строки Unicode "
+"или же вы можете использовать обыкновенные строки (иногда называющиеся  "
+"\"байтовыми строками\"), которые кодируются с использованием UTF-8."
+
+# 6142734fcd44462e8cbc332003efd3eb
+#: ../../ref/unicode.txt:48
+msgid ""
+"In Python 3, the logic is reversed, that is normal strings are Unicode, and "
+"when you want to specifically create a bytestring, you have to prefix the "
+"string with a 'b'. As we are doing in Django code from version 1.5, we "
+"recommend that you import ``unicode_literals`` from the __future__ library "
+"in your code. Then, when you specifically want to create a bytestring "
+"literal, prefix the string with 'b'."
+msgstr ""
+"В Python 3 логика была изменена, теперь обыкновенные строки являются "
+"Unicode, и когда вы хотите создать байтовую строку, вы должны использовать "
+"строку начинающуюся с  'b'. Как мы сами делаем в Django, начиная с версии "
+"1.5, мы рекомендуем и вам - импортировать ``unicode_literals`` из библиотеки "
+"__future__ в вашем коде. И тогда, когда вы захотите специально создать "
+"байтовую строку, добавьте префикс 'b'."
+
+# 4207871f7e1d4e07b7e6a54fef8f5d29
+#: ../../ref/unicode.txt:55
+msgid "Python 2 legacy::"
+msgstr "Наследие Python 2::"
+
+# b7ed69b55b6646a58449d15cb2c7c68b
+#: ../../ref/unicode.txt:60
+msgid "Python 2 with unicode literals or Python 3::"
+msgstr "Python 2 с литералами Unicode или Python 3::"
+
+# 3448d02238b544c892d14d7211bcd2e4
+#: ../../ref/unicode.txt:67
+msgid "See also :doc:`Python 3 compatibility </topics/python3>`."
+msgstr "Смотрите также :doc:`Портирование на Python 3 </topics/python3>`."
 
 # a3e2d61ee7d84215ad8a6dba6872fb9b
-#: ../../ref/unicode.txt:73
+#: ../../ref/unicode.txt:71
 msgid ""
 "A bytestring does not carry any information with it about its encoding. For "
 "that reason, we have to make an assumption, and Django assumes that all "
 "bytestrings are in UTF-8."
 msgstr ""
+"Байтовые строки не могут содержать информацию о своих кодировках. По этой "
+"причине, мы должны делать предположение, и Django  предполагает, что все "
+"байтовые строки будут в кодировке UTF-8."
 
 # 2f354764235a4919865608975d77f5f7
-#: ../../ref/unicode.txt:77
+#: ../../ref/unicode.txt:75
 msgid ""
 "If you pass a string to Django that has been encoded in some other format, "
 "things will go wrong in interesting ways. Usually, Django will raise a "
 "``UnicodeDecodeError`` at some point."
 msgstr ""
+"Если передать строку в Django, которая была закодирована в каком-то другом "
+"формате, все пойдет не так. Как правило Django выбрасывает исключение "
+"``UnicodeDecodeError`` в этом месте."
 
 # 7d74f4149fcc49beb09636a6d1339325
-#: ../../ref/unicode.txt:81
+#: ../../ref/unicode.txt:79
 msgid ""
 "If your code only uses ASCII data, it's safe to use your normal strings, "
 "passing them around at will, because ASCII is a subset of UTF-8."
 msgstr ""
+"Если ваш код использует только данные ASCII, это позволяет использовать "
+"обыкновенные строки, они будут работать корректно, так как ASCII является "
+"подмножеством UTF-8."
 
 # d9f0e1fe17fa4cd7b99b161dfd057d19
-#: ../../ref/unicode.txt:84
+#: ../../ref/unicode.txt:82
 msgid ""
 "Don't be fooled into thinking that if your :setting:`DEFAULT_CHARSET` "
 "setting is set to something other than ``'utf-8'`` you can use that other "
@@ -140,23 +210,38 @@ msgid ""
 "chooses a different setting, your code must still continue to work. Ergo, it "
 "cannot rely on that setting."
 msgstr ""
+"Не обманывайте себя, думая что если ваш параметр :setting:`DEFAULT_CHARSET` "
+"установлен в какую-то отличную от ``'utf-8'`` кодировку, то вы можете "
+"использовать другую кодировку в ваших байтовых строках. Параметр :setting:"
+"`DEFAULT_CHARSET` применяется только к строкам, сгенерированным в результате "
+"рендеринга шаблона (или email). Django всегда будет ожидать UTF-8 для "
+"внутренних байтовых строк. Причина этого в том, что параметр :setting:"
+"`DEFAULT_CHARSET` фактически находится не под вашим контролем (если вы "
+"разработчик приложения). Это будет под контролем, того, кто инсталирует и "
+"использует ваше приложение -- и даже если будет выбрана другая кодировка, то "
+"ваш код обязан продолжать работать. Следовательно это не может зависеть от "
+"такого параметра."
 
 # 4cb8fc5871bb4491bf586c0137c7fbd0
-#: ../../ref/unicode.txt:94
+#: ../../ref/unicode.txt:92
 msgid ""
 "In most cases when Django is dealing with strings, it will convert them to "
 "Unicode strings before doing anything else. So, as a general rule, if you "
 "pass in a bytestring, be prepared to receive a Unicode string back in the "
 "result."
 msgstr ""
+"Во многих случаях, когда Django работает со строками, он будет "
+"конвертировать их в строки Unicode перед тем как что-либо делать с ними. "
+"Поэтому, общее правило, если вы передаете байтовую строку, будьте готовы "
+"получить назад строку Unicode."
 
 # 6954a7bafe354c139f01f37c1df18aac
-#: ../../ref/unicode.txt:99
+#: ../../ref/unicode.txt:97
 msgid "Translated strings"
-msgstr ""
+msgstr "Переведенные строки"
 
 # 08f2e6041a964e768fa2861754f57b68
-#: ../../ref/unicode.txt:101
+#: ../../ref/unicode.txt:99
 msgid ""
 "Aside from Unicode strings and bytestrings, there's a third type of string-"
 "like object you may encounter when using Django. The framework's "
@@ -167,51 +252,71 @@ msgid ""
 "until the string is used, even though the string might have originally been "
 "created when the code was first imported."
 msgstr ""
+"Немного в стороне от строк Unicode и байтовых строк, есть еще третий тип "
+"строковых объектов, с которыми можно столкнуться, используя Django. "
+"Особенности интернационализации фреймворка вводят понятие \"ленивого перевода"
+"\" -- это строка которая отмечена как переведенная, но чей фактический "
+"перевод не определен пока объект используется в строке. Эта особенность "
+"полезна в случаях, когда перевод локали не известен пока строка не будет "
+"использована, даже при том что строка могла быть первоначально создана когда "
+"код был первый раз импортирован."
 
 # 055493ec6177439e91e31e8d2d5f217c
-#: ../../ref/unicode.txt:110
+#: ../../ref/unicode.txt:108
 msgid ""
 "Normally, you won't have to worry about lazy translations. Just be aware "
 "that if you examine an object and it claims to be a ``django.utils."
-"functional.__proxy__`` object, it is a lazy translation. Calling ``unicode()"
-"`` with the lazy translation as the argument will generate a Unicode string "
-"in the current locale."
+"functional.__proxy__`` object, it is a lazy translation. Calling "
+"``unicode()`` with the lazy translation as the argument will generate a "
+"Unicode string in the current locale."
 msgstr ""
+"Обычно, вы не должны беспокоиться о ленивых переводах. Только знайте, что "
+"если вы проверяете объект и он утверждает, что он ``django.utils.functional."
+"__proxy__`` - это ленивый перевод.  Вызов ``unicode()`` с ленивым переводом "
+"в качестве аргумента сгенерирует строку Unicode в текущей локали."
 
 # c490974aa40f48c1825adea420a98bb1
-#: ../../ref/unicode.txt:116
+#: ../../ref/unicode.txt:114
 msgid ""
 "For more details about lazy translation objects, refer to the :doc:"
 "`internationalization </topics/i18n/index>` documentation."
 msgstr ""
+"Для более подробной информации об объектах ленивого перевода вы можете "
+"обратиться к документации :doc:`Интернационализация </topics/i18n/index>`. "
 
 # 7c6ed93cc58248a18cc9b33b59fe60d4
-#: ../../ref/unicode.txt:120
+#: ../../ref/unicode.txt:118
 msgid "Useful utility functions"
-msgstr ""
+msgstr "Полезные утилитарные функции."
 
 # b990b0ba5c734f21af9bce990e5696f8
-#: ../../ref/unicode.txt:122
+#: ../../ref/unicode.txt:120
 msgid ""
 "Because some string operations come up again and again, Django ships with a "
 "few useful functions that should make working with Unicode and bytestring "
 "objects a bit easier."
 msgstr ""
+"По причине того, что некоторые строковые операции требуются снова и снова, "
+"Django поставляется с несколькими полезными функциями, которые должны "
+"сделать работу с Unicode и байтовыми строками немного легче."
 
 # 7c341f68c945438a93e8feae4a38b2cd
-#: ../../ref/unicode.txt:127
+#: ../../ref/unicode.txt:125
 msgid "Conversion functions"
-msgstr ""
+msgstr "Функции преобразования"
 
 # 3b179dcd3ece4a869033a2fd1a30e3d3
-#: ../../ref/unicode.txt:129
+#: ../../ref/unicode.txt:127
 msgid ""
 "The ``django.utils.encoding`` module contains a few functions that are handy "
 "for converting back and forth between Unicode and bytestrings."
 msgstr ""
+"Модуль ``django.utils.encoding`` содержит несколько функций, которые удобны "
+"для прямого и обратного преобразования между строками Unicode и байтовыми "
+"строками "
 
 # 839461a5e1734fe592293bfa8ed8f006
-#: ../../ref/unicode.txt:132
+#: ../../ref/unicode.txt:130
 msgid ""
 "``smart_text(s, encoding='utf-8', strings_only=False, errors='strict')`` "
 "converts its input to a Unicode string. The ``encoding`` parameter specifies "
@@ -222,29 +327,49 @@ msgid ""
 "original types). The ``errors`` parameter takes any of the values that are "
 "accepted by Python's ``unicode()`` function for its error handling."
 msgstr ""
+"``smart_text(s, encoding='utf-8', strings_only=False, errors='strict')`` "
+"преобразовывает входную строку в  Unicode. Параметр ``encoding`` "
+"устанавливает входную кодировку. (Так Django использует это внутри при "
+"обработке форм входных данных, которые могут быть закодированы не в  UTF-8.) "
+"Если параметр ``strings_only`` установлен  в True, то результат для чисел, "
+"булевых переменных и ``None`` не  будет преобразован в строку (они сохранят "
+"свои начальные типы). Параметр ``errors`` может принимать любые значение, "
+"которые передаются в  Python функцию ``unicode()`` для обработки ею ошибок."
 
 # c313ef0bdb3943509dc329a946e985e0
-#: ../../ref/unicode.txt:142
+#: ../../ref/unicode.txt:140
 msgid ""
 "If you pass ``smart_text()`` an object that has a ``__unicode__`` method, it "
 "will use that method to do the conversion."
 msgstr ""
+"Если вы передаете в ``smart_text()`` объект, который имеет метод "
+"``__unicode__``, то этот метод будет использован для преобразования."
 
 # 950fea0b97a14305ba0eb9efa2cb3b68
-#: ../../ref/unicode.txt:145
+#: ../../ref/unicode.txt:143
 msgid ""
 "``force_text(s, encoding='utf-8', strings_only=False, errors='strict')`` is "
 "identical to ``smart_text()`` in almost all cases. The difference is when "
 "the first argument is a :ref:`lazy translation <lazy-translations>` "
-"instance. While ``smart_text()`` preserves lazy translations, ``force_text()"
-"`` forces those objects to a Unicode string (causing the translation to "
-"occur). Normally, you'll want to use ``smart_text()``. However, ``force_text"
-"()`` is useful in template tags and filters that absolutely *must* have a "
-"string to work with, not just something that can be converted to a string."
+"instance. While ``smart_text()`` preserves lazy translations, "
+"``force_text()`` forces those objects to a Unicode string (causing the "
+"translation to occur). Normally, you'll want to use ``smart_text()``. "
+"However, ``force_text()`` is useful in template tags and filters that "
+"absolutely *must* have a string to work with, not just something that can be "
+"converted to a string."
 msgstr ""
+"``force_text(s, encoding='utf-8', strings_only=False, errors='strict')`` "
+"идентична ``smart_text()``  в большинстве случаев. Отличие лишь в том "
+"случае, когда первый аргумент является инстансом :ref:`ленивого перевода "
+"<lazy-translations>`. В то время как ``smart_text()`` хранит ленивые "
+"переводы, ``force_text()`` форсирует преобразование этих объектов в строки "
+"Unicode (в результате чего происходит перевод). Обычно вам будет нужно "
+"использовать ``smart_text()``. Но тем не менее ``force_text()`` полезна в "
+"шаблонных тегах и фильтрах, которые должны обязательно работать со строками, "
+"а не только с тем, что может быть преобразовано в строку."
 
 # 7c874d14b1164add99b5a76ecf616869
-#: ../../ref/unicode.txt:155
+#: ../../ref/unicode.txt:153
 msgid ""
 "``smart_bytes(s, encoding='utf-8', strings_only=False, errors='strict')`` is "
 "essentially the opposite of ``smart_text()``. It forces the first argument "
@@ -253,22 +378,32 @@ msgid ""
 "from Python's builtin ``str()`` function, but the difference is needed in a "
 "few places within Django's internals."
 msgstr ""
+"``smart_bytes(s, encoding='utf-8', strings_only=False, errors='strict')`` - "
+"это по существу противоположность ``smart_text()``. Она преобразовывает "
+"первый аргумент в байтовую строку. Параметр ``strings_only`` имеет такое же "
+"поведение, как в ``smart_text()`` и  ``force_text()``. Есть небольшое "
+"отличие от семантики встроенной  функции Python ``str()``, но это отличие "
+"обусловлено несколькими внутренними особенностями Django."
 
 # 97e5177f126b4102bff9a0fee2561127
-#: ../../ref/unicode.txt:162
+#: ../../ref/unicode.txt:160
 msgid ""
 "Normally, you'll only need to use ``smart_text()``. Call it as early as "
 "possible on any input data that might be either Unicode or a bytestring, and "
 "from then on, you can treat the result as always being Unicode."
 msgstr ""
+"Как правило, вам будет нужно использовать только ``smart_text()``. Вызывайте "
+"это как можно раньше для любых входных данных, которые могут быть Unicode "
+"или байтовой строкой, и после этого вы можете работать с результатом, "
+"который всегда будет Unicode."
 
 # c2e00a4aec8449eb9d3fa8513c9a5ff4
-#: ../../ref/unicode.txt:169
+#: ../../ref/unicode.txt:167
 msgid "URI and IRI handling"
-msgstr ""
+msgstr "Обработка URI и IRI"
 
 # c33570ed0d3b45fb9f3f28a1f02e81e6
-#: ../../ref/unicode.txt:171
+#: ../../ref/unicode.txt:169
 msgid ""
 "Web frameworks have to deal with URLs (which are a type of IRI_). One "
 "requirement of URLs is that they are encoded using only ASCII characters. "
@@ -277,25 +412,38 @@ msgid ""
 "characters. Quoting and converting an IRI to URI can be a little tricky, so "
 "Django provides some assistance."
 msgstr ""
+"Веб фреймворки должны взаимодействовать с URL'ами (которые являются "
+"разновидностью IRI_). Одно из требований URL'ов - это то, что они должны "
+"быть закодированы с использованием только ASCII символов. Тем не менее, в "
+"международном окружении, вы можете захотеть обрабатывать URL как IRI_ --  "
+"если говорить очень просто, то URI_ могут содержать Unicode символы."
+"Экранирование и преобразование IRI в URI  может быть непростым, поэтому "
+"Django представляет некоторую помощь для этого."
 
 # 8eb896f3ce6e456296275513d63d640f
-#: ../../ref/unicode.txt:178
+#: ../../ref/unicode.txt:176
 msgid ""
 "The function ``django.utils.encoding.iri_to_uri()`` implements the "
 "conversion from IRI to URI as required by the specification (:rfc:`3987`)."
 msgstr ""
+"Функция ``django.utils.encoding.iri_to_uri()`` реализует преобразование из "
+"IRI в URI, как этого требует спецификация (:rfc:`3987`)."
 
 # c61223c714924c32a9f815084c79a1cd
-#: ../../ref/unicode.txt:181
+#: ../../ref/unicode.txt:179
 msgid ""
 "The functions ``django.utils.http.urlquote()`` and ``django.utils.http."
 "urlquote_plus()`` are versions of Python's standard ``urllib.quote()`` and "
 "``urllib.quote_plus()`` that work with non-ASCII characters. (The data is "
 "converted to UTF-8 prior to encoding.)"
 msgstr ""
+"Функции ``django.utils.http.urlquote()`` и ``django.utils.http."
+"urlquote_plus()`` - это версии Python стандартных  ``urllib.quote()`` и "
+"``urllib.quote_plus()``, которые работают с не-ASCII символами. (Данные "
+"преобразуются в UTF-8 перед кодированием.)"
 
 # 13f58ab5ea0643a8a0ab96d4ec0a461d
-#: ../../ref/unicode.txt:186
+#: ../../ref/unicode.txt:184
 msgid ""
 "These two groups of functions have slightly different purposes, and it's "
 "important to keep them straight. Normally, you would use ``urlquote()`` on "
@@ -304,17 +452,26 @@ msgid ""
 "``iri_to_uri()`` to the full IRI and it converts any non-ASCII characters to "
 "the correct encoded values."
 msgstr ""
+"Эти две группы функций имеют небольшие различия в назначении, и понимание "
+"этого важно для их правильного применения. Как правило вы должны "
+"использовать ``urlquote()`` для отдельных частей IRI или URI путей, в "
+"результате любые зарезервированные символы как '&' и '%'  будут кодироваться "
+"корректно. Затем вы применяете ``iri_to_uri()`` для полного IRI и это "
+"преобразует любые не-ASCII символы в правильно закодированные значения."
 
 # 535f8023052f48f38f4baf04ab00e229
-#: ../../ref/unicode.txt:194
+#: ../../ref/unicode.txt:192
 msgid ""
 "Technically, it isn't correct to say that ``iri_to_uri()`` implements the "
 "full algorithm in the IRI specification. It doesn't (yet) perform the "
 "international domain name encoding portion of the algorithm."
 msgstr ""
+"Формально, не корректно говорить, что функция ``iri_to_uri()`` реализует "
+"полный алгоритм из спецификации IRI. Она (пока) не реализует часть алгоритма "
+"для кодирования международных доменных имен."
 
 # aa1ea0876dfc483fab78219720f39be0
-#: ../../ref/unicode.txt:198
+#: ../../ref/unicode.txt:196
 msgid ""
 "The ``iri_to_uri()`` function will not change ASCII characters that are "
 "otherwise permitted in a URL. So, for example, the character '%' is not "
@@ -322,14 +479,19 @@ msgid ""
 "full URL to this function and it will not mess up the query string or "
 "anything like that."
 msgstr ""
+"Функция ``iri_to_uri()`` не будет изменять ASCII символы, которые в "
+"противном случае допускаются в URL. Так, например, символ  '%' дополнительно "
+"не кодируется когда передается в ``iri_to_uri()``. Это значит вы можете "
+"передавать полный URL в эту функцию и это не испортит строку запроса или что-"
+"либо подобное ей."
 
 # 64232a8cb67d47f2ba010fd6a86b1078
-#: ../../ref/unicode.txt:204
+#: ../../ref/unicode.txt:202
 msgid "An example might clarify things here::"
-msgstr ""
+msgstr "Пример поможет прояснить это::"
 
 # a2d3147821824d568d3d3478da36939e
-#: ../../ref/unicode.txt:211
+#: ../../ref/unicode.txt:209
 msgid ""
 "If you look carefully, you can see that the portion that was generated by "
 "``urlquote()`` in the second example was not double-quoted when passed to "
@@ -338,76 +500,105 @@ msgid ""
 "ASCII characters and then, right at the end, call ``iri_to_uri()`` on the "
 "result."
 msgstr ""
+"Если вы посмотрите внимательно, вы сможете увидеть что часть, которая "
+"генерируется при помощи ``urlquote()`` во втором примере не обрабатывается "
+"дважды когда передается в ``iri_to_uri()``. Это очень важная и полезная "
+"особенность. Это означает, что вы можете работать с вашей IRI без "
+"беспокойства будeт ли IRI содержать не-ASCII символы и затем правильно ли "
+"все в конце, при вызове ``iri_to_uri()``."
 
 # 99ccbabc520c45be99af6467dc244b0c
-#: ../../ref/unicode.txt:218
+#: ../../ref/unicode.txt:216
 msgid ""
 "The ``iri_to_uri()`` function is also idempotent, which means the following "
 "is always true::"
 msgstr ""
+"Функция ``iri_to_uri()`` также идемпотентна, это значит что следующее всегда "
+"истинно::"
 
 # aef855dee53c4301b9beb9b8c88c7297
-#: ../../ref/unicode.txt:223
+#: ../../ref/unicode.txt:221
 msgid ""
 "So you can safely call it multiple times on the same IRI without risking "
 "double-quoting problems."
 msgstr ""
+"Поэтому вы можете безопасно вызывать функцию множество раз для одного и того "
+"же IRI без риска получить проблему двойного экранирования (double-quoting)."
 
 # 05dfcc3092ab446d9daf28d5fbfc522f
-#: ../../ref/unicode.txt:230
+#: ../../ref/unicode.txt:228
 msgid "Models"
-msgstr ""
+msgstr "Модели"
 
 # 9a2f3e969e9949f689feebe80cc92a06
-#: ../../ref/unicode.txt:232
+#: ../../ref/unicode.txt:230
 msgid ""
 "Because all strings are returned from the database as Unicode strings, model "
 "fields that are character based (CharField, TextField, URLField, etc) will "
 "contain Unicode values when Django retrieves data from the database. This is "
 "*always* the case, even if the data could fit into an ASCII bytestring."
 msgstr ""
+"По причине того, что все строки возвращаются из базы данных как Unicode "
+"строки, строковые поля модели (CharField, TextField, URLField и т.д.) будут "
+"содержать Unicode значения, когда Django достает данные из базы данных. Это "
+"происходит *всегда* , даже если данные содержат только байтовые строки ASCII."
 
 # 8f5168ae54f049678e6c6539fccbdf93
-#: ../../ref/unicode.txt:237
+#: ../../ref/unicode.txt:235
 msgid ""
 "You can pass in bytestrings when creating a model or populating a field, and "
 "Django will convert it to Unicode when it needs to."
 msgstr ""
+"Вы можете передавать данные в байтовых строках, когда создается модель или "
+"заполняется поле, и Django будет преобразовывать данные в Unicode когда это "
+"будет необходимо."
 
 # 57e09905d740402b9f0afcccf9ab14f6
-#: ../../ref/unicode.txt:241
+#: ../../ref/unicode.txt:239
 msgid "Choosing between ``__str__()`` and ``__unicode__()``"
-msgstr ""
+msgstr "Выбор между ``__str__()`` и ``__unicode__()``"
 
 # c5cf637947e246b0bbf82278e9682f14
-#: ../../ref/unicode.txt:245
+#: ../../ref/unicode.txt:243
 msgid ""
 "If you are on Python 3, you can skip this section because you'll always "
 "create ``__str__()`` rather than ``__unicode__()``. If you'd like "
 "compatibility with Python 2, you can decorate your model class with :func:"
 "`~django.utils.encoding.python_2_unicode_compatible`."
 msgstr ""
+"Если вы используете Python 3, можете пропустить эту секцию, потому что вы "
+"всегда будете создавать ``__str__()`` вместо ``__unicode__()``. Если вы "
+"хотите обеспечить совместимость с Python 2, вы можете декорировать ваш класс "
+"модели при помощи :func:`~django.utils.encoding.python_2_unicode_compatible`."
 
 # 3329c6bf1614488d9549be4fa9ebbddb
-#: ../../ref/unicode.txt:250
+#: ../../ref/unicode.txt:248
 msgid ""
 "One consequence of using Unicode by default is that you have to take some "
 "care when printing data from the model."
 msgstr ""
+"Одно из последствий использования Unicode по умолчанию - это то что вы "
+"должны проявлять некоторую заботу при распечатке данных из модели. "
 
 # 154174c4da474b919279ddac47bc5de2
-#: ../../ref/unicode.txt:253
+#: ../../ref/unicode.txt:251
 msgid ""
 "In particular, rather than giving your model a ``__str__()`` method, we "
-"recommended you implement a ``__unicode__()`` method. In the ``__unicode__()"
-"`` method, you can quite safely return the values of all your fields without "
-"having to worry about whether they fit into a bytestring or not. (The way "
-"Python works, the result of ``__str__()`` is *always* a bytestring, even if "
-"you accidentally try to return a Unicode object)."
+"recommended you implement a ``__unicode__()`` method. In the "
+"``__unicode__()`` method, you can quite safely return the values of all your "
+"fields without having to worry about whether they fit into a bytestring or "
+"not. (The way Python works, the result of ``__str__()`` is *always* a "
+"bytestring, even if you accidentally try to return a Unicode object)."
 msgstr ""
+"В частности, вместо получения ``__str__()``  метода вашей модели, мы "
+"рекомендовали вам реализовать ``__unicode__()`` метод. В ``__unicode__()`` "
+"методе, вы можете довольно безопасно вернуть значения всех ваших полей без "
+"необходимости беспокойства о том будут ли они байтовыми строками или нет. "
+"(Путь Python работает, результат ``__str__()`` *всегда* байтовая строка,  "
+"даже если вы нечаянно попробуете вернуть Unicode объект)."
 
 # 704a5f0daabc4242bc30a4414ef276d3
-#: ../../ref/unicode.txt:260
+#: ../../ref/unicode.txt:258
 msgid ""
 "You can still create a ``__str__()`` method on your models if you want, of "
 "course, but you shouldn't need to do this unless you have a good reason. "
@@ -416,65 +607,90 @@ msgid ""
 "UTF-8. This means you'll normally only need to implement a ``__unicode__()`` "
 "method and let Django handle the coercion to a bytestring when required."
 msgstr ""
+"Вы можете все же создать метод ``__str__()`` в вашей модели, если хотите, "
+"конечно, но вам не нужно этого делать, пока вы не имеете достаточной "
+"причины. Базовый класс ``Model`` в Django автоматически предоставляет "
+"реализацию ``__str__()``, которая вызывает ``__unicode__()`` и кодирует "
+"результат в UTF-8. Это значит, что обычно вам достаточно реализовать метод "
+"``__unicode__()`` и дать Django принудительно преобразовать в байтовую "
+"строку когда это потребуется."
 
 # bc573647f59e4a429ae9fdfa74272659
-#: ../../ref/unicode.txt:268
+#: ../../ref/unicode.txt:266
 msgid "Taking care in ``get_absolute_url()``"
-msgstr ""
+msgstr "Будьте осторожны с ``get_absolute_url()``"
 
 # 5a7f720545484df7911fee45f3325b07
-#: ../../ref/unicode.txt:270
+#: ../../ref/unicode.txt:268
 msgid ""
 "URLs can only contain ASCII characters. If you're constructing a URL from "
 "pieces of data that might be non-ASCII, be careful to encode the results in "
 "a way that is suitable for a URL. The :func:`~django.core.urlresolvers."
 "reverse` function handles this for you automatically."
 msgstr ""
+"URL'ы могут содержать только ASCII символы. Если вы собираете URL из частей, "
+"которые могут содержать не-ASCII, будьте осторожны с кодированием "
+"результатов,  способом подходящим для URL. Функция :func:`~django.core."
+"urlresolvers.reverse`  обрабатывает это для вас автоматически."
 
 # 1201f403616248138a0342ec7b035117
-#: ../../ref/unicode.txt:275
+#: ../../ref/unicode.txt:273
 msgid ""
 "If you're constructing a URL manually (i.e., *not* using the ``reverse()`` "
 "function), you'll need to take care of the encoding yourself. In this case, "
 "use the ``iri_to_uri()`` and ``urlquote()`` functions that were documented "
 "above_. For example::"
 msgstr ""
+"Если вы собираете URL вручную (то есть *не* используя функцию "
+"``reverse()`` ), вам будет нужно заботиться о кодировании самостоятельно. В "
+"этом случае,  используйте функции ``iri_to_uri()`` и ``urlquote()`` которые "
+"были описаны выше_.  Например::"
 
 # 67fda75a9b304ff18279fc21ab1f6956
-#: ../../ref/unicode.txt:287
+#: ../../ref/unicode.txt:285
 msgid ""
 "This function returns a correctly encoded URL even if ``self.location`` is "
-"something like \"Jack visited Paris & Orléans\". (In fact, the ``iri_to_uri()"
-"`` call isn't strictly necessary in the above example, because all the non-"
-"ASCII characters would have been removed in quoting in the first line.)"
+"something like \"Jack visited Paris & Orléans\". (In fact, the "
+"``iri_to_uri()`` call isn't strictly necessary in the above example, because "
+"all the non-ASCII characters would have been removed in quoting in the first "
+"line.)"
 msgstr ""
+"Функция возвращает корректный кодированный URL, даже если ``self.location`` "
+"это что то подобное \"Jack visited Paris & Orléans\". (По факту, вызов "
+"``iri_to_uri()`` не строго необходим в примере выше, потому что все не-ASCII "
+"символы были бы удалены при экранировании в первой строке.)"
 
 # 022685bb217a447594f4df260ad1b722
-#: ../../ref/unicode.txt:295
+#: ../../ref/unicode.txt:293
 msgid "The database API"
-msgstr ""
+msgstr "API базы данных"
 
 # 8b847a38115b4b15936a2960bfb6b922
-#: ../../ref/unicode.txt:297
+#: ../../ref/unicode.txt:295
 msgid ""
 "You can pass either Unicode strings or UTF-8 bytestrings as arguments to "
 "``filter()`` methods and the like in the database API. The following two "
 "querysets are identical::"
 msgstr ""
+"Вы можете передавать или Unicode строку или UTF-8 байтовую строку в качестве "
+"аргументов в методы ``filter()`` и им подобные в API баз данных. Следующие "
+"два QuerySets одинаковы:"
 
 # e29ec60154354ff5987dea7a375ee387
-#: ../../ref/unicode.txt:307
+#: ../../ref/unicode.txt:305
 msgid "Templates"
-msgstr ""
+msgstr "Шаблоны"
 
 # c11d083ca5414108be093f0d3ef1f4e8
-#: ../../ref/unicode.txt:309
+#: ../../ref/unicode.txt:307
 msgid ""
 "You can use either Unicode or bytestrings when creating templates manually::"
 msgstr ""
+"Вы можете использовать Unicode или байтовые строки когда создаете шаблон "
+"вручную."
 
 # 1122ff7ff44940e385c7d90df0d7c72c
-#: ../../ref/unicode.txt:316
+#: ../../ref/unicode.txt:314
 msgid ""
 "But the common case is to read templates from the filesystem, and this "
 "creates a slight complication: not all filesystems store their data encoded "
@@ -484,48 +700,66 @@ msgid ""
 "encoding to Unicode. (:setting:`FILE_CHARSET` is set to ``'utf-8'`` by "
 "default.)"
 msgstr ""
+"Но в общем случае шаблоны читаются из файловой системы и это создает "
+"незначительную сложность: не все файловые системы хранят данные в UTF-8. "
+"Если ваши файлы с шаблонами хранятся не в UTF-8, установите параметр :"
+"setting:`FILE_CHARSET` в значение кодировки ваших файлов на диске. Когда "
+"Django читает файл шаблона, он будет конвертировать данные из указанной "
+"кодировки в Unicode.(:setting:`FILE_CHARSET` установлено в ``'utf-8'`` по "
+"умолчанию.)"
 
 # 84975e1dcc0244dfaeb4ab6abf00985d
-#: ../../ref/unicode.txt:323
+#: ../../ref/unicode.txt:321
 msgid ""
 "The :setting:`DEFAULT_CHARSET` setting controls the encoding of rendered "
 "templates. This is set to UTF-8 by default."
 msgstr ""
+"Параметр :setting:`DEFAULT_CHARSET` управляет кодировкой сгенерированных "
+"шаблонов. Он установлен в UTF-8 по умолчанию."
 
 # caf02266ef594b76bc150c27ed3bf39b
-#: ../../ref/unicode.txt:327
+#: ../../ref/unicode.txt:325
 msgid "Template tags and filters"
-msgstr ""
+msgstr "Шаблонные теги и фильтры"
 
 # be65434e202d42e38e573d56e0c50ef8
-#: ../../ref/unicode.txt:329
+#: ../../ref/unicode.txt:327
 msgid ""
 "A couple of tips to remember when writing your own template tags and filters:"
 msgstr ""
+"Несколько подсказок, которые следует помнить когда вы пишите свои теги и "
+"фильтры:"
 
 # 481b5d90df1743339ab00e37f31c4000
-#: ../../ref/unicode.txt:331
+#: ../../ref/unicode.txt:329
 msgid ""
 "Always return Unicode strings from a template tag's ``render()`` method and "
 "from template filters."
 msgstr ""
+"Всегда возвращайте Unicode строки из ``render()`` метода шаблонных тегов и "
+"из шаблонных фильтров."
 
 # 91ffbc86d42c4d3cbf0c9693ba5de58a
-#: ../../ref/unicode.txt:334
+#: ../../ref/unicode.txt:332
 msgid ""
 "Use ``force_text()`` in preference to ``smart_text()`` in these places. Tag "
 "rendering and filter calls occur as the template is being rendered, so there "
 "is no advantage to postponing the conversion of lazy translation objects "
 "into strings. It's easier to work solely with Unicode strings at that point."
 msgstr ""
+"Использование ``force_text()`` предпочтительнее ``smart_text()`` в этих "
+"местах. Вызовы рендеринга тега и фильтра происходят так же как для "
+"отрендереннного шаблона, поэтому нет выгоды в отложенном преобразовании "
+"объектов ленивого перевода в строки. Это легче для работы исключительно с "
+"Unicode строками в этот момент."
 
 # 49fd815bcaf64c539e2dc96d5e21cdfb
-#: ../../ref/unicode.txt:341
+#: ../../ref/unicode.txt:339
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 # cd6a36ea2dd04b7db4b224eeee4a8f54
-#: ../../ref/unicode.txt:343
+#: ../../ref/unicode.txt:341
 msgid ""
 "Django's email framework (in ``django.core.mail``) supports Unicode "
 "transparently. You can use Unicode data in the message bodies and any "
@@ -533,29 +767,39 @@ msgid ""
 "email specifications, so, for example, email addresses should use only ASCII "
 "characters."
 msgstr ""
+"Email фреймворк Django (в ``django.core.mail``) прозрачно поддерживает "
+"Unicode. Вы можете использовать Unicode данные в теле сообщения и в любых "
+"заголовках. Однако, вы все еще обязаны соблюдать требования email "
+"спецификаций, так, например, email адрес должен использовать только ASCII "
+"символы."
 
 # aaf669b85f19417aa4005509b319ee13
-#: ../../ref/unicode.txt:349
+#: ../../ref/unicode.txt:347
 msgid ""
 "The following code example demonstrates that everything except email "
 "addresses can be non-ASCII::"
 msgstr ""
+"Следующий пример кода демонстрирует, что все, исключая лишь email, адрес "
+"может быть не-ASCII::"
 
 # 86d4128f75744f3d97d775a87d9f77e3
-#: ../../ref/unicode.txt:364
+#: ../../ref/unicode.txt:362
 msgid "Form submission"
-msgstr ""
+msgstr "Отправка формы"
 
 # a6dd550991ab4ba692bd24b1893c042a
-#: ../../ref/unicode.txt:366
+#: ../../ref/unicode.txt:364
 msgid ""
 "HTML form submission is a tricky area. There's no guarantee that the "
 "submission will include encoding information, which means the framework "
 "might have to guess at the encoding of submitted data."
 msgstr ""
+"Отправка HTML форм - это сложная область. Нет гарантии, что отправка будет "
+"содержать информацию о кодировке, это означает, что фреймворк может только "
+"предполагать, в какой кодировке находятся отправленные данные."
 
 # c1d32b412f8646ce9debc6209f81a014
-#: ../../ref/unicode.txt:370
+#: ../../ref/unicode.txt:368
 msgid ""
 "Django adopts a \"lazy\" approach to decoding form data. The data in an "
 "``HttpRequest`` object is only decoded when you access it. In fact, most of "
@@ -565,35 +809,54 @@ msgid ""
 "attributes and methods of ``HttpRequest`` return data exactly as it was "
 "submitted by the client."
 msgstr ""
+"Django исполузует \"ленивый\" подход для декодирования данных формы. Данные "
+"в объекте ``HttpRequest`` декодируются только, когда вы обращаетесь к этому "
+"объекту. А фактически многие данные не декодируются вовсе. Только "
+"``HttpRequest.GET`` и ``HttpRequest.POST`` структуры могут декодироваться. "
+"Эти два поля будут возвращать свои данные в Unicode.  Все остальные атрибуты "
+"и методы ``HttpRequest`` возвращают данные так, как их прислал клиент."
 
 # 53436b98a4514d41a8879ced28b99cb6
-#: ../../ref/unicode.txt:378
+#: ../../ref/unicode.txt:376
 msgid ""
 "By default, the :setting:`DEFAULT_CHARSET` setting is used as the assumed "
 "encoding for form data. If you need to change this for a particular form, "
 "you can set the ``encoding`` attribute on an ``HttpRequest`` instance. For "
 "example::"
 msgstr ""
+"По умолчанию параметр :setting:`DEFAULT_CHARSET` используется как "
+"предполагающаяся кодировка для данных формы. Если вам нужно изменить это для "
+"части форм, вы можете установить атрибут ``encoding`` для экземпляра "
+"``HttpRequest``. Например:"
 
 # bd502faf221f4096bee46ac6a5932c4a
-#: ../../ref/unicode.txt:387
+#: ../../ref/unicode.txt:385
 msgid ""
 "You can even change the encoding after having accessed ``request.GET`` or "
 "``request.POST``, and all subsequent accesses will use the new encoding."
 msgstr ""
+"Вы даже можете изменить кодировку после обращения к  ``request.GET`` или "
+"``request.POST``, и все более поздние обращения будут использовать эту новую "
+"кодировку."
 
 # 2c9f5a098eb8449db22ca990f0305eee
-#: ../../ref/unicode.txt:390
+#: ../../ref/unicode.txt:388
 msgid ""
 "Most developers won't need to worry about changing form encoding, but this "
 "is a useful feature for applications that talk to legacy systems whose "
 "encoding you cannot control."
 msgstr ""
+"Большинство разработчиков не захотят беспокоится об изменении кодировки, но "
+"это полезная особенность для приложений, которые работают с устаревшими "
+"системами, которые не могут управлять кодировкой."
 
 # cf3ddf54f3514d5c96d8efe846000bb9
-#: ../../ref/unicode.txt:394
+#: ../../ref/unicode.txt:392
 msgid ""
 "Django does not decode the data of file uploads, because that data is "
 "normally treated as collections of bytes, rather than strings. Any automatic "
 "decoding there would alter the meaning of the stream of bytes."
 msgstr ""
+"Django не декодирует данные загруженных файлов, потому что их данные обычно "
+"обрабатывают как набор байтов, а не как строки. Любое автоматическое "
+"декодирование здесь могло бы изменить значение потока байт. "

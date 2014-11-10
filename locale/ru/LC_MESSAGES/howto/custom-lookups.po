@@ -1,0 +1,378 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-09 11:16+0300\n"
+"PO-Revision-Date: 2014-07-30 13:35+0300\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 151bf591525541ca8713eec4948a4ba0
+#: ../../howto/custom-lookups.txt:3
+msgid "Custom Lookups"
+msgstr ""
+
+# f64e4f49c9024d17aa48e25ca098ec35
+#: ../../howto/custom-lookups.txt:9
+msgid ""
+"Django offers a wide variety of :ref:`built-in lookups <field-lookups>` for "
+"filtering (for example, ``exact`` and ``icontains``). This documentation "
+"explains how to write custom lookups and how to alter the working of "
+"existing lookups. For the API references of lookups, see the :doc:`/ref/"
+"models/lookups`."
+msgstr ""
+
+# 82e12ebbdd2f40748b577e23b34d7f8d
+#: ../../howto/custom-lookups.txt:15
+msgid "A simple lookup example"
+msgstr ""
+
+# a5d91bd3453e4184b649a4221575c66b
+#: ../../howto/custom-lookups.txt:17
+msgid ""
+"Let's start with a simple custom lookup. We will write a custom lookup "
+"``ne`` which works opposite to ``exact``. ``Author.objects."
+"filter(name__ne='Jack')`` will translate to the SQL::"
+msgstr ""
+
+# 9d1501160a9143d8bf11d58f8c87ca1e
+#: ../../howto/custom-lookups.txt:23
+msgid ""
+"This SQL is backend independent, so we don't need to worry about different "
+"databases."
+msgstr ""
+
+# 9d23ce4c8d674bf98f1e41c04818b1fd
+#: ../../howto/custom-lookups.txt:26
+msgid ""
+"There are two steps to making this work. Firstly we need to implement the "
+"lookup, then we need to tell Django about it. The implementation is quite "
+"straightforward::"
+msgstr ""
+
+# 69b80eb10ceb47a18decb42be2a328ad
+#: ../../howto/custom-lookups.txt:41
+msgid ""
+"To register the ``NotEqual`` lookup we will just need to call "
+"``register_lookup`` on the field class we want the lookup to be available. "
+"In this case, the lookup makes sense on all ``Field`` subclasses, so we "
+"register it with ``Field`` directly::"
+msgstr ""
+
+# 8c3567929b1b40b98b74af6c88cd4d63
+#: ../../howto/custom-lookups.txt:49
+msgid ""
+"We can now use ``foo__ne`` for any field ``foo``. You will need to ensure "
+"that this registration happens before you try to create any querysets using "
+"it. You could place the implementation in a ``models.py`` file, or register "
+"the lookup in the ``ready()`` method of an ``AppConfig``."
+msgstr ""
+
+# ac7e8d8cb2e043b79ece8f4c999b485f
+#: ../../howto/custom-lookups.txt:54
+msgid ""
+"Taking a closer look at the implementation, the first required attribute is "
+"``lookup_name``. This allows the ORM to understand how to interpret "
+"``name__ne`` and use ``NotEqual`` to generate the SQL. By convention, these "
+"names are always lowercase strings containing only letters, but the only "
+"hard requirement is that it must not contain the string ``__``."
+msgstr ""
+
+# 509f4542f2294203957f5f5a56ddb36a
+#: ../../howto/custom-lookups.txt:60
+msgid ""
+"We then need to define the ``as_sql`` method. This takes a ``SQLCompiler`` "
+"object, called ``qn``,  and the active database connection. ``SQLCompiler`` "
+"objects are not documented, but the only thing we need to know about them is "
+"that they have a ``compile()`` method which returns a tuple containing a SQL "
+"string, and the parameters to be interpolated into that string. In most "
+"cases, you don't need to use it directly and can pass it on to "
+"``process_lhs()`` and ``process_rhs()``."
+msgstr ""
+
+# 22c758dbc3ad4c0ead708275b7b7523d
+#: ../../howto/custom-lookups.txt:68
+msgid ""
+"A ``Lookup`` works against two values, ``lhs`` and ``rhs``, standing for "
+"left-hand side and right-hand side. The left-hand side is usually a field "
+"reference, but it can be anything implementing the :ref:`query expression "
+"API <query-expression>`. The right-hand is the value given by the user. In "
+"the example ``Author.objects.filter(name__ne='Jack')``, the left-hand side "
+"is a reference to the ``name`` field of the ``Author`` model, and ``'Jack'`` "
+"is the right-hand side."
+msgstr ""
+
+# f7eea2b747b14592bc4b96d665c28d84
+#: ../../howto/custom-lookups.txt:76
+msgid ""
+"We call ``process_lhs`` and ``process_rhs`` to convert them into the values "
+"we need for SQL using the ``qn`` object described before. These methods "
+"return tuples containing some SQL and the parameters to be interpolated into "
+"that SQL, just as we need to return from our ``as_sql`` method. In the above "
+"example, ``process_lhs`` returns ``('\"author\".\"name\"', [])`` and "
+"``process_rhs`` returns ``('\"%s\"', ['Jack'])``. In this example there were "
+"no parameters for the left hand side, but this would depend on the object we "
+"have, so we still need to include them in the parameters we return."
+msgstr ""
+
+# 41ab8909bc634775a1c14c66d7054f72
+#: ../../howto/custom-lookups.txt:85
+msgid ""
+"Finally we combine the parts into a SQL expression with ``<>``, and supply "
+"all the parameters for the query. We then return a tuple containing the "
+"generated SQL string and the parameters."
+msgstr ""
+
+# 3530dd92e5ea48e1ab83fc4e9ea84f38
+#: ../../howto/custom-lookups.txt:90
+msgid "A simple transformer example"
+msgstr ""
+
+# d69b0edc07964047a6b21d9c042f04ab
+#: ../../howto/custom-lookups.txt:92
+msgid ""
+"The custom lookup above is great, but in some cases you may want to be able "
+"to chain lookups together. For example, let's suppose we are building an "
+"application where we want to make use of the ``abs()`` operator. We have an "
+"``Experiment`` model which records a start value, end value, and the change "
+"(start - end). We would like to find all experiments where the change was "
+"equal to a certain amount (``Experiment.objects.filter(change__abs=27)``), "
+"or where it did not exceed a certain amount (``Experiment.objects."
+"filter(change__abs__lt=27)``)."
+msgstr ""
+
+# b5158dc460904520887fa655ab280d2e
+#: ../../howto/custom-lookups.txt:102
+msgid ""
+"This example is somewhat contrived, but it nicely demonstrates the range of "
+"functionality which is possible in a database backend independent manner, "
+"and without duplicating functionality already in Django."
+msgstr ""
+
+# 93c1dded8a1e4fef9c326b040cdb6808
+#: ../../howto/custom-lookups.txt:106
+msgid ""
+"We will start by writing a ``AbsoluteValue`` transformer. This will use the "
+"SQL function ``ABS()`` to transform the value before comparison::"
+msgstr ""
+
+# 6c0c863bbacb4fef9f41a62638b9ca5e
+#: ../../howto/custom-lookups.txt:118
+msgid "Next, lets register it for ``IntegerField``::"
+msgstr ""
+
+# 0c17de46d68c4f19bab0b21dc1694a1f
+#: ../../howto/custom-lookups.txt:123
+msgid ""
+"We can now run the queries we had before. ``Experiment.objects."
+"filter(change__abs=27)`` will generate the following SQL::"
+msgstr ""
+
+# fcf9c0b78bab4a88b5f722f7bb7f9b21
+#: ../../howto/custom-lookups.txt:128
+msgid ""
+"By using ``Transform`` instead of ``Lookup`` it means we are able to chain "
+"further lookups afterwards. So ``Experiment.objects."
+"filter(change__abs__lt=27)`` will generate the following SQL::"
+msgstr ""
+
+# e1ac3aad95f44230ab67fd79d20819ee
+#: ../../howto/custom-lookups.txt:135
+msgid ""
+"Subclasses of ``Transform`` usually only operate on the left-hand side of "
+"the expression. Further lookups will work on the transformed value. Note "
+"that in this case where there is no other lookup specified, Django "
+"interprets ``change__abs=27`` as ``change__abs__exact=27``."
+msgstr ""
+
+# c12d74f2c2fd4e49b35ac96fc5ebeecd
+#: ../../howto/custom-lookups.txt:140
+msgid ""
+"When looking for which lookups are allowable after the ``Transform`` has "
+"been applied, Django uses the ``output_field`` attribute. We didn't need to "
+"specify this here as it didn't change, but supposing we were applying "
+"``AbsoluteValue`` to some field which represents a more complex type (for "
+"example a point relative to an origin, or a complex number) then we may have "
+"wanted to specify ``output_field = FloatField``, which will ensure that "
+"further lookups like ``abs__lte`` behave as they would for a ``FloatField``."
+msgstr ""
+
+# 237b205c33c84395b3ab1ac12dea6ad5
+#: ../../howto/custom-lookups.txt:149
+msgid "Writing an efficient abs__lt lookup"
+msgstr ""
+
+# 05ba8a2d746d4d78a2de5f76929fbc9d
+#: ../../howto/custom-lookups.txt:151
+msgid ""
+"When using the above written ``abs`` lookup, the SQL produced will not use "
+"indexes efficiently in some cases. In particular, when we use "
+"``change__abs__lt=27``, this is equivalent to ``change__gt=-27`` AND "
+"``change__lt=27``. (For the ``lte`` case we could use the SQL ``BETWEEN``)."
+msgstr ""
+
+# 97a78f10dffd405caa29f29dd0f3a434
+#: ../../howto/custom-lookups.txt:156
+msgid ""
+"So we would like ``Experiment.objects.filter(change__abs__lt=27)`` to "
+"generate the following SQL::"
+msgstr ""
+
+# 662341adf65145bca65eb2a9e9ef7028
+#: ../../howto/custom-lookups.txt:161
+msgid "The implementation is::"
+msgstr ""
+
+# f15cb05c6524498faff8e061ede63d01
+#: ../../howto/custom-lookups.txt:176
+msgid ""
+"There are a couple of notable things going on. First, "
+"``AbsoluteValueLessThan`` isn't calling ``process_lhs()``. Instead it skips "
+"the transformation of the ``lhs`` done by ``AbsoluteValue`` and uses the "
+"original ``lhs``. That is, we want to get ``27`` not ``ABS(27)``. Referring "
+"directly to ``self.lhs.lhs`` is safe as ``AbsoluteValueLessThan`` can be "
+"accessed only from the ``AbsoluteValue`` lookup, that is the ``lhs`` is "
+"always an instance of ``AbsoluteValue``."
+msgstr ""
+
+# 27e8e540beda4c509f73823c53c55147
+#: ../../howto/custom-lookups.txt:184
+msgid ""
+"Notice also that  as both sides are used multiple times in the query the "
+"params need to contain ``lhs_params`` and ``rhs_params`` multiple times."
+msgstr ""
+
+# 118dd941a52b4f478486baf6dbaab64a
+#: ../../howto/custom-lookups.txt:187
+msgid ""
+"The final query does the inversion (``27`` to ``-27``) directly in the "
+"database. The reason for doing this is that if the self.rhs is something "
+"else than a plain integer value (for example an ``F()`` reference) we can't "
+"do the transformations in Python."
+msgstr ""
+
+# 4b87dff7fda44ab3860fb1d8bbdd273b
+#: ../../howto/custom-lookups.txt:193
+msgid ""
+"In fact, most lookups with ``__abs`` could be implemented as range queries "
+"like this, and on most database backends it is likely to be more sensible to "
+"do so as you can make use of the indexes. However with PostgreSQL you may "
+"want to add an index on ``abs(change)`` which would allow these queries to "
+"be very efficient."
+msgstr ""
+
+# 550c58ad65d2411aba73a180f0b4a19d
+#: ../../howto/custom-lookups.txt:200
+msgid "Writing alternative implementations for existing lookups"
+msgstr ""
+
+# b8a8281a454a4e86a4667416ca2da841
+#: ../../howto/custom-lookups.txt:202
+msgid ""
+"Sometimes different database vendors require different SQL for the same "
+"operation. For this example we will rewrite a custom implementation for "
+"MySQL for the NotEqual operator. Instead of ``<>`` we will be using ``!=`` "
+"operator. (Note that in reality almost all databases support both, including "
+"all the official databases supported by Django)."
+msgstr ""
+
+# f5c1abec59b147fb87ca65202c586ab4
+#: ../../howto/custom-lookups.txt:208
+msgid ""
+"We can change the behavior on a specific backend by creating a subclass of "
+"``NotEqual`` with a ``as_mysql`` method::"
+msgstr ""
+
+# ec086d3fa08f45e38b10059b6d9e48fd
+#: ../../howto/custom-lookups.txt:219
+msgid ""
+"We can then register it with ``Field``. It takes the place of the original "
+"``NotEqual`` class as it has the same ``lookup_name``."
+msgstr ""
+
+# 9fe966e75f3043ff99c74ddc2805d977
+#: ../../howto/custom-lookups.txt:222
+msgid ""
+"When compiling a query, Django first looks for ``as_%s % connection.vendor`` "
+"methods, and then falls back to ``as_sql``. The vendor names for the in-"
+"built backends are ``sqlite``, ``postgresql``, ``oracle`` and ``mysql``."
+msgstr ""
+
+# cd03624a3252481fb05e9f949d96ffee
+#: ../../howto/custom-lookups.txt:227
+msgid "How Django determines the lookups and transforms which are used"
+msgstr ""
+
+# 1a74de71435040fab39fcb2114be40f8
+#: ../../howto/custom-lookups.txt:229
+msgid ""
+"In some cases you may which to dynamically change which ``Transform`` or "
+"``Lookup`` is returned based on the name passed in, rather than fixing it. "
+"As an example, you could have a field which stores coordinates or an "
+"arbitrary dimension, and wish to allow a syntax like ``."
+"filter(coords__x7=4)`` to return the objects where the 7th coordinate has "
+"value 4. In order to do this, you would override ``get_lookup`` with "
+"something like::"
+msgstr ""
+
+# acaa1794cb3a44848128c8040f0c645b
+#: ../../howto/custom-lookups.txt:247
+msgid ""
+"You would then define ``get_coordinate_lookup`` appropriately to return a "
+"``Lookup`` subclass which handles the relevant value of ``dimension``."
+msgstr ""
+
+# b6b49e6d51f242c2a124be87a7898f31
+#: ../../howto/custom-lookups.txt:250
+msgid ""
+"There is a similarly named method called ``get_transform()``. "
+"``get_lookup()`` should always return a ``Lookup`` subclass, and "
+"``get_transform()`` a ``Transform`` subclass. It is important to remember "
+"that ``Transform`` objects can be further filtered on, and ``Lookup`` "
+"objects cannot."
+msgstr ""
+
+# df668ae090624dd0874284d57b5f8f73
+#: ../../howto/custom-lookups.txt:255
+msgid ""
+"When filtering, if there is only one lookup name remaining to be resolved, "
+"we will look for a ``Lookup``. If there are multiple names, it will look for "
+"a ``Transform``. In the situation where there is only one name and a "
+"``Lookup`` is not found, we look for a ``Transform`` and then the ``exact`` "
+"lookup on that ``Transform``. All call sequences always end with a "
+"``Lookup``. To clarify:"
+msgstr ""
+
+# 8d12d3cb7fa94085becd62c0de4eec9f
+#: ../../howto/custom-lookups.txt:261
+msgid ""
+"``.filter(myfield__mylookup)`` will call ``myfield.get_lookup('mylookup')``."
+msgstr ""
+
+# f8aa1591cd2b4ad9b9c2d55127617a23
+#: ../../howto/custom-lookups.txt:262
+msgid ""
+"``.filter(myfield__mytransform__mylookup)`` will call ``myfield."
+"get_transform('mytransform')``, and then ``mytransform."
+"get_lookup('mylookup')``."
+msgstr ""
+
+# 2aa8ed859134450eb352e4ccd613abc3
+#: ../../howto/custom-lookups.txt:265
+msgid ""
+"``.filter(myfield__mytransform)`` will first call ``myfield."
+"get_lookup('mytransform')``, which will fail, so it will fall back to "
+"calling ``myfield.get_transform('mytransform')`` and then ``mytransform."
+"get_lookup('exact')``."
+msgstr ""

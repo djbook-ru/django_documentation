@@ -1,6 +1,6 @@
 from cliff.command import Command as BaseCommand
 from jinja2 import Environment, FileSystemLoader
-from djbook.polib import pofile
+from polib import pofile
 import logging
 import os
 
@@ -16,8 +16,7 @@ class Command(BaseCommand):
         total = 0
         translated = 0
 
-        main = ['/intro/', '/howto/', '/ref/', '/faq/', '/topics/']
-        exclude = ['/releases/', '/internals/']
+        exclude = ['/releases/', '/internals/', '/ref/contrib/gis/', '/sphinx.po']
         main_total = 0
         main_translated = 0
 
@@ -40,17 +39,20 @@ class Command(BaseCommand):
 
                     msg_total = len([e for e in po if not e.obsolete])
                     msg_translated = len(po.translated_entries())
-                    untranslated_count = msg_total - msg_translated
+                    msg_untranslated = len(po.untranslated_entries())
+                    need_fix_count = msg_total - msg_translated
+
+                    untranslated_perc = int(round(msg_untranslated / float(msg_total) * 100))
+                    translated_perc = po.percent_translated()
+                    fuzzy_perc = 100 - translated_perc - untranslated_perc
+
                     total += msg_total
                     translated += msg_translated
 
-                    statistic.append((unicode(name),  po.percent_translated(), untranslated_count))
+                    statistic.append((unicode(name), translated_perc, untranslated_perc, fuzzy_perc, need_fix_count))
 
-                    for item in main:
-                        if name.startswith(item):
-                            main_total += msg_total
-                            main_translated += msg_translated
-                            break
+                    main_total += msg_total
+                    main_translated += msg_translated
 
         self.save_to_file({
             'statistic': statistic,

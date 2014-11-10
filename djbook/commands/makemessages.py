@@ -2,7 +2,7 @@ from cliff.command import Command as BaseCommand
 import logging
 import shutil
 import os
-from djbook.polib import pofile
+from polib import pofile
 
 
 class Command(BaseCommand):
