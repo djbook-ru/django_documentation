@@ -16,7 +16,7 @@ class Command(BaseCommand):
         total = 0
         translated = 0
 
-        exclude = ['/releases/', '/internals/', '/ref/contrib/gis/']
+        exclude = ['/releases/', '/internals/', '/ref/contrib/gis/', '/sphinx.po']
         main_total = 0
         main_translated = 0
 
