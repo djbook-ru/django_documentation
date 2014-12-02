@@ -42,6 +42,9 @@ class Command(BaseCommand):
                     msg_untranslated = len(po.untranslated_entries())
                     need_fix_count = msg_total - msg_translated
 
+                    #if msg_untranslated:
+                    #    print unicode(name), msg_untranslated
+
                     untranslated_perc = int(round(msg_untranslated / float(msg_total) * 100))
                     translated_perc = po.percent_translated()
                     fuzzy_perc = 100 - translated_perc - untranslated_perc
