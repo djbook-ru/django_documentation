@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-11 11:43+0300\n"
-"PO-Revision-Date: 2014-12-25 18:41+0200\n"
+"PO-Revision-Date: 2014-12-26 15:55+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -215,6 +215,12 @@ msgid ""
 "`INSTALLED_APPS`. The ``--pattern`` option and file paths as test labels are "
 "new in 1.6."
 msgstr ""
+"В предыдущих версиях название теста могло быть в формате ``applabel``, "
+"``applabel.TestCase``, или ``applabel.TestCase.test_method``, а не обычный "
+"путь для импорта Python, и поиск тестов выполнялся только в файлах ``tests."
+"py`` и ``models.py`` пакета Python, указанного в :setting:`INSTALLED_APPS`. "
+"Опция ``--pattern`` и использование пути к файлу, как название теста, были "
+"добавлены в 1.6."
 
 # 90b85a49c6b3404b9ffc82935ba2868a
 #: ../../topics/testing/overview.txt:132
@@ -229,6 +235,12 @@ msgid ""
 "to get details on the failures without waiting for the full test run to "
 "complete."
 msgstr ""
+"Если нажать ``Ctrl-C`` при выполнении тестов, будет завершен текущий тест и "
+"затем остановлено выполнение тестов. После остановки будет выведен результат "
+"выполнения тестов и удалена тестовая база данных. ``Ctrl-C`` может быть "
+"очень полезна, если вы забыли указать опцию :djadminopt:`--failfast`, и не "
+"хотите ждать окончания выполнения всех тестов, если один из них уже "
+"выполнился с ошибкой."
 
 # 797f5c1fb7774f4fbf6d7a6a13bb33ad
 #: ../../topics/testing/overview.txt:141
@@ -238,11 +250,14 @@ msgid ""
 "not gracefully. No details of the tests run before the interruption will be "
 "reported, and any test databases created by the run will not be destroyed."
 msgstr ""
+"Если вы не хотите ждать окончания текущего теста, можете нажать ``Ctrl-C`` "
+"еще раз и выполнение тестов завершиться немедленно. При этом вы не получите "
+"результатов выполнения тестов и тестовая база данных не будет удалена."
 
 # 72eda77501b742739133d4bd11120194
 #: ../../topics/testing/overview.txt:0
 msgid "Test with warnings enabled"
-msgstr ""
+msgstr "Выполнение тестов с включенными предупреждениями"
 
 # e6dfe4745a614113b9d127f62f2ad338
 #: ../../topics/testing/overview.txt:148
@@ -254,11 +269,18 @@ msgid ""
 "your code that aren't strictly wrong but could benefit from a better "
 "implementation."
 msgstr ""
+"Хорошая практика - запускать тесты с включенными предупреждениями Python: "
+"``python -Wall manage.py test``. Флаг ``-Wall`` указывает Python показывать "
+"предупреждения об использовании устаревшего API. Django, как и многие другие "
+"библиотеки Python, использует такие предупреждения для пометки функционала, "
+"который в будущем будет удален из Django. Предупреждения могут также "
+"использоваться, чтобы обратить внимание на код, который не совсем "
+"неправильный, но требует лучшей реализации."
 
 # 3d3d574515cc4b73980fbb1c68a42708
 #: ../../topics/testing/overview.txt:159
 msgid "The test database"
-msgstr ""
+msgstr "Тестовая база данных"
 
 # 7b52813d752b43ab8b9b7f64deb43eaa
 #: ../../topics/testing/overview.txt:161
@@ -267,6 +289,9 @@ msgid ""
 "\" (production) database. Separate, blank databases are created for the "
 "tests."
 msgstr ""
+"Тесты, которые работают с базой данных (то есть тесты моделей), не будут "
+"использовать \"настоящую\" базу данных. Для этого будет создана отдельная "
+"пустая база данных."
 
 # b82c76dd38e142908dd9bf7300234736
 #: ../../topics/testing/overview.txt:164
@@ -274,6 +299,8 @@ msgid ""
 "Regardless of whether the tests pass or fail, the test databases are "
 "destroyed when all the tests have been executed."
 msgstr ""
+"Независимо от результата выполнения тестов тестовая база будет удалена после "
+"выполнения тестов."
 
 # 0348a217f372486c86032bb05ec06d71
 #: ../../topics/testing/overview.txt:167
@@ -286,6 +313,13 @@ msgid ""
 "name, specify :setting:`NAME <TEST_NAME>` in the :setting:`TEST <DATABASE-"
 "TEST>` dictionary for any given database in :setting:`DATABASES`."
 msgstr ""
+"По умолчанию название тестовой базы данных формируется путем добавления "
+"префикса ``test_`` к значению настройки :setting:`NAME` баз данных, "
+"указанных в настройке :setting:`DATABASES`. При использовании SQLite "
+"тестовая база данных создается в памяти (файловая система не используется!). "
+"Если вы хотите использовать другое название для тестовой базы данных, "
+"укажите его через :setting:`NAME <TEST_NAME>` в словаре насйтроки :setting:"
+"`TEST <DATABASE-TEST>` для баз данных, указанных в :setting:`DATABASES`."
 
 # 79a3ac5a9d054616a8ecfd5f27c84346
 #: ../../topics/testing/overview.txt:178
@@ -293,6 +327,8 @@ msgid ""
 "On PostgreSQL, :setting:`USER` will also need read access to the built-in "
 "``postgres`` database."
 msgstr ""
+"Для PostgreSQL пользователь из :setting:`USER` должен иметь права на чтение "
+"встроенной базы данных ``postgres``."
 
 # 2eca4cfd2a214377bcdbc976704181c6
 #: ../../topics/testing/overview.txt:181
@@ -304,6 +340,11 @@ msgid ""
 "to make sure that the given user account has sufficient privileges to create "
 "a new database on the system."
 msgstr ""
+"При создании тестовой базы данных будут использоваться настройки базы "
+"данных: :setting:`ENGINE <DATABASE-ENGINE>`, :setting:`USER`, :setting:"
+"`HOST`, и т.д. Тестовая база данных создается пользователем из :setting:"
+"`USER`, убедитесь, что у этого пользователя есть права на создания базы "
+"данных."
 
 # ca854cf37a72493087695de8b08270a6
 #: ../../topics/testing/overview.txt:188
@@ -315,6 +356,10 @@ msgid ""
 "`settings documentation </ref/settings>` for details of these and other "
 "advanced settings."
 msgstr ""
+"Для больше контроля кодировок в тестовой базе данных используйте параметр :"
+"setting:`CHARSET <TEST_CHARSET>` настройки TEST. При использовании MySQL "
+"можно также указать :setting:`COLLATION <TEST_COLLATION>`. Подробнее о "
+"настройках можно прочитать в :doc:`соответствующем разделе </ref/settings>`."
 
 # b7c04c3238bc4dfa9577936266947d25
 #: ../../topics/testing/overview.txt:197
@@ -323,11 +368,13 @@ msgid ""
 "setting used to be separate options in the database settings dictionary, "
 "prefixed with ``TEST_``."
 msgstr ""
+"Настройки с префиксом ``TEST_`` были перенесены в настройку :setting:`TEST "
+"<DATABASE-TEST>` для каждой из используемых баз данных."
 
 # 9a6d6717ce624aa5a25c4d91c33d36ee
 #: ../../topics/testing/overview.txt:0
 msgid "Finding data from your production database when running tests?"
-msgstr ""
+msgstr "Запросы к настоящей базе дынных при выполнении тестов"
 
 # 50d0932429d642d2a7ea58b360f0fe2a
 #: ../../topics/testing/overview.txt:203
@@ -339,6 +386,11 @@ msgid ""
 "tests. *It is a bad idea to have such import-time database queries in your "
 "code* anyway - rewrite your code so that it doesn't do this."
 msgstr ""
+"Если ваш код выполняет запросы к базе данных при импорте модуля, эти запросы "
+"будут выполнены *перед* созданием тестовой базы данных, что может привести к "
+"неожиданным результатам. То есть такие запросы выполнятся для настоящей базы "
+"данных. В любом случае *выполнение запросов при импорте модуля - плохая "
+"практика*. Избегайте этого."
 
 # c3cef5c3b7f4470488e30bab367e2f89
 #: ../../topics/testing/overview.txt:212
@@ -346,6 +398,7 @@ msgid ""
 "This also applies to customized implementations of :meth:`~django.apps."
 "AppConfig.ready()`."
 msgstr ""
+"Это также относиться и к методу :meth:`~django.apps.AppConfig.ready()`."
 
 # 67e4a351b90847a3b0e4957a74bd17a0
 #: ../../topics/testing/overview.txt:217
@@ -353,11 +406,13 @@ msgid ""
 "The :ref:`advanced multi-db testing topics <topics-testing-advanced-"
 "multidb>`."
 msgstr ""
+":ref:`Раздел об использовании нескольких баз данных при тестировании <topics-"
+"testing-advanced-multidb>`."
 
 # 68f136d436e24f1a940fced8d9d6978c
 #: ../../topics/testing/overview.txt:222
 msgid "Order in which tests are executed"
-msgstr ""
+msgstr "Порядок выполнения тестов"
 
 # 9fcd4b7c31554e3fadc3e4ce1636d483
 #: ../../topics/testing/overview.txt:224
@@ -365,11 +420,13 @@ msgid ""
 "In order to guarantee that all ``TestCase`` code starts with a clean "
 "database, the Django test runner reorders tests in the following way:"
 msgstr ""
+"Чтобы код ``TestCase`` выполнялся на чистой базе данных, Django выполняет "
+"тесты в следующем порядке:"
 
 # ed08057435074f30919e91385f999b6b
 #: ../../topics/testing/overview.txt:227
 msgid "All :class:`~django.test.TestCase` subclasses are run first."
-msgstr ""
+msgstr "Сначала классы-наследники :class:`~django.test.TestCase`."
 
 # d6b5ebcd817948ac9782afe95f1910dd
 #: ../../topics/testing/overview.txt:229
@@ -378,6 +435,9 @@ msgid ""
 "SimpleTestCase`, including :class:`~django.test.TransactionTestCase`) are "
 "run with no particular ordering guaranteed nor enforced among them."
 msgstr ""
+"Затем остальные тесты, которые используют базовые тесты Django (классы-"
+"наследники :class:`~django.test.SimpleTestCase`, включая :class:`~django."
+"test.TransactionTestCase`). Эти тесты могут быть выполнены в любом порядке."
 
 # b4621cd1bd714dbfbc077a160f9cb5a1
 #: ../../topics/testing/overview.txt:234
@@ -385,6 +445,8 @@ msgid ""
 "Then any other :class:`unittest.TestCase` tests (including doctests) that "
 "may alter the database without restoring it to its original state are run."
 msgstr ""
+"Затем все остальные тесты :class:`unittest.TestCase` (включая \"doctests\"), "
+"которые могут изменять базу данных без восстановления начального состояния."
 
 # 4b723c3208004e4fa37baddf6f136b34
 #: ../../topics/testing/overview.txt:239
@@ -394,11 +456,15 @@ msgid ""
 "database by a given :class:`~django.test.TransactionTestCase` test, they "
 "must be updated to be able to run independently."
 msgstr ""
+"Такой порядок выполнения тестов может выявить неожиданные зависимости между "
+"тестами. Например, \"doctests\" могут использовать состояние, оставленное "
+"определенным :class:`~django.test.TransactionTestCase`. Такие тесты следует "
+"исправить, чтобы они могли выполняться независимо."
 
 # cca5ba49494b40dea38ef8e62b01f06f
 #: ../../topics/testing/overview.txt:247
 msgid "Rollback emulation"
-msgstr ""
+msgstr "Эмуляция отката изменений"
 
 # c9380d5a96df46f48994dd015ee7f9e9
 #: ../../topics/testing/overview.txt:249
@@ -408,6 +474,10 @@ msgid ""
 "backends where transactions are supported (the most important exception "
 "being MyISAM)."
 msgstr ""
+"Все начальные данные, созданные миграциями, будут доступны в тестах "
+"``TestCase``, но не ``TransactionTestCase``, и только, если база данных "
+"поддерживает транзакции (обратите внимание, MyISAM не поддерживает "
+"транзакции)."
 
 # ef95bfefea02444ebbb965df57ffd120
 #: ../../topics/testing/overview.txt:254
@@ -417,6 +487,10 @@ msgid ""
 "or ``TransactionTestCase``, but note that this will slow down that test "
 "suite by approximately 3x."
 msgstr ""
+"Django может восстановить начальные данные перед каждым тестом, эмулируя "
+"откат изменений, если указать атрибут ``serialized_rollback`` с ``True`` в "
+"теле ``TestCase`` или ``TransactionTestCase``. Но учтите, это замедлит "
+"выполнение тестов приблизительно в 3 раза."
 
 # 7c3c7aa4249141409fe7a1ab595669a2
 #: ../../topics/testing/overview.txt:259
@@ -426,6 +500,10 @@ msgid ""
 "transactional database and be using ``TestCase`` for most tests, and thus "
 "not need this setting."
 msgstr ""
+"Распространяемые приложения и те, что используют MyISAM, должны использовать "
+"этот атрибут. Но мы рекомендуем использовать базу данных, которая "
+"поддерживает транзакции, и ``TestCase`` для создания тестов. В таком случае "
+"эта настройка не понадобится."
 
 # ee62cdb536b2456d86f34d741e913dde
 #: ../../topics/testing/overview.txt:264
@@ -434,6 +512,10 @@ msgid ""
 "some apps from this process (and speed up test runs slightly), you may add "
 "those apps to :setting:`TEST_NON_SERIALIZED_APPS`."
 msgstr ""
+"Начальная сериализация данных обычно работает очень быстро, но если вы "
+"хотите исключить некоторые приложения из этого процесса (и немного ускорить "
+"выполнение тестов), вы можете указать их в настройке :setting:"
+"`TEST_NON_SERIALIZED_APPS`."
 
 # bc2d87d405c14608b9d9f2a4e61cd74a
 #: ../../topics/testing/overview.txt:268
@@ -441,11 +523,13 @@ msgid ""
 "Apps without migrations are not affected; ``initial_data`` fixtures are "
 "reloaded as usual."
 msgstr ""
+"Приложения без миграция работают как и раньше - ``initial_data`` фикстуры "
+"загружаются перед каждым тестом."
 
 # aed89693cb414352a34d81414d96c0f5
 #: ../../topics/testing/overview.txt:272
 msgid "Other test conditions"
-msgstr ""
+msgstr "Другие условия выполнения тестов"
 
 # 03e9e972af3f4f98aa439cf44f1f5e5c
 #: ../../topics/testing/overview.txt:274
@@ -455,6 +539,9 @@ msgid ""
 "is to ensure that the observed output of your code matches what will be seen "
 "in a production setting."
 msgstr ""
+"Независимо от значения :setting:`DEBUG` в вашем файле настроек, Django "
+"выполняет все тесты со значением :setting:`DEBUG`\\=False. Таким образом, "
+"при выполнении тестов код будет работать так же, как и на боевом сервере."
 
 # 176c789a0f6f4d3ca1c6851697d4fa84
 #: ../../topics/testing/overview.txt:279
@@ -464,11 +551,16 @@ msgid ""
 "your tests in production because, unlike databases, a separate \"test cache"
 "\" is not used. This behavior `may change`_ in the future."
 msgstr ""
+"Кэш не очищается после каждого теста, и выполнение \"manage.py test fooapp\" "
+"может привести к добавлению тестовых данных в кэш на \"боевом\" сервере, "
+"если вы запускаете тесты на этот сервере. В отличии от базы данных, "
+"отдельный \"кэш для тестирования\" не используется. Но это может `измениться "
+"в будущем <https://code.djangoproject.com/ticket/11505>`_."
 
 # a9ea38b8c27f4b6e95728c5f62c7f9fd
 #: ../../topics/testing/overview.txt:287
 msgid "Understanding the test output"
-msgstr ""
+msgstr "Разбираем вывод в консоль при выполнении тестов"
 
 # 76a5322dbc594adf8844942ed86bafe6
 #: ../../topics/testing/overview.txt:289
@@ -477,6 +569,8 @@ msgid ""
 "prepares itself. You can control the level of detail of these messages with "
 "the ``verbosity`` option on the command line::"
 msgstr ""
+"При выполнении тестов в консоль выводится различная информация. Вы можете "
+"указать уровень подробности вывода, используя опцию ``verbosity``::"
 
 # 1745770b6a14433f89d3262b6d640109
 #: ../../topics/testing/overview.txt:299
@@ -484,6 +578,8 @@ msgid ""
 "This tells you that the test runner is creating a test database, as "
 "described in the previous section."
 msgstr ""
+"Этот вывод уведомляет, что была создана тестовая база данных, как описано "
+"выше."
 
 # 2a3e39f2ca4049258e8fd3dab0ab2b7f
 #: ../../topics/testing/overview.txt:302
@@ -491,6 +587,8 @@ msgid ""
 "Once the test database has been created, Django will run your tests. If "
 "everything goes well, you'll see something like this::"
 msgstr ""
+"После создания базы данных Django начнет выполнять тесты. Если тесты "
+"выполнены успешно, вы увидите приблизительно такое::"
 
 # 1f72c54b22924a8096f7cfea19893fe7
 #: ../../topics/testing/overview.txt:310
@@ -498,6 +596,7 @@ msgid ""
 "If there are test failures, however, you'll see full details about which "
 "tests failed::"
 msgstr ""
+"Если некоторые тесты не выполнились успешно, будут выведены подробности::"
 
 # 1668885098ff44ad8be72ed84679d48e
 #: ../../topics/testing/overview.txt:326
@@ -506,6 +605,9 @@ msgid ""
 "document, but it's pretty intuitive. You can consult the documentation of "
 "Python's :mod:`unittest` library for details."
 msgstr ""
+"Мы не будем подробно описывать информацию об ошибке, но все и так должно "
+"быть понятно. Подробности вы можете найти в документации Python для пакета :"
+"mod:`unittest`."
 
 # 05e4a7d89bb843479206a3b0abef1f58
 #: ../../topics/testing/overview.txt:330
@@ -515,11 +617,14 @@ msgid ""
 "This feature is useful if you're using the test-runner script in a shell "
 "script and need to test for success or failure at that level."
 msgstr ""
+"Обратите внимание, \"return code\" команды будет 1, если не выполнился хотя "
+"бы один тест. Если все тесты выполнились успешно, вернет 0. Это полезно, "
+"если вы запускаете тесты в shell скрипте и необходим результат выполнения."
 
 # 3bf706d749bf4855a9edb9dce7bdf3c1
 #: ../../topics/testing/overview.txt:336
 msgid "Speeding up the tests"
-msgstr ""
+msgstr "Оптимизация тестов"
 
 # cafa96f6a0fb4d16a536440a0d71b413
 #: ../../topics/testing/overview.txt:338
@@ -529,6 +634,10 @@ msgid ""
 "to use a custom settings file and set the :setting:`PASSWORD_HASHERS` "
 "setting to a faster hashing algorithm::"
 msgstr ""
+"В последней версии Django при генерации хэша для паролей используется "
+"медленный алгоритм. Если вы создаете большое количество пользователей в "
+"тестах, можно создать отдельный файл настроек и указать в :setting:"
+"`PASSWORD_HASHERS` более быстрый алгоритм::"
 
 # c86fa9c2f30445dc9b55afa77efd125c
 #: ../../topics/testing/overview.txt:347
@@ -536,3 +645,5 @@ msgid ""
 "Don't forget to also include in :setting:`PASSWORD_HASHERS` any hashing "
 "algorithm used in fixtures, if any."
 msgstr ""
+"Не забудьте также добавить в :setting:`PASSWORD_HASHERS` все хэширующие "
+"алгоритмы, которые используются в фикстурах."
