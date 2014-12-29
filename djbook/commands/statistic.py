@@ -16,9 +16,17 @@ class Command(BaseCommand):
         total = 0
         translated = 0
 
-        exclude = ['/releases/', '/internals/', '/ref/contrib/gis/', '/sphinx.po']
+        exclude = [
+            '/releases/',
+            '/internals/',
+            '/ref/contrib/gis/',
+            '/ref/contrib/comments/',
+            '/sphinx.po'
+        ]
         main_total = 0
         main_translated = 0
+
+        untranslated_list = []
 
         for path, dirs, files in os.walk(self.app.locale_path):
             for f in files:
@@ -42,8 +50,8 @@ class Command(BaseCommand):
                     msg_untranslated = len(po.untranslated_entries())
                     need_fix_count = msg_total - msg_translated
 
-                    #if msg_untranslated:
-                    #    print unicode(name), msg_untranslated
+                    if msg_untranslated:
+                        untranslated_list.append((unicode(name), msg_untranslated))
 
                     untranslated_perc = int(round(msg_untranslated / float(msg_total) * 100))
                     translated_perc = po.percent_translated()
@@ -56,6 +64,11 @@ class Command(BaseCommand):
 
                     main_total += msg_total
                     main_translated += msg_translated
+
+        untranslated_list.sort(key=lambda item: item[1])
+
+        #for name, count in untranslated_list:
+        #    print name, count
 
         self.save_to_file({
             'statistic': statistic,
