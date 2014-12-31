@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2014-12-30 16:39+0200\n"
+"PO-Revision-Date: 2014-12-31 14:29+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -635,6 +635,10 @@ msgid ""
 "(``ModelBackend``), ``credentials`` should be the user's username and "
 "password, provided as keyword arguments::"
 msgstr ""
+"Формат аргумента ``credentials`` зависит от используемого :ref:`бэкенда "
+"авторизации <authentication-backends>` (который настраивается :setting:"
+"`AUTHENTICATION_BACKENDS`). Если вы используете стандартный бэкенд Django "
+"(``ModelBackend``), ``credentials`` будет имя и пароль пользователя::"
 
 # 39f05f2b879d4f988638e0361cffbeba
 #: ../../topics/testing/tools.txt:342
@@ -643,13 +647,15 @@ msgid ""
 "different credentials. It requires whichever credentials are required by "
 "your backend's ``authenticate()`` method."
 msgstr ""
+"Для других бэкендов авторизации параметры могут отличаться. Это зависит от "
+"аргументов, которые принимает метод ``authenticate()`` бэкенда авторизации."
 
 # f43eac4869c64335903068a21e9dcbf9
 #: ../../topics/testing/tools.txt:346
 msgid ""
 "``login()`` returns ``True`` if it the credentials were accepted and login "
 "was successful."
-msgstr ""
+msgstr "``login()`` возвращает ``True``, если пользователь успешно залогинен."
 
 # f9bd7dc6a8dc46eea5035114839adef0
 #: ../../topics/testing/tools.txt:349
@@ -667,6 +673,17 @@ msgid ""
 "models.UserManager.create_user` helper method to create a new user with a "
 "correctly hashed password."
 msgstr ""
+"Не забудьте создать пользователя перед вызовом метода. Как мы уже сказали "
+"выше, тесты используют тестовую базу данных, которая не содержит "
+"пользователей по умолчанию. По этому пользователь, который существует в "
+"вашей базе данных, не будет работать в тестах. Вы должны создать "
+"пользователя в текущем наборе тестов явно (используя API Django моделей), "
+"или используя тестовые фикстуры. Помните, если вы хотите установить пароль "
+"тестовому пользователю, вы не можете этого сделать просто назначив атрибут "
+"-- вы должны использовать метод :meth:`~django.contrib.auth.models.User."
+"set_password()`, которая установит пароль в правильно хешированном виде. "
+"Также вы можете использовать метод :meth:`~django.contrib.auth.models."
+"UserManager.create_user` для создания пользователя с правильным паролем."
 
 # 275f5fa10beb492e959c574639bd6ac3
 #: ../../topics/testing/tools.txt:365
@@ -675,6 +692,9 @@ msgid ""
 "the ``logout()`` method can be used to simulate the effect of a user logging "
 "out of your site."
 msgstr ""
+"Если ваш сайт использует :doc:`систему авторизации Django </topics/auth/"
+"index>`, вы можете использовать метод ``logout()`` чтобы эмулировать логаут "
+"пользователя."
 
 # 6c679aad9d60404cb7970e450d969e67
 #: ../../topics/testing/tools.txt:369
@@ -683,11 +703,14 @@ msgid ""
 "session data cleared to defaults. Subsequent requests will appear to come "
 "from an :class:`~django.contrib.auth.models.AnonymousUser`."
 msgstr ""
+"После вызова метода тестовый клиент очистит все куки и сессионные данные. "
+"Последующие запросы будт выполнены от :class:`~django.contrib.auth.models."
+"AnonymousUser`."
 
 # 53f10d5caedd4066ac39364bdf964bc7
 #: ../../topics/testing/tools.txt:374
 msgid "Testing responses"
-msgstr ""
+msgstr "Тестовые ответы"
 
 # 3b3b92fc8de842fb8cf5955eff2b635a
 #: ../../topics/testing/tools.txt:376
@@ -697,18 +720,22 @@ msgid ""
 "returned Django views; the test response object has some additional data "
 "useful for test code to verify."
 msgstr ""
+"Методы ``get()`` и ``post()`` возвращают объект ``Response``. Этот объект "
+"``Response`` *отличается* от объекта ``HttpResponse``, который возвращается "
+"представлениями. Тестовый ответ содержит дополнительные данные, которые "
+"могут быть полезны при тестировании."
 
 # cd908126a7944730b6578bf1acd5f8d0
 #: ../../topics/testing/tools.txt:381
 msgid "Specifically, a ``Response`` object has the following attributes:"
-msgstr ""
+msgstr "Объект ``Response`` содержит следующие атрибуты:"
 
 # 9d036460e8474ab5ad4e36cfdec2f971
 #: ../../topics/testing/tools.txt:387
 msgid ""
 "The test client that was used to make the request that resulted in the "
 "response."
-msgstr ""
+msgstr "Тестовый клиент, который отправил запрос."
 
 # 5cde3acdd64c45c4813914b2ff95f435
 #: ../../topics/testing/tools.txt:392
