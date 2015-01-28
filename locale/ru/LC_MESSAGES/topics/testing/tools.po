@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2015-01-28 00:55+0200\n"
+"PO-Revision-Date: 2015-01-28 23:51+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -1402,6 +1402,12 @@ msgid ""
 "browser. The example above is just a tiny fraction of what the Selenium "
 "client can do; check out the `full reference`_ for more details."
 msgstr ""
+"Этот тест автоматически откроет Firefox, затем страницу авторизации, вводит "
+"логин и пароль и нажимает кнопку \"Log in\". Selenium поддерживает и другие "
+"драйверы, если у вас не установлен Firefox, или вы хотите использовать "
+"другие браузеры. Пример выше показывает лишь малую часть возможностей "
+"Selenium; подробности смотрите в `документации <http://selenium-python."
+"readthedocs.org/en/latest/api.html>`_."
 
 # 3d41d96902254afa80b2fd2d4c1446f2
 #: ../../topics/testing/tools.txt:763
@@ -1411,6 +1417,9 @@ msgid ""
 "assets of the application(s) under test transparently served at their "
 "expected locations during the execution of these tests."
 msgstr ""
+"До Django 1.7 ``LiveServerTestCase`` использовал :doc:`приложение "
+"staticfiles </howto/static-files/index>` для загрузки статических файлов во "
+"время тестов."
 
 # c46102bb340f409dac4d34f6a84221c3
 #: ../../topics/testing/tools.txt:768
@@ -1421,6 +1430,9 @@ msgid ""
 "of the file system under :setting:`STATIC_ROOT` at the :setting:`STATIC_URL` "
 "URL."
 msgstr ""
+"В Django 1.7 зависимость от приложений ``contrib`` убрали, а "
+"``LiveServerTestCase`` доработали и теперь он раздает файлы из :setting:"
+"`STATIC_ROOT` по URL :setting:`STATIC_URL`."
 
 # cab17bb4987348ab99532d368209b952
 #: ../../topics/testing/tools.txt:774
@@ -1432,6 +1444,10 @@ msgid ""
 "ref:`the relevant documentation <staticfiles-testing-support>` for more "
 "details."
 msgstr ""
+"Если вы используете приложение ``staticfiles`` в проекте, используйте :class:"
+"`~django.contrib.staticfiles.testing.StaticLiveServerTestCase`, который "
+"реализует старое поведение. Подробности смотрите в :ref:`соответствующем "
+"разделе <staticfiles-testing-support>`."
 
 # e0478b7094814b7c9df523b11d8eb649
 #: ../../topics/testing/tools.txt:783
@@ -1449,6 +1465,16 @@ msgid ""
 "by making Selenium wait until the ``<body>`` HTML tag is found in the "
 "response (requires Selenium > 2.13):"
 msgstr ""
+"При использовании SQLite в памяти для тестов, подключение к базе данных "
+"будет использоваться параллельно двумя потоками: в одном потоке работает "
+"тестовый сервер, во втором выполняются тесты. Важно, чтобы запросы в разных "
+"потоках не выполнялись одновременно, т.к. это может привести к неожиданному "
+"поведению тестов. По этому вам необходимо убедиться, что разные потоки не "
+"выполняют запросы одновременно. Для этого в некоторых ситуациях (например, "
+"после нажатия на ссылку, или отправки формы), вам необходимо дождаться пока "
+"Selenium получит ответ от сервера, и загрузиться новая страница, затем "
+"продолжить выполнение тестов. Вы можете сделать это указав Selenium ждать "
+"пока не будет найдет тег ``<body>`` в ответе (требуется Selenium > 2.13):"
 
 # b1b0dc0ffb104b0083356f77ef6fe43a
 #: ../../topics/testing/tools.txt:807
@@ -1460,16 +1486,24 @@ msgid ""
 "use cases. Please refer to the `Selenium FAQ`_ and `Selenium documentation`_ "
 "for more information."
 msgstr ""
+"Проблема в том, что на самом деле нет определенного момента \"загрузки "
+"страницы\", особенно в современных Web приложениях, которые генерируют HTML "
+"динамически после загрузки основы страницы с сервера. По этому ожидания тега "
+"``<body>`` не подходит для всех случаев. Дополнительную информацию ищите в "
+"`Selenium FAQ <http://code.google.com/p/selenium/wiki/"
+"FrequentlyAskedQuestions#Q:_WebDriver_fails_to_find_elements_/"
+"_Does_not_block_on_page_loa>`_ и `документации Selenium <http://seleniumhq."
+"org/docs/04_webdriver_advanced.html#explicit-waits>`_."
 
 # 35e68ca1d3204563b1121291246c363a
 #: ../../topics/testing/tools.txt:818
 msgid "Test cases features"
-msgstr ""
+msgstr "Возможности приложения для тестирования"
 
 # ed6891acfbab43de87ff5ebbdfc04ff2
 #: ../../topics/testing/tools.txt:821
 msgid "Default test client"
-msgstr ""
+msgstr "Тестовый клиент по умолчанию"
 
 # 974c2bbb18c049f2a00435cb6b79c121
 #: ../../topics/testing/tools.txt:825
@@ -1479,21 +1513,25 @@ msgid ""
 "client``. This client is recreated for each test, so you don't have to worry "
 "about state (such as cookies) carrying over from one test to another."
 msgstr ""
+"Каждый тест экземпляра ``django.test.*TestCase`` может использовать "
+"экземпляр тестового клиента Django, обратившись к атрибуту ``self.client``. "
+"Этот клиент пересоздается для каждого теста, по этому вам не нужно "
+"беспокоится о состоянии (например о куках) между тестами."
 
 # 6849f34bbb334921911d2b303e454619
 #: ../../topics/testing/tools.txt:830
 msgid "This means, instead of instantiating a ``Client`` in each test::"
-msgstr ""
+msgstr "По этому вместо создания экземпляра ``Client`` в каждом тесте::"
 
 # 4acaa44656044a4aad12fc3c2deacc15
 #: ../../topics/testing/tools.txt:846
 msgid "...you can just refer to ``self.client``, like so::"
-msgstr ""
+msgstr "...вы можете просто обращаться к ``self.client``::"
 
 # c3ee722d80334914b0be54a10f0490e6
 #: ../../topics/testing/tools.txt:860
 msgid "Customizing the test client"
-msgstr ""
+msgstr "Переопределение тестового клиента"
 
 # 47099470903a4e0d8c8badb40040e781
 #: ../../topics/testing/tools.txt:864
@@ -1502,11 +1540,13 @@ msgid ""
 "with customized behavior), use the :attr:`~SimpleTestCase.client_class` "
 "class attribute::"
 msgstr ""
+"Если вы хотите использовать переопределенный класс ``Client``, укажите его в "
+"атрибуте :attr:`~SimpleTestCase.client_class`::"
 
 # 2737ab59aee5427db574a2fb88dfd2c6
 #: ../../topics/testing/tools.txt:883
 msgid "Fixture loading"
-msgstr ""
+msgstr "Загрузка фикстур"
 
 # 1606c6203a484c8f95f0e0b786cf689a
 #: ../../topics/testing/tools.txt:887
