@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2015-01-28 23:51+0200\n"
+"PO-Revision-Date: 2015-01-29 23:11+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -1556,6 +1556,9 @@ msgid ""
 "Django's custom ``TransactionTestCase`` class provides a way of loading "
 "**fixtures**."
 msgstr ""
+"Тестирование сайта, который использует базу данных, не очень эффективно, "
+"если в базе нет данных. Для добавления данных в базу данных "
+"``TransactionTestCase`` предоставляет возможность загружать **фикстуры**."
 
 # 44ec1f10dde94faab1703353abc4608d
 #: ../../topics/testing/tools.txt:892
@@ -1565,6 +1568,10 @@ msgid ""
 "fixture of fake user accounts in order to populate your database during "
 "tests."
 msgstr ""
+"Фикстуры - это набор данных, которые Django умеет импортировать в базу "
+"данных. Например, если ваш сайт использует модель пользователя, вы можете "
+"создать фикстуру с данными пользователей и загружать её перед запуском "
+"тестов."
 
 # 9e68ac7648f148ce86127b56543b8541
 #: ../../topics/testing/tools.txt:896
@@ -1574,6 +1581,9 @@ msgid ""
 "data in your database. See the :djadmin:`dumpdata documentation<dumpdata>` "
 "for more details."
 msgstr ""
+"Самый простой способ создать фикстуры, использовать команду :djadmin:`manage."
+"py dumpdata <dumpdata>`. Необходимые данные должны быть в вашей базе данных. "
+"Подробности смотрите в описании команды :djadmin:`dumpdata<dumpdata>`."
 
 # 9383bd46db7d476ea54a407576f9a6a4
 #: ../../topics/testing/tools.txt:903
@@ -1584,6 +1594,11 @@ msgid ""
 "``initial_data``. This gives you a way of populating a new database with any "
 "initial data, such as a default set of categories."
 msgstr ""
+"Если вы когда либо запускали команду :djadmin:`manage.py migrate<migrate>`, "
+"вы уже использовали фикстуры даже не зная этого! При вызове :djadmin:"
+"`migrate` впервые, Django устанавливает фикстуры, которые называются "
+"``initial_data``. Это позволяет добавлять данные в новую базу "
+"данных(например, список категорий по умолчанию)."
 
 # 0195670dd3b54c7baf84da7b5fb87182
 #: ../../topics/testing/tools.txt:910
@@ -1591,11 +1606,13 @@ msgid ""
 "Fixtures with other names can always be installed manually using the :"
 "djadmin:`manage.py loaddata<loaddata>` command."
 msgstr ""
+"Фикстуры можно загрузить с помощью команды :djadmin:`manage.py "
+"loaddata<loaddata>`."
 
 # 785eee53e5304fa5bf54c4b8644aa936
 #: ../../topics/testing/tools.txt:0
 msgid "Initial SQL data and testing"
-msgstr ""
+msgstr "Инициализирующий SQL и тесты"
 
 # fb1002e7042143be9931fc6d1c609602
 #: ../../topics/testing/tools.txt:915
@@ -1606,6 +1623,11 @@ msgid ""
 "the contents of the test database after each test; as a result, any data "
 "added using the custom SQL hook will be lost."
 msgstr ""
+"Django предоставляет еще один способ добавить начальные данные для моделей "
+"-- :ref:`инициализирующий SQL <initial-sql>`. Однако, этот подход *нельзя* "
+"использовать для загрузки данных в тестах. Django очищает базу данных после "
+"каждого теста, в результате любые данные, добавленные с помощью SQL, будут "
+"потеряны."
 
 # c0538cceb8a14c5399e6043837183a11
 #: ../../topics/testing/tools.txt:922
@@ -1615,11 +1637,15 @@ msgid ""
 "specifying a ``fixtures`` class attribute on your :class:`django.test."
 "TestCase` subclass::"
 msgstr ""
+"После создания фикстур, добавьте их в каталог ``fixtures`` одного из ваших "
+"приложений из :setting:`INSTALLED_APPS`. Теперь вы можете использовать их в "
+"тестах, указав в атрибуте ``fixtures`` класса-наследника :class:`django.test."
+"TestCase`::"
 
 # 44274328ca3e41efba15bcfce417b6df
 #: ../../topics/testing/tools.txt:941
 msgid "Here's specifically what will happen:"
-msgstr ""
+msgstr "Что произойдет:"
 
 # ce7065708c1042b8aeb6f2a04674e4b2
 #: ../../topics/testing/tools.txt:943
@@ -1628,6 +1654,8 @@ msgid ""
 "the database, returning the database to the state it was in directly after :"
 "djadmin:`migrate` was called."
 msgstr ""
+"Перед выполнение теста и перед методом ``setUp()``, Django очитсти базу "
+"данных и вернет её до состояния после выполнения команды :djadmin:`migrate`."
 
 # e3176e247f114df58044cd085ff7a90e
 #: ../../topics/testing/tools.txt:947
@@ -1637,6 +1665,9 @@ msgid ""
 "``birds``. See the :djadmin:`loaddata` documentation for more details on "
 "defining and installing fixtures."
 msgstr ""
+"Затем загружаются фикстуры. В примере выше Django загрузит JSON фикстуру с "
+"названием ``mammals``, затем фикстуру ``birds``. Подробности смотрите в "
+"описании :djadmin:`loaddata`."
 
 # bcfa528394ed46709618389e345a5a1b
 #: ../../topics/testing/tools.txt:952
@@ -1645,6 +1676,8 @@ msgid ""
 "can be certain that the outcome of a test will not be affected by another "
 "test, or by the order of test execution."
 msgstr ""
+"Перезагрузка фикстур выполняет перед каждым тестом, вы можете не "
+"беспокоится, что один тест повлияет на выполнение другого."
 
 # 31c9d95c75ce4125a98884ffe24ce490
 #: ../../topics/testing/tools.txt:956
@@ -1653,11 +1686,15 @@ msgid ""
 "are using multiple databases and set :attr:`multi_db=True "
 "<TransactionTestCase.multi_db>`, fixtures will be loaded into all databases."
 msgstr ""
+"По умолчанию фикстуры загружаются в базу данных ``default``. Если вы "
+"используете несколько баз данных и указали атрибут :attr:`multi_db=True "
+"<TransactionTestCase.multi_db>`, фикстуры будут загружены в несколько баз "
+"данных."
 
 # f954bca468de486aa4a07b057dc9db22
 #: ../../topics/testing/tools.txt:961
 msgid "URLconf configuration"
-msgstr ""
+msgstr "Конфигурация URLconf"
 
 # 2c1307b7df22477ab8efb0ccbaf3e001
 #: ../../topics/testing/tools.txt:965
@@ -1668,6 +1705,10 @@ msgid ""
 "means that your tests can't rely upon the fact that your views will be "
 "available at a particular URL."
 msgstr ""
+"Если выше приложение содержит представления, вам понадобятся тесты, которые "
+"вызывают их, используя тестовый клиент. Однако, пользователь приложения "
+"может добавить представления на любой URL. Это означает, что тесты не могут "
+"полагаться на то, что представление доступно по определенному URL-у."
 
 # 9020b4425f6343e886f603111e70467c
 #: ../../topics/testing/tools.txt:971
@@ -1679,12 +1720,17 @@ msgid ""
 "use the value of that attribute as the :setting:`ROOT_URLCONF` for the "
 "duration of that test."
 msgstr ""
+"Чтобы обеспечить определенность URL-ов в тестах, классы ``django.test."
+"*TestCase`` предоставляют возможность настроить URLconf для теста. Если "
+"атрибут ``urls`` экземпляра ``*TestCase`` содержит конфигурацию URL-ов, "
+"``*TestCase`` будет использовать ее как значение :setting:`ROOT_URLCONF` при "
+"выполнении тестов."
 
 # 4f6950099751413ba49cf456da204560
 # b28e54d287f24d3a8d4b31ed4d470558
 #: ../../topics/testing/tools.txt:978 ../../topics/testing/tools.txt:1014
 msgid "For example::"
-msgstr ""
+msgstr "Например::"
 
 # b36fa64b81c4417e86f656c37e9454d6
 #: ../../topics/testing/tools.txt:989
@@ -1692,11 +1738,13 @@ msgid ""
 "This test case will use the contents of ``myapp.test_urls`` as the URLconf "
 "for the duration of the test case."
 msgstr ""
+"При выполнении этого теста содержимое ``myapp.test_urls`` будет "
+"использоваться как URLconf."
 
 # face625abcd04f0292feadbcd0c76e22
 #: ../../topics/testing/tools.txt:995
 msgid "Multi-database support"
-msgstr ""
+msgstr "Поддержка нескольких баз данных"
 
 # 88788a755a16453e902421b1bc6b2f9f
 #: ../../topics/testing/tools.txt:999
