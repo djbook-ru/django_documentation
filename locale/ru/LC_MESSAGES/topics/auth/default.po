@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2015-02-02 01:03+0200\n"
+"PO-Revision-Date: 2015-02-03 09:33+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -287,7 +287,7 @@ msgstr ""
 # 2014bd1f984f45e3a0cffc1eb992fa0a
 #: ../../topics/auth/default.txt:155
 msgid "Permissions and Authorization"
-msgstr ""
+msgstr "Права доступа и авторизация"
 
 # 9d0858e01545476687cca85e8752b12a
 #: ../../topics/auth/default.txt:157
@@ -295,6 +295,8 @@ msgid ""
 "Django comes with a simple permissions system. It provides a way to assign "
 "permissions to specific users and groups of users."
 msgstr ""
+"Django предоставляет простую систему проверки прав. Она позволяет добавлять "
+"права пользователю или группе пользователей."
 
 # 7d5642d5656041bdaeb2d75708af9885
 #: ../../topics/auth/default.txt:160
@@ -302,11 +304,13 @@ msgid ""
 "It's used by the Django admin site, but you're welcome to use it in your own "
 "code."
 msgstr ""
+"Эта система используется админкой Django, но вы можете использовать её и в "
+"своем коде."
 
 # 8e711cdecccf4f92805af109b836d98f
 #: ../../topics/auth/default.txt:163
 msgid "The Django admin site uses permissions as follows:"
-msgstr ""
+msgstr "Админка использует проверку прав следующим образом:"
 
 # 3d835eb7ce904643922654093fcfad49
 #: ../../topics/auth/default.txt:165
@@ -314,6 +318,8 @@ msgid ""
 "Access to view the \"add\" form and add an object is limited to users with "
 "the \"add\" permission for that type of object."
 msgstr ""
+"При доступе к странице добавления объекта проверяется наличие прав \"add\" "
+"для объектов этого типа."
 
 # a60a80d1405b4580b160f0ad16da00f2
 #: ../../topics/auth/default.txt:167
@@ -322,6 +328,8 @@ msgid ""
 "object is limited to users with the \"change\" permission for that type of "
 "object."
 msgstr ""
+"При доступе к страницам просмотра списка объектов и изменения объекта "
+"проверяется наличие прав \"change\" для объектов этого типа."
 
 # 879213096ff143c4837080086530ffd6
 #: ../../topics/auth/default.txt:170
@@ -329,6 +337,8 @@ msgid ""
 "Access to delete an object is limited to users with the \"delete\" "
 "permission for that type of object."
 msgstr ""
+"При удалении объекта проверяется наличие прав \"delete\" для объектов этого "
+"типа."
 
 # 353a9790fa274f41a443bcc588cd1024
 #: ../../topics/auth/default.txt:173
@@ -341,6 +351,12 @@ msgid ""
 "ModelAdmin` class, it is possible to customize permissions for different "
 "object instances of the same type."
 msgstr ""
+"Правда доступа можно добавлять не только типу объекта, но и конкретному "
+"объекту. Переопределив методы :meth:`~django.contrib.admin.ModelAdmin."
+"has_add_permission`, :meth:`~django.contrib.admin.ModelAdmin."
+"has_change_permission` и :meth:`~django.contrib.admin.ModelAdmin."
+"has_delete_permission` класса :class:`~django.contrib.admin.ModelAdmin`, "
+"можно проверять права для конкретного объекта."
 
 # 389b226d1de441f8bb9bc358e879310c
 #: ../../topics/auth/default.txt:181
@@ -350,11 +366,15 @@ msgid ""
 "models.User` objects can access their related objects in the same way as any "
 "other :doc:`Django model </topics/db/models>`:"
 msgstr ""
+":class:`~django.contrib.auth.models.User` содержит связи многое ко многим с "
+"таблицами ``groups`` и ``user_permissions``. Объект модели :class:`~django."
+"contrib.auth.models.User` работает со связанными моделями, как и другие :doc:"
+"`модели Django </topics/db/models>`:"
 
 # 6cf4ee5cb991470fb6030c96169f85b6
 #: ../../topics/auth/default.txt:199
 msgid "Default permissions"
-msgstr ""
+msgstr "Права доступа по умолчанию"
 
 # 4f00e716cb8341cfbb2616140525b73e
 #: ../../topics/auth/default.txt:201
@@ -364,6 +384,9 @@ msgid ""
 "delete -- are created for each Django model defined in one of your installed "
 "applications."
 msgstr ""
+"Если добавить приложение ``django.contrib.auth`` в настройку :setting:"
+"`INSTALLED_APPS`, оно добавит правда доступа по умолчанию -- \"add\", "
+"\"change\" и \"delete\" -- для каждой модели из установленных приложений."
 
 # cf9073dab12a4f69ab7afbf878b1208a
 #: ../../topics/auth/default.txt:206
@@ -375,6 +398,11 @@ msgid ""
 "installed at that time. Afterward, it will create default permissions for "
 "new models each time you run :djadmin:`manage.py migrate <migrate>`."
 msgstr ""
+"Эти права доступа создаются при запуске команды :djadmin:`manage.py migrate "
+"<migrate>`. При первом выполнении ``migrate``, после добавления ``django."
+"contrib.auth`` в :setting:`INSTALLED_APPS`, права доступа по умолчанию "
+"создаются для всех старых и новых моделей. Для каждой новой модели они "
+"добавляются при выполнении :djadmin:`manage.py migrate <migrate>`."
 
 # f30c484f907e4bde85ff783a1df84d54
 #: ../../topics/auth/default.txt:214
@@ -383,21 +411,24 @@ msgid ""
 "app_label` ``foo`` and a model named ``Bar``, to test for basic permissions "
 "you should use:"
 msgstr ""
+"Предположим у вас есть приложение с :attr:`~django.db.models.Options."
+"app_label` ``foo`` и модель ``Bar``. Чтобы проверить права доступа, "
+"используйте:"
 
 # 089dd023370e49af8bb3b0422590995e
 #: ../../topics/auth/default.txt:218
 msgid "add: ``user.has_perm('foo.add_bar')``"
-msgstr ""
+msgstr "add: ``user.has_perm('foo.add_bar')``"
 
 # c9011f5c01a546019d4293d4e8ac8dc2
 #: ../../topics/auth/default.txt:219
 msgid "change: ``user.has_perm('foo.change_bar')``"
-msgstr ""
+msgstr "change: ``user.has_perm('foo.change_bar')``"
 
 # 27cba49d947b453289d9a7fd05a0142a
 #: ../../topics/auth/default.txt:220
 msgid "delete: ``user.has_perm('foo.delete_bar')``"
-msgstr ""
+msgstr "delete: ``user.has_perm('foo.delete_bar')``"
 
 # 6e93e6cda1464dfaaeb66a45b7d02f76
 #: ../../topics/auth/default.txt:222
@@ -405,11 +436,13 @@ msgid ""
 "The :class:`~django.contrib.auth.models.Permission` model is rarely accessed "
 "directly."
 msgstr ""
+"Модель :class:`~django.contrib.auth.models.Permission` редко используется на "
+"прямую."
 
 # 790f3b7b146b43c6a95a43cb3931c262
 #: ../../topics/auth/default.txt:226
 msgid "Groups"
-msgstr ""
+msgstr "Группы"
 
 # 8b1280aa6fe94f2cb184e43441724e33
 #: ../../topics/auth/default.txt:228
