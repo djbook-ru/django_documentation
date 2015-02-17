@@ -28,3 +28,4 @@
 Проверка орфографии:
 
     $ ./translator.py spellcheck
+
