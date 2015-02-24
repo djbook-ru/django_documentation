@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-09 11:16+0300\n"
-"PO-Revision-Date: 2015-02-03 09:33+0200\n"
+"PO-Revision-Date: 2015-02-24 11:47+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -451,6 +451,9 @@ msgid ""
 "categorizing users so you can apply permissions, or some other label, to "
 "those users. A user can belong to any number of groups."
 msgstr ""
+"Модель :class:`django.contrib.auth.models.Group` предоставляет возможность "
+"группировать пользователей, добавляя им набор прав доступа. Пользователь "
+"может принадлежать нескольким группам."
 
 # d91a2ad80d204b54a065742cbd4a19cf
 #: ../../topics/auth/default.txt:232
@@ -459,6 +462,10 @@ msgid ""
 "For example, if the group ``Site editors`` has the permission "
 "``can_edit_home_page``, any user in that group will have that permission."
 msgstr ""
+"Пользователь, добавленный в группу, автоматически получает все права доступа "
+"этой группы. Например, если группа ``Site editors`` содержит права доступа "
+"``can_edit_home_page``, любой пользователь в этой группе получить это право "
+"доступа."
 
 # 1af1d553fb2a4f5f86be54dec41192f9
 #: ../../topics/auth/default.txt:236
@@ -469,11 +476,16 @@ msgid ""
 "them access to a members-only portion of your site, or send them members-"
 "only email messages."
 msgstr ""
+"Также группы позволяют группировать пользователей, добавляя метки или "
+"допольнительные возможности. Например, вы можете создать группу ``'Special "
+"users'``, и написать код, который, например, предоставляет доступ к "
+"дополнительному функционалу сайта, или отправлять сообщения только "
+"пользователям этой группы."
 
 # c20492a8c1454ab494f73083545df89e
 #: ../../topics/auth/default.txt:243
 msgid "Programmatically creating permissions"
-msgstr ""
+msgstr "Программное создание прав доступа"
 
 # 724315b2d79046359c9e10c35c2f5dd6
 #: ../../topics/auth/default.txt:245
@@ -483,6 +495,10 @@ msgid ""
 "example, you can create the ``can_publish`` permission for a ``BlogPost`` "
 "model in ``myapp``::"
 msgstr ""
+"Кроме добавления :ref:`своих прав доступа <custom-permissions>` через класс "
+"``Meta`` модели, вы также можете создать их напрямую. Например, создадим "
+"право доступа ``can_publish`` для модели ``BlogPost`` в приложении "
+"``myapp``::"
 
 # 16759c8ea8e9483fb30a9b7de00f6e84
 #: ../../topics/auth/default.txt:259
@@ -491,11 +507,14 @@ msgid ""
 "User` via its ``user_permissions`` attribute or to a :class:`~django.contrib."
 "auth.models.Group` via its ``permissions`` attribute."
 msgstr ""
+"Теперь его можно добавить объекту :class:`~django.contrib.auth.models.User` "
+"через атрибут ``user_permissions`` или к объекту :class:`~django.contrib."
+"auth.models.Group` через атрибут ``permissions``."
 
 # a35d8be7b44949a7bb931f068da476c0
 #: ../../topics/auth/default.txt:265
 msgid "Permission caching"
-msgstr ""
+msgstr "Кеширование прав доступа"
 
 # 1867271aefe54c56a26aba088f40ba5b
 #: ../../topics/auth/default.txt:267
@@ -508,11 +527,17 @@ msgid ""
 "immediately afterward, in a test or view for example, the easiest solution "
 "is to re-fetch the ``User`` from the database. For example::"
 msgstr ""
+":class:`~django.contrib.auth.backends.ModelBackend` кэширует правда доступа "
+"объекта ``User`` после первого запроса на их получение. Такой подход удобен "
+"для цикла запрос-ответ, т.к. права доступа редко проверяются сразу же после "
+"их изменения например, в админке). Если вы изменяете и проверяете права "
+"доступа в одном запросе или в тестах, проще всего загрузить объект ``User`` "
+"из базы данных заново. Например::"
 
 # 21742463b5c14a7da70e322db73bfb17
 #: ../../topics/auth/default.txt:300
 msgid "Authentication in Web requests"
-msgstr ""
+msgstr "Аутентификация в запросах"
 
 # e5cd5a3f19634e578f46ed8feeee042e
 #: ../../topics/auth/default.txt:302
@@ -521,6 +546,9 @@ msgid ""
 "the authentication system into :class:`request objects <django.http."
 "HttpRequest>`."
 msgstr ""
+"Django использует :doc:`сессию </topics/http/sessions>` и промежуточный слой "
+"для системы аутентификации в :class:`объекте запроса <django.http."
+"HttpRequest>`."
 
 # da72a5ad77754a17a0ab826a7b5282da
 #: ../../topics/auth/default.txt:305
@@ -531,6 +559,11 @@ msgid ""
 "`~django.contrib.auth.models.AnonymousUser`, otherwise it will be an "
 "instance of :class:`~django.contrib.auth.models.User`."
 msgstr ""
+"Этот механизм предоставляет атрибут :attr:`request.user <django.http."
+"HttpRequest.user>`  для каждого запроса, который возвращает текущего "
+"пользователя. Если текущий пользователь не авторизован, атрибут содержит "
+"экземпляр :class:`~django.contrib.auth.models.AnonymousUser`, иначе "
+"экземпляр :class:`~django.contrib.auth.models.User`."
 
 # a72be288d2614118a4de50b0210e70b4
 #: ../../topics/auth/default.txt:311
@@ -538,11 +571,13 @@ msgid ""
 "You can tell them apart with :meth:`~django.contrib.auth.models.User."
 "is_authenticated()`, like so::"
 msgstr ""
+"Различить их можно с помощью метода :meth:`~django.contrib.auth.models.User."
+"is_authenticated()`::"
 
 # 0f4ef0038f774a9490d38e8c283a3cb0
 #: ../../topics/auth/default.txt:322
 msgid "How to log a user in"
-msgstr ""
+msgstr "Как логинить пользователя"
 
 # 6dd4311786464552ae77688adfef4e46
 #: ../../topics/auth/default.txt:324
@@ -550,6 +585,8 @@ msgid ""
 "If you have an authenticated user you want to attach to the current session "
 "- this is done with a :func:`~django.contrib.auth.login` function."
 msgstr ""
+"Если вы ходите привязать к сессии авторизованного пользователя, используйте "
+"функцию :func:`~django.contrib.auth.login`."
 
 # 0b60204e250a4bca99f86b04e2ccf471
 #: ../../topics/auth/default.txt:329
@@ -559,6 +596,11 @@ msgid ""
 "contrib.auth.models.User` object. :func:`~django.contrib.auth.login()` saves "
 "the user's ID in the session, using Django's session framework."
 msgstr ""
+"Чтобы залогинить пользователя в представлении, используйте функцию :func:"
+"`~django.contrib.auth.login()`. Она принимает объект :class:`~django.http."
+"HttpRequest` и объект :class:`~django.contrib.auth.models.User`. :func:"
+"`~django.contrib.auth.login()` сохраняет ID пользователя в сессии, используя "
+"приложения сессии Django."
 
 # 1054cd88e0414f7b8c91952f049cd90b
 #: ../../topics/auth/default.txt:335
