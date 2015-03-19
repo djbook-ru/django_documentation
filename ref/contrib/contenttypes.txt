@@ -37,7 +37,7 @@ Installing the contenttypes framework
 =====================================
 
 The contenttypes framework is included in the default
-:setting:`INSTALLED_APPS` list created by ``django-admin.py startproject``,
+:setting:`INSTALLED_APPS` list created by ``django-admin startproject``,
 but if you've removed it or if you manually set up your
 :setting:`INSTALLED_APPS` list, you can enable it by adding
 ``'django.contrib.contenttypes'`` to your :setting:`INSTALLED_APPS` setting.
@@ -51,9 +51,6 @@ installed; several of Django's other bundled applications require it:
 * Django's :mod:`authentication framework <django.contrib.auth>` uses it
   to tie user permissions to specific models.
 
-* Django's comments system (:mod:`django.contrib.comments`) uses it to
-  "attach" comments to any installed model.
-
 .. currentmodule:: django.contrib.contenttypes.models
 
 The ``ContentType`` model
@@ -62,7 +59,7 @@ The ``ContentType`` model
 .. class:: ContentType
 
     Each instance of :class:`~django.contrib.contenttypes.models.ContentType`
-    has three fields which, taken together, uniquely describe an installed
+    has two fields which, taken together, uniquely describe an installed
     model:
 
     .. attribute:: app_label
@@ -77,11 +74,18 @@ The ``ContentType`` model
 
         The name of the model class.
 
+    Additionally, the following property is available:
+
     .. attribute:: name
 
-        The human-readable name of the model. This is taken from the
+        The human-readable name of the content type. This is taken from the
         :attr:`verbose_name <django.db.models.Field.verbose_name>`
         attribute of the model.
+
+.. versionchanged:: 1.8
+
+    Before Django 1.8, the ``name`` property was a real field on the
+    ``ContentType`` model.
 
 Let's look at an example to see how this works. If you already have
 the :mod:`~django.contrib.contenttypes` application installed, and then add
@@ -97,9 +101,6 @@ created with the following values:
   path "django.contrib.sites").
 
 * :attr:`~django.contrib.contenttypes.models.ContentType.model`
-  will be set to ``'site'``.
-
-* :attr:`~django.contrib.contenttypes.models.ContentType.name`
   will be set to ``'site'``.
 
 .. _the verbose_name attribute: ../model-api/#verbose_name
@@ -294,16 +295,22 @@ model:
 
     .. attribute:: GenericForeignKey.for_concrete_model
 
-       .. versionadded:: 1.6
-
        If ``False``, the field will be able to reference proxy models. Default
        is ``True``. This mirrors the ``for_concrete_model`` argument to
        :meth:`~django.contrib.contenttypes.models.ContentTypeManager.get_for_model`.
 
-    .. versionchanged:: 1.7
+    .. attribute:: GenericForeignKey.allow_unsaved_instance_assignment
+
+        .. versionadded:: 1.8
+
+        Works analogously to :attr:`ForeignKey.allow_unsaved_instance_assignment
+        <django.db.models.ForeignKey.allow_unsaved_instance_assignment>`.
+
+    .. deprecated:: 1.7
 
         This class used to be defined in ``django.contrib.contenttypes.generic``.
-
+        Support for importing from this old location will be removed in Django
+        1.9.
 
 .. admonition:: Primary key type compatibility
 
@@ -335,7 +342,8 @@ model:
    generic relations, you should probably be using a natural key to uniquely
    identify related :class:`~django.contrib.contenttypes.models.ContentType`
    objects. See :ref:`natural keys<topics-serialization-natural-keys>` and
-   :djadminopt:`dumpdata --natural <--natural>` for more information.
+   :djadminopt:`dumpdata --natural-foreign <--natural-foreign>` for more
+   information.
 
 This will enable an API similar to the one used for a normal
 :class:`~django.db.models.ForeignKey`;
@@ -369,9 +377,11 @@ Reverse generic relations
 
 .. class:: GenericRelation
 
-    .. versionchanged:: 1.7
+    .. deprecated:: 1.7
 
         This class used to be defined in ``django.contrib.contenttypes.generic``.
+        Support for importing from this old location will be removed in Django
+        1.9.
 
     .. attribute:: related_query_name
 
@@ -442,8 +452,8 @@ same types of lookups manually::
 Note that if the model in a
 :class:`~django.contrib.contenttypes.fields.GenericRelation` uses a
 non-default value for ``ct_field`` or ``fk_field`` in its
-:class:`~django.contrib.contenttypes.fields.GenericForeignKey` (e.g. the
-:mod:`django.contrib.comments` app uses ``ct_field="object_pk"``),
+:class:`~django.contrib.contenttypes.fields.GenericForeignKey` (for example, if
+you had a ``Comment`` model that uses ``ct_field="object_pk"``),
 you'll need to set ``content_type_field`` and/or ``object_id_field`` in
 the :class:`~django.contrib.contenttypes.fields.GenericRelation` to
 match the ``ct_field`` and ``fk_field``, respectively, in the
@@ -496,9 +506,11 @@ The :mod:`django.contrib.contenttypes.forms` module provides:
 
 .. class:: BaseGenericInlineFormSet
 
-    .. versionchanged:: 1.7
+    .. deprecated:: 1.7
 
         This class used to be defined in ``django.contrib.contenttypes.generic``.
+        Support for importing from this old location will be removed in Django
+        1.9.
 
 .. function:: generic_inlineformset_factory(model, form=ModelForm, formset=BaseGenericInlineFormSet, ct_field="content_type", fk_field="object_id", fields=None, exclude=None, extra=3, can_order=False, can_delete=True, max_num=None, formfield_callback=None, validate_max=False, for_concrete_model=True, min_num=None, validate_min=False)
 
@@ -511,15 +523,15 @@ The :mod:`django.contrib.contenttypes.forms` module provides:
     :func:`~django.forms.models.modelformset_factory` and
     :func:`~django.forms.models.inlineformset_factory`.
 
-    .. versionadded:: 1.6
+    The ``for_concrete_model`` argument corresponds to the
+    :class:`~django.contrib.contenttypes.fields.GenericForeignKey.for_concrete_model`
+    argument on ``GenericForeignKey``.
 
-        The ``for_concrete_model`` argument corresponds to the
-        :class:`~django.contrib.contenttypes.fields.GenericForeignKey.for_concrete_model`
-        argument on ``GenericForeignKey``.
-
-    .. versionchanged:: 1.7
+    .. deprecated:: 1.7
 
         This function used to be defined in ``django.contrib.contenttypes.generic``.
+        Support for importing from this old location will be removed in Django
+        1.9.
 
     .. versionchanged:: 1.7
 
@@ -559,9 +571,11 @@ information.
         The name of the integer field that represents the ID of the related
         object. Defaults to ``object_id``.
 
-    .. versionchanged:: 1.7
+    .. deprecated:: 1.7
 
         This class used to be defined in ``django.contrib.contenttypes.generic``.
+        Support for importing from this old location will be removed in Django
+        1.9.
 
 .. class:: GenericTabularInline
 .. class:: GenericStackedInline
@@ -569,6 +583,8 @@ information.
     Subclasses of :class:`GenericInlineModelAdmin` with stacked and tabular
     layouts, respectively.
 
-    .. versionchanged:: 1.7
+    .. deprecated:: 1.7
 
         These classes used to be defined in ``django.contrib.contenttypes.generic``.
+        Support for importing from this old location will be removed in Django
+        1.9.

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 10:34\n"
+"POT-Creation-Date: 2015-03-19 15:06+0200\n"
 "PO-Revision-Date: 2012-02-15 15:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -44,32 +44,40 @@ msgid ""
 "CommonMiddleware` middleware to set the ``ETag`` header."
 msgstr ""
 
-# aa0e5090717e4fb4aaf1dea215cd9d12
 #: ../../topics/conditional-view-processing.txt:17
 msgid ""
 "When the client next requests the same resource, it might send along a "
-"header such as `If-modified-since`_, containing the date of the last "
-"modification time it was sent, or `If-none-match`_, containing the ``ETag`` "
-"it was sent. If the current version of the page matches the ``ETag`` sent by "
-"the client, or if the resource has not been modified, a 304 status code can "
-"be sent back, instead of a full response, telling the client that nothing "
-"has changed."
+"header such as either `If-modified-since`_ or `If-unmodified-since`_, "
+"containing the date of the last modification time it was sent, or either `If-"
+"match`_ or `If-none-match`_, containing the last ``ETag`` it was sent. If "
+"the current version of the page matches the ``ETag`` sent by the client, or "
+"if the resource has not been modified, a 304 status code can be sent back, "
+"instead of a full response, telling the client that nothing has changed. "
+"Depending on the header, if the page has been modified or does not match the "
+"``ETag`` sent by the client, a 412 status code (Precondition Failed) may be "
+"returned."
 msgstr ""
 
 # 89a6c63ef40e40b9ac2625c1b051cb9c
-#: ../../topics/conditional-view-processing.txt:27
+#: ../../topics/conditional-view-processing.txt:33
 msgid ""
 "When you need more fine-grained control you may use per-view conditional "
 "processing functions."
 msgstr ""
 
+#: ../../topics/conditional-view-processing.txt:38
+msgid ""
+"Support for the ``If-unmodified-since`` header was added to conditional view "
+"processing."
+msgstr ""
+
 # 3a41aa3f847d4deaadbb9d560ed308cd
-#: ../../topics/conditional-view-processing.txt:33
+#: ../../topics/conditional-view-processing.txt:44
 msgid "The ``condition`` decorator"
 msgstr ""
 
 # b323a44866304b859991f3271b7de36a
-#: ../../topics/conditional-view-processing.txt:35
+#: ../../topics/conditional-view-processing.txt:46
 msgid ""
 "Sometimes (in fact, quite often) you can create functions to rapidly compute "
 "the ETag_ value or the last-modified time for a resource, **without** "
@@ -80,7 +88,7 @@ msgid ""
 msgstr ""
 
 # ec07c61cd0004a33b14e8a7b8339fdcc
-#: ../../topics/conditional-view-processing.txt:44
+#: ../../topics/conditional-view-processing.txt:55
 msgid ""
 "These two functions are passed as parameters the ``django.views.decorators."
 "http.condition`` decorator. This decorator uses the two functions (you only "
@@ -91,12 +99,12 @@ msgid ""
 msgstr ""
 
 # 005fcbf2116b4467b75d1351230fb958
-#: ../../topics/conditional-view-processing.txt:51
+#: ../../topics/conditional-view-processing.txt:62
 msgid "The ``condition`` decorator's signature looks like this::"
 msgstr ""
 
 # ed8054c6d99440b185fd36d01c628e74
-#: ../../topics/conditional-view-processing.txt:55
+#: ../../topics/conditional-view-processing.txt:66
 msgid ""
 "The two functions, to compute the ETag and the last modified time, will be "
 "passed the incoming ``request`` object and the same parameters, in the same "
@@ -108,14 +116,14 @@ msgid ""
 msgstr ""
 
 # 417c8fb516194da8912b9ccc8874700b
-#: ../../topics/conditional-view-processing.txt:63
+#: ../../topics/conditional-view-processing.txt:74
 msgid ""
 "Using this feature usefully is probably best explained with an example. "
 "Suppose you have this pair of models, representing a simple blog system::"
 msgstr ""
 
 # 290aee1d643d430ab800d0519c4be1be
-#: ../../topics/conditional-view-processing.txt:77
+#: ../../topics/conditional-view-processing.txt:88
 msgid ""
 "If the front page, displaying the latest blog entries, only changes when you "
 "add a new blog entry, you can compute the last modified time very quickly. "
@@ -124,19 +132,19 @@ msgid ""
 msgstr ""
 
 # c9e430ab08014d098192257e241ab0b8
-#: ../../topics/conditional-view-processing.txt:85
+#: ../../topics/conditional-view-processing.txt:96
 msgid ""
 "You can then use this function to provide early detection of an unchanged "
 "page for your front page view::"
 msgstr ""
 
 # 14a0168d64474c639ea0b7d057df4f43
-#: ../../topics/conditional-view-processing.txt:95
+#: ../../topics/conditional-view-processing.txt:106
 msgid "Shortcuts for only computing one value"
 msgstr ""
 
 # aa9290d0eafa421494d5607202331bf6
-#: ../../topics/conditional-view-processing.txt:97
+#: ../../topics/conditional-view-processing.txt:108
 msgid ""
 "As a general rule, if you can provide functions to compute *both* the ETag "
 "and the last modified time, you should do so. You don't know which headers "
@@ -146,7 +154,7 @@ msgid ""
 msgstr ""
 
 # 43a98a45fab2409cb0b78d44cf4a9829
-#: ../../topics/conditional-view-processing.txt:103
+#: ../../topics/conditional-view-processing.txt:114
 msgid ""
 "The ``django.views.decorators.http.etag`` and ``django.views.decorators.http."
 "last_modified`` decorators are passed the same type of functions as the "
@@ -154,24 +162,24 @@ msgid ""
 msgstr ""
 
 # dc4ac2219e4b4ae492bd53ae8f02d8e7
-#: ../../topics/conditional-view-processing.txt:110
+#: ../../topics/conditional-view-processing.txt:121
 msgid ""
 "We could write the earlier example, which only uses a last-modified "
 "function, using one of these decorators::"
 msgstr ""
 
 # 507c782dfb694948b40601e260d6399e
-#: ../../topics/conditional-view-processing.txt:117
+#: ../../topics/conditional-view-processing.txt:128
 msgid "...or::"
 msgstr ""
 
 # 7e5f62f68b9145e592863613a701a176
-#: ../../topics/conditional-view-processing.txt:124
+#: ../../topics/conditional-view-processing.txt:135
 msgid "Use ``condition`` when testing both conditions"
 msgstr ""
 
 # 8ea726009c014e2d8917d5f1824809cf
-#: ../../topics/conditional-view-processing.txt:126
+#: ../../topics/conditional-view-processing.txt:137
 msgid ""
 "It might look nicer to some people to try and chain the ``etag`` and "
 "``last_modified`` decorators if you want to test both preconditions. "
@@ -179,7 +187,7 @@ msgid ""
 msgstr ""
 
 # f7c6adea301f4f5fa1fd0749b29c5041
-#: ../../topics/conditional-view-processing.txt:140
+#: ../../topics/conditional-view-processing.txt:151
 msgid ""
 "The first decorator doesn't know anything about the second and might answer "
 "that the response is not modified even if the second decorators would "
@@ -188,12 +196,12 @@ msgid ""
 msgstr ""
 
 # 56ea4b6dff8a45e9bee333c6fb85884b
-#: ../../topics/conditional-view-processing.txt:146
+#: ../../topics/conditional-view-processing.txt:157
 msgid "Using the decorators with other HTTP methods"
 msgstr ""
 
 # 6d22658e5db24014b5eea62d163441b2
-#: ../../topics/conditional-view-processing.txt:148
+#: ../../topics/conditional-view-processing.txt:159
 msgid ""
 "The ``condition`` decorator is useful for more than only ``GET`` and "
 "``HEAD`` requests (``HEAD`` requests are the same as ``GET`` in this "
@@ -204,23 +212,23 @@ msgid ""
 msgstr ""
 
 # bb19168659d04ac5b196ea3c348ee8a7
-#: ../../topics/conditional-view-processing.txt:155
+#: ../../topics/conditional-view-processing.txt:166
 msgid ""
 "For example, consider the following exchange between the client and server:"
 msgstr ""
 
 # a3eee41cb6c04b6bb2f41398254e4101
-#: ../../topics/conditional-view-processing.txt:157
+#: ../../topics/conditional-view-processing.txt:168
 msgid "Client requests ``/foo/``."
 msgstr ""
 
 # e7dda3237f31488ba00797550611ff71
-#: ../../topics/conditional-view-processing.txt:158
+#: ../../topics/conditional-view-processing.txt:169
 msgid "Server responds with some content with an ETag of ``\"abcd1234\"``."
 msgstr ""
 
 # e2727c59d632499ba8907ec715ef6143
-#: ../../topics/conditional-view-processing.txt:159
+#: ../../topics/conditional-view-processing.txt:170
 msgid ""
 "Client sends an HTTP ``PUT`` request to ``/foo/`` to update the resource. It "
 "also sends an ``If-Match: \"abcd1234\"`` header to specify the version it is "
@@ -228,7 +236,7 @@ msgid ""
 msgstr ""
 
 # ad100b936ea244d3886a894faac25735
-#: ../../topics/conditional-view-processing.txt:162
+#: ../../topics/conditional-view-processing.txt:173
 msgid ""
 "Server checks to see if the resource has changed, by computing the ETag the "
 "same way it does for a ``GET`` request (using the same function). If the "
@@ -237,14 +245,14 @@ msgid ""
 msgstr ""
 
 # 91c25b44a0a54cd7bf9aa300fc704429
-#: ../../topics/conditional-view-processing.txt:166
+#: ../../topics/conditional-view-processing.txt:177
 msgid ""
 "Client sends a ``GET`` request to ``/foo/``, after receiving a 412 response, "
 "to retrieve an updated version of the content before updating it."
 msgstr ""
 
 # 5cd324b69b7645e2863e59e7046c5874
-#: ../../topics/conditional-view-processing.txt:170
+#: ../../topics/conditional-view-processing.txt:181
 msgid ""
 "The important thing this example shows is that the same functions can be "
 "used to compute the ETag and last modification values in all situations. In "
@@ -253,12 +261,12 @@ msgid ""
 msgstr ""
 
 # 4b5758b74cef42ef89a785bc5be76d22
-#: ../../topics/conditional-view-processing.txt:176
+#: ../../topics/conditional-view-processing.txt:187
 msgid "Comparison with middleware conditional processing"
 msgstr ""
 
 # 26134701a597469bbd85114570512046
-#: ../../topics/conditional-view-processing.txt:178
+#: ../../topics/conditional-view-processing.txt:189
 msgid ""
 "You may notice that Django already provides simple and straightforward "
 "conditional ``GET`` handling via the :class:`django.middleware.http."
@@ -269,24 +277,24 @@ msgid ""
 msgstr ""
 
 # e674e88579fb420d8498f8883caa5bcf
-#: ../../topics/conditional-view-processing.txt:185
+#: ../../topics/conditional-view-processing.txt:196
 msgid "They are applied globally to all views in your project"
 msgstr ""
 
 # dc50ef424ceb497fb80e78e7ff703c15
-#: ../../topics/conditional-view-processing.txt:186
+#: ../../topics/conditional-view-processing.txt:197
 msgid ""
 "They don't save you from generating the response itself, which may be "
 "expensive"
 msgstr ""
 
 # 7c26453a21294d178751a99d43b2463b
-#: ../../topics/conditional-view-processing.txt:188
+#: ../../topics/conditional-view-processing.txt:199
 msgid "They are only appropriate for HTTP ``GET`` requests."
 msgstr ""
 
 # b7f618a92b244c339925bfdc4893331b
-#: ../../topics/conditional-view-processing.txt:190
+#: ../../topics/conditional-view-processing.txt:201
 msgid ""
 "You should choose the most appropriate tool for your particular problem "
 "here. If you have a way to compute ETags and modification times quickly and "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-30 13:35+0300\n"
+"POT-Creation-Date: 2015-03-19 15:06+0200\n"
 "PO-Revision-Date: 2012-02-15 15:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -240,9 +240,8 @@ msgid ""
 "your work is ready to be merged in create a pull request."
 msgstr ""
 
-# 9ece692dcf2845ceb77d87f03b055c94
 #: ../../internals/contributing/writing-code/submitting-patches.txt:122
-msgid "See the :doc:`working-with-git` documentation for mode details."
+msgid "See the :doc:`working-with-git` documentation for more details."
 msgstr ""
 
 # ca879ddf06434fc9b3d6aa7b4a0da42d
@@ -322,24 +321,25 @@ msgid ""
 msgstr ""
 
 # 35bf11c0590840139ebd6065f9d48e7e
-#: ../../internals/contributing/writing-code/submitting-patches.txt:162
+#: ../../internals/contributing/writing-code/submitting-patches.txt:164
+#: ../../internals/contributing/writing-code/submitting-patches.txt:328
 msgid "Deprecating a feature"
 msgstr ""
 
 # 7531b289b7cc4c39baa262b497311e7b
-#: ../../internals/contributing/writing-code/submitting-patches.txt:164
+#: ../../internals/contributing/writing-code/submitting-patches.txt:166
 msgid "There are a couple reasons that code in Django might be deprecated:"
 msgstr ""
 
 # 4c42957d9b224a3f922cd3a6868dc530
-#: ../../internals/contributing/writing-code/submitting-patches.txt:166
+#: ../../internals/contributing/writing-code/submitting-patches.txt:168
 msgid ""
 "If a feature has been improved or modified in a backwards-incompatible way, "
 "the old feature or behavior will be deprecated."
 msgstr ""
 
 # dab1565809c547c6af6e7b691ef0da66
-#: ../../internals/contributing/writing-code/submitting-patches.txt:169
+#: ../../internals/contributing/writing-code/submitting-patches.txt:171
 msgid ""
 "Sometimes Django will include a backport of a Python library that's not "
 "included in a version of Python that Django currently supports. When Django "
@@ -347,51 +347,57 @@ msgid ""
 "the library, the library will be deprecated in Django."
 msgstr ""
 
-# 1417372fea14449a94feb6cee8cf2b53
-#: ../../internals/contributing/writing-code/submitting-patches.txt:174
+#: ../../internals/contributing/writing-code/submitting-patches.txt:176
 msgid ""
 "As the :ref:`deprecation policy<internal-release-deprecation-policy>` "
 "describes, the first release of Django that deprecates a feature (``A.B``) "
 "should raise a ``RemovedInDjangoXXWarning`` (where XX is the Django version "
 "where the feature will be removed) when the deprecated feature is invoked. "
-"Assuming we have a good test coverage, these warnings will be shown by the "
-"test suite when :ref:`running it <running-unit-tests>` with warnings "
-"enabled: ``python -Wall runtests.py``. This is annoying and the output of "
-"the test suite should remain clean. Thus, when adding a "
+"Assuming we have good test coverage, these warnings are converted to errors "
+"when :ref:`running the test suite <running-unit-tests>` with warnings "
+"enabled: ``python -Wall runtests.py``. Thus, when adding a "
 "``RemovedInDjangoXXWarning`` you need to eliminate or silence any warnings "
 "generated when running the tests."
 msgstr ""
 
-# 54cbf95e77064c52b39e358bab40a0a6
-#: ../../internals/contributing/writing-code/submitting-patches.txt:184
+#: ../../internals/contributing/writing-code/submitting-patches.txt:185
 msgid ""
 "The first step is to remove any use of the deprecated behavior by Django "
 "itself. Next you can silence warnings in tests that actually test the "
-"deprecated behavior in one of two ways:"
+"deprecated behavior by using the ``ignore_warnings`` decorator, either at "
+"the test or class level:"
 msgstr ""
 
 # 44997e8400d94020816ed1ebbf04963f
-#: ../../internals/contributing/writing-code/submitting-patches.txt:188
+#: ../../internals/contributing/writing-code/submitting-patches.txt:190
 msgid "In a particular test::"
 msgstr ""
 
-# 34b5eb03248847e7aa8b6e4e9a402a6a
-#: ../../internals/contributing/writing-code/submitting-patches.txt:198
+#: ../../internals/contributing/writing-code/submitting-patches.txt:199
+msgid "For an entire test case::"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:210
 msgid ""
-"For an entire test case, ``django.test.utils`` contains three helpful mixins "
-"to silence warnings: ``IgnorePendingDeprecationWarningsMixin``, "
-"``IgnoreDeprecationWarningsMixin``, and "
-"``IgnoreAllDeprecationWarningsMixin``. For example::"
+"Previous versions of Django had some ``Ignore*DeprecationWarningsMixin`` "
+"classes to prevent warnings from appearing. These have been replaced by the "
+"``ignore_warnings`` decorator."
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:214
+msgid ""
+"You can also add a test for the deprecation warning. You'll have to disable "
+"the \"warning as error\" behavior in your test by doing::"
 msgstr ""
 
 # 9349775e8c21492b815f7ce421741a13
-#: ../../internals/contributing/writing-code/submitting-patches.txt:208
+#: ../../internals/contributing/writing-code/submitting-patches.txt:228
 msgid ""
 "Finally, there are a couple of updates to Django's documentation to make:"
 msgstr ""
 
 # 5491b8a5ea184f5ba1c68a3a241f788a
-#: ../../internals/contributing/writing-code/submitting-patches.txt:210
+#: ../../internals/contributing/writing-code/submitting-patches.txt:230
 msgid ""
 "If the existing feature is documented, mark it deprecated in documentation "
 "using the ``.. deprecated:: A.B`` annotation. Include a short description "
@@ -399,7 +405,7 @@ msgid ""
 msgstr ""
 
 # dd4c6f0ffb2b40b88c22b7fdf4b1151c
-#: ../../internals/contributing/writing-code/submitting-patches.txt:214
+#: ../../internals/contributing/writing-code/submitting-patches.txt:234
 msgid ""
 "Add a description of the deprecated behavior, and the upgrade path if "
 "applicable, to the current release notes (``docs/releases/A.B.txt``) under "
@@ -407,14 +413,14 @@ msgid ""
 msgstr ""
 
 # e880a28b870a485e9d877e65cdd2ff57
-#: ../../internals/contributing/writing-code/submitting-patches.txt:218
+#: ../../internals/contributing/writing-code/submitting-patches.txt:238
 msgid ""
 "Add an entry in the deprecation timeline (``docs/internals/deprecation."
 "txt``) under the ``A.B+2`` version describing what code will be removed."
 msgstr ""
 
 # 0b717a9bf5de475cb82decd8abbdae1a
-#: ../../internals/contributing/writing-code/submitting-patches.txt:221
+#: ../../internals/contributing/writing-code/submitting-patches.txt:241
 msgid ""
 "Once you have completed these steps, you are finished with the deprecation. "
 "In each major release, all ``RemovedInDjangoXXWarning``\\s matching the new "
@@ -422,12 +428,12 @@ msgid ""
 msgstr ""
 
 # b52d0fcefba744009278dfc5842500e5
-#: ../../internals/contributing/writing-code/submitting-patches.txt:226
+#: ../../internals/contributing/writing-code/submitting-patches.txt:246
 msgid "Javascript patches"
 msgstr ""
 
 # 28c802b062f2411eb432596a78d1fe9f
-#: ../../internals/contributing/writing-code/submitting-patches.txt:228
+#: ../../internals/contributing/writing-code/submitting-patches.txt:248
 msgid ""
 "Django's admin system leverages the jQuery framework to increase the "
 "capabilities of the admin interface. In conjunction, there is an emphasis on "
@@ -437,7 +443,7 @@ msgid ""
 msgstr ""
 
 # 2ad7778ebbe94a85ad051cd517759c94
-#: ../../internals/contributing/writing-code/submitting-patches.txt:234
+#: ../../internals/contributing/writing-code/submitting-patches.txt:254
 msgid ""
 "To that end, patches for javascript files should include both the original "
 "code for future development (e.g. ``foo.js``), and a compressed version for "
@@ -446,43 +452,148 @@ msgid ""
 msgstr ""
 
 # 8b9af3cb750042d787856b6465625a92
-#: ../../internals/contributing/writing-code/submitting-patches.txt:240
+#: ../../internals/contributing/writing-code/submitting-patches.txt:260
 msgid "Compressing JavaScript"
 msgstr ""
 
 # 53774df86abe4011a8cd74a5acb318cd
-#: ../../internals/contributing/writing-code/submitting-patches.txt:242
+#: ../../internals/contributing/writing-code/submitting-patches.txt:262
 msgid ""
 "To simplify the process of providing optimized javascript code, Django "
 "includes a handy python script which should be used to create a \"minified\" "
 "version. To run it::"
 msgstr ""
 
-# 0b8ce4b2a2404a2da287f81b27a1d6fb
-#: ../../internals/contributing/writing-code/submitting-patches.txt:248
+#: ../../internals/contributing/writing-code/submitting-patches.txt:268
 msgid ""
 "Behind the scenes, ``compress.py`` is a front-end for Google's `Closure "
 "Compiler`_ which is written in Java. However, the Closure Compiler library "
 "is not bundled with Django directly, so those wishing to contribute complete "
 "javascript patches will need to download and install the library "
-"independently."
-msgstr ""
-
-# f517d185238444c584c2ef6168c158cf
-#: ../../internals/contributing/writing-code/submitting-patches.txt:254
-msgid ""
-"The Closure Compiler library requires Java version 6 or higher (Java 1.6 or "
-"higher on Mac OS X. Note that Mac OS X 10.5 and earlier did not ship with "
-"Java 1.6 by default, so it may be necessary to upgrade your Java "
-"installation before the tool will be functional. Also note that even after "
-"upgrading Java, the default ``/usr/bin/java`` command may remain linked to "
-"the previous Java binary, so relinking that command may be necessary as "
-"well.)"
+"independently. The Closure Compiler library requires `Java`_ 7 or higher."
 msgstr ""
 
 # e87f01c881aa45c0965650500bec5253
-#: ../../internals/contributing/writing-code/submitting-patches.txt:261
+#: ../../internals/contributing/writing-code/submitting-patches.txt:274
 msgid ""
 "Please don't forget to run ``compress.py`` and include the ``diff`` of the "
 "minified scripts when submitting patches for Django's javascript."
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:285
+msgid "Patch review checklist"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:287
+msgid ""
+"Use this checklist to review a pull request. If you are reviewing a pull "
+"request that is not your own and it passes all the criteria below, please "
+"set the \"Triage Stage\" on the corresponding Trac ticket to \"Ready for "
+"checkin\". If you've left comments for improvement on the pull request, "
+"please tick the appropriate flags on the Trac ticket based on the results of "
+"your review: \"Patch needs improvement\", \"Needs documentation\", and/or "
+"\"Needs tests\". As time and interest permits, core developers do final "
+"reviews of \"Ready for checkin\" tickets and will either commit the patch or "
+"bump it back to \"Accepted\" if further works need to be done. If you're "
+"looking to become a core developer, doing thorough reviews of patches is a "
+"great way to earn trust."
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:298
+msgid ""
+"Looking for a patch to review? Check out the \"Patches needing review\" "
+"section of the `Django Development Dashboard <https://dashboard."
+"djangoproject.com/>`_. Looking to get your patch reviewed? Ensure the Trac "
+"flags on the ticket are set so that the ticket appears in that queue."
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:304
+msgid "Documentation"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:306
+msgid ""
+"Does the documentation build without any errors (``make html``, or ``make."
+"bat html`` on Windows, from the ``docs`` directory)?"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:308
+msgid ""
+"Does the documentation follow the writing style guidelines in :doc:`/"
+"internals/contributing/writing-documentation`?"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:310
+msgid "Are there any :ref:`spelling errors <documentation-spelling-check>`?"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:313
+msgid "Bugs"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:315
+msgid ""
+"Is there a proper regression test (the test should fail before the fix is "
+"applied)?"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:319
+msgid "New Features"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:321
+msgid "Are there tests to \"exercise\" all of the new code?"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:322
+msgid "Is there a release note in ``docs/releases/A.B.txt``?"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:323
+msgid ""
+"Is there documentation for the feature and is it :ref:`annotated "
+"appropriately <documenting-new-features>` with ``.. versionadded:: A.B`` or "
+"``.. versionchanged:: A.B``?"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:330
+msgid "See the :ref:`deprecating-a-feature` guide."
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:333
+msgid "All code changes"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:335
+msgid ""
+"Does the :doc:`coding style </internals/contributing/writing-code/coding-"
+"style>` conform to our guidelines? Are there any ``flake8`` errors?"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:338
+msgid ""
+"If the change is backwards incompatible in any way, is there a note in the "
+"release notes (``docs/releases/A.B.txt``)?"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:340
+msgid ""
+"Is Django's test suite passing? Ask in ``#django-dev`` for a core dev to "
+"build the pull request against our continuous integration server."
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:344
+msgid "All tickets"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:346
+msgid ""
+"Is the pull request a single squashed commit with a message that follows "
+"our :ref:`commit message format <committing-guidelines>`?"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/submitting-patches.txt:348
+msgid ""
+"Are you the patch author and a new contributor? Please add yourself to the "
+"``AUTHORS`` file and submit a `Contributor License Agreement`_."
 msgstr ""

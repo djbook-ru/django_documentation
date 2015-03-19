@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-09 11:16+0300\n"
+"POT-Creation-Date: 2015-03-19 15:06+0200\n"
 "PO-Revision-Date: 2014-12-18 18:47+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -20,1269 +20,2011 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Gtranslator 2.91.6\n"
 
-# f2ec389c092c4aeb9911e01fe093419a
-#: ../../topics/templates.txt:3
-msgid "The Django template language"
-msgstr "Язык шаблонов Django"
-
-# 91617ae39d904c4dbab66c87e6b8e303
-#: ../../topics/templates.txt:0
-msgid "About this document"
-msgstr "Об этом документе"
-
-# 338bc381cbe84a36a6237088e1b1a4af
-#: ../../topics/templates.txt:7
-msgid ""
-"This document explains the language syntax of the Django template system. If "
-"you're looking for a more technical perspective on how it works and how to "
-"extend it, see :doc:`/ref/templates/api`."
-msgstr ""
-"Этот раздел описывает синтаксис языка шаблонов Django. Если вы ищете "
-"технически подробности как он работает и как расширять его, смотрите :doc:`/"
-"ref/templates/api`."
-
-# 54f37eb253234e3ea62bddaa6549c3e4
-#: ../../topics/templates.txt:11
-msgid ""
-"Django's template language is designed to strike a balance between power and "
-"ease. It's designed to feel comfortable to those used to working with HTML. "
-"If you have any exposure to other text-based template languages, such as "
-"Smarty_ or CheetahTemplate_, you should feel right at home with Django's "
-"templates."
-msgstr ""
-"Язык шаблонов Django представляет баланс между возможностями и простотой. Он "
-"создавался, чтобы быть удобным для пользователей HTML. Если у вас есть опыт "
-"работы с другими языками текстовых шаблонов, таких как Smarty_ или "
-"CheetahTemplate_, вы должны себя чувствовать как дома с шаблонами Django."
-
-# 2ef291f17dbc479ea5e8ea15022546d8
-# 768873a9c8c3447cbb52bbcb1cd8f8a6
-#: ../../topics/templates.txt:0
-msgid "Philosophy"
-msgstr "Философия"
-
-# 7dd5c2828d124882b34d64fc1151c90c
-#: ../../topics/templates.txt:18
-msgid ""
-"If you have a background in programming, or if you're used to languages "
-"which mix programming code directly into HTML, you'll want to bear in mind "
-"that the Django template system is not simply Python embedded into HTML. "
-"This is by design: the template system is meant to express presentation, not "
-"program logic."
-msgstr ""
-"Если у вас есть опыт программирования или вы использовали PHP, который "
-"позволяет интегрировать программный код прямо HTML, вам стоит помнить, что "
-"система шаблонов Django -- это не просто Python встроенный в HTML. Это "
-"сделано намеренно: шаблоны предназначены для представления, а не для "
-"реализации логики программы."
-
-# ab34b638ed6d4f3a876bcccddd82b4f7
-#: ../../topics/templates.txt:24
-msgid ""
-"The Django template system provides tags which function similarly to some "
-"programming constructs -- an :ttag:`if` tag for boolean tests, a :ttag:`for` "
-"tag for looping, etc. -- but these are not simply executed as the "
-"corresponding Python code, and the template system will not execute "
-"arbitrary Python expressions. Only the tags, filters and syntax listed below "
-"are supported by default (although you can add :doc:`your own extensions </"
-"howto/custom-template-tags>` to the template language as needed)."
-msgstr ""
-"Шаблоны Django предоставляют теги, которые повторяют некоторые структуры "
-"языка программирования -- тег :ttag:`if` для проверки на истинность, тег :"
-"ttag:`for` для циклов, и др. -- но они не выполняются непосредственно как "
-"код Python, и система шаблонов не будет выполнять произвольное выражение "
-"Python. Только теги, фильтры и синтаксис, перечисленные ниже, поддерживаются "
-"по умолчанию (хотя вы можете добавить :doc:`собственное расширение </howto/"
-"custom-template-tags>` для языка шаблонов при необходимости)."
-
 # 95a64c65987a4095b4e869c612e78ccb
-#: ../../topics/templates.txt:37
+#: ../../topics/templates.txt:3
 msgid "Templates"
 msgstr "Шаблоны"
 
-# d7e87bf68be94e87a5da384ee28a63ef
-#: ../../topics/templates.txt:41
+#: ../../topics/templates.txt:8
 msgid ""
-"A template is simply a text file. It can generate any text-based format "
-"(HTML, XML, CSV, etc.)."
+"Being a web framework, Django needs a convenient way to generate HTML "
+"dynamically. The most common approach relies on templates. A template "
+"contains the static parts of the desired HTML output as well as some special "
+"syntax describing how dynamic content will be inserted. For a hands-on "
+"example of creating HTML pages with templates, see :doc:`Tutorial 3 </intro/"
+"tutorial03>`."
 msgstr ""
-"Шаблон это просто текстовый файл. Он позволяет создать любой текстовый "
-"формат (HTML, XML, CSV, и др.)."
 
-# 0efad2a595dc40e0bc4eb4582b3e2fa8
-#: ../../topics/templates.txt:44
+#: ../../topics/templates.txt:14
 msgid ""
-"A template contains **variables**, which get replaced with values when the "
-"template is evaluated, and **tags**, which control the logic of the template."
+"A Django project can be configured with one or several template engines (or "
+"even zero if you don't use templates). Django ships built-in backends for "
+"its own template system, creatively called the Django template language "
+"(DTL), and for the popular alternative Jinja2_. Backends for other template "
+"languages may be available from third-parties."
 msgstr ""
-"Шаблон содержит **переменные**, которые будут заменены значениями при "
-"выполнении шаблона, и **теги**, которые управляют логикой шаблона."
 
-# 65336cb59f2e4dfabf855ea8e0c88fd2
-#: ../../topics/templates.txt:47
+#: ../../topics/templates.txt:20
 msgid ""
-"Below is a minimal template that illustrates a few basics. Each element will "
-"be explained later in this document."
+"Django defines a standard API for loading and rendering templates regardless "
+"of the backend. Loading consists of finding the template for a given "
+"identifier and preprocessing it, usually compiling it to an in-memory "
+"representation. Rendering means interpolating the template with context data "
+"and returning the resulting string."
 msgstr ""
-"Ниже приводится простой шаблон, который иллюстрирует некоторые основы. "
-"Каждый элемент будет объяснен далее в этом разделе."
 
-# 8f01df6c6a6a47ab943ca7841df22c8c
-#: ../../topics/templates.txt:71
+#: ../../topics/templates.txt:26
 msgid ""
-"Why use a text-based template instead of an XML-based one (like Zope's TAL)? "
-"We wanted Django's template language to be usable for more than just XML/"
-"HTML templates. At World Online, we use it for emails, JavaScript and CSV. "
-"You can use the template language for any text-based format."
+"The :doc:`Django template language </ref/templates/language>` is Django's "
+"own template system. Until Django 1.8 it was the only built-in option "
+"available. It's a good template library even though it's fairly opinionated "
+"and sports a few idiosyncrasies. If you don't have a pressing reason to "
+"choose another backend, you should use the DTL, especially if you're writing "
+"a pluggable application and you intend to distribute templates. Django's "
+"contrib apps that include templates, like :doc:`django.contrib.admin </ref/"
+"contrib/admin/index>`, use the DTL."
 msgstr ""
-"Зачем использовать текстовый шаблон, а не на основе XML (как TAL в Zope)? Мы "
-"хотели, чтобы шаблоны Django были больше, чем просто XML/HTML шаблоны. На "
-"World Online, мы используем их для email, JavaScript и CSV. Вы можете "
-"использовать шаблоны для любого текстового формата."
 
-# 27d8a353303c4a39a9a6f19060f348c5
-#: ../../topics/templates.txt:77
-msgid "Oh, and one more thing: Making humans edit XML is sadistic!"
-msgstr "Ах да, еще одно: заставлять людей редактировать XML -- это садизм!"
+#: ../../topics/templates.txt:35
+msgid ""
+"For historical reasons, both the generic support for template engines and "
+"the implementation of the Django template language live in the ``django."
+"template`` namespace."
+msgstr ""
+
+#: ../../topics/templates.txt:42
+msgid "Support for template engines"
+msgstr ""
+
+#: ../../topics/templates.txt:46
+msgid ""
+"Support for multiple template engines and the :setting:`TEMPLATES` setting "
+"were added in Django 1.8."
+msgstr ""
+
+#: ../../topics/templates.txt:50
+msgid "Configuration"
+msgstr ""
+
+#: ../../topics/templates.txt:52
+msgid ""
+"Templates engines are configured with the :setting:`TEMPLATES` setting. It's "
+"a list of configurations, one for each engine. The default value is empty. "
+"The ``settings.py`` generated by the :djadmin:`startproject` command defines "
+"a more useful value::"
+msgstr ""
+
+#: ../../topics/templates.txt:68
+msgid ""
+":setting:`BACKEND <TEMPLATES-BACKEND>` is a dotted Python path to a template "
+"engine class implementing Django's template backend API. The built-in "
+"backends are :class:`django.template.backends.django.DjangoTemplates` and :"
+"class:`django.template.backends.jinja2.Jinja2`."
+msgstr ""
+
+#: ../../topics/templates.txt:73
+msgid ""
+"Since most engines load templates from files, the top-level configuration "
+"for each engine contains two common settings:"
+msgstr ""
+
+#: ../../topics/templates.txt:76
+msgid ""
+":setting:`DIRS <TEMPLATES-DIRS>` defines a list of directories where the "
+"engine should look for template source files, in search order."
+msgstr ""
+
+#: ../../topics/templates.txt:78
+msgid ""
+":setting:`APP_DIRS <TEMPLATES-APP_DIRS>` tells whether the engine should "
+"look for templates inside installed applications. Each backend defines a "
+"conventional name for the subdirectory inside applications where its "
+"templates should be stored."
+msgstr ""
+
+#: ../../topics/templates.txt:83
+msgid ""
+"While uncommon, it's possible to configure several instances of the same "
+"backend with different options. In that case you should define a unique :"
+"setting:`NAME <TEMPLATES-NAME>` for each engine."
+msgstr ""
+
+#: ../../topics/templates.txt:87
+msgid ""
+":setting:`OPTIONS <TEMPLATES-OPTIONS>` contains backend-specific settings."
+msgstr ""
+
+#: ../../topics/templates.txt:90
+msgid "Usage"
+msgstr ""
+
+#: ../../topics/templates.txt:96
+msgid ""
+"The ``django.template.loader`` module defines two functions to load "
+"templates."
+msgstr ""
+
+#: ../../topics/templates.txt:100
+msgid ""
+"This function loads the template with the given name and returns a "
+"``Template`` object."
+msgstr ""
+
+#: ../../topics/templates.txt:103
+msgid ""
+"The exact type of the return value depends on the backend that loaded the "
+"template. Each backend has its own ``Template`` class."
+msgstr ""
+
+#: ../../topics/templates.txt:106
+msgid ""
+"``get_template()`` tries each template engine in order until one succeeds. "
+"If the template cannot be found, it raises :exc:`~django.template."
+"TemplateDoesNotExist`. If the template is found but contains invalid syntax, "
+"it raises :exc:`~django.template.TemplateSyntaxError`."
+msgstr ""
+
+#: ../../topics/templates.txt:112
+msgid ""
+"How templates are searched and loaded depends on each engine's backend and "
+"configuration."
+msgstr ""
+
+#: ../../topics/templates.txt:115
+msgid ""
+"If you want to restrict the search to a particular template engine, pass the "
+"engine's :setting:`NAME <TEMPLATES-NAME>` in the ``using`` argument."
+msgstr ""
+
+#: ../../topics/templates.txt:120 ../../topics/templates.txt:143
+msgid "The ``dirs`` parameter was added."
+msgstr ""
+
+#: ../../topics/templates.txt:124 ../../topics/templates.txt:147
+msgid "The ``dirs`` parameter was deprecated."
+msgstr ""
+
+#: ../../topics/templates.txt:128 ../../topics/templates.txt:151
+msgid "The ``using`` parameter was added."
+msgstr ""
+
+#: ../../topics/templates.txt:132
+msgid ""
+"``get_template()`` returns a backend-dependent ``Template`` instead of a :"
+"class:`django.template.Template`."
+msgstr ""
+
+#: ../../topics/templates.txt:137
+msgid ""
+"``select_template()`` is just like ``get_template()``, except it takes a "
+"list of template names. It tries each name in order and returns the first "
+"template that exists."
+msgstr ""
+
+#: ../../topics/templates.txt:155
+msgid ""
+"``select_template()`` returns a backend-dependent ``Template`` instead of a :"
+"class:`django.template.Template`."
+msgstr ""
+
+#: ../../topics/templates.txt:160
+msgid ""
+"If loading a template fails, the following two exceptions, defined in "
+"``django.template``, may be raised:"
+msgstr ""
+
+#: ../../topics/templates.txt:165
+msgid "This exception is raised when a template cannot be found."
+msgstr ""
+
+#: ../../topics/templates.txt:169
+msgid "This exception is raised when a template was found but contains errors."
+msgstr ""
+
+#: ../../topics/templates.txt:171
+msgid ""
+"``Template`` objects returned by ``get_template()`` and "
+"``select_template()`` must provide a ``render()`` method with the following "
+"signature:"
+msgstr ""
+
+#: ../../topics/templates.txt:178
+msgid "Renders this template with a given context."
+msgstr ""
+
+#: ../../topics/templates.txt:180
+msgid ""
+"If ``context`` is provided, it must be a :class:`dict`. If it isn't "
+"provided, the engine will render the template with an empty context."
+msgstr ""
+
+#: ../../topics/templates.txt:183
+msgid ""
+"If ``request`` is provided, it must be an :class:`~django.http.HttpRequest`. "
+"Then the engine must make it, as well as the CSRF token, available in the "
+"template. How this is achieved is up to each backend."
+msgstr ""
+
+#: ../../topics/templates.txt:187
+msgid ""
+"Here's an example of the search algorithm. For this example the :setting:"
+"`TEMPLATES` setting is::"
+msgstr ""
+
+#: ../../topics/templates.txt:206
+msgid ""
+"If you call ``get_template('story_detail.html')``, here are the files Django "
+"will look for, in order:"
+msgstr ""
+
+#: ../../topics/templates.txt:209 ../../topics/templates.txt:219
+msgid "``/home/html/example.com/story_detail.html`` (``'django'`` engine)"
+msgstr ""
+
+#: ../../topics/templates.txt:210 ../../topics/templates.txt:220
+msgid "``/home/html/default/story_detail.html`` (``'django'`` engine)"
+msgstr ""
+
+#: ../../topics/templates.txt:211 ../../topics/templates.txt:221
+msgid "``/home/html/jinja2/story_detail.html`` (``'jinja2'`` engine)"
+msgstr ""
+
+#: ../../topics/templates.txt:213
+msgid ""
+"If you call ``select_template(['story_253_detail.html', 'story_detail."
+"html'])``, here's what Django will look for:"
+msgstr ""
+
+#: ../../topics/templates.txt:216
+msgid "``/home/html/example.com/story_253_detail.html`` (``'django'`` engine)"
+msgstr ""
+
+#: ../../topics/templates.txt:217
+msgid "``/home/html/default/story_253_detail.html`` (``'django'`` engine)"
+msgstr ""
+
+#: ../../topics/templates.txt:218
+msgid "``/home/html/jinja2/story_253_detail.html`` (``'jinja2'`` engine)"
+msgstr ""
+
+#: ../../topics/templates.txt:223
+msgid "When Django finds a template that exists, it stops looking."
+msgstr ""
+
+#: ../../topics/templates.txt:225
+msgid "Tip"
+msgstr ""
+
+#: ../../topics/templates.txt:227
+msgid ""
+"You can use :func:`~django.template.loader.select_template()` for flexible "
+"template loading. For example, if you've written a news story and want some "
+"stories to have custom templates, use something like "
+"``select_template(['story_%s_detail.html' % story.id, 'story_detail."
+"html'])``. That'll allow you to use a custom template for an individual "
+"story, with a fallback template for stories that don't have custom templates."
+msgstr ""
+
+#: ../../topics/templates.txt:235
+msgid ""
+"It's possible -- and preferable -- to organize templates in subdirectories "
+"inside each directory containing templates. The convention is to make a "
+"subdirectory for each Django app, with subdirectories within those "
+"subdirectories as needed."
+msgstr ""
+
+#: ../../topics/templates.txt:240
+msgid ""
+"Do this for your own sanity. Storing all templates in the root level of a "
+"single directory gets messy."
+msgstr ""
+
+#: ../../topics/templates.txt:243
+msgid ""
+"To load a template that's within a subdirectory, just use a slash, like so::"
+msgstr ""
+
+#: ../../topics/templates.txt:247
+msgid ""
+"Using the same :setting:`TEMPLATES` option as above, this will attempt to "
+"load the following templates:"
+msgstr ""
+
+#: ../../topics/templates.txt:250
+msgid "``/home/html/example.com/news/story_detail.html`` (``'django'`` engine)"
+msgstr ""
+
+#: ../../topics/templates.txt:251
+msgid "``/home/html/default/news/story_detail.html`` (``'django'`` engine)"
+msgstr ""
+
+#: ../../topics/templates.txt:252
+msgid "``/home/html/jinja2/news/story_detail.html`` (``'jinja2'`` engine)"
+msgstr ""
+
+#: ../../topics/templates.txt:256
+msgid ""
+"In addition, to cut down on the repetitive nature of loading and rendering "
+"templates, Django provides a shortcut function which automates the process."
+msgstr ""
+
+#: ../../topics/templates.txt:261
+msgid ""
+"``render_to_string()`` loads a template like :func:`get_template` and calls "
+"its ``render()`` method immediately. It takes the following arguments."
+msgstr ""
+
+#: ../../topics/templates.txt:268
+msgid "``template_name``"
+msgstr ""
+
+#: ../../topics/templates.txt:266
+msgid ""
+"The name of the template to load and render. If it's a list of template "
+"names, Django uses :func:`select_template` instead of :func:`get_template` "
+"to find the template."
+msgstr ""
+
+#: ../../topics/templates.txt:279
+msgid "``context``"
+msgstr ""
+
+#: ../../topics/templates.txt:271
+msgid "A :class:`dict` to be used as the template's context for rendering."
+msgstr ""
+
+#: ../../topics/templates.txt:275
+msgid ""
+"The ``context`` argument used to be called ``dictionary``. That name is "
+"deprecated in Django 1.8 and will be removed in Django 2.0."
+msgstr ""
+
+#: ../../topics/templates.txt:278
+msgid ""
+"``context`` is now optional. An empty context will be used if it isn't "
+"provided."
+msgstr ""
+
+#: ../../topics/templates.txt:289
+msgid "``context_instance``"
+msgstr ""
+
+#: ../../topics/templates.txt:282
+msgid ""
+"An instance of :class:`~django.template.Context` or a subclass (e.g., an "
+"instance of :class:`~django.template.RequestContext`) to use as the "
+"template's context."
+msgstr ""
+
+#: ../../topics/templates.txt:288
+msgid ""
+"The ``context_instance`` argument is deprecated. Use ``context`` and if "
+"needed ``request``."
+msgstr ""
+
+#: ../../topics/templates.txt:296
+msgid "``request``"
+msgstr ""
+
+#: ../../topics/templates.txt:292
+msgid ""
+"An optional :class:`~django.http.HttpRequest` that will be available during "
+"the template's rendering process."
+msgstr ""
+
+#: ../../topics/templates.txt:297
+msgid "The ``request`` argument was added."
+msgstr ""
+
+#: ../../topics/templates.txt:299
+msgid ""
+"See also the :func:`~django.shortcuts.render()` and :func:`~django.shortcuts."
+"render_to_response()` shortcuts, which call :func:`render_to_string()` and "
+"feed the result into an :class:`~django.http.HttpResponse` suitable for "
+"returning from a view."
+msgstr ""
+
+#: ../../topics/templates.txt:304
+msgid "Finally, you can use configured engines directly:"
+msgstr ""
+
+#: ../../topics/templates.txt:308
+msgid "Template engines are available in ``django.template.engines``::"
+msgstr ""
+
+#: ../../topics/templates.txt:315
+msgid ""
+"The lookup key — ``'django'`` in this example — is the engine's :setting:"
+"`NAME <TEMPLATES-NAME>`."
+msgstr ""
+
+#: ../../topics/templates.txt:321
+msgid "Built-in backends"
+msgstr ""
+
+#: ../../topics/templates.txt:327
+msgid ""
+"Set :setting:`BACKEND <TEMPLATES-BACKEND>` to ``'django.template.backends."
+"django.DjangoTemplates'`` to configure a Django template engine."
+msgstr ""
+
+#: ../../topics/templates.txt:331
+msgid ""
+"When :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` is ``True``, "
+"``DjangoTemplates`` engines look for templates in the ``templates`` "
+"subdirectory of installed applications. This generic name was kept for "
+"backwards-compatibility."
+msgstr ""
+
+#: ../../topics/templates.txt:335
+msgid ""
+"``DjangoTemplates`` engines accept the following :setting:`OPTIONS "
+"<TEMPLATES-OPTIONS>`:"
+msgstr ""
+
+#: ../../topics/templates.txt:338
+msgid ""
+"``'allowed_include_roots'``: a list of strings representing allowed prefixes "
+"for the ``{% ssi %}`` template tag. This is a security measure, so that "
+"template authors can't access files that they shouldn't be accessing."
+msgstr ""
+
+#: ../../topics/templates.txt:342
+msgid ""
+"For example, if ``'allowed_include_roots'`` is ``['/home/html', '/var/"
+"www']``, then ``{% ssi /home/html/foo.txt %}`` would work, but ``{% ssi /etc/"
+"passwd %}`` wouldn't."
+msgstr ""
+
+#: ../../topics/templates.txt:346 ../../topics/templates.txt:358
+msgid "It defaults to an empty list."
+msgstr ""
+
+#: ../../topics/templates.txt:350
+msgid ""
+"``allowed_include_roots`` is deprecated because the {% ssi %} tag is "
+"deprecated."
+msgstr ""
+
+#: ../../topics/templates.txt:353
+msgid ""
+"``'context_processors'``: a list of dotted Python paths to callables that "
+"are used to populate the context when a template is rendered with a request. "
+"These callables take a request object as their argument and return a :class:"
+"`dict` of items to be merged into the context."
+msgstr ""
+
+#: ../../topics/templates.txt:360
+msgid "See :class:`~django.template.RequestContext` for more information."
+msgstr ""
+
+#: ../../topics/templates.txt:362
+msgid ""
+"``'debug'``: a boolean that turns on/off template debug mode. If it is "
+"``True``, the fancy error page will display a detailed report for any "
+"exception raised during template rendering. This report contains the "
+"relevant snippet of the template with the appropriate line highlighted."
+msgstr ""
+
+#: ../../topics/templates.txt:367
+msgid "It defaults to the value of the :setting:`DEBUG` setting."
+msgstr ""
+
+#: ../../topics/templates.txt:369
+msgid ""
+"``'loaders'``: a list of dotted Python paths to template loader classes. "
+"Each ``Loader`` class knows how to import templates from a particular "
+"source. Optionally, a tuple can be used instead of a string. The first item "
+"in the tuple should be the ``Loader`` class name, and subsequent items are "
+"passed to the ``Loader`` during initialization."
+msgstr ""
+
+#: ../../topics/templates.txt:375
+msgid ""
+"The default depends on the values of :setting:`DIRS <TEMPLATES-DIRS>` and :"
+"setting:`APP_DIRS <TEMPLATES-APP_DIRS>`."
+msgstr ""
+
+#: ../../topics/templates.txt:378
+msgid "See :ref:`template-loaders` for details."
+msgstr ""
+
+#: ../../topics/templates.txt:380
+msgid ""
+"``'string_if_invalid'``: the output, as a string, that the template system "
+"should use for invalid (e.g. misspelled) variables."
+msgstr ""
+
+#: ../../topics/templates.txt:383
+msgid "It defaults to an empty string."
+msgstr ""
+
+#: ../../topics/templates.txt:385
+msgid "See :ref:`invalid-template-variables` for details."
+msgstr ""
+
+#: ../../topics/templates.txt:387
+msgid "``'file_charset'``: the charset used to read template files on disk."
+msgstr ""
+
+#: ../../topics/templates.txt:389
+msgid "It defaults to the value of :setting:`FILE_CHARSET`."
+msgstr ""
+
+#: ../../topics/templates.txt:395
+msgid ""
+"Set :setting:`BACKEND <TEMPLATES-BACKEND>` to ``'django.template.backends."
+"jinja2.Jinja2'`` to configure a Jinja2_ engine."
+msgstr ""
+
+#: ../../topics/templates.txt:398
+msgid ""
+"When :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` is ``True``, ``Jinja2`` "
+"engines look for templates in the ``jinja2`` subdirectory of installed "
+"applications."
+msgstr ""
+
+#: ../../topics/templates.txt:401
+msgid ""
+"The most important entry in :setting:`OPTIONS <TEMPLATES-OPTIONS>` is "
+"``'environment'``. It's a dotted Python path to a callable returning a "
+"Jinja2 environment. It defaults to ``'jinja2.Environment'``. Django invokes "
+"that callable and passes other options as keyword arguments. Furthermore, "
+"Django adds defaults that differ from Jinja2's for a few options:"
+msgstr ""
+
+#: ../../topics/templates.txt:407
+msgid "``'autoescape'``: ``True``"
+msgstr ""
+
+#: ../../topics/templates.txt:408
+msgid ""
+"``'loader'``: a loader configured for :setting:`DIRS <TEMPLATES-DIRS>` and :"
+"setting:`APP_DIRS <TEMPLATES-APP_DIRS>`"
+msgstr ""
+
+#: ../../topics/templates.txt:410
+msgid "``'auto_reload'``: ``settings.DEBUG``"
+msgstr ""
+
+#: ../../topics/templates.txt:411
+msgid "``'undefined'``: ``DebugUndefined if settings.DEBUG else Undefined``"
+msgstr ""
+
+#: ../../topics/templates.txt:413
+msgid ""
+"The default configuration is purposefully kept to a minimum. The ``Jinja2`` "
+"backend doesn't create a Django-flavored environment. It doesn't know about "
+"Django context processors, filters, and tags. In order to use Django-"
+"specific APIs, you must configure them into the environment."
+msgstr ""
+
+#: ../../topics/templates.txt:418
+msgid "For example, you can create ``myproject/jinja2.py`` with this content::"
+msgstr ""
+
+#: ../../topics/templates.txt:434
+msgid ""
+"and set the ``'environment'`` option to ``'myproject.jinja2.environment'``."
+msgstr ""
+
+#: ../../topics/templates.txt:436
+msgid "Then you could use the following constructs in Jinja2 templates:"
+msgstr ""
+
+#: ../../topics/templates.txt:444
+msgid ""
+"The concepts of tags and filters exist both in the Django template language "
+"and in Jinja2 but they're used differently. Since Jinja2 supports passing "
+"arguments to callables in templates, many features that require a template "
+"tag or filter in Django templates can be achieved simply by calling a "
+"function in Jinja2 templates, as shown in the example above. Jinja2's global "
+"namespace removes the need for template context processors. The Django "
+"template language doesn't have an equivalent of Jinja2 tests."
+msgstr ""
+
+#: ../../topics/templates.txt:453
+msgid "Custom backends"
+msgstr ""
+
+#: ../../topics/templates.txt:455
+msgid ""
+"Here's how to implement a custom template backend in order to use another "
+"template system. A template backend is a class that inherits ``django."
+"template.backends.base.BaseEngine``. It must implement ``get_template()`` "
+"and optionally ``from_string()``. Here's an example for a fictional "
+"``foobar`` template library::"
+msgstr ""
+
+#: ../../topics/templates.txt:511
+msgid "See `DEP 182`_ for more information."
+msgstr ""
+
+# f2ec389c092c4aeb9911e01fe093419a
+#: ../../topics/templates.txt:518
+msgid "The Django template language"
+msgstr "Язык шаблонов Django"
+
+#: ../../topics/templates.txt:523
+msgid "Syntax"
+msgstr ""
+
+# 91617ae39d904c4dbab66c87e6b8e303
+#: ../../topics/templates.txt:525 ../../topics/templates.txt:624
+#, fuzzy
+msgid "About this section"
+msgstr "Об этом документе"
+
+#: ../../topics/templates.txt:527
+msgid ""
+"This is an overview of the Django template language's syntax. For details "
+"see the :doc:`language syntax reference </ref/templates/language>`."
+msgstr ""
+
+#: ../../topics/templates.txt:530
+msgid ""
+"A Django template is simply a text document or a Python string marked-up "
+"using the Django template language. Some constructs are recognized and "
+"interpreted by the template engine. The main ones are variables and tags."
+msgstr ""
+
+#: ../../topics/templates.txt:534
+msgid ""
+"A template is rendered with a context. Rendering replaces variables with "
+"their values, which are looked up in the context, and executes tags. "
+"Everything else is output as is."
+msgstr ""
+
+#: ../../topics/templates.txt:538
+msgid "The syntax of the Django template language involves four constructs."
+msgstr ""
 
 # 7e41b7d93cf348bfaae0488724faffc1
-#: ../../topics/templates.txt:80
+#: ../../topics/templates.txt:541
 msgid "Variables"
 msgstr "Переменные"
 
-# dd6987b4df5942dfa94a4f9fc7b6af4b
-#: ../../topics/templates.txt:82
+#: ../../topics/templates.txt:543
 msgid ""
-"Variables look like this: ``{{ variable }}``. When the template engine "
-"encounters a variable, it evaluates that variable and replaces it with the "
-"result. Variable names consist of any combination of alphanumeric characters "
-"and the underscore (``\"_\"``). The dot (``\".\"``) also appears in variable "
-"sections, although that has a special meaning, as indicated below. "
-"Importantly, *you cannot have spaces or punctuation characters in variable "
-"names.*"
+"A variable outputs a value from the context, which is a dict-like object "
+"mapping keys to values."
 msgstr ""
-"Переменные выглядят таким образом: ``{{ variable }}``. Когда шаблон "
-"встречает переменную, он вычисляет ее и заменяет результатом. Названия "
-"переменных могут состоять из букв, цифр и нижнего подчеркивания(``\"_\"``). "
-"Точку (``\".\"``) также можно использовать, но она имеет особый смысл "
-"описанный ниже. Важно, *нельзя использовать пробелы и знаки пунктуации в "
-"названии переменных.*"
 
-# 94fbd9e4c7cb404290161934bb965100
-#: ../../topics/templates.txt:90
-msgid "Use a dot (``.``) to access attributes of a variable."
-msgstr "Используйте точку (``.``) для доступа к атрибутам переменной."
-
-# 25cbe35d544244f4b084422918fcdff8
-#: ../../topics/templates.txt:0
-msgid "Behind the scenes"
-msgstr "За кадром"
-
-# cf89805da4474fdc80890ff5260e774b
-#: ../../topics/templates.txt:94
-msgid ""
-"Technically, when the template system encounters a dot, it tries the "
-"following lookups, in this order:"
+#: ../../topics/templates.txt:546
+msgid "Variables are surrounded by ``{{`` and ``}}`` like this::"
 msgstr ""
-"Технически, когда шаблон встречает точку, он пытается получить значения в "
-"таком порядке:"
 
-# a2197c683a4d49a6a53cd93ae13199d5
-#: ../../topics/templates.txt:97
-msgid "Dictionary lookup"
-msgstr "Ключ словаря"
-
-# dd9a54e445104def8b4cbb8d95e8cc44
-#: ../../topics/templates.txt:98
-msgid "Attribute or method lookup"
-msgstr "Атрибут или метод"
-
-# 84e4e3707a72476aa76b24717c4a8146
-#: ../../topics/templates.txt:99
-msgid "Numeric index lookup"
-msgstr "Индекс списка"
-
-# 19e2e28027be42e1aa8642e4f868e7db
-#: ../../topics/templates.txt:101
+#: ../../topics/templates.txt:550
 msgid ""
-"If the resulting value is callable, it is called with no arguments. The "
-"result of the call becomes the template value."
+"With a context of ``{'first_name': 'John', 'last_name': 'Doe'}``, this "
+"template renders to::"
 msgstr ""
-"Если найден вызываемый объект(функция или метод), он будет вызван без "
-"аргументов. Результат будет использоваться шаблоном как значение."
 
-# db188db83e9b492ca33955153e47181f
-#: ../../topics/templates.txt:104
+#: ../../topics/templates.txt:555
 msgid ""
-"This lookup order can cause some unexpected behavior with objects that "
-"override dictionary lookup. For example, consider the following code snippet "
-"that attempts to loop over a ``collections.defaultdict``::"
+"Dictionary lookup, attribute lookup and list-index lookups are implemented "
+"with a dot notation::"
 msgstr ""
-"Это может приводить к неожиданным результатам с объектами, которые "
-"переопределяют поиск по словарю. Например, рассмотрим следующий код, который "
-"пытается выполнить цикл по ``collections.defaultdict``::"
 
-# 37364c19bd254f96a88726093d1db9d0
-#: ../../topics/templates.txt:112
+#: ../../topics/templates.txt:562
 msgid ""
-"Because dictionary lookup happens first, that behavior kicks in and provides "
-"a default value instead of using the intended ``.iteritems()`` method. In "
-"this case, consider converting to a dictionary first."
+"If a variable resolves to a callable, the template system will call it with "
+"no arguments and use its result instead of the callable."
 msgstr ""
-"Так как поиск словаре происходит вперёд, такое поведение предоставляет "
-"значение по умолчанию вместо использования метода ``.iteritems()``. В данном "
-"случае, сначала рассмотрим преобразование в словарь."
-
-# 7a115c2e50194cc69b0f1d70a1346a27
-#: ../../topics/templates.txt:116
-msgid ""
-"In the above example, ``{{ section.title }}`` will be replaced with the "
-"``title`` attribute of the ``section`` object."
-msgstr ""
-"В примере выше, ``{{ section.title }}`` будет заменен на атрибут ``title`` "
-"объекта ``section``."
-
-# ba0cdd5e0b144067a45e90f29f0ec624
-#: ../../topics/templates.txt:119
-msgid ""
-"If you use a variable that doesn't exist, the template system will insert "
-"the value of the :setting:`TEMPLATE_STRING_IF_INVALID` setting, which is set "
-"to ``''`` (the empty string) by default."
-msgstr ""
-"Если переменная не найдена, шаблон вставит значение из настройки :setting:"
-"`TEMPLATE_STRING_IF_INVALID`, которая равна ``''`` (пустой строке) по-"
-"умолчанию."
-
-# 8bd19adf676f49d5b677f04b09ccb7a3
-#: ../../topics/templates.txt:123
-msgid ""
-"Note that \"bar\" in a template expression like ``{{ foo.bar }}`` will be "
-"interpreted as a literal string and not using the value of the variable \"bar"
-"\", if one exists in the template context."
-msgstr ""
-"Следует отметить, что \"bar\" в шаблонном выражении выглядит как ``{{ foo."
-"bar }}`` и будет интерпретирован как строка. Если в шаблонном контексте "
-"определена переменная с таким именем, то значение локальной переменной \"bar"
-"\" будет проигнорировано."
-
-# 56fb6d3ca10743198e2d5676744b2562
-#: ../../topics/templates.txt:128
-msgid "Filters"
-msgstr "Фильтры"
-
-# 0fe29e1597bc4576bf8d9d5cb48dcbe1
-#: ../../topics/templates.txt:130
-msgid "You can modify variables for display by using **filters**."
-msgstr "Вы можете изменить значение переменной используя **фильтры**."
-
-# b0209fc4074d46a596c794234e74ee7d
-#: ../../topics/templates.txt:132
-msgid ""
-"Filters look like this: ``{{ name|lower }}``. This displays the value of the "
-"``{{ name }}`` variable after being filtered through the :tfilter:`lower` "
-"filter, which converts text to lowercase. Use a pipe (``|``) to apply a "
-"filter."
-msgstr ""
-"Фильтры выглядят таким образом: ``{{ name|lower }}``. Это выведет значение "
-"переменной ``{{ name }}`` после применения фильтра :tfilter:`lower` к нему, "
-"который преобразует значение в нижний регистр. Используйте символ (``|``) "
-"для применения фильтра."
-
-# d5c9d37c690d4a2a837b40f3dd1ed88d
-#: ../../topics/templates.txt:136
-msgid ""
-"Filters can be \"chained.\" The output of one filter is applied to the next. "
-"``{{ text|escape|linebreaks }}`` is a common idiom for escaping text "
-"contents, then converting line breaks to ``<p>`` tags."
-msgstr ""
-"Можно использовать \"цепочку\" фильтров. Вывод одного фильтра используется "
-"для другого. ``{{ text|escape|linebreaks }}`` обычно применяется для "
-"экранирования текста, и замены переноса строки тегами ``<p>``."
-
-# 83cf676da9224ff5801ddbfbdad40bba
-#: ../../topics/templates.txt:140
-msgid ""
-"Some filters take arguments. A filter argument looks like this: ``{{ bio|"
-"truncatewords:30 }}``. This will display the first 30 words of the ``bio`` "
-"variable."
-msgstr ""
-"Некоторые фильтры принимают аргументы. Аргумент фильтра выглядит таким "
-"образом: ``{{ bio|truncatewords:30 }}``. Этот код отобразит первые 30 слов "
-"переменной ``bio``."
-
-# a66aecb77ae84b7c8b0f69a6d19527af
-#: ../../topics/templates.txt:144
-msgid ""
-"Filter arguments that contain spaces must be quoted; for example, to join a "
-"list with commas and spaced you'd use ``{{ list|join:\", \" }}``."
-msgstr ""
-"Аргументы фильтров, которые содержат пробелы, должны быть заключены в "
-"кавычки. Например, чтобы объединить список пробелом и запятой, используйте "
-"``{{ list|join:\", \" }}``."
-
-# 10da6836ea97410e90a71c392bb0c885
-#: ../../topics/templates.txt:147
-msgid ""
-"Django provides about thirty built-in template filters. You can read all "
-"about them in the :ref:`built-in filter reference <ref-templates-builtins-"
-"filters>`. To give you a taste of what's available, here are some of the "
-"more commonly used template filters:"
-msgstr ""
-"Django предоставляет около тридцати встроенных фильтров. Вы можете прочитать "
-"о них в :ref:`разделе о встроенных фильтрах <ref-templates-builtins-"
-"filters>`. Чтобы дать вам представление о возможностях, вот некоторые из "
-"наиболее часто используемых фильтров:"
-
-# dd5ed53839254cc1ac30f396c2f06e9f
-#: ../../topics/templates.txt:161
-msgid ":tfilter:`default`"
-msgstr ":tfilter:`default`"
-
-# b70ade8790344ea1b641352e32d2d31c
-#: ../../topics/templates.txt:153
-msgid ""
-"If a variable is false or empty, use given default. Otherwise, use the value "
-"of the variable"
-msgstr ""
-"Если значение равно ``False``, будет использовано значение по умолчанию. В "
-"противном случае используется значение."
-
-# 6bb84b800595413e9ab43ee3a5328351
-#: ../../topics/templates.txt:156
-msgid "For example::"
-msgstr "Например::"
-
-# 7480af08eb0444e5bc78895573259d44
-#: ../../topics/templates.txt:160
-msgid ""
-"If ``value`` isn't provided or is empty, the above will display \"``nothing``"
-"\"."
-msgstr ""
-"Если ``value`` равно ``\"\"`` (пустая строка), будет выведено ``nothing``."
-
-# da94379ccb9f4c9d9fe3abcc76c9293e
-#: ../../topics/templates.txt:169
-msgid ":tfilter:`length`"
-msgstr ":tfilter:`length`"
-
-# 90ce9dab4b9e4d3fa7e650fdb5144c8d
-#: ../../topics/templates.txt:164
-msgid ""
-"Returns the length of the value. This works for both strings and lists; for "
-"example::"
-msgstr "Возвращает размер значения. Работает для строк и списков, например::"
-
-# 67bcf20d7db3486dab8c29ed1fc8d667
-#: ../../topics/templates.txt:169
-msgid "If ``value`` is ``['a', 'b', 'c', 'd']``, the output will be ``4``."
-msgstr "Если ``value`` равно ``['a', 'b', 'c', 'd']``, выведет ``4``."
-
-# a76a3a16f67e4ba4a7c393c679788b14
-#: ../../topics/templates.txt:177
-msgid ":tfilter:`striptags`"
-msgstr ":tfilter:`striptags`"
-
-# 5d7a0dbe7e3b43e78d4baa609d7f64c8
-#: ../../topics/templates.txt:172
-msgid "Strips all [X]HTML tags. For example::"
-msgstr "Удаляет все [X]HTML теги. Например::"
-
-# 07e20e060066445dae60c46478ee9859
-#: ../../topics/templates.txt:176
-msgid ""
-"If ``value`` is ``\"<b>Joel</b> <button>is</button> a <span>slug</span>\"``, "
-"the output will be ``\"Joel is a slug\"``."
-msgstr ""
-"Если ``value`` равно ``\"<b>Joel</b> <button>is</button> a <span>slug</span>"
-"\"``, выведет ``\"Joel is a slug\"``."
-
-# 192621bec1a44a1fafeb028a92712923
-#: ../../topics/templates.txt:179
-msgid ""
-"Again, these are just a few examples; see the :ref:`built-in filter "
-"reference <ref-templates-builtins-filters>` for the complete list."
-msgstr ""
-"Опять же, это всего лишь несколько примеров; полный список смотрите :ref:"
-"`раздел о встроенных фильтрах <ref-templates-builtins-filters>`."
-
-# 0b5e9162b74d446da8c488714bf54f63
-#: ../../topics/templates.txt:182
-msgid ""
-"You can also create your own custom template filters; see :doc:`/howto/"
-"custom-template-tags`."
-msgstr ""
-"Вы можете создать собственный фильтр; смотрите :doc:`/howto/custom-template-"
-"tags`."
-
-# d2112403e8ee43ecbac7ba7ce9f5d19d
-# 6a62d74a8a114b09aa28afc7e17e0bd5
-#: ../../topics/templates.txt:187 ../../topics/templates.txt:258
-msgid ""
-"Django's admin interface can include a complete reference of all template "
-"tags and filters available for a given site. See :doc:`/ref/contrib/admin/"
-"admindocs`."
-msgstr ""
-"Интерфейс администратора Django может предоставить полный список доступных "
-"тегов и фильтров. Смотрите :doc:`/ref/contrib/admin/admindocs`."
 
 # e2fbc31c77dc405cb13535ecd88ee4ba
-#: ../../topics/templates.txt:192
+#: ../../topics/templates.txt:566
 msgid "Tags"
 msgstr "Теги"
 
-# ade3c60483524723a2d406d81467d1be
-#: ../../topics/templates.txt:194
-msgid ""
-"Tags look like this: ``{% tag %}``. Tags are more complex than variables: "
-"Some create text in the output, some control flow by performing loops or "
-"logic, and some load external information into the template to be used by "
-"later variables."
+#: ../../topics/templates.txt:568
+msgid "Tags provide arbitrary logic in the rendering process."
 msgstr ""
-"Теги выглядят таким образом: ``{% tag %}``. Теги сложнее чем переменные: "
-"одни создают текст для вывода, влияют на выполнение используя условия и "
-"циклы, другие загружают дополнительную информацию в шаблоны, чтобы "
-"использовать ее далее через переменные."
 
-# 000111c65907405f89bce087e49326a5
-#: ../../topics/templates.txt:198
+#: ../../topics/templates.txt:570
 msgid ""
-"Some tags require beginning and ending tags (i.e. ``{% tag %} ... tag "
-"contents ... {% endtag %}``)."
+"This definition is deliberately vague. For example, a tag can output "
+"content, serve as a control structure e.g. an \"if\" statement or a \"for\" "
+"loop, grab content from a database, or even enable access to other template "
+"tags."
 msgstr ""
-"Некоторые теги требуют открывающий и закрывающий теги (например, ``{% tag "
-"%} ... содержимое тега ... {% endtag %}``)."
 
-# 049efc7c33f8445aa9b86d0927bd4253
-#: ../../topics/templates.txt:201
+#: ../../topics/templates.txt:574
+msgid "Tags are surrounded by ``{%`` and ``%}`` like this::"
+msgstr ""
+
+#: ../../topics/templates.txt:578
+msgid "Most tags accept arguments::"
+msgstr ""
+
+#: ../../topics/templates.txt:582
+msgid "Some tags require beginning and ending tags::"
+msgstr ""
+
+#: ../../topics/templates.txt:586
 msgid ""
-"Django ships with about two dozen built-in template tags. You can read all "
-"about them in the :ref:`built-in tag reference <ref-templates-builtins-"
-"tags>`. To give you a taste of what's available, here are some of the more "
-"commonly used tags:"
+"A :ref:`reference of built-in tags <ref-templates-builtins-tags>` is "
+"available as well as :ref:`instructions for writing custom tags <howto-"
+"writing-custom-template-tags>`."
 msgstr ""
-"Django содержит около двадцати встроенных тегов. Вы можете прочитать все о "
-"них в :ref:`разделе о встроенных тегах <ref-templates-builtins-tags>`. Чтобы "
-"дать вам представление о возможностях, вот некоторые из наиболее часто "
-"используемых тегов:"
 
-# ce7ba1d0a6f7445f8d0c92da6082d4c8
-#: ../../topics/templates.txt:214
-msgid ":ttag:`for`"
-msgstr ":ttag:`for`"
+# 56fb6d3ca10743198e2d5676744b2562
+#: ../../topics/templates.txt:591
+msgid "Filters"
+msgstr "Фильтры"
 
-# f02470727ab144538ddaa297e2113369
-#: ../../topics/templates.txt:207
+#: ../../topics/templates.txt:593
+msgid "Filters transform the values of variables and tag arguments."
+msgstr ""
+
+# 03489c2c588c4eff917c0e36bd13aa9e
+#: ../../topics/templates.txt:595
+#, fuzzy
+msgid "They look like this::"
+msgstr "Дочерний шаблон может выглядеть таким образом::"
+
+#: ../../topics/templates.txt:599
 msgid ""
-"Loop over each item in an array.  For example, to display a list of athletes "
-"provided in ``athlete_list``::"
+"With a context of ``{'django': 'the web framework for perfectionists with "
+"deadlines'}``, this template renders to::"
 msgstr ""
-"Цикл по каждому элементу массива.  Например, выведем список спортсменов из "
-"``athlete_list``::"
 
-# 8b53531238944f308d0c4e1a29f92a36
-#: ../../topics/templates.txt:244
-msgid ":ttag:`if`, ``elif``, and ``else``"
-msgstr ":ttag:`if`, ``elif``, и ``else``"
+#: ../../topics/templates.txt:604
+msgid "Some filters take an argument::"
+msgstr ""
 
-# 44157ac6b0894d2aa1b7ae97cd938ab3
-#: ../../topics/templates.txt:217
+#: ../../topics/templates.txt:608
 msgid ""
-"Evaluates a variable, and if that variable is \"true\" the contents of the "
-"block are displayed::"
+"A :ref:`reference of built-in filters <ref-templates-builtins-filters>` is "
+"available as well as :ref:`instructions for writing custom filters <howto-"
+"writing-custom-template-filters>`."
 msgstr ""
-"Вычисляет переменную и если она равна \"true\", выводит содержимое блока::"
-
-# b5b5bceafb8e488885d80742d6e77cb1
-#: ../../topics/templates.txt:228
-msgid ""
-"In the above, if ``athlete_list`` is not empty, the number of athletes will "
-"be displayed by the ``{{ athlete_list|length }}`` variable. Otherwise, if "
-"``athlete_in_locker_room_list`` is not empty, the message \"Athletes should "
-"be out...\" will be displayed. If both lists are empty, \"No athletes.\" "
-"will be displayed."
-msgstr ""
-"В примере выше, если ``athlete_list`` не пустой, будет отображено количество "
-"спортсменов ``{{ athlete_list|length }}``. Иначе, если "
-"``athlete_in_locker_room_list`` не пустой, будет показано сообщение "
-"\"Athletes should be out...\". Если оба списка пустые, будет показано "
-"сообщение \"No athletes.\"."
-
-# 63efcc2e1e2d4592bfc2ef4de29562b8
-#: ../../topics/templates.txt:234
-msgid "You can also use filters and various operators in the :ttag:`if` tag::"
-msgstr "Вы можете использовать фильтры и операторы в теге :ttag:`if` tag::"
-
-# 8a6c3fced7ef4b4f830af442f3aecc01
-#: ../../topics/templates.txt:242
-msgid ""
-"While the above example works, be aware that most template filters return "
-"strings, so mathematical comparisons using filters will generally not work "
-"as you expect. :tfilter:`length` is an exception."
-msgstr ""
-"Несмотря на работоспособность вышеупомянутого примера, помните, что "
-"большинство шаблонных фильтров возвращает строки, таким образом, "
-"математическое сравнение результатов фильтров в общем случае будет работать "
-"не так, как вы можете ожидать. Хотя : tfilter:`length` является исключением."
-
-# ae55f950596a4548a48c8b8e3f184c3f
-#: ../../topics/templates.txt:248
-msgid ":ttag:`block` and :ttag:`extends`"
-msgstr ":ttag:`block` и :ttag:`extends`"
-
-# 819c94a354a040adb26deceb65dd0749
-#: ../../topics/templates.txt:247
-msgid ""
-"Set up `template inheritance`_ (see below), a powerful way of cutting down "
-"on \"boilerplate\" in templates."
-msgstr ""
-"Определяет  :ref:`наследование шаблонов <template-inheritance>` (смотрите "
-"ниже), эффективный способ использовать шаблоны."
-
-# b713d4c8d03f41e8862285a3ca24215d
-#: ../../topics/templates.txt:250
-msgid ""
-"Again, the above is only a selection of the whole list; see the :ref:`built-"
-"in tag reference <ref-templates-builtins-tags>` for the complete list."
-msgstr ""
-"Опять же, это только несколько тегов; полный список смотрите в :ref:`разделе "
-"о встроенных тегах <ref-templates-builtins-tags>`."
-
-# 9b5f027343cb4e43a8d4ecc508dac416
-#: ../../topics/templates.txt:253
-msgid ""
-"You can also create your own custom template tags; see :doc:`/howto/custom-"
-"template-tags`."
-msgstr ""
-"Вы можете создать собственный тег; смотрите :doc:`/howto/custom-template-"
-"tags`."
 
 # 2342c1ccf2604587a62e089602b2fadf
-#: ../../topics/templates.txt:265
+#: ../../topics/templates.txt:613
 msgid "Comments"
 msgstr "Комментарии"
 
-# f7cca4597a424b43af51c36a9804fef0
-#: ../../topics/templates.txt:267
-msgid ""
-"To comment-out part of a line in a template, use the comment syntax: ``{# #}"
-"``."
-msgstr ""
-"Чтобы закомментировать строку в шаблоне, используйте синтаксис комментариев: "
-"``{# #}``."
-
-# dbc1f319d437477087f300d2be853579
-#: ../../topics/templates.txt:269
-msgid "For example, this template would render as ``'hello'``::"
-msgstr "Например, этот шаблон выведет ``'hello'``::"
-
-# 070199fbd8ea457da6be2d0a5d67a9bf
-#: ../../topics/templates.txt:273
-msgid "A comment can contain any template code, invalid or not. For example::"
-msgstr ""
-"Комментарий может содержать любой код шаблона, правильный или нет. Например::"
-
-# abcff62b7a704a09a532b9c18aee6853
-#: ../../topics/templates.txt:277
-msgid ""
-"This syntax can only be used for single-line comments (no newlines are "
-"permitted between the ``{#`` and ``#}`` delimiters). If you need to comment "
-"out a multiline portion of the template, see the :ttag:`comment` tag."
-msgstr ""
-"Этот синтаксис может быть использован только для однострочных комментариев "
-"(нельзя использовать перенос строки между ``{#`` и ``#}``). Если вам нужно "
-"закомментировать несколько строк, используйте тег :ttag:`comment`."
-
-# 6ab4da952ddc458daa72ceee5385affb
-#: ../../topics/templates.txt:284
-msgid "Template inheritance"
-msgstr "Наследование шаблонов"
-
-# 89ae1e5cdd7346daa96dbd88e81f3b4f
-#: ../../topics/templates.txt:286
-msgid ""
-"The most powerful -- and thus the most complex -- part of Django's template "
-"engine is template inheritance. Template inheritance allows you to build a "
-"base \"skeleton\" template that contains all the common elements of your "
-"site and defines **blocks** that child templates can override."
-msgstr ""
-"Самая могущественная -- и, следовательно, самая сложная -- часть механизма "
-"шаблонов Django -- это наследование шаблонов. Наследование шаблонов "
-"позволяет создать вам шаблон-\"скелет\", который содержит базовые элементы "
-"вашего сайта и определяет **блоки**, которые могут быть переопределены "
-"дочерними шаблонами."
-
-# c2f1e9ea43bc4635b8d334bcad53fcc4
-#: ../../topics/templates.txt:291
-msgid ""
-"It's easiest to understand template inheritance by starting with an example::"
-msgstr "Проще всего понять наследования шаблонов с помощью примера:"
-
-# f144259fe2e3434087e0cbb6ef6a8688
-#: ../../topics/templates.txt:316
-msgid ""
-"This template, which we'll call ``base.html``, defines a simple HTML "
-"skeleton document that you might use for a simple two-column page. It's the "
-"job of \"child\" templates to fill the empty blocks with content."
-msgstr ""
-"Этот шаблон, который мы будем называть ``base.html``, определяет HTML "
-"структуру документа, которую вы можете использовать для двух-колоночной "
-"страницы. Задача \"дочернего\" шаблона заполнить пустые блоки содержимым."
-
-# 8684aa413a2745a494c8e083f9806e0f
-#: ../../topics/templates.txt:320
-msgid ""
-"In this example, the :ttag:`block` tag defines three blocks that child "
-"templates can fill in. All the :ttag:`block` tag does is to tell the "
-"template engine that a child template may override those portions of the "
-"template."
-msgstr ""
-"В этом примере, тег :ttag:`block` определяет три блока, которые может "
-"переопределить дочерний шаблон. Все что делает тег :ttag:`block` -- "
-"указывает механизму шаблонов, какая часть шаблона может быть переопределена "
-"в дочернем шаблоне."
-
 # 03489c2c588c4eff917c0e36bd13aa9e
-#: ../../topics/templates.txt:324
-msgid "A child template might look like this::"
+#: ../../topics/templates.txt:615
+#, fuzzy
+msgid "Comments look like this::"
 msgstr "Дочерний шаблон может выглядеть таким образом::"
 
-# 7d4af052a16d4e149fc6b9b27ff9f3d5
-#: ../../topics/templates.txt:337
-msgid ""
-"The :ttag:`extends` tag is the key here. It tells the template engine that "
-"this template \"extends\" another template. When the template system "
-"evaluates this template, first it locates the parent -- in this case, \"base."
-"html\"."
+#: ../../topics/templates.txt:619
+msgid "A :ttag:`{% comment %} <comment>` tag provides multi-line comments."
 msgstr ""
-"Ключевым здесь есть тег :ttag:`extends`. Он говорит механизму шаблонов, что "
-"этот шаблон \"наследует\" другой шаблон. Когда механизм шаблонов выполняет "
-"этот шаблон, первым делом находится родительский шаблон -- в этом примере "
-"\"base.html\"."
 
-# 7ea85e9dff2048dcabcef386187c65ab
-#: ../../topics/templates.txt:341
+# 2342c1ccf2604587a62e089602b2fadf
+#: ../../topics/templates.txt:622
+#, fuzzy
+msgid "Components"
+msgstr "Комментарии"
+
+#: ../../topics/templates.txt:626
 msgid ""
-"At that point, the template engine will notice the three :ttag:`block` tags "
-"in ``base.html`` and replace those blocks with the contents of the child "
-"template. Depending on the value of ``blog_entries``, the output might look "
-"like::"
+"This is an overview of the Django template language's APIs. For details see "
+"the :doc:`API reference </ref/templates/api>`."
 msgstr ""
-"Далее механизм шаблонов находит три тега :ttag:`block` в ``base.html`` и "
-"заменяет их содержимым дочернего шаблона. В зависимости от значения "
-"``blog_entries``, результат может выглядеть таким образом::"
 
-# a3741c0605b64fb08d6f4da55ab71501
-#: ../../topics/templates.txt:371
+#: ../../topics/templates.txt:630
+msgid "Engine"
+msgstr ""
+
+#: ../../topics/templates.txt:632
 msgid ""
-"Note that since the child template didn't define the ``sidebar`` block, the "
-"value from the parent template is used instead. Content within a ``{% block "
-"%}`` tag in a parent template is always used as a fallback."
+":class:`django.template.Engine` encapsulates an instance of the Django "
+"template system. The main reason for instantiating an :class:`~django."
+"template.Engine` directly is to use the Django template language outside of "
+"a Django project."
 msgstr ""
-"Так как дочерний шаблон не определяет блок ``sidebar``, будет использовано "
-"значение из родительского шаблона. Содержимое тега ``{% block %}`` "
-"родительского шаблона всегда используется как значение по умолчанию."
 
-# 6cd2b627ce5f441cb716d4be3604a489
-#: ../../topics/templates.txt:375
+#: ../../topics/templates.txt:637
 msgid ""
-"You can use as many levels of inheritance as needed. One common way of using "
-"inheritance is the following three-level approach:"
+":class:`django.template.backends.django.DjangoTemplates` is a thin wrapper "
+"adapting :class:`django.template.Engine` to Django's template backend API."
 msgstr ""
-"Вы можете использовать столько уровней наследование, сколько вам нужно. Один "
-"из распространенных способов использовать наследование -- это трехуровневый "
-"подход:"
 
-# 5ad81e4a174349fbbdd3eff0bc03c3b6
-#: ../../topics/templates.txt:378
-msgid ""
-"Create a ``base.html`` template that holds the main look-and-feel of your "
-"site."
-msgstr ""
-"Создать шаблон ``base.html``, который отображает основной вид вашего сайта."
-
-# c98d15d3d34540b2a9301e705ff5c0f0
-#: ../../topics/templates.txt:380
-msgid ""
-"Create a ``base_SECTIONNAME.html`` template for each \"section\" of your "
-"site. For example, ``base_news.html``, ``base_sports.html``. These templates "
-"all extend ``base.html`` and include section-specific styles/design."
-msgstr ""
-"Создать шаблон ``base_SECTIONNAME.html`` для каждого \"раздела\" вашего "
-"сайта. Например, ``base_news.html``, ``base_sports.html``. Все эти шаблоны "
-"наследуют ``base.html`` и включают стили и дизайн специфические для "
-"конкретного раздела."
-
-# d9124e875c514688bdf8635b2e759aab
-#: ../../topics/templates.txt:384
-msgid ""
-"Create individual templates for each type of page, such as a news article or "
-"blog entry. These templates extend the appropriate section template."
-msgstr ""
-"Создание шаблона для каждого типа страницы, такие как новость или запись в "
-"блоге. Эти шаблоны наследуют соответствующий шаблон раздела."
-
-# 74e11a742c0b4b7696acb714f5d5940b
-#: ../../topics/templates.txt:388
-msgid ""
-"This approach maximizes code reuse and makes it easy to add items to shared "
-"content areas, such as section-wide navigation."
-msgstr ""
-"Такой подход позволяет максимально использовать существующий код и легко "
-"добавлять элементы, такие как элементы навигации специфические для каждого "
-"раздела, в общие блоки шаблона."
-
-# ff3ac870f9d54ae8b06464c6fa7560ea
-#: ../../topics/templates.txt:391
-msgid "Here are some tips for working with inheritance:"
-msgstr "Вот несколько советов по работе с наследованием:"
-
-# 65d489883ec546c786a4379643e41e4c
-#: ../../topics/templates.txt:393
-msgid ""
-"If you use :ttag:`{% extends %}<extends>` in a template, it must be the "
-"first template tag in that template. Template inheritance won't work, "
-"otherwise."
-msgstr ""
-"Если вы используете :ttag:`{% extends %}<extends>`, он должен быть первым "
-"тегом в шаблоне. Иначе наследование не будет работать."
-
-# 3bb1d212e3b645d7a5bc718ac79ed746
-#: ../../topics/templates.txt:396
-msgid ""
-"More :ttag:`{% block %}<block>` tags in your base templates are better. "
-"Remember, child templates don't have to define all parent blocks, so you can "
-"fill in reasonable defaults in a number of blocks, then only define the ones "
-"you need later. It's better to have more hooks than fewer hooks."
-msgstr ""
-"Чем больше тегов :ttag:`{% block %}<block>` в вашем шаблоне, тем лучше. "
-"Помните, дочерний шаблон не обязан определять все блоки родительского, вы "
-"можете указать значение по умолчанию для всех блоков, а затем определить в "
-"дочернем шаблоне только те, которые необходимы. Лучше иметь больше \"hooks"
-"\", чем меньше \"hooks\"."
-
-# 20e5ce4f9cd04acd9bb8a39a6471473c
-#: ../../topics/templates.txt:401
-msgid ""
-"If you find yourself duplicating content in a number of templates, it "
-"probably means you should move that content to a ``{% block %}`` in a parent "
-"template."
-msgstr ""
-"Если вы дублируете содержимое в нескольких шаблонах, возможно вы должны "
-"перенести его в тег ``{% block %}`` родительского шаблона."
-
-# 464196833fc74e5eb819a0d618398397
-#: ../../topics/templates.txt:405
-msgid ""
-"If you need to get the content of the block from the parent template, the "
-"``{{ block.super }}`` variable will do the trick. This is useful if you want "
-"to add to the contents of a parent block instead of completely overriding "
-"it. Data inserted using ``{{ block.super }}`` will not be automatically "
-"escaped (see the `next section`_), since it was already escaped, if "
-"necessary, in the parent template."
-msgstr ""
-"Если вам необходимо содержимое блока родительского шаблона, используйте "
-"переменную ``{{ block.super }}``. Эта полезно, если вам необходимо дополнить "
-"содержимое родительского блока, а не полностью переопределить его. "
-"Содержимое ``{{ block.super }}`` не будет автоматически экранировано "
-"(смотрите :ref:`раздел ниже <automatic-html-escaping>`), так как оно уже "
-"было экранировано, при необходимости, в родительском шаблоне."
-
-# 825c11434b42412d8992b2462ea6f9b8
-#: ../../topics/templates.txt:412
-msgid ""
-"For extra readability, you can optionally give a *name* to your ``{% "
-"endblock %}`` tag. For example::"
-msgstr ""
-"Для ясности, вы можете добавить *название* вашему тегу ``{% endblock %}``. "
-"Например::"
-
-# 91669ac2e8ba434a9001ccef3ddd0e13
-#: ../../topics/templates.txt:419
-msgid ""
-"In larger templates, this technique helps you see which ``{% block %}`` tags "
-"are being closed."
-msgstr ""
-"В больших шаблонах такой подход поможет вам увидеть какой тег ``{% block %}"
-"`` был закрыт."
-
-# 05d84092ba2d442a9b5cb3fa076c46e5
-#: ../../topics/templates.txt:422
-msgid ""
-"Finally, note that you can't define multiple :ttag:`block` tags with the "
-"same name in the same template. This limitation exists because a block tag "
-"works in \"both\" directions. That is, a block tag doesn't just provide a "
-"hole to fill -- it also defines the content that fills the hole in the "
-"*parent*. If there were two similarly-named :ttag:`block` tags in a "
-"template, that template's parent wouldn't know which one of the blocks' "
-"content to use."
-msgstr ""
-"Вы не можете определить несколько тегов :ttag:`block` с одним названием в "
-"одном шаблоне. Такое ограничение существует потому, что тег :ttag:`block` "
-"работает в \"оба\" направления. :ttag:`block` не просто предоставляет "
-"\"полость\" в шаблоне -- он определяет содержимое, которое заполняет "
-"\"полость\" в *родительском шаблоне*. Если бы было несколько тегов :ttag:"
-"`block` с одним названием, родительский шаблон не знал содержимое какого "
-"блока использовать."
-
-# af289496010943e9a9569dcd732824d3
-#: ../../topics/templates.txt:433
-msgid "Automatic HTML escaping"
-msgstr "Автоматическое экранирование HTML"
-
-# 61e37993781e46abb74e831f1078a8d0
-#: ../../topics/templates.txt:435
-msgid ""
-"When generating HTML from templates, there's always a risk that a variable "
-"will include characters that affect the resulting HTML. For example, "
-"consider this template fragment::"
-msgstr ""
-"Создавая HTML используя шаблон, есть риск, что переменная может содержать "
-"символы, которые повлияют на структуру полученного HTML. Например, "
-"рассмотрим такой фрагмент::"
-
-# 7779f35b760249f8bcdd44857ac3a973
-#: ../../topics/templates.txt:441
-msgid ""
-"At first, this seems like a harmless way to display a user's name, but "
-"consider what would happen if the user entered their name as this::"
-msgstr ""
-"На первый взгляд это кажется безобидным способом отображения имени "
-"пользователя, но давайте посмотрим, что произойдет, если пользователь выбрал "
-"такое имя:::"
-
-# cb4b76ad8fbf4fd6905012c84ba26823
-#: ../../topics/templates.txt:446
-msgid "With this name value, the template would be rendered as::"
-msgstr "С таким именем шаблон вернет::"
-
-# ca040842b8d943a2b2b4d9a7d136085e
-#: ../../topics/templates.txt:450
-msgid "...which means the browser would pop-up a JavaScript alert box!"
-msgstr "...что приведет к отображению alert-окна JavaScript!"
-
-# fda644aefd5f4c4290f75cbea670ade4
-#: ../../topics/templates.txt:452
-msgid "Similarly, what if the name contained a ``'<'`` symbol, like this?"
-msgstr "Аналогично, что если имя содержит символ ``'<'``?"
-
-# 73a9fd3bacdb4f30bf4204270248062a
-#: ../../topics/templates.txt:458
-msgid "That would result in a rendered template like this::"
-msgstr "Шаблон вернет такое содержимое::"
-
-# bb6114e1f8a84f0886848c0f3117320c
-#: ../../topics/templates.txt:462
-msgid ""
-"...which, in turn, would result in the remainder of the Web page being "
-"bolded!"
-msgstr ""
-"...в результате оставшееся содержимое страницы будет выделено полужирным!"
-
-# f3464b2288854e18a8b0f3885428bd83
-#: ../../topics/templates.txt:464
-msgid ""
-"Clearly, user-submitted data shouldn't be trusted blindly and inserted "
-"directly into your Web pages, because a malicious user could use this kind "
-"of hole to do potentially bad things. This type of security exploit is "
-"called a `Cross Site Scripting`_ (XSS) attack."
-msgstr ""
-"Очевидно, пользовательским данными нельзя слепо доверять и вставлять "
-"непосредственно в содержимое страницы, так как злоумышленники могут "
-"использовать это с плохими намерениями. Такой тип уязвимости называется "
-"`Cross Site Scripting <http://ru.wikipedia.org/wiki/%D0%9C"
-"%D0%B5%D0%B6%D1%81%D0%B0%D0%B9%D1%82%D0%BE%D0%B2%D1%8B%D0%B9_%D1%81%D0%BA"
-"%D1%80%D0%B8%D0%BF%D1%82%D0%B8%D0%BD%D0%B3>`_ (XSS) атакой."
-
-# e2489e5fef944e68a1b7868b233139ab
-#: ../../topics/templates.txt:469
-msgid "To avoid this problem, you have two options:"
-msgstr "Чтобы избежать этой проблемы, у вас есть два варианта:"
-
-# 7c268055785344208ab6b0047d07eff0
-#: ../../topics/templates.txt:471
-msgid ""
-"One, you can make sure to run each untrusted variable through the :tfilter:"
-"`escape` filter (documented below), which converts potentially harmful HTML "
-"characters to unharmful ones. This was the default solution in Django for "
-"its first few years, but the problem is that it puts the onus on *you*, the "
-"developer / template author, to ensure you're escaping everything. It's easy "
-"to forget to escape data."
-msgstr ""
-"Первый, вы можете применять ко всем сомнительным переменным фильтр :tfilter:"
-"`escape` (описанный далее), который преобразует потенциально опасные HTML "
-"символы в безопасные. Такое решение было принятым в первых версиях Django, "
-"но проблема в том, что оно возлагает бремя ответственности за безопасность "
-"на *вас*, разработчика / автора шаблона. Легко забыть экранировать "
-"переменную."
-
-# 9a6f99a3008e4c448d9362048e1ddf27
-#: ../../topics/templates.txt:478
-msgid ""
-"Two, you can take advantage of Django's automatic HTML escaping. The "
-"remainder of this section describes how auto-escaping works."
-msgstr ""
-"Второй, вы можете позволить Django автоматически экранировать HTML. "
-"Оставшаяся часть этого раздела описывает, как автоматическое экранирование "
-"работает."
-
-# a2c6625e0d9c4eaeaf0e0ad6ba1c4044
-#: ../../topics/templates.txt:481
-msgid ""
-"By default in Django, every template automatically escapes the output of "
-"every variable tag. Specifically, these five characters are escaped:"
-msgstr ""
-"По-умолчанию в Django, каждый шаблон экранирует все переменные. В частности "
-"выполняются такие замены:"
-
-# ef39136807bb41f68f1bb31100c3f4f6
-#: ../../topics/templates.txt:485
-msgid "``<`` is converted to ``&lt;``"
-msgstr "``<`` заменяется на ``&lt;``"
-
-# f6bf91e855a540478a714b55afce1026
-#: ../../topics/templates.txt:486
-msgid "``>`` is converted to ``&gt;``"
-msgstr "``>`` заменяется на ``&gt;``"
-
-# 16e820ce340943a8a9c54ee47a851c29
-#: ../../topics/templates.txt:487
-msgid "``'`` (single quote) is converted to ``&#39;``"
-msgstr "``'`` (одинарная кавычка) заменяется на ``&#39;``"
-
-# ca3b7e4f5ce4484b8d8615f01049c57b
-#: ../../topics/templates.txt:488
-msgid "``\"`` (double quote) is converted to ``&quot;``"
-msgstr "``\"`` (двойная кавычка) заменяется на ``&quot;``"
-
-# 1429057ff3a345b8a9d806ccfb2969c3
-#: ../../topics/templates.txt:489
-msgid "``&`` is converted to ``&amp;``"
-msgstr "``&`` заменяется на ``&amp;``"
-
-# 4ce97e2e0eef404eb910b0526f3cadfa
-#: ../../topics/templates.txt:491
-msgid ""
-"Again, we stress that this behavior is on by default. If you're using "
-"Django's template system, you're protected."
-msgstr ""
-"Опять же, мы подчеркиваем, что такое поведение используется по умолчанию. "
-"Если вы используете систему шаблонов Django, вы в безопасности."
-
-# dfd5ad7103ec4051aea2c8b45447a3b7
-#: ../../topics/templates.txt:497
-msgid "How to turn it off"
-msgstr "Как это отключить"
-
-# 717c058f5dec40acbc5bc30ea75cd31c
-#: ../../topics/templates.txt:499
-msgid ""
-"If you don't want data to be auto-escaped, on a per-site, per-template level "
-"or per-variable level, you can turn it off in several ways."
-msgstr ""
-"Если вы не хотите, чтобы данные автоматически экранировались, на уровне "
-"сайта, шаблона или одной переменной, вы можете отключить это несколькими "
-"способами."
-
-# 3ea07dba136443238fc2df6cad2902fe
-#: ../../topics/templates.txt:502
-msgid ""
-"Why would you want to turn it off? Because sometimes, template variables "
-"contain data that you *intend* to be rendered as raw HTML, in which case you "
-"don't want their contents to be escaped. For example, you might store a blob "
-"of HTML in your database and want to embed that directly into your template. "
-"Or, you might be using Django's template system to produce text that is "
-"*not* HTML -- like an email message, for instance."
-msgstr ""
-"Зачем вам отключить экранирование? Потому что в некоторых ситуациях, вы "
-"*намеренно* добавляете HTML в переменную, и хотите, чтобы он выводился без "
-"экранирования. Например, вы можете хранить HTML в базе данных и хотите "
-"непосредственно вставить его в содержимое страницы. Или шаблоны Django "
-"используются для создания текста, который *не* является HTML -- например "
-"email."
-
-# c040440af6354e7f89d2f715b4ee7946
-#: ../../topics/templates.txt:510
-msgid "For individual variables"
-msgstr "Для отдельных переменных"
-
-# 30ef4d501ec34d25845715a731376e9a
-#: ../../topics/templates.txt:512
-msgid ""
-"To disable auto-escaping for an individual variable, use the :tfilter:`safe` "
-"filter::"
-msgstr ""
-"Для отключения авто-экранирования для отдельных переменных, используйте "
-"фильтр :tfilter:`safe`::"
-
-# 1d5bfe3a8c1b4e49915f1d9ffbbb13e7
-#: ../../topics/templates.txt:518
-msgid ""
-"Think of *safe* as shorthand for *safe from further escaping* or *can be "
-"safely interpreted as HTML*. In this example, if ``data`` contains "
-"``'<b>'``, the output will be::"
-msgstr ""
-"Думайте о :tfilter:`safe` как сокращение *\"обезопасить от последующего "
-"экранирования\"* или *\"может быть смело интерпретировано как HTML\"*. В "
-"этом примере, если ``data`` содержит ``'<b>'``, будет выведено::"
-
-# 5d76a9fb7da64e6f873f4c7288aa6004
-#: ../../topics/templates.txt:526
-msgid "For template blocks"
-msgstr "Для блоков шаблона"
-
-# ebfcbddf66d347f2bad1632847caf084
-#: ../../topics/templates.txt:528
-msgid ""
-"To control auto-escaping for a template, wrap the template (or just a "
-"particular section of the template) in the :ttag:`autoescape` tag, like so::"
-msgstr ""
-"Для контроля авто-экранирования в шаблоне, \"оберните\" шаблон (или часть "
-"шаблона) тегом :ttag:`autoescape`, например::"
-
-# f11304f6313745bfab986c1560b9926a
-#: ../../topics/templates.txt:535
-msgid ""
-"The :ttag:`autoescape` tag takes either ``on`` or ``off`` as its argument. "
-"At times, you might want to force auto-escaping when it would otherwise be "
-"disabled. Here is an example template::"
-msgstr ""
-"Тег :ttag:`autoescape` в качестве аргумента принимает ``on`` или ``off``. В "
-"некоторых случаях, вы захотите включить экранирование в шаблоне, в котором "
-"оно было отключено. Например::"
-
-# 0c31d7de36ec45b68ff617b47a501653
-#: ../../topics/templates.txt:550
-msgid ""
-"The auto-escaping tag passes its effect onto templates that extend the "
-"current one as well as templates included via the :ttag:`include` tag, just "
-"like all block tags. For example:"
-msgstr ""
-"Тег :ttag:`autoescape` распространяет свой эффект на шаблоны, которые "
-"наследуют текущий, и на включенные тегом  :ttag:`include` шаблоны, как и "
-"другие блочные теги. Например::"
-
-# 9816b544495a4ae9bfe8434296f27edb
-#: ../../topics/templates.txt:570
-msgid ""
-"Because auto-escaping is turned off in the base template, it will also be "
-"turned off in the child template, resulting in the following rendered HTML "
-"when the ``greeting`` variable contains the string ``<b>Hello!</b>``::"
-msgstr ""
-"Так как авто-экранирование отключено в базовом шаблоне, оно будет отключено "
-"и в дочернем шаблоне. Если переменная ``greeting`` равна ``<b>Hello!</b>``, "
-"будет выведено::"
-
-# 74505fbc46e243be9f6dc16fc8c9f47d
-#: ../../topics/templates.txt:578
-msgid "Notes"
-msgstr "Заметки"
-
-# 78c9fcf6ca4c44a8965945a06e480e83
-#: ../../topics/templates.txt:580
-msgid ""
-"Generally, template authors don't need to worry about auto-escaping very "
-"much. Developers on the Python side (people writing views and custom "
-"filters) need to think about the cases in which data shouldn't be escaped, "
-"and mark data appropriately, so things Just Work in the template."
-msgstr ""
-"Обычно, авторы шаблонов не должны волноваться про авто-экранирование. "
-"Разработчики на стороне Python (те, кто создает представления и фильтры) "
-"должны определять в каких случаях данные не должны экранироваться и помечать "
-"их соответствующим образом, так что все будет `просто работать` в шаблонах."
-
-# 3adf79c9439045a2bf357116d94536d5
-#: ../../topics/templates.txt:585
-msgid ""
-"If you're creating a template that might be used in situations where you're "
-"not sure whether auto-escaping is enabled, then add an :tfilter:`escape` "
-"filter to any variable that needs escaping. When auto-escaping is on, "
-"there's no danger of the :tfilter:`escape` filter *double-escaping* data -- "
-"the :tfilter:`escape` filter does not affect auto-escaped variables."
-msgstr ""
-"Если вы создаете шаблон, который может использовать как с включенным авто-"
-"экранированием так и без него, добавляйте фильтр :tfilter:`escape` для "
-"каждой переменной, которую нужно экранировать. При включенном авто-"
-"экранировании фильтр :tfilter:`escape` не выполнит замену символов повторно."
-
-# 80abbf16c49b4e76a9b8707eeaacd4a4
-#: ../../topics/templates.txt:594
-msgid "String literals and automatic escaping"
-msgstr "Строки и автоматическое экранирование"
-
-# e16e132ffa21439a83c41ee682b1fadc
-#: ../../topics/templates.txt:596
-msgid "As we mentioned earlier, filter arguments can be strings::"
-msgstr "Как уже упоминалось выше, аргументом фильтра может быть строка::"
-
-# aa9051f5a5f74618b288a3dbf7b4528c
-#: ../../topics/templates.txt:600
-msgid ""
-"All string literals are inserted **without** any automatic escaping into the "
-"template -- they act as if they were all passed through the :tfilter:`safe` "
-"filter. The reasoning behind this is that the template author is in control "
-"of what goes into the string literal, so they can make sure the text is "
-"correctly escaped when the template is written."
-msgstr ""
-"Все строки в шаблоне вставляются **без** автоматического экранирования -- "
-"они обрабатываются как строки, к которым применили фильтр :tfilter:`safe`. "
-"Причина этого состоит в том, что автор шаблона контролирует содержимое этих "
-"строк и самостоятельно может убедиться при создании шаблона, что они не "
-"содержат не безопасных символов."
-
-# a70dfd2f9e424c5fa70c5eddc920ad4c
-#: ../../topics/templates.txt:606
-msgid "This means you would write ::"
-msgstr "Это означает, чтобы вы должны писать::"
-
-# 7654fae00eb84ffe87cb70680ebf331b
-#: ../../topics/templates.txt:610
-msgid "...rather than::"
-msgstr "...вместо::"
-
-# d980614a2ed5486cb04a4d5b9ee62e04
-#: ../../topics/templates.txt:614
-msgid ""
-"This doesn't affect what happens to data coming from the variable itself. "
-"The variable's contents are still automatically escaped, if necessary, "
-"because they're beyond the control of the template author."
-msgstr ""
-"Это правило не распространяется на переменные, которые используются в "
-"качестве аргументов, так как автор шаблоне не может контролировать "
-"содержимое этих переменных."
-
-# 2c992443237d42628791b5ea4cdef854
-#: ../../topics/templates.txt:621
-msgid "Accessing method calls"
-msgstr "Вызов методов"
-
-# 026c75c58f34405ba5e59f9fddff44a8
-#: ../../topics/templates.txt:623
-msgid ""
-"Most method calls attached to objects are also available from within "
-"templates. This means that templates have access to much more than just "
-"class attributes (like field names) and variables passed in from views. For "
-"example, the Django ORM provides the :ref:`\"entry_set\"<topics-db-queries-"
-"related>` syntax for finding a collection of objects related on a foreign "
-"key. Therefore, given a model called \"comment\" with a foreign key "
-"relationship to a model called \"task\" you can loop through all comments "
-"attached to a given task like this::"
-msgstr ""
-"Вызов большинства методов объектов также доступен в шаблоне. Это означает, "
-"что шаблон имеет доступ не только к атрибутам классов (например, название "
-"поля) и переменных переданных из представлениях. Например, Django ORM "
-"предоставляет :ref:`\"entry_set\"<topics-db-queries-related>` атрибут для "
-"получения связанных через внешний ключ объектов. Следовательно, для модели "
-"комментариев(\"comment\") с внешним ключом на модель задач(\"task\") вы "
-"можете обратиться в цикле ко всем связанным комментариям переданного объекта "
-"задачи::"
-
-# 58fee8333363456888033bb6e9b70912
-#: ../../topics/templates.txt:635
-msgid ""
-"Similarly, :doc:`QuerySets</ref/models/querysets>` provide a ``count()`` "
-"method to count the number of objects they contain. Therefore, you can "
-"obtain a count of all comments related to the current task with::"
-msgstr ""
-"Также, :doc:`QuerySets</ref/models/querysets>` предоставляет метод "
-"``count()`` для получения количества объектов. Следовательно, вы можете "
-"получить количество комментариев связанных с конкретной задачей::"
-
-# 61c3299bc4fc4e4b9a54ae452ccd74ee
+# 95a64c65987a4095b4e869c612e78ccb
 #: ../../topics/templates.txt:641
-msgid ""
-"And of course you can easily access methods you've explicitly defined on "
-"your own models:"
-msgstr "И конечно вы можете использовать методы вашей модели::"
+#, fuzzy
+msgid "Template"
+msgstr "Шаблоны"
 
-# b4ced439160e483eb7b6cef1603ff964
-#: ../../topics/templates.txt:656
+#: ../../topics/templates.txt:643
 msgid ""
-"Because Django intentionally limits the amount of logic processing available "
-"in the template language, it is not possible to pass arguments to method "
-"calls accessed from within templates. Data should be calculated in views, "
-"then passed to templates for display."
+":class:`django.template.Template` represents a compiled template. Templates "
+"are obtained with :meth:`Engine.get_template() <django.template.Engine."
+"get_template>` or :meth:`Engine.from_string() <django.template.Engine."
+"from_string>`"
 msgstr ""
-"Так как Django намеренно ограничивает определение логики проекта в шаблоне, "
-"передавать аргументы при вызове метода в шаблоне нельзя. Данные должны "
-"вычисляться в представлении и передаваться в шаблон для отображения."
 
-# 99065e3a3719449681326a140d52999f
-#: ../../topics/templates.txt:664
-msgid "Custom tag and filter libraries"
-msgstr "Собственные библиотеки тегов и фильтров"
-
-# 4a586a7486e54832a6895584032d6fea
-#: ../../topics/templates.txt:666
+#: ../../topics/templates.txt:648
 msgid ""
-"Certain applications provide custom tag and filter libraries. To access them "
-"in a template, use the :ttag:`load` tag::"
+"Likewise ``django.template.backends.django.Template`` is a thin wrapper "
+"adapting :class:`django.template.Template` to the common template API."
 msgstr ""
-"Некоторые приложения предоставляют собственные библиотеки тегов и фильтров. "
-"Чтобы использовать их в шаблоне, используйте тег :ttag:`load`::"
 
-# 6ac26bfb05ac49b99b8f98ed9fab8a28
-#: ../../topics/templates.txt:673
+#: ../../topics/templates.txt:652
+msgid "Context"
+msgstr ""
+
+#: ../../topics/templates.txt:654
 msgid ""
-"In the above, the :ttag:`load` tag loads the ``comments`` tag library, which "
-"then makes the ``comment_form`` tag available for use. Consult the "
-"documentation area in your admin to find the list of custom libraries in "
-"your installation."
+":class:`django.template.Context` holds some metadata in addition to the "
+"context data. It is passed to :meth:`Template.render() <django.template."
+"Template.render>` for rendering a template."
 msgstr ""
-"В это примере, тег :ttag:`load` загружает библиотеку ``comments``, которая "
-"предоставляет тег ``comment_form``. В разделе документации вашего интерфейса "
-"администратора вы можете найти список всех установленных библиотек."
 
-# d9bfd6e9a8ff4150b2a1e2dc01d96109
-#: ../../topics/templates.txt:677
+#: ../../topics/templates.txt:658
 msgid ""
-"The :ttag:`load` tag can take multiple library names, separated by spaces. "
-"Example::"
+":class:`django.template.RequestContext` is a subclass of :class:`~django."
+"template.Context` that stores the current :class:`~django.http.HttpRequest` "
+"and runs template context processors."
 msgstr ""
-"Тег :ttag:`load` может принимать названия нескольких библиотек, разделенные "
-"пробелом. Например::"
 
-# 8430e73cf0524ee490e457590f276827
+#: ../../topics/templates.txt:662
+msgid ""
+"The common API doesn't have an equivalent concept. Context data is passed in "
+"a plain :class:`dict` and the current :class:`~django.http.HttpRequest` is "
+"passed separately if needed."
+msgstr ""
+
+#: ../../topics/templates.txt:667
+msgid "Loaders"
+msgstr ""
+
+#: ../../topics/templates.txt:669
+msgid ""
+"Template loaders are responsible for locating templates, loading them, and "
+"returning :class:`~django.template.Template` objects."
+msgstr ""
+
+#: ../../topics/templates.txt:672
+msgid ""
+"Django provides several :ref:`built-in template loaders <template-loaders>` "
+"and supports :ref:`custom template loaders <custom-template-loaders>`."
+msgstr ""
+
+#: ../../topics/templates.txt:676
+msgid "Context processors"
+msgstr ""
+
+#: ../../topics/templates.txt:678
+msgid ""
+"Context processors are functions that receive the current :class:`~django."
+"http.HttpRequest` as an argument and return a :class:`dict` of data to be "
+"added to the rendering context."
+msgstr ""
+
 #: ../../topics/templates.txt:682
 msgid ""
-"See :doc:`/howto/custom-template-tags` for information on writing your own "
-"custom template libraries."
+"Their main use is to add common data shared by all templates to the context "
+"without repeating code in every view."
 msgstr ""
-"Смотрите раздел :doc:`/howto/custom-template-tags`, чтобы узнать как "
-"создавать собственные библиотеки для шаблонов."
+
+#: ../../topics/templates.txt:685
+msgid ""
+"Django provides many :ref:`built-in context processors <context-"
+"processors>`. Implementing a custom context processor is as simple as "
+"defining a function."
+msgstr ""
+
+# 338bc381cbe84a36a6237088e1b1a4af
+#~ msgid ""
+#~ "This document explains the language syntax of the Django template system. "
+#~ "If you're looking for a more technical perspective on how it works and "
+#~ "how to extend it, see :doc:`/ref/templates/api`."
+#~ msgstr ""
+#~ "Этот раздел описывает синтаксис языка шаблонов Django. Если вы ищете "
+#~ "технически подробности как он работает и как расширять его, смотрите :doc:"
+#~ "`/ref/templates/api`."
+
+# 54f37eb253234e3ea62bddaa6549c3e4
+#~ msgid ""
+#~ "Django's template language is designed to strike a balance between power "
+#~ "and ease. It's designed to feel comfortable to those used to working with "
+#~ "HTML. If you have any exposure to other text-based template languages, "
+#~ "such as Smarty_ or CheetahTemplate_, you should feel right at home with "
+#~ "Django's templates."
+#~ msgstr ""
+#~ "Язык шаблонов Django представляет баланс между возможностями и простотой. "
+#~ "Он создавался, чтобы быть удобным для пользователей HTML. Если у вас есть "
+#~ "опыт работы с другими языками текстовых шаблонов, таких как Smarty_ или "
+#~ "CheetahTemplate_, вы должны себя чувствовать как дома с шаблонами Django."
+
+# 2ef291f17dbc479ea5e8ea15022546d8
+# 768873a9c8c3447cbb52bbcb1cd8f8a6
+#~ msgid "Philosophy"
+#~ msgstr "Философия"
+
+# 7dd5c2828d124882b34d64fc1151c90c
+#~ msgid ""
+#~ "If you have a background in programming, or if you're used to languages "
+#~ "which mix programming code directly into HTML, you'll want to bear in "
+#~ "mind that the Django template system is not simply Python embedded into "
+#~ "HTML. This is by design: the template system is meant to express "
+#~ "presentation, not program logic."
+#~ msgstr ""
+#~ "Если у вас есть опыт программирования или вы использовали PHP, который "
+#~ "позволяет интегрировать программный код прямо HTML, вам стоит помнить, "
+#~ "что система шаблонов Django -- это не просто Python встроенный в HTML. "
+#~ "Это сделано намеренно: шаблоны предназначены для представления, а не для "
+#~ "реализации логики программы."
+
+# ab34b638ed6d4f3a876bcccddd82b4f7
+#~ msgid ""
+#~ "The Django template system provides tags which function similarly to some "
+#~ "programming constructs -- an :ttag:`if` tag for boolean tests, a :ttag:"
+#~ "`for` tag for looping, etc. -- but these are not simply executed as the "
+#~ "corresponding Python code, and the template system will not execute "
+#~ "arbitrary Python expressions. Only the tags, filters and syntax listed "
+#~ "below are supported by default (although you can add :doc:`your own "
+#~ "extensions </howto/custom-template-tags>` to the template language as "
+#~ "needed)."
+#~ msgstr ""
+#~ "Шаблоны Django предоставляют теги, которые повторяют некоторые структуры "
+#~ "языка программирования -- тег :ttag:`if` для проверки на истинность, тег :"
+#~ "ttag:`for` для циклов, и др. -- но они не выполняются непосредственно как "
+#~ "код Python, и система шаблонов не будет выполнять произвольное выражение "
+#~ "Python. Только теги, фильтры и синтаксис, перечисленные ниже, "
+#~ "поддерживаются по умолчанию (хотя вы можете добавить :doc:`собственное "
+#~ "расширение </howto/custom-template-tags>` для языка шаблонов при "
+#~ "необходимости)."
+
+# d7e87bf68be94e87a5da384ee28a63ef
+#~ msgid ""
+#~ "A template is simply a text file. It can generate any text-based format "
+#~ "(HTML, XML, CSV, etc.)."
+#~ msgstr ""
+#~ "Шаблон это просто текстовый файл. Он позволяет создать любой текстовый "
+#~ "формат (HTML, XML, CSV, и др.)."
+
+# 0efad2a595dc40e0bc4eb4582b3e2fa8
+#~ msgid ""
+#~ "A template contains **variables**, which get replaced with values when "
+#~ "the template is evaluated, and **tags**, which control the logic of the "
+#~ "template."
+#~ msgstr ""
+#~ "Шаблон содержит **переменные**, которые будут заменены значениями при "
+#~ "выполнении шаблона, и **теги**, которые управляют логикой шаблона."
+
+# 65336cb59f2e4dfabf855ea8e0c88fd2
+#~ msgid ""
+#~ "Below is a minimal template that illustrates a few basics. Each element "
+#~ "will be explained later in this document."
+#~ msgstr ""
+#~ "Ниже приводится простой шаблон, который иллюстрирует некоторые основы. "
+#~ "Каждый элемент будет объяснен далее в этом разделе."
+
+# 8f01df6c6a6a47ab943ca7841df22c8c
+#~ msgid ""
+#~ "Why use a text-based template instead of an XML-based one (like Zope's "
+#~ "TAL)? We wanted Django's template language to be usable for more than "
+#~ "just XML/HTML templates. At World Online, we use it for emails, "
+#~ "JavaScript and CSV. You can use the template language for any text-based "
+#~ "format."
+#~ msgstr ""
+#~ "Зачем использовать текстовый шаблон, а не на основе XML (как TAL в Zope)? "
+#~ "Мы хотели, чтобы шаблоны Django были больше, чем просто XML/HTML шаблоны. "
+#~ "На World Online, мы используем их для email, JavaScript и CSV. Вы можете "
+#~ "использовать шаблоны для любого текстового формата."
+
+# 27d8a353303c4a39a9a6f19060f348c5
+#~ msgid "Oh, and one more thing: Making humans edit XML is sadistic!"
+#~ msgstr "Ах да, еще одно: заставлять людей редактировать XML -- это садизм!"
+
+# dd6987b4df5942dfa94a4f9fc7b6af4b
+#~ msgid ""
+#~ "Variables look like this: ``{{ variable }}``. When the template engine "
+#~ "encounters a variable, it evaluates that variable and replaces it with "
+#~ "the result. Variable names consist of any combination of alphanumeric "
+#~ "characters and the underscore (``\"_\"``). The dot (``\".\"``) also "
+#~ "appears in variable sections, although that has a special meaning, as "
+#~ "indicated below. Importantly, *you cannot have spaces or punctuation "
+#~ "characters in variable names.*"
+#~ msgstr ""
+#~ "Переменные выглядят таким образом: ``{{ variable }}``. Когда шаблон "
+#~ "встречает переменную, он вычисляет ее и заменяет результатом. Названия "
+#~ "переменных могут состоять из букв, цифр и нижнего подчеркивания(``\"_"
+#~ "\"``). Точку (``\".\"``) также можно использовать, но она имеет особый "
+#~ "смысл описанный ниже. Важно, *нельзя использовать пробелы и знаки "
+#~ "пунктуации в названии переменных.*"
+
+# 94fbd9e4c7cb404290161934bb965100
+#~ msgid "Use a dot (``.``) to access attributes of a variable."
+#~ msgstr "Используйте точку (``.``) для доступа к атрибутам переменной."
+
+# 25cbe35d544244f4b084422918fcdff8
+#~ msgid "Behind the scenes"
+#~ msgstr "За кадром"
+
+# cf89805da4474fdc80890ff5260e774b
+#~ msgid ""
+#~ "Technically, when the template system encounters a dot, it tries the "
+#~ "following lookups, in this order:"
+#~ msgstr ""
+#~ "Технически, когда шаблон встречает точку, он пытается получить значения в "
+#~ "таком порядке:"
+
+# a2197c683a4d49a6a53cd93ae13199d5
+#~ msgid "Dictionary lookup"
+#~ msgstr "Ключ словаря"
+
+# dd9a54e445104def8b4cbb8d95e8cc44
+#~ msgid "Attribute or method lookup"
+#~ msgstr "Атрибут или метод"
+
+# 84e4e3707a72476aa76b24717c4a8146
+#~ msgid "Numeric index lookup"
+#~ msgstr "Индекс списка"
+
+# 19e2e28027be42e1aa8642e4f868e7db
+#~ msgid ""
+#~ "If the resulting value is callable, it is called with no arguments. The "
+#~ "result of the call becomes the template value."
+#~ msgstr ""
+#~ "Если найден вызываемый объект(функция или метод), он будет вызван без "
+#~ "аргументов. Результат будет использоваться шаблоном как значение."
+
+# db188db83e9b492ca33955153e47181f
+#~ msgid ""
+#~ "This lookup order can cause some unexpected behavior with objects that "
+#~ "override dictionary lookup. For example, consider the following code "
+#~ "snippet that attempts to loop over a ``collections.defaultdict``::"
+#~ msgstr ""
+#~ "Это может приводить к неожиданным результатам с объектами, которые "
+#~ "переопределяют поиск по словарю. Например, рассмотрим следующий код, "
+#~ "который пытается выполнить цикл по ``collections.defaultdict``::"
+
+# 37364c19bd254f96a88726093d1db9d0
+#~ msgid ""
+#~ "Because dictionary lookup happens first, that behavior kicks in and "
+#~ "provides a default value instead of using the intended ``.iteritems()`` "
+#~ "method. In this case, consider converting to a dictionary first."
+#~ msgstr ""
+#~ "Так как поиск словаре происходит вперёд, такое поведение предоставляет "
+#~ "значение по умолчанию вместо использования метода ``.iteritems()``. В "
+#~ "данном случае, сначала рассмотрим преобразование в словарь."
+
+# 7a115c2e50194cc69b0f1d70a1346a27
+#~ msgid ""
+#~ "In the above example, ``{{ section.title }}`` will be replaced with the "
+#~ "``title`` attribute of the ``section`` object."
+#~ msgstr ""
+#~ "В примере выше, ``{{ section.title }}`` будет заменен на атрибут "
+#~ "``title`` объекта ``section``."
+
+# ba0cdd5e0b144067a45e90f29f0ec624
+#~ msgid ""
+#~ "If you use a variable that doesn't exist, the template system will insert "
+#~ "the value of the :setting:`TEMPLATE_STRING_IF_INVALID` setting, which is "
+#~ "set to ``''`` (the empty string) by default."
+#~ msgstr ""
+#~ "Если переменная не найдена, шаблон вставит значение из настройки :setting:"
+#~ "`TEMPLATE_STRING_IF_INVALID`, которая равна ``''`` (пустой строке) по-"
+#~ "умолчанию."
+
+# 8bd19adf676f49d5b677f04b09ccb7a3
+#~ msgid ""
+#~ "Note that \"bar\" in a template expression like ``{{ foo.bar }}`` will be "
+#~ "interpreted as a literal string and not using the value of the variable "
+#~ "\"bar\", if one exists in the template context."
+#~ msgstr ""
+#~ "Следует отметить, что \"bar\" в шаблонном выражении выглядит как ``{{ foo."
+#~ "bar }}`` и будет интерпретирован как строка. Если в шаблонном контексте "
+#~ "определена переменная с таким именем, то значение локальной переменной "
+#~ "\"bar\" будет проигнорировано."
+
+# 0fe29e1597bc4576bf8d9d5cb48dcbe1
+#~ msgid "You can modify variables for display by using **filters**."
+#~ msgstr "Вы можете изменить значение переменной используя **фильтры**."
+
+# b0209fc4074d46a596c794234e74ee7d
+#~ msgid ""
+#~ "Filters look like this: ``{{ name|lower }}``. This displays the value of "
+#~ "the ``{{ name }}`` variable after being filtered through the :tfilter:"
+#~ "`lower` filter, which converts text to lowercase. Use a pipe (``|``) to "
+#~ "apply a filter."
+#~ msgstr ""
+#~ "Фильтры выглядят таким образом: ``{{ name|lower }}``. Это выведет "
+#~ "значение переменной ``{{ name }}`` после применения фильтра :tfilter:"
+#~ "`lower` к нему, который преобразует значение в нижний регистр. "
+#~ "Используйте символ (``|``) для применения фильтра."
+
+# d5c9d37c690d4a2a837b40f3dd1ed88d
+#~ msgid ""
+#~ "Filters can be \"chained.\" The output of one filter is applied to the "
+#~ "next. ``{{ text|escape|linebreaks }}`` is a common idiom for escaping "
+#~ "text contents, then converting line breaks to ``<p>`` tags."
+#~ msgstr ""
+#~ "Можно использовать \"цепочку\" фильтров. Вывод одного фильтра "
+#~ "используется для другого. ``{{ text|escape|linebreaks }}`` обычно "
+#~ "применяется для экранирования текста, и замены переноса строки тегами "
+#~ "``<p>``."
+
+# 83cf676da9224ff5801ddbfbdad40bba
+#~ msgid ""
+#~ "Some filters take arguments. A filter argument looks like this: ``{{ bio|"
+#~ "truncatewords:30 }}``. This will display the first 30 words of the "
+#~ "``bio`` variable."
+#~ msgstr ""
+#~ "Некоторые фильтры принимают аргументы. Аргумент фильтра выглядит таким "
+#~ "образом: ``{{ bio|truncatewords:30 }}``. Этот код отобразит первые 30 "
+#~ "слов переменной ``bio``."
+
+# a66aecb77ae84b7c8b0f69a6d19527af
+#~ msgid ""
+#~ "Filter arguments that contain spaces must be quoted; for example, to join "
+#~ "a list with commas and spaced you'd use ``{{ list|join:\", \" }}``."
+#~ msgstr ""
+#~ "Аргументы фильтров, которые содержат пробелы, должны быть заключены в "
+#~ "кавычки. Например, чтобы объединить список пробелом и запятой, "
+#~ "используйте ``{{ list|join:\", \" }}``."
+
+# 10da6836ea97410e90a71c392bb0c885
+#~ msgid ""
+#~ "Django provides about thirty built-in template filters. You can read all "
+#~ "about them in the :ref:`built-in filter reference <ref-templates-builtins-"
+#~ "filters>`. To give you a taste of what's available, here are some of the "
+#~ "more commonly used template filters:"
+#~ msgstr ""
+#~ "Django предоставляет около тридцати встроенных фильтров. Вы можете "
+#~ "прочитать о них в :ref:`разделе о встроенных фильтрах <ref-templates-"
+#~ "builtins-filters>`. Чтобы дать вам представление о возможностях, вот "
+#~ "некоторые из наиболее часто используемых фильтров:"
+
+# dd5ed53839254cc1ac30f396c2f06e9f
+#~ msgid ":tfilter:`default`"
+#~ msgstr ":tfilter:`default`"
+
+# b70ade8790344ea1b641352e32d2d31c
+#~ msgid ""
+#~ "If a variable is false or empty, use given default. Otherwise, use the "
+#~ "value of the variable"
+#~ msgstr ""
+#~ "Если значение равно ``False``, будет использовано значение по умолчанию. "
+#~ "В противном случае используется значение."
+
+# 6bb84b800595413e9ab43ee3a5328351
+#~ msgid "For example::"
+#~ msgstr "Например::"
+
+# 7480af08eb0444e5bc78895573259d44
+#~ msgid ""
+#~ "If ``value`` isn't provided or is empty, the above will display "
+#~ "\"``nothing``\"."
+#~ msgstr ""
+#~ "Если ``value`` равно ``\"\"`` (пустая строка), будет выведено ``nothing``."
+
+# da94379ccb9f4c9d9fe3abcc76c9293e
+#~ msgid ":tfilter:`length`"
+#~ msgstr ":tfilter:`length`"
+
+# 90ce9dab4b9e4d3fa7e650fdb5144c8d
+#~ msgid ""
+#~ "Returns the length of the value. This works for both strings and lists; "
+#~ "for example::"
+#~ msgstr ""
+#~ "Возвращает размер значения. Работает для строк и списков, например::"
+
+# 67bcf20d7db3486dab8c29ed1fc8d667
+#~ msgid "If ``value`` is ``['a', 'b', 'c', 'd']``, the output will be ``4``."
+#~ msgstr "Если ``value`` равно ``['a', 'b', 'c', 'd']``, выведет ``4``."
+
+# a76a3a16f67e4ba4a7c393c679788b14
+#~ msgid ":tfilter:`striptags`"
+#~ msgstr ":tfilter:`striptags`"
+
+# 5d7a0dbe7e3b43e78d4baa609d7f64c8
+#~ msgid "Strips all [X]HTML tags. For example::"
+#~ msgstr "Удаляет все [X]HTML теги. Например::"
+
+# 07e20e060066445dae60c46478ee9859
+#~ msgid ""
+#~ "If ``value`` is ``\"<b>Joel</b> <button>is</button> a <span>slug</span>"
+#~ "\"``, the output will be ``\"Joel is a slug\"``."
+#~ msgstr ""
+#~ "Если ``value`` равно ``\"<b>Joel</b> <button>is</button> a <span>slug</"
+#~ "span>\"``, выведет ``\"Joel is a slug\"``."
+
+# 192621bec1a44a1fafeb028a92712923
+#~ msgid ""
+#~ "Again, these are just a few examples; see the :ref:`built-in filter "
+#~ "reference <ref-templates-builtins-filters>` for the complete list."
+#~ msgstr ""
+#~ "Опять же, это всего лишь несколько примеров; полный список смотрите :ref:"
+#~ "`раздел о встроенных фильтрах <ref-templates-builtins-filters>`."
+
+# 0b5e9162b74d446da8c488714bf54f63
+#~ msgid ""
+#~ "You can also create your own custom template filters; see :doc:`/howto/"
+#~ "custom-template-tags`."
+#~ msgstr ""
+#~ "Вы можете создать собственный фильтр; смотрите :doc:`/howto/custom-"
+#~ "template-tags`."
+
+# d2112403e8ee43ecbac7ba7ce9f5d19d
+# 6a62d74a8a114b09aa28afc7e17e0bd5
+#~ msgid ""
+#~ "Django's admin interface can include a complete reference of all template "
+#~ "tags and filters available for a given site. See :doc:`/ref/contrib/admin/"
+#~ "admindocs`."
+#~ msgstr ""
+#~ "Интерфейс администратора Django может предоставить полный список "
+#~ "доступных тегов и фильтров. Смотрите :doc:`/ref/contrib/admin/admindocs`."
+
+# ade3c60483524723a2d406d81467d1be
+#~ msgid ""
+#~ "Tags look like this: ``{% tag %}``. Tags are more complex than variables: "
+#~ "Some create text in the output, some control flow by performing loops or "
+#~ "logic, and some load external information into the template to be used by "
+#~ "later variables."
+#~ msgstr ""
+#~ "Теги выглядят таким образом: ``{% tag %}``. Теги сложнее чем переменные: "
+#~ "одни создают текст для вывода, влияют на выполнение используя условия и "
+#~ "циклы, другие загружают дополнительную информацию в шаблоны, чтобы "
+#~ "использовать ее далее через переменные."
+
+# 000111c65907405f89bce087e49326a5
+#~ msgid ""
+#~ "Some tags require beginning and ending tags (i.e. ``{% tag %} ... tag "
+#~ "contents ... {% endtag %}``)."
+#~ msgstr ""
+#~ "Некоторые теги требуют открывающий и закрывающий теги (например, ``{% tag "
+#~ "%} ... содержимое тега ... {% endtag %}``)."
+
+# 049efc7c33f8445aa9b86d0927bd4253
+#~ msgid ""
+#~ "Django ships with about two dozen built-in template tags. You can read "
+#~ "all about them in the :ref:`built-in tag reference <ref-templates-"
+#~ "builtins-tags>`. To give you a taste of what's available, here are some "
+#~ "of the more commonly used tags:"
+#~ msgstr ""
+#~ "Django содержит около двадцати встроенных тегов. Вы можете прочитать все "
+#~ "о них в :ref:`разделе о встроенных тегах <ref-templates-builtins-tags>`. "
+#~ "Чтобы дать вам представление о возможностях, вот некоторые из наиболее "
+#~ "часто используемых тегов:"
+
+# ce7ba1d0a6f7445f8d0c92da6082d4c8
+#~ msgid ":ttag:`for`"
+#~ msgstr ":ttag:`for`"
+
+# f02470727ab144538ddaa297e2113369
+#~ msgid ""
+#~ "Loop over each item in an array.  For example, to display a list of "
+#~ "athletes provided in ``athlete_list``::"
+#~ msgstr ""
+#~ "Цикл по каждому элементу массива.  Например, выведем список спортсменов "
+#~ "из ``athlete_list``::"
+
+# 8b53531238944f308d0c4e1a29f92a36
+#~ msgid ":ttag:`if`, ``elif``, and ``else``"
+#~ msgstr ":ttag:`if`, ``elif``, и ``else``"
+
+# 44157ac6b0894d2aa1b7ae97cd938ab3
+#~ msgid ""
+#~ "Evaluates a variable, and if that variable is \"true\" the contents of "
+#~ "the block are displayed::"
+#~ msgstr ""
+#~ "Вычисляет переменную и если она равна \"true\", выводит содержимое блока::"
+
+# b5b5bceafb8e488885d80742d6e77cb1
+#~ msgid ""
+#~ "In the above, if ``athlete_list`` is not empty, the number of athletes "
+#~ "will be displayed by the ``{{ athlete_list|length }}`` variable. "
+#~ "Otherwise, if ``athlete_in_locker_room_list`` is not empty, the message "
+#~ "\"Athletes should be out...\" will be displayed. If both lists are empty, "
+#~ "\"No athletes.\" will be displayed."
+#~ msgstr ""
+#~ "В примере выше, если ``athlete_list`` не пустой, будет отображено "
+#~ "количество спортсменов ``{{ athlete_list|length }}``. Иначе, если "
+#~ "``athlete_in_locker_room_list`` не пустой, будет показано сообщение "
+#~ "\"Athletes should be out...\". Если оба списка пустые, будет показано "
+#~ "сообщение \"No athletes.\"."
+
+# 63efcc2e1e2d4592bfc2ef4de29562b8
+#~ msgid ""
+#~ "You can also use filters and various operators in the :ttag:`if` tag::"
+#~ msgstr "Вы можете использовать фильтры и операторы в теге :ttag:`if` tag::"
+
+# 8a6c3fced7ef4b4f830af442f3aecc01
+#~ msgid ""
+#~ "While the above example works, be aware that most template filters return "
+#~ "strings, so mathematical comparisons using filters will generally not "
+#~ "work as you expect. :tfilter:`length` is an exception."
+#~ msgstr ""
+#~ "Несмотря на работоспособность вышеупомянутого примера, помните, что "
+#~ "большинство шаблонных фильтров возвращает строки, таким образом, "
+#~ "математическое сравнение результатов фильтров в общем случае будет "
+#~ "работать не так, как вы можете ожидать. Хотя : tfilter:`length` является "
+#~ "исключением."
+
+# ae55f950596a4548a48c8b8e3f184c3f
+#~ msgid ":ttag:`block` and :ttag:`extends`"
+#~ msgstr ":ttag:`block` и :ttag:`extends`"
+
+# 819c94a354a040adb26deceb65dd0749
+#~ msgid ""
+#~ "Set up `template inheritance`_ (see below), a powerful way of cutting "
+#~ "down on \"boilerplate\" in templates."
+#~ msgstr ""
+#~ "Определяет  :ref:`наследование шаблонов <template-inheritance>` (смотрите "
+#~ "ниже), эффективный способ использовать шаблоны."
+
+# b713d4c8d03f41e8862285a3ca24215d
+#~ msgid ""
+#~ "Again, the above is only a selection of the whole list; see the :ref:"
+#~ "`built-in tag reference <ref-templates-builtins-tags>` for the complete "
+#~ "list."
+#~ msgstr ""
+#~ "Опять же, это только несколько тегов; полный список смотрите в :ref:"
+#~ "`разделе о встроенных тегах <ref-templates-builtins-tags>`."
+
+# 9b5f027343cb4e43a8d4ecc508dac416
+#~ msgid ""
+#~ "You can also create your own custom template tags; see :doc:`/howto/"
+#~ "custom-template-tags`."
+#~ msgstr ""
+#~ "Вы можете создать собственный тег; смотрите :doc:`/howto/custom-template-"
+#~ "tags`."
+
+# f7cca4597a424b43af51c36a9804fef0
+#~ msgid ""
+#~ "To comment-out part of a line in a template, use the comment syntax: ``{# "
+#~ "#}``."
+#~ msgstr ""
+#~ "Чтобы закомментировать строку в шаблоне, используйте синтаксис "
+#~ "комментариев: ``{# #}``."
+
+# dbc1f319d437477087f300d2be853579
+#~ msgid "For example, this template would render as ``'hello'``::"
+#~ msgstr "Например, этот шаблон выведет ``'hello'``::"
+
+# 070199fbd8ea457da6be2d0a5d67a9bf
+#~ msgid ""
+#~ "A comment can contain any template code, invalid or not. For example::"
+#~ msgstr ""
+#~ "Комментарий может содержать любой код шаблона, правильный или нет. "
+#~ "Например::"
+
+# abcff62b7a704a09a532b9c18aee6853
+#~ msgid ""
+#~ "This syntax can only be used for single-line comments (no newlines are "
+#~ "permitted between the ``{#`` and ``#}`` delimiters). If you need to "
+#~ "comment out a multiline portion of the template, see the :ttag:`comment` "
+#~ "tag."
+#~ msgstr ""
+#~ "Этот синтаксис может быть использован только для однострочных "
+#~ "комментариев (нельзя использовать перенос строки между ``{#`` и ``#}``). "
+#~ "Если вам нужно закомментировать несколько строк, используйте тег :ttag:"
+#~ "`comment`."
+
+# 6ab4da952ddc458daa72ceee5385affb
+#~ msgid "Template inheritance"
+#~ msgstr "Наследование шаблонов"
+
+# 89ae1e5cdd7346daa96dbd88e81f3b4f
+#~ msgid ""
+#~ "The most powerful -- and thus the most complex -- part of Django's "
+#~ "template engine is template inheritance. Template inheritance allows you "
+#~ "to build a base \"skeleton\" template that contains all the common "
+#~ "elements of your site and defines **blocks** that child templates can "
+#~ "override."
+#~ msgstr ""
+#~ "Самая могущественная -- и, следовательно, самая сложная -- часть "
+#~ "механизма шаблонов Django -- это наследование шаблонов. Наследование "
+#~ "шаблонов позволяет создать вам шаблон-\"скелет\", который содержит "
+#~ "базовые элементы вашего сайта и определяет **блоки**, которые могут быть "
+#~ "переопределены дочерними шаблонами."
+
+# c2f1e9ea43bc4635b8d334bcad53fcc4
+#~ msgid ""
+#~ "It's easiest to understand template inheritance by starting with an "
+#~ "example::"
+#~ msgstr "Проще всего понять наследования шаблонов с помощью примера:"
+
+# f144259fe2e3434087e0cbb6ef6a8688
+#~ msgid ""
+#~ "This template, which we'll call ``base.html``, defines a simple HTML "
+#~ "skeleton document that you might use for a simple two-column page. It's "
+#~ "the job of \"child\" templates to fill the empty blocks with content."
+#~ msgstr ""
+#~ "Этот шаблон, который мы будем называть ``base.html``, определяет HTML "
+#~ "структуру документа, которую вы можете использовать для двух-колоночной "
+#~ "страницы. Задача \"дочернего\" шаблона заполнить пустые блоки содержимым."
+
+# 8684aa413a2745a494c8e083f9806e0f
+#~ msgid ""
+#~ "In this example, the :ttag:`block` tag defines three blocks that child "
+#~ "templates can fill in. All the :ttag:`block` tag does is to tell the "
+#~ "template engine that a child template may override those portions of the "
+#~ "template."
+#~ msgstr ""
+#~ "В этом примере, тег :ttag:`block` определяет три блока, которые может "
+#~ "переопределить дочерний шаблон. Все что делает тег :ttag:`block` -- "
+#~ "указывает механизму шаблонов, какая часть шаблона может быть "
+#~ "переопределена в дочернем шаблоне."
+
+# 7d4af052a16d4e149fc6b9b27ff9f3d5
+#~ msgid ""
+#~ "The :ttag:`extends` tag is the key here. It tells the template engine "
+#~ "that this template \"extends\" another template. When the template system "
+#~ "evaluates this template, first it locates the parent -- in this case, "
+#~ "\"base.html\"."
+#~ msgstr ""
+#~ "Ключевым здесь есть тег :ttag:`extends`. Он говорит механизму шаблонов, "
+#~ "что этот шаблон \"наследует\" другой шаблон. Когда механизм шаблонов "
+#~ "выполняет этот шаблон, первым делом находится родительский шаблон -- в "
+#~ "этом примере \"base.html\"."
+
+# 7ea85e9dff2048dcabcef386187c65ab
+#~ msgid ""
+#~ "At that point, the template engine will notice the three :ttag:`block` "
+#~ "tags in ``base.html`` and replace those blocks with the contents of the "
+#~ "child template. Depending on the value of ``blog_entries``, the output "
+#~ "might look like::"
+#~ msgstr ""
+#~ "Далее механизм шаблонов находит три тега :ttag:`block` в ``base.html`` и "
+#~ "заменяет их содержимым дочернего шаблона. В зависимости от значения "
+#~ "``blog_entries``, результат может выглядеть таким образом::"
+
+# a3741c0605b64fb08d6f4da55ab71501
+#~ msgid ""
+#~ "Note that since the child template didn't define the ``sidebar`` block, "
+#~ "the value from the parent template is used instead. Content within a ``{% "
+#~ "block %}`` tag in a parent template is always used as a fallback."
+#~ msgstr ""
+#~ "Так как дочерний шаблон не определяет блок ``sidebar``, будет "
+#~ "использовано значение из родительского шаблона. Содержимое тега ``{% "
+#~ "block %}`` родительского шаблона всегда используется как значение по "
+#~ "умолчанию."
+
+# 6cd2b627ce5f441cb716d4be3604a489
+#~ msgid ""
+#~ "You can use as many levels of inheritance as needed. One common way of "
+#~ "using inheritance is the following three-level approach:"
+#~ msgstr ""
+#~ "Вы можете использовать столько уровней наследование, сколько вам нужно. "
+#~ "Один из распространенных способов использовать наследование -- это "
+#~ "трехуровневый подход:"
+
+# 5ad81e4a174349fbbdd3eff0bc03c3b6
+#~ msgid ""
+#~ "Create a ``base.html`` template that holds the main look-and-feel of your "
+#~ "site."
+#~ msgstr ""
+#~ "Создать шаблон ``base.html``, который отображает основной вид вашего "
+#~ "сайта."
+
+# c98d15d3d34540b2a9301e705ff5c0f0
+#~ msgid ""
+#~ "Create a ``base_SECTIONNAME.html`` template for each \"section\" of your "
+#~ "site. For example, ``base_news.html``, ``base_sports.html``. These "
+#~ "templates all extend ``base.html`` and include section-specific styles/"
+#~ "design."
+#~ msgstr ""
+#~ "Создать шаблон ``base_SECTIONNAME.html`` для каждого \"раздела\" вашего "
+#~ "сайта. Например, ``base_news.html``, ``base_sports.html``. Все эти "
+#~ "шаблоны наследуют ``base.html`` и включают стили и дизайн специфические "
+#~ "для конкретного раздела."
+
+# d9124e875c514688bdf8635b2e759aab
+#~ msgid ""
+#~ "Create individual templates for each type of page, such as a news article "
+#~ "or blog entry. These templates extend the appropriate section template."
+#~ msgstr ""
+#~ "Создание шаблона для каждого типа страницы, такие как новость или запись "
+#~ "в блоге. Эти шаблоны наследуют соответствующий шаблон раздела."
+
+# 74e11a742c0b4b7696acb714f5d5940b
+#~ msgid ""
+#~ "This approach maximizes code reuse and makes it easy to add items to "
+#~ "shared content areas, such as section-wide navigation."
+#~ msgstr ""
+#~ "Такой подход позволяет максимально использовать существующий код и легко "
+#~ "добавлять элементы, такие как элементы навигации специфические для "
+#~ "каждого раздела, в общие блоки шаблона."
+
+# ff3ac870f9d54ae8b06464c6fa7560ea
+#~ msgid "Here are some tips for working with inheritance:"
+#~ msgstr "Вот несколько советов по работе с наследованием:"
+
+# 65d489883ec546c786a4379643e41e4c
+#~ msgid ""
+#~ "If you use :ttag:`{% extends %}<extends>` in a template, it must be the "
+#~ "first template tag in that template. Template inheritance won't work, "
+#~ "otherwise."
+#~ msgstr ""
+#~ "Если вы используете :ttag:`{% extends %}<extends>`, он должен быть первым "
+#~ "тегом в шаблоне. Иначе наследование не будет работать."
+
+# 3bb1d212e3b645d7a5bc718ac79ed746
+#~ msgid ""
+#~ "More :ttag:`{% block %}<block>` tags in your base templates are better. "
+#~ "Remember, child templates don't have to define all parent blocks, so you "
+#~ "can fill in reasonable defaults in a number of blocks, then only define "
+#~ "the ones you need later. It's better to have more hooks than fewer hooks."
+#~ msgstr ""
+#~ "Чем больше тегов :ttag:`{% block %}<block>` в вашем шаблоне, тем лучше. "
+#~ "Помните, дочерний шаблон не обязан определять все блоки родительского, вы "
+#~ "можете указать значение по умолчанию для всех блоков, а затем определить "
+#~ "в дочернем шаблоне только те, которые необходимы. Лучше иметь больше "
+#~ "\"hooks\", чем меньше \"hooks\"."
+
+# 20e5ce4f9cd04acd9bb8a39a6471473c
+#~ msgid ""
+#~ "If you find yourself duplicating content in a number of templates, it "
+#~ "probably means you should move that content to a ``{% block %}`` in a "
+#~ "parent template."
+#~ msgstr ""
+#~ "Если вы дублируете содержимое в нескольких шаблонах, возможно вы должны "
+#~ "перенести его в тег ``{% block %}`` родительского шаблона."
+
+# 464196833fc74e5eb819a0d618398397
+#~ msgid ""
+#~ "If you need to get the content of the block from the parent template, the "
+#~ "``{{ block.super }}`` variable will do the trick. This is useful if you "
+#~ "want to add to the contents of a parent block instead of completely "
+#~ "overriding it. Data inserted using ``{{ block.super }}`` will not be "
+#~ "automatically escaped (see the `next section`_), since it was already "
+#~ "escaped, if necessary, in the parent template."
+#~ msgstr ""
+#~ "Если вам необходимо содержимое блока родительского шаблона, используйте "
+#~ "переменную ``{{ block.super }}``. Эта полезно, если вам необходимо "
+#~ "дополнить содержимое родительского блока, а не полностью переопределить "
+#~ "его. Содержимое ``{{ block.super }}`` не будет автоматически экранировано "
+#~ "(смотрите :ref:`раздел ниже <automatic-html-escaping>`), так как оно уже "
+#~ "было экранировано, при необходимости, в родительском шаблоне."
+
+# 825c11434b42412d8992b2462ea6f9b8
+#~ msgid ""
+#~ "For extra readability, you can optionally give a *name* to your ``{% "
+#~ "endblock %}`` tag. For example::"
+#~ msgstr ""
+#~ "Для ясности, вы можете добавить *название* вашему тегу ``{% endblock %}"
+#~ "``. Например::"
+
+# 91669ac2e8ba434a9001ccef3ddd0e13
+#~ msgid ""
+#~ "In larger templates, this technique helps you see which ``{% block %}`` "
+#~ "tags are being closed."
+#~ msgstr ""
+#~ "В больших шаблонах такой подход поможет вам увидеть какой тег ``{% block "
+#~ "%}`` был закрыт."
+
+# 05d84092ba2d442a9b5cb3fa076c46e5
+#~ msgid ""
+#~ "Finally, note that you can't define multiple :ttag:`block` tags with the "
+#~ "same name in the same template. This limitation exists because a block "
+#~ "tag works in \"both\" directions. That is, a block tag doesn't just "
+#~ "provide a hole to fill -- it also defines the content that fills the hole "
+#~ "in the *parent*. If there were two similarly-named :ttag:`block` tags in "
+#~ "a template, that template's parent wouldn't know which one of the blocks' "
+#~ "content to use."
+#~ msgstr ""
+#~ "Вы не можете определить несколько тегов :ttag:`block` с одним названием в "
+#~ "одном шаблоне. Такое ограничение существует потому, что тег :ttag:`block` "
+#~ "работает в \"оба\" направления. :ttag:`block` не просто предоставляет "
+#~ "\"полость\" в шаблоне -- он определяет содержимое, которое заполняет "
+#~ "\"полость\" в *родительском шаблоне*. Если бы было несколько тегов :ttag:"
+#~ "`block` с одним названием, родительский шаблон не знал содержимое какого "
+#~ "блока использовать."
+
+# af289496010943e9a9569dcd732824d3
+#~ msgid "Automatic HTML escaping"
+#~ msgstr "Автоматическое экранирование HTML"
+
+# 61e37993781e46abb74e831f1078a8d0
+#~ msgid ""
+#~ "When generating HTML from templates, there's always a risk that a "
+#~ "variable will include characters that affect the resulting HTML. For "
+#~ "example, consider this template fragment::"
+#~ msgstr ""
+#~ "Создавая HTML используя шаблон, есть риск, что переменная может содержать "
+#~ "символы, которые повлияют на структуру полученного HTML. Например, "
+#~ "рассмотрим такой фрагмент::"
+
+# 7779f35b760249f8bcdd44857ac3a973
+#~ msgid ""
+#~ "At first, this seems like a harmless way to display a user's name, but "
+#~ "consider what would happen if the user entered their name as this::"
+#~ msgstr ""
+#~ "На первый взгляд это кажется безобидным способом отображения имени "
+#~ "пользователя, но давайте посмотрим, что произойдет, если пользователь "
+#~ "выбрал такое имя:::"
+
+# cb4b76ad8fbf4fd6905012c84ba26823
+#~ msgid "With this name value, the template would be rendered as::"
+#~ msgstr "С таким именем шаблон вернет::"
+
+# ca040842b8d943a2b2b4d9a7d136085e
+#~ msgid "...which means the browser would pop-up a JavaScript alert box!"
+#~ msgstr "...что приведет к отображению alert-окна JavaScript!"
+
+# fda644aefd5f4c4290f75cbea670ade4
+#~ msgid "Similarly, what if the name contained a ``'<'`` symbol, like this?"
+#~ msgstr "Аналогично, что если имя содержит символ ``'<'``?"
+
+# 73a9fd3bacdb4f30bf4204270248062a
+#~ msgid "That would result in a rendered template like this::"
+#~ msgstr "Шаблон вернет такое содержимое::"
+
+# bb6114e1f8a84f0886848c0f3117320c
+#~ msgid ""
+#~ "...which, in turn, would result in the remainder of the Web page being "
+#~ "bolded!"
+#~ msgstr ""
+#~ "...в результате оставшееся содержимое страницы будет выделено полужирным!"
+
+# f3464b2288854e18a8b0f3885428bd83
+#~ msgid ""
+#~ "Clearly, user-submitted data shouldn't be trusted blindly and inserted "
+#~ "directly into your Web pages, because a malicious user could use this "
+#~ "kind of hole to do potentially bad things. This type of security exploit "
+#~ "is called a `Cross Site Scripting`_ (XSS) attack."
+#~ msgstr ""
+#~ "Очевидно, пользовательским данными нельзя слепо доверять и вставлять "
+#~ "непосредственно в содержимое страницы, так как злоумышленники могут "
+#~ "использовать это с плохими намерениями. Такой тип уязвимости называется "
+#~ "`Cross Site Scripting <http://ru.wikipedia.org/wiki/%D0%9C"
+#~ "%D0%B5%D0%B6%D1%81%D0%B0%D0%B9%D1%82%D0%BE%D0%B2%D1%8B%D0%B9_%D1%81%D0%BA"
+#~ "%D1%80%D0%B8%D0%BF%D1%82%D0%B8%D0%BD%D0%B3>`_ (XSS) атакой."
+
+# e2489e5fef944e68a1b7868b233139ab
+#~ msgid "To avoid this problem, you have two options:"
+#~ msgstr "Чтобы избежать этой проблемы, у вас есть два варианта:"
+
+# 7c268055785344208ab6b0047d07eff0
+#~ msgid ""
+#~ "One, you can make sure to run each untrusted variable through the :"
+#~ "tfilter:`escape` filter (documented below), which converts potentially "
+#~ "harmful HTML characters to unharmful ones. This was the default solution "
+#~ "in Django for its first few years, but the problem is that it puts the "
+#~ "onus on *you*, the developer / template author, to ensure you're escaping "
+#~ "everything. It's easy to forget to escape data."
+#~ msgstr ""
+#~ "Первый, вы можете применять ко всем сомнительным переменным фильтр :"
+#~ "tfilter:`escape` (описанный далее), который преобразует потенциально "
+#~ "опасные HTML символы в безопасные. Такое решение было принятым в первых "
+#~ "версиях Django, но проблема в том, что оно возлагает бремя "
+#~ "ответственности за безопасность на *вас*, разработчика / автора шаблона. "
+#~ "Легко забыть экранировать переменную."
+
+# 9a6f99a3008e4c448d9362048e1ddf27
+#~ msgid ""
+#~ "Two, you can take advantage of Django's automatic HTML escaping. The "
+#~ "remainder of this section describes how auto-escaping works."
+#~ msgstr ""
+#~ "Второй, вы можете позволить Django автоматически экранировать HTML. "
+#~ "Оставшаяся часть этого раздела описывает, как автоматическое "
+#~ "экранирование работает."
+
+# a2c6625e0d9c4eaeaf0e0ad6ba1c4044
+#~ msgid ""
+#~ "By default in Django, every template automatically escapes the output of "
+#~ "every variable tag. Specifically, these five characters are escaped:"
+#~ msgstr ""
+#~ "По-умолчанию в Django, каждый шаблон экранирует все переменные. В "
+#~ "частности выполняются такие замены:"
+
+# ef39136807bb41f68f1bb31100c3f4f6
+#~ msgid "``<`` is converted to ``&lt;``"
+#~ msgstr "``<`` заменяется на ``&lt;``"
+
+# f6bf91e855a540478a714b55afce1026
+#~ msgid "``>`` is converted to ``&gt;``"
+#~ msgstr "``>`` заменяется на ``&gt;``"
+
+# 16e820ce340943a8a9c54ee47a851c29
+#~ msgid "``'`` (single quote) is converted to ``&#39;``"
+#~ msgstr "``'`` (одинарная кавычка) заменяется на ``&#39;``"
+
+# ca3b7e4f5ce4484b8d8615f01049c57b
+#~ msgid "``\"`` (double quote) is converted to ``&quot;``"
+#~ msgstr "``\"`` (двойная кавычка) заменяется на ``&quot;``"
+
+# 1429057ff3a345b8a9d806ccfb2969c3
+#~ msgid "``&`` is converted to ``&amp;``"
+#~ msgstr "``&`` заменяется на ``&amp;``"
+
+# 4ce97e2e0eef404eb910b0526f3cadfa
+#~ msgid ""
+#~ "Again, we stress that this behavior is on by default. If you're using "
+#~ "Django's template system, you're protected."
+#~ msgstr ""
+#~ "Опять же, мы подчеркиваем, что такое поведение используется по умолчанию. "
+#~ "Если вы используете систему шаблонов Django, вы в безопасности."
+
+# dfd5ad7103ec4051aea2c8b45447a3b7
+#~ msgid "How to turn it off"
+#~ msgstr "Как это отключить"
+
+# 717c058f5dec40acbc5bc30ea75cd31c
+#~ msgid ""
+#~ "If you don't want data to be auto-escaped, on a per-site, per-template "
+#~ "level or per-variable level, you can turn it off in several ways."
+#~ msgstr ""
+#~ "Если вы не хотите, чтобы данные автоматически экранировались, на уровне "
+#~ "сайта, шаблона или одной переменной, вы можете отключить это несколькими "
+#~ "способами."
+
+# 3ea07dba136443238fc2df6cad2902fe
+#~ msgid ""
+#~ "Why would you want to turn it off? Because sometimes, template variables "
+#~ "contain data that you *intend* to be rendered as raw HTML, in which case "
+#~ "you don't want their contents to be escaped. For example, you might store "
+#~ "a blob of HTML in your database and want to embed that directly into your "
+#~ "template. Or, you might be using Django's template system to produce text "
+#~ "that is *not* HTML -- like an email message, for instance."
+#~ msgstr ""
+#~ "Зачем вам отключить экранирование? Потому что в некоторых ситуациях, вы "
+#~ "*намеренно* добавляете HTML в переменную, и хотите, чтобы он выводился "
+#~ "без экранирования. Например, вы можете хранить HTML в базе данных и "
+#~ "хотите непосредственно вставить его в содержимое страницы. Или шаблоны "
+#~ "Django используются для создания текста, который *не* является HTML -- "
+#~ "например email."
+
+# c040440af6354e7f89d2f715b4ee7946
+#~ msgid "For individual variables"
+#~ msgstr "Для отдельных переменных"
+
+# 30ef4d501ec34d25845715a731376e9a
+#~ msgid ""
+#~ "To disable auto-escaping for an individual variable, use the :tfilter:"
+#~ "`safe` filter::"
+#~ msgstr ""
+#~ "Для отключения авто-экранирования для отдельных переменных, используйте "
+#~ "фильтр :tfilter:`safe`::"
+
+# 1d5bfe3a8c1b4e49915f1d9ffbbb13e7
+#~ msgid ""
+#~ "Think of *safe* as shorthand for *safe from further escaping* or *can be "
+#~ "safely interpreted as HTML*. In this example, if ``data`` contains "
+#~ "``'<b>'``, the output will be::"
+#~ msgstr ""
+#~ "Думайте о :tfilter:`safe` как сокращение *\"обезопасить от последующего "
+#~ "экранирования\"* или *\"может быть смело интерпретировано как HTML\"*. В "
+#~ "этом примере, если ``data`` содержит ``'<b>'``, будет выведено::"
+
+# 5d76a9fb7da64e6f873f4c7288aa6004
+#~ msgid "For template blocks"
+#~ msgstr "Для блоков шаблона"
+
+# ebfcbddf66d347f2bad1632847caf084
+#~ msgid ""
+#~ "To control auto-escaping for a template, wrap the template (or just a "
+#~ "particular section of the template) in the :ttag:`autoescape` tag, like "
+#~ "so::"
+#~ msgstr ""
+#~ "Для контроля авто-экранирования в шаблоне, \"оберните\" шаблон (или часть "
+#~ "шаблона) тегом :ttag:`autoescape`, например::"
+
+# f11304f6313745bfab986c1560b9926a
+#~ msgid ""
+#~ "The :ttag:`autoescape` tag takes either ``on`` or ``off`` as its "
+#~ "argument. At times, you might want to force auto-escaping when it would "
+#~ "otherwise be disabled. Here is an example template::"
+#~ msgstr ""
+#~ "Тег :ttag:`autoescape` в качестве аргумента принимает ``on`` или ``off``. "
+#~ "В некоторых случаях, вы захотите включить экранирование в шаблоне, в "
+#~ "котором оно было отключено. Например::"
+
+# 0c31d7de36ec45b68ff617b47a501653
+#~ msgid ""
+#~ "The auto-escaping tag passes its effect onto templates that extend the "
+#~ "current one as well as templates included via the :ttag:`include` tag, "
+#~ "just like all block tags. For example:"
+#~ msgstr ""
+#~ "Тег :ttag:`autoescape` распространяет свой эффект на шаблоны, которые "
+#~ "наследуют текущий, и на включенные тегом  :ttag:`include` шаблоны, как и "
+#~ "другие блочные теги. Например::"
+
+# 9816b544495a4ae9bfe8434296f27edb
+#~ msgid ""
+#~ "Because auto-escaping is turned off in the base template, it will also be "
+#~ "turned off in the child template, resulting in the following rendered "
+#~ "HTML when the ``greeting`` variable contains the string ``<b>Hello!</"
+#~ "b>``::"
+#~ msgstr ""
+#~ "Так как авто-экранирование отключено в базовом шаблоне, оно будет "
+#~ "отключено и в дочернем шаблоне. Если переменная ``greeting`` равна "
+#~ "``<b>Hello!</b>``, будет выведено::"
+
+# 74505fbc46e243be9f6dc16fc8c9f47d
+#~ msgid "Notes"
+#~ msgstr "Заметки"
+
+# 78c9fcf6ca4c44a8965945a06e480e83
+#~ msgid ""
+#~ "Generally, template authors don't need to worry about auto-escaping very "
+#~ "much. Developers on the Python side (people writing views and custom "
+#~ "filters) need to think about the cases in which data shouldn't be "
+#~ "escaped, and mark data appropriately, so things Just Work in the template."
+#~ msgstr ""
+#~ "Обычно, авторы шаблонов не должны волноваться про авто-экранирование. "
+#~ "Разработчики на стороне Python (те, кто создает представления и фильтры) "
+#~ "должны определять в каких случаях данные не должны экранироваться и "
+#~ "помечать их соответствующим образом, так что все будет `просто работать` "
+#~ "в шаблонах."
+
+# 3adf79c9439045a2bf357116d94536d5
+#~ msgid ""
+#~ "If you're creating a template that might be used in situations where "
+#~ "you're not sure whether auto-escaping is enabled, then add an :tfilter:"
+#~ "`escape` filter to any variable that needs escaping. When auto-escaping "
+#~ "is on, there's no danger of the :tfilter:`escape` filter *double-"
+#~ "escaping* data -- the :tfilter:`escape` filter does not affect auto-"
+#~ "escaped variables."
+#~ msgstr ""
+#~ "Если вы создаете шаблон, который может использовать как с включенным авто-"
+#~ "экранированием так и без него, добавляйте фильтр :tfilter:`escape` для "
+#~ "каждой переменной, которую нужно экранировать. При включенном авто-"
+#~ "экранировании фильтр :tfilter:`escape` не выполнит замену символов "
+#~ "повторно."
+
+# 80abbf16c49b4e76a9b8707eeaacd4a4
+#~ msgid "String literals and automatic escaping"
+#~ msgstr "Строки и автоматическое экранирование"
+
+# e16e132ffa21439a83c41ee682b1fadc
+#~ msgid "As we mentioned earlier, filter arguments can be strings::"
+#~ msgstr "Как уже упоминалось выше, аргументом фильтра может быть строка::"
+
+# aa9051f5a5f74618b288a3dbf7b4528c
+#~ msgid ""
+#~ "All string literals are inserted **without** any automatic escaping into "
+#~ "the template -- they act as if they were all passed through the :tfilter:"
+#~ "`safe` filter. The reasoning behind this is that the template author is "
+#~ "in control of what goes into the string literal, so they can make sure "
+#~ "the text is correctly escaped when the template is written."
+#~ msgstr ""
+#~ "Все строки в шаблоне вставляются **без** автоматического экранирования -- "
+#~ "они обрабатываются как строки, к которым применили фильтр :tfilter:"
+#~ "`safe`. Причина этого состоит в том, что автор шаблона контролирует "
+#~ "содержимое этих строк и самостоятельно может убедиться при создании "
+#~ "шаблона, что они не содержат не безопасных символов."
+
+# a70dfd2f9e424c5fa70c5eddc920ad4c
+#~ msgid "This means you would write ::"
+#~ msgstr "Это означает, чтобы вы должны писать::"
+
+# 7654fae00eb84ffe87cb70680ebf331b
+#~ msgid "...rather than::"
+#~ msgstr "...вместо::"
+
+# d980614a2ed5486cb04a4d5b9ee62e04
+#~ msgid ""
+#~ "This doesn't affect what happens to data coming from the variable itself. "
+#~ "The variable's contents are still automatically escaped, if necessary, "
+#~ "because they're beyond the control of the template author."
+#~ msgstr ""
+#~ "Это правило не распространяется на переменные, которые используются в "
+#~ "качестве аргументов, так как автор шаблоне не может контролировать "
+#~ "содержимое этих переменных."
+
+# 2c992443237d42628791b5ea4cdef854
+#~ msgid "Accessing method calls"
+#~ msgstr "Вызов методов"
+
+# 026c75c58f34405ba5e59f9fddff44a8
+#~ msgid ""
+#~ "Most method calls attached to objects are also available from within "
+#~ "templates. This means that templates have access to much more than just "
+#~ "class attributes (like field names) and variables passed in from views. "
+#~ "For example, the Django ORM provides the :ref:`\"entry_set\"<topics-db-"
+#~ "queries-related>` syntax for finding a collection of objects related on a "
+#~ "foreign key. Therefore, given a model called \"comment\" with a foreign "
+#~ "key relationship to a model called \"task\" you can loop through all "
+#~ "comments attached to a given task like this::"
+#~ msgstr ""
+#~ "Вызов большинства методов объектов также доступен в шаблоне. Это "
+#~ "означает, что шаблон имеет доступ не только к атрибутам классов "
+#~ "(например, название поля) и переменных переданных из представлениях. "
+#~ "Например, Django ORM предоставляет :ref:`\"entry_set\"<topics-db-queries-"
+#~ "related>` атрибут для получения связанных через внешний ключ объектов. "
+#~ "Следовательно, для модели комментариев(\"comment\") с внешним ключом на "
+#~ "модель задач(\"task\") вы можете обратиться в цикле ко всем связанным "
+#~ "комментариям переданного объекта задачи::"
+
+# 58fee8333363456888033bb6e9b70912
+#~ msgid ""
+#~ "Similarly, :doc:`QuerySets</ref/models/querysets>` provide a ``count()`` "
+#~ "method to count the number of objects they contain. Therefore, you can "
+#~ "obtain a count of all comments related to the current task with::"
+#~ msgstr ""
+#~ "Также, :doc:`QuerySets</ref/models/querysets>` предоставляет метод "
+#~ "``count()`` для получения количества объектов. Следовательно, вы можете "
+#~ "получить количество комментариев связанных с конкретной задачей::"
+
+# 61c3299bc4fc4e4b9a54ae452ccd74ee
+#~ msgid ""
+#~ "And of course you can easily access methods you've explicitly defined on "
+#~ "your own models:"
+#~ msgstr "И конечно вы можете использовать методы вашей модели::"
+
+# b4ced439160e483eb7b6cef1603ff964
+#~ msgid ""
+#~ "Because Django intentionally limits the amount of logic processing "
+#~ "available in the template language, it is not possible to pass arguments "
+#~ "to method calls accessed from within templates. Data should be calculated "
+#~ "in views, then passed to templates for display."
+#~ msgstr ""
+#~ "Так как Django намеренно ограничивает определение логики проекта в "
+#~ "шаблоне, передавать аргументы при вызове метода в шаблоне нельзя. Данные "
+#~ "должны вычисляться в представлении и передаваться в шаблон для "
+#~ "отображения."
+
+# 99065e3a3719449681326a140d52999f
+#~ msgid "Custom tag and filter libraries"
+#~ msgstr "Собственные библиотеки тегов и фильтров"
+
+# 4a586a7486e54832a6895584032d6fea
+#~ msgid ""
+#~ "Certain applications provide custom tag and filter libraries. To access "
+#~ "them in a template, use the :ttag:`load` tag::"
+#~ msgstr ""
+#~ "Некоторые приложения предоставляют собственные библиотеки тегов и "
+#~ "фильтров. Чтобы использовать их в шаблоне, используйте тег :ttag:`load`::"
+
+# 6ac26bfb05ac49b99b8f98ed9fab8a28
+#~ msgid ""
+#~ "In the above, the :ttag:`load` tag loads the ``comments`` tag library, "
+#~ "which then makes the ``comment_form`` tag available for use. Consult the "
+#~ "documentation area in your admin to find the list of custom libraries in "
+#~ "your installation."
+#~ msgstr ""
+#~ "В это примере, тег :ttag:`load` загружает библиотеку ``comments``, "
+#~ "которая предоставляет тег ``comment_form``. В разделе документации вашего "
+#~ "интерфейса администратора вы можете найти список всех установленных "
+#~ "библиотек."
+
+# d9bfd6e9a8ff4150b2a1e2dc01d96109
+#~ msgid ""
+#~ "The :ttag:`load` tag can take multiple library names, separated by "
+#~ "spaces. Example::"
+#~ msgstr ""
+#~ "Тег :ttag:`load` может принимать названия нескольких библиотек, "
+#~ "разделенные пробелом. Например::"
+
+# 8430e73cf0524ee490e457590f276827
+#~ msgid ""
+#~ "See :doc:`/howto/custom-template-tags` for information on writing your "
+#~ "own custom template libraries."
+#~ msgstr ""
+#~ "Смотрите раздел :doc:`/howto/custom-template-tags`, чтобы узнать как "
+#~ "создавать собственные библиотеки для шаблонов."
 
 # ddef1274f1474e478913b65ac3438f84
-#: ../../topics/templates.txt:686
-msgid "Custom libraries and template inheritance"
-msgstr "Собственные библиотеки и наследование шаблонов"
+#~ msgid "Custom libraries and template inheritance"
+#~ msgstr "Собственные библиотеки и наследование шаблонов"
 
 # d5d8baf3983240038939f0f92ce73ed5
-#: ../../topics/templates.txt:688
-msgid ""
-"When you load a custom tag or filter library, the tags/filters are only made "
-"available to the current template -- not any parent or child templates along "
-"the template-inheritance path."
-msgstr ""
-"При загрузке библиотеки, теги и фильтры, которые она содержит, будут "
-"доступны только в текущем шаблоне -- не в родительском или дочернем шаблонах."
+#~ msgid ""
+#~ "When you load a custom tag or filter library, the tags/filters are only "
+#~ "made available to the current template -- not any parent or child "
+#~ "templates along the template-inheritance path."
+#~ msgstr ""
+#~ "При загрузке библиотеки, теги и фильтры, которые она содержит, будут "
+#~ "доступны только в текущем шаблоне -- не в родительском или дочернем "
+#~ "шаблонах."
 
 # 47dafada49574497b1814ed513faa3cd
-#: ../../topics/templates.txt:692
-msgid ""
-"For example, if a template ``foo.html`` has ``{% load comments %}``, a child "
-"template (e.g., one that has ``{% extends \"foo.html\" %}``) will *not* have "
-"access to the comments template tags and filters. The child template is "
-"responsible for its own ``{% load comments %}``."
-msgstr ""
-"Например, если шаблон ``foo.html`` содержит ``{% load comments %}``, "
-"дочерний шаблон (например, содержащий``{% extends \"foo.html\" %}``) *не* "
-"сможет использовать теги и фильтры из этой библиотеки. Дочерний шаблон "
-"должен самостоятельно загрузить библиотеку, используя ``{% load comments %}"
-"``."
+#~ msgid ""
+#~ "For example, if a template ``foo.html`` has ``{% load comments %}``, a "
+#~ "child template (e.g., one that has ``{% extends \"foo.html\" %}``) will "
+#~ "*not* have access to the comments template tags and filters. The child "
+#~ "template is responsible for its own ``{% load comments %}``."
+#~ msgstr ""
+#~ "Например, если шаблон ``foo.html`` содержит ``{% load comments %}``, "
+#~ "дочерний шаблон (например, содержащий``{% extends \"foo.html\" %}``) *не* "
+#~ "сможет использовать теги и фильтры из этой библиотеки. Дочерний шаблон "
+#~ "должен самостоятельно загрузить библиотеку, используя ``{% load comments "
+#~ "%}``."
 
 # 2a77ab437d8f4083881b4173217cb18e
-#: ../../topics/templates.txt:697
-msgid "This is a feature for the sake of maintainability and sanity."
-msgstr "Так сделано ради \"maintainability\" и \"sanity\"."
+#~ msgid "This is a feature for the sake of maintainability and sanity."
+#~ msgstr "Так сделано ради \"maintainability\" и \"sanity\"."
 
 # 359db41b2272480ab6238b5f9dc045b6
 #~ msgid "Method call"

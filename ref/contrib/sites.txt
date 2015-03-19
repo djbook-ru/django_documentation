@@ -18,10 +18,6 @@ The sites framework is mainly based on a simple model:
 .. class:: models.Site
 
     A model for storing the ``domain`` and ``name`` attributes of a Web site.
-    The :setting:`SITE_ID` setting specifies the database ID of the
-    :class:`~django.contrib.sites.models.Site` object (accessible using
-    the automatically added ``id`` attribute) associated with that
-    particular settings file.
 
     .. attribute:: domain
 
@@ -30,6 +26,14 @@ The sites framework is mainly based on a simple model:
     .. attribute:: name
 
         A human-readable "verbose" name for the Web site.
+
+The :setting:`SITE_ID` setting specifies the database ID of the
+:class:`~django.contrib.sites.models.Site` object associated with that
+particular settings file. If the setting is omitted, the
+:func:`~django.contrib.sites.shortcuts.get_current_site` function will
+try to get the current site by comparing the
+:attr:`~django.contrib.sites.models.Site.domain` with the host name from
+the :meth:`request.get_host() <django.http.HttpRequest.get_host>` method.
 
 How you use this is up to you, but Django uses it in a couple of ways
 automatically via simple conventions.
@@ -84,7 +88,7 @@ This accomplishes several things quite nicely:
           try:
               a = Article.objects.get(id=article_id, sites__id=get_current_site(request).id)
           except Article.DoesNotExist:
-              raise Http404
+              raise Http404("Article does not exist on this site")
           # ...
 
 .. _ljworld.com: http://www.ljworld.com/
@@ -205,8 +209,8 @@ subscribing to LJWorld.com alerts." Same goes for the email's message body.
 
 Note that an even more flexible (but more heavyweight) way of doing this would
 be to use Django's template system. Assuming Lawrence.com and LJWorld.com have
-different template directories (:setting:`TEMPLATE_DIRS`), you could simply
-farm out to the template system like so::
+different template directories (:setting:`DIRS <TEMPLATES-DIRS>`), you could
+simply farm out to the template system like so::
 
     from django.core.mail import send_mail
     from django.template import loader, Context
@@ -249,10 +253,6 @@ To do this, you can use the sites framework. A simple example::
 
 Enabling the sites framework
 ============================
-
-.. versionchanged:: 1.6
-
-    In previous versions, the sites framework was enabled by default.
 
 To enable the sites framework, follow these steps:
 
@@ -311,6 +311,11 @@ application, consider using the helpful
 model(s). It's a model :doc:`manager </topics/db/managers>` that
 automatically filters its queries to include only objects associated
 with the current :class:`~django.contrib.sites.models.Site`.
+
+.. admonition:: Mandatory :setting:`SITE_ID`
+
+    The ``CurrentSiteManager`` is only usable when the :setting:`SITE_ID`
+    setting is defined in your settings.
 
 Use :class:`~django.contrib.sites.managers.CurrentSiteManager` by adding it to
 your model explicitly. For example::
@@ -414,12 +419,6 @@ Here's how Django uses the sites framework:
   redirect object is associated with a particular site. When Django searches
   for a redirect, it takes into account the current site.
 
-* In the comments framework, each comment is associated with a particular
-  site. When a comment is posted, its
-  :class:`~django.contrib.sites.models.Site` is set to the current site,
-  and when comments are listed via the appropriate template tag, only the
-  comments for the current site are displayed.
-
 * In the :mod:`flatpages framework <django.contrib.flatpages>`, each
   flatpage is associated with a particular site. When a flatpage is created,
   you specify its :class:`~django.contrib.sites.models.Site`, and the
@@ -473,9 +472,10 @@ a fallback when the database-backed sites framework is not available.
         Sets the ``name`` and ``domain`` attributes to the value of
         :meth:`~django.http.HttpRequest.get_host`.
 
-    .. versionchanged:: 1.7
+    .. deprecated:: 1.7
 
-      This class used to be defined in ``django.contrib.sites.models``.
+        This class used to be defined in ``django.contrib.sites.models``. The
+        old import location will work until Django 1.9.
 
 A :class:`~django.contrib.sites.requests.RequestSite` object has a similar
 interface to a normal :class:`~django.contrib.sites.models.Site` object,
@@ -499,6 +499,13 @@ Finally, to avoid repetitive fallback code, the framework provides a
     object or a :class:`~django.contrib.sites.requests.RequestSite` object
     based on the request.
 
-    .. versionchanged:: 1.7
+    .. deprecated:: 1.7
 
-      This function used to be defined in ``django.contrib.sites.models``.
+        This function used to be defined in ``django.contrib.sites.models``.
+        The old import location will work until Django 1.9.
+
+    .. versionchanged:: 1.8
+
+        This function will now lookup the current site based on
+        :meth:`request.get_host() <django.http.HttpRequest.get_host>` if the
+        :setting:`SITE_ID` setting is not defined.

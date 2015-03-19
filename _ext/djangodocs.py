@@ -7,14 +7,13 @@ import re
 
 from docutils import nodes
 from docutils.parsers.rst import directives
-
-from sphinx import addnodes, __version__ as sphinx_ver
+from sphinx import __version__ as sphinx_ver, addnodes
 from sphinx.builders.html import StandaloneHTMLBuilder
 from sphinx.locale import l_
-from sphinx.writers.html import SmartyPantsHTMLTranslator
-from sphinx.util.console import bold
 from sphinx.util.compat import Directive
+from sphinx.util.console import bold
 from sphinx.util.nodes import set_source_info
+from sphinx.writers.html import SmartyPantsHTMLTranslator
 
 # RE for option descriptions without a '--' prefix
 simple_option_desc_re = re.compile(
@@ -301,7 +300,7 @@ class DjangoHTMLTranslator(SmartyPantsHTMLTranslator):
 def parse_django_admin_node(env, sig, signode):
     command = sig.split(' ')[0]
     env._django_curr_admin_command = command
-    title = "django-admin.py %s" % sig
+    title = "django-admin %s" % sig
     signode += addnodes.desc_name(title, title)
     return sig
 

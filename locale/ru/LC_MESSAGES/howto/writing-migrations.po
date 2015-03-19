@@ -1,0 +1,143 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-19 15:06+0200\n"
+"PO-Revision-Date: 2015-03-19 15:06+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../../howto/writing-migrations.txt:3
+msgid "Writing database migrations"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:5
+msgid ""
+"This document explains how to structure and write database migrations for "
+"different scenarios you might encounter. For introductory material on "
+"migrations, see :doc:`the topic guide </topics/migrations>`."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:12
+msgid "Data migrations and multiple databases"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:14
+msgid ""
+"When using multiple databases, you may need to figure out whether or not to "
+"run a migration against a particular database. For example, you may want to "
+"**only** run a migration on a particular database."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:18
+msgid ""
+"In order to do that you can check the database connection's alias inside a "
+"``RunPython`` operation by looking at the ``schema_editor.connection.alias`` "
+"attribute::"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:41
+msgid ""
+"You can also provide hints that will be passed to the :meth:"
+"`allow_migrate()` method of database routers as ``**hints``:"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:54
+msgid "Then, to leverage this in your migrations, do the following::"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:71
+msgid ""
+"If your ``RunPython`` or ``RunSQL`` operation only affects one model, it's "
+"good practice to pass ``model_name`` as a hint to make it as transparent as "
+"possible to the router. This is especially important for reusable and third-"
+"party apps."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:76
+msgid "Migrations that add unique fields"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:78
+msgid ""
+"Applying a \"plain\" migration that adds a unique non-nullable field to a "
+"table with existing rows will raise an error because the value used to "
+"populate existing rows is generated only once, thus breaking the unique "
+"constraint."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:82
+msgid ""
+"Therefore, the following steps should be taken. In this example, we'll add a "
+"non-nullable :class:`~django.db.models.UUIDField` with a default value. "
+"Modify the respective field according to your needs."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:86
+msgid ""
+"Add the field on your model with ``default=...`` and ``unique=True`` "
+"arguments. In the example, we use ``uuid.uuid4`` for the default."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:89
+msgid "Run the :djadmin:`makemigrations` command."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:91
+msgid "Edit the created migration file."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:93
+msgid "The generated migration class should look similar to this::"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:109
+msgid "You will need to make three changes:"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:111
+msgid ""
+"Add a second :class:`~django.db.migrations.operations.AddField` operation "
+"copied from the generated one and change it to :class:`~django.db.migrations."
+"operations.AlterField`."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:115
+msgid ""
+"On the first operation (``AddField``), change ``unique=True`` to "
+"``null=True`` -- this will create the intermediary null field."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:118
+msgid ""
+"Between the two operations, add a :class:`~django.db.migrations.operations."
+"RunPython` or :class:`~django.db.migrations.operations.RunSQL` operation to "
+"generate a unique value (UUID in the example) for each existing row."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:123
+msgid "The resulting migration should look similar to this::"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:158
+msgid ""
+"Now you can apply the migration as usual with the :djadmin:`migrate` command."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:160
+msgid ""
+"Note there is a race condition if you allow objects to be created while this "
+"migration is running. Objects created after the ``AddField`` and before "
+"``RunPython`` will have their original ``uuid``’s overwritten."
+msgstr ""

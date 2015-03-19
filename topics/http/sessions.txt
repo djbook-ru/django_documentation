@@ -20,7 +20,7 @@ To enable session functionality, do the following:
 
 * Edit the :setting:`MIDDLEWARE_CLASSES` setting and make sure
   it contains ``'django.contrib.sessions.middleware.SessionMiddleware'``.
-  The default ``settings.py`` created by ``django-admin.py startproject``
+  The default ``settings.py`` created by ``django-admin startproject``
   has ``SessionMiddleware`` activated.
 
 If you don't want to use sessions, you might as well remove the
@@ -97,8 +97,8 @@ configuration instructions for the `using database-backed sessions`_.
 
 .. versionchanged:: 1.7
 
-Before version 1.7, the ``cached_db`` backend always used the ``default`` cache
-rather than the :setting:`SESSION_CACHE_ALIAS`.
+    Before version 1.7, the ``cached_db`` backend always used the ``default``
+    cache rather than the :setting:`SESSION_CACHE_ALIAS`.
 
 Using file-based sessions
 -------------------------
@@ -226,11 +226,16 @@ You can edit it multiple times.
 
     .. method:: flush()
 
-      Delete the current session data from the session and regenerate the
-      session key value that is sent back to the user in the cookie. This is
-      used if you want to ensure that the previous session data can't be
-      accessed again from the user's browser (for example, the
+      Delete the current session data from the session and delete the session
+      cookie. This is used if you want to ensure that the previous session data
+      can't be accessed again from the user's browser (for example, the
       :func:`django.contrib.auth.logout()` function calls it).
+
+      .. versionchanged:: 1.8
+
+          Deletion of the session cookie is a behavior new in Django 1.8.
+          Previously, the behavior was to regenerate the session key value that
+          was sent back to the user in the cookie.
 
     .. method:: set_test_cookie()
 
@@ -286,7 +291,7 @@ You can edit it multiple times.
       - ``modification``: last modification of the session, as a
         :class:`~datetime.datetime` object. Defaults to the current time.
       - ``expiry``: expiry information for the session, as a
-        :class:`~datetime.datetime` object, an :func:`int` (in seconds), or
+        :class:`~datetime.datetime` object, an :class:`int` (in seconds), or
         ``None``. Defaults to the value stored in the session by
         :meth:`set_expiry`, if there is one, or ``None``.
 
@@ -318,8 +323,6 @@ You can edit it multiple times.
 
 Session serialization
 ---------------------
-
-.. versionchanged:: 1.6
 
 Before version 1.6, Django defaulted to using :mod:`pickle` to serialize
 session data before storing it in the backend. If you're using the :ref:`signed

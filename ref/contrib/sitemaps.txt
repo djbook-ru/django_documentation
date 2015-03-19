@@ -34,9 +34,9 @@ To install the sitemap app, follow these steps:
 1. Add ``'django.contrib.sitemaps'`` to your :setting:`INSTALLED_APPS`
    setting.
 
-2. Make sure ``'django.template.loaders.app_directories.Loader'``
-   is in your :setting:`TEMPLATE_LOADERS` setting. It's in there by default,
-   so you'll only need to change this if you've changed that setting.
+2. Make sure your :setting:`TEMPLATES` setting contains a ``DjangoTemplates``
+   backend whose ``APP_DIRS`` options is set to ``True``. It's in there by
+   default, so you'll only need to change this if you've changed that setting.
 
 3. Make sure you've installed the
    :mod:`sites framework <django.contrib.sites>`.
@@ -54,10 +54,10 @@ Initialization
 To activate sitemap generation on your Django site, add this line to your
 :doc:`URLconf </topics/http/urls>`::
 
-   from django.contrib.sitemaps.views import sitemap
+    from django.contrib.sitemaps.views import sitemap
 
-   (r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
-       name='django.contrib.sitemaps.views.sitemap')
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap')
 
 This tells Django to build a sitemap when a client accesses :file:`/sitemap.xml`.
 
@@ -234,6 +234,15 @@ Sitemap class reference
         sitemap was requested is used. If the sitemap is built outside the
         context of a request, the default is ``'http'``.
 
+    .. attribute:: Sitemap.i18n
+
+        .. versionadded:: 1.8
+
+        **Optional.**
+
+        A boolean attribute that defines if the URLs of this sitemap should
+        be generated using all of your :setting:`LANGUAGES`. The default is
+        ``False``.
 
 Shortcuts
 =========
@@ -241,6 +250,10 @@ Shortcuts
 The sitemap framework provides a couple convenience classes for common cases:
 
 .. class:: FlatPageSitemap
+
+    .. deprecated:: 1.8
+
+        Use :class:`django.contrib.flatpages.sitemaps.FlatPageSitemap` instead.
 
     The :class:`django.contrib.sitemaps.FlatPageSitemap` class looks at all
     publicly visible :mod:`flatpages <django.contrib.flatpages>`
@@ -266,10 +279,11 @@ The sitemap framework provides a couple convenience classes for common cases:
 Example
 -------
 
-Here's an example of a :doc:`URLconf </topics/http/urls>` using both::
+Here's an example of a :doc:`URLconf </topics/http/urls>` using
+:class:`GenericSitemap`::
 
-    from django.conf.urls import patterns
-    from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
+    from django.conf.urls import url
+    from django.contrib.sitemaps import GenericSitemap
     from django.contrib.sitemaps.views import sitemap
     from blog.models import Entry
 
@@ -278,19 +292,15 @@ Here's an example of a :doc:`URLconf </topics/http/urls>` using both::
         'date_field': 'pub_date',
     }
 
-    sitemaps = {
-        'flatpages': FlatPageSitemap,
-        'blog': GenericSitemap(info_dict, priority=0.6),
-    }
-
-    urlpatterns = patterns('',
+    urlpatterns = [
         # some generic view using info_dict
         # ...
 
         # the sitemap
-        url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
+        url(r'^sitemap\.xml$', sitemap,
+            {'sitemaps': {'blog': GenericSitemap(info_dict, priority=0.6)}},
             name='django.contrib.sitemaps.views.sitemap'),
-    )
+    ]
 
 .. _URLconf: ../url_dispatch/
 
@@ -305,10 +315,7 @@ the sitemap. For example::
 
     # sitemaps.py
     from django.contrib import sitemaps
-    from django.contrib.sitemaps.views import sitemap
     from django.core.urlresolvers import reverse
-
-    from . import views
 
     class StaticViewSitemap(sitemaps.Sitemap):
         priority = 0.5
@@ -321,21 +328,24 @@ the sitemap. For example::
             return reverse(item)
 
     # urls.py
-    from django.conf.urls import patterns, url
+    from django.conf.urls import url
+    from django.contrib.sitemaps.views import sitemap
+
     from .sitemaps import StaticViewSitemap
+    from . import views
 
     sitemaps = {
         'static': StaticViewSitemap,
     }
 
-    urlpatterns = patterns('',
+    urlpatterns = [
         url(r'^$', views.main, name='main'),
         url(r'^about/$', views.about, name='about'),
         url(r'^license/$', views.license, name='license'),
         # ...
         url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
             name='django.contrib.sitemaps.views.sitemap')
-    )
+    ]
 
 
 Creating a sitemap index
@@ -354,10 +364,12 @@ references individual sitemap files, one per each section defined in your
 
 Here's what the relevant URLconf lines would look like for the example above::
 
-    urlpatterns = patterns('django.contrib.sitemaps.views',
-        (r'^sitemap\.xml$', 'index', {'sitemaps': sitemaps}),
-        (r'^sitemap-(?P<section>.+)\.xml$', 'sitemap', {'sitemaps': sitemaps}),
-    )
+    from django.contrib.sitemaps import views
+
+    urlpatterns = [
+        url(r'^sitemap\.xml$', views.index, {'sitemaps': sitemaps}),
+        url(r'^sitemap-(?P<section>.+)\.xml$', views.sitemap, {'sitemaps': sitemaps}),
+    ]
 
 This will automatically generate a :file:`sitemap.xml` file that references
 both :file:`sitemap-flatpages.xml` and :file:`sitemap-blog.xml`. The
@@ -375,14 +387,14 @@ with a caching decorator -- you must name your sitemap view and pass
     from django.contrib.sitemaps import views as sitemaps_views
     from django.views.decorators.cache import cache_page
 
-    urlpatterns = patterns('',
+    urlpatterns = [
         url(r'^sitemap\.xml$',
             cache_page(86400)(sitemaps_views.index),
             {'sitemaps': sitemaps, 'sitemap_url_name': 'sitemaps'}),
         url(r'^sitemap-(?P<section>.+)\.xml$',
             cache_page(86400)(sitemaps_views.sitemap),
             {'sitemaps': sitemaps}, name='sitemaps'),
-    )
+    ]
 
 
 Template customization
@@ -392,16 +404,18 @@ If you wish to use a different template for each sitemap or sitemap index
 available on your site, you may specify it by passing a ``template_name``
 parameter to the ``sitemap`` and ``index`` views via the URLconf::
 
-    urlpatterns = patterns('django.contrib.sitemaps.views',
-        (r'^custom-sitemap\.xml$', 'index', {
+    from django.contrib.sitemaps import views
+
+    urlpatterns = [
+        url(r'^custom-sitemap\.xml$', views.index, {
             'sitemaps': sitemaps,
             'template_name': 'custom_sitemap.html'
         }),
-        (r'^custom-sitemap-(?P<section>.+)\.xml$', 'sitemap', {
+        url(r'^custom-sitemap-(?P<section>.+)\.xml$', views.sitemap, {
             'sitemaps': sitemaps,
             'template_name': 'custom_sitemap.html'
         }),
-    )
+    ]
 
 
 These views return :class:`~django.template.response.TemplateResponse`

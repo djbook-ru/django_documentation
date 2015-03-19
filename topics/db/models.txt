@@ -190,9 +190,9 @@ ones:
         >>> p = Person(name="Fred Flintstone", shirt_size="L")
         >>> p.save()
         >>> p.shirt_size
-        u'L'
+        'L'
         >>> p.get_shirt_size_display()
-        u'Large'
+        'Large'
 
 :attr:`~Field.default`
     The default value for the field. This can be a value or a callable
@@ -212,6 +212,23 @@ ones:
     :attr:`primary_key=True <Field.primary_key>` on any of your fields
     unless you want to override the default primary-key behavior. For more,
     see :ref:`automatic-primary-key-fields`.
+
+    The primary key field is read-only. If you change the value of the primary
+    key on an existing object and then save it, a new object will be created
+    alongside the old one. For example::
+
+        from django.db import models
+
+        class Fruit(models.Model):
+            name = models.CharField(max_length=100, primary_key=True)
+
+    .. code-block:: pycon
+
+        >>> fruit = Fruit.objects.create(name='Apple')
+        >>> fruit.name = 'Pear'
+        >>> fruit.save()
+        >>> Fruit.objects.values_list('name', flat=True)
+        ['Apple', 'Pear']
 
 :attr:`~Field.unique`
     If ``True``, this field must be unique throughout the table.
@@ -541,7 +558,7 @@ querying the ``Membership`` model::
     >>> ringos_membership.date_joined
     datetime.date(1962, 8, 16)
     >>> ringos_membership.invite_reason
-    u'Needed a new drummer.'
+    'Needed a new drummer.'
 
 Another way to access the same information is by querying the
 :ref:`many-to-many reverse relationship<m2m-reverse-relationships>` from a
@@ -551,7 +568,7 @@ Another way to access the same information is by querying the
     >>> ringos_membership.date_joined
     datetime.date(1962, 8, 16)
     >>> ringos_membership.invite_reason
-    u'Needed a new drummer.'
+    'Needed a new drummer.'
 
 
 One-to-one relationships
@@ -681,8 +698,9 @@ Model attributes
     :class:`~django.db.models.Manager`. It's the interface through which
     database query operations are provided to Django models and is used to
     :ref:`retrieve the instances <retrieving-objects>` from the database. If no
-    custom ``Manager`` is defined, the default name is ``objects``. Managers
-    are only accessible via model classes, not the model instances.
+    custom ``Manager`` is defined, the default name is
+    :attr:`~django.db.models.Model.objects`. Managers are only accessible via
+    model classes, not the model instances.
 
 .. _model-methods:
 
@@ -1373,3 +1391,9 @@ different database tables).
 
 Django will raise a :exc:`~django.core.exceptions.FieldError` if you override
 any model field in any ancestor model.
+
+.. seealso::
+
+    :doc:`The Models Reference </ref/models/index>`
+        Covers all the model related APIs including model fields, related
+        objects, and ``QuerySet``.

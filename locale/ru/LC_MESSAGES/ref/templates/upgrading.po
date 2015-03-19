@@ -1,0 +1,240 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-19 15:06+0200\n"
+"PO-Revision-Date: 2015-03-19 15:06+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../../ref/templates/upgrading.txt:3
+msgid "Upgrading templates to Django 1.8"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:5
+msgid ""
+"Django's template system was overhauled in Django 1.8 when it gained support "
+"for multiple template engines. This document complements the :doc:`release "
+"notes </releases/1.8>` with detailed upgrade instructions on some topics."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:10
+msgid "The :setting:`TEMPLATES` settings"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:12
+msgid ""
+"A new setting was introduced in Django 1.8: :setting:`TEMPLATES`. All "
+"existing template-related settings were deprecated."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:15
+msgid ""
+"During the deprecation period, Django will create a backwards-compatible :"
+"setting:`TEMPLATES` based on the ``TEMPLATE_*`` settings if you don't define "
+"it yourself."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:19
+msgid "Here's how to define :setting:`TEMPLATES` in your settings module."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:21
+msgid ""
+"If you're using the default value of ``TEMPLATE_LOADERS``, that is, if it "
+"isn't defined in your settings file or if it's set to::"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:27
+msgid "then you should define :setting:`TEMPLATES` as follows::"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:52
+msgid ""
+"If you aren't using the default value of ``TEMPLATE_LOADERS``, then you "
+"should define :setting:`TEMPLATES` as follows::"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:80
+msgid ""
+"Furthermore you should replace ``django.core.context_processors`` with "
+"``django.template.context_processors`` in the names of context processors."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:83
+msgid ""
+"If your settings module defines ``ALLOWED_INCLUDE_ROOTS`` or "
+"``TEMPLATE_STRING_IF_INVALID``, include their values under the "
+"``'allowed_include_roots'`` and ``'string_if_invalid'`` keys in the "
+"``'OPTIONS'`` dictionary."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:88
+msgid ""
+"If it sets ``TEMPLATE_DEBUG`` to a value that differs from :setting:`DEBUG`, "
+"include that value under the ``'debug'`` key in ``'OPTIONS'``."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:91
+msgid ""
+"Once you have defined :setting:`TEMPLATES`, you can safely remove "
+"``ALLOWED_INCLUDE_ROOTS``, ``TEMPLATE_CONTEXT_PROCESSORS``, "
+"``TEMPLATE_DEBUG``, ``TEMPLATE_DIRS``, ``TEMPLATE_LOADERS``, and "
+"``TEMPLATE_STRING_IF_INVALID``."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:96
+msgid ""
+"If you are overriding some of these settings in tests, you should override "
+"the entire :setting:`TEMPLATES` setting instead."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:100
+msgid ":mod:`django.template.loader`"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:105
+msgid ""
+":func:`~django.template.loader.get_template` and :func:`~django.template."
+"loader.select_template`"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:107
+msgid ""
+"In Django 1.8 :func:`~django.template.loader.get_template` and :func:"
+"`~django.template.loader.select_template` return a backend-dependent "
+"``Template`` instead of a :class:`django.template.Template`."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:111
+msgid ""
+"For example, if :func:`~django.template.loader.get_template` loads a "
+"template with a :class:`~django.template.backends.django.DjangoTemplates` "
+"backend, then it returns a ``django.template.backends.django.Template``."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:115
+msgid ""
+"``Template`` objects must provide a :meth:`~django.template.backends.base."
+"Template.render` method whose signature differs slightly from the Django "
+"template language's :meth:`~django.template.Template.render`."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:120
+msgid "Instead of::"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:128 ../../ref/templates/upgrading.txt:143
+msgid "You should write::"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:135
+msgid "And instead of::"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:150
+msgid ""
+"Passing a :class:`~django.template.Context` or a :class:`~django.template."
+"RequestContext` is still possible when the template is loaded by a :class:"
+"`~django.template.backends.django.DjangoTemplates` backend but it's "
+"deprecated and won't be supported in Django 2.0."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:155
+msgid ""
+"If you're loading a template while you're rendering another template with "
+"the Django template language and you have access to the current context, for "
+"instance in the ``render()`` method of a template tag, you can use the "
+"current :class:`~django.template.Engine` directly. Instead of::"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:163
+msgid "You can write::"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:167
+msgid ""
+"This will load the template with the current engine without triggering the "
+"multiple template engines machinery, which is usually the desired behavior. "
+"Unlike previous solutions, this returns a :class:`django.template.Template`, "
+"like :func:`~django.template.loader.get_template` used to in Django 1.7 and "
+"earlier, avoiding all backwards-compatibility problems."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:174
+msgid "``get_template_from_string()``"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:176
+msgid ""
+"Private API ``get_template_from_string(template_code)`` was removed in "
+"Django 1.8 because it had no way to choose an engine to compile the template."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:179
+msgid "Three alternatives are available."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:181
+msgid ""
+"If you control the project's setting, you can use one of the configured "
+"engines::"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:188
+msgid "This returns a backend-dependent ``Template`` object."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:190
+msgid ""
+"For trivial templates that don't need context processors nor anything else, "
+"you can create a bare-bones engine and use its ``from_string()`` method::"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:197
+msgid ""
+"This returns a :class:`django.template.Template` because :class:`~django."
+"template.Engine` is part of the Django template language's APIs. The "
+"multiple template engines machinery isn't involved here."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:201
+msgid ""
+"Finally, if you have access to the current context, you can use the same "
+"trick as above::"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:207
+msgid "``Template()``"
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:209
+msgid ""
+"To a lesser extent, instantiating a template with "
+"``Template(template_code)`` suffers from the same issue as "
+"``get_template_from_string()``."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:212
+msgid ""
+"It still works when the :setting:`TEMPLATES` setting defines exactly one :"
+"class:`~django.template.backends.django.DjangoTemplates` backend, but "
+"pluggable applications can't control this requirement."
+msgstr ""
+
+#: ../../ref/templates/upgrading.txt:216
+msgid ""
+"The last two solutions described in the previous section are recommended in "
+"that case."
+msgstr ""

@@ -8,10 +8,9 @@ Welcome to Django 1.7!
 
 These release notes cover the `new features`_, as well as some `backwards
 incompatible changes`_ you'll want to be aware of when upgrading from Django
-1.6 or older versions. We've also dropped some features, which are detailed in
-:ref:`our deprecation plan <deprecation-removed-in-1.7>`, we've `begun the
-deprecation process for some features`_, and some features have reached the
-end of their deprecation process and `have been removed`_.
+1.6 or older versions. We've `begun the deprecation process for some features`_,
+and some features have reached the end of their deprecation process and
+`have been removed`_.
 
 .. _`new features`: `What's new in Django 1.7`_
 .. _`backwards incompatible changes`: `Backwards incompatible changes in 1.7`_
@@ -65,7 +64,9 @@ but a few of the key features are:
   it as soon as possible (nothing more than renaming is required).
 
 * ``initial_data`` fixtures are no longer loaded for apps with migrations; if
-  you want to load initial data for an app, we suggest you do it in a migration.
+  you want to load initial data for an app, we suggest you create a migration for
+  your application and define a :class:`~django.db.migrations.operations.RunPython`
+  or :class:`~django.db.migrations.operations.RunSQL` operation in the ``operations`` section of the migration.
 
 * Test rollback behavior is different for apps with migrations; in particular,
   Django will no longer emulate rollbacks on non-transactional databases or
@@ -439,11 +440,11 @@ Minor features
   enabled. See :ref:`session-invalidation-on-password-change` for more details
   including upgrade considerations when enabling this new middleware.
 
-:mod:`django.contrib.formtools`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``django.contrib.formtools``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 * Calls to :meth:`WizardView.done()
-  <django.contrib.formtools.wizard.views.WizardView.done>` now include a
+  <formtools.wizard.views.WizardView.done>` now include a
   ``form_dict`` to allow easier access to forms by their step name.
 
 :mod:`django.contrib.gis`
@@ -519,7 +520,7 @@ Minor features
   that doesn't use the cache system at all but instead a JSON file called
   ``staticfiles.json`` for storing the mapping between the original file name
   (e.g. ``css/styles.css``) and the hashed file name (e.g.
-  ``css/styles.55e7cbb9ba48.css``. The ``staticfiles.json`` file is created
+  ``css/styles.55e7cbb9ba48.css``). The ``staticfiles.json`` file is created
   when running the :djadmin:`collectstatic` management command and should
   be a less expensive alternative for remote storages such as Amazon S3.
 
@@ -567,7 +568,7 @@ Email
 * :func:`~django.core.mail.send_mail` now accepts an ``html_message``
   parameter for sending a multipart ``text/plain`` and ``text/html`` email.
 * The SMTP :class:`~django.core.mail.backends.smtp.EmailBackend` now accepts a
-  :attr:`~django.core.mail.backends.smtp.EmailBackend.timeout` parameter.
+  ``timeout`` parameter.
 
 File Storage
 ^^^^^^^^^^^^
@@ -702,7 +703,7 @@ Internationalization
 Management Commands
 ^^^^^^^^^^^^^^^^^^^
 
-* The :djadminopt:`--no-color` option for ``django-admin.py`` allows you to
+* The :djadminopt:`--no-color` option for ``django-admin`` allows you to
   disable the colorization of management command output.
 
 * The new :djadminopt:`--natural-foreign` and :djadminopt:`--natural-primary`
@@ -759,7 +760,7 @@ Models
 * Explicit :class:`~django.db.models.OneToOneField` for
   :ref:`multi-table-inheritance` are now discovered in abstract classes.
 
-* Is it now possible to avoid creating a backward relation for
+* It is now possible to avoid creating a backward relation for
   :class:`~django.db.models.OneToOneField` by setting its
   :attr:`~django.db.models.ForeignKey.related_name` to
   ``'+'`` or ending it with ``'+'``.
@@ -845,14 +846,14 @@ Templates
 * It is now possible to :ttag:`include` templates recursively.
 
 * Template objects now have an origin attribute set when
-  :setting:`TEMPLATE_DEBUG` is ``True``. This allows template origins to be
+  ``TEMPLATE_DEBUG`` is ``True``. This allows template origins to be
   inspected and logged outside of the ``django.template`` infrastructure.
 
 * ``TypeError`` exceptions are no longer silenced when raised during the
   rendering of a template.
 
 * The following functions now accept a ``dirs`` parameter which is a list or
-  tuple to override :setting:`TEMPLATE_DIRS`:
+  tuple to override ``TEMPLATE_DIRS``:
 
   * :func:`django.template.loader.get_template()`
   * :func:`django.template.loader.select_template()`
@@ -1020,6 +1021,22 @@ script with::
 
 Otherwise, you will hit an ``AppRegistryNotReady`` exception.
 
+WSGI scripts
+^^^^^^^^^^^^
+
+Until Django 1.3, the recommended way to create a WSGI application was::
+
+    import django.core.handlers.wsgi
+    application = django.core.handlers.wsgi.WSGIHandler()
+
+In Django 1.4, support for WSGI was improved and the API changed to::
+
+    from django.core.wsgi import get_wsgi_application
+    application = get_wsgi_application()
+
+If you're still using the former style in your WSGI script, you need to
+upgrade to the latter, or you will hit an ``AppRegistryNotReady`` exception.
+
 App registry consistency
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1156,9 +1173,7 @@ errors are handled by different cache backends.
 ``django.core.cache.backends.locmem.LocMemCache`` used to fail silently when
 such an error occurs, which is inconsistent with other backends and leads to
 cache-specific errors. This has been fixed in Django 1.7, see
-`Ticket #21200`_ for more details.
-
-.. _Ticket #21200: https://code.djangoproject.com/ticket/21200
+:ticket:`21200` for more details.
 
 Cache keys are now generated from the request's absolute URL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1171,7 +1186,7 @@ query string. For example, the URL portion of a cache key is now generated from
 ``http://www.example.com/path/to/?key=val`` rather than ``/path/to/?key=val``.
 The cache keys generated by Django 1.7 will be different from the keys
 generated by older versions of Django. After upgrading to Django 1.7, the first
-request to any previously cached URL will be a cache miss .
+request to any previously cached URL will be a cache miss.
 
 Passing ``None`` to ``Manager.db_manager()``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1182,10 +1197,8 @@ instance using default routing behavior, overriding any manually specified
 database routing. In Django 1.7, a value of ``None`` passed to db_manager will
 produce a router that *retains* any manually assigned database routing -- the
 manager will *not* be reset. This was necessary to resolve an inconsistency in
-the way routing information cascaded over joins. See `Ticket #13724`_ for more
+the way routing information cascaded over joins. See :ticket:`13724` for more
 details.
-
-.. _Ticket #13724: https://code.djangoproject.com/ticket/13724
 
 pytz may be required
 ~~~~~~~~~~~~~~~~~~~~
@@ -1393,8 +1406,8 @@ Miscellaneous
   primary keys with value 0.
 
 * Shadowing model fields defined in a parent model has been forbidden as this
-  creates ambiguity in the expected model behavior. In addition, any clashing
-  fields in the model inheritance hierarchy results in a system check error.
+  creates ambiguity in the expected model behavior. In addition, clashing
+  fields in the model inheritance hierarchy result in a system check error.
   For example, if you use multi-inheritance, you need to define custom primary
   key fields on parent models, otherwise the default ``id`` fields will clash.
   See :ref:`model-multiple-inheritance-topic` for details.
@@ -1441,6 +1454,11 @@ Miscellaneous
 
 * Decoding the query string from URLs now falls back to the ISO-8859-1 encoding
   when the input is not valid UTF-8.
+
+* With the addition of the
+  :class:`~django.contrib.auth.middleware.SessionAuthenticationMiddleware` to
+  the default project template (pre-1.7.2 only), a database must be created
+  before accessing a page using :djadmin:`runserver`.
 
 .. _deprecated-features-1.7:
 
@@ -1496,17 +1514,32 @@ As :class:`~collections.OrderedDict` was added to the standard library in
 Python 2.7, :class:`~django.utils.datastructures.SortedDict` is no longer
 needed and has been deprecated.
 
+The two additional, deprecated methods provided by ``SortedDict`` (``insert()``
+and ``value_for_index()``) have been removed. If you relied on these methods to
+alter structures like form fields, you should now treat these ``OrderedDict``\s
+as immutable objects and override them to change their content.
+
+For example, you might want to override ``MyFormClass.base_fields`` (although
+this attribute isn't considered a public API) to change the ordering of fields
+for all ``MyFormClass`` instances; or similarly, you could override
+``self.fields`` from inside ``MyFormClass.__init__()``, to change the fields
+for a particular form instance. For example (from Django itself)::
+
+    PasswordChangeForm.base_fields = OrderedDict(
+        (k, PasswordChangeForm.base_fields[k])
+        for k in ['old_password', 'new_password1', 'new_password2']
+    )
+
 Custom SQL location for models package
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Previously, if models were organized in a package (``myapp/models/``) rather
 than simply ``myapp/models.py``, Django would look for :ref:`initial SQL data
 <initial-sql>` in ``myapp/models/sql/``. This bug has been fixed so that Django
-will search ``myapp/sql/`` as documented. The old location will continue to
-work until Django 1.9. After this issue was fixed, migrations were added which
-deprecates initial SQL data. Thus, while this change still exists, the
-deprecation is somewhat irrelevant as the entire feature will be removed in
-Django 2.0 when migrations become compulsory for all applications.
+will search ``myapp/sql/`` as documented. After this issue was fixed, migrations
+were added which deprecates initial SQL data. Thus, while this change still
+exists, the deprecation is irrelevant as the entire feature will be removed in
+Django 1.9.
 
 Reorganization of ``django.contrib.sites``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1533,7 +1566,7 @@ Reorganization of ``django.contrib.contenttypes``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Since ``django.contrib.contenttypes.generic`` defined both admin and model
-related objects an import of this module could trigger unexpected side effects.
+related objects, an import of this module could trigger unexpected side effects.
 As a consequence, its contents were split into :mod:`~django.contrib.contenttypes`
 submodules and the ``django.contrib.contenttypes.generic`` module is deprecated:
 
@@ -1677,10 +1710,16 @@ value of the former flag is used. Defining both ``requires_system_checks`` and
 
 The ``check()`` method has replaced the old ``validate()`` method.
 
-``ModelAdmin.validator``
-~~~~~~~~~~~~~~~~~~~~~~~~
+``ModelAdmin`` validators
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``ModelAdmin.validator`` is deprecated in favor of new ``checks`` attribute.
+The ``ModelAdmin.validator_class`` and ``default_validator_class`` attributes
+are deprecated in favor of the new ``checks_class`` attribute.
+
+The ``ModelAdmin.validate()`` method is deprecated in favor of
+``ModelAdmin.check()``.
+
+The ``django.contrib.admin.validation`` module is deprecated.
 
 ``django.db.backends.DatabaseValidation.validate_field``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1688,8 +1727,8 @@ The ``check()`` method has replaced the old ``validate()`` method.
 This method is deprecated in favor of a new ``check_field`` method.
 The functionality required by ``check_field()`` is the same as that provided
 by ``validate_field()``, but the output format is different. Third-party database
-backends needing this functionality should modify their backends to provide an
-implementation of ``check_field()``.
+backends needing this functionality should provide an implementation of
+``check_field()``.
 
 Loading ``ssi`` and ``url`` template tags from ``future`` library
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1715,7 +1754,7 @@ If all you need is to generate valid javascript strings, you can simply use
 ``fix_ampersands`` utils method and template filter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``django.utils.html.fix_ampersands`` method and the :tfilter:`fix_ampersands`
+The ``django.utils.html.fix_ampersands`` method and the ``fix_ampersands``
 template filter are deprecated, as the escaping of ampersands is already taken care
 of by Django's standard HTML escaping features. Combining this with ``fix_ampersands``
 would either result in double escaping, or, if the output is assumed to be safe,
@@ -1739,6 +1778,30 @@ FastCGI support
 
 FastCGI support via the ``runfcgi`` management command will be removed in
 Django 1.9. Please deploy your project using WSGI.
+
+Moved objects in ``contrib.sites``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Following the app-loading refactor, two objects in
+``django.contrib.sites.models`` needed to be moved because they must be
+available without importing ``django.contrib.sites.models`` when
+``django.contrib.sites`` isn't installed. Import ``RequestSite`` from
+``django.contrib.sites.requests`` and ``get_current_site()`` from
+``django.contrib.sites.shortcuts``. The old import locations will work until
+Django 1.9.
+
+``django.forms.forms.get_declared_fields()``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Django no longer uses this functional internally. Even though it's a private
+API, it'll go through the normal deprecation cycle.
+
+Private Query Lookup APIs
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Private APIs ``django.db.models.sql.where.WhereNode.make_atom()`` and
+``django.db.models.sql.where.Constraint`` are deprecated in favor of the new
+:doc:`custom lookups API </ref/models/lookups>`.
 
 .. removed-features-1.7:
 

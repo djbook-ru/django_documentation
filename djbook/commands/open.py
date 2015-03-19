@@ -1,6 +1,7 @@
-from cliff.command import Command as BaseCommand
 import logging
-import os
+import webbrowser
+
+from cliff.command import Command as BaseCommand
 
 
 class Command(BaseCommand):
@@ -10,4 +11,4 @@ class Command(BaseCommand):
     log = logging.getLogger(__name__)
 
     def take_action(self, parsed_args):
-        os.system('xdg-open %s/index.html' % self.app.html_path)
+        webbrowser.open('%s/index.html' % self.app.html_path)

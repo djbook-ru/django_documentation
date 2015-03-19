@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-11 11:43+0300\n"
+"POT-Creation-Date: 2015-03-19 15:06+0200\n"
 "PO-Revision-Date: 2014-09-17 18:46+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -97,33 +97,142 @@ msgstr "Добавить метод класса в модель::"
 msgid "Add a method on a custom manager (usually preferred)::"
 msgstr "Добавить метод в менеджер модели(лучший вариант)::"
 
+#: ../../ref/models/instances.txt:66
+msgid "Customizing model loading"
+msgstr ""
+
+#: ../../ref/models/instances.txt:72
+msgid ""
+"The ``from_db()`` method can be used to customize model instance creation "
+"when loading from the database."
+msgstr ""
+
+#: ../../ref/models/instances.txt:75
+msgid ""
+"The ``db`` argument contains the database alias for the database the model "
+"is loaded from, ``field_names`` contains the names of all loaded fields, and "
+"``values`` contains the loaded values for each field in ``field_names``. The "
+"``field_names`` are in the same order as the ``values``, so it is possible "
+"to use ``cls(**(zip(field_names, values)))`` to instantiate the object. If "
+"all of the model's fields are present, then ``values`` are guaranteed to be "
+"in the order ``__init__()`` expects them. That is, the instance can be "
+"created by ``cls(*values)``. It is possible to check if all fields are "
+"present by consulting ``cls._deferred`` - if ``False``, then all fields have "
+"been loaded from the database."
+msgstr ""
+
+#: ../../ref/models/instances.txt:86
+msgid ""
+"In addition to creating the new model, the ``from_db()`` method must set the "
+"``adding`` and ``db`` flags in the new instance's ``_state`` attribute."
+msgstr ""
+
+#: ../../ref/models/instances.txt:89
+msgid ""
+"Below is an example showing how to record the initial values of fields that "
+"are loaded from the database::"
+msgstr ""
+
+#: ../../ref/models/instances.txt:115
+msgid ""
+"The example above shows a full ``from_db()`` implementation to clarify how "
+"that is done. In this case it would of course be possible to just use "
+"``super()`` call in the ``from_db()`` method."
+msgstr ""
+
+#: ../../ref/models/instances.txt:120
+msgid "Refreshing objects from database"
+msgstr ""
+
+#: ../../ref/models/instances.txt:126
+msgid ""
+"If you need to reload a model's values from the database, you can use the "
+"``refresh_from_db()`` method. When this method is called without arguments "
+"the following is done:"
+msgstr ""
+
+#: ../../ref/models/instances.txt:130
+msgid ""
+"All non-deferred fields of the model are updated to the values currently "
+"present in the database."
+msgstr ""
+
+#: ../../ref/models/instances.txt:132
+msgid ""
+"The previously loaded related instances for which the relation's value is no "
+"longer valid are removed from the reloaded instance. For example, if you "
+"have a foreign key from the reloaded instance to another model with name "
+"``Author``, then if ``obj.author_id != obj.author.id``, ``obj.author`` will "
+"be thrown away, and when next accessed it will be reloaded with the value of "
+"``obj.author_id``."
+msgstr ""
+
+#: ../../ref/models/instances.txt:139
+msgid ""
+"Note that only fields of the model are reloaded from the database. Other "
+"database dependent values such as annotations are not reloaded."
+msgstr ""
+
+#: ../../ref/models/instances.txt:142
+msgid ""
+"The reloading happens from the database the instance was loaded from, or "
+"from the default database if the instance wasn't loaded from the database. "
+"The ``using`` argument can be used to force the database used for reloading."
+msgstr ""
+
+#: ../../ref/models/instances.txt:146
+msgid ""
+"It is possible to force the set of fields to be loaded by using the "
+"``fields`` argument."
+msgstr ""
+
+#: ../../ref/models/instances.txt:149
+msgid ""
+"For example, to test that an ``update()`` call resulted in the expected "
+"update, you could write a test similar to this::"
+msgstr ""
+
+#: ../../ref/models/instances.txt:161
+msgid ""
+"Note that when deferred fields are accessed, the loading of the deferred "
+"field's value happens through this method. Thus it is possible to customize "
+"the way deferred loading happens. The example below shows how one can reload "
+"all of the instance's fields when a deferred field is reloaded::"
+msgstr ""
+
+#: ../../ref/models/instances.txt:183
+msgid ""
+"A helper method that returns a set containing the attribute names of all "
+"those fields that are currently deferred for this model."
+msgstr ""
+
 # a1af197f5374441fbd6f668e42644aef
-#: ../../ref/models/instances.txt:68
+#: ../../ref/models/instances.txt:189
 msgid "Validating objects"
 msgstr "Проверка объектов"
 
 # 93bd9a6303ac44f981b1dcbe691d5c83
-#: ../../ref/models/instances.txt:70
+#: ../../ref/models/instances.txt:191
 msgid "There are three steps involved in validating a model:"
 msgstr "Проверка объектов модели проходив в три этапа:"
 
 # 2d28ada844a04da99aff382e3cec5dcd
-#: ../../ref/models/instances.txt:72
+#: ../../ref/models/instances.txt:193
 msgid "Validate the model fields - :meth:`Model.clean_fields()`"
 msgstr "Проверка полей модели - :meth:`Model.clean_fields()`"
 
 # 5960436d670c49339e1f8a77a898d12f
-#: ../../ref/models/instances.txt:73
+#: ../../ref/models/instances.txt:194
 msgid "Validate the model as a whole - :meth:`Model.clean()`"
 msgstr "Проверка всего объекта - :meth:`Model.clean()`"
 
 # d3c5d873719c4115a6ed637da6a6642b
-#: ../../ref/models/instances.txt:74
+#: ../../ref/models/instances.txt:195
 msgid "Validate the field uniqueness - :meth:`Model.validate_unique()`"
 msgstr "Проверка уникальности полей - :meth:`Model.validate_unique()`"
 
 # c04c6f856f3f42c9af2f08d69dce7d7b
-#: ../../ref/models/instances.txt:76
+#: ../../ref/models/instances.txt:197
 msgid ""
 "All three steps are performed when you call a model's :meth:`~Model."
 "full_clean()` method."
@@ -131,7 +240,7 @@ msgstr ""
 "Все три этапа выполняются при вызове метода :meth:`~Model.full_clean()`."
 
 # 0ef0de90d1694bd6a19ea26ae8fa0ac2
-#: ../../ref/models/instances.txt:79
+#: ../../ref/models/instances.txt:200
 msgid ""
 "When you use a :class:`~django.forms.ModelForm`, the call to :meth:`~django."
 "forms.Form.is_valid()` will perform these validation steps for all the "
@@ -148,22 +257,12 @@ msgstr ""
 "собираетесь самостоятельно обрабатывать ошибки валидности, или если :class:"
 "`~django.forms.ModelForm` не содержит поля, которые должны проверяться."
 
-# 37762212f32a43b9833eafa10a1f02f6
-#: ../../ref/models/instances.txt:91
-msgid ""
-"The ``validate_unique`` parameter was added to allow skipping :meth:`Model."
-"validate_unique()`. Previously, :meth:`Model.validate_unique()` was always "
-"called by ``full_clean``."
-msgstr ""
-"Параметр ``validate_unique`` был добавлен для пропуска проверки :meth:`Model."
-"validate_unique()`. Ранее :meth:`Model.validate_unique()` вызывался всегда "
-"при вызове ``full_clean``."
-
 # 06e39a0d61cf4fd8b83b5cea1435e0a3
-#: ../../ref/models/instances.txt:95
+#: ../../ref/models/instances.txt:210
+#, fuzzy
 msgid ""
 "This method calls :meth:`Model.clean_fields()`, :meth:`Model.clean()`, and :"
-"meth:`Model.validate_unique()` (if ``validate_unique`` is ``True``, in that "
+"meth:`Model.validate_unique()` (if ``validate_unique`` is ``True``), in that "
 "order and raises a :exc:`~django.core.exceptions.ValidationError` that has a "
 "``message_dict`` attribute containing errors from all three stages."
 msgstr ""
@@ -174,7 +273,7 @@ msgstr ""
 "трех этапов проверки."
 
 # 63d338c2a66e4453b34aad181339d1a7
-#: ../../ref/models/instances.txt:100
+#: ../../ref/models/instances.txt:215
 msgid ""
 "The optional ``exclude`` argument can be used to provide a list of field "
 "names that can be excluded from validation and cleaning. :class:`~django."
@@ -188,7 +287,7 @@ msgstr ""
 "исправлены пользователем."
 
 # e1a3dcc242d3470fad26fa9bd9828a0d
-#: ../../ref/models/instances.txt:106
+#: ../../ref/models/instances.txt:221
 msgid ""
 "Note that ``full_clean()`` will *not* be called automatically when you call "
 "your model's :meth:`~Model.save()` method. You'll need to call it manually "
@@ -200,13 +299,13 @@ msgstr ""
 "объектов модели, вам необходимо явно вызывать этот метод. Например::"
 
 # 6c596143cc8a410eadd412441a29c35c
-#: ../../ref/models/instances.txt:119
+#: ../../ref/models/instances.txt:234
 msgid ""
 "The first step ``full_clean()`` performs is to clean each individual field."
 msgstr "Первым делом ``full_clean()`` выполняет проверку каждого поля."
 
 # 59bc3b15bd0246f58c315b3ace31c220
-#: ../../ref/models/instances.txt:123
+#: ../../ref/models/instances.txt:238
 msgid ""
 "This method will validate all fields on your model. The optional ``exclude`` "
 "argument lets you provide a list of field names to exclude from validation. "
@@ -219,7 +318,7 @@ msgstr ""
 "ValidationError`."
 
 # 5a68808ab9ab4bf5a61145be54c1134a
-#: ../../ref/models/instances.txt:128
+#: ../../ref/models/instances.txt:243
 msgid ""
 "The second step ``full_clean()`` performs is to call :meth:`Model.clean()`. "
 "This method should be overridden to perform custom validation on your model."
@@ -229,7 +328,7 @@ msgstr ""
 "дополнительная проверка модели."
 
 # 84b3e98dac6644bfae1c75bb3ba03ba5
-#: ../../ref/models/instances.txt:133
+#: ../../ref/models/instances.txt:248
 msgid ""
 "This method should be used to provide custom model validation, and to modify "
 "attributes on your model if desired. For instance, you could use it to "
@@ -242,7 +341,7 @@ msgstr ""
 "значения нескольких полей::"
 
 # 020bd77fc6b447a88c362544893c4a1e
-#: ../../ref/models/instances.txt:152
+#: ../../ref/models/instances.txt:267
 msgid ""
 "Note, however, that like :meth:`Model.full_clean()`, a model's ``clean()`` "
 "method is not invoked when you call your model's :meth:`~Model.save()` "
@@ -252,26 +351,36 @@ msgstr ""
 "``clean()``, не вызываются при вызове :meth:`~Model.save()`."
 
 # add054fa6fe04f13bc58b99020a5edab
-#: ../../ref/models/instances.txt:155
+#: ../../ref/models/instances.txt:270
+#, fuzzy
 msgid ""
-"Any :exc:`~django.core.exceptions.ValidationError` exceptions raised by "
-"``Model.clean()`` will be stored in a special key error dictionary key, :"
-"data:`~django.core.exceptions.NON_FIELD_ERRORS`, that is used for errors "
-"that are tied to the entire model instead of to a specific field::"
+"In the above example, the :exc:`~django.core.exceptions.ValidationError` "
+"exception raised by ``Model.clean()`` was instantiated with a string, so it "
+"will be stored in a special error dictionary key, :data:`~django.core."
+"exceptions.NON_FIELD_ERRORS`. This key is used for errors that are tied to "
+"the entire model instead of to a specific field::"
 msgstr ""
 "Любое исключение :exc:`~django.core.exceptions.ValidationError` вызванное в "
 "``Model.clean()`` будет сохранено со специальным ключом в словаре ошибок, :"
 "data:`~django.core.exceptions.NON_FIELD_ERRORS`, который используется для "
 "ошибок относящихся ко всей модели, а не конкретному полю::"
 
+#: ../../ref/models/instances.txt:282
+msgid ""
+"To assign exceptions to a specific field, instantiate the :exc:`~django.core."
+"exceptions.ValidationError` with a dictionary, where the keys are the field "
+"names. We could update the previous example to assign the error to the "
+"``pub_date`` field::"
+msgstr ""
+
 # 91c9d98f74c54c40a03252a75f9e3ca8
-#: ../../ref/models/instances.txt:166
+#: ../../ref/models/instances.txt:295
 msgid ""
 "Finally, ``full_clean()`` will check any unique constraints on your model."
 msgstr "Также ``full_clean()`` выполняет все проверки на уникальность модели."
 
 # 50104e825b5444d783baf3fa5ac928c7
-#: ../../ref/models/instances.txt:170
+#: ../../ref/models/instances.txt:299
 msgid ""
 "This method is similar to :meth:`~Model.clean_fields`, but validates all "
 "uniqueness constraints on your model instead of individual field values. The "
@@ -286,7 +395,7 @@ msgstr ""
 "ValidationError`, если поле не прошло проверку."
 
 # 03268cec819643c6b67a15565ec4818b
-#: ../../ref/models/instances.txt:176
+#: ../../ref/models/instances.txt:305
 msgid ""
 "Note that if you provide an ``exclude`` argument to ``validate_unique()``, "
 "any :attr:`~django.db.models.Options.unique_together` constraint involving "
@@ -297,17 +406,17 @@ msgstr ""
 "указанных полей, не будет учитываться при проверке."
 
 # 098c3d147234461bad39df3e02a35830
-#: ../../ref/models/instances.txt:182
+#: ../../ref/models/instances.txt:311
 msgid "Saving objects"
 msgstr "Сохранение объектов"
 
 # c840ed2fcba34cca99fd1acd27a82263
-#: ../../ref/models/instances.txt:184
+#: ../../ref/models/instances.txt:313
 msgid "To save an object back to the database, call ``save()``:"
 msgstr "Чтобы сохранить объект в базе данных, используйте ``save()``:"
 
 # 5ba36080b7ba4d20994326616e1ef50d
-#: ../../ref/models/instances.txt:188
+#: ../../ref/models/instances.txt:317
 msgid ""
 "If you want customized saving behavior, you can override this ``save()`` "
 "method. See :ref:`overriding-model-methods` for more details."
@@ -316,18 +425,18 @@ msgstr ""
 "Подробности в разделе :ref:`overriding-model-methods`."
 
 # c52b843201a2476fa312ed7b6bf111ec
-#: ../../ref/models/instances.txt:191
+#: ../../ref/models/instances.txt:320
 msgid ""
 "The model save process also has some subtleties; see the sections below."
 msgstr "Процесс сохранения модели имеет ряд особенностей описанных ниже."
 
 # f774cc85cd73454bb517c9844e7254d3
-#: ../../ref/models/instances.txt:194
+#: ../../ref/models/instances.txt:323
 msgid "Auto-incrementing primary keys"
 msgstr "Автоинкрементные первичные ключи"
 
 # 40ea6476c815472688ba7fbbcfc19fa5
-#: ../../ref/models/instances.txt:196
+#: ../../ref/models/instances.txt:325
 msgid ""
 "If a model has an :class:`~django.db.models.AutoField` — an auto-"
 "incrementing primary key — then that auto-incremented value will be "
@@ -339,7 +448,7 @@ msgstr ""
 "при первом вызове метода ``save()``::"
 
 # 651b53b421564ed38375f6909679f70e
-#: ../../ref/models/instances.txt:205
+#: ../../ref/models/instances.txt:334
 msgid ""
 "There's no way to tell what the value of an ID will be before you call "
 "``save()``, because that value is calculated by your database, not by Django."
@@ -348,7 +457,7 @@ msgstr ""
 "так как оно вычисляется базой данных, а не Django."
 
 # 9b83a66be2014246a4a2c59d1d6f957e
-#: ../../ref/models/instances.txt:208
+#: ../../ref/models/instances.txt:337
 msgid ""
 "For convenience, each model has an :class:`~django.db.models.AutoField` "
 "named ``id`` by default unless you explicitly specify ``primary_key=True`` "
@@ -361,12 +470,12 @@ msgstr ""
 "db.models.AutoField`."
 
 # 190326b03b374f859182598c91a12f37
-#: ../../ref/models/instances.txt:214
+#: ../../ref/models/instances.txt:343
 msgid "The ``pk`` property"
 msgstr "Свойство ``pk``"
 
 # f539c4204852435a95e3b12a1412b519
-#: ../../ref/models/instances.txt:218
+#: ../../ref/models/instances.txt:347
 msgid ""
 "Regardless of whether you define a primary key field yourself, or let Django "
 "supply one for you, each model will have a property called ``pk``. It "
@@ -383,12 +492,12 @@ msgstr ""
 "соответствующее поле модели."
 
 # 206bfe2281e3478ba50e6cd99f458b05
-#: ../../ref/models/instances.txt:226
+#: ../../ref/models/instances.txt:355
 msgid "Explicitly specifying auto-primary-key values"
 msgstr "Явное определение значения первичного ключа"
 
 # daf5d25b018a4eb58a7907f4d0f07994
-#: ../../ref/models/instances.txt:228
+#: ../../ref/models/instances.txt:357
 msgid ""
 "If a model has an :class:`~django.db.models.AutoField` but you want to "
 "define a new object's ID explicitly when saving, just define it explicitly "
@@ -398,7 +507,7 @@ msgstr ""
 "указать значение ID нового объекта при сохранении, просто укажите его::"
 
 # 3a93a98526b8426ab9497a2aac2905f2
-#: ../../ref/models/instances.txt:237
+#: ../../ref/models/instances.txt:366
 msgid ""
 "If you assign auto-primary-key values manually, make sure not to use an "
 "already-existing primary-key value! If you create a new object with an "
@@ -411,7 +520,7 @@ msgstr ""
 "запись в базе данных, а не сохранить новую."
 
 # 35bff39e62734d489e22b1fa14ae38f8
-#: ../../ref/models/instances.txt:242
+#: ../../ref/models/instances.txt:371
 msgid ""
 "Given the above ``'Cheddar Talk'`` blog example, this example would override "
 "the previous record in the database::"
@@ -420,7 +529,7 @@ msgstr ""
 "предыдущий объект в базе данных::"
 
 # 819cafcb27af459785fec1a2a0eae827
-#: ../../ref/models/instances.txt:248
+#: ../../ref/models/instances.txt:377
 msgid ""
 "See `How Django knows to UPDATE vs. INSERT`_, below, for the reason this "
 "happens."
@@ -429,7 +538,7 @@ msgstr ""
 "INSERT` (FIXME) ниже."
 
 # 5be5ef59904444f9821b174edb1dbdc0
-#: ../../ref/models/instances.txt:251
+#: ../../ref/models/instances.txt:380
 msgid ""
 "Explicitly specifying auto-primary-key values is mostly useful for bulk-"
 "saving objects, when you're confident you won't have primary-key collision."
@@ -438,17 +547,17 @@ msgstr ""
 "множества объектов, когда вы уверенны что все значения уникальны."
 
 # d04372d78ad4406aa992d39972fe9a8f
-#: ../../ref/models/instances.txt:255
+#: ../../ref/models/instances.txt:384
 msgid "What happens when you save?"
 msgstr "Что происходит при сохранении?"
 
 # fc8ca633e516453ea0ed02cb05bd78b1
-#: ../../ref/models/instances.txt:257
+#: ../../ref/models/instances.txt:386
 msgid "When you save an object, Django performs the following steps:"
 msgstr "При сохранении объекта Django выполняет следующие шаги:"
 
 # 49a649847dc940979b384aa452c71120
-#: ../../ref/models/instances.txt:259
+#: ../../ref/models/instances.txt:388
 msgid ""
 "**Emit a pre-save signal.** The :doc:`signal </ref/signals>` :attr:`django."
 "db.models.signals.pre_save` is sent, allowing any functions listening for "
@@ -459,7 +568,7 @@ msgstr ""
 "какие-либо действия."
 
 # 40caa366c585447dafced6ad65484e31
-#: ../../ref/models/instances.txt:264
+#: ../../ref/models/instances.txt:393
 msgid ""
 "**Pre-process the data.** Each field on the object is asked to perform any "
 "automated data modification that the field may need to perform."
@@ -468,7 +577,7 @@ msgstr ""
 "изменения значения поля при необходимости."
 
 # bedb769fff8148bc9f47e76ac72d11c2
-#: ../../ref/models/instances.txt:268
+#: ../../ref/models/instances.txt:397
 msgid ""
 "Most fields do *no* pre-processing — the field data is kept as-is. Pre-"
 "processing is only used on fields that have special behavior.  For example, "
@@ -486,7 +595,7 @@ msgstr ""
 "содержит список полей с \"особым поведением\".)"
 
 # a69652b8dc60447a952cccd013446ab8
-#: ../../ref/models/instances.txt:276
+#: ../../ref/models/instances.txt:405
 msgid ""
 "**Prepare the data for the database.** Each field is asked to provide its "
 "current value in a data type that can be written to the database."
@@ -495,7 +604,7 @@ msgstr ""
 "значение к типу данных, которой может быть сохранен в базу данных."
 
 # e82d742cedf142fc98ede65b66888951
-#: ../../ref/models/instances.txt:279
+#: ../../ref/models/instances.txt:408
 msgid ""
 "Most fields require *no* data preparation. Simple data types, such as "
 "integers and strings, are 'ready to write' as a Python object. However, more "
@@ -506,7 +615,7 @@ msgstr ""
 "большинство сложных типов данных требуют некоторой модификации."
 
 # e03d498e9b2240698a9d9927cea8db6b
-#: ../../ref/models/instances.txt:283
+#: ../../ref/models/instances.txt:412
 msgid ""
 "For example, :class:`~django.db.models.DateField` fields use a Python "
 "``datetime`` object to store data. Databases don't store ``datetime`` "
@@ -520,7 +629,7 @@ msgstr ""
 "данных."
 
 # 91daa17ee949449ab037d99f75483d64
-#: ../../ref/models/instances.txt:288
+#: ../../ref/models/instances.txt:417
 msgid ""
 "**Insert the data into the database.** The pre-processed, prepared data is "
 "then composed into an SQL statement for insertion into the database."
@@ -530,7 +639,7 @@ msgstr ""
 "данных."
 
 # 91052ed0d4524864805f7340fb7cc2f3
-#: ../../ref/models/instances.txt:292
+#: ../../ref/models/instances.txt:421
 msgid ""
 "**Emit a post-save signal.** The signal :attr:`django.db.models.signals."
 "post_save` is sent, allowing any functions listening for that signal to take "
@@ -541,12 +650,12 @@ msgstr ""
 "какие-либо действия."
 
 # 445b4fbfdf014f23bc065356b5f68677
-#: ../../ref/models/instances.txt:298
+#: ../../ref/models/instances.txt:427
 msgid "How Django knows to UPDATE vs. INSERT"
 msgstr "Как Django определят использовать UPDATE или INSERT"
 
 # a692e205b6a04318ac7a2d019f0eacbb
-#: ../../ref/models/instances.txt:300
+#: ../../ref/models/instances.txt:429
 msgid ""
 "You may have noticed Django database objects use the same ``save()`` method "
 "for creating and changing objects. Django abstracts the need to use "
@@ -559,7 +668,7 @@ msgstr ""
 "Django следует такому алгоритму:"
 
 # b3dcce1ebf954ca482fd930b73e57efa
-#: ../../ref/models/instances.txt:305
+#: ../../ref/models/instances.txt:434
 msgid ""
 "If the object's primary key attribute is set to a value that evaluates to "
 "``True`` (i.e., a value other than ``None`` or the empty string), Django "
@@ -570,7 +679,7 @@ msgstr ""
 "запрос."
 
 # a13f1673a6524d59a3f2dd04dc251464
-#: ../../ref/models/instances.txt:308
+#: ../../ref/models/instances.txt:437
 msgid ""
 "If the object's primary key attribute is *not* set or if the ``UPDATE`` "
 "didn't update anything, Django executes an ``INSERT``."
@@ -579,7 +688,7 @@ msgstr ""
 "выполнит ``INSERT``."
 
 # 34aa17e5fafd43b08b28323d32cdadef
-#: ../../ref/models/instances.txt:311
+#: ../../ref/models/instances.txt:440
 msgid ""
 "The one gotcha here is that you should be careful not to specify a primary-"
 "key value explicitly when saving new objects, if you cannot guarantee the "
@@ -593,17 +702,18 @@ msgstr ""
 "auto-primary-key values` (FIXME) и :ref:`ref-models-force-insert`."
 
 # 71bee65874244f709b1210097335bc17
-#: ../../ref/models/instances.txt:318
+#: ../../ref/models/instances.txt:445
+#, fuzzy
 msgid ""
-"Previously Django did a ``SELECT`` when the primary key attribute was set. "
-"If the ``SELECT`` found a row, then Django did an ``UPDATE``, otherwise it "
-"did an ``INSERT``. The old algorithm results in one more query in the "
-"``UPDATE`` case. There are some rare cases where the database doesn't report "
-"that a row was updated even if the database contains a row for the object's "
-"primary key value. An example is the PostgreSQL ``ON UPDATE`` trigger which "
-"returns ``NULL``. In such cases it is possible to revert to the old "
-"algorithm by setting the :attr:`~django.db.models.Options.select_on_save` "
-"option to ``True``."
+"In Django 1.5 and earlier, Django did a ``SELECT`` when the primary key "
+"attribute was set. If the ``SELECT`` found a row, then Django did an "
+"``UPDATE``, otherwise it did an ``INSERT``. The old algorithm results in one "
+"more query in the ``UPDATE`` case. There are some rare cases where the "
+"database doesn't report that a row was updated even if the database contains "
+"a row for the object's primary key value. An example is the PostgreSQL ``ON "
+"UPDATE`` trigger which returns ``NULL``. In such cases it is possible to "
+"revert to the old algorithm by setting the :attr:`~django.db.models.Options."
+"select_on_save` option to ``True``."
 msgstr ""
 "В предыдущих версиях Django выполнялся ``SELECT`` запрос, когда первичный "
 "ключ был явно указан. Если ``SELECT`` находил строку, Django выполнял "
@@ -615,12 +725,12 @@ msgstr ""
 "``True`` в :attr:`~django.db.models.Options.select_on_save`."
 
 # d180ef568b2b4c21a0763872d5b1b3f8
-#: ../../ref/models/instances.txt:331
+#: ../../ref/models/instances.txt:458
 msgid "Forcing an INSERT or UPDATE"
 msgstr "Принудительное выполнение INSERT или UPDATE"
 
 # 46e1acd5799248f49c7010a3adb1174a
-#: ../../ref/models/instances.txt:333
+#: ../../ref/models/instances.txt:460
 msgid ""
 "In some rare circumstances, it's necessary to be able to force the :meth:"
 "`~Model.save()` method to perform an SQL ``INSERT`` and not fall back to "
@@ -638,7 +748,7 @@ msgstr ""
 "аргумента вместе: вы не можете добавлять *и* обновлять одновременно!"
 
 # 7aa800ee3a5d43b2a798e4d6993f27f8
-#: ../../ref/models/instances.txt:341
+#: ../../ref/models/instances.txt:468
 msgid ""
 "It should be very rare that you'll need to use these parameters. Django will "
 "almost always do the right thing and trying to override that will lead to "
@@ -651,7 +761,7 @@ msgstr ""
 "пользователей."
 
 # 0cd8870db8004752b273f5fcb9f3c9dc
-#: ../../ref/models/instances.txt:346
+#: ../../ref/models/instances.txt:473
 msgid ""
 "Using ``update_fields`` will force an update similarly to ``force_update``."
 msgstr ""
@@ -659,12 +769,12 @@ msgstr ""
 "вызове ``force_update``."
 
 # 3e9e7e8e699741929140673d8bdd9a74
-#: ../../ref/models/instances.txt:351
+#: ../../ref/models/instances.txt:478
 msgid "Updating attributes based on existing fields"
 msgstr "Обновление значений полей"
 
 # 5280780451ad4fb195240aac2eacc58b
-#: ../../ref/models/instances.txt:353
+#: ../../ref/models/instances.txt:480
 msgid ""
 "Sometimes you'll need to perform a simple arithmetic task on a field, such "
 "as incrementing or decrementing the current value. The obvious way to "
@@ -675,7 +785,7 @@ msgstr ""
 "сделать это::"
 
 # e928f345411d488ab159890fccc309c2
-#: ../../ref/models/instances.txt:361
+#: ../../ref/models/instances.txt:488
 msgid ""
 "If the old ``number_sold`` value retrieved from the database was 10, then "
 "the value of 11 will be written back to the database."
@@ -684,7 +794,7 @@ msgstr ""
 "базу данных будет записано значение 11."
 
 # d4ecdc8b5c9d4726bce0631972668fa7
-#: ../../ref/models/instances.txt:364
+#: ../../ref/models/instances.txt:491
 msgid ""
 "The process can be made robust, :ref:`avoiding a race condition <avoiding-"
 "race-conditions-using-f>`, as well as slightly faster by expressing the "
@@ -701,7 +811,7 @@ msgstr ""
 "будет выглядеть таким образом::"
 
 # 243276e7f53b4e898cafe9c475d44fa8
-#: ../../ref/models/instances.txt:377
+#: ../../ref/models/instances.txt:504
 msgid ""
 "For more details, see the documentation on :class:`F expressions <django.db."
 "models.F>` and their :ref:`use in update queries <topics-db-queries-update>`."
@@ -710,12 +820,12 @@ msgstr ""
 "его :ref:`использование в запросах обновления <topics-db-queries-update>`."
 
 # cf9cce4cc6d648e397d828700475686a
-#: ../../ref/models/instances.txt:382
+#: ../../ref/models/instances.txt:509
 msgid "Specifying which fields to save"
 msgstr "Указываем какие поля сохранять"
 
 # d44d33036cd24ff7a4e8f6a13cc28a44
-#: ../../ref/models/instances.txt:384
+#: ../../ref/models/instances.txt:511
 msgid ""
 "If ``save()`` is passed a list of field names in keyword argument "
 "``update_fields``, only the fields named in that list will be updated. This "
@@ -729,7 +839,7 @@ msgstr ""
 "небольшой прирост в производительности. Например::"
 
 # 1a08e6b87af34a76ad19581af20ed6bc
-#: ../../ref/models/instances.txt:393
+#: ../../ref/models/instances.txt:520
 msgid ""
 "The ``update_fields`` argument can be any iterable containing strings. An "
 "empty ``update_fields`` iterable will skip the save. A value of None will "
@@ -739,12 +849,12 @@ msgstr ""
 "``update_fields`` пропустит сохранение. None сохранит все поля."
 
 # 543907df97154c85a0766942aee3fddb
-#: ../../ref/models/instances.txt:397
+#: ../../ref/models/instances.txt:524
 msgid "Specifying ``update_fields`` will force an update."
 msgstr "Указав ``update_fields`` вы инициируете редактирование записи."
 
 # 2aeecc4ffc9b43f5868ae4fd5ae12425
-#: ../../ref/models/instances.txt:399
+#: ../../ref/models/instances.txt:526
 msgid ""
 "When saving a model fetched through deferred model loading (:meth:`~django."
 "db.models.query.QuerySet.only()` or :meth:`~django.db.models.query.QuerySet."
@@ -760,12 +870,12 @@ msgstr ""
 "изменено, оно будет добавлено в список для обновления."
 
 # 5710063c94b64f6a9867bbff8de57716
-#: ../../ref/models/instances.txt:407
+#: ../../ref/models/instances.txt:534
 msgid "Deleting objects"
 msgstr "Удаление объектов"
 
 # e7946ed560a34e83b2c99a904e4407cf
-#: ../../ref/models/instances.txt:411
+#: ../../ref/models/instances.txt:538
 msgid ""
 "Issues an SQL ``DELETE`` for the object. This only deletes the object in the "
 "database; the Python instance will still exist and will still have data in "
@@ -775,7 +885,7 @@ msgstr ""
 "данных; объекты Python будут существовать и содержать данные."
 
 # 76bbf5d60a17460c98f0e01eaa8ecc3a
-#: ../../ref/models/instances.txt:415
+#: ../../ref/models/instances.txt:542
 msgid ""
 "For more details, including how to delete objects in bulk, see :ref:`topics-"
 "db-queries-delete`."
@@ -784,7 +894,7 @@ msgstr ""
 "db-queries-delete`."
 
 # 15b756b0ac7d48188d9957ab58daff95
-#: ../../ref/models/instances.txt:418
+#: ../../ref/models/instances.txt:545
 msgid ""
 "If you want customized deletion behavior, you can override the ``delete()`` "
 "method. See :ref:`overriding-model-methods` for more details."
@@ -792,18 +902,51 @@ msgstr ""
 "Если вам нужно изменить процесс удаления, переопределите метод ``delete()``. "
 "Подробности в :ref:`overriding-model-methods`."
 
+# 5710063c94b64f6a9867bbff8de57716
+#: ../../ref/models/instances.txt:549
+#, fuzzy
+msgid "Pickling objects"
+msgstr "Удаление объектов"
+
+#: ../../ref/models/instances.txt:551
+msgid ""
+"When you :mod:`pickle` a model, its current state is pickled. When you "
+"unpickle it, it'll contain the model instance at the moment it was pickled, "
+"rather than the data that's currently in the database."
+msgstr ""
+
+#: ../../ref/models/instances.txt:555
+msgid "You can't share pickles between versions"
+msgstr ""
+
+#: ../../ref/models/instances.txt:557
+msgid ""
+"Pickles of models are only valid for the version of Django that was used to "
+"generate them. If you generate a pickle using Django version N, there is no "
+"guarantee that pickle will be readable with Django version N+1. Pickles "
+"should not be used as part of a long-term archival strategy."
+msgstr ""
+
+#: ../../ref/models/instances.txt:565
+msgid ""
+"Since pickle compatibility errors can be difficult to diagnose, such as "
+"silently corrupted objects, a ``RuntimeWarning`` is raised when you try to "
+"unpickle a model in a Django version that is different than the one in which "
+"it was pickled."
+msgstr ""
+
 # 722e6dd3564f4c2a821c76ed276b03c9
-#: ../../ref/models/instances.txt:424
+#: ../../ref/models/instances.txt:573
 msgid "Other model instance methods"
 msgstr "Остальные методы модели"
 
 # b485a9afc82343eeab9befa8696e54ac
-#: ../../ref/models/instances.txt:426
+#: ../../ref/models/instances.txt:575
 msgid "A few object methods have special purposes."
 msgstr "Несколько методов имеют специальное назначение."
 
 # 7c4746597e1a4bf5bb9efe94d1b82ec0
-#: ../../ref/models/instances.txt:429
+#: ../../ref/models/instances.txt:578
 msgid ""
 "On Python 3, as all strings are natively considered Unicode, only use the "
 "``__str__()`` method (the ``__unicode__()`` method is obsolete). If you'd "
@@ -816,12 +959,12 @@ msgstr ""
 "func:`~django.utils.encoding.python_2_unicode_compatible`."
 
 # 77ddec81cdd4478dac1e8dcf53721767
-#: ../../ref/models/instances.txt:435
+#: ../../ref/models/instances.txt:584
 msgid "``__unicode__``"
 msgstr "``__unicode__``"
 
 # 322fead3b40a4c5780afc817e7714563
-#: ../../ref/models/instances.txt:439
+#: ../../ref/models/instances.txt:588
 msgid ""
 "The ``__unicode__()`` method is called whenever you call ``unicode()`` on an "
 "object. Django uses ``unicode(obj)`` (or the related function, :meth:"
@@ -840,14 +983,14 @@ msgstr ""
 
 # 5b4e92636d0f4db499d2704f36b4edfb
 # f0f49d96bd0242a4bb39fa7a3a784269
-#: ../../ref/models/instances.txt:446 ../../ref/models/instances.txt:476
-#: ../../ref/models/instances.txt:518 ../../ref/models/instances.txt:570
-#: ../../ref/models/instances.txt:579 ../../ref/models/instances.txt:724
+#: ../../ref/models/instances.txt:595 ../../ref/models/instances.txt:625
+#: ../../ref/models/instances.txt:667 ../../ref/models/instances.txt:719
+#: ../../ref/models/instances.txt:728 ../../ref/models/instances.txt:799
 msgid "For example::"
 msgstr "Например::"
 
 # 77610f5d55554d99963e837d02254090
-#: ../../ref/models/instances.txt:457
+#: ../../ref/models/instances.txt:606
 msgid ""
 "If you define a ``__unicode__()`` method on your model and not a :meth:"
 "`~Model.__str__()` method, Django will automatically provide you with a :"
@@ -864,12 +1007,12 @@ msgstr ""
 "при необходимости."
 
 # 811e6bcf2367418bb7cdc15a31029b32
-#: ../../ref/models/instances.txt:465
+#: ../../ref/models/instances.txt:614
 msgid "``__str__``"
 msgstr "``__str__``"
 
 # 322fead3b40a4c5780afc817e7714563
-#: ../../ref/models/instances.txt:469
+#: ../../ref/models/instances.txt:618
 msgid ""
 "The ``__str__()`` method is called whenever you call ``str()`` on an object. "
 "In Python 3, Django uses ``str(obj)`` in a number of places. Most notably, "
@@ -886,7 +1029,7 @@ msgstr ""
 "восприятия представление объекта."
 
 # c1169ef193684b02a2f0ff7ea349c3bd
-#: ../../ref/models/instances.txt:487
+#: ../../ref/models/instances.txt:636
 msgid ""
 "In Python 2, the main use of ``__str__`` directly inside Django is when the "
 "``repr()`` output of a model is displayed anywhere (for example, in "
@@ -898,7 +1041,7 @@ msgstr ""
 "не обязательно, если вы определили метод :meth:`~Model.__unicode__()`."
 
 # 389315b6074e4b5ebd98d75cde5e3c31
-#: ../../ref/models/instances.txt:493
+#: ../../ref/models/instances.txt:642
 msgid ""
 "The previous :meth:`~Model.__unicode__()` example could be similarly written "
 "using ``__str__()`` like this::"
@@ -907,12 +1050,12 @@ msgstr ""
 "использоваться и в ``__str__()``::"
 
 # 811e6bcf2367418bb7cdc15a31029b32
-#: ../../ref/models/instances.txt:509
+#: ../../ref/models/instances.txt:658
 msgid "``__eq__``"
 msgstr "``__eq__``"
 
 # 7432bc1b5e2b44afbd28a4849049e0c9
-#: ../../ref/models/instances.txt:513
+#: ../../ref/models/instances.txt:662
 msgid ""
 "The equality method is defined such that instances with the same primary key "
 "value and the same concrete class are considered equal. For proxy models, "
@@ -926,7 +1069,7 @@ msgstr ""
 "просто класс модели."
 
 # 7fba26715f1e4b7c8ac7a636306b435c
-#: ../../ref/models/instances.txt:539
+#: ../../ref/models/instances.txt:688
 msgid ""
 "In previous versions only instances of the exact same class and same primary "
 "key value were considered equal."
@@ -935,12 +1078,12 @@ msgstr ""
 "ключом считались равными."
 
 # 811e6bcf2367418bb7cdc15a31029b32
-#: ../../ref/models/instances.txt:543
+#: ../../ref/models/instances.txt:692
 msgid "``__hash__``"
 msgstr "``__hash__``"
 
 # a0325aa2b4d24f9faef17863e297b50e
-#: ../../ref/models/instances.txt:547
+#: ../../ref/models/instances.txt:696
 msgid ""
 "The ``__hash__`` method is based on the instance's primary key value. It is "
 "effectively hash(obj.pk). If the instance doesn't have a primary key value "
@@ -955,19 +1098,19 @@ msgstr ""
 "reference/datamodel.html#object.__hash__>`_)."
 
 # e9b3eb5672fd40509235cd750229c4c2
-#: ../../ref/models/instances.txt:556
+#: ../../ref/models/instances.txt:705
 msgid ""
 "In previous versions instance's without primary key value were hashable."
 msgstr ""
 "В предыдущих версиях объекты без первичного ключа можно было хешировать."
 
 # 7be347663638442f8bf2f6a99674af1d
-#: ../../ref/models/instances.txt:562
+#: ../../ref/models/instances.txt:711
 msgid "``get_absolute_url``"
 msgstr "``get_absolute_url``"
 
 # 170be423e7b9487797847057de6377f5
-#: ../../ref/models/instances.txt:566
+#: ../../ref/models/instances.txt:715
 msgid ""
 "Define a ``get_absolute_url()`` method to tell Django how to calculate the "
 "canonical URL for an object. To callers, this method should appear to return "
@@ -978,7 +1121,7 @@ msgstr ""
 "использована в HTTP запросе."
 
 # c2e13c9d8417413bac11402b7b71ad6d
-#: ../../ref/models/instances.txt:575
+#: ../../ref/models/instances.txt:724
 msgid ""
 "(Whilst this code is correct and simple, it may not be the most portable way "
 "to write this kind of method. The :func:`~django.core.urlresolvers.reverse` "
@@ -989,7 +1132,7 @@ msgstr ""
 "urlresolvers.reverse`.)"
 
 # f01a31faf0bc4c679cb0db2cfa8b3b01
-#: ../../ref/models/instances.txt:585
+#: ../../ref/models/instances.txt:734
 msgid ""
 "One place Django uses ``get_absolute_url()`` is in the admin app. If an "
 "object defines this method, the object-editing page will have a \"View on "
@@ -1002,7 +1145,7 @@ msgstr ""
 "объекта, ссылку на которую возвращает ``get_absolute_url()``."
 
 # f16957c12a9b4c5184b86620d3f85233
-#: ../../ref/models/instances.txt:590
+#: ../../ref/models/instances.txt:739
 msgid ""
 "Similarly, a couple of other bits of Django, such as the :doc:`syndication "
 "feed framework </ref/contrib/syndication>`, use ``get_absolute_url()`` when "
@@ -1014,8 +1157,21 @@ msgstr ""
 "объект модели представляет какой-то уникальный URL, вам стоит определить "
 "метод ``get_absolute_url()``."
 
+#: ../../ref/models/instances.txt:746
+msgid ""
+"You should avoid building the URL from unvalidated user input, in order to "
+"reduce possibilities of link or redirect poisoning::"
+msgstr ""
+
+#: ../../ref/models/instances.txt:752
+msgid ""
+"If ``self.name`` is ``'/example.com'`` this returns ``'//example.com/'`` "
+"which, in turn, is a valid schema relative URL but not the expected ``'/"
+"%2Fexample.com/'``."
+msgstr ""
+
 # c79820e1a3f049c6b2afbf034475175e
-#: ../../ref/models/instances.txt:595
+#: ../../ref/models/instances.txt:757
 msgid ""
 "It's good practice to use ``get_absolute_url()`` in templates, instead of "
 "hard-coding your objects' URLs. For example, this template code is bad:"
@@ -1024,12 +1180,12 @@ msgstr ""
 "того, чтобы \"хардкодить\" URL-ы. Например, это плохой подход:"
 
 # 366627a9ab644c97b9436cbfe11008c1
-#: ../../ref/models/instances.txt:603
+#: ../../ref/models/instances.txt:765
 msgid "This template code is much better:"
 msgstr "Этот шаблон значительно лучше:"
 
 # f6ba7b82b1be4413bd17195594598517
-#: ../../ref/models/instances.txt:609
+#: ../../ref/models/instances.txt:771
 msgid ""
 "The logic here is that if you change the URL structure of your objects, even "
 "for something simple such as correcting a spelling error, you don't want to "
@@ -1043,7 +1199,7 @@ msgstr ""
 "``get_absolute_url()``, и пусть остальной код использует его."
 
 # 2b5c045aaa9a42faa0fac63212011858
-#: ../../ref/models/instances.txt:615
+#: ../../ref/models/instances.txt:777
 msgid ""
 "The string you return from ``get_absolute_url()`` **must** contain only "
 "ASCII characters (required by the URI specification, :rfc:`2396`) and be URL-"
@@ -1054,7 +1210,7 @@ msgstr ""
 "закодированной для URL, если необходимо."
 
 # a2803a2645ed46faa1d84776eab4976a
-#: ../../ref/models/instances.txt:619
+#: ../../ref/models/instances.txt:781
 msgid ""
 "Code and templates calling ``get_absolute_url()`` should be able to use the "
 "result directly without any further processing. You may wish to use the "
@@ -1066,157 +1222,13 @@ msgstr ""
 "``django.utils.encoding.iri_to_uri()``, если используете unicode-строку, "
 "которая содержит не ASCII символы."
 
-# 2543e14c1a644a1e8e41151dbeeab8ab
-#: ../../ref/models/instances.txt:626
-msgid "The ``permalink`` decorator"
-msgstr "Декоратор ``permalink``"
-
-# a0a6eae7bb9d4ef7a81fa0512c5fede1
-#: ../../ref/models/instances.txt:630
-msgid ""
-"The ``permalink`` decorator is no longer recommended. You should use :func:"
-"`~django.core.urlresolvers.reverse` in the body of your ``get_absolute_url`` "
-"method instead."
-msgstr ""
-"Декоратор ``permalink`` больше не рекомендуется. Следует использовать :func:"
-"`~django.core.urlresolvers.reverse` в методе ``get_absolute_url``."
-
-# 0f2a9906c5454e6f8e5d462596a1630d
-#: ../../ref/models/instances.txt:634
-msgid ""
-"In early versions of Django, there wasn't an easy way to use URLs defined in "
-"URLconf file inside :meth:`~django.db.models.Model.get_absolute_url`. That "
-"meant you would need to define the URL both in URLConf and :meth:`~django.db."
-"models.Model.get_absolute_url`. The ``permalink`` decorator was added to "
-"overcome this DRY principle violation. However, since the introduction of :"
-"func:`~django.core.urlresolvers.reverse` there is no reason to use "
-"``permalink`` any more."
-msgstr ""
-"В ранних версиях Django не было просто способа использовать URL определенный "
-"в URLconf в методе :meth:`~django.db.models.Model.get_absolute_url`. Вам "
-"приходилось определять URL и в URLConf и в :meth:`~django.db.models.Model."
-"get_absolute_url`. Для соблюдения DRY принципа был добавлен декоратор "
-"``permalink``. Но после представления функции :func:`~django.core."
-"urlresolvers.reverse` отпала надобность в ``permalink``."
-
-# 0de89d47f43f44d49c394757dba7a1cb
-#: ../../ref/models/instances.txt:644
-msgid ""
-"This decorator takes the name of a URL pattern (either a view name or a URL "
-"pattern name) and a list of position or keyword arguments and uses the "
-"URLconf patterns to construct the correct, full URL. It returns a string for "
-"the correct URL, with all parameters substituted in the correct positions."
-msgstr ""
-"Этот декоратор принимает названия шаблона URL (либо имя представления, либо "
-"название шаблона URL) и список позиционных или именованных аргументов "
-"шаблона URLconf для вычисления правильного и полного URL. Он возвращает "
-"правильный URL, с учетом всех аргументов."
-
-# daa122604922490fb98638f694970b68
-#: ../../ref/models/instances.txt:649
-msgid ""
-"The ``permalink`` decorator is a Python-level equivalent to the :ttag:`url` "
-"template tag and a high-level wrapper for the :func:`~django.core."
-"urlresolvers.reverse` function."
-msgstr ""
-"Декоратор ``permalink`` это эквивалент шаблонного тега :ttag:`url` и обертка "
-"для функции :func:`~django.core.urlresolvers.reverse`."
-
-# 1655bcda94964ca3bf1dbeae206f18d7
-#: ../../ref/models/instances.txt:653
-msgid ""
-"An example should make it clear how to use ``permalink()``. Suppose your "
-"URLconf contains a line such as::"
-msgstr ""
-"Пример покажет как использовать ``permalink()``. Предположим у на есть такой "
-"URLconf::"
-
-# b7b893018cd1456b8026524b479956c1
-#: ../../ref/models/instances.txt:658
-msgid ""
-"...your model could have a :meth:`~django.db.models.Model.get_absolute_url` "
-"method that looked like this::"
-msgstr ""
-"...ваша модель может определить метод :meth:`~django.db.models.Model."
-"get_absolute_url` таким образом::"
-
-# 802da1e481af4c5082ad2fed6faeaae9
-#: ../../ref/models/instances.txt:667
-msgid "Similarly, if you had a URLconf entry that looked like::"
-msgstr "Добавим еще одну строку в URLconf::"
-
-# f6bc301e2a664f01ad133cd4048eb2db
-#: ../../ref/models/instances.txt:671
-msgid "...you could reference this using ``permalink()`` as follows::"
-msgstr "...теперь ``permalink()`` можно использовать таким образом::"
-
-# 12d9d11a392c4ece98b445b7838fcf84
-#: ../../ref/models/instances.txt:680
-msgid ""
-"Notice that we specify an empty sequence for the second parameter in this "
-"case, because we only want to pass keyword parameters, not positional ones."
-msgstr ""
-"Обратите внимание, мы указали пустую последовательность вторым параметром, "
-"потому что хотим использовать только именованные аргументы."
-
-# 316dfa73947d483685e17f74efb6264d
-#: ../../ref/models/instances.txt:683
-msgid ""
-"In this way, you're associating the model's absolute path with the view that "
-"is used to display it, without repeating the view's URL information "
-"anywhere. You can still use the :meth:`~django.db.models.Model."
-"get_absolute_url()` method in templates, as before."
-msgstr ""
-"Таким образом, мы связали абсолютный путь модели с представлением, которое "
-"отображает ее, без повторного упоминания информации про URL. Вы можете "
-"использовать метод :meth:`~django.db.models.Model.get_absolute_url()` в "
-"шаблоне, как было показано выше."
-
-# 57204706e08e4e6ca39b05f42d2dea98
-#: ../../ref/models/instances.txt:688
-msgid ""
-"In some cases, such as the use of generic views or the re-use of custom "
-"views for multiple models, specifying the view function may confuse the "
-"reverse URL matcher (because multiple patterns point to the same view). For "
-"that case, Django has :ref:`named URL patterns <naming-url-patterns>`. Using "
-"a named URL pattern, it's possible to give a name to a pattern, and then "
-"reference the name rather than the view function. A named URL pattern is "
-"defined by replacing the pattern tuple by a call to the ``url`` function)::"
-msgstr ""
-"В некоторых случаях, таких, как использование общих представлений или "
-"повторное использование представления для нескольких моделей, использование "
-"представления может обескуражить определение URL (так как несколько шаблонов "
-"используют одно представление). Для таких случаев, Django имеет :ref:"
-"`именованные шаблоны URL <naming-url-patterns>`. При их использовании, можно "
-"добавить название для шаблона URL, и использовать его вместо функции "
-"представления при определении URL, именованные шаблоны URL определяются "
-"заменой кортежа в URLconf на вызов функции ``url``)::"
-
-# ee9251dfedba4df1bee846838c55e640
-#: ../../ref/models/instances.txt:700
-msgid ""
-"...and then using that name to perform the reverse URL resolution instead of "
-"the view name::"
-msgstr ""
-"...а затем использовать это название вместо названия функции представления "
-"для вычисления URL::"
-
-# cfc54b578d704da8b1de4d5c5351a237
-#: ../../ref/models/instances.txt:709
-msgid ""
-"More details on named URL patterns are in the :doc:`URL dispatch "
-"documentation </topics/http/urls>`."
-msgstr ""
-"Подробности вы можете узнать в разделе о :doc:`менеджере URL </topics/http/"
-"urls>`."
-
 # 453c15c6a8844c309a23b08f28369113
-#: ../../ref/models/instances.txt:713
+#: ../../ref/models/instances.txt:788
 msgid "Extra instance methods"
 msgstr "Дополнительные методы модели"
 
 # cf5de768199043bc8999fe4610b43407
-#: ../../ref/models/instances.txt:715
+#: ../../ref/models/instances.txt:790
 msgid ""
 "In addition to :meth:`~Model.save()`, :meth:`~Model.delete()`, a model "
 "object might have some of the following methods:"
@@ -1225,7 +1237,7 @@ msgstr ""
 "объект модели может содержать некоторые из этих методов:"
 
 # e0af5f91ae4a45bfa89adb4e84adaa04
-#: ../../ref/models/instances.txt:720
+#: ../../ref/models/instances.txt:795
 msgid ""
 "For every field that has :attr:`~django.db.models.Field.choices` set, the "
 "object will have a ``get_FOO_display()`` method, where ``FOO`` is the name "
@@ -1236,7 +1248,7 @@ msgstr ""
 "метод возвращает удобное для восприятия название для значения поля."
 
 # 29b4c3a7c4604d31883039917f636f41
-#: ../../ref/models/instances.txt:749
+#: ../../ref/models/instances.txt:824
 msgid ""
 "For every :class:`~django.db.models.DateField` and :class:`~django.db.models."
 "DateTimeField` that does not have :attr:`null=True <django.db.models.Field."
@@ -1255,7 +1267,7 @@ msgstr ""
 "объект не существует."
 
 # 23fa6b7de97c48abac35b6b507368d0b
-#: ../../ref/models/instances.txt:756
+#: ../../ref/models/instances.txt:831
 msgid ""
 "Both of these methods will perform their queries using the default manager "
 "for the model. If you need to emulate filtering used by a custom manager, or "
@@ -1270,7 +1282,7 @@ msgstr ""
 "`операторов фильтрации <field-lookups>`."
 
 # ee2b2e31cf7b488799a7efffc60e78a9
-#: ../../ref/models/instances.txt:762
+#: ../../ref/models/instances.txt:837
 msgid ""
 "Note that in the case of identical date values, these methods will use the "
 "primary key as a tie-breaker. This guarantees that no records are skipped or "
@@ -1281,6 +1293,150 @@ msgstr ""
 "Это гарантирует, что записи не будут пропущены или дублированы. Это также "
 "означает, что вы не можете использовать эти методы для не сохраненных "
 "объектов."
+
+# 37762212f32a43b9833eafa10a1f02f6
+#~ msgid ""
+#~ "The ``validate_unique`` parameter was added to allow skipping :meth:"
+#~ "`Model.validate_unique()`. Previously, :meth:`Model.validate_unique()` "
+#~ "was always called by ``full_clean``."
+#~ msgstr ""
+#~ "Параметр ``validate_unique`` был добавлен для пропуска проверки :meth:"
+#~ "`Model.validate_unique()`. Ранее :meth:`Model.validate_unique()` "
+#~ "вызывался всегда при вызове ``full_clean``."
+
+# 2543e14c1a644a1e8e41151dbeeab8ab
+#~ msgid "The ``permalink`` decorator"
+#~ msgstr "Декоратор ``permalink``"
+
+# a0a6eae7bb9d4ef7a81fa0512c5fede1
+#~ msgid ""
+#~ "The ``permalink`` decorator is no longer recommended. You should use :"
+#~ "func:`~django.core.urlresolvers.reverse` in the body of your "
+#~ "``get_absolute_url`` method instead."
+#~ msgstr ""
+#~ "Декоратор ``permalink`` больше не рекомендуется. Следует использовать :"
+#~ "func:`~django.core.urlresolvers.reverse` в методе ``get_absolute_url``."
+
+# 0f2a9906c5454e6f8e5d462596a1630d
+#~ msgid ""
+#~ "In early versions of Django, there wasn't an easy way to use URLs defined "
+#~ "in URLconf file inside :meth:`~django.db.models.Model.get_absolute_url`. "
+#~ "That meant you would need to define the URL both in URLConf and :meth:"
+#~ "`~django.db.models.Model.get_absolute_url`. The ``permalink`` decorator "
+#~ "was added to overcome this DRY principle violation. However, since the "
+#~ "introduction of :func:`~django.core.urlresolvers.reverse` there is no "
+#~ "reason to use ``permalink`` any more."
+#~ msgstr ""
+#~ "В ранних версиях Django не было просто способа использовать URL "
+#~ "определенный в URLconf в методе :meth:`~django.db.models.Model."
+#~ "get_absolute_url`. Вам приходилось определять URL и в URLConf и в :meth:"
+#~ "`~django.db.models.Model.get_absolute_url`. Для соблюдения DRY принципа "
+#~ "был добавлен декоратор ``permalink``. Но после представления функции :"
+#~ "func:`~django.core.urlresolvers.reverse` отпала надобность в "
+#~ "``permalink``."
+
+# 0de89d47f43f44d49c394757dba7a1cb
+#~ msgid ""
+#~ "This decorator takes the name of a URL pattern (either a view name or a "
+#~ "URL pattern name) and a list of position or keyword arguments and uses "
+#~ "the URLconf patterns to construct the correct, full URL. It returns a "
+#~ "string for the correct URL, with all parameters substituted in the "
+#~ "correct positions."
+#~ msgstr ""
+#~ "Этот декоратор принимает названия шаблона URL (либо имя представления, "
+#~ "либо название шаблона URL) и список позиционных или именованных "
+#~ "аргументов шаблона URLconf для вычисления правильного и полного URL. Он "
+#~ "возвращает правильный URL, с учетом всех аргументов."
+
+# daa122604922490fb98638f694970b68
+#~ msgid ""
+#~ "The ``permalink`` decorator is a Python-level equivalent to the :ttag:"
+#~ "`url` template tag and a high-level wrapper for the :func:`~django.core."
+#~ "urlresolvers.reverse` function."
+#~ msgstr ""
+#~ "Декоратор ``permalink`` это эквивалент шаблонного тега :ttag:`url` и "
+#~ "обертка для функции :func:`~django.core.urlresolvers.reverse`."
+
+# 1655bcda94964ca3bf1dbeae206f18d7
+#~ msgid ""
+#~ "An example should make it clear how to use ``permalink()``. Suppose your "
+#~ "URLconf contains a line such as::"
+#~ msgstr ""
+#~ "Пример покажет как использовать ``permalink()``. Предположим у на есть "
+#~ "такой URLconf::"
+
+# b7b893018cd1456b8026524b479956c1
+#~ msgid ""
+#~ "...your model could have a :meth:`~django.db.models.Model."
+#~ "get_absolute_url` method that looked like this::"
+#~ msgstr ""
+#~ "...ваша модель может определить метод :meth:`~django.db.models.Model."
+#~ "get_absolute_url` таким образом::"
+
+# 802da1e481af4c5082ad2fed6faeaae9
+#~ msgid "Similarly, if you had a URLconf entry that looked like::"
+#~ msgstr "Добавим еще одну строку в URLconf::"
+
+# f6bc301e2a664f01ad133cd4048eb2db
+#~ msgid "...you could reference this using ``permalink()`` as follows::"
+#~ msgstr "...теперь ``permalink()`` можно использовать таким образом::"
+
+# 12d9d11a392c4ece98b445b7838fcf84
+#~ msgid ""
+#~ "Notice that we specify an empty sequence for the second parameter in this "
+#~ "case, because we only want to pass keyword parameters, not positional "
+#~ "ones."
+#~ msgstr ""
+#~ "Обратите внимание, мы указали пустую последовательность вторым "
+#~ "параметром, потому что хотим использовать только именованные аргументы."
+
+# 316dfa73947d483685e17f74efb6264d
+#~ msgid ""
+#~ "In this way, you're associating the model's absolute path with the view "
+#~ "that is used to display it, without repeating the view's URL information "
+#~ "anywhere. You can still use the :meth:`~django.db.models.Model."
+#~ "get_absolute_url()` method in templates, as before."
+#~ msgstr ""
+#~ "Таким образом, мы связали абсолютный путь модели с представлением, "
+#~ "которое отображает ее, без повторного упоминания информации про URL. Вы "
+#~ "можете использовать метод :meth:`~django.db.models.Model."
+#~ "get_absolute_url()` в шаблоне, как было показано выше."
+
+# 57204706e08e4e6ca39b05f42d2dea98
+#~ msgid ""
+#~ "In some cases, such as the use of generic views or the re-use of custom "
+#~ "views for multiple models, specifying the view function may confuse the "
+#~ "reverse URL matcher (because multiple patterns point to the same view). "
+#~ "For that case, Django has :ref:`named URL patterns <naming-url-"
+#~ "patterns>`. Using a named URL pattern, it's possible to give a name to a "
+#~ "pattern, and then reference the name rather than the view function. A "
+#~ "named URL pattern is defined by replacing the pattern tuple by a call to "
+#~ "the ``url`` function)::"
+#~ msgstr ""
+#~ "В некоторых случаях, таких, как использование общих представлений или "
+#~ "повторное использование представления для нескольких моделей, "
+#~ "использование представления может обескуражить определение URL (так как "
+#~ "несколько шаблонов используют одно представление). Для таких случаев, "
+#~ "Django имеет :ref:`именованные шаблоны URL <naming-url-patterns>`. При их "
+#~ "использовании, можно добавить название для шаблона URL, и использовать "
+#~ "его вместо функции представления при определении URL, именованные шаблоны "
+#~ "URL определяются заменой кортежа в URLconf на вызов функции ``url``)::"
+
+# ee9251dfedba4df1bee846838c55e640
+#~ msgid ""
+#~ "...and then using that name to perform the reverse URL resolution instead "
+#~ "of the view name::"
+#~ msgstr ""
+#~ "...а затем использовать это название вместо названия функции "
+#~ "представления для вычисления URL::"
+
+# cfc54b578d704da8b1de4d5c5351a237
+#~ msgid ""
+#~ "More details on named URL patterns are in the :doc:`URL dispatch "
+#~ "documentation </topics/http/urls>`."
+#~ msgstr ""
+#~ "Подробности вы можете узнать в разделе о :doc:`менеджере URL </topics/"
+#~ "http/urls>`."
 
 # f558936c4c5a4cce8a4a5ed14bd6f9dc
 #~ msgid ""

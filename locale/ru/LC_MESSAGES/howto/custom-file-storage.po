@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-09 11:16+0300\n"
+"POT-Creation-Date: 2015-03-19 15:06+0200\n"
 "PO-Revision-Date: 2012-02-15 15:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -72,12 +72,10 @@ msgid ""
 "FileSystemStorage)."
 msgstr ""
 
-# 27fb526288d04efb83963d8abf5b5176
 #: ../../howto/custom-file-storage.txt:44
 msgid ""
-"Your custom storage system may override any of the storage methods explained "
-"in :doc:`/ref/files/storage`, but you **must** implement the following "
-"methods:"
+"By default, the following methods raise `NotImplementedError` and will "
+"typically have to be overridden:"
 msgstr ""
 
 # 882d83bba9584f3785d7dd9caf522632
@@ -105,20 +103,46 @@ msgstr ""
 msgid ":meth:`Storage.url`"
 msgstr ""
 
-# 1a0f1d4a02ff4efdac2f7f1c5bf44822
 #: ../../howto/custom-file-storage.txt:53
+msgid ""
+"Note however that not all these methods are required and may be deliberately "
+"omitted. As it happens, it is possible to leave each method unimplemented "
+"and still have a working Storage."
+msgstr ""
+
+#: ../../howto/custom-file-storage.txt:57
+msgid ""
+"By way of example, if listing the contents of certain storage backends turns "
+"out to be expensive, you might decide not to implement `Storage.listdir`."
+msgstr ""
+
+#: ../../howto/custom-file-storage.txt:60
+msgid ""
+"Another example would be a backend that only handles writing to files. In "
+"this case, you would not need to implement any of the above methods."
+msgstr ""
+
+#: ../../howto/custom-file-storage.txt:63
+msgid ""
+"Ultimately, which of these methods are implemented is up to you. Leaving "
+"some methods unimplemented will result in a partial (possibly broken) "
+"interface."
+msgstr ""
+
+# 1a0f1d4a02ff4efdac2f7f1c5bf44822
+#: ../../howto/custom-file-storage.txt:66
 msgid ""
 "You'll also usually want to use hooks specifically designed for custom "
 "storage objects. These are:"
 msgstr ""
 
 # 50006620485e4434acd60d9d3915b1e9
-#: ../../howto/custom-file-storage.txt:58
+#: ../../howto/custom-file-storage.txt:71
 msgid "**Required**."
 msgstr ""
 
 # 37e946cb8d9048ea8845231547ee1eeb
-#: ../../howto/custom-file-storage.txt:60
+#: ../../howto/custom-file-storage.txt:73
 msgid ""
 "Called by ``Storage.open()``, this is the actual mechanism the storage class "
 "uses to open the file. This must return a ``File`` object, though in most "
@@ -127,7 +151,7 @@ msgid ""
 msgstr ""
 
 # 5835dbb20f8547238b186db03e779391
-#: ../../howto/custom-file-storage.txt:67
+#: ../../howto/custom-file-storage.txt:80
 msgid ""
 "Called by ``Storage.save()``. The ``name`` will already have gone through "
 "``get_valid_name()`` and ``get_available_name()``, and the ``content`` will "
@@ -135,7 +159,7 @@ msgid ""
 msgstr ""
 
 # 32afc01f4e2e4a128ffac8c6cce41843
-#: ../../howto/custom-file-storage.txt:71
+#: ../../howto/custom-file-storage.txt:84
 msgid ""
 "Should return the actual name of name of the file saved (usually the "
 "``name`` passed in, but if the storage needs to change the file name return "
@@ -143,7 +167,7 @@ msgid ""
 msgstr ""
 
 # ffef9aea1eef4a4e818776ce8b1fe8b1
-#: ../../howto/custom-file-storage.txt:78
+#: ../../howto/custom-file-storage.txt:90
 msgid ""
 "Returns a filename suitable for use with the underlying storage system. The "
 "``name`` argument passed to this method is the original filename sent to the "
@@ -152,14 +176,14 @@ msgid ""
 msgstr ""
 
 # 72e0e92233674bb0b544d37d2282b7e5
-#: ../../howto/custom-file-storage.txt:83
+#: ../../howto/custom-file-storage.txt:95
 msgid ""
 "The code provided on ``Storage`` retains only alpha-numeric characters, "
 "periods and underscores from the original filename, removing everything else."
 msgstr ""
 
 # f41826c98aaa430a9dde78a6664fa76e
-#: ../../howto/custom-file-storage.txt:88
+#: ../../howto/custom-file-storage.txt:100
 msgid ""
 "Returns a filename that is available in the storage mechanism, possibly "
 "taking the provided filename into account. The ``name`` argument passed to "
@@ -167,8 +191,15 @@ msgid ""
 "system, according to the ``get_valid_name()`` method described above."
 msgstr ""
 
+#: ../../howto/custom-file-storage.txt:105
+msgid ""
+"The length of the filename will not exceed ``max_length``, if provided. If a "
+"free unique filename cannot be found, a :exc:`SuspiciousFileOperation "
+"<django.core.exceptions.SuspiciousOperation>` exception is raised."
+msgstr ""
+
 # f51c0e2f80c1474ea2421f3d1c927fe7
-#: ../../howto/custom-file-storage.txt:95
+#: ../../howto/custom-file-storage.txt:109
 msgid ""
 "If a file with ``name`` already exists, an underscore plus a random 7 "
 "character alphanumeric string is appended to the filename before the "
@@ -176,11 +207,15 @@ msgid ""
 msgstr ""
 
 # b8be0c93e2bb4b03bb538d128f423538
-#: ../../howto/custom-file-storage.txt:99
+#: ../../howto/custom-file-storage.txt:114
 msgid ""
 "Previously, an underscore followed by a number (e.g. ``\"_1\"``, ``\"_2\"``, "
 "etc.) was appended to the filename until an available name in the "
 "destination directory was found. A malicious user could exploit this "
 "deterministic algorithm to create a denial-of-service attack. This change "
 "was also made in Django 1.6.6, 1.5.9, and 1.4.14."
+msgstr ""
+
+#: ../../howto/custom-file-storage.txt:122
+msgid "The ``max_length`` argument was added."
 msgstr ""

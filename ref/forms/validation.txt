@@ -36,7 +36,7 @@ overridden:
   ``ValidationError``.
 
 * The ``validate()`` method on a Field handles field-specific validation
-  that is not suitable for a validator, It takes a value that has been
+  that is not suitable for a validator. It takes a value that has been
   coerced to correct datatype and raises ``ValidationError`` on any error.
   This method does not return anything and shouldn't alter the value. You
   should override it to handle validation logic that you can't or don't
@@ -81,7 +81,7 @@ overridden:
   which will be used as the ``cleaned_data``.
 
   Since the field validation methods have been run by the time ``clean()`` is
-  called, you also have access to the form's errors attribute which
+  called, you also have access to the form's ``errors`` attribute which
   contains all the errors raised by cleaning of individual fields.
 
   Note that any errors raised by your :meth:`Form.clean()` override will not
@@ -114,8 +114,6 @@ for all remaining fields are still executed.
 
 Raising ``ValidationError``
 ---------------------------
-
-.. versionchanged:: 1.6
 
 In order to make error messages flexible and easy to override, consider the
 following guidelines:
@@ -261,7 +259,7 @@ available and for an example of how to write a validator.
 Form field default cleaning
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Let's firstly create a custom form field that validates its input is a string
+Let's first create a custom form field that validates its input is a string
 containing comma-separated email addresses. The full class looks like this::
 
     from django import forms
@@ -327,13 +325,6 @@ write a cleaning method that operates on the ``recipients`` field, like so::
             # Always return the cleaned data, whether you have changed it or
             # not.
             return data
-
-Sometimes you may want to add an error message to a particular field from the
-form's :meth:`~Form.clean()` method, in which case you can use
-:meth:`~django.forms.Form.add_error()`. Note that this won't always be
-appropriate and the more typical situation is to raise a ``ValidationError``
-from , which is turned into a form-wide error that is available through the
-:meth:`Form.non_field_errors() <django.forms.Form.non_field_errors>` method.
 
 .. _validating-fields-with-clean:
 
@@ -410,7 +401,7 @@ sample) looks like this::
             subject = cleaned_data.get("subject")
 
             if cc_myself and subject and "help" not in subject:
-                msg = u"Must put 'help' in subject when cc'ing yourself."
+                msg = "Must put 'help' in subject when cc'ing yourself."
                 self.add_error('cc_myself', msg)
                 self.add_error('subject', msg)
 

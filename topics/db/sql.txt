@@ -56,7 +56,7 @@ options that make it very powerful.
 
 .. admonition:: Model table names
 
-    Where'd the name of the ``Person`` table come from in that example?
+    Where did the name of the ``Person`` table come from in that example?
 
     By default, Django figures out a database table name by joining the
     model's "app label" -- the name you used in ``manage.py startapp`` -- to
@@ -203,7 +203,7 @@ dictionary key, of course), regardless of your database engine.  Such
 placeholders will be replaced with parameters from the ``params``
 argument.
 
-.. note:: Dictionary params not supported with SQLite
+.. note::
 
    Dictionary params are not supported with the SQLite backend; with
    this backend, you must pass parameters as a list.
@@ -226,13 +226,6 @@ argument.
     ``params`` argument you'll be protected.
 
 __ http://en.wikipedia.org/wiki/SQL_injection
-
-.. versionchanged:: 1.6
-
-    In Django 1.5 and earlier, you could pass parameters as dictionaries
-    when using PostgreSQL or MySQL, although this wasn't documented. Now
-    you can also do this when using Oracle, and it is officially supported.
-
 
 .. _executing-custom-sql:
 
@@ -265,13 +258,6 @@ For example::
         row = cursor.fetchone()
 
         return row
-
-.. versionchanged:: 1.6
-
-    In Django 1.5 and earlier, after performing a data changing operation, you
-    had to call ``transaction.commit_unless_managed()`` to ensure your changes
-    were committed to the database. Since Django now defaults to database-level
-    autocommit, this isn't necessary any longer.
 
 Note that if you want to include literal percent signs in the query, you have to
 double them in the case you are passing parameters::
@@ -336,18 +322,14 @@ an unexpected behavior in magic method lookups (`Python ticket #9220`_).
 Django 1.7 explicitly added support to allow using a cursor as context
 manager.
 
-.. _`Python ticket #9220`: http://bugs.python.org/issue9220
+.. _`Python ticket #9220`: https://bugs.python.org/issue9220
 
-Using a cursor as a context manager:
-
-.. code-block:: python
+Using a cursor as a context manager::
 
     with connection.cursor() as c:
         c.execute(...)
 
-is equivalent to:
-
-.. code-block:: python
+is equivalent to::
 
     c = connection.cursor()
     try:

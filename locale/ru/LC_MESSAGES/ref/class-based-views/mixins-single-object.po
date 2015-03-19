@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-09 11:16+0300\n"
+"POT-Creation-Date: 2015-03-19 15:06+0200\n"
 "PO-Revision-Date: 2014-09-09 23:02+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -42,22 +42,25 @@ msgstr ""
 # 7bb90542a582450584c63f842df0b460
 # 7cda2b7f39fd41299d0d32570d985879
 #: ../../ref/class-based-views/mixins-single-object.txt:13
-#: ../../ref/class-based-views/mixins-single-object.txt:115
+#: ../../ref/class-based-views/mixins-single-object.txt:140
 msgid "**Methods and Attributes**"
 msgstr "**Методы и Атрибуты**"
 
 # 8c18f59eede5435881c88966ed435dec
 #: ../../ref/class-based-views/mixins-single-object.txt:17
+#, fuzzy
 msgid ""
 "The model that this view will display data for. Specifying ``model = Foo`` "
-"is effectively the same as specifying ``queryset = Foo.objects.all()``."
+"is effectively the same as specifying ``queryset = Foo.objects.all()``, "
+"where ``objects`` stands for ``Foo``’s :ref:`default manager <default-"
+"managers>`."
 msgstr ""
 "Модель с которой \"работает\" данное представление(представление будет "
 "отображать данные этой модели). Указать  ``model = Foo`` эквивалентно "
 "инструкции ``queryset = Foo.objects.all()``."
 
 # bcbfe50797d64cd6b983ca2e5c884cce
-#: ../../ref/class-based-views/mixins-single-object.txt:23
+#: ../../ref/class-based-views/mixins-single-object.txt:24
 msgid ""
 "A ``QuerySet`` that represents the objects. If provided, the value of "
 "``queryset`` supersedes the value provided for :attr:`model`."
@@ -66,7 +69,7 @@ msgstr ""
 "``queryset`` замещает значение в  :attr:`model`."
 
 # 55d9e496aa2446159ecf72de0dbe69c6
-#: ../../ref/class-based-views/mixins-single-object.txt:28
+#: ../../ref/class-based-views/mixins-single-object.txt:29
 msgid ""
 "``queryset`` is a class attribute with a *mutable* value so care must be "
 "taken when using it directly. Before using it, either call its :meth:"
@@ -79,7 +82,7 @@ msgstr ""
 "метод :meth:`get_queryset`, которые сделает копию атрибута."
 
 # 0059e17e84b44a99ae5f44c701fbde42
-#: ../../ref/class-based-views/mixins-single-object.txt:36
+#: ../../ref/class-based-views/mixins-single-object.txt:37
 msgid ""
 "The name of the field on the model that contains the slug. By default, "
 "``slug_field`` is ``'slug'``."
@@ -88,7 +91,7 @@ msgstr ""
 "``'slug'``."
 
 # a363ff59d7a8454c9250fe4d25ccd6bf
-#: ../../ref/class-based-views/mixins-single-object.txt:41
+#: ../../ref/class-based-views/mixins-single-object.txt:42
 msgid ""
 "The name of the URLConf keyword argument that contains the slug. By default, "
 "``slug_url_kwarg`` is ``'slug'``."
@@ -98,7 +101,7 @@ msgstr ""
 "``'slug'``."
 
 # 5e767bc9715d4a93b4934f4c46835012
-#: ../../ref/class-based-views/mixins-single-object.txt:46
+#: ../../ref/class-based-views/mixins-single-object.txt:47
 msgid ""
 "The name of the URLConf keyword argument that contains the primary key. By "
 "default, ``pk_url_kwarg`` is ``'pk'``."
@@ -108,12 +111,31 @@ msgstr ""
 "``pk_url_kwarg`` равен ``'pk'``."
 
 # fd7ea5f9e96047bdbcccb3520abe844c
-#: ../../ref/class-based-views/mixins-single-object.txt:51
+#: ../../ref/class-based-views/mixins-single-object.txt:52
 msgid "Designates the name of the variable to use in the context."
 msgstr "Задает имя переменной для использования в текущем контексте."
 
+#: ../../ref/class-based-views/mixins-single-object.txt:58
+msgid ""
+"If ``True``, causes :meth:`get_object()` to perform its lookup using both "
+"the primary key and the slug. Defaults to ``False``."
+msgstr ""
+
+#: ../../ref/class-based-views/mixins-single-object.txt:61
+msgid ""
+"This attribute can help mitigate `insecure direct object reference`_ "
+"attacks. When applications allow access to individual objects by a "
+"sequential primary key, an attacker could brute-force guess all URLs; "
+"thereby obtaining a list of all objects in the application. If users with "
+"access to individual objects should be prevented from obtaining this list, "
+"setting ``query_pk_and_slug`` to ``True`` will help prevent the guessing of "
+"URLs as each URL will require two correct, non-sequential arguments. Simply "
+"using a unique slug may serve the same purpose, but this scheme allows you "
+"to have non-unique slugs."
+msgstr ""
+
 # 9936e482510f491a8f24ef1453358114
-#: ../../ref/class-based-views/mixins-single-object.txt:55
+#: ../../ref/class-based-views/mixins-single-object.txt:75
 msgid ""
 "Returns the single object that this view will display. If ``queryset`` is "
 "provided, that queryset will be used as the source of objects; otherwise, :"
@@ -130,11 +152,17 @@ msgstr ""
 "аргумента :attr:`pk_url_kwarg`, из списка переданных представлению; если "
 "этот аргумент найден, то метод выполнит поиск по первичному ключу(по "
 "переданному значению). Если этот аргумент не найден, то будет проверено "
-"наличие аргумента :attr:`slug_url_kwarg`, и выполнен поиск по значению слага"
-"(используя :attr:`slug_field`)."
+"наличие аргумента :attr:`slug_url_kwarg`, и выполнен поиск по значению "
+"слага(используя :attr:`slug_field`)."
+
+#: ../../ref/class-based-views/mixins-single-object.txt:86
+msgid ""
+"When :attr:`query_pk_and_slug` is ``True``, ``get_object()`` will perform "
+"its lookup using both the primary key and the slug."
+msgstr ""
 
 # dac17fc5c50f4407a62e27e5152d4a6d
-#: ../../ref/class-based-views/mixins-single-object.txt:66
+#: ../../ref/class-based-views/mixins-single-object.txt:91
 msgid ""
 "Returns the queryset that will be used to retrieve the object that this view "
 "will display. By default, :meth:`get_queryset` returns the value of the :"
@@ -150,7 +178,7 @@ msgstr ""
 "менеджера по умолчанию)."
 
 # 6f1dc49887034c95b55677f4fdc38c08
-#: ../../ref/class-based-views/mixins-single-object.txt:74
+#: ../../ref/class-based-views/mixins-single-object.txt:99
 msgid ""
 "Return the context variable name that will be used to contain the data that "
 "this view is manipulating. If :attr:`context_object_name` is not set, the "
@@ -166,12 +194,12 @@ msgstr ""
 "переменную контекста с именем ``'article'``."
 
 # f62b32114c1d4f7394c7011758004fef
-#: ../../ref/class-based-views/mixins-single-object.txt:82
+#: ../../ref/class-based-views/mixins-single-object.txt:107
 msgid "Returns context data for displaying the list of objects."
 msgstr "Возвращает данные контекста для отображения списка объектов."
 
 # 9e03fb97b4124ea5a5ad0e71bc7a4094
-#: ../../ref/class-based-views/mixins-single-object.txt:84
+#: ../../ref/class-based-views/mixins-single-object.txt:109
 msgid ""
 "The base implementation of this method requires that the ``object`` "
 "attribute be set by the view (even if ``None``). Be sure to do this if you "
@@ -183,7 +211,7 @@ msgstr ""
 "которое уже делает это."
 
 # 5fa9698d071646a6a298460a63a2df6d
-#: ../../ref/class-based-views/mixins-single-object.txt:90
+#: ../../ref/class-based-views/mixins-single-object.txt:115
 msgid ""
 "Returns the name of a slug field to be used to look up by slug. By default "
 "this simply returns the value of :attr:`slug_field`."
@@ -193,12 +221,12 @@ msgstr ""
 "attr:`slug_field`."
 
 # 904f97f16ce14ef9a77590eab94d5e13
-#: ../../ref/class-based-views/mixins-single-object.txt:93
+#: ../../ref/class-based-views/mixins-single-object.txt:118
 msgid "**Context**"
 msgstr "**Контекст**"
 
 # b31b78436b7f45a2bf499c2be282c345
-#: ../../ref/class-based-views/mixins-single-object.txt:95
+#: ../../ref/class-based-views/mixins-single-object.txt:120
 msgid ""
 "``object``: The object that this view is displaying. If "
 "``context_object_name`` is specified, that variable will also be set in the "
@@ -209,12 +237,12 @@ msgstr ""
 "с тем же значением, что и у ``object``."
 
 # 6147f4ddd4ec46f6be1b564936adb128
-#: ../../ref/class-based-views/mixins-single-object.txt:100
+#: ../../ref/class-based-views/mixins-single-object.txt:125
 msgid "SingleObjectTemplateResponseMixin"
 msgstr "SingleObjectTemplateResponseMixin"
 
 # 9f76af37a1e94240ac430ce84c3740bf
-#: ../../ref/class-based-views/mixins-single-object.txt:104
+#: ../../ref/class-based-views/mixins-single-object.txt:129
 msgid ""
 "A mixin class that performs template-based response rendering for views that "
 "operate upon a single object instance. Requires that the view it is mixed "
@@ -232,17 +260,17 @@ msgstr ""
 "экземпляра объекта."
 
 # 62cbb58322e54ed2828dbb9bba8597ef
-#: ../../ref/class-based-views/mixins-single-object.txt:111
+#: ../../ref/class-based-views/mixins-single-object.txt:136
 msgid "**Extends**"
 msgstr "**Наследуется от**"
 
 # 0fec53383ab148d398b2bc8f6525ae83
-#: ../../ref/class-based-views/mixins-single-object.txt:113
+#: ../../ref/class-based-views/mixins-single-object.txt:138
 msgid ":class:`~django.views.generic.base.TemplateResponseMixin`"
 msgstr ":class:`~django.views.generic.base.TemplateResponseMixin`"
 
 # 612fbd09d195464d90a3679301544fe2
-#: ../../ref/class-based-views/mixins-single-object.txt:119
+#: ../../ref/class-based-views/mixins-single-object.txt:144
 msgid ""
 "The field on the current object instance that can be used to determine the "
 "name of a candidate template. If either ``template_name_field`` itself or "
@@ -257,7 +285,7 @@ msgstr ""
 "кандидата."
 
 # b2610dab9cf844448558a958b356febf
-#: ../../ref/class-based-views/mixins-single-object.txt:127
+#: ../../ref/class-based-views/mixins-single-object.txt:152
 msgid ""
 "The suffix to append to the auto-generated candidate template name. Default "
 "suffix is ``_detail``."
@@ -266,18 +294,18 @@ msgstr ""
 "шаблонов кандидатов. Значение суффикса по умолчанию: ``_detail``."
 
 # b73a328ccd3a4c728a3048d642743052
-#: ../../ref/class-based-views/mixins-single-object.txt:132
+#: ../../ref/class-based-views/mixins-single-object.txt:157
 msgid "Returns a list of candidate template names. Returns the following list:"
 msgstr ""
 "Возвращает список имен шаблонов кандидатов. Возвращает следующий список:"
 
 # f175a5a695794904b83f4726abe01cf3
-#: ../../ref/class-based-views/mixins-single-object.txt:134
+#: ../../ref/class-based-views/mixins-single-object.txt:159
 msgid "the value of ``template_name`` on the view (if provided)"
 msgstr "значение атрибута  ``template_name`` в представлении(если указано)"
 
 # 1084ffd2cf2c4964a81960736288c7aa
-#: ../../ref/class-based-views/mixins-single-object.txt:135
+#: ../../ref/class-based-views/mixins-single-object.txt:160
 msgid ""
 "the contents of the ``template_name_field`` field on the object instance "
 "that the view is operating upon (if available)"
@@ -286,6 +314,6 @@ msgstr ""
 "работает представление(если доступно)"
 
 # 3542c9c4e85d46ee94c16216c8deffb3
-#: ../../ref/class-based-views/mixins-single-object.txt:137
+#: ../../ref/class-based-views/mixins-single-object.txt:162
 msgid "``<app_label>/<model_name><template_name_suffix>.html``"
 msgstr "``<app_label>/<model_name><template_name_suffix>.html``"
