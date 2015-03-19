@@ -1,8 +1,10 @@
+import logging
+import os
 from cliff.command import Command as BaseCommand
 from jinja2 import Environment, FileSystemLoader
 from polib import pofile
-import logging
-import os
+
+import conf
 
 
 class Command(BaseCommand):
@@ -73,7 +75,8 @@ class Command(BaseCommand):
         self.save_to_file({
             'statistic': statistic,
             'total': '%.02f' % ((100.00 / float(total)) * translated),
-            'main_total': '%.02f' % ((100.00 / float(main_total)) * main_translated)
+            'main_total': '%.02f' % ((100.00 / float(main_total)) * main_translated),
+            'version': conf.version
         })
 
         self.app.stdout.write('Complete statistic generated!\n')
