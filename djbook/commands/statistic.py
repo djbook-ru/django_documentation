@@ -50,14 +50,15 @@ class Command(BaseCommand):
                     msg_total = len([e for e in po if not e.obsolete])
                     msg_translated = len(po.translated_entries())
                     msg_untranslated = len(po.untranslated_entries())
+                    msg_fuzzy = msg_total - msg_translated - msg_untranslated
                     need_fix_count = msg_total - msg_translated
 
                     if msg_untranslated:
                         untranslated_list.append((unicode(name), msg_untranslated))
 
-                    untranslated_perc = int(round(msg_untranslated / float(msg_total) * 100))
-                    translated_perc = po.percent_translated()
-                    fuzzy_perc = 100 - translated_perc - untranslated_perc
+                    untranslated_perc = round(msg_untranslated / float(msg_total) * 100)
+                    fuzzy_perc = int(msg_fuzzy / float(msg_total) * 100)
+                    translated_perc = 100 - untranslated_perc - fuzzy_perc
 
                     total += msg_total
                     translated += msg_translated
