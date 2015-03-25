@@ -56,7 +56,7 @@ class Command(BaseCommand):
                     if msg_untranslated:
                         untranslated_list.append((unicode(name), msg_untranslated))
 
-                    untranslated_perc = round(msg_untranslated / float(msg_total) * 100)
+                    untranslated_perc = int(round(msg_untranslated / float(msg_total) * 100))
                     fuzzy_perc = int(msg_fuzzy / float(msg_total) * 100)
                     translated_perc = 100 - untranslated_perc - fuzzy_perc
 
