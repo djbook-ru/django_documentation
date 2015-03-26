@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated, 2012.
-# redvi <liberty195@gmail.com>, 2014.
+# redvi <liberty195@gmail.com>, 2014, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2014-07-15 15:45+0300\n"
+"PO-Revision-Date: 2015-03-26 17:58+0200\n"
 "Last-Translator: redvi <liberty195@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -107,6 +107,12 @@ msgid ""
 "``AUTHENTICATION_BACKENDS`` list will use ``ModelBackend`` as a fallback if "
 "``REMOTE_USER`` is absent, which will solve these issues."
 msgstr ""
+"Обратите внимание, что такие настройки отключат авторизацию через "
+"``ModelBackend``. Это означает, что при пустом ``REMOTE_USER`` пользователь "
+"не сможет авторизоваться, даже в интерфейсе администратора Django. "
+"Добавление ``'django.contrib.auth.backends.ModelBackend'`` в список "
+"``AUTHENTICATION_BACKENDS`` позволит использовать ``ModelBackend`` в случае "
+"пустого ``REMOTE_USER``, что решит проблему."
 
 #: ../../howto/auth-remote-user.txt:60
 msgid ""
@@ -115,6 +121,10 @@ msgid ""
 "users. These interfaces work with users stored in the database regardless of "
 "``AUTHENTICATION_BACKENDS``."
 msgstr ""
+"Управление пользователями в Django -- представления из ``contrib.admin`` и "
+"команда :djadmin:`createsuperuser`,не работают со сторонними пользователями, "
+"только с пользователями в базе данных, независимо от значения настройки "
+"``AUTHENTICATION_BACKENDS``."
 
 # 3d84c4da77fb43048f645e03ee36c3cb
 #: ../../howto/auth-remote-user.txt:66
@@ -149,6 +159,14 @@ msgid ""
 "check that your web server doesn't allow a spoofed header using underscores "
 "in place of dashes."
 msgstr ""
+"Будьте осторожны при наследовании от ``RemoteUserMiddleware`` и "
+"использовании собственного HTTP заголовка. Вы должны быть уверенны, что "
+"внешний(front-end) веб-сервер всегда устанавливает или удаляет этот "
+"заголовок при проверке авторизации, не позволяя пользователю явно передать "
+"неверное или поддельное значение. Т.к. HTTP заголовки ``X-Auth-User`` и ``X-"
+"Auth_User`` (например) приводятся к ``HTTP_X_AUTH_USER`` в ``request.META``, "
+"веб сервер также должен предотвращать подделку этих заголовков, путем "
+"использования подчеркивания вместо дефиса."
 
 #: ../../howto/auth-remote-user.txt:90
 msgid ""
@@ -157,6 +175,10 @@ msgid ""
 "start with ``HTTP_`` in ``request.META`` can only be set by your WSGI "
 "server, not directly from an HTTP request header."
 msgstr ""
+"Это замечание не относится к параметрам по умолчанию для "
+"``RemoteUserMiddleware``(``header = 'REMOTE_USER'``), т.к. ключ без "
+"``HTTP_`` в ``request.META`` может быть установлен только WSGI сервером, а "
+"не HTTP заголовком запроса."
 
 # 93264720e6484ab18d09007e510b9f9b
 #: ../../howto/auth-remote-user.txt:95
