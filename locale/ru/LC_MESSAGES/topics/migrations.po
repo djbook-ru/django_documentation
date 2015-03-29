@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2015-03-06 08:16+0300\n"
+"PO-Revision-Date: 2015-03-29 02:01+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -66,9 +66,8 @@ msgstr ""
 
 # 1a8912ad5d704b3b876f04bac5346056
 #: ../../topics/migrations.txt:27
-#, fuzzy
 msgid "The Commands"
-msgstr "Две команды"
+msgstr "Команды"
 
 # 6c4f1d8c388a459c9c4d0fe254f1b03a
 #: ../../topics/migrations.txt:29
@@ -393,6 +392,8 @@ msgid ""
 "If you want to give the migration(s) a meaningful name instead of a "
 "generated one, you can use the :djadminopt:`--name` option::"
 msgstr ""
+"Вы можете указать свое название для миграции с помощью опции :djadminopt:`--"
+"name`::"
 
 # 5ceefbc0ae96437ab20d3ad58c3434e8
 #: ../../topics/migrations.txt:178
@@ -495,7 +496,6 @@ msgstr ""
 
 # 37093d6b9dbd45ed884f64a969bf5ffb
 #: ../../topics/migrations.txt:221
-#, fuzzy
 msgid ""
 "Be aware, however, that unmigrated apps cannot depend on migrated apps, by "
 "the very nature of not having migrations. This means that it is not "
@@ -513,6 +513,9 @@ msgid ""
 "Even if things appear to work with unmigrated apps depending on migrated "
 "apps, Django may not generate all the necessary foreign key constraints!"
 msgstr ""
+"Даже если ваш проект работает с приложением без миграций, которое ссылается "
+"на приложение с миграциями, Django не сможет создать все необходимые "
+"проверки(constraints) для внешних ключей!"
 
 # afcb3b102be446f591f0072e862037af
 #: ../../topics/migrations.txt:231
@@ -632,7 +635,6 @@ msgstr "Собственные поля"
 
 # ad921bb3a72f42caa41885f7acc086d2
 #: ../../topics/migrations.txt:290
-#, fuzzy
 msgid ""
 "You can't modify the number of positional arguments in an already migrated "
 "custom field without raising a ``TypeError``. The old migration will call "
@@ -645,12 +647,12 @@ msgstr ""
 "``TypeError``. Это вызвано тем, что старая миграция попытается вызвать "
 "измененный метод ``__init__`` со старыми аргументами. По этому, если вам "
 "необходимо добавить новый аргумент в конструктор поля, используйте "
-"именованный аргумент и добавьте в конструктор что-то вроде ``assert kwargs."
-"get('argument_name') is not None``."
+"именованный аргумент и добавьте в конструктор что-то вроде ``assert "
+"'argument_name' in kwargs``."
 
 #: ../../topics/migrations.txt:299
 msgid "Model managers"
-msgstr ""
+msgstr "Менеджеры модели"
 
 #: ../../topics/migrations.txt:303
 msgid ""
@@ -659,6 +661,9 @@ msgid ""
 "This is done by defining a ``use_in_migrations`` attribute on the manager "
 "class::"
 msgstr ""
+"Вы можете сериализировать менеджеры модели в миграции, чтобы использовать в "
+"их операциях :class:`~django.db.migrations.operations.RunPython`. Для этого "
+"укажите атрибут ``use_in_migrations`` в классе менеджера::"
 
 #: ../../topics/migrations.txt:313
 msgid ""
@@ -666,12 +671,14 @@ msgid ""
 "dynamically generate a manager class, you need to inherit from the generated "
 "class to make it importable::"
 msgstr ""
+"Если вы используете функцию :meth:`~django.db.models.from_queryset`для "
+"создания менеджера, вам следует унаследоваться от сгенерированного класса::"
 
 #: ../../topics/migrations.txt:323
 msgid ""
 "Please refer to the notes about :ref:`historical-models` in migrations to "
 "see the implications that come along."
-msgstr ""
+msgstr "Советуем ознакомиться с заметками в разделе :ref:`historical-models`."
 
 # d6e3c9c33e4140e3b2671b71649a2e33
 #: ../../topics/migrations.txt:327
@@ -704,7 +711,6 @@ msgstr ""
 
 # 1a20f8ca21fa42a1a6f8c78530a04a9c
 #: ../../topics/migrations.txt:339
-#, fuzzy
 msgid ""
 "This will make a new initial migration for your app. Now, run ``python "
 "manage.py migrate --fake-initial``, and Django will detect that you have an "
@@ -713,10 +719,12 @@ msgid ""
 "fake-initial` flag, the :djadmin:`migrate` command would error out because "
 "the tables it wants to create already exist.)"
 msgstr ""
-"В приложении будет создана начальная миграция. Теперь, при выполнении :"
-"djadmin:`migrate`, Django увидит начальную миграцию, *и* что таблицы, "
-"которые необходимо создать, уже существуют, и просто пометит миграцию как "
-"уже выполненную."
+"В приложении будет создана начальная миграция. Теперь выполните ``python "
+"manage.py migrate --fake-initial``, Django увидит начальную миграцию, *и* "
+"что таблицы, которые необходимо создать, уже существуют, и просто пометит "
+"миграцию как уже выполненную. (Без флага :djadminopt:`--fake-initial` "
+"команда :djadmin:`migrate` вернет ошибку т.к. таблицы, которые она пытается "
+"создать, уже существуют.)"
 
 # 96cea579051d4d039ba0b4e515506164
 #: ../../topics/migrations.txt:346
@@ -769,7 +777,6 @@ msgstr ""
 
 # b23e65a8ba3d450da348b6f11d11dd42
 #: ../../topics/migrations.txt:373
-#, fuzzy
 msgid ""
 "Because it's impossible to serialize arbitrary Python code, these historical "
 "models will not have any custom methods that you have defined. They will, "
@@ -778,10 +785,11 @@ msgid ""
 "they may be different from your current ones)."
 msgstr ""
 "Т.к. невозможно сериализовать произвольный код Python, эти версии моделей не "
-"будут содержать методы или менеджеры, который вы добавили в модели. Однако, "
-"модели будут содержать аналогичные поля, связи и параметры ``Meta`` (с "
-"учетом версии модели, так что они могут отличаться от моделей, которые "
-"находятся на данный момент в приложении)."
+"будут содержать методы, который вы добавили в модели. Однако, модели будут "
+"содержать аналогичные поля, связи, менеджеры(только те, которые содержат "
+"``use_in_migrations = True``) и параметры ``Meta`` (с учетом версии модели, "
+"так что они могут отличаться от моделей, которые находятся на данный момент "
+"в приложении)."
 
 # bf580196957d4288b45074ec834e67a4
 #: ../../topics/migrations.txt:381
@@ -796,7 +804,6 @@ msgstr ""
 
 # f1d29382bef94e928c47fb3d66c9fc1e
 #: ../../topics/migrations.txt:385
-#, fuzzy
 msgid ""
 "References to functions in field options such as ``upload_to`` and "
 "``limit_choices_to`` and model manager declarations with managers having "
@@ -807,8 +814,11 @@ msgid ""
 "migrations."
 msgstr ""
 "Ссылки на функции, которые используются в параметрах поля (например, "
-"``upload_to`` и ``limit_choices_to``), будут сохранены в миграциях. Такие "
-"функции нельзя удалять из кода проекта, пока миграции ссылаются на них."
+"``upload_to`` и ``limit_choices_to``), и менеджеры моделей с "
+"``use_in_migrations = True`` будут сериализированы в миграциях. Такие "
+"функции нельзя удалять из кода проекта, пока существуют миграции, которые "
+"ссылаются на них. Все :doc:`собственные поля моделей </howto/custom-model-"
+"fields>` также должы быть доступны т.к. они явно импортируются в миграциях."
 
 # cb56ad648d0f46ef9c2f673870718af0
 #: ../../topics/migrations.txt:392
@@ -828,7 +838,7 @@ msgstr ""
 
 #: ../../topics/migrations.txt:401
 msgid "Considerations when removing model fields"
-msgstr ""
+msgstr "Советы по удалению полей модели"
 
 #: ../../topics/migrations.txt:405
 msgid ""
@@ -837,6 +847,9 @@ msgid ""
 "project or third-party app will cause a problem if they are referenced in "
 "old migrations."
 msgstr ""
+"Из предыдущего раздела вы узнали, что удаление собственных полей модели из "
+"проекта или используемых приложений может привести к проблемам с миграциями, "
+"если существуют миграции, которые ссылаются на эти поля."
 
 #: ../../topics/migrations.txt:409
 msgid ""
@@ -844,12 +857,15 @@ msgid ""
 "assist with model field deprecation using the :doc:`system checks framework "
 "</topics/checks>`."
 msgstr ""
+"Чтобы помочь решить эту проблему, были добавлены атрибуты в поля модели, "
+"которые могут указать на устаревшие поля при :doc:`проверке проекта </topics/"
+"checks>`."
 
 #: ../../topics/migrations.txt:413
 msgid ""
 "Add the ``system_check_deprecated_details`` attribute to your model field "
 "similar to the following::"
-msgstr ""
+msgstr "Добавьте атрибут ``system_check_deprecated_details`` к полю модели::"
 
 #: ../../topics/migrations.txt:426
 msgid ""
@@ -857,6 +873,10 @@ msgid ""
 "in Django itself), change the ``system_check_deprecated_details`` attribute "
 "to ``system_check_removed_details`` and update the dictionary similar to::"
 msgstr ""
+"После определенного периода поддержки устаревшего кода (Django использует "
+"два мажорных релиза для своих полей), замените "
+"``system_check_deprecated_details`` на ``system_check_removed_details`` со "
+"следующим значением::"
 
 #: ../../topics/migrations.txt:440
 msgid ""
@@ -866,6 +886,11 @@ msgid ""
 "which reference the field exist. For example, after squashing migrations and "
 "removing the old ones, you should be able to remove the field completely."
 msgstr ""
+"Вы должны сохранить методы поля поля, которые используются в миграции: "
+"``__init__()``, ``deconstruct()`` и ``get_internal_type()``. Храните это "
+"поле-заглушку, пока существуют миграции, которые ссылаются на него. "
+"Например, после объединения миграций и удаления старых, вы сможете полностью "
+"удалить эти поля."
 
 # 78cc6c6026894dd2a2a1825b20160148
 #: ../../topics/migrations.txt:449
@@ -979,7 +1004,7 @@ msgstr ""
 
 #: ../../topics/migrations.txt:527
 msgid "Accessing models from other apps"
-msgstr ""
+msgstr "Доступ к моделям в других приложениях"
 
 #: ../../topics/migrations.txt:529
 msgid ""
