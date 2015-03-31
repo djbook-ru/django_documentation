@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2015-03-29 02:01+0200\n"
+"PO-Revision-Date: 2015-03-31 18:53+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -1015,6 +1015,11 @@ msgid ""
 "with label 'myappname'`` when you try to retrieve the model in the "
 "``RunPython`` function using ``apps.get_model()``."
 msgstr ""
+"Если функция для ``RunPython`` использует модели другого приложения, атрибут "
+"``dependencies`` миграции должен включать последнюю миграцию приложения, "
+"модель которого используется. Иначе вы можете получить исключение: "
+"``LookupError: No installed app with label 'myappname'`` в функции "
+"``RunPython`` при использовании ``apps.get_model()``."
 
 #: ../../topics/migrations.txt:536
 msgid ""
@@ -1023,16 +1028,18 @@ msgid ""
 "other than the fact it will need to access models from both apps. Therefore "
 "we've added a dependency that specifies the last migration of ``app2``::"
 msgstr ""
+"В примере у нас есть миграция из приложения ``app1``, которая используем "
+"модели из приложения ``app2``. Нас не интересует реализация ``move_m1``, но "
+"мы знаем, что этой функции необходим доступ к моделям из обоих приложений. "
+"Для этого мы добавили в зависимости последнюю миграцию ``app2``::"
 
 # 78cc6c6026894dd2a2a1825b20160148
 #: ../../topics/migrations.txt:554
-#, fuzzy
 msgid "More advanced migrations"
-msgstr "Миграция данных"
+msgstr "Миграции для продвинутых"
 
 # 243e42c894724ebc90d42ee79ec26b26
 #: ../../topics/migrations.txt:556
-#, fuzzy
 msgid ""
 "If you're interested in the more advanced migration operations, or want to "
 "be able to write your own, see the :doc:`migration operations reference </"
@@ -1041,7 +1048,8 @@ msgid ""
 msgstr ""
 "Если вы хотите узнать как писать более сложные миграции, или как создавать "
 "миграции с нуля, смотрите :doc:`раздел об операциях в миграциях </ref/"
-"migration-operations>`."
+"migration-operations>` и \"how-to\" о :doc:`создании миграций </howto/"
+"writing-migrations>`."
 
 # b05c63762b6144fbb47e2c647d51a802
 #: ../../topics/migrations.txt:564
@@ -1092,7 +1100,6 @@ msgstr ""
 
 # 84f7908d57ba42109a3ddd1f6de8cc35
 #: ../../topics/migrations.txt:582
-#, fuzzy
 msgid ""
 "Once the operation sequence has been reduced as much as possible - the "
 "amount possible depends on how closely intertwined your models are and if "
@@ -1285,11 +1292,12 @@ msgstr "``list``, ``set``, ``tuple``, ``dict``"
 
 # c5c2b1bb8f8046d89d64035c31fbe595
 #: ../../topics/migrations.txt:669
-#, fuzzy
 msgid ""
 "``datetime.date``, ``datetime.time``, and ``datetime.datetime`` instances "
 "(include those that are timezone-aware)"
-msgstr "Объекты ``datetime.date``, ``datetime.time`` и ``datetime.datetime``"
+msgstr ""
+"Объекты ``datetime.date``, ``datetime.time`` и ``datetime.datetime`` "
+"(включая те, у которых указан часовой пояс)"
 
 # dccd4f32c500499495cb2d0b1695c0a6
 #: ../../topics/migrations.txt:671
@@ -1303,16 +1311,16 @@ msgstr "Любое поле Django"
 
 # 2ccc05225783451e82a337bc5807e94c
 #: ../../topics/migrations.txt:673
-#, fuzzy
 msgid ""
 "Any function or method reference (e.g. ``datetime.datetime.today``) (must be "
 "in module's top-level scope)"
 msgstr ""
-"Ссылку на любую функцию или метод (например ``datetime.datetime.today``)"
+"Ссылку на любую функцию или метод (например ``datetime.datetime.today``) "
+"(должны быть доступны на уровне модуля)"
 
 #: ../../topics/migrations.txt:674
 msgid "Any class reference (must be in module's top-level scope)"
-msgstr ""
+msgstr "Ссылка на класс (должны быть доступны на уровне модуля)"
 
 # 3690be5782854dcd89e24d2ecba67e13
 #: ../../topics/migrations.txt:675
@@ -1326,6 +1334,7 @@ msgstr ""
 #: ../../topics/migrations.txt:679
 msgid "Support for serializing timezone-aware datetimes was added."
 msgstr ""
+"Была добавлена возможность сериализовать ``datetime`` с часовым поясом."
 
 # e6c9f707415a4039a56aa5554374de94
 #: ../../topics/migrations.txt:681
@@ -1344,7 +1353,7 @@ msgstr "Django не может сериализовать:"
 
 #: ../../topics/migrations.txt:687
 msgid "Nested classes"
-msgstr ""
+msgstr "Вложенные классы"
 
 # 13268fe8db994ec9b7c900f028469b2f
 #: ../../topics/migrations.txt:688
@@ -1454,10 +1463,13 @@ msgid ""
 "decorated class. This function will be called by Django's migration "
 "framework to detect changes between states."
 msgstr ""
+"Чтобы Django не создавал новую миграцию при каждом выполнении :djadmin:"
+"`makemigrations`, добавьте метод ``__eq__()`` к декорируемому классу. Эта "
+"функция будет вызываться Django, чтобы определить не поменялось ли состояние "
+"моделей."
 
 # 9025384595b24055a0a4eeb44186c79e
 #: ../../topics/migrations.txt:739
-#, fuzzy
 msgid ""
 "As long as all of the arguments to your class' constructor are themselves "
 "serializable, you can use the ``@deconstructible`` class decorator from "
@@ -1465,7 +1477,7 @@ msgid ""
 msgstr ""
 "Если все аргументы вашего класса сериализируемые, то для автоматического "
 "создания метода вы можете использовать декоратор класса ``@deconstructible`` "
-"из ``django.utils.deconstruct``::"
+"из ``django.utils.deconstruct``, чтобы добавить метод ``deconstruct()``::"
 
 # 9f6ea85914344b83b692ecbb472af7b3
 #: ../../topics/migrations.txt:756
@@ -1479,7 +1491,7 @@ msgstr ""
 
 #: ../../topics/migrations.txt:761
 msgid "Supporting Python 2 and 3"
-msgstr ""
+msgstr "Поддержка Python 2 и 3"
 
 #: ../../topics/migrations.txt:763
 msgid ""
@@ -1491,6 +1503,13 @@ msgid ""
 "Otherwise running :djadmin:`makemigrations` under Python 3 will generate "
 "spurious new migrations to convert all these string attributes to text."
 msgstr ""
+"Чтобы создать миграции, которые поддерживают Python 2 и 3, все строки, "
+"которые используются в ваших моделях и полях (например ``verbose_name``, "
+"``related_name``, и т.д.), должны быть байтовыми строками или текстовыми "
+"(unicode) и в Python 2, и Python 3 (а не байтами в Python 2 и текстом в "
+"Python 3, что бывает по умолчанию, если тип строки явно не указан.) Иначе "
+"выполнение :djadmin:`makemigrations` на Python 3 создаст миграцию, которая "
+"преобразует все строковые атрибуты в текст."
 
 #: ../../topics/migrations.txt:771
 msgid ""
@@ -1503,10 +1522,18 @@ msgid ""
 "many changes as it converts all the bytestring attributes to text strings; "
 "this is normal and should only happen once."
 msgstr ""
+"Самый простой способ добиться этого - следовать :doc:`гайду Django по "
+"переходу на Python 3 </topics/python3>` и убедиться, что все модули содержат "
+"в начале ``from __future__ import unicode_literals``, и все строки в них "
+"являются юникод-строками, независимо от версии Python. Если вы добавите это "
+"текущий проект, который содержим миграции, созданные на Python 2, при "
+"следующем запуске :djadmin:`makemigrations` на Python 3 будет создана "
+"большая миграция с преобразованием всех байтовых строк в текстовые. Это "
+"нормально и необходимо выполнить всего лишь раз."
 
 #: ../../topics/migrations.txt:781
 msgid "Supporting multiple Django versions"
-msgstr ""
+msgstr "Поддержка нескольких версий Django"
 
 #: ../../topics/migrations.txt:783
 msgid ""
@@ -1515,6 +1542,10 @@ msgid ""
 "should always run :djadmin:`makemigrations` **with the lowest Django version "
 "you wish to support**."
 msgstr ""
+"Если вы разрабатываете распространяемое приложение с моделями, вам "
+"необходимо создать миграции, которые поддерживают различные версии Django. В "
+"этом случае вы должны всегда выполнять :djadmin:`makemigrations` **для самый "
+"старой версии Django, которую вы поддерживаете**."
 
 #: ../../topics/migrations.txt:788
 msgid ""
@@ -1525,6 +1556,11 @@ msgid ""
 "migration files generated with newer versions of Django may not work on "
 "older versions."
 msgstr ""
+"Система миграций поддерживает обратную совместимость как и остальная часть "
+"Django, и файлы миграций для Django X.Y должны работать для Django X.Y+1. "
+"Однако, система миграций не гарантирует обратную совместимость. Могут "
+"добавляться новые возможности и новые миграции не будут работать на старой "
+"версии Django."
 
 # 32c8c625df184822ad2fd29bc2a4017a
 #: ../../topics/migrations.txt:797
@@ -1543,14 +1579,13 @@ msgstr ""
 
 # 45e05114b12c443f816deae28e6fe7e0
 #: ../../topics/migrations.txt:803
-#, fuzzy
 msgid "Ensure all installs are fully up-to-date with their migrations."
 msgstr ""
 "Убедитесь, что все установки проекта используют последнюю версию миграций"
 
 #: ../../topics/migrations.txt:804
 msgid "Remove ``'south'`` from :setting:`INSTALLED_APPS`."
-msgstr ""
+msgstr "Удалите ``'south'`` из :setting:`INSTALLED_APPS`."
 
 # ae5d850c67f7479b9d6870a305000b48
 #: ../../topics/migrations.txt:805
@@ -1572,15 +1607,16 @@ msgstr ""
 
 # 16af3c30b8e64f8e8bbf7f175735bcb2
 #: ../../topics/migrations.txt:809
-#, fuzzy
 msgid ""
 "Run ``python manage.py migrate --fake-initial``. Django will see that the "
 "tables for the initial migrations already exist and mark them as applied "
 "without running them. (Django won't check that the table schema match your "
 "models, just that the right table names exist)."
 msgstr ""
-"Выполните ``python manage.py migrate``. Django увидит, что все таблицы в "
-"базе данных соответствуют начальным миграциям и пометит их как выполненные."
+"Выполните ``python manage.py migrate --fake-initial``. Django увидит, что "
+"все таблицы в базе данных соответствуют начальным миграциям и пометит их как "
+"выполненные. (Django не проверяет соответствие структуры таблиц и моделей, "
+"только наличие таблицы в базе данных)."
 
 # 65b3045a520c4d2299efe1697fe565b1
 #: ../../topics/migrations.txt:814
@@ -1599,6 +1635,9 @@ msgid ""
 "previously, initial migrations were always automatically fake-applied if "
 "existing tables were detected."
 msgstr ""
+"Был добавлен флаг :djadminopt:`--fake-initial` для :djadmin:`migrate`. Ранее "
+"начальные миграции всегда автоматически помечались выполненными, если были "
+"найдены таблицы в базе данных."
 
 # dd0e45ee4bb744f2a394e116b33fa524
 #: ../../topics/migrations.txt:827
@@ -1643,23 +1682,26 @@ msgstr ""
 
 #: ../../topics/migrations.txt:846
 msgid ":doc:`The Migrations Operations Reference </ref/migration-operations>`"
-msgstr ""
+msgstr ":doc:`Описание операций миграции </ref/migration-operations>`"
 
 #: ../../topics/migrations.txt:845
 msgid ""
 "Covers the schema operations API, special operations, and writing your own "
 "operations."
 msgstr ""
+"Описывает API операций для изменений структуры базы данных, специальные "
+"операции, и создания своих операций."
 
 #: ../../topics/migrations.txt:849
 msgid ":doc:`The Writing Migrations \"how-to\" </howto/writing-migrations>`"
-msgstr ""
+msgstr ":doc:`\"how-to\" о создании миграций </howto/writing-migrations>`"
 
 #: ../../topics/migrations.txt:849
 msgid ""
 "Explains how to structure and write database migrations for different "
 "scenarios you might encounter."
 msgstr ""
+"Описывает как самостоятельно создать миграции для решения различных ситуаций."
 
 # f9f395e87c474b439fc28216568a412f
 #~ msgid "Any class reference"
