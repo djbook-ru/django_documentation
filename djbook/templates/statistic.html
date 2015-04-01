@@ -31,7 +31,7 @@
             <label class="checkbox"><input type="checkbox" id="unfinished"> незаконченные</label>
         </div>
     </div>
-    {% for name, translated_perc, untranslated_perc, fuzzy_perc, need_fix in statistic|sort %}
+    {% for name, translated_perc, untranslated_perc, fuzzy_perc, need_fix in statistic %}
         <div class="row po-row {% if need_fix and translated_perc %}unfinished{% endif %}"
             data-untranslated-count="{{ need_fix }}">
             {% if name %}
@@ -40,13 +40,17 @@
                 <div class="progress {% if translated_perc != 100 %}progress-info1{% endif %}">
                     <div class="bar bar-success" style="width: {{ translated_perc }}%;" title="translated{% if need_fix %} ({{ need_fix }} require fix){% endif %}">
                         {{ translated_perc }}%
-                        {% if need_fix %}<span style="font-size: 0.9em">({{ need_fix }}){% endif %}</span>
+                        {% if need_fix %}<span style="font-size: 0.9em">({{ need_fix }})</span>{% endif %}
                     </div>
                     {% if fuzzy_perc %}
                         <div class="bar bar-warning" style="width: {{ fuzzy_perc }}%;" title="fuzzy"></div>
                     {% endif %}
                     {% if untranslated_perc %}
-                        <div class="bar bar-danger" style="width: {{ untranslated_perc }}%;" title="untranslated"></div>
+                        <div class="bar bar-danger" style="width: {{ untranslated_perc }}%;" title="untranslated">
+                            {% if untranslated_perc == 100 %}
+                                0% <span style="font-size: 0.9em">({{ need_fix }})</span>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 </div>
 
@@ -62,22 +66,6 @@
                 } else {
                     $('.po-row').not('.unfinished').show();
                 }
-
-                var items = $('.po-row').remove().toArray();
-                items.sort(function(a, b){
-                    var valA = $(a).data('untranslated-count'),
-                        valB = $(b).data('untranslated-count');
-
-                    if (valA < valB) {
-                        return -1;
-                    } else if (valA > valB) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                });
-
-                $('.main.container').append(items);
 
                 colorRows();
             });

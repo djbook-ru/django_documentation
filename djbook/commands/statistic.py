@@ -53,9 +53,6 @@ class Command(BaseCommand):
                     msg_fuzzy = msg_total - msg_translated - msg_untranslated
                     need_fix_count = msg_total - msg_translated
 
-                    if msg_untranslated:
-                        untranslated_list.append((unicode(name), msg_untranslated))
-
                     untranslated_perc = int(round(msg_untranslated / float(msg_total) * 100))
                     fuzzy_perc = int(msg_fuzzy / float(msg_total) * 100)
                     translated_perc = 100 - untranslated_perc - fuzzy_perc
@@ -68,10 +65,14 @@ class Command(BaseCommand):
                     main_total += msg_total
                     main_translated += msg_translated
 
-        untranslated_list.sort(key=lambda item: item[1])
+        def sort_statistic(item1, item2):
+            if item1[4] == 0:
+                return 1
+            if item2[4] == 0:
+                return -1
+            return item1[4] - item2[4]
 
-        #for name, count in untranslated_list:
-        #    print name, count
+        statistic.sort(cmp=sort_statistic)
 
         self.save_to_file({
             'statistic': statistic,
