@@ -28,8 +28,6 @@ class Command(BaseCommand):
         main_total = 0
         main_translated = 0
 
-        untranslated_list = []
-
         for path, dirs, files in os.walk(self.app.locale_path):
             for f in files:
                 if f.endswith('.po'):
