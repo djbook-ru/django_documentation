@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-02 10:33+0300\n"
-"PO-Revision-Date: 2015-03-25 20:08+0300\n"
+"PO-Revision-Date: 2015-04-02 20:49+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -430,8 +430,8 @@ msgid ""
 "``logger.exception()``: Creates an ``ERROR`` level logging message wrapping "
 "the current exception stack frame."
 msgstr ""
-"``logger.exception()``: Создать ``ERROR`` сообщение из последнего "
-"исключения(*пер.* the current exception stack frame)."
+"``logger.exception()``: Создать ``ERROR`` сообщение из последнего исключения"
+"(*пер.* the current exception stack frame)."
 
 # 149046927d934267abc3aff09407cf90
 #: ../../topics/logging.txt:199
@@ -479,6 +479,9 @@ msgid ""
 "default logging configuration <default-logging-configuration>` using the "
 "following scheme."
 msgstr ""
+"По умолчанию, параметр конфигурации :setting:`LOGGING` совмещается с :ref:"
+"`стандартной конфигурацией журналирования Django <default-logging-"
+"configuration>` с помощью следующей схемы."
 
 #: ../../topics/logging.txt:219
 msgid ""
@@ -493,6 +496,18 @@ msgid ""
 "default loggers; or you can set :setting:`LOGGING_CONFIG` to ``None`` and :"
 "ref:`handle logging config yourself <disabling-logging-configuration>`."
 msgstr ""
+"Если ключ ``disable_existing_loggers`` в параметре конфигурации :setting:"
+"`LOGGING` установлен в ``True`` (по умолчанию это так), тогда все логгеры "
+"стандартной конфигурации отключаются. Отключенные логгеры отличаются от "
+"удалённых; логгер продолжает существовать, но тихо игнорирует всё, что ему "
+"передаётся, не пытаясь передавать записи в родительский логгер. "
+"Следовательно, вам надо быть аккуратным, используя "
+"``'disable_existing_loggers': True``; скорее всего вам не нужно такое "
+"поведение. Вместо этого, вы можете установить ``disable_existing_loggers`` в "
+"``False`` и переопределить некоторые или все стандартные логгер; также вы "
+"можете установить :setting:`LOGGING_CONFIG` в ``None`` и :ref:"
+"`самостоятельно обработать конфигурацию журналирования <disabling-logging-"
+"configuration>`."
 
 # bc26758d9cbc42bda37fec0f43de6647
 #: ../../topics/logging.txt:230
@@ -512,7 +527,6 @@ msgstr "Примеры"
 
 # 8fe82bb89c704d85accdf9fca014fe23
 #: ../../topics/logging.txt:239
-#, fuzzy
 msgid ""
 "The full documentation for `dictConfig format`_ is the best source of "
 "information about logging configuration dictionaries. However, to give you a "
@@ -548,6 +562,11 @@ msgid ""
 "``django.security`` don't propagate their log entries by default. It may be "
 "useful during local development."
 msgstr ""
+"Во-вторых, здесь представлен пример того, как заставить систему "
+"журналирования Django выводить сообщения на консоль. Здесь переопределяется "
+"поведение ``django.request`` и ``django.security``, которые по умолчанию не "
+"передают свои отладочные сообщения. Это может пригодится в локальной "
+"разработке."
 
 #: ../../topics/logging.txt:273
 msgid ""
@@ -556,14 +575,18 @@ msgid ""
 "variable ``DJANGO_LOG_LEVEL=DEBUG`` to see all of Django's debug logging "
 "which is very verbose as it includes all database queries::"
 msgstr ""
+"По умолчанию, данная конфигурация только отсылает сообщения уровня ``INFO`` "
+"или выше на консоль. Django не журналирует большое количество таких "
+"сообщений. Для того, чтобы увидеть отладочные сообщения Django, которые "
+"очень информативны и даже включают в себя все запросы к базе данных, "
+"установите переменную окружения ``DJANGO_LOG_LEVEL=DEBUG``::"
 
 # 034e8d1a23c944e381a4b552421749b6
 #: ../../topics/logging.txt:296
-#, fuzzy
 msgid "Finally, here's an example of a fairly complex logging setup::"
 msgstr ""
-"Второй пример -- довольно сложная настройка с использованием :func:`logging."
-"config.dictConfig`::"
+"Наконец, здесь показан пример достаточно сложной конфигурации "
+"журналирования::"
 
 # 2c29e94fb5f14bf49a671b58502c073b
 #: ../../topics/logging.txt:350
@@ -741,7 +764,6 @@ msgstr "Отключение настройки логгирования"
 
 # c799f20624d44f559ad618d4d9f85ae3
 #: ../../topics/logging.txt:427
-#, fuzzy
 msgid ""
 "If you don't want to configure logging at all (or you want to manually "
 "configure logging using your own approach), you can set :setting:"
@@ -750,22 +772,26 @@ msgid ""
 "an example that disables Django's logging configuration and then manually "
 "configures logging:"
 msgstr ""
-"Если вы не хотите настраивать логгирование (или самостоятельно настроить "
-"логгирование используя собственный механизм), вы можете установить :setting:"
-"`LOGGING_CONFIG` в ``None``. Это отключит процесс настройки логгирования."
+"Если вы вообще не желаете настраивать журналирование (или требуется "
+"самостоятельно настроить журналирование, используя собственный механизм\\2), "
+"вы можете установить :setting:`LOGGING_CONFIG` в ``None``. Это отключит "
+"процесс настройки журналирования для :ref:`случая по умолчанию <default-"
+"logging-configuration>`. Здесь приведён пример отключения конфигурации "
+"журналирования Django и затем ручной её настройки:"
 
 # 1d4f1721204b4c979ec072960657d3d9
 #: ../../topics/logging.txt:442
-#, fuzzy
 msgid ""
 "Setting :setting:`LOGGING_CONFIG` to ``None`` only means that the automatic "
 "configuration process is disabled, not logging itself. If you disable the "
 "configuration process, Django will still make logging calls, falling back to "
 "whatever default logging behavior is defined."
 msgstr ""
-"Установка :setting:`LOGGING_CONFIG` в ``None`` отключает процесс "
-"конфигурации, а не логгирование. Если вы отключите процесс конфигурации, "
-"Django все равно будет вызывать методы логгирования."
+"Установка :setting:`LOGGING_CONFIG` в ``None`` только означает, что процесс "
+"автоматической настройки отключен, это не влияет на само журналирование. "
+"Если вы отключите процесс конфигурации, Django все равно будет вызывать "
+"методы журналирования, используя поведение логгеров, настроенное по "
+"умолчанию."
 
 # 9c22f2889abd4d3087566cc0f35d0312
 #: ../../topics/logging.txt:448
@@ -1123,13 +1149,13 @@ msgstr "Стандартная конфигурация логгирования
 
 # 2c29e94fb5f14bf49a671b58502c073b
 #: ../../topics/logging.txt:694
-#, fuzzy
 msgid "By default, Django configures the following logging:"
-msgstr "Эта конфигурация выполняет следующее:"
+msgstr ""
+"По умолчанию, Django настраивает следующую конфигурацию журналирования:"
 
 #: ../../topics/logging.txt:696
 msgid "When :setting:`DEBUG` is ``True``:"
-msgstr ""
+msgstr "Если :setting:`DEBUG` равна ``True``:"
 
 #: ../../topics/logging.txt:698
 msgid ""
@@ -1138,16 +1164,22 @@ msgid ""
 "time (all logging is at the ``DEBUG`` level or handled by the ``django."
 "request`` and ``django.security`` loggers)."
 msgstr ""
+"Общий логгер ``django`` отправляет все сообщения уровня ``INFO`` и выше на "
+"консоль. Django не ваполняет никаких обращений к системе журналирования в "
+"это время (всё журналирование находится на уровне ``DEBUG`` или "
+"обрабатывается логгерами ``django.request`` и ``django.security``)."
 
 #: ../../topics/logging.txt:703
 msgid ""
 "The ``py.warnings`` logger, which handles messages from ``warnings.warn()``, "
 "sends messages to the console."
 msgstr ""
+"Логгер ``py.warnings``, который обрабатывает сообщения от ``warnings.warn()"
+"``, отправляет их на консоль."
 
 #: ../../topics/logging.txt:706
 msgid "When :setting:`DEBUG` is ``False``:"
-msgstr ""
+msgstr "Если :setting:`DEBUG` установлен в ``False``:"
 
 #: ../../topics/logging.txt:708
 msgid ""
@@ -1157,6 +1189,11 @@ msgid ""
 "propagated to other loggers (they won't reach the ``django`` catch-all "
 "logger, even when ``DEBUG`` is ``True``)."
 msgstr ""
+"Логгеры ``django.request`` и ``django.security`` отправляют сообщения уровня "
+"``ERROR`` или ``CRITICAL`` в :class:`AdminEmailHandler`. Эти логгеры "
+"игнорируют все сообщения уровня ``WARNING`` или журналируют записи, которые "
+"не прошли к другим логгерам (они не достигают общего логгера ``django`` даже "
+"при ``DEBUG`` равным ``True``)."
 
 # 96a53fe4e626480cb6886b88e3e7f571
 #: ../../topics/logging.txt:714
