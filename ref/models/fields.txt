@@ -12,10 +12,11 @@ This document contains all the API references of :class:`Field` including the
 
 .. seealso::
 
-    If the built-in fields don't do the trick, you can try :doc:`localflavor
-    </topics/localflavor>`, which contains assorted pieces of code
-    that are useful for particular countries or cultures. Also, you can easily
-    :doc:`write your own custom model fields </howto/custom-model-fields>`.
+    If the built-in fields don't do the trick, you can try `django-localflavor
+    <https://django-localflavor.readthedocs.org/>`_, which contains assorted
+    pieces of code that are useful for particular countries or cultures. Also,
+    you can easily :doc:`write your own custom model fields
+    </howto/custom-model-fields>`.
 
 .. note::
 
@@ -508,6 +509,15 @@ Any combination of these options will result in an error.
     As currently implemented, setting ``auto_now`` or ``auto_now_add`` to
     ``True`` will cause the field to have ``editable=False`` and ``blank=True``
     set.
+
+.. note::
+    The ``auto_now`` and ``auto_now_add`` options will always use the date in
+    the :ref:`default timezone <default-current-time-zone>` at the moment of
+    creation or update. If you need something different, you may want to
+    consider simply using your own callable default or overriding ``save()``
+    instead of using ``auto_now`` or ``auto_now_add``; or using a
+    ``DateTimeField`` instead of a ``DateField`` and deciding how to handle the
+    conversion from datetime to date at display time.
 
 ``DateTimeField``
 -----------------

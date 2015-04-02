@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-19 15:06+0200\n"
+"POT-Creation-Date: 2015-04-02 10:33+0300\n"
 "PO-Revision-Date: 2015-03-25 15:35+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -431,8 +431,8 @@ msgstr ""
 # dc29c0ea27ea476ab715e2683544683f
 # 5e91e24cb1594c89b6bfe3f55ac80f24
 # 433aa0a799de4613be266c553c4b00ce
-#: ../../topics/db/queries.txt:251 ../../topics/db/queries.txt:1075
-#: ../../topics/db/queries.txt:1125
+#: ../../topics/db/queries.txt:251 ../../topics/db/queries.txt:1094
+#: ../../topics/db/queries.txt:1144
 msgid "Example::"
 msgstr "Например::"
 
@@ -997,12 +997,12 @@ msgstr ""
 
 # c0cfd5cb496e46b9a50035f791c80e6f
 #: ../../topics/db/queries.txt:548
+#, fuzzy
 msgid ""
 "To handle both of these situations, Django has a consistent way of "
-"processing :meth:`~django.db.models.query.QuerySet.filter` and :meth:"
-"`~django.db.models.query.QuerySet.exclude` calls. Everything inside a "
-"single :meth:`~django.db.models.query.QuerySet.filter` call is applied "
-"simultaneously to filter out items matching all those requirements. "
+"processing :meth:`~django.db.models.query.QuerySet.filter` calls. Everything "
+"inside a single :meth:`~django.db.models.query.QuerySet.filter` call is "
+"applied simultaneously to filter out items matching all those requirements. "
 "Successive :meth:`~django.db.models.query.QuerySet.filter` calls further "
 "restrict the set of objects, but for multi-valued relations, they apply to "
 "any object linked to the primary model, not necessarily those objects that "
@@ -1020,7 +1020,7 @@ msgstr ""
 "вызовом :meth:`~django.db.models.query.QuerySet.filter`."
 
 # 7bd3f99bf3fe44208404a8672d8a7292
-#: ../../topics/db/queries.txt:558
+#: ../../topics/db/queries.txt:557
 msgid ""
 "That may sound a bit confusing, so hopefully an example will clarify. To "
 "select all blogs that contain entries with both *\"Lennon\"* in the headline "
@@ -1033,7 +1033,7 @@ msgstr ""
 "код::"
 
 # 7a884561801443c9a3944ea257dd4c99
-#: ../../topics/db/queries.txt:566
+#: ../../topics/db/queries.txt:565
 msgid ""
 "To select all blogs that contain an entry with *\"Lennon\"* in the headline "
 "**as well as** an entry that was published in 2008, we would write::"
@@ -1042,7 +1042,7 @@ msgstr ""
 "также** с записями опубликованными в 2008, мы напишем::"
 
 # 6398ede0fab4430db86645d7e987aa2d
-#: ../../topics/db/queries.txt:572
+#: ../../topics/db/queries.txt:571
 msgid ""
 "Suppose there is only one blog that had both entries containing *\"Lennon\"* "
 "and entries from 2008, but that none of the entries from 2008 contained *"
@@ -1055,7 +1055,7 @@ msgstr ""
 "блог."
 
 # 0171ffc0fb7c48c2a81d1c78dbad5d72
-#: ../../topics/db/queries.txt:577
+#: ../../topics/db/queries.txt:576
 msgid ""
 "In the second example, the first filter restricts the queryset to all those "
 "blogs linked to entries with *\"Lennon\"* in the headline. The second filter "
@@ -1072,31 +1072,41 @@ msgstr ""
 "Мы фильтруем объекты ``Blog`` с каждым вызовом ``filter()``, а не объекты "
 "``Entry``."
 
-# e0c354100c6a4f72b5ed282f90ac2cf3
-#: ../../topics/db/queries.txt:584
+#: ../../topics/db/queries.txt:585
 msgid ""
-"All of this behavior also applies to :meth:`~django.db.models.query.QuerySet."
-"exclude`: all the conditions in a single :meth:`~django.db.models.query."
-"QuerySet.exclude` statement apply to a single instance (if those conditions "
-"are talking about the same multi-valued relation). Conditions in subsequent :"
-"meth:`~django.db.models.query.QuerySet.filter` or :meth:`~django.db.models."
-"query.QuerySet.exclude` calls that refer to the same relation may end up "
-"filtering on different linked objects."
+"The behavior of :meth:`~django.db.models.query.QuerySet.filter` for queries "
+"that span multi-value relationships, as described above, is not implemented "
+"equivalently for :meth:`~django.db.models.query.QuerySet.exclude`. Instead, "
+"the conditions in a single :meth:`~django.db.models.query.QuerySet.exclude` "
+"call will not necessarily refer to the same item."
 msgstr ""
-"Все эти правила также распространяются и на :meth:`~django.db.models.query."
-"QuerySet.exclude`: все условия в одном :meth:`~django.db.models.query."
-"QuerySet.exclude` применяются к одному объекту (если эти условия относятся к "
-"одной связи). Условия в последующих вызовах :meth:`~django.db.models.query."
-"QuerySet.filter` или :meth:`~django.db.models.query.QuerySet.exclude` для "
-"одной связи могут применяться к различным связанным объектам."
+
+# 7a884561801443c9a3944ea257dd4c99
+#: ../../topics/db/queries.txt:591
+#, fuzzy
+msgid ""
+"For example, the following query would exclude blogs that contain *both* "
+"entries with *\"Lennon\"* in the headline *and* entries published in 2008::"
+msgstr ""
+"Для выбора блогов с записями, у которых заголовок содержит *\"Lennon\"*, **а "
+"также** с записями опубликованными в 2008, мы напишем::"
+
+#: ../../topics/db/queries.txt:599
+msgid ""
+"However, unlike the behavior when using :meth:`~django.db.models.query."
+"QuerySet.filter`, this will not limit blogs based on entries that satisfy "
+"both conditions. In order to do that, i.e. to select all blogs that do not "
+"contain entries published with *\"Lennon\"* that were published in 2008, you "
+"need to make two queries::"
+msgstr ""
 
 # d03542d8cfc94a68be7678d4fc5c16c3
-#: ../../topics/db/queries.txt:596
+#: ../../topics/db/queries.txt:615
 msgid "Filters can reference fields on the model"
 msgstr "Фильтры могут ссылаться на поля модели"
 
 # daf680ef5b7b4c1dae58f9d4d4715432
-#: ../../topics/db/queries.txt:598
+#: ../../topics/db/queries.txt:617
 msgid ""
 "In the examples given so far, we have constructed filters that compare the "
 "value of a model field with a constant. But what if you want to compare the "
@@ -1107,7 +1117,7 @@ msgstr ""
 "поле с другим полем одной модели?"
 
 # 96c2498aa253463899e504d5e5696d0a
-#: ../../topics/db/queries.txt:602
+#: ../../topics/db/queries.txt:621
 msgid ""
 "Django provides :class:`F expressions <django.db.models.F>` to allow such "
 "comparisons. Instances of ``F()`` act as a reference to a model field within "
@@ -1120,7 +1130,7 @@ msgstr ""
 "разных полей одного объекта модели."
 
 # 5dbba97bfd8d46feb6b62def596a66b8
-#: ../../topics/db/queries.txt:607
+#: ../../topics/db/queries.txt:626
 msgid ""
 "For example, to find a list of all blog entries that have had more comments "
 "than pingbacks, we construct an ``F()`` object to reference the pingback "
@@ -1131,7 +1141,7 @@ msgstr ""
 "\"pingback\", и используем этот объект ``F()`` в запросе::"
 
 # 38a8b48e80b240bd876eb2daf7ebd84b
-#: ../../topics/db/queries.txt:614
+#: ../../topics/db/queries.txt:633
 msgid ""
 "Django supports the use of addition, subtraction, multiplication, division, "
 "modulo, and power arithmetic with ``F()`` objects, both with constants and "
@@ -1144,12 +1154,12 @@ msgstr ""
 "раза больше* чем \"pingbacks\", используем такой запрос::"
 
 # cea7d992185544e489fdc073bf92c131
-#: ../../topics/db/queries.txt:623
+#: ../../topics/db/queries.txt:642
 msgid "The power operator ``**`` was added."
 msgstr "Был добавлен оператор вознесения в степень ``**``."
 
 # 1b4656c76a914e7c989975855b270f2d
-#: ../../topics/db/queries.txt:625
+#: ../../topics/db/queries.txt:644
 msgid ""
 "To find all the entries where the rating of the entry is less than the sum "
 "of the pingback count and comment count, we would issue the query::"
@@ -1158,7 +1168,7 @@ msgstr ""
 "комментариев, необходимо выполнить такой запрос::"
 
 # 7640beb6287741be8fb1e3b627883152
-#: ../../topics/db/queries.txt:631
+#: ../../topics/db/queries.txt:650
 msgid ""
 "You can also use the double underscore notation to span relationships in an "
 "``F()`` object. An ``F()`` object with a double underscore will introduce "
@@ -1173,7 +1183,7 @@ msgstr ""
 "совпадает с названием блога, нужно выполнить такой запрос::"
 
 # 33f2bb6676324a2ab398a74705af9cfa
-#: ../../topics/db/queries.txt:639
+#: ../../topics/db/queries.txt:658
 msgid ""
 "For date and date/time fields, you can add or subtract a :class:`~datetime."
 "timedelta` object. The following would return all entries that were modified "
@@ -1184,7 +1194,7 @@ msgstr ""
 "отредактированы через 3 дня после публикации::"
 
 # 85c94a81d156475d8916800dec4c96c4
-#: ../../topics/db/queries.txt:646
+#: ../../topics/db/queries.txt:665
 msgid ""
 "The ``F()`` objects support bitwise operations by ``.bitand()`` and ``."
 "bitor()``, for example::"
@@ -1193,12 +1203,12 @@ msgstr ""
 "и ``.bitor()``, например::"
 
 # 747410fa45a143589fc635ec7d748c00
-#: ../../topics/db/queries.txt:652
+#: ../../topics/db/queries.txt:671
 msgid "The pk lookup shortcut"
 msgstr "\"Shortcut\" для фильтрации по первичному ключу"
 
 # 6be18a0ecccd41218e0df6f3492c6655
-#: ../../topics/db/queries.txt:654
+#: ../../topics/db/queries.txt:673
 msgid ""
 "For convenience, Django provides a ``pk`` lookup shortcut, which stands for "
 "\"primary key\"."
@@ -1207,7 +1217,7 @@ msgstr ""
 "первичным ключом."
 
 # 729e96fa9f6a4d15b7aceb1bf99a25c1
-#: ../../topics/db/queries.txt:657
+#: ../../topics/db/queries.txt:676
 msgid ""
 "In the example ``Blog`` model, the primary key is the ``id`` field, so these "
 "three statements are equivalent::"
@@ -1216,7 +1226,7 @@ msgstr ""
 "идентичны::"
 
 # bd8f98e87fe64fb5b741d19900b4d293
-#: ../../topics/db/queries.txt:664
+#: ../../topics/db/queries.txt:683
 msgid ""
 "The use of ``pk`` isn't limited to ``__exact`` queries -- any query term can "
 "be combined with ``pk`` to perform a query on the primary key of a model::"
@@ -1225,7 +1235,7 @@ msgstr ""
 "фильтр может быть использован с ``pk``::"
 
 # 440e5e390e324d54a6a24936e7a08982
-#: ../../topics/db/queries.txt:673
+#: ../../topics/db/queries.txt:692
 msgid ""
 "``pk`` lookups also work across joins. For example, these three statements "
 "are equivalent::"
@@ -1233,13 +1243,13 @@ msgstr ""
 "``pk`` работает также и для связей. Например, эти три запроса идентичны::"
 
 # 2734ae7f3b434e19bf4dc2c193c3f548
-#: ../../topics/db/queries.txt:681
+#: ../../topics/db/queries.txt:700
 msgid "Escaping percent signs and underscores in LIKE statements"
 msgstr ""
 "Экранирование знака процента и нижнего подчеркивания для оператора LIKE"
 
 # 6b8f4c6a30084ef9aea95d40f8316362
-#: ../../topics/db/queries.txt:683
+#: ../../topics/db/queries.txt:702
 msgid ""
 "The field lookups that equate to ``LIKE`` SQL statements (``iexact``, "
 "``contains``, ``icontains``, ``startswith``, ``istartswith``, ``endswith`` "
@@ -1256,7 +1266,7 @@ msgstr ""
 "нижнего подчеркивания - односимвольный \"wildcard\".)"
 
 # 3f68ccdad09a4628adaf0417bb4b9e02
-#: ../../topics/db/queries.txt:690
+#: ../../topics/db/queries.txt:709
 msgid ""
 "This means things should work intuitively, so the abstraction doesn't leak. "
 "For example, to retrieve all the entries that contain a percent sign, just "
@@ -1267,7 +1277,7 @@ msgstr ""
 "любой другой символ::"
 
 # 27aaccc5d173456191bdc649cfc4bc5d
-#: ../../topics/db/queries.txt:696
+#: ../../topics/db/queries.txt:715
 msgid ""
 "Django takes care of the quoting for you; the resulting SQL will look "
 "something like this:"
@@ -1276,7 +1286,7 @@ msgstr ""
 "выглядеть приблизительно вот так:"
 
 # d7edc2b172e44cdab998ca5284b7346a
-#: ../../topics/db/queries.txt:703
+#: ../../topics/db/queries.txt:722
 msgid ""
 "Same goes for underscores. Both percentage signs and underscores are handled "
 "for you transparently."
@@ -1285,12 +1295,12 @@ msgstr ""
 "подчеркивания, обрабатываются автоматически, прозрачно для вас."
 
 # f968d2f6665c47a0854ca91731525e61
-#: ../../topics/db/queries.txt:709
+#: ../../topics/db/queries.txt:728
 msgid "Caching and QuerySets"
 msgstr "Кэширование и QuerySets"
 
 # 4410cb11d332487280399ced7fbba0d0
-#: ../../topics/db/queries.txt:711
+#: ../../topics/db/queries.txt:730
 msgid ""
 "Each :class:`~django.db.models.query.QuerySet` contains a cache to minimize "
 "database access. Understanding how it works will allow you to write the most "
@@ -1301,7 +1311,7 @@ msgstr ""
 "эффективного использования Django."
 
 # 5212b8430b004737973f06edf4697629
-#: ../../topics/db/queries.txt:715
+#: ../../topics/db/queries.txt:734
 msgid ""
 "In a newly created :class:`~django.db.models.query.QuerySet`, the cache is "
 "empty. The first time a :class:`~django.db.models.query.QuerySet` is "
@@ -1321,7 +1331,7 @@ msgstr ""
 "используют кеш."
 
 # 485d2b9560224de6b2e96c47e41c0c9a
-#: ../../topics/db/queries.txt:724
+#: ../../topics/db/queries.txt:743
 msgid ""
 "Keep this caching behavior in mind, because it may bite you if you don't use "
 "your :class:`~django.db.models.query.QuerySet`\\s correctly. For example, "
@@ -1333,7 +1343,7 @@ msgstr ""
 "`~django.db.models.query.QuerySet` и вычислит их не сохраняя::"
 
 # 17a35f3adc8d43928f2e476a2e1a30ef
-#: ../../topics/db/queries.txt:732
+#: ../../topics/db/queries.txt:751
 msgid ""
 "That means the same database query will be executed twice, effectively "
 "doubling your database load. Also, there's a possibility the two lists may "
@@ -1346,7 +1356,7 @@ msgstr ""
 "удалена в доли секунды между запросами."
 
 # 32a73dc57b404d8a85eef07fc6ceb410
-#: ../../topics/db/queries.txt:737
+#: ../../topics/db/queries.txt:756
 msgid ""
 "To avoid this problem, simply save the :class:`~django.db.models.query."
 "QuerySet` and reuse it::"
@@ -1355,12 +1365,12 @@ msgstr ""
 "query.QuerySet` и используйте его повторно::"
 
 # 335613a407ee43bc95690fd6fafc1948
-#: ../../topics/db/queries.txt:745
+#: ../../topics/db/queries.txt:764
 msgid "When querysets are not cached"
 msgstr "Когда queryset не кэшируется"
 
 # 2dc48ea0df894c6da300972aef27389a
-#: ../../topics/db/queries.txt:747
+#: ../../topics/db/queries.txt:766
 msgid ""
 "Querysets do not always cache their results.  When evaluating only *part* of "
 "the queryset, the cache is checked, but if it is not populated then the "
@@ -1375,7 +1385,7 @@ msgstr ""
 "списков, не заполнит кэш."
 
 # 5283eae897104fe3a79b0f3aeb0fd225
-#: ../../topics/db/queries.txt:753
+#: ../../topics/db/queries.txt:772
 msgid ""
 "For example, repeatedly getting a certain index in a queryset object will "
 "query the database each time::"
@@ -1384,7 +1394,7 @@ msgstr ""
 "выполнять запрос к базе данных::"
 
 # e6dc0170f9d045f4af43d1fa7ff5c846
-#: ../../topics/db/queries.txt:760
+#: ../../topics/db/queries.txt:779
 msgid ""
 "However, if the entire queryset has already been evaluated, the cache will "
 "be checked instead::"
@@ -1393,7 +1403,7 @@ msgstr ""
 "получения значения::"
 
 # 0af62391d6384f67aea89ea28dd3a945
-#: ../../topics/db/queries.txt:768
+#: ../../topics/db/queries.txt:787
 msgid ""
 "Here are some examples of other actions that will result in the entire "
 "queryset being evaluated and therefore populate the cache::"
@@ -1402,7 +1412,7 @@ msgstr ""
 "сохраняется в кэше::"
 
 # 1b77672ea3724ca386e2ad7e769d6d60
-#: ../../topics/db/queries.txt:778
+#: ../../topics/db/queries.txt:797
 msgid ""
 "Simply printing the queryset will not populate the cache. This is because "
 "the call to ``__repr__()`` only returns a slice of the entire queryset."
@@ -1411,12 +1421,12 @@ msgstr ""
 "``__repr__()``, который показывает только часть объектов."
 
 # 223d8b76d30d4f8b8c5539dc89d26e90
-#: ../../topics/db/queries.txt:784
+#: ../../topics/db/queries.txt:803
 msgid "Complex lookups with Q objects"
 msgstr "Сложные запросы с помощью объектов Q"
 
 # 875b5fab606e49688631a843c5dc1bed
-#: ../../topics/db/queries.txt:786
+#: ../../topics/db/queries.txt:805
 msgid ""
 "Keyword argument queries -- in :meth:`~django.db.models.query.QuerySet."
 "filter`, etc. -- are \"AND\"ed together. If you need to execute more complex "
@@ -1429,7 +1439,7 @@ msgstr ""
 "использовать :class:`объекты Q <django.db.models.Q>`."
 
 # 674127ebd747487089e469ba45fff1d4
-#: ../../topics/db/queries.txt:790
+#: ../../topics/db/queries.txt:809
 msgid ""
 "A :class:`Q object <django.db.models.Q>` (``django.db.models.Q``) is an "
 "object used to encapsulate a collection of keyword arguments. These keyword "
@@ -1440,12 +1450,12 @@ msgstr ""
 "фильтрации. Аргументы определяются так же, как и в примерах выше."
 
 # 9a3eea84c46149589a0b8881e789cc9b
-#: ../../topics/db/queries.txt:794
+#: ../../topics/db/queries.txt:813
 msgid "For example, this ``Q`` object encapsulates a single ``LIKE`` query::"
 msgstr "Например, этот объект ``Q`` определяет запрос ``LIKE``::"
 
 # bbefbbfb4d0941eda81fa43a71138c0c
-#: ../../topics/db/queries.txt:799
+#: ../../topics/db/queries.txt:818
 msgid ""
 "``Q`` objects can be combined using the ``&`` and ``|`` operators. When an "
 "operator is used on two ``Q`` objects, it yields a new ``Q`` object."
@@ -1454,7 +1464,7 @@ msgstr ""
 "будет создан новый объект ``Q``."
 
 # e9d6d727a53a43669301e5b843e7d03e
-#: ../../topics/db/queries.txt:802
+#: ../../topics/db/queries.txt:821
 msgid ""
 "For example, this statement yields a single ``Q`` object that represents the "
 "\"OR\" of two ``\"question__startswith\"`` queries::"
@@ -1463,12 +1473,12 @@ msgstr ""
 "операцию \"OR\" двух фильтров с ``\"question__startswith\"``::"
 
 # 705510ff892d44f3a18cc95c9ae46d5d
-#: ../../topics/db/queries.txt:807
+#: ../../topics/db/queries.txt:826
 msgid "This is equivalent to the following SQL ``WHERE`` clause::"
 msgstr "Этот фильтр равнозначен такому оператору SQL ``WHERE``::"
 
 # c13885b1e2874b65ad91bf58787a1240
-#: ../../topics/db/queries.txt:811
+#: ../../topics/db/queries.txt:830
 msgid ""
 "You can compose statements of arbitrary complexity by combining ``Q`` "
 "objects with the ``&`` and ``|`` operators and use parenthetical grouping. "
@@ -1481,7 +1491,7 @@ msgstr ""
 "отрицания(``NOT``) в запросе::"
 
 # 3ccf0a35a62341d087ac8e8fcd6a514d
-#: ../../topics/db/queries.txt:818
+#: ../../topics/db/queries.txt:837
 msgid ""
 "Each lookup function that takes keyword-arguments (e.g. :meth:`~django.db."
 "models.query.QuerySet.filter`, :meth:`~django.db.models.query.QuerySet."
@@ -1498,12 +1508,12 @@ msgstr ""
 "они будут объединены оператором \"AND\". Например::"
 
 # 8a2b582e756f4e25af771abdd008aa2b
-#: ../../topics/db/queries.txt:831
+#: ../../topics/db/queries.txt:850
 msgid "... roughly translates into the SQL::"
 msgstr "... примерно переводится в SQL::"
 
 # 5bd89ed905d94e80912bef8cf3999e92
-#: ../../topics/db/queries.txt:836
+#: ../../topics/db/queries.txt:855
 msgid ""
 "Lookup functions can mix the use of ``Q`` objects and keyword arguments. All "
 "arguments provided to a lookup function (be they keyword arguments or ``Q`` "
@@ -1516,12 +1526,12 @@ msgstr ""
 "следовать перед именованными аргументами. Например::"
 
 # 91663bded41c4d89abffacd92cd56d7b
-#: ../../topics/db/queries.txt:845
+#: ../../topics/db/queries.txt:864
 msgid "... would be a valid query, equivalent to the previous example; but::"
 msgstr "... правильный запрос, идентичный предыдущему примеру; но::"
 
 # 824e3be530e94066a9a7ca961684fbb0
-#: ../../topics/db/queries.txt:852
+#: ../../topics/db/queries.txt:871
 msgid "... would not be valid."
 msgstr ""
 "... будет неправильный`(Вообще Django здесь не причем. Синтаксис Python не "
@@ -1529,7 +1539,7 @@ msgstr ""
 "переводчика)`."
 
 # 9c3dc79cbab141ecbcf0b54674db105b
-#: ../../topics/db/queries.txt:856
+#: ../../topics/db/queries.txt:875
 msgid ""
 "The `OR lookups examples`_ in the Django unit tests show some possible uses "
 "of ``Q``."
@@ -1538,12 +1548,12 @@ msgstr ""
 "com/browser/django/trunk/tests/modeltests/or_lookups/tests.py>`_."
 
 # 2a5bbb7cbe4b4308baaa21b4faf17e95
-#: ../../topics/db/queries.txt:862
+#: ../../topics/db/queries.txt:881
 msgid "Comparing objects"
 msgstr "Сравнение объектов"
 
 # 3b377f861a164ba2922f651aebf8b364
-#: ../../topics/db/queries.txt:864
+#: ../../topics/db/queries.txt:883
 msgid ""
 "To compare two model instances, just use the standard Python comparison "
 "operator, the double equals sign: ``==``. Behind the scenes, that compares "
@@ -1554,7 +1564,7 @@ msgstr ""
 "первичные ключи."
 
 # 34f084c0f65143feb8d10782bf55a4f1
-#: ../../topics/db/queries.txt:868
+#: ../../topics/db/queries.txt:887
 msgid ""
 "Using the ``Entry`` example above, the following two statements are "
 "equivalent::"
@@ -1563,7 +1573,7 @@ msgstr ""
 "эквивалентны::"
 
 # c67dd80bf875447c9ef8fe8c99a2a3ba
-#: ../../topics/db/queries.txt:873
+#: ../../topics/db/queries.txt:892
 msgid ""
 "If a model's primary key isn't called ``id``, no problem. Comparisons will "
 "always use the primary key, whatever it's called. For example, if a model's "
@@ -1574,12 +1584,12 @@ msgstr ""
 "эти два утверждения эквивалентны::"
 
 # e79b6b8b79214d0ebdcf90a1ea3296c2
-#: ../../topics/db/queries.txt:883
+#: ../../topics/db/queries.txt:902
 msgid "Deleting objects"
 msgstr "Удаление объектов"
 
 # 12c8a561a8db436cac6b9e7026b6169b
-#: ../../topics/db/queries.txt:885
+#: ../../topics/db/queries.txt:904
 msgid ""
 "The delete method, conveniently, is named :meth:`~django.db.models.Model."
 "delete`. This method immediately deletes the object and has no return value. "
@@ -1589,7 +1599,7 @@ msgstr ""
 "delete`. Этот метод сразу удаляет объект и ничего не возвращает. Например::"
 
 # f562bcec62704e03a6eeca005171bafd
-#: ../../topics/db/queries.txt:891
+#: ../../topics/db/queries.txt:910
 msgid ""
 "You can also delete objects in bulk. Every :class:`~django.db.models.query."
 "QuerySet` has a :meth:`~django.db.models.query.QuerySet.delete` method, "
@@ -1601,7 +1611,7 @@ msgstr ""
 "QuerySet`."
 
 # 29d5a6d552b34dfc902b9af19607082a
-#: ../../topics/db/queries.txt:896
+#: ../../topics/db/queries.txt:915
 msgid ""
 "For example, this deletes all ``Entry`` objects with a ``pub_date`` year of "
 "2005::"
@@ -1610,7 +1620,7 @@ msgstr ""
 "2005::"
 
 # 42fafab98e06479d880cc1d583dee050
-#: ../../topics/db/queries.txt:901
+#: ../../topics/db/queries.txt:920
 msgid ""
 "Keep in mind that this will, whenever possible, be executed purely in SQL, "
 "and so the ``delete()`` methods of individual object instances will not "
@@ -1632,7 +1642,7 @@ msgstr ""
 "models.query.QuerySet`."
 
 # 0ede23c152e542dd988752b6af812fed
-#: ../../topics/db/queries.txt:911
+#: ../../topics/db/queries.txt:930
 msgid ""
 "When Django deletes an object, by default it emulates the behavior of the "
 "SQL constraint ``ON DELETE CASCADE`` -- in other words, any objects which "
@@ -1644,7 +1654,7 @@ msgstr ""
 "объектом, будет также удален. Например::"
 
 # e9a498fc256b4a4c8d84a92ca9800765
-#: ../../topics/db/queries.txt:920
+#: ../../topics/db/queries.txt:939
 msgid ""
 "This cascade behavior is customizable via the :attr:`~django.db.models."
 "ForeignKey.on_delete` argument to the :class:`~django.db.models.ForeignKey`."
@@ -1653,7 +1663,7 @@ msgstr ""
 "ForeignKey.on_delete` поля :class:`~django.db.models.ForeignKey`."
 
 # f67a2d004f8044ad821ce0afbcb87b44
-#: ../../topics/db/queries.txt:924
+#: ../../topics/db/queries.txt:943
 msgid ""
 "Note that :meth:`~django.db.models.query.QuerySet.delete` is the only :class:"
 "`~django.db.models.query.QuerySet` method that is not exposed on a :class:"
@@ -1670,12 +1680,12 @@ msgstr ""
 "все записи::"
 
 # ae2a313325c54157b06781adbd7f8ac1
-#: ../../topics/db/queries.txt:936
+#: ../../topics/db/queries.txt:955
 msgid "Copying model instances"
 msgstr "Копирование объекта модели"
 
 # 81c2d5d79d1d41c48414728113e1a885
-#: ../../topics/db/queries.txt:938
+#: ../../topics/db/queries.txt:957
 msgid ""
 "Although there is no built-in method for copying model instances, it is "
 "possible to easily create new instance with all fields' values copied. In "
@@ -1688,7 +1698,7 @@ msgstr ""
 "примеров выше::"
 
 # 4cf698eb363649559b38f6aebd891382
-#: ../../topics/db/queries.txt:948
+#: ../../topics/db/queries.txt:967
 msgid ""
 "Things get more complicated if you use inheritance. Consider a subclass of "
 "``Blog``::"
@@ -1697,7 +1707,7 @@ msgstr ""
 "``Blog``::"
 
 # 4aafc8d17e2a41669e1bab2715b2bb84
-#: ../../topics/db/queries.txt:957
+#: ../../topics/db/queries.txt:976
 msgid ""
 "Due to how inheritance works, you have to set both ``pk`` and ``id`` to "
 "None::"
@@ -1706,7 +1716,7 @@ msgstr ""
 "в None::"
 
 # fa510ea6d64c461a85892099ce76d86f
-#: ../../topics/db/queries.txt:963
+#: ../../topics/db/queries.txt:982
 msgid ""
 "This process does not copy related objects. If you want to copy relations, "
 "you have to write a little bit more code. In our example, ``Entry`` has a "
@@ -1717,12 +1727,12 @@ msgstr ""
 "содержит связь много-ко-многим к модели ``Author``::"
 
 # 4e99683ce0e947be9167c79edb058c5f
-#: ../../topics/db/queries.txt:976
+#: ../../topics/db/queries.txt:995
 msgid "Updating multiple objects at once"
 msgstr "Изменение нескольких объектов"
 
 # d3d4c95936a4497eabd03a6652c10613
-#: ../../topics/db/queries.txt:978
+#: ../../topics/db/queries.txt:997
 msgid ""
 "Sometimes you want to set a field to a particular value for all the objects "
 "in a :class:`~django.db.models.query.QuerySet`. You can do this with the :"
@@ -1733,7 +1743,7 @@ msgstr ""
 "models.query.QuerySet.update`. Например::"
 
 # bf7b6e6c7753494291b9891c9dc5b89b
-#: ../../topics/db/queries.txt:985
+#: ../../topics/db/queries.txt:1004
 msgid ""
 "You can only set non-relation fields and :class:`~django.db.models."
 "ForeignKey` fields using this method. To update a non-relation field, "
@@ -1747,7 +1757,7 @@ msgstr ""
 "ForeignKey`, укажите объект связанной модели. Например::"
 
 # 43a9217ba7a542afb5e96c6444f638d7
-#: ../../topics/db/queries.txt:995
+#: ../../topics/db/queries.txt:1014
 msgid ""
 "The ``update()`` method is applied instantly and returns the number of rows "
 "matched by the query (which may not be equal to the number of rows updated "
@@ -1766,7 +1776,7 @@ msgstr ""
 "Например::"
 
 # c32824823bdb4d788282ff418af903b7
-#: ../../topics/db/queries.txt:1008
+#: ../../topics/db/queries.txt:1027
 msgid ""
 "Be aware that the ``update()`` method is converted directly to an SQL "
 "statement. It is a bulk operation for direct updates. It doesn't run any :"
@@ -1791,7 +1801,7 @@ msgstr ""
 "db.models.Model.save`::"
 
 # 6ec6bee63e7348d1aeb7ce9230d36876
-#: ../../topics/db/queries.txt:1022
+#: ../../topics/db/queries.txt:1041
 msgid ""
 "Calls to update can also use :class:`F expressions <django.db.models.F>` to "
 "update one field based on the value of another field in the model. This is "
@@ -1804,7 +1814,7 @@ msgstr ""
 "на один для каждой записи::"
 
 # 512e4e1efe294d0d9da9579148de042d
-#: ../../topics/db/queries.txt:1029
+#: ../../topics/db/queries.txt:1048
 msgid ""
 "However, unlike ``F()`` objects in filter and exclude clauses, you can't "
 "introduce joins when you use ``F()`` objects in an update -- you can only "
@@ -1817,12 +1827,12 @@ msgstr ""
 "исключение ``FieldError``::"
 
 # 1181022be17a492db4e34ced0747fcc4
-#: ../../topics/db/queries.txt:1040
+#: ../../topics/db/queries.txt:1059
 msgid "Related objects"
 msgstr "Связанные объекты"
 
 # 12ca6be79571436c817ebce5e7d6f5f8
-#: ../../topics/db/queries.txt:1042
+#: ../../topics/db/queries.txt:1061
 msgid ""
 "When you define a relationship in a model (i.e., a :class:`~django.db.models."
 "ForeignKey`, :class:`~django.db.models.OneToOneField`, or :class:`~django.db."
@@ -1835,7 +1845,7 @@ msgstr ""
 "связанными объектами."
 
 # 76a00e3eabcb497b9cdaf9000060755e
-#: ../../topics/db/queries.txt:1048
+#: ../../topics/db/queries.txt:1067
 msgid ""
 "Using the models at the top of this page, for example, an ``Entry`` object "
 "``e`` can get its associated ``Blog`` object by accessing the ``blog`` "
@@ -1846,7 +1856,7 @@ msgstr ""
 "blog``."
 
 # a6ec2c148731455cb7b7381415382104
-#: ../../topics/db/queries.txt:1052
+#: ../../topics/db/queries.txt:1071
 msgid ""
 "(Behind the scenes, this functionality is implemented by Python "
 "descriptors_. This shouldn't really matter to you, but we point it out here "
@@ -1857,7 +1867,7 @@ msgstr ""
 "любознательных.)"
 
 # 2432ded29ac746fc9cc2b23e86703616
-#: ../../topics/db/queries.txt:1055
+#: ../../topics/db/queries.txt:1074
 msgid ""
 "Django also creates API accessors for the \"other\" side of the relationship "
 "-- the link from the related model to the model that defines the "
@@ -1871,7 +1881,7 @@ msgstr ""
 "объектам ``Entry`` через атрибут ``entry_set``: ``b.entry_set.all()``."
 
 # f9c620084c2340699062d5cd7e99b510
-#: ../../topics/db/queries.txt:1060
+#: ../../topics/db/queries.txt:1079
 msgid ""
 "All examples in this section use the sample ``Blog``, ``Author`` and "
 "``Entry`` models defined at the top of this page."
@@ -1880,17 +1890,17 @@ msgstr ""
 "``Author`` и ``Entry``."
 
 # ddba1e5f35134b1d9b42c3f6e3e05951
-#: ../../topics/db/queries.txt:1066
+#: ../../topics/db/queries.txt:1085
 msgid "One-to-many relationships"
 msgstr "Связь один-к-многим"
 
 # 2a588632bef445558e59b9e4f6e921d4
-#: ../../topics/db/queries.txt:1069
+#: ../../topics/db/queries.txt:1088
 msgid "Forward"
 msgstr "Прямая"
 
 # ca55dce52f474004a985e923621508ba
-#: ../../topics/db/queries.txt:1071
+#: ../../topics/db/queries.txt:1090
 msgid ""
 "If a model has a :class:`~django.db.models.ForeignKey`, instances of that "
 "model will have access to the related (foreign) object via a simple "
@@ -1900,7 +1910,7 @@ msgstr ""
 "модели может получить связанный объект через атрибут модели."
 
 # 046b04d00de8478c877833241743ad96
-#: ../../topics/db/queries.txt:1080
+#: ../../topics/db/queries.txt:1099
 msgid ""
 "You can get and set via a foreign-key attribute. As you may expect, changes "
 "to the foreign key aren't saved to the database until you call :meth:"
@@ -1911,7 +1921,7 @@ msgstr ""
 "будет вызван метод :meth:`~django.db.models.Model.save`. Например::"
 
 # a7dfa9b31d80453ea55661fb837380e5
-#: ../../topics/db/queries.txt:1088
+#: ../../topics/db/queries.txt:1107
 msgid ""
 "If a :class:`~django.db.models.ForeignKey` field has ``null=True`` set (i."
 "e., it allows ``NULL`` values), you can assign ``None`` to remove the "
@@ -1922,7 +1932,7 @@ msgstr ""
 "поля. Например::"
 
 # aaecabd4a9994a2aabee92706f81442a
-#: ../../topics/db/queries.txt:1096
+#: ../../topics/db/queries.txt:1115
 msgid ""
 "Forward access to one-to-many relationships is cached the first time the "
 "related object is accessed. Subsequent accesses to the foreign key on the "
@@ -1933,7 +1943,7 @@ msgstr ""
 "будут использовать кэшированное значение. Например::"
 
 # b0c2840f6ebc48c9821ae1199ac04cb9
-#: ../../topics/db/queries.txt:1104
+#: ../../topics/db/queries.txt:1123
 msgid ""
 "Note that the :meth:`~django.db.models.query.QuerySet.select_related` :class:"
 "`~django.db.models.query.QuerySet` method recursively prepopulates the cache "
@@ -1944,12 +1954,12 @@ msgstr ""
 "заполняет кэш значениями для всех связей один-ко-многим. Например::"
 
 # 2ac51945c1724da08d97c46265d95795
-#: ../../topics/db/queries.txt:1115
+#: ../../topics/db/queries.txt:1134
 msgid "Following relationships \"backward\""
 msgstr "\"Обратная\" связь"
 
 # 6fa632cc418e43fe9e9403e72960ca1c
-#: ../../topics/db/queries.txt:1117
+#: ../../topics/db/queries.txt:1136
 msgid ""
 "If a model has a :class:`~django.db.models.ForeignKey`, instances of the "
 "foreign-key model will have access to a :class:`~django.db.models.Manager` "
@@ -1969,7 +1979,7 @@ msgstr ""
 "\"Получение объектов\"."
 
 # 2b06ad760bd24dd485cae060c6fb842d
-#: ../../topics/db/queries.txt:1134
+#: ../../topics/db/queries.txt:1153
 msgid ""
 "You can override the ``FOO_set`` name by setting the :attr:`~django.db."
 "models.ForeignKey.related_name` parameter in the :class:`~django.db.models."
@@ -1983,12 +1993,12 @@ msgstr ""
 "ForeignKey(Blog, related_name='entries')``, пример выше выглядел бы как::"
 
 # 358de7d8ffa841bcaf2dcf4c024c9131
-#: ../../topics/db/queries.txt:1150
+#: ../../topics/db/queries.txt:1169
 msgid "Using a custom reverse manager"
 msgstr "Использование своего менеджера для обратных связей"
 
 # 4e907f69c16145e887160968c0e2e9d3
-#: ../../topics/db/queries.txt:1154
+#: ../../topics/db/queries.txt:1173
 msgid ""
 "By default the :class:`~django.db.models.fields.related.RelatedManager` used "
 "for reverse relations is a subclass of the :ref:`default manager <manager-"
@@ -2001,7 +2011,7 @@ msgstr ""
 "менеджер, используйте следующий подход::"
 
 # 96e04fa7ddaa46df91b6ad5e2fb4deeb
-#: ../../topics/db/queries.txt:1169
+#: ../../topics/db/queries.txt:1188
 msgid ""
 "If ``EntryManager`` performed default filtering in its ``get_queryset()`` "
 "method, that filtering would apply to the ``all()`` call."
@@ -2010,19 +2020,19 @@ msgstr ""
 "будет выполнена и при вызове ``all()``."
 
 # cb02797f3a4e4ef29a6c1928397c4bca
-#: ../../topics/db/queries.txt:1172
+#: ../../topics/db/queries.txt:1191
 msgid ""
 "Of course, specifying a custom reverse manager also enables you to call its "
 "custom methods::"
 msgstr "Также вы можете вызывать методы указанного менеджера::"
 
 # 216f9640763048febb0bd4facc1c8c5e
-#: ../../topics/db/queries.txt:1178
+#: ../../topics/db/queries.txt:1197
 msgid "Additional methods to handle related objects"
 msgstr "Дополнительные методы менеджера связанных объектов"
 
 # 961836648e6a477e824770cf337525fd
-#: ../../topics/db/queries.txt:1180
+#: ../../topics/db/queries.txt:1199
 msgid ""
 "In addition to the :class:`~django.db.models.query.QuerySet` methods defined "
 "in \"Retrieving objects\" above, the :class:`~django.db.models.ForeignKey` :"
@@ -2037,22 +2047,22 @@ msgstr ""
 "о :doc:`связанных объектах </ref/models/relations>`."
 
 # 31dad4f72fbc4ba2b12661614903e5d1
-#: ../../topics/db/queries.txt:1187
+#: ../../topics/db/queries.txt:1206
 msgid "``add(obj1, obj2, ...)``"
 msgstr "``add(obj1, obj2, ...)``"
 
 # 216f9640763048febb0bd4facc1c8c5e
-#: ../../topics/db/queries.txt:1187
+#: ../../topics/db/queries.txt:1206
 msgid "Adds the specified model objects to the related object set."
 msgstr "Добавляет указанный объект к связанным объектам."
 
 # 41ef0939d5794ff09a4e58ec2d7bb183
-#: ../../topics/db/queries.txt:1191
+#: ../../topics/db/queries.txt:1210
 msgid "``create(**kwargs)``"
 msgstr "``create(**kwargs)``"
 
 # db0515d208244ec39a0a80028f6a47c1
-#: ../../topics/db/queries.txt:1190
+#: ../../topics/db/queries.txt:1209
 msgid ""
 "Creates a new object, saves it and puts it in the related object set. "
 "Returns the newly created object."
@@ -2061,27 +2071,27 @@ msgstr ""
 "Возвращает созданный объект."
 
 # 0856c5bd8c3540929b40a4378dc66437
-#: ../../topics/db/queries.txt:1194
+#: ../../topics/db/queries.txt:1213
 msgid "``remove(obj1, obj2, ...)``"
 msgstr "``remove(obj1, obj2, ...)``"
 
 # deda08b2ca3244ea8106ec0558c7d55c
-#: ../../topics/db/queries.txt:1194
+#: ../../topics/db/queries.txt:1213
 msgid "Removes the specified model objects from the related object set."
 msgstr "Удаляет указанный объект из списка связанных объектов."
 
 # 934d5a36831b4105a5a5ba019743581d
-#: ../../topics/db/queries.txt:1197
+#: ../../topics/db/queries.txt:1216
 msgid "``clear()``"
 msgstr "``clear()``"
 
 # 7389187100f54ca7972ee45ce505af34
-#: ../../topics/db/queries.txt:1197
+#: ../../topics/db/queries.txt:1216
 msgid "Removes all objects from the related object set."
 msgstr "Удаляет все объекты из списка связанных."
 
 # f3a792203f994426b93f1ff3b68a491e
-#: ../../topics/db/queries.txt:1199
+#: ../../topics/db/queries.txt:1218
 msgid ""
 "To assign the members of a related set in one fell swoop, just assign to it "
 "from any iterable object. The iterable can contain object instances, or just "
@@ -2092,7 +2102,7 @@ msgstr ""
 "первичных ключей. Например::"
 
 # 1aaed1cd411b456eab1caa3d6692aad1
-#: ../../topics/db/queries.txt:1206
+#: ../../topics/db/queries.txt:1225
 msgid ""
 "In this example, ``e1`` and ``e2`` can be full Entry instances, or integer "
 "primary key values."
@@ -2101,7 +2111,7 @@ msgstr ""
 "значениями первичного ключа."
 
 # 9c0557108268448c94282e171e6e3893
-#: ../../topics/db/queries.txt:1209
+#: ../../topics/db/queries.txt:1228
 msgid ""
 "If the ``clear()`` method is available, any pre-existing objects will be "
 "removed from the ``entry_set`` before all objects in the iterable (in this "
@@ -2116,7 +2126,7 @@ msgstr ""
 "объектов."
 
 # 592feacc21004d15b4cfd91271940422
-#: ../../topics/db/queries.txt:1215
+#: ../../topics/db/queries.txt:1234
 msgid ""
 "Each \"reverse\" operation described in this section has an immediate effect "
 "on the database. Every addition, creation and deletion is immediately and "
@@ -2127,12 +2137,12 @@ msgstr ""
 "в базу данных."
 
 # 6be458cd37dc4e59ae7498f5729fec3d
-#: ../../topics/db/queries.txt:1222
+#: ../../topics/db/queries.txt:1241
 msgid "Many-to-many relationships"
 msgstr "Связь много-ко-многим"
 
 # 9a401310d540429bb0db647a8a06ab3b
-#: ../../topics/db/queries.txt:1224
+#: ../../topics/db/queries.txt:1243
 msgid ""
 "Both ends of a many-to-many relationship get automatic API access to the "
 "other end. The API works just as a \"backward\" one-to-many relationship, "
@@ -2143,7 +2153,7 @@ msgstr ""
 "менеджер для связи один-ко-многим, описанный выше."
 
 # f00cec0ad3044822ae04b25f8996a9b0
-#: ../../topics/db/queries.txt:1227
+#: ../../topics/db/queries.txt:1246
 msgid ""
 "The only difference is in the attribute naming: The model that defines the :"
 "class:`~django.db.models.ManyToManyField` uses the attribute name of that "
@@ -2157,12 +2167,12 @@ msgstr ""
 "нижнем регистре плюс ``'_set'`` (так же, как и для связи один-ко-многим)."
 
 # 5d56c76b4efd46ef8b082d43eba6ed1a
-#: ../../topics/db/queries.txt:1232
+#: ../../topics/db/queries.txt:1251
 msgid "An example makes this easier to understand::"
 msgstr "Пример все разъяснит::"
 
 # ed67193473614bfca7a6d6917f7118e5
-#: ../../topics/db/queries.txt:1242
+#: ../../topics/db/queries.txt:1261
 msgid ""
 "Like :class:`~django.db.models.ForeignKey`, :class:`~django.db.models."
 "ManyToManyField` can specify :attr:`~django.db.models.ManyToManyField."
@@ -2179,12 +2189,12 @@ msgstr ""
 "атрибутом ``entries`` вместо ``entry_set``."
 
 # 58dc0610d67d4894aafc637cfe84e268
-#: ../../topics/db/queries.txt:1250
+#: ../../topics/db/queries.txt:1269
 msgid "One-to-one relationships"
 msgstr "Связь один-к-одному"
 
 # 2518ca1f41df40339d225f06c55de122
-#: ../../topics/db/queries.txt:1252
+#: ../../topics/db/queries.txt:1271
 msgid ""
 "One-to-one relationships are very similar to many-to-one relationships. If "
 "you define a :class:`~django.db.models.OneToOneField` on your model, "
@@ -2196,12 +2206,12 @@ msgstr ""
 "содержать ссылку на связанный объект через атрибут модели."
 
 # 5bac17ba464a44eb8ef73610c30e948f
-#: ../../topics/db/queries.txt:1257
+#: ../../topics/db/queries.txt:1276
 msgid "For example::"
 msgstr "Например::"
 
 # b535b1d1d0e74fa8a83cef302cac0422
-#: ../../topics/db/queries.txt:1266
+#: ../../topics/db/queries.txt:1285
 msgid ""
 "The difference comes in \"reverse\" queries. The related model in a one-to-"
 "one relationship also has access to a :class:`~django.db.models.Manager` "
@@ -2213,7 +2223,7 @@ msgstr ""
 "представляет один объект, а не множество объектов::"
 
 # b6b0e183769c4289a508aa9db77ac531
-#: ../../topics/db/queries.txt:1274
+#: ../../topics/db/queries.txt:1293
 msgid ""
 "If no object has been assigned to this relationship, Django will raise a "
 "``DoesNotExist`` exception."
@@ -2222,7 +2232,7 @@ msgstr ""
 "``DoesNotExist``."
 
 # 117c826dc5e149499692bc3f3b44c688
-#: ../../topics/db/queries.txt:1277
+#: ../../topics/db/queries.txt:1296
 msgid ""
 "Instances can be assigned to the reverse relationship in the same way as you "
 "would assign the forward relationship::"
@@ -2230,12 +2240,12 @@ msgstr ""
 "Объект может быть назначен через обратную связь так же, как и через прямую::"
 
 # 2c5d938af4784825997033f0a4011056
-#: ../../topics/db/queries.txt:1283
+#: ../../topics/db/queries.txt:1302
 msgid "How are the backward relationships possible?"
 msgstr "Как работает обратная связь?"
 
 # d86cc532225542b2be233f21db22980d
-#: ../../topics/db/queries.txt:1285
+#: ../../topics/db/queries.txt:1304
 msgid ""
 "Other object-relational mappers require you to define relationships on both "
 "sides. The Django developers believe this is a violation of the DRY (Don't "
@@ -2248,7 +2258,7 @@ msgstr ""
 "одной модели."
 
 # 7928531e4fa4471397b2b353b22d6361
-#: ../../topics/db/queries.txt:1290
+#: ../../topics/db/queries.txt:1309
 msgid ""
 "But how is this possible, given that a model class doesn't know which other "
 "model classes are related to it until those other model classes are loaded?"
@@ -2257,7 +2267,7 @@ msgstr ""
 "связаны с ней, пока классы этих моделей не будут загружены?"
 
 # d256060e25d34cbf8c6ff2972ebd432e
-#: ../../topics/db/queries.txt:1293
+#: ../../topics/db/queries.txt:1312
 msgid ""
 "The answer lies in the :data:`app registry <django.apps.apps>`. When Django "
 "starts, it imports each application listed in :setting:`INSTALLED_APPS`, and "
@@ -2274,7 +2284,7 @@ msgstr ""
 "модели и добавит связь при ее импорте."
 
 # d0e4ac6238fb4c3992f01c27421e5aeb
-#: ../../topics/db/queries.txt:1300
+#: ../../topics/db/queries.txt:1319
 msgid ""
 "For this reason, it's particularly important that all the models you're "
 "using be defined in applications listed in :setting:`INSTALLED_APPS`. "
@@ -2284,12 +2294,12 @@ msgstr ""
 "приложениях из :setting:`INSTALLED_APPS`. Иначе связи не будут работать."
 
 # 0895351da3b84730bedbb16e1bdeaecd
-#: ../../topics/db/queries.txt:1305
+#: ../../topics/db/queries.txt:1324
 msgid "Queries over related objects"
 msgstr "Запросы со связанными объектами"
 
 # c6ef9029545d436584d6bcda98e006d5
-#: ../../topics/db/queries.txt:1307
+#: ../../topics/db/queries.txt:1326
 msgid ""
 "Queries involving related objects follow the same rules as queries involving "
 "normal value fields. When specifying the value for a query to match, you may "
@@ -2300,7 +2310,7 @@ msgstr ""
 "значениями. Вы можете использовать объект или значение первичного ключа."
 
 # 0f6f6b8d11404210b59d152cff37f99c
-#: ../../topics/db/queries.txt:1311
+#: ../../topics/db/queries.txt:1330
 msgid ""
 "For example, if you have a Blog object ``b`` with ``id=5``, the following "
 "three queries would be identical::"
@@ -2309,12 +2319,12 @@ msgstr ""
 "идентичны::"
 
 # ecf21c78d1ee407092fd93800876f849
-#: ../../topics/db/queries.txt:1319
+#: ../../topics/db/queries.txt:1338
 msgid "Falling back to raw SQL"
 msgstr "Использование чистого SQL"
 
 # eea72f40671a41d2bf2c11ec33d9ba86
-#: ../../topics/db/queries.txt:1321
+#: ../../topics/db/queries.txt:1340
 msgid ""
 "If you find yourself needing to write an SQL query that is too complex for "
 "Django's database-mapper to handle, you can fall back on writing SQL by "
@@ -2326,7 +2336,7 @@ msgstr ""
 "использовать SQL запросы; смотрите :doc:`/topics/db/sql`."
 
 # 5c5bcff1298f471abee7b10697f6d16a
-#: ../../topics/db/queries.txt:1326
+#: ../../topics/db/queries.txt:1345
 msgid ""
 "Finally, it's important to note that the Django database layer is merely an "
 "interface to your database. You can access your database via other tools, "
@@ -2337,6 +2347,23 @@ msgstr ""
 "лишь интерфейсом к базе данных. Вы можете получить доступ к базе данных "
 "через другие инструменты, языки программирования и фреймворки; Django не "
 "делает ничего специфического с вашей базой данных."
+
+# e0c354100c6a4f72b5ed282f90ac2cf3
+#~ msgid ""
+#~ "All of this behavior also applies to :meth:`~django.db.models.query."
+#~ "QuerySet.exclude`: all the conditions in a single :meth:`~django.db."
+#~ "models.query.QuerySet.exclude` statement apply to a single instance (if "
+#~ "those conditions are talking about the same multi-valued relation). "
+#~ "Conditions in subsequent :meth:`~django.db.models.query.QuerySet.filter` "
+#~ "or :meth:`~django.db.models.query.QuerySet.exclude` calls that refer to "
+#~ "the same relation may end up filtering on different linked objects."
+#~ msgstr ""
+#~ "Все эти правила также распространяются и на :meth:`~django.db.models."
+#~ "query.QuerySet.exclude`: все условия в одном :meth:`~django.db.models."
+#~ "query.QuerySet.exclude` применяются к одному объекту (если эти условия "
+#~ "относятся к одной связи). Условия в последующих вызовах :meth:`~django.db."
+#~ "models.query.QuerySet.filter` или :meth:`~django.db.models.query.QuerySet."
+#~ "exclude` для одной связи могут применяться к различным связанным объектам."
 
 # a1daedded2014169aa4c423b77f1dda1
 #~ msgid ""
