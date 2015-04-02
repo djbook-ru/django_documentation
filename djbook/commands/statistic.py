@@ -1,5 +1,6 @@
 import logging
 import os
+from math import ceil
 from cliff.command import Command as BaseCommand
 from jinja2 import Environment, FileSystemLoader
 from polib import pofile
@@ -51,8 +52,8 @@ class Command(BaseCommand):
                     msg_fuzzy = msg_total - msg_translated - msg_untranslated
                     need_fix_count = msg_total - msg_translated
 
-                    untranslated_perc = int(round(msg_untranslated / float(msg_total) * 100))
-                    fuzzy_perc = int(msg_fuzzy / float(msg_total) * 100)
+                    untranslated_perc = int(ceil(msg_untranslated / float(msg_total) * 100))
+                    fuzzy_perc = int(ceil(msg_fuzzy / float(msg_total) * 100))
                     translated_perc = 100 - untranslated_perc - fuzzy_perc
 
                     total += msg_total
