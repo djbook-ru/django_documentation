@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated <>, 2012, 2014.
+# Automatically generated <>, 2012, 2014, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2014-12-18 18:34+0200\n"
+"PO-Revision-Date: 2015-04-03 18:30+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -21,13 +21,11 @@ msgstr ""
 
 # 1d201004172a46e59165f832c52481b4
 #: ../../ref/templates/api.txt:3
-#, fuzzy
 msgid "The Django template language: for Python programmers"
 msgstr "Язык шаблонов Django: для Python программистов"
 
 # 523ab89fd9274fffacba647757a590b2
 #: ../../ref/templates/api.txt:7
-#, fuzzy
 msgid ""
 "This document explains the Django template system from a technical "
 "perspective -- how it works and how to extend it. If you're just looking for "
@@ -35,7 +33,7 @@ msgid ""
 msgstr ""
 "Этот раздел описывает систему шаблонов Django с технической стороны -- как "
 "она работает и как расширить её. Если вы ищите просто описание синтаксиса "
-"шаблонов, смотрите :doc:`/topics/templates`."
+"шаблонов, смотрите :doc:`/ref/templates/language`."
 
 #: ../../ref/templates/api.txt:11
 msgid ""
@@ -43,30 +41,32 @@ msgid ""
 "rendering. Start with the :ref:`introduction to the Django template language "
 "<template-language-intro>` if you aren't familiar with these concepts."
 msgstr ""
+"Этот документ подразумевает, что вы уже знакомы с шаблонами, контекстом, "
+"переменными, тегами и рендерингом. Если вам не знакомы эти концепции, "
+"начните с :ref:`вступления в систему шаблонов Django <template-language-"
+"intro>`."
 
 #: ../../ref/templates/api.txt:16
 msgid "Overview"
-msgstr ""
+msgstr "Введение"
 
 # c9a0b776484849c28ce22782f30c9e28
 #: ../../ref/templates/api.txt:18
-#, fuzzy
 msgid "Using the template system in Python is a three-step process:"
 msgstr "Система шаблонов в Python работает в два этапа:"
 
 #: ../../ref/templates/api.txt:20
 msgid "You configure an :class:`Engine`."
-msgstr ""
+msgstr "Вы настраиваете :class:`Engine`."
 
 # 3cbf75ced2e046d8b1ba15e0ff119d06
 #: ../../ref/templates/api.txt:21
-#, fuzzy
 msgid "You compile template code into a :class:`Template`."
-msgstr "Сначала вы компилируете код шаблона в объект ``Template``."
+msgstr "Сначала вы компилируете код шаблона в объект :class:`Template`."
 
 #: ../../ref/templates/api.txt:22
 msgid "You render the template with a :class:`Context`."
-msgstr ""
+msgstr "Вы рендерите шаблон с :class:`Context`."
 
 #: ../../ref/templates/api.txt:24
 msgid ""
@@ -74,6 +74,8 @@ msgid ""
 "APIs <template-engines>` for each of these steps instead of the template "
 "system's lower level APIs:"
 msgstr ""
+"Django использует :ref:`высокоуровневый API, который не привязан к "
+"конкретному бэкенду <template-engines>`:"
 
 #: ../../ref/templates/api.txt:28
 msgid ""
@@ -82,6 +84,11 @@ msgid ""
 "`Engine`. :class:`~django.template.backends.django.DjangoTemplates` wraps :"
 "class:`Engine` and adapts it to the common template backend API."
 msgstr ""
+"Для каждого бэкенда :class:`~django.template.backends.django."
+"DjangoTemplates` из настройки the :setting:`TEMPLATES`, Django создает "
+"экземпляр :class:`Engine`. :class:`~django.template.backends.django."
+"DjangoTemplates` оборачивает :class:`Engine`, чтобы адаптировать его под API "
+"конкретного бэкенда шаблонов."
 
 #: ../../ref/templates/api.txt:32
 msgid ""
@@ -90,6 +97,10 @@ msgid ""
 "``django.template.backends.django.Template`` which wraps the actual :class:"
 "`django.template.Template`."
 msgstr ""
+"Модуль :mod:`django.template.loader` предоставляет функции, такие как :func:"
+"`~django.template.loader.get_template`, для загрузки шаблонов. Они "
+"возвращают ``django.template.backends.django.Template``, который "
+"оборачивает :class:`django.template.Template`."
 
 #: ../../ref/templates/api.txt:36
 msgid ""
@@ -98,16 +109,21 @@ msgid ""
 "a request into a :class:`Context` and delegates the rendering to the "
 "underlying :class:`Template`."
 msgstr ""
+"``Template``, полученный на предыдущем шаге, содержит метод :meth:`~django."
+"template.backends.base.Template.render`, который оборачивает контекст и "
+"запрос в :class:`Context` и делегирует рендеринг основному объекту :class:"
+"`Template`."
 
 #: ../../ref/templates/api.txt:42
 msgid "Configuring an engine"
-msgstr ""
+msgstr "Настройка бэкенда"
 
 #: ../../ref/templates/api.txt:48
 msgid ""
 "When instantiating an ``Engine`` all arguments must be passed as keyword "
 "arguments:"
 msgstr ""
+"При создании ``Engine`` все аргументы должны передаваться как именованные:"
 
 #: ../../ref/templates/api.txt:51
 msgid ""
@@ -115,19 +131,24 @@ msgid ""
 "source files. It is used to configure :class:`filesystem.Loader <django."
 "template.loaders.filesystem.Loader>`."
 msgstr ""
+"``dirs`` -- это список каталого, в которых бэкенд ищет файлы шаблонов. "
+"Используется для настройки :class:`filesystem.Loader <django.template."
+"loaders.filesystem.Loader>`."
 
 #: ../../ref/templates/api.txt:55 ../../ref/templates/api.txt:70
 #: ../../ref/templates/api.txt:81
 msgid "It defaults to an empty list."
-msgstr ""
+msgstr "По умолчанию равен пустому списку."
 
 #: ../../ref/templates/api.txt:57
 msgid "``app_dirs`` only affects the default value of ``loaders``. See below."
 msgstr ""
+"``app_dirs`` влияет только на значение ``loaders`` по умолчанию. Смотрите "
+"ниже."
 
 #: ../../ref/templates/api.txt:59 ../../ref/templates/api.txt:90
 msgid "It defaults to ``False``."
-msgstr ""
+msgstr "По умолчанию ``False``."
 
 #: ../../ref/templates/api.txt:61
 msgid ""
@@ -135,6 +156,9 @@ msgid ""
 "for the ``{% ssi %}`` template tag. This is a security measure, so that "
 "template authors can't access files that they shouldn't be accessing."
 msgstr ""
+"``allowed_include_roots`` -- список доступных префиксов для тега ``{% ssi %}"
+"``. Эта настройка используется для безопасности, чтобы авторы шаблонов не "
+"имели доступа ко всем файлам."
 
 #: ../../ref/templates/api.txt:66
 msgid ""
@@ -142,10 +166,13 @@ msgid ""
 "www']``, then ``{% ssi /home/html/foo.txt %}`` would work, but ``{% ssi /etc/"
 "passwd %}`` wouldn't."
 msgstr ""
+"Например, если ``'allowed_include_roots'`` равна ``['/home/html', '/var/"
+"www']``, тогда ``{% ssi /home/html/foo.txt %}`` будет работать, а ``{% ssi /"
+"etc/passwd %}`` -- нет."
 
 #: ../../ref/templates/api.txt:74
 msgid "``allowed_include_roots`` is deprecated."
-msgstr ""
+msgstr "Опция ``allowed_include_roots`` устарела."
 
 #: ../../ref/templates/api.txt:76
 msgid ""
@@ -154,10 +181,15 @@ msgid ""
 "These callables take a request object as their argument and return a :class:"
 "`dict` of items to be merged into the context."
 msgstr ""
+"``context_processors`` -- список путей Python для импорта функций, которые "
+"используются для наполнения контекста шаблонов, если он рендерится с "
+"объектом запроса. Эти функции принимают объект запроса и возвращают :class:"
+"`dict` значений, которые будут добавлены в контекст."
 
 #: ../../ref/templates/api.txt:83
 msgid "See :class:`~django.template.RequestContext` for more information."
 msgstr ""
+"Подробности смотрите в описании :class:`~django.template.RequestContext`."
 
 #: ../../ref/templates/api.txt:85
 msgid ""

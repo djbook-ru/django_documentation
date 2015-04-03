@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2015-04-02 16:30+0300\n"
+"PO-Revision-Date: 2015-04-03 13:57+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -122,18 +122,31 @@ msgid ""
 "present by consulting ``cls._deferred`` - if ``False``, then all fields have "
 "been loaded from the database."
 msgstr ""
+"Аргумент ``db`` содержит название базы данных, из которой загружается "
+"объект, ``field_names`` содержит список загруженных полей, а ``values`` "
+"содержит значения полей из ``field_names``. Поля в ``field_names`` "
+"расположены в таком же порядке как и ``values``, по этому можно использовать "
+"``cls(**(zip(field_names, values)))`` для создания объекта. Если все поля "
+"модели присутствуют, порядок значений в ``values`` будет таким, каким их "
+"ожидает ``__init__()``. И вы можете создать объект с помощью "
+"``cls(*values)``. Все поля модели загружены, если ``cls._deferred`` равен "
+"``False``."
 
 #: ../../ref/models/instances.txt:86
 msgid ""
 "In addition to creating the new model, the ``from_db()`` method must set the "
 "``adding`` and ``db`` flags in the new instance's ``_state`` attribute."
 msgstr ""
+"Кроме создания экземпляра модели метод ``from_db()`` должен установить флаги "
+"``adding`` и ``db`` атрибута ``_state`` нового объекта модели."
 
 #: ../../ref/models/instances.txt:89
 msgid ""
 "Below is an example showing how to record the initial values of fields that "
 "are loaded from the database::"
 msgstr ""
+"В этом примере вы можете увидеть как сохранить начальные загруженные "
+"значений полей и проверять их при сохранении::"
 
 #: ../../ref/models/instances.txt:115
 msgid ""
@@ -141,10 +154,13 @@ msgid ""
 "that is done. In this case it would of course be possible to just use "
 "``super()`` call in the ``from_db()`` method."
 msgstr ""
+"Это оригинальная реализация метода ``from_db()``, чтобы показать как он "
+"работает. На самом деле мы бы могли просто вызвать родительский метод через "
+"``super()``."
 
 #: ../../ref/models/instances.txt:120
 msgid "Refreshing objects from database"
-msgstr ""
+msgstr "Обновление объектов из базы данных"
 
 #: ../../ref/models/instances.txt:126
 msgid ""
@@ -152,12 +168,15 @@ msgid ""
 "``refresh_from_db()`` method. When this method is called without arguments "
 "the following is done:"
 msgstr ""
+"Если вам необходимо обновить значения модели из базы данных, вы можете "
+"использовать ``refresh_from_db()``. Если вызвать этот метод без аргументов, "
+"произойдет следующее:"
 
 #: ../../ref/models/instances.txt:130
 msgid ""
 "All non-deferred fields of the model are updated to the values currently "
 "present in the database."
-msgstr ""
+msgstr "Все загруженные поля модели будут обновлены значениями из базы данных."
 
 #: ../../ref/models/instances.txt:132
 msgid ""
@@ -168,12 +187,18 @@ msgid ""
 "be thrown away, and when next accessed it will be reloaded with the value of "
 "``obj.author_id``."
 msgstr ""
+"Если ранее загруженные внешние связи уже не верны, они будут удалены. "
+"Например, если объект содержит внешнюю связь на модель ``Author``, и ``obj."
+"author_id != obj.author.id``, ``obj.author`` будет очищен и при следующем "
+"обращении будет загружен объект со значением ``obj.author_id``."
 
 #: ../../ref/models/instances.txt:139
 msgid ""
 "Note that only fields of the model are reloaded from the database. Other "
 "database dependent values such as annotations are not reloaded."
 msgstr ""
+"Обратите внимание, загружаются только поля модели. Аннотации и прочие "
+"специфические значения не будут загружены."
 
 #: ../../ref/models/instances.txt:142
 msgid ""
@@ -181,18 +206,23 @@ msgid ""
 "from the default database if the instance wasn't loaded from the database. "
 "The ``using`` argument can be used to force the database used for reloading."
 msgstr ""
+"Перезагрузка выполняется из базы данных, из которой объект был изначально "
+"загружен, или из базы данных по умолчанию, если база данных не была явно "
+"указана. Аргумент ``using`` позволяет явно указать базу данных."
 
 #: ../../ref/models/instances.txt:146
 msgid ""
 "It is possible to force the set of fields to be loaded by using the "
 "``fields`` argument."
-msgstr ""
+msgstr "Вы можете указать какие поля загружать с помощью аргумента ``fields``."
 
 #: ../../ref/models/instances.txt:149
 msgid ""
 "For example, to test that an ``update()`` call resulted in the expected "
 "update, you could write a test similar to this::"
 msgstr ""
+"Например, чтобы проверить вызов метода ``update()``, вы можете использовать "
+"следующий тест::"
 
 #: ../../ref/models/instances.txt:161
 msgid ""
@@ -201,12 +231,16 @@ msgid ""
 "the way deferred loading happens. The example below shows how one can reload "
 "all of the instance's fields when a deferred field is reloaded::"
 msgstr ""
+"Обратите внимание, при доступе к отложенным(deferred) полям они загружаются "
+"этим методом. Таким образом вы можете переопределить способ загрузки "
+"отложенных полей. В этом примере мы перегружаем все поля, если загружаются "
+"отложенные поля::"
 
 #: ../../ref/models/instances.txt:183
 msgid ""
 "A helper method that returns a set containing the attribute names of all "
 "those fields that are currently deferred for this model."
-msgstr ""
+msgstr "Возвращает список текущих отложенных полей для экземпляра модели."
 
 # a1af197f5374441fbd6f668e42644aef
 #: ../../ref/models/instances.txt:189
@@ -261,7 +295,6 @@ msgstr ""
 
 # 06e39a0d61cf4fd8b83b5cea1435e0a3
 #: ../../ref/models/instances.txt:210
-#, fuzzy
 msgid ""
 "This method calls :meth:`Model.clean_fields()`, :meth:`Model.clean()`, and :"
 "meth:`Model.validate_unique()` (if ``validate_unique`` is ``True``), in that "
@@ -354,7 +387,6 @@ msgstr ""
 
 # add054fa6fe04f13bc58b99020a5edab
 #: ../../ref/models/instances.txt:270
-#, fuzzy
 msgid ""
 "In the above example, the :exc:`~django.core.exceptions.ValidationError` "
 "exception raised by ``Model.clean()`` was instantiated with a string, so it "
@@ -374,6 +406,10 @@ msgid ""
 "names. We could update the previous example to assign the error to the "
 "``pub_date`` field::"
 msgstr ""
+"Чтобы добавить ошибку валидации к определенному полю, создайте экземпляр :"
+"exc:`~django.core.exceptions.ValidationError` со словарем, где ключи "
+"отображают необходимые поля. Добавим к предыдущему примеру проверку поля "
+"``pub_date``::"
 
 # 91c9d98f74c54c40a03252a75f9e3ca8
 #: ../../ref/models/instances.txt:295
@@ -705,7 +741,6 @@ msgstr ""
 
 # 71bee65874244f709b1210097335bc17
 #: ../../ref/models/instances.txt:445
-#, fuzzy
 msgid ""
 "In Django 1.5 and earlier, Django did a ``SELECT`` when the primary key "
 "attribute was set. If the ``SELECT`` found a row, then Django did an "
@@ -906,9 +941,8 @@ msgstr ""
 
 # 5710063c94b64f6a9867bbff8de57716
 #: ../../ref/models/instances.txt:549
-#, fuzzy
 msgid "Pickling objects"
-msgstr "Удаление объектов"
+msgstr "Сериализация объектов"
 
 #: ../../ref/models/instances.txt:551
 msgid ""
@@ -916,10 +950,14 @@ msgid ""
 "unpickle it, it'll contain the model instance at the moment it was pickled, "
 "rather than the data that's currently in the database."
 msgstr ""
+"При упаковке объекта модели с помощью :mod:`pickle` сохраняется текущее "
+"состояние. При распаковке объекта он содержит объект модели в состоянии на "
+"момент упаковки, а не текущее состояние в базе данных."
 
 #: ../../ref/models/instances.txt:555
 msgid "You can't share pickles between versions"
 msgstr ""
+"Вы не можете использовать объекты, упакованные на разных версиях Django"
 
 #: ../../ref/models/instances.txt:557
 msgid ""
@@ -928,6 +966,10 @@ msgid ""
 "guarantee that pickle will be readable with Django version N+1. Pickles "
 "should not be used as part of a long-term archival strategy."
 msgstr ""
+"Упакованные модели работают только для той версии Django, на которой они "
+"были созданы. Если вы упаковали модель на Django версии N, нет гарантии, что "
+"вы сомжете распаковать её на Django версии N+1. Упаковка моделей не должна "
+"использоваться для долговременного архивирования объектов."
 
 #: ../../ref/models/instances.txt:565
 msgid ""
@@ -936,6 +978,10 @@ msgid ""
 "unpickle a model in a Django version that is different than the one in which "
 "it was pickled."
 msgstr ""
+"Ошибки несовместимости версий при распаковке объектом тяжело "
+"диагностировать, например сломанный объект, по этому вызывается "
+"``RuntimeWarning`` при попытке распаковать модель на версии Django отличной "
+"от той, которая использовалась при упаковке."
 
 # 722e6dd3564f4c2a821c76ed276b03c9
 #: ../../ref/models/instances.txt:573
@@ -1164,6 +1210,8 @@ msgid ""
 "You should avoid building the URL from unvalidated user input, in order to "
 "reduce possibilities of link or redirect poisoning::"
 msgstr ""
+"При создания URL не используйте непроверенные данные от пользователя, чтобы "
+"избежать подделки ссылок или перенаправлений::"
 
 #: ../../ref/models/instances.txt:752
 msgid ""
@@ -1171,6 +1219,9 @@ msgid ""
 "which, in turn, is a valid schema relative URL but not the expected ``'/"
 "%2Fexample.com/'``."
 msgstr ""
+"Если ``self.name`` равен ``'/example.com'``, будет возвращен ``'//example."
+"com/'``, являющимся правильным URL-ом относительно протокола, вместо "
+"ожидаемого ``'/%2Fexample.com/'``."
 
 # c79820e1a3f049c6b2afbf034475175e
 #: ../../ref/models/instances.txt:757
