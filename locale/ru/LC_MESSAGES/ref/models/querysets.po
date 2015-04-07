@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2015-04-03 14:05+0300\n"
+"PO-Revision-Date: 2015-04-07 17:26+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -115,6 +115,10 @@ msgid ""
 "filters, or modifying ordering) is not allowed, since that does not "
 "translate well into SQL and it would not have a clear meaning either."
 msgstr ""
+"Обратите внимание, хотя срез не вычисленного ``QuerySet`` вернет новый не "
+"вычисленный ``QuerySet``, вы не можете изменять (например, добавлять "
+"фильтры, менять сортировку) его дальше, т.к. это не транслируется в SQL и не "
+"имеет определенного смысла."
 
 # 99a34d84d70f4617ae3ff5339d628e09
 #: ../../ref/models/querysets.txt:49
@@ -149,7 +153,6 @@ msgstr ""
 
 # 4e7152e7b8a54da19602177972d20d79
 #: ../../ref/models/querysets.txt:60
-#, fuzzy
 msgid ""
 "Note: If you only need to determine the number of records in the set (and "
 "don't need the actual objects), it's much more efficient to handle a count "
@@ -159,7 +162,7 @@ msgstr ""
 "Заметка: *Не используйте* ``len()`` с ``QuerySet`` если вам нужно узнать "
 "только количество записей в выборке. Эффективнее использовать подсчет на "
 "уровне базы данных, используя оператор SQL ``SELECT COUNT(*)``, и Django "
-"предоставляет метод ``count()`` для этого. Смотрите ``count()`` ниже."
+"предоставляет метод :meth:`~QuerySet.count` для этого."
 
 # f2ee6259dad84d99beaf8af8932b6442
 #: ../../ref/models/querysets.txt:65
@@ -185,16 +188,14 @@ msgstr ""
 
 # 64e106da47db49398858e730d80ca97e
 #: ../../ref/models/querysets.txt:78
-#, fuzzy
 msgid ""
 "Note: If you only want to determine if at least one result exists (and don't "
 "need the actual objects), it's more efficient to use :meth:`~QuerySet."
 "exists`."
 msgstr ""
-"Заметка: *не используйте* такой подходи, если необходимо всего лишь узнать "
+"Заметка: *не используйте* такой подход, если необходимо всего лишь узнать "
 "содержит ли результат запроса хотя бы один объект, и вам не нужен сам "
-"результат. Эффективнее использовать метод :meth:`~QuerySet.exists` (смотрите "
-"ниже)."
+"результат. Эффективнее использовать метод :meth:`~QuerySet.exists`."
 
 # 5b6bb2dcb2784b5cb020f75b74b30426
 #: ../../ref/models/querysets.txt:84
@@ -272,6 +273,9 @@ msgid ""
 "unpickle a queryset in a Django version that is different than the one in "
 "which it was pickled."
 msgstr ""
+"Так как ошибки совместимости \"pickle\" тяжело диагностировать, если вы "
+"попытаетесь распаковать ``QuerySet`` в версии Django, которая отличается от "
+"версии при упаковке объекта, будет вызвано ``RuntimeWarning``."
 
 # 8908ae5fd52d421ca02f08f6bd313113
 #: ../../ref/models/querysets.txt:127
@@ -378,6 +382,8 @@ msgid ""
 "If you need to execute more complex queries (for example, queries with "
 "``OR`` statements), you can use :class:`Q objects <django.db.models.Q>`."
 msgstr ""
+"Если вам необходимо выполнить более сложные вопросы (например, запросы с "
+"``OR``), вы можете использовать :class:`объект Q <django.db.models.Q>`."
 
 # 28aa203a3e1a435c96eb81c24c2e689c
 #: ../../ref/models/querysets.txt:185
@@ -613,7 +619,6 @@ msgstr ""
 
 # ca5d43c386634e059a7d177dc4a37ca4
 #: ../../ref/models/querysets.txt:306
-#, fuzzy
 msgid ""
 "If you try to order by a field that is a relation to another model, Django "
 "will use the default ordering on the related model, or order by the related "
@@ -624,7 +629,8 @@ msgstr ""
 "Если вы пытаетесь отсортировать по полю, которое является связью на другую "
 "модель, Django будет использовать сортировку по-умолчанию связанной модели "
 "(или же сортировку по первичному ключу связанной модели если :attr:`Meta."
-"ordering <django.db.models.Options.ordering>` не указан). Например::"
+"ordering <django.db.models.Options.ordering>` не указан). Например, так как "
+"в модели ``Blog`` не указана сортировка по умолчанию::"
 
 # 1e58dbcf06c84eeba4053165e5509788
 #: ../../ref/models/querysets.txt:314
@@ -636,37 +642,39 @@ msgid ""
 "If ``Blog`` had ``ordering = ['name']``, then the first queryset would be "
 "identical to::"
 msgstr ""
+"Если ``Blog`` содержит ``ordering = ['name']``, первый запрос будет "
+"аналогичен::"
 
 # 51e66a26f4e64b77b808ba178f80076a
 #: ../../ref/models/querysets.txt:323
-#, fuzzy
 msgid ""
 "It is also possible to order a queryset by a related field, without "
 "incurring the cost of a JOIN, by referring to the ``_id`` of the related "
 "field::"
 msgstr ""
 "Обратите внимание, можно использовать сортировку по внешнему ключу без "
-"использования ``JOIN``::"
+"использования ``JOIN``, указав связанное поле с ``_id``::"
 
 # 51e66a26f4e64b77b808ba178f80076a
 #: ../../ref/models/querysets.txt:334
-#, fuzzy
 msgid ""
 "The ability to order a queryset by a related field, without incurring the "
 "cost of a JOIN was added."
 msgstr ""
-"Обратите внимание, можно использовать сортировку по внешнему ключу без "
-"использования ``JOIN``::"
+"Была добавлена возможность использовать сортировку по внешнему ключу без "
+"использования ``JOIN``"
 
 #: ../../ref/models/querysets.txt:337
 msgid ""
 "You can also order by :doc:`query expressions </ref/models/expressions>` by "
 "calling ``asc()`` or ``desc()`` on the expression::"
 msgstr ""
+"Вы можете также сортировать по :doc:`выражению </ref/models/expressions>`, "
+"вызвав ``asc()`` или ``desc()`` для выражения::"
 
 #: ../../ref/models/querysets.txt:344
 msgid "Ordering by query expressions was added."
-msgstr ""
+msgstr "Была добавлена возможность сортировать по выражению."
 
 # 0b0c59c51c0841ac9e6768b430ecd9ee
 #: ../../ref/models/querysets.txt:346
@@ -738,10 +746,14 @@ msgid ""
 "You can order by a field converted to lowercase with :class:`~django.db."
 "models.functions.Lower` which will achieve case-consistent ordering::"
 msgstr ""
+"Вы можете отсортировать по полю преобразовав значение в нижний регистр, "
+"используя :class:`~django.db.models.functions.Lower`::"
 
 #: ../../ref/models/querysets.txt:387
 msgid "The ability to order by expressions like ``Lower`` was added."
 msgstr ""
+"Была добавлена возможность указать выражение при сортировке, например "
+"``Lower``."
 
 # d072c96416f2478aa9c3ef185dc17d86
 #: ../../ref/models/querysets.txt:389
@@ -768,6 +780,9 @@ msgid ""
 "Each ``order_by()`` call will clear any previous ordering. For example, this "
 "query will be ordered by ``pub_date`` and not ``headline``::"
 msgstr ""
+"Каждый последующий вызов ``order_by()`` сбросит предыдущую сортировку. "
+"Например, следующий запрос будет отсортирован по ``pub_date``, а не "
+"``headline``::"
 
 # ab3d940be09f46aca7d5c324fa3b7a02
 #: ../../ref/models/querysets.txt:403
@@ -1237,15 +1252,15 @@ msgstr ""
 
 # 7a8b45479ff14c29a5adbde580e97125
 #: ../../ref/models/querysets.txt:667
-#, fuzzy
 msgid ""
 "``field`` should be the name of a ``DateField`` of your model. ``kind`` "
 "should be either ``\"year\"``, ``\"month\"`` or ``\"day\"``. Each ``datetime."
 "date`` object in the result list is \"truncated\" to the given ``type``."
 msgstr ""
-"``kind`` должен быть ``\"year\"``, ``\"month\"`` или ``\"day\"``. Каждый "
-"объект ``datetime.date`` - результат \"урезания\" данных в соответствии с "
-"указанным ``type``."
+"``field`` должен быть названием поля ``DateField`` вашей модели. ``kind`` "
+"должен быть ``\"year\"``, ``\"month\"`` или ``\"day\"``. Каждый объект "
+"``datetime.date`` - результат \"урезания\" данных в соответствии с указанным "
+"``type``."
 
 # af481c348edd403dbe26e806860a8cc2
 #: ../../ref/models/querysets.txt:672
@@ -1306,9 +1321,8 @@ msgstr ""
 
 # 4c676dfb14b54e969e866cc4eb76811d
 #: ../../ref/models/querysets.txt:703
-#, fuzzy
 msgid "``field_name`` should be the name of a ``DateTimeField`` of your model."
-msgstr "``field`` -- название поля модели типа ``DateTimeField``."
+msgstr "``field_name`` -- название поля модели типа ``DateTimeField``."
 
 # 7a8b45479ff14c29a5adbde580e97125
 #: ../../ref/models/querysets.txt:705
@@ -1454,13 +1468,15 @@ msgstr "И с ``select_related``::"
 
 #: ../../ref/models/querysets.txt:798
 msgid "You can use ``select_related()`` with any queryset of objects::"
-msgstr ""
+msgstr "Вы можете использовать ``select_related()`` с любым \"queryset\"::"
 
 #: ../../ref/models/querysets.txt:810
 msgid ""
 "The order of ``filter()`` and ``select_related()`` chaining isn't important. "
 "These querysets are equivalent::"
 msgstr ""
+"Порядок использования ``filter()`` и ``select_related()`` не важен. Эти "
+"экземпляры ``QuerySet`` одинаковы::"
 
 # e3f6354104e0493a9a828ef9334fdeea
 #: ../../ref/models/querysets.txt:816
@@ -1473,12 +1489,11 @@ msgstr ""
 
 # 26ababe5af374ddab78c493810a3d259
 #: ../../ref/models/querysets.txt:833
-#, fuzzy
 msgid ""
 "... then a call to ``Book.objects.select_related('author__hometown')."
 "get(id=4)`` will cache the related ``Person`` *and* the related ``City``::"
 msgstr ""
-"...тогда вызов ``Book.objects.select_related('person__city').get(id=4)`` "
+"...тогда вызов ``Book.objects.select_related('person__hometown').get(id=4)`` "
 "получит данные связанных ``Person`` *и* связанных ``City``::"
 
 # 7658fa95c6cc469d8ad2cc333a17d849
@@ -1536,7 +1551,6 @@ msgstr ""
 
 # 2826c34e4d1a4e39a09a6d35243d70b4
 #: ../../ref/models/querysets.txt:867
-#, fuzzy
 msgid ""
 "Chaining ``select_related`` calls works in a similar way to other methods - "
 "that is that ``select_related('foo', 'bar')`` is equivalent to "
@@ -1544,14 +1558,13 @@ msgid ""
 msgstr ""
 "Несколько вызовов ``select_related`` теперь работает как и для других "
 "методов -- то есть ``select_related('foo', 'bar')`` аналогично "
-"``select_related('foo').select_related('bar')``. Ранее использовались поля "
-"только из последнего вызова."
+"``select_related('foo').select_related('bar')``."
 
 #: ../../ref/models/querysets.txt:873
 msgid ""
 "Previously the latter would have been equivalent to "
 "``select_related('bar')``."
-msgstr ""
+msgstr "Ранее последний вариант был бы эквивалентен ``select_related('bar')``."
 
 # c88e911f60014854a17560028894701a
 #: ../../ref/models/querysets.txt:877
@@ -2168,10 +2181,12 @@ msgid ""
 "If you need to use a literal ``%s`` inside your select string, use the "
 "sequence ``%%s``."
 msgstr ""
+"Если вам необходимо использовать ``%s`` в запрашиваемой строке, используйте "
+"``%%s``."
 
 #: ../../ref/models/querysets.txt:1217
 msgid "Prior to 1.8, you were unable to escape a literal ``%s``."
-msgstr ""
+msgstr "До 1.8 нельзя было экранировать ``%s``."
 
 # c89f9dbedbe2441c8c70b5ba0f33f091
 #: ../../ref/models/querysets.txt:1219
@@ -3229,6 +3244,10 @@ msgid ""
 "probably more efficient to use ``len(queryset)`` which won't cause an extra "
 "database query like ``count()`` would."
 msgstr ""
+"Обратите внимание, если вам необходимо количество объектов в ``QuerySet`` и "
+"сами объекты (например, цикл по ним), возможно эффективнее использовать "
+"``len(queryset)``, чтобы избежать дополнительного запроса при выполнении "
+"``count()``."
 
 # b86d2ab4185543909ae12e93061bb1cf
 #: ../../ref/models/querysets.txt:1817
@@ -3441,10 +3460,13 @@ msgid ""
 "expressions </ref/models/expressions>`, you may combine aggregates with "
 "other aggregates or values to create complex aggregates."
 msgstr ""
+"Функции агрегации Django описаны в :ref:`aggregation-functions`. Так как они "
+"являются :doc:`выражениями запроса </ref/models/expressions>`, вы можете "
+"комбинировать функции агрегации друг с другом или значениями, чтобы создать "
+"сложные агрегации."
 
 # c51b80cd24bd4d82a249065668c34bdd
 #: ../../ref/models/querysets.txt:1939
-#, fuzzy
 msgid ""
 "Aggregates specified using keyword arguments will use the keyword as the "
 "name for the annotation. Anonymous arguments will have a name generated for "
@@ -3455,7 +3477,8 @@ msgstr ""
 "Агрегация, указанная с помощью именованного аргумента, использует имя "
 "аргумента как название ключа в возвращаемом словаре. Для анонимных "
 "аргументов названия ключей будут созданы из названия функции агрегации и "
-"названия поля модели используемого в агрегации данных. "
+"названия поля модели используемого в агрегации данных. Сложные агрегации не "
+"могут использовать анонимные аргументы и вы должны указать именованные."
 
 # 1913362ad43347b2a98db63df08b4bff
 #: ../../ref/models/querysets.txt:1945
@@ -4467,7 +4490,6 @@ msgstr "Функции агрегации"
 
 # 0db7cc5369fc410abe92d4b71fce6968
 #: ../../ref/models/querysets.txt:2717
-#, fuzzy
 msgid ""
 "Django provides the following aggregation functions in the ``django.db."
 "models`` module. For details on how to use these aggregate functions, see :"
@@ -4477,7 +4499,8 @@ msgid ""
 msgstr ""
 "Django предоставляет ряд функций агрегации в модуле ``django.db.models``. "
 "Подробности, как использовать функции агрегации, смотрите в :doc:`разделе об "
-"агрегации </topics/db/aggregation>`."
+"агрегации </topics/db/aggregation>`. В разеделе :class:`~django.db.models."
+"Aggregate` вы можете узнать как создать собственные агрегации."
 
 # 1684120b1d984f14b5bec205b7448f67
 #: ../../ref/models/querysets.txt:2725
@@ -4570,10 +4593,10 @@ msgstr "Avg"
 
 # 4f087bf53f1846879bddb58150ef6abd
 #: ../../ref/models/querysets.txt:2778
-#, fuzzy
 msgid "Returns the mean value of the given expression, which must be numeric."
 msgstr ""
-"Возвращает среднее значение указанного поля, которое должно быть численным."
+"Возвращает среднее значение указанного выражения, которое должно быть "
+"численным."
 
 # 6690fc6440444e229991c12a0bad51d7
 #: ../../ref/models/querysets.txt:2780
@@ -4595,11 +4618,10 @@ msgstr "Count"
 
 # 7620ea9ffc0648bf96b86af00b52b4f3
 #: ../../ref/models/querysets.txt:2788
-#, fuzzy
 msgid ""
 "Returns the number of objects that are related through the provided "
 "expression."
-msgstr "Возвращает количество объектов связанных через указанное поле.."
+msgstr "Возвращает количество объектов связанных через указанное выражение."
 
 # ebcbab5dfc8948ac9da204f618439c2b
 #: ../../ref/models/querysets.txt:2791
@@ -4636,9 +4658,8 @@ msgstr "Max"
 
 # c39eab0e29cc4c9e8f5c4906ffd2e0bd
 #: ../../ref/models/querysets.txt:2807
-#, fuzzy
 msgid "Returns the maximum value of the given expression."
-msgstr "Возвращает максимальное значение указанного поля."
+msgstr "Возвращает максимальное значение указанного выражения."
 
 # ced5a09597d44654940ee0335d460243
 #: ../../ref/models/querysets.txt:2809
@@ -4650,9 +4671,8 @@ msgstr "Псевдоним по-умолчанию: ``<field>__max``"
 # f11f6e6ff69a493e8ea9e58573a648c5
 #: ../../ref/models/querysets.txt:2810 ../../ref/models/querysets.txt:2820
 #: ../../ref/models/querysets.txt:2854
-#, fuzzy
 msgid "Return type: same as input field, or ``output_field`` if supplied"
-msgstr "Тип возвращаемого значения: тип указанного поля."
+msgstr "Тип возвращаемого значения: тип указанного поля, или ``output_field``."
 
 # 005622d3bbfa4271956016793ade610f
 #: ../../ref/models/querysets.txt:2813
@@ -4661,9 +4681,8 @@ msgstr "Min"
 
 # 961c01be2a224222b5d329b06bee39e3
 #: ../../ref/models/querysets.txt:2817
-#, fuzzy
 msgid "Returns the minimum value of the given expression."
-msgstr "Возвращает минимальное значение указанного поля."
+msgstr "Возвращает минимальное значение указанного выражения."
 
 # e32617a3373d412782bdfc2d70347a5e
 #: ../../ref/models/querysets.txt:2819
@@ -4677,9 +4696,8 @@ msgstr "StdDev"
 
 # 0c05bca7d1314a0c967070c0b345f71d
 #: ../../ref/models/querysets.txt:2827
-#, fuzzy
 msgid "Returns the standard deviation of the data in the provided expression."
-msgstr "Возвращает стандартное отклонение для данных указанного поля."
+msgstr "Возвращает стандартное отклонение для данных указанного выражения."
 
 # b52735b21eac46eb9a5d41d9ff8489cd
 #: ../../ref/models/querysets.txt:2829
@@ -4720,9 +4738,8 @@ msgstr "Sum"
 
 # 3d3652bb66364c77a828d2e0197165ac
 #: ../../ref/models/querysets.txt:2851
-#, fuzzy
 msgid "Computes the sum of all values of the given expression."
-msgstr "Возвращает сумму всех значений указанного поля."
+msgstr "Возвращает сумму всех значений указанного выражения."
 
 # 28ecdfc98f5e42a5a0bc42c286d93393
 #: ../../ref/models/querysets.txt:2853
@@ -4736,9 +4753,8 @@ msgstr "Variance"
 
 # 783e403140ed4b3bbbec4334b291bc5f
 #: ../../ref/models/querysets.txt:2861
-#, fuzzy
 msgid "Returns the variance of the data in the provided expression."
-msgstr "Возвращает дисперсию значений в указанном поле."
+msgstr "Возвращает дисперсию значений в указанном выражении."
 
 # 36da04f912d944988d28bedf8f989068
 #: ../../ref/models/querysets.txt:2863
