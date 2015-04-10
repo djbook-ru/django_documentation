@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-02 10:33+0300\n"
-"PO-Revision-Date: 2015-03-25 01:10+0200\n"
+"PO-Revision-Date: 2015-04-10 16:46+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -253,6 +253,8 @@ msgid ""
 "``get_template()`` returns a backend-dependent ``Template`` instead of a :"
 "class:`django.template.Template`."
 msgstr ""
+"``get_template()`` возвращает ``Template`` конкретного бэкенда, а не :class:"
+"`django.template.Template`."
 
 #: ../../topics/templates.txt:137
 msgid ""
@@ -260,26 +262,33 @@ msgid ""
 "list of template names. It tries each name in order and returns the first "
 "template that exists."
 msgstr ""
+"``select_template()`` как и ``get_template()``, но принимает список названий "
+"шаблонов. Пытается загрузить по очереди каждый из шаблонов, возвращает "
+"первый загруженный."
 
 #: ../../topics/templates.txt:155
 msgid ""
 "``select_template()`` returns a backend-dependent ``Template`` instead of a :"
 "class:`django.template.Template`."
 msgstr ""
+"``select_template()`` возвращает ``Template`` для конкретного бэкенда, а не :"
+"class:`django.template.Template`."
 
 #: ../../topics/templates.txt:160
 msgid ""
 "If loading a template fails, the following two exceptions, defined in "
 "``django.template``, may be raised:"
 msgstr ""
+"Если не удалось загрузить шаблон, вызываются исключения, описанные в "
+"``django.template``:"
 
 #: ../../topics/templates.txt:165
 msgid "This exception is raised when a template cannot be found."
-msgstr ""
+msgstr "Это исключение вызывается, если шаблон не был найден."
 
 #: ../../topics/templates.txt:169
 msgid "This exception is raised when a template was found but contains errors."
-msgstr ""
+msgstr "Это исключение вызывается, если шаблон найден, но содержит ошибки."
 
 #: ../../topics/templates.txt:171
 msgid ""
@@ -287,16 +296,21 @@ msgid ""
 "``select_template()`` must provide a ``render()`` method with the following "
 "signature:"
 msgstr ""
+"Объекты ``Template``, которые возвращают ``get_template()`` и "
+"``select_template()``, должны содержать метод ``render()`` со следующей "
+"сигнатурой:"
 
 #: ../../topics/templates.txt:178
 msgid "Renders this template with a given context."
-msgstr ""
+msgstr "Рендерит шаблон с переданным контекстом."
 
 #: ../../topics/templates.txt:180
 msgid ""
 "If ``context`` is provided, it must be a :class:`dict`. If it isn't "
 "provided, the engine will render the template with an empty context."
 msgstr ""
+"Если ``context`` передан, это должен быть :class:`dict`. Если не передан, "
+"используется пустой контекст."
 
 #: ../../topics/templates.txt:183
 msgid ""
@@ -304,56 +318,69 @@ msgid ""
 "Then the engine must make it, as well as the CSRF token, available in the "
 "template. How this is achieved is up to each backend."
 msgstr ""
+"Если передан ``request``, это должен быть экземпляр :class:`~django.http."
+"HttpRequest`. Шаблонизатор должен добавить его в шаблон, как и CSRF токен. "
+"Как это должно происходит определяет шаблонизатор."
 
 #: ../../topics/templates.txt:187
 msgid ""
 "Here's an example of the search algorithm. For this example the :setting:"
 "`TEMPLATES` setting is::"
 msgstr ""
+"Пример алгоритма поиска шаблона. Возьмем следующую настройку :setting:"
+"`TEMPLATES`::"
 
 #: ../../topics/templates.txt:206
 msgid ""
 "If you call ``get_template('story_detail.html')``, here are the files Django "
 "will look for, in order:"
 msgstr ""
+"Если вызвать ``get_template('story_detail.html')``, Django будет искать "
+"следующие файлы:"
 
 #: ../../topics/templates.txt:209 ../../topics/templates.txt:219
 msgid "``/home/html/example.com/story_detail.html`` (``'django'`` engine)"
 msgstr ""
+"``/home/html/example.com/story_detail.html`` (шаблонизатор ``'django'``)"
 
 #: ../../topics/templates.txt:210 ../../topics/templates.txt:220
 msgid "``/home/html/default/story_detail.html`` (``'django'`` engine)"
-msgstr ""
+msgstr "``/home/html/default/story_detail.html`` (шаблонизатор ``'django'``)"
 
 #: ../../topics/templates.txt:211 ../../topics/templates.txt:221
 msgid "``/home/html/jinja2/story_detail.html`` (``'jinja2'`` engine)"
-msgstr ""
+msgstr "``/home/html/jinja2/story_detail.html`` (шаблонизатор ``'jinja2'``)"
 
 #: ../../topics/templates.txt:213
 msgid ""
 "If you call ``select_template(['story_253_detail.html', 'story_detail."
 "html'])``, here's what Django will look for:"
 msgstr ""
+"Если вызвать ``select_template(['story_253_detail.html', 'story_detail."
+"html'])``, Django бдудет искать:"
 
 #: ../../topics/templates.txt:216
 msgid "``/home/html/example.com/story_253_detail.html`` (``'django'`` engine)"
 msgstr ""
+"``/home/html/example.com/story_253_detail.html`` (шаблонизатор ``'django'``)"
 
 #: ../../topics/templates.txt:217
 msgid "``/home/html/default/story_253_detail.html`` (``'django'`` engine)"
 msgstr ""
+"``/home/html/default/story_253_detail.html`` (шаблонизатор ``'django'``)"
 
 #: ../../topics/templates.txt:218
 msgid "``/home/html/jinja2/story_253_detail.html`` (``'jinja2'`` engine)"
 msgstr ""
+"``/home/html/jinja2/story_253_detail.html`` (шаблонизатор ``'jinja2'``)"
 
 #: ../../topics/templates.txt:223
 msgid "When Django finds a template that exists, it stops looking."
-msgstr ""
+msgstr "Если Django находит шаблон, поиск останавливается."
 
 #: ../../topics/templates.txt:225
 msgid "Tip"
-msgstr ""
+msgstr "Советы"
 
 #: ../../topics/templates.txt:227
 msgid ""
