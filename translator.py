@@ -1,11 +1,12 @@
 #!/usr/bin/env python
-from cliff.app import App
-from djbook import commands
+import conf  # use shpinx API to load config
 import imp
 import logging
 import os
 import pkgutil
 import sys
+from cliff.app import App
+from djbook import commands
 
 
 class CommandManager(object):
@@ -71,7 +72,7 @@ class TranslatorApp(App):
         self.templates_path = os.path.join(self.doc_path, 'djbook', 'templates')
         self.html_path = os.path.join(self.doc_path, '_build', 'html')
         # sitemap
-        self.sitemap_base_url = 'http://djbook.ru/rel1.7/'
+        self.sitemap_base_url = 'http://djbook.ru/rel%s/' % conf.version
         self.sitemap_priority = '0.8'
 
     def initialize_app(self, argv):
