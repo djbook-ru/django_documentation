@@ -19,7 +19,7 @@
 
 Необходимые пакеты можно установить запустив:
 
-    $ pip install -r djbook/deps.txt
+    $ pip install -r djbook/requirements.txt
 
 Список всех команад:
 
@@ -28,4 +28,3 @@
 Проверка орфографии:
 
     $ ./translator.py spellcheck
-
