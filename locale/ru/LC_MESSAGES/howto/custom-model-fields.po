@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2015-06-03 00:20+0300\n"
+"PO-Revision-Date: 2015-06-17 18:08+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -503,15 +503,14 @@ msgstr ""
 
 # 7df1821fed754b31bf12d77f0a477630
 #: ../../howto/custom-model-fields.txt:220
-#, fuzzy
 msgid ""
 ":attr:`~django.db.models.Field.auto_created`: ``True`` if the field was "
 "automatically created, as for the :class:`~django.db.models.OneToOneField` "
 "used by model inheritance. For advanced use only."
 msgstr ""
-"``auto_created``: True, если поле создается автоматически, например, "
-"используется полем  :class:`~django.db.models.OneToOneField`. Для опытных "
-"пользователей."
+":attr:`~django.db.models.Field.auto_created`: True, если поле создается "
+"автоматически, например, используется полем  :class:`~django.db.models."
+"OneToOneField`. Для опытных пользователей."
 
 # 506f24cd21c441a3a3ada5bce901bc72
 #: ../../howto/custom-model-fields.txt:224
@@ -832,7 +831,6 @@ msgstr ""
 
 # 392329bf4bf647d1a5766d2bb15082ae
 #: ../../howto/custom-model-fields.txt:435
-#, fuzzy
 msgid "Converting values to Python objects"
 msgstr "Преобразование значений базы данных в объекты Python"
 
@@ -843,18 +841,22 @@ msgid ""
 "nicely with custom database transformations, aggregation, or values queries, "
 "so it has been replaced with :meth:`~Field.from_db_value`."
 msgstr ""
+"Исторически Django предоставляет метакласс ``SubfieldBase``, который "
+"вызывает :meth:`~Field.to_python` при каждом указании значения поля. Такой "
+"подход не очень хорошо работал с преобразованиями на уровне базы данных, "
+"агрегациями, или получением данных через :meth:`~django.db.models.query."
+"QuerySet.values`, и был заменен методом :meth:`~Field.from_db_value`."
 
 # 62902371d5c047df8cb06b4caff4d195
 #: ../../howto/custom-model-fields.txt:444
-#, fuzzy
 msgid ""
 "If your custom :class:`~Field` class deals with data structures that are "
 "more complex than strings, dates, integers, or floats, then you may need to "
 "override :meth:`~Field.from_db_value` and :meth:`~Field.to_python`."
 msgstr ""
-"Если ваш подкласс :class:`~Field` работает со структурами более сложными чем "
-"строка, дата и числа, вам следует переопределить :meth:`~Field.to_python`. "
-"Метод должен корректно работать со следующими аргументами:"
+"Если ваш подкласс :class:`~Field` работает со структурами более сложными, "
+"чем строка, дата и число, вам следует переопределить :meth:`~Field."
+"from_db_value` и :meth:`~Field.to_python`."
 
 #: ../../howto/custom-model-fields.txt:448
 msgid ""
@@ -862,18 +864,24 @@ msgid ""
 "circumstances when the data is loaded from the database, including in "
 "aggregates and :meth:`~django.db.models.query.QuerySet.values` calls."
 msgstr ""
+"Если поле содержит метод ``from_db_value()``, он будет вызываться при всех "
+"операциях загрузки данных с базы данных, включая агрегации и вызовы :meth:"
+"`~django.db.models.query.QuerySet.values`."
 
 #: ../../howto/custom-model-fields.txt:452
 msgid ""
 "``to_python()`` is called by deserialization and during the :meth:`~django."
 "db.models.Model.clean` method used from forms."
 msgstr ""
+"``to_python()`` вызывается при десериализации и при вызове метода :meth:"
+"`~django.db.models.Model.clean` в формах."
 
 #: ../../howto/custom-model-fields.txt:455
 msgid ""
 "As a general rule, ``to_python()`` should deal gracefully with any of the "
 "following arguments:"
 msgstr ""
+"Метод ``to_python()`` должен корректно обрабатывать следующие типы значения:"
 
 # fb1688a134a8429186ab2f5d6e19c39b
 #: ../../howto/custom-model-fields.txt:458
@@ -883,47 +891,41 @@ msgstr "Объект нужного типа (например, ``Hand`` в на
 
 #: ../../howto/custom-model-fields.txt:460
 msgid "A string"
-msgstr ""
+msgstr "Строка"
 
 #: ../../howto/custom-model-fields.txt:462
 msgid "``None`` (if the field allows ``null=True``)"
-msgstr ""
+msgstr "``None`` (если поле содержит ``null=True``)"
 
 # 128ac3c4ef9f4c509e5a97db8a6580dd
 #: ../../howto/custom-model-fields.txt:464
-#, fuzzy
 msgid ""
 "In our ``HandField`` class, we're storing the data as a VARCHAR field in the "
 "database, so we need to be able to process strings and ``None`` in the "
 "``from_db_value()``. In ``to_python()``, we need to also handle ``Hand`` "
 "instances::"
 msgstr ""
-"В нашем ``HandField`` мы сохраняем значение в поле VARCHAR и должны "
-"обрабатывать строки и объекты ``Hand`` в методе :meth:`.to_python`::"
+"В нашем ``HandField`` мы сохраняем значение в поле VARCHAR, и в "
+"``from_db_value()`` должны обрабатывать строки и ``None``. В ``to_python()`` "
+"также объекты ``Hand``::"
 
 # 64eb9981da4d496899a39112fca3c038
 #: ../../howto/custom-model-fields.txt:500
-#, fuzzy
 msgid ""
 "Notice that we always return a ``Hand`` instance from these methods. That's "
 "the Python object type we want to store in the model's attribute."
 msgstr ""
 "Помните, что мы всегда возвращаем объект ``Hand`` из этого метода. Это "
-"объект Python, который мы хотим сохранить в модели. Если преобразование "
-"значения не может быть выполнено, вызовите исключение :exc:`~django.core."
-"exceptions.ValidationError`."
+"объект Python, который мы хотим сохранить в модели."
 
 # 64eb9981da4d496899a39112fca3c038
 #: ../../howto/custom-model-fields.txt:503
-#, fuzzy
 msgid ""
 "For ``to_python()``, if anything goes wrong during value conversion, you "
 "should raise a :exc:`~django.core.exceptions.ValidationError` exception."
 msgstr ""
-"Помните, что мы всегда возвращаем объект ``Hand`` из этого метода. Это "
-"объект Python, который мы хотим сохранить в модели. Если преобразование "
-"значения не может быть выполнено, вызовите исключение :exc:`~django.core."
-"exceptions.ValidationError`."
+"Если ``to_python()`` не может выполнить преобразование значения, вызовите "
+"исключение :exc:`~django.core.exceptions.ValidationError`."
 
 # ff46ada6ed6e44189c67f6468a4b74a2
 #: ../../howto/custom-model-fields.txt:509
@@ -1036,8 +1038,8 @@ msgid ""
 "As with value conversions, preparing a value for database lookups is a two "
 "phase process."
 msgstr ""
-"Как и преобразование значения поля, преобразование значения для поиска"
-"(WHERE) в базе данных выполняется в две фазы."
+"Как и преобразование значения поля, преобразование значения для "
+"поиска(WHERE) в базе данных выполняется в две фазы."
 
 # 35cdbdd1a70f4d5293fa850a4366b2b3
 #: ../../howto/custom-model-fields.txt:583
@@ -1243,7 +1245,6 @@ msgstr ""
 
 # 654cbaa57af549aab02f5989e3009a7f
 #: ../../howto/custom-model-fields.txt:702
-#, fuzzy
 msgid ""
 "If :meth:`.get_internal_type` returns a string that is not known to Django "
 "for the database backend you are using -- that is, it doesn't appear in "
@@ -1255,12 +1256,14 @@ msgid ""
 "ever going to be using the serializer output in some other place, outside of "
 "Django."
 msgstr ""
-"Если :meth:`.get_internal_type` возвращает название, неизвестное Django  -- "
-"то есть его нет в ``django.db.backends.<db_name>.creation.data_types`` -- "
-"оно будет использовано сериализатором, но метод :meth:`~Field.db_type` по "
-"умолчанию вернет ``None``. Смотрите описание :meth:`~Field.db_type` чтобы "
-"понять, в каких случаях это может быть полезно. Возвращение строки, "
-"описывающей поле для сериализатора, может быть хорошей практикой."
+"Если :meth:`.get_internal_type` возвращает строку, которая неизвестна "
+"Django  -- то есть отсутствует в ``django.db.backends.<db_name>.base."
+"DatabaseWrapper.data_types`` -- она все равно будет использована "
+"сериализатором, но метод :meth:`~Field.db_type` по умолчанию вернет "
+"``None``. Смотрите описание :meth:`~Field.db_type` чтобы понять, в каких "
+"случаях это может быть полезно. Возвращение строки, описывающей поле для "
+"сериализатора, может быть полезным, если вы собираетесь использовать "
+"результат сериализации не только в Django."
 
 # f2cdcc2f9bf8422ea4541dd7f27a9f9f
 #: ../../howto/custom-model-fields.txt:714
@@ -1271,10 +1274,10 @@ msgstr "Преобразование значения поля для сериа
 #: ../../howto/custom-model-fields.txt:716
 msgid ""
 "To customize how the values are serialized by a serializer, you can "
-"override :meth:`~Field.value_to_string`. Calling ``Field._get_val_from_obj"
-"(obj)`` is the best way to get the value serialized. For example, since our "
-"``HandField`` uses strings for its data storage anyway, we can reuse some "
-"existing conversion code::"
+"override :meth:`~Field.value_to_string`. Calling ``Field."
+"_get_val_from_obj(obj)`` is the best way to get the value serialized. For "
+"example, since our ``HandField`` uses strings for its data storage anyway, "
+"we can reuse some existing conversion code::"
 msgstr ""
 "Чтобы указать как значения сериализуются сериализатором, переопределите "
 "метод :meth:`~Field.value_to_string`. Вызов ``Field._get_val_from_obj(obj)`` "

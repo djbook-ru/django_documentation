@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-02 10:33+0300\n"
-"PO-Revision-Date: 2015-06-08 12:15+0300\n"
+"PO-Revision-Date: 2015-06-17 18:41+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -384,11 +384,16 @@ msgid ""
 "isn't provided for the field. When the field is a primary key, the default "
 "is also used when the field is set to ``None``."
 msgstr ""
+"Значение по умолчанию используется, если был создан экземпляр модели, а "
+"значение для поля не было указано. Если поле является первичным ключом, "
+"значение по умолчанию также использует и при указании ``None``."
 
 #: ../../ref/models/fields.txt:230
 msgid ""
 "The default wasn't used for ``None`` primary key values in previous versions."
 msgstr ""
+"В предыдущих версиях значение по умолчанию не использовалось для первичного "
+"ключа, если указать ``None``."
 
 # 750eb18dc5034be3ac51a5db175f3c2b
 #: ../../ref/models/fields.txt:234
@@ -515,6 +520,8 @@ msgid ""
 "key on an existing object and then save it, a new object will be created "
 "alongside the old one."
 msgstr ""
+"Первичный ключ доступен только для чтения. Если вы поменяете значение для "
+"существующего объекта и сохраните его, будет создан новый объект."
 
 # 593fb17b072141369e1e208341eda565
 #: ../../ref/models/fields.txt:300
@@ -784,13 +791,12 @@ msgstr ""
 
 # 47694632da724487a512b1ae41723f4a
 #: ../../ref/models/fields.txt:435
-#, fuzzy
 msgid ""
 "The default value of ``BooleanField`` is ``None`` when :attr:`Field.default` "
 "isn't defined."
 msgstr ""
-"Значение по умолчанию для ``BooleanField`` было изменено с ``False`` на "
-"``None``, если :attr:`Field.default` не указан."
+"Значение по умолчанию для ``BooleanField`` ``None``, если :attr:`Field."
+"default` не указан."
 
 # 85f1d44cd44143a0855fb1a1dc492c4a
 #: ../../ref/models/fields.txt:439
@@ -934,6 +940,8 @@ msgid ""
 "The options ``auto_now_add``, ``auto_now``, and ``default`` are mutually "
 "exclusive. Any combination of these options will result in an error."
 msgstr ""
+"Опции ``auto_now_add``, ``auto_now`` и ``default`` взаимоисключающие. "
+"Использование их вместе вызовет ошибку."
 
 # 9676f0dc473b47a99f2aad98dbf1e16e
 #: ../../ref/models/fields.txt:509
@@ -955,6 +963,13 @@ msgid ""
 "``DateTimeField`` instead of a ``DateField`` and deciding how to handle the "
 "conversion from datetime to date at display time."
 msgstr ""
+"Опции``auto_now`` и ``auto_now_add`` всегда используют дату в :ref:`часовом "
+"поясе по умолчанию <default-current-time-zone>` в момент создания или "
+"изменения объекта. Если такое поведение вам не подходит, вы можете указать "
+"свою функцию как значение по умолчанию, или переопределить метод ``save()``, "
+"вместо использования ``auto_now`` или ``auto_now_add``. Или использовать "
+"``DateTimeField`` вместо ``DateField`` и выполнять преобразование в дату при "
+"выводе значения."
 
 # 9ea587e4e3524b39a67603cfda36d057
 #: ../../ref/models/fields.txt:523
@@ -1038,9 +1053,8 @@ msgstr ""
 
 # 082b945827d14012a2e68d4f99bb07bd
 #: ../../ref/models/fields.txt:570
-#, fuzzy
 msgid "``DurationField``"
-msgstr "``AutoField``"
+msgstr "``DurationField``"
 
 #: ../../ref/models/fields.txt:576
 msgid ""
@@ -1049,6 +1063,10 @@ msgid ""
 "``interval`` and on Oracle the data type is ``INTERVAL DAY(9) TO "
 "SECOND(6)``. Otherwise a ``bigint`` of microseconds is used."
 msgstr ""
+"Поля для хранения периодов времени - используется объект Python :class:"
+"`~python:datetime.timedelta`. Для PostgreSQL используется тип ``interval``, "
+"а в Oracle -- ``INTERVAL DAY(9) TO SECOND(6)``. Иначе используется "
+"``bigint``, в котором хранится количество микросекунд."
 
 #: ../../ref/models/fields.txt:583
 msgid ""
@@ -1056,6 +1074,9 @@ msgid ""
 "databases other than PostgreSQL, comparing the value of a ``DurationField`` "
 "to arithmetic on ``DateTimeField`` instances will not work as expected."
 msgstr ""
+"Арифметика над ``DurationField`` работает в большинстве случаев. Однако, для "
+"всех баз данных, кроме PostgreSQL, арифметическое сравнение "
+"``DurationField`` и ``DateTimeField`` работает не как ожидается."
 
 # 5643c3c3b85f43c49301e730cb781305
 #: ../../ref/models/fields.txt:588
@@ -1064,17 +1085,20 @@ msgstr "``EmailField``"
 
 # db898623fc2a46148f39e94967e3cfd0
 #: ../../ref/models/fields.txt:592
-#, fuzzy
 msgid ""
 "A :class:`CharField` that checks that the value is a valid email address. It "
 "uses :class:`~django.core.validators.EmailValidator` to validate the input."
-msgstr "Поле :class:`CharField` для хранения правильного email-адреса."
+msgstr ""
+"Поле :class:`CharField` для хранения правильного email-адреса. Использует :"
+"class:`~django.core.validators.EmailValidator` для проверки значения."
 
 #: ../../ref/models/fields.txt:597
 msgid ""
 "The default ``max_length`` was increased from 75 to 254 in order to be "
 "compliant with RFC3696/5321."
 msgstr ""
+"Значение ``max_length`` по умолчанию было увеличено с 75 до 254 для "
+"совместимости с RFC3696/5321."
 
 # 2f2a524f57904e969789685ccd0efdee
 #: ../../ref/models/fields.txt:601
@@ -1347,16 +1371,15 @@ msgstr ""
 
 # 62509adbe0414b92b2aae736e8e5cb68
 #: ../../ref/models/fields.txt:717
-#, fuzzy
 msgid ""
 ":class:`FileField` instances are created in your database as ``varchar`` "
 "columns with a default max length of 100 characters. As with other fields, "
 "you can change the maximum length using the :attr:`~CharField.max_length` "
 "argument."
 msgstr ""
-"По-умолчанию, экземпляр :class:`FileField` создается как колонка "
-"``varchar(100)`` в базе данных. Как и с другими полями, вы можете изменить "
-"максимальную длину, используя аргумент :attr:`~CharField.max_length`."
+"По-умолчанию, экземпляр :class:`FileField` создается как колонка ``varchar`` "
+"в базе данных. Как и с другими полями, вы можете изменить максимальную "
+"длину, используя аргумент :attr:`~CharField.max_length`."
 
 # d0fba97f8c144d3fbc44c789f00b1f70
 #: ../../ref/models/fields.txt:722
@@ -1365,7 +1388,6 @@ msgstr "FileField и FieldFile"
 
 # 1652b28e48d24256abde753aa031246b
 #: ../../ref/models/fields.txt:728
-#, fuzzy
 msgid ""
 "When you access a :class:`~django.db.models.FileField` on a model, you are "
 "given an instance of :class:`FieldFile` as a proxy for accessing the "
@@ -1375,7 +1397,8 @@ msgid ""
 msgstr ""
 "При доступе к :class:`~django.db.models.FileField` модели, вы получаете "
 "экземпляр :class:`FieldFile` как \"proxy\" для работы с файлом. Этот класс "
-"содержит несколько методов для работы с файлом:"
+"содержит несколько дополнительных атрибутов и методов для работы с файлом, "
+"кроме унаследованных от :class:`django.core.files.File`:"
 
 # 75e79999d24a4aabb4fffc2e9efbbe94
 #: ../../ref/models/fields.txt:736
@@ -1422,7 +1445,6 @@ msgstr ""
 
 # f875b0b4104c4415a1f0ddcacf846357
 #: ../../ref/models/fields.txt:758
-#, fuzzy
 msgid ""
 "Takes two required arguments: ``name`` which is the name of the file, and "
 "``content`` which is an object containing the file's contents.  The optional "
@@ -1431,7 +1453,7 @@ msgid ""
 msgstr ""
 "Принимает два аргумента: ``name`` -- название файла, и ``content`` -- "
 "содержимое файла.  Дополнительный аргумент ``save`` указывает сохранять ли "
-"объект после изменения поля. По-умолчанию -- ``True``."
+"объект после изменения поля. По-умолчанию ``True``."
 
 # 5a35a656cac94d348b007fda814f4b32
 #: ../../ref/models/fields.txt:764
@@ -1468,14 +1490,13 @@ msgstr ""
 
 # 65dfde837435447191e53893a216728b
 #: ../../ref/models/fields.txt:787
-#, fuzzy
 msgid ""
 "The optional ``save`` argument controls whether or not the model instance is "
 "saved after the file associated with this field has been deleted. Defaults "
 "to ``True``."
 msgstr ""
 "Дополнительный аргумент ``save`` указывает сохранять ли модель после "
-"удаления файла. По-умолчанию -- ``True``."
+"удаления файла. По-умолчанию ``True``."
 
 # 5038e28aafea4691b6a7246d7217384b
 #: ../../ref/models/fields.txt:791
@@ -1686,7 +1707,6 @@ msgstr "Требуется библиотека `Pillow`_."
 
 # 693103d12f804a60afad1589f7412835
 #: ../../ref/models/fields.txt:899
-#, fuzzy
 msgid ""
 ":class:`ImageField` instances are created in your database as ``varchar`` "
 "columns with a default max length of 100 characters. As with other fields, "
@@ -1694,7 +1714,7 @@ msgid ""
 "argument."
 msgstr ""
 "По-умолчанию, экземпляр :class:`ImageField` создается как колонка "
-"``varchar(100)`` в базе данных. Как и с другими полями вы можете изменить "
+"``varchar`` в базе данных. Как и с другими полями вы можете изменить "
 "максимальную длину используя аргумент :attr:`~CharField.max_length`."
 
 # bfd201dcf2f849ea938d4b5ed07c459f
@@ -1991,9 +2011,8 @@ msgstr ""
 
 # 74494961615e41c9989f9e307c7d82af
 #: ../../ref/models/fields.txt:1061
-#, fuzzy
 msgid "``UUIDField``"
-msgstr "``URLField``"
+msgstr "``UUIDField``"
 
 #: ../../ref/models/fields.txt:1067
 msgid ""
@@ -2001,6 +2020,8 @@ msgid ""
 "`~python:uuid.UUID` class. When used on PostgreSQL, this stores in a "
 "``uuid`` datatype, otherwise in a ``char(32)``."
 msgstr ""
+"Поля для сохранения UUID. Использует класс Python :class:`~python:uuid."
+"UUID`. Для PostgreSQL используется тип ``uuid``, иначе ``char(32)``."
 
 #: ../../ref/models/fields.txt:1071
 msgid ""
@@ -2008,12 +2029,17 @@ msgid ""
 "for :attr:`~Field.primary_key`. The database will not generate the UUID for "
 "you, so it is recommended to use :attr:`~Field.default`::"
 msgstr ""
+"UUID является хорошей альтернативой :class:`AutoField` с :attr:`~Field."
+"primary_key`. База данных не сгенерирует UUID за вас, по этому следует "
+"использовать :attr:`~Field.default`::"
 
 #: ../../ref/models/fields.txt:1082
 msgid ""
 "Note that a callable (with the parentheses omitted) is passed to "
 "``default``, not an instance of ``UUID``."
 msgstr ""
+"Обратите внимание, указана функция (без скобок) в ``default``, а не объект "
+"``UUID``."
 
 # b2d5ca194bdb4413a0fbd07f0c7a8e7a
 #: ../../ref/models/fields.txt:1086
