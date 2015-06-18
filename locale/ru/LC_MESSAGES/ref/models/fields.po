@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-02 10:33+0300\n"
-"PO-Revision-Date: 2015-06-17 18:41+0300\n"
+"PO-Revision-Date: 2015-06-18 12:23+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -2454,6 +2454,11 @@ msgid ""
 "it will fail hard if the user tries to run with a User model you don't "
 "support, for example)."
 msgstr ""
+"Указав ``False``, вы не сможете ссылаться на подменяемую модель даже после "
+"того, как её подменили. ``False`` означает, что миграция, содержащая этот "
+"``ForeignKey``, будет указывать на конкретную модель, которую вы укажите (и "
+"пользователь вашего приложения получит ошибку, если попытается выполнить с "
+"моделью ``User``, которую вы не поддерживаете, например)."
 
 # 60379d827a3a44268886dc9979d7af77
 # 9c1e57b47ef94f7ab43feceb506dc997
@@ -2468,6 +2473,8 @@ msgid ""
 "This flag was added for backwards compatibility as older versions of Django "
 "always allowed assigning unsaved model instances."
 msgstr ""
+"Этот параметр добавлен для обратной совместимости т.к. в предыдущих версиях "
+"Django можно было назначать не сохраненные объекты."
 
 #: ../../ref/models/fields.txt:1350
 msgid ""
@@ -2475,6 +2482,9 @@ msgid ""
 "``ForeignKey`` field to prevent accidental data loss (unsaved foreign keys "
 "are silently ignored when saving a model instance)."
 msgstr ""
+"Django не позволяет назначать полю ``ForeignKey`` не сохраненные объекты, "
+"чтобы избежать потерю данных (такие объекты просто игнорируются при "
+"сохранении объекта модели)."
 
 #: ../../ref/models/fields.txt:1354
 msgid ""
@@ -2484,6 +2494,10 @@ msgid ""
 "field class and setting its ``allow_unsaved_instance_assignment`` attribute "
 "to ``True``. For example::"
 msgstr ""
+"Если вам необходимо назначать не сохраненные объекты и вы не боитесь "
+"потенциальной потери данных (например, вы никогда не сохраняете объект в "
+"базу данных), вы можете отключить проверку, унаследовавшись от базового "
+"класса и указав ``True`` в ``allow_unsaved_instance_assignment``. Например::"
 
 # ea27a02a3b6c43f4bbd64075e142ad5f
 #: ../../ref/models/fields.txt:1370
@@ -2498,7 +2512,7 @@ msgid ""
 "class:`ForeignKey`, including :ref:`recursive <recursive-relationships>` "
 "and :ref:`lazy <lazy-relationships>` relationships."
 msgstr ""
-"Связь много-ко-многим. Принимает позиционный аргумент: класс связанной "
+"Связь многие-ко-многим. Принимает позиционный аргумент: класс связанной "
 "модели. Работает так же как и :class:`ForeignKey`, включая :ref:`рекурсивную "
 "<recursive-relationships>` и :ref:`ленивую <lazy-relationships>` связь."
 
@@ -2635,7 +2649,6 @@ msgstr ""
 
 # c0446edf0893496497dbbe9d4ff6dbfa
 #: ../../ref/models/fields.txt:1457
-#, fuzzy
 msgid ""
 "If you don't specify an explicit ``through`` model, there is still an "
 "implicit ``through`` model class you can use to directly access the table "
@@ -2643,12 +2656,12 @@ msgid ""
 msgstr ""
 "Если вы не указали ``through`` модель, вы все равно может обратиться к "
 "неявно промежуточной модели, которая была автоматически создана. Она "
-"содержит три поля:"
+"содержит три поля, связывающие модели."
 
 #: ../../ref/models/fields.txt:1461
 msgid ""
 "If the source and target models differ, the following fields are generated:"
-msgstr ""
+msgstr "Если связанные модели разные, создаются следующие поля:"
 
 # c9014c14bbc34b37bc7e551859db8b90
 #: ../../ref/models/fields.txt:1464 ../../ref/models/fields.txt:1473
@@ -2678,18 +2691,22 @@ msgid ""
 "If the ``ManyToManyField`` points from and to the same model, the following "
 "fields are generated:"
 msgstr ""
+"Если ``ManyToManyField`` ссылается на одну и ту же модель, будут созданы "
+"поля:"
 
 #: ../../ref/models/fields.txt:1474
 msgid ""
 "``from_<model>_id``: the ``id`` of the instance which points at the model (i."
 "e. the source instance)."
-msgstr ""
+msgstr "``from_<model>_id``: ``id`` объекта основной модели (исходный объект)."
 
 #: ../../ref/models/fields.txt:1476
 msgid ""
 "``to_<model>_id``: the ``id`` of the instance to which the relationship "
 "points (i.e. the target model instance)."
 msgstr ""
+"``to_<model>_id``: ``id`` объекта, на который указывает связь (целевой "
+"объект)."
 
 # e56086a031aa4f30acabdd5e12748dde
 #: ../../ref/models/fields.txt:1479
@@ -2820,16 +2837,19 @@ msgstr ""
 msgid ""
 "Works analogously to :attr:`ForeignKey.allow_unsaved_instance_assignment`."
 msgstr ""
+"Работает аналогично :attr:`ForeignKey.allow_unsaved_instance_assignment`."
 
 #: ../../ref/models/fields.txt:1575
 msgid ":class:`ManyToManyField` does not support :attr:`~Field.validators`."
-msgstr ""
+msgstr ":class:`ManyToManyField` не поддерживает :attr:`~Field.validators`."
 
 #: ../../ref/models/fields.txt:1577
 msgid ""
 ":attr:`~Field.null` has no effect since there is no way to require a "
 "relationship at the database level."
 msgstr ""
+":attr:`~Field.null` не влияет на работу поля т.к. нет способа сделать связь "
+"обязательной на уровне базы данных."
 
 # 13a32ac5c4184542b884d2bb36eb12b1
 #: ../../ref/models/fields.txt:1583
@@ -2912,7 +2932,6 @@ msgstr ""
 
 # 0c2d3028dd88429d93ad8996b26e000f
 #: ../../ref/models/fields.txt:1638
-#, fuzzy
 msgid ""
 "When ``True`` and used in a model which inherits from another :term:"
 "`concrete model`, indicates that this field should be used as the link back "
@@ -2940,7 +2959,6 @@ msgstr "Справочник по полям модели"
 
 # bece7ca989394330b68e8af18f9efec2
 #: ../../ref/models/fields.txt:1652
-#, fuzzy
 msgid ""
 "``Field`` is an abstract class that represents a database table column. "
 "Django uses fields to create the database table (:meth:`db_type`), to map "
@@ -2948,11 +2966,11 @@ msgid ""
 "`from_db_value`), and to apply :doc:`/ref/models/lookups` (:meth:"
 "`get_prep_lookup`)."
 msgstr ""
-"``Field`` -- абстрактный класс, отображающий поле в таблице в базе данных. "
-"Django используется поля для создания таблицы в базе данных (:meth:"
+"``Field`` -- абстрактный класс, отображающий колонку в таблице в базе "
+"данных. Django используется поля для создания таблицы в базе данных (:meth:"
 "`db_type`), для преобразования типов Python в типа в базе данных (:meth:"
-"`get_prep_value`) и наоборот (:meth:`to_python`), и для применения :doc:`/"
-"ref/models/lookups` (:meth:`get_prep_lookup`)."
+"`get_prep_value`) и наоборот (:meth:`from_db_value`), и для применения :doc:"
+"`/ref/models/lookups` (:meth:`get_prep_lookup`)."
 
 # da8bd1dc21b84595987aa90a5adb72b1
 #: ../../ref/models/fields.txt:1658
@@ -2995,16 +3013,15 @@ msgstr ""
 
 # 38acf621ec30427da4492976ad0c3e91
 #: ../../ref/models/fields.txt:1674
-#, fuzzy
 msgid ""
 "All of Django's built-in fields, such as :class:`CharField`, are particular "
 "implementations of ``Field``. If you need a custom field, you can either "
 "subclass any of the built-in fields or write a ``Field`` from scratch. In "
 "either case, see :doc:`/howto/custom-model-fields`."
 msgstr ""
-"Все встроенные поля Django, например :class:`CharField` -- наследуются от "
-"``Field``. Если вы хотите создать свое поле, можно унаследоваться от "
-"встроенного поля или от ``Field``. Подробности смотрите в :doc:`/howto/"
+"Все встроенные поля Django, например :class:`CharField`, наследуются от "
+"``Field``. Если вы хотите создать свое поле, можно унаследоваться от любого "
+"встроенного поля, или от ``Field``. Подробности смотрите в :doc:`/howto/"
 "custom-model-fields`."
 
 # edddb3ddeddd4fc384b56d08d17dd567
@@ -3136,19 +3153,17 @@ msgstr "Смотрите :ref:`converting-query-values-to-database-values`."
 
 # 146a096cf7f3444fb3d69e5290604335
 #: ../../ref/models/fields.txt:1732
-#, fuzzy
 msgid "When loading data, :meth:`from_db_value` is used:"
-msgstr "При загрузке данных используется :meth:`to_python`:"
+msgstr "При загрузке данных используется :meth:`from_db_value`:"
 
 # 850bb75ffd7746b1b2ab8746913db68a
 #: ../../ref/models/fields.txt:1738
-#, fuzzy
 msgid ""
 "Converts a value as returned by the database to a Python object. It is the "
 "reverse of :meth:`get_prep_value`."
 msgstr ""
-"Преобразует значение из базы данных (или сериалайзера) в объект Python. "
-"Метод обратный :meth:`get_prep_value`."
+"Преобразует значение из базы данных в объект Python. Метод обратный :meth:"
+"`get_prep_value`."
 
 #: ../../ref/models/fields.txt:1741
 msgid ""
@@ -3156,12 +3171,14 @@ msgid ""
 "already returns the correct Python type, or the backend itself does the "
 "conversion."
 msgstr ""
+"Для большинства встроенных полей этот метод не используется т.к. бэкенд базы "
+"данных возвращает уже правильный объект Python, или же бэкенд сам выполняет "
+"необходимые преобразования."
 
 # 720a48ea675e401f81c5ad703c57311a
 #: ../../ref/models/fields.txt:1745 ../../ref/models/fields.txt:1814
-#, fuzzy
 msgid "See :ref:`converting-values-to-python-objects` for usage."
-msgstr "Смотрите :ref:`converting-database-values-to-python-objects`."
+msgstr "Смотрите :ref:`converting-values-to-python-objects`."
 
 #: ../../ref/models/fields.txt:1749
 msgid ""
@@ -3169,6 +3186,9 @@ msgid ""
 "fields which do not require it (all Django fields). Consequently you may not "
 "call ``super`` in your definition."
 msgstr ""
+"Для повышения производительности поля, которые не используют "
+"``from_db_value``, не содержат пустую реализацию этого метода (все поля "
+"Django). По этому нет необходимости вызывать ``super`` в вашем методе."
 
 # 812e69b2121342b9abb1b8e8453042f3
 #: ../../ref/models/fields.txt:1753
@@ -3285,7 +3305,7 @@ msgstr ""
 msgid ""
 "Fields often receive their values as a different type, either from "
 "serialization or from forms."
-msgstr ""
+msgstr "Поля часто принимает значения разных типов из сериализатора, или формы"
 
 #: ../../ref/models/fields.txt:1810
 msgid ""
@@ -3293,16 +3313,18 @@ msgid ""
 "of :meth:`value_to_string`, and is also called in :meth:`~django.db.models."
 "Model.clean`."
 msgstr ""
+"Преобразует значение в правильный объект Python. Выполняет действия "
+"обратные :meth:`value_to_string`, и вызывается в :meth:`~django.db.models."
+"Model.clean`."
 
 # 4b4ed3d3c4c04f44b2d702c829ca11b3
 #: ../../ref/models/fields.txt:1816
-#, fuzzy
 msgid ""
 "Besides saving to the database, the field also needs to know how to "
 "serialize its value:"
 msgstr ""
 "Кроме сохранения в базу данных, поле также должно знать как сериализовать "
-"свое значение (процесс обратный :meth:`to_python`):"
+"свое значение:"
 
 # 1656197ea011492183bbc4969040db1d
 #: ../../ref/models/fields.txt:1821
@@ -3393,9 +3415,8 @@ msgstr ""
 
 # 8c3574e0b9844bc2ab306e3fd9e3a480
 #: ../../ref/models/fields.txt:1859
-#, fuzzy
 msgid "Field attribute reference"
-msgstr "Справочник по полям модели"
+msgstr "Атрибуты поля"
 
 #: ../../ref/models/fields.txt:1863
 msgid ""
@@ -3406,24 +3427,33 @@ msgid ""
 "meta-field-api>` to narrow down a search for specific field types. Custom "
 "model fields should implement these flags."
 msgstr ""
+"Каждый экземпляр ``Field`` содержит атрибуты, определяющие поведение поля. "
+"Используйте эти атрибуты вместо проверки ``isinstance``, если вам необходимо "
+"написать код, который зависит от поведения поля. Эти атрибуты можно "
+"использовать совместно с :ref:`Model._meta API <model-meta-field-api>`, "
+"чтобы проверять поля конкретного типа. Собственные поля модели должны "
+"определять эти атрибуты."
 
 # 68b6f9896d334c4f868ad663cdc47cb0
 #: ../../ref/models/fields.txt:1871
-#, fuzzy
 msgid "Attributes for fields"
-msgstr "Поле хранящее значение true/false."
+msgstr "Атрибуты поля"
 
 #: ../../ref/models/fields.txt:1875
 msgid ""
 "Boolean flag that indicates if the field was automatically created, such as "
 "the ``OneToOneField`` used by model inheritance."
 msgstr ""
+"Флаг, который указывает было ли поле создано автоматически, например "
+"``OneToOneField`` при наследовании моделей."
 
 #: ../../ref/models/fields.txt:1880
 msgid ""
 "Boolean flag that indicates if the field has a database column associated "
 "with it."
 msgstr ""
+"Флаг, который указывает представлено ли поле колонкой в таблице в базе "
+"данных."
 
 #: ../../ref/models/fields.txt:1885
 msgid ""
@@ -3433,6 +3463,10 @@ msgid ""
 "distinguish what constitutes the public subset of fields on the model from "
 "all the fields on the model."
 msgstr ""
+"Флаг, который указывает, что поле скрыто и используется для работы другого "
+"не скрытого поля (например, поля ``content_type`` и ``object_id`` "
+"используются для работы ``GenericForeignKey``). Флаг ``hidden`` "
+"используется, чтобы выделить публичные поля модели из всех полей."
 
 #: ../../ref/models/fields.txt:1893
 msgid ""
@@ -3440,6 +3474,9 @@ msgid ""
 "excludes hidden fields by default. Pass in ``include_hidden=True`` to return "
 "hidden fields in the results."
 msgstr ""
+":meth:`Options.get_fields() <django.db.models.options.Options.get_fields()>` "
+"не возвращает скрытые поля. Передайте ``include_hidden=True``, чтобы "
+"получить все поля."
 
 #: ../../ref/models/fields.txt:1900
 msgid ""
@@ -3447,6 +3484,8 @@ msgid ""
 "other models for its functionality (e.g. ``ForeignKey``, "
 "``ManyToManyField``, ``OneToOneField``, etc.)."
 msgstr ""
+"Флаг, который указывает, ссылается ли поле на другие модели (например, "
+"``ForeignKey``, ``ManyToManyField``, ``OneToOneField``, и т.д.)."
 
 #: ../../ref/models/fields.txt:1906
 msgid ""
@@ -3454,10 +3493,13 @@ msgid ""
 "superclass of a model, ``model`` will refer to the superclass, not the class "
 "of the instance."
 msgstr ""
+"Содержит модель, в которой это поле определено. Если поле определено в "
+"родительском классе, ``model`` будет ссылаться на этот класс, а не класс "
+"экземпляра модели."
 
 #: ../../ref/models/fields.txt:1911
 msgid "Attributes for fields with relations"
-msgstr ""
+msgstr "Атрибуты связывающих полей"
 
 #: ../../ref/models/fields.txt:1913
 msgid ""
@@ -3466,6 +3508,9 @@ msgid ""
 "only have meaningful values if the field is a relation type (:attr:`Field."
 "is_relation=True <Field.is_relation>`)."
 msgstr ""
+"Атрибуты, определяющие связь поля. Эти атрибуты присутствуют во всех полях, "
+"однако, только для связывающих полей(:attr:`Field.is_relation=True <Field."
+"is_relation>`) они содержат полезные значения."
 
 #: ../../ref/models/fields.txt:1920
 msgid ""
@@ -3473,12 +3518,17 @@ msgid ""
 "``False`` otherwise. The only field included with Django where this is "
 "``True`` is ``ManyToManyField``."
 msgstr ""
+"Флаг, который содержит ``True``, если поле содержит связь многие-ко-многим, "
+"иначе ``False``. Единственное поле Django, которое содержит ``True`` -- это "
+"``ManyToManyField``."
 
 #: ../../ref/models/fields.txt:1926
 msgid ""
 "Boolean flag that is ``True`` if the field has a many-to-one relation, such "
 "as a ``ForeignKey``; ``False`` otherwise."
 msgstr ""
+"Флаг, который содержит ``True``, если поле содержит связь многие-к-одному, "
+"такие как ``ForeignKey``, иначе ``False``."
 
 #: ../../ref/models/fields.txt:1931
 msgid ""
@@ -3486,12 +3536,17 @@ msgid ""
 "as a ``GenericRelation`` or the reverse of a ``ForeignKey``; ``False`` "
 "otherwise."
 msgstr ""
+"Флаг, который содержит ``True``, если поле содержит связь один-ко-многим, "
+"такие как ``GenericRelation`` или обратная связь ``ForeignKey``, иначе "
+"``False``."
 
 #: ../../ref/models/fields.txt:1937
 msgid ""
 "Boolean flag that is ``True`` if the field has a one-to-one relation, such "
 "as a ``OneToOneField``; ``False`` otherwise."
 msgstr ""
+"Флаг, который содержит ``True``, если поле содержит связь один-к-одному, "
+"такие как ``OneToOneField``, иначе ``False``."
 
 #: ../../ref/models/fields.txt:1942
 msgid ""
@@ -3500,6 +3555,10 @@ msgid ""
 "``GenericForeignKey`` or a ``GenericRelation``) then ``related_model`` will "
 "be ``None``."
 msgstr ""
+"Указывает на модель, на которую ссылается поле. Например, ``Author`` в "
+"``ForeignKey(Author)``. Если поле содержит связь с несколькими объектами "
+"(такие как ``GenericForeignKey`` или ``GenericRelation``) тогда "
+"``related_model`` будет ``None``."
 
 # 484439867537456fadbef6d49b2ef960
 #~ msgid "Incompliance to RFCs"
