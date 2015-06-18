@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-02 10:33+0300\n"
-"PO-Revision-Date: 2015-04-10 16:46+0300\n"
+"PO-Revision-Date: 2015-06-18 16:41+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -391,6 +391,12 @@ msgid ""
 "html'])``. That'll allow you to use a custom template for an individual "
 "story, with a fallback template for stories that don't have custom templates."
 msgstr ""
+"Вы можете использовать :func:`~django.template.loader.select_template()` для "
+"гибкой загрузки шаблонов. Например, вы написали новость и хотите "
+"использовать другой шаблон для некоторых новостей. Вы можете использовать "
+"``select_template(['story_%s_detail.html' % story.id, 'story_detail."
+"html'])``. Это позволить создать отдельный шаблон для определенных новостей, "
+"а для все остальных использовать шаблон по умолчанию."
 
 #: ../../topics/templates.txt:235
 msgid ""
@@ -399,51 +405,64 @@ msgid ""
 "subdirectory for each Django app, with subdirectories within those "
 "subdirectories as needed."
 msgstr ""
+"Мы советуем хранить шаблоны в подкаталогах в каталогах с шаблонами. Следует "
+"создать подкаталог для каждого приложения Django, в котором вы можете "
+"хранить шаблоны в различных подкаталогах, если это необходимо."
 
 #: ../../topics/templates.txt:240
 msgid ""
 "Do this for your own sanity. Storing all templates in the root level of a "
 "single directory gets messy."
 msgstr ""
+"Хранить все шаблоны в корневом каталоге может привести к хаосу в шаблонах."
 
 #: ../../topics/templates.txt:243
 msgid ""
 "To load a template that's within a subdirectory, just use a slash, like so::"
-msgstr ""
+msgstr "Чтобы загрузить каталог из подкаталога, просто используйте слэш::"
 
 #: ../../topics/templates.txt:247
 msgid ""
 "Using the same :setting:`TEMPLATES` option as above, this will attempt to "
 "load the following templates:"
 msgstr ""
+"При использовании настроек :setting:`TEMPLATES`, приведенных выше, Django "
+"будет искать следующие шаблоны:"
 
 #: ../../topics/templates.txt:250
 msgid "``/home/html/example.com/news/story_detail.html`` (``'django'`` engine)"
 msgstr ""
+"``/home/html/example.com/news/story_detail.html`` (шаблонизатор ``'django'``)"
 
 #: ../../topics/templates.txt:251
 msgid "``/home/html/default/news/story_detail.html`` (``'django'`` engine)"
 msgstr ""
+"``/home/html/default/news/story_detail.html`` (шаблонизатор ``'django'``)"
 
 #: ../../topics/templates.txt:252
 msgid "``/home/html/jinja2/news/story_detail.html`` (``'jinja2'`` engine)"
 msgstr ""
+"``/home/html/jinja2/news/story_detail.html`` (шаблонизатор ``'jinja2'``)"
 
 #: ../../topics/templates.txt:256
 msgid ""
 "In addition, to cut down on the repetitive nature of loading and rendering "
 "templates, Django provides a shortcut function which automates the process."
 msgstr ""
+"Django предоставляет несколько вспомогательных функций для работы с "
+"шаблонами."
 
 #: ../../topics/templates.txt:261
 msgid ""
 "``render_to_string()`` loads a template like :func:`get_template` and calls "
 "its ``render()`` method immediately. It takes the following arguments."
 msgstr ""
+"``render_to_string()`` загружает шаблон как и :func:`get_template`, и "
+"вызывает метод ``render()``. Принимает следующие аргументы."
 
 #: ../../topics/templates.txt:268
 msgid "``template_name``"
-msgstr ""
+msgstr "``template_name``"
 
 #: ../../topics/templates.txt:266
 msgid ""
@@ -451,30 +470,39 @@ msgid ""
 "names, Django uses :func:`select_template` instead of :func:`get_template` "
 "to find the template."
 msgstr ""
+"Название шаблона, который будет загружен и выполнен. Если указать список "
+"шаблонов, для поиска шаблонов Django будет использовать :func:"
+"`select_template` вместо :func:`get_template`."
 
 #: ../../topics/templates.txt:279
 msgid "``context``"
-msgstr ""
+msgstr "``context``"
 
 #: ../../topics/templates.txt:271
 msgid "A :class:`dict` to be used as the template's context for rendering."
 msgstr ""
+":class:`dict`, который будет использовать как контекст при рендеринге "
+"шаблона."
 
 #: ../../topics/templates.txt:275
 msgid ""
 "The ``context`` argument used to be called ``dictionary``. That name is "
 "deprecated in Django 1.8 and will be removed in Django 2.0."
 msgstr ""
+"``context`` ранее назывался ``dictionary``. Это название устарело в Django "
+"1.8 и будет удалено Django 2.0."
 
 #: ../../topics/templates.txt:278
 msgid ""
 "``context`` is now optional. An empty context will be used if it isn't "
 "provided."
 msgstr ""
+"``context`` теперь не обязательный аргумент. Если он не указан, будет "
+"использоваться пустой контекст."
 
 #: ../../topics/templates.txt:289
 msgid "``context_instance``"
-msgstr ""
+msgstr "``context_instance``"
 
 #: ../../topics/templates.txt:282
 msgid ""
@@ -482,26 +510,33 @@ msgid ""
 "instance of :class:`~django.template.RequestContext`) to use as the "
 "template's context."
 msgstr ""
+"Экземпляр :class:`~django.template.Context` или дочернего класса (например, "
+"экземпляр :class:`~django.template.RequestContext`), который будет "
+"использоваться как контекст шаблона."
 
 #: ../../topics/templates.txt:288
 msgid ""
 "The ``context_instance`` argument is deprecated. Use ``context`` and if "
 "needed ``request``."
 msgstr ""
+"Аргумент ``context_instance`` устарел. Используйте ``context`` и "
+"``request``, если необходимо."
 
 #: ../../topics/templates.txt:296
 msgid "``request``"
-msgstr ""
+msgstr "``request``"
 
 #: ../../topics/templates.txt:292
 msgid ""
 "An optional :class:`~django.http.HttpRequest` that will be available during "
 "the template's rendering process."
 msgstr ""
+"Необязательный :class:`~django.http.HttpRequest`, который будет "
+"использоваться при рендеринге шаблона."
 
 #: ../../topics/templates.txt:297
 msgid "The ``request`` argument was added."
-msgstr ""
+msgstr "Был добавлен аргумент ``request``."
 
 #: ../../topics/templates.txt:299
 msgid ""
@@ -510,30 +545,38 @@ msgid ""
 "feed the result into an :class:`~django.http.HttpResponse` suitable for "
 "returning from a view."
 msgstr ""
+"Смотрите также :func:`~django.shortcuts.render()` и :func:`~django.shortcuts."
+"render_to_response()`, которые вызывают :func:`render_to_string()` и "
+"передают результат в :class:`~django.http.HttpResponse`, который можно "
+"вернуть из представления."
 
 #: ../../topics/templates.txt:304
 msgid "Finally, you can use configured engines directly:"
-msgstr ""
+msgstr "Вы можете использовать шаблонизатор непосредственно:"
 
 #: ../../topics/templates.txt:308
 msgid "Template engines are available in ``django.template.engines``::"
-msgstr ""
+msgstr "Шаблонизаторы доступны в ``django.template.engines``::"
 
 #: ../../topics/templates.txt:315
 msgid ""
 "The lookup key — ``'django'`` in this example — is the engine's :setting:"
 "`NAME <TEMPLATES-NAME>`."
 msgstr ""
+"Ключ ``'django'`` в этом примере соответствует :setting:`NAME <TEMPLATES-"
+"NAME>`."
 
 #: ../../topics/templates.txt:321
 msgid "Built-in backends"
-msgstr ""
+msgstr "Встроенные бэкенды"
 
 #: ../../topics/templates.txt:327
 msgid ""
 "Set :setting:`BACKEND <TEMPLATES-BACKEND>` to ``'django.template.backends."
 "django.DjangoTemplates'`` to configure a Django template engine."
 msgstr ""
+"Укажите ``'django.template.backends.django.DjangoTemplates'`` в :setting:"
+"`BACKEND <TEMPLATES-BACKEND>`, чтобы использовать шаблонизатор Django."
 
 #: ../../topics/templates.txt:331
 msgid ""
@@ -542,12 +585,18 @@ msgid ""
 "subdirectory of installed applications. This generic name was kept for "
 "backwards-compatibility."
 msgstr ""
+"Если :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` равна ``True``, "
+"``DjangoTemplates`` будет искать шаблоны в подкаталогах ``templates`` "
+"установленных приложений. Такое название используется для обратной "
+"совместимости."
 
 #: ../../topics/templates.txt:335
 msgid ""
 "``DjangoTemplates`` engines accept the following :setting:`OPTIONS "
 "<TEMPLATES-OPTIONS>`:"
 msgstr ""
+"``DjangoTemplates`` принимает следующие параметры :setting:`OPTIONS "
+"<TEMPLATES-OPTIONS>`:"
 
 #: ../../topics/templates.txt:338
 msgid ""
@@ -555,6 +604,9 @@ msgid ""
 "for the ``{% ssi %}`` template tag. This is a security measure, so that "
 "template authors can't access files that they shouldn't be accessing."
 msgstr ""
+"``'allowed_include_roots'``: список строк, который определяют доступные "
+"префиксы для тега ``{% ssi %}``. Эта настройка используется для "
+"безопасности, чтобы ограничить доступ к файлам."
 
 #: ../../topics/templates.txt:342
 msgid ""
@@ -562,16 +614,19 @@ msgid ""
 "www']``, then ``{% ssi /home/html/foo.txt %}`` would work, but ``{% ssi /etc/"
 "passwd %}`` wouldn't."
 msgstr ""
+"Например, если ``'allowed_include_roots'`` равен ``['/home/html', '/var/"
+"www']``, тогда ``{% ssi /home/html/foo.txt %}`` будет работать, а ``{% ssi /"
+"etc/passwd %}`` не будет."
 
 #: ../../topics/templates.txt:346 ../../topics/templates.txt:358
 msgid "It defaults to an empty list."
-msgstr ""
+msgstr "По умолчанию содержит пустой список."
 
 #: ../../topics/templates.txt:350
 msgid ""
 "``allowed_include_roots`` is deprecated because the {% ssi %} tag is "
 "deprecated."
-msgstr ""
+msgstr "``allowed_include_roots`` устарела т.к. устарел тег {% ssi %}."
 
 #: ../../topics/templates.txt:353
 msgid ""
@@ -580,10 +635,16 @@ msgid ""
 "These callables take a request object as their argument and return a :class:"
 "`dict` of items to be merged into the context."
 msgstr ""
+"``'context_processors'``: список путей Python, который указывают на "
+"процессоры контекста, которые добавляют дополнительные переменные в контекст "
+"при рендеринге шаблона в процессе обработки запроса. Процессоры контекста -- "
+"это функции, или другие вызываемые объекты, которые принимают объект запроса "
+"и возвращают :class:`dict` значений, который будут добавлены в контекст."
 
 #: ../../topics/templates.txt:360
 msgid "See :class:`~django.template.RequestContext` for more information."
 msgstr ""
+"Подробности смотрите в описании :class:`~django.template.RequestContext`."
 
 #: ../../topics/templates.txt:362
 msgid ""
@@ -592,10 +653,14 @@ msgid ""
 "exception raised during template rendering. This report contains the "
 "relevant snippet of the template with the appropriate line highlighted."
 msgstr ""
+"``'debug'``: булево значение, которое включает/выключает отладку шаблонов. "
+"При ``True`` будет отображаться страница с отладочной информацией, если "
+"возникнет ошибка при рендеринге шаблона. Страница показывает часть шаблона, "
+"которая вызвала ошибку."
 
 #: ../../topics/templates.txt:367
 msgid "It defaults to the value of the :setting:`DEBUG` setting."
-msgstr ""
+msgstr "По умолчанию равна значению :setting:`DEBUG`."
 
 #: ../../topics/templates.txt:369
 msgid ""
@@ -605,38 +670,48 @@ msgid ""
 "in the tuple should be the ``Loader`` class name, and subsequent items are "
 "passed to the ``Loader`` during initialization."
 msgstr ""
+"``'loaders'``: список путей Python к загрузчикам шаблонов. Каждый класс "
+"``Loader`` знает как загрузить шаблон из определенного источника. Можно "
+"использовать кортеж вместо строки. Первым элементом должен быть путь к "
+"``Loader``, последующие элементы передаются в ``Loader`` при инициализации."
 
 #: ../../topics/templates.txt:375
 msgid ""
 "The default depends on the values of :setting:`DIRS <TEMPLATES-DIRS>` and :"
 "setting:`APP_DIRS <TEMPLATES-APP_DIRS>`."
 msgstr ""
+"Значение по умолчанию зависит от значений :setting:`DIRS <TEMPLATES-DIRS>` "
+"и :setting:`APP_DIRS <TEMPLATES-APP_DIRS>`."
 
 #: ../../topics/templates.txt:378
 msgid "See :ref:`template-loaders` for details."
-msgstr ""
+msgstr "Подробности смотрите в :ref:`template-loaders`."
 
 #: ../../topics/templates.txt:380
 msgid ""
 "``'string_if_invalid'``: the output, as a string, that the template system "
 "should use for invalid (e.g. misspelled) variables."
 msgstr ""
+"``'string_if_invalid'``: строка, которая будет использоваться для "
+"неправильных (например, с опечаткой) переменных в шаблоне."
 
 #: ../../topics/templates.txt:383
 msgid "It defaults to an empty string."
-msgstr ""
+msgstr "По умолчанию пустая строка."
 
 #: ../../topics/templates.txt:385
 msgid "See :ref:`invalid-template-variables` for details."
-msgstr ""
+msgstr "Подробности смотрите в  :ref:`invalid-template-variables`."
 
 #: ../../topics/templates.txt:387
 msgid "``'file_charset'``: the charset used to read template files on disk."
 msgstr ""
+"``'file_charset'``: кодировка, которая используется при чтении файла шаблона "
+"с диска."
 
 #: ../../topics/templates.txt:389
 msgid "It defaults to the value of :setting:`FILE_CHARSET`."
-msgstr ""
+msgstr "По умолчанию равна значению :setting:`FILE_CHARSET`."
 
 #: ../../topics/templates.txt:395
 msgid "Requires Jinja2_ to be installed:"
