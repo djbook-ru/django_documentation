@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-02 10:33+0300\n"
-"PO-Revision-Date: 2015-06-18 16:41+0300\n"
+"PO-Revision-Date: 2015-06-19 12:39+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -715,13 +715,15 @@ msgstr "По умолчанию равна значению :setting:`FILE_CHARS
 
 #: ../../topics/templates.txt:395
 msgid "Requires Jinja2_ to be installed:"
-msgstr ""
+msgstr "Для использования необходимо установить Jinja2_:"
 
 #: ../../topics/templates.txt:401
 msgid ""
 "Set :setting:`BACKEND <TEMPLATES-BACKEND>` to ``'django.template.backends."
 "jinja2.Jinja2'`` to configure a Jinja2_ engine."
 msgstr ""
+"Укажите ``'django.template.backends.jinja2.Jinja2'`` в :setting:`BACKEND "
+"<TEMPLATES-BACKEND>` для настройки шаблонизатора Jinja2_."
 
 #: ../../topics/templates.txt:404
 msgid ""
@@ -729,6 +731,8 @@ msgid ""
 "engines look for templates in the ``jinja2`` subdirectory of installed "
 "applications."
 msgstr ""
+"Если :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` равна ``True``, ``Jinja2`` "
+"будет искать шаблоны в подкаталоге ``jinja2``установленных приложений."
 
 #: ../../topics/templates.txt:407
 msgid ""
@@ -738,24 +742,32 @@ msgid ""
 "that callable and passes other options as keyword arguments. Furthermore, "
 "Django adds defaults that differ from Jinja2's for a few options:"
 msgstr ""
+"Самой важной настройкой в :setting:`OPTIONS <TEMPLATES-OPTIONS>` является "
+"``'environment'``. Это путь для импорта функции, или другого вызываемого "
+"объекта, которая возвращает Jinja2. По умолчанию ``'jinja2.Environment'``. "
+"Django вызывает функцию и передает другие параметры как именованные "
+"аргументы. Также Django указывает значения по умолчанию для некоторых "
+"параметров Jinja2:"
 
 #: ../../topics/templates.txt:413
 msgid "``'autoescape'``: ``True``"
-msgstr ""
+msgstr "``'autoescape'``: ``True``"
 
 #: ../../topics/templates.txt:414
 msgid ""
 "``'loader'``: a loader configured for :setting:`DIRS <TEMPLATES-DIRS>` and :"
 "setting:`APP_DIRS <TEMPLATES-APP_DIRS>`"
 msgstr ""
+"``'loader'``: загрузчик соответствующий настройкам :setting:`DIRS <TEMPLATES-"
+"DIRS>` и :setting:`APP_DIRS <TEMPLATES-APP_DIRS>`"
 
 #: ../../topics/templates.txt:416
 msgid "``'auto_reload'``: ``settings.DEBUG``"
-msgstr ""
+msgstr "``'auto_reload'``: ``settings.DEBUG``"
 
 #: ../../topics/templates.txt:417
 msgid "``'undefined'``: ``DebugUndefined if settings.DEBUG else Undefined``"
-msgstr ""
+msgstr "``'undefined'``: ``DebugUndefined if settings.DEBUG else Undefined``"
 
 #: ../../topics/templates.txt:419
 msgid ""
@@ -764,19 +776,24 @@ msgid ""
 "Django context processors, filters, and tags. In order to use Django-"
 "specific APIs, you must configure them into the environment."
 msgstr ""
+"Настройки по умолчанию намерено сокращены до минимума. ``Jinja2`` не создает "
+"окружения заточенное под Django. Шаблонизатор ничего не знает про процессоры "
+"контекста Django, фильтры и теги. Чтобы использовать API Django, необходимо "
+"настроить окружение шаблонизатора."
 
 #: ../../topics/templates.txt:424
 msgid "For example, you can create ``myproject/jinja2.py`` with this content::"
-msgstr ""
+msgstr "Например, вы можете создать следующий ``myproject/jinja2.py``::"
 
 #: ../../topics/templates.txt:440
 msgid ""
 "and set the ``'environment'`` option to ``'myproject.jinja2.environment'``."
 msgstr ""
+"и указать в настройке ``'environment'`` ``'myproject.jinja2.environment'``."
 
 #: ../../topics/templates.txt:442
 msgid "Then you could use the following constructs in Jinja2 templates:"
-msgstr ""
+msgstr "Теперь вы можете использовать в шаблонах Jinja2:"
 
 #: ../../topics/templates.txt:450
 msgid ""
@@ -788,10 +805,16 @@ msgid ""
 "namespace removes the need for template context processors. The Django "
 "template language doesn't have an equivalent of Jinja2 tests."
 msgstr ""
+"Концепция тегов и фильтров существует как в шаблонах Django, так и Jinja2, "
+"но используется по разному. Так как Jinja2 позволяет передавать аргументы "
+"при вызове функций и методов, многие вещи, для которых необходим тег или "
+"фильтр в шаблонах Django, можно использовать напрямую в шаблонах Jinja2, как "
+"это делается в примере выше. Глобальное пространство имен Jinja2 не требует "
+"процессоров контекста. Язык шаблонов Django не имеет аналогов тестов Jinja2."
 
 #: ../../topics/templates.txt:459
 msgid "Custom backends"
-msgstr ""
+msgstr "Собственный бэкенд"
 
 #: ../../topics/templates.txt:461
 msgid ""
@@ -801,10 +824,14 @@ msgid ""
 "and optionally ``from_string()``. Here's an example for a fictional "
 "``foobar`` template library::"
 msgstr ""
+"Вот небольшой пример собственного шаблонизатора. Шаблонизатор должен "
+"наследоваться от ``django.template.backends.base.BaseEngine`` и определить "
+"метод ``get_template()``, и опционально ``from_string()``. Код нашего "
+"шаблонизатора ``foobar``::"
 
 #: ../../topics/templates.txt:517
 msgid "See `DEP 182`_ for more information."
-msgstr ""
+msgstr "Подробности смотрите в `DEP 182`_."
 
 # f2ec389c092c4aeb9911e01fe093419a
 #: ../../topics/templates.txt:524
@@ -813,11 +840,10 @@ msgstr "Язык шаблонов Django"
 
 #: ../../topics/templates.txt:529
 msgid "Syntax"
-msgstr ""
+msgstr "Синтаксис"
 
 # 91617ae39d904c4dbab66c87e6b8e303
 #: ../../topics/templates.txt:531 ../../topics/templates.txt:630
-#, fuzzy
 msgid "About this section"
 msgstr "Об этом документе"
 
@@ -826,6 +852,8 @@ msgid ""
 "This is an overview of the Django template language's syntax. For details "
 "see the :doc:`language syntax reference </ref/templates/language>`."
 msgstr ""
+"Этот раздел описывает основы синтаксиса языка шаблонов Django. Подробности "
+"смотрите в :doc:`полном описании </ref/templates/language>`."
 
 #: ../../topics/templates.txt:536
 msgid ""
@@ -833,6 +861,9 @@ msgid ""
 "using the Django template language. Some constructs are recognized and "
 "interpreted by the template engine. The main ones are variables and tags."
 msgstr ""
+"Шаблон Django -- это просто текстовый файл, или строка Python, которые "
+"следуют языку шаблонов Django. Определенные конструкции распознаются и "
+"интерпретируются шаблонизатором. Основные -- это переменные и теги."
 
 #: ../../topics/templates.txt:540
 msgid ""
@@ -840,10 +871,13 @@ msgid ""
 "their values, which are looked up in the context, and executes tags. "
 "Everything else is output as is."
 msgstr ""
+"Шаблон рендерится с контекстом. Рендеринг заменяет переменные на их "
+"значения, которые ищутся в контексте, и выполняет теги. Все остальное "
+"выводится как есть."
 
 #: ../../topics/templates.txt:544
 msgid "The syntax of the Django template language involves four constructs."
-msgstr ""
+msgstr "Синтаксис языка шаблонов Django использует четыре конструкции."
 
 # 7e41b7d93cf348bfaae0488724faffc1
 #: ../../topics/templates.txt:547
@@ -854,29 +888,35 @@ msgstr "Переменные"
 msgid ""
 "A variable outputs a value from the context, which is a dict-like object "
 "mapping keys to values."
-msgstr ""
+msgstr "Переменные выводят значения из контекста, который является словарем."
 
 #: ../../topics/templates.txt:552
 msgid "Variables are surrounded by ``{{`` and ``}}`` like this::"
-msgstr ""
+msgstr "Переменные выделяются ``{{`` и ``}}``, например::"
 
 #: ../../topics/templates.txt:556
 msgid ""
 "With a context of ``{'first_name': 'John', 'last_name': 'Doe'}``, this "
 "template renders to::"
 msgstr ""
+"Для контекста ``{'first_name': 'John', 'last_name': 'Doe'}`` шаблон "
+"отрендерит::"
 
 #: ../../topics/templates.txt:561
 msgid ""
 "Dictionary lookup, attribute lookup and list-index lookups are implemented "
 "with a dot notation::"
 msgstr ""
+"Обращение к ключам словаря, атрибутам объектов и элементам списка "
+"выполняется через точку::"
 
 #: ../../topics/templates.txt:568
 msgid ""
 "If a variable resolves to a callable, the template system will call it with "
 "no arguments and use its result instead of the callable."
 msgstr ""
+"Если значение переменной является вызываемый объект, шаблонизатор вызовет "
+"его без аргументов и подставит результат."
 
 # e2fbc31c77dc405cb13535ecd88ee4ba
 #: ../../topics/templates.txt:572
@@ -885,7 +925,7 @@ msgstr "Теги"
 
 #: ../../topics/templates.txt:574
 msgid "Tags provide arbitrary logic in the rendering process."
-msgstr ""
+msgstr "Теги позволяют добавлять произвольную логику в шаблон."
 
 #: ../../topics/templates.txt:576
 msgid ""
