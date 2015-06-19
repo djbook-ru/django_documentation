@@ -20,14 +20,12 @@ class Command(BaseCommand):
         translated = 0
 
         exclude = [
+            '/misc/',
             '/releases/',
             '/internals/',
             '/ref/contrib/gis/',
-            '/ref/contrib/comments/',
             '/sphinx.po'
         ]
-        main_total = 0
-        main_translated = 0
 
         for path, dirs, files in os.walk(self.app.locale_path):
             for f in files:
@@ -61,9 +59,6 @@ class Command(BaseCommand):
 
                     statistic.append((unicode(name), translated_perc, untranslated_perc, fuzzy_perc, need_fix_count))
 
-                    main_total += msg_total
-                    main_translated += msg_translated
-
         def sort_statistic(item1, item2):
             if item1[4] == 0:
                 return 1
@@ -75,8 +70,9 @@ class Command(BaseCommand):
 
         self.save_to_file({
             'statistic': statistic,
-            'total': '%.02f' % ((100.00 / float(total)) * translated),
-            'main_total': '%.02f' % ((100.00 / float(main_total)) * main_translated),
+            'total_perc': '%.02f' % ((100.00 / float(total)) * translated),
+            'total': total,
+            'translated': translated,
             'version': conf.version
         })
 
