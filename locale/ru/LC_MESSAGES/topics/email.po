@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2015-06-19 12:43+0300\n"
+"PO-Revision-Date: 2015-06-22 17:39+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -364,7 +364,7 @@ msgstr ""
 # 99749c1da5ec4a21960f01f4c4e9298f
 #: ../../topics/email.txt:169
 msgid "Preventing header injection"
-msgstr ""
+msgstr "Защищаемся от инъекции заголовков электронного письма"
 
 # b87a27cf5ca748048e31835d83aeaa4a
 #: ../../topics/email.txt:171
@@ -373,6 +373,9 @@ msgid ""
 "email headers to control the \"To:\" and \"From:\" in email messages that "
 "your scripts generate."
 msgstr ""
+"`Инъекции заголовков <http://www.nyphp.org/phundamentals/8_Preventing-Email-"
+"Header-Injection>`_ -- это атака, во время которой атакующий добавляет "
+"данные в заголовки письма \"To:\" и \"From:\", которое создает ваш код."
 
 # b9d4116da0ba46a6bfded33542085cdb
 #: ../../topics/email.txt:175
@@ -385,6 +388,13 @@ msgid ""
 "``ValueError``) and, hence, will not send the email. It's your "
 "responsibility to validate all data before passing it to the email functions."
 msgstr ""
+"Функции для отправки писем в Django запрещают указывать перенос строки в "
+"значениях заголовков. Если ``subject``, ``from_email`` или "
+"``recipient_list`` содержит перенос строки (в Unix, Windows или Mac стиле), "
+"функция отправки писем (например, :meth:`~django.core.mail.send_mail()`) "
+"вызовет исключение ``django.core.mail.BadHeaderError`` (дочерний класс "
+"``ValueError``), и ничего не оправит. Это ваша ответственность проверять все "
+"данные перед тем, как передать в функцию."
 
 # d89c6b4bf507481e8b1ade352b8885da
 #: ../../topics/email.txt:183
@@ -392,6 +402,8 @@ msgid ""
 "If a ``message`` contains headers at the start of the string, the headers "
 "will simply be printed as the first bit of the email message."
 msgstr ""
+"Если ``message`` содержит заголовки в начале, они просто будут выведены в "
+"начале содержимого письма."
 
 # 88da96b49c2a4005add1ebe6e405dc63
 #: ../../topics/email.txt:186
@@ -400,11 +412,14 @@ msgid ""
 "``from_email`` from the request's POST data, sends that to admin@example.com "
 "and redirects to \"/contact/thanks/\" when it's done::"
 msgstr ""
+"Вот пример представления, которое получает ``subject``, ``message`` и "
+"``from_email`` из POST данных запроса, отправляет их на admin@example.com, и "
+"перенаправляет по адресу \"/contact/thanks/\"::"
 
 # d4b434dd0a3945eeb1f0a8f7cb225f4c
 #: ../../topics/email.txt:213
 msgid "The EmailMessage class"
-msgstr ""
+msgstr "Класс EmailMessage"
 
 # cf41724884684500887a8e2c912a5d6e
 #: ../../topics/email.txt:215
@@ -413,6 +428,9 @@ msgid ""
 "send_mass_mail()` functions are actually thin wrappers that make use of the :"
 "class:`~django.core.mail.EmailMessage` class."
 msgstr ""
+"Функции :meth:`~django.core.mail.send_mail()` и :meth:`~django.core.mail."
+"send_mass_mail()` на самом деле обертки, которые используют класс :class:"
+"`~django.core.mail.EmailMessage`."
 
 # 0b55b450d228436b8d34a9e40620d62b
 #: ../../topics/email.txt:219
@@ -423,6 +441,11 @@ msgid ""
 "recipients, file attachments, or multi-part email, you'll need to create :"
 "class:`~django.core.mail.EmailMessage` instances directly."
 msgstr ""
+"Не все возможности :class:`~django.core.mail.EmailMessage` доступны через :"
+"meth:`~django.core.mail.send_mail()` и остальные функции. Если вы хотите "
+"использовать дополнительные возможности, такие как получатели в BCC, "
+"отправка файла, или \"multi-part\" письмо, вам следует использовать "
+"непосредственно :class:`~django.core.mail.EmailMessage`."
 
 # 574413577df840e1875173b393df1ead
 #: ../../topics/email.txt:226
@@ -433,6 +456,11 @@ msgid ""
 "to move to a more object-oriented design for email messages and retain the "
 "original functions only for backwards compatibility."
 msgstr ""
+"Это особенности проектирования. :meth:`~django.core.mail.send_mail()` и "
+"подобные функции ранее были единственным интерфейсом, который предоставлял "
+"Django. Однако, список аргументом постепенно рос и рос. По этому было решено "
+"использовать более объектно-ориентированный для электронных писем, а функции "
+"оставить для обратной совместимости."
 
 # 253007d375f34b29b077677a1ea51d49
 #: ../../topics/email.txt:233
@@ -441,6 +469,9 @@ msgid ""
 "email message itself. The :ref:`email backend <topic-email-backends>` is "
 "then responsible for sending the email."
 msgstr ""
+":class:`~django.core.mail.EmailMessage` отвечает за создание электронного "
+"письма. :ref:`Бэкенд отправки писем <topic-email-backends>` отвечает за "
+"отправку писем."
 
 # e5d6b31002ef428f92dfeca98aef2db8
 #: ../../topics/email.txt:237
@@ -450,11 +481,15 @@ msgid ""
 "messages, the email backend API :ref:`provides an alternative <topics-"
 "sending-multiple-emails>`."
 msgstr ""
+"Для удобства :class:`~django.core.mail.EmailMessage` предоставляет простой "
+"метод ``send()`` для отправки одного письма. Если вы хотите отправить "
+"несколько писем, API бэкенда :ref:`предоставляет дополнительные методы "
+"<topics-sending-multiple-emails>`."
 
 # 921d49c76d254e70a07ac1bf3b155d12
 #: ../../topics/email.txt:243
 msgid "EmailMessage Objects"
-msgstr ""
+msgstr "Объекты EmailMessage"
 
 # 4434e92c574e4afba527fdf25265ec8b
 #: ../../topics/email.txt:247
@@ -464,16 +499,20 @@ msgid ""
 "All parameters are optional and can be set at any time prior to calling the "
 "``send()`` method."
 msgstr ""
+"Класс :class:`~django.core.mail.EmailMessage` создает со следующими "
+"параметрами (в указанном порядке, если передавать позиционные аргументы). "
+"Все параметры не обязательны и их можно установить в любой момент до вызова "
+"метода ``send()``."
 
 # f7a93ec2ca3e4d7dad73eb1b74c18654
 #: ../../topics/email.txt:252
 msgid "``subject``: The subject line of the email."
-msgstr ""
+msgstr "``subject``: Тема письма."
 
 # a962c34fe1a546ad8ee9db140a10e029
 #: ../../topics/email.txt:254
 msgid "``body``: The body text. This should be a plain text message."
-msgstr ""
+msgstr "``body``: Содержимое письма. Необходимо указать обычный текст."
 
 # bc430c183830472e88b248effe583e6e
 #: ../../topics/email.txt:256
@@ -482,11 +521,14 @@ msgid ""
 "<fred@example.com>`` forms are legal. If omitted, the :setting:"
 "`DEFAULT_FROM_EMAIL` setting is used."
 msgstr ""
+"``from_email``: Адрес отправителя. Можно использовать как ``fred@example."
+"com``, так и ``Fred <fred@example.com>``. Если не указан, будет использовать "
+"значение настройки :setting:`DEFAULT_FROM_EMAIL`."
 
 # 244debc83d254fd19536f3dbb344befc
 #: ../../topics/email.txt:260
 msgid "``to``: A list or tuple of recipient addresses."
-msgstr ""
+msgstr "``to``: Список, или кортеж, получателей."
 
 # d79cd5f4dfc7430f834ce5f39710e90c
 #: ../../topics/email.txt:262
@@ -494,6 +536,8 @@ msgid ""
 "``bcc``: A list or tuple of addresses used in the \"Bcc\" header when "
 "sending the email."
 msgstr ""
+"``bcc``: Список, или кортеж, адресов, которые будут указаны в заголовке \"Bcc"
+"\"."
 
 # d17ea296fe374a3787823c3f58855d3f
 #: ../../topics/email.txt:265
@@ -502,6 +546,9 @@ msgid ""
 "use the same connection for multiple messages. If omitted, a new connection "
 "is created when ``send()`` is called."
 msgstr ""
+"``connection``: Экземпляр бэкенда для отправки писем. Используйте этот "
+"параметр, если хотите использовать одно подключения для нескольких писем. "
+"Если не указан, будет создано новое подключение при вызове ``send()``."
 
 # 2a0a86e1595a447d9aabb55c6d5e362e
 #: ../../topics/email.txt:269
@@ -510,6 +557,8 @@ msgid ""
 "either ``email.MIMEBase.MIMEBase`` instances, or ``(filename, content, "
 "mimetype)`` triples."
 msgstr ""
+"``attachments``: Список вложений. Могут быть экземпляры ``email.MIMEBase."
+"MIMEBase``, или кортежи ``(filename, content, mimetype)``."
 
 # ba23a89be54d465c8b0112a20648e256
 #: ../../topics/email.txt:273
@@ -519,6 +568,9 @@ msgid ""
 "ensure header names and values are in the correct format for an email "
 "message. The corresponding attribute is ``extra_headers``."
 msgstr ""
+"``headers``: Словарь дополнительных заголовков. Ключами являются названия "
+"заголовков, значения -- содержимое заголовка. Вы сами должны убедиться в "
+"правильности заголовков. Соответствующий атрибут -- ``extra_headers``."
 
 # e3ae479d009e4a7886cb5cd73b00e5bf
 #: ../../topics/email.txt:278
@@ -526,27 +578,31 @@ msgid ""
 "``cc``: A list or tuple of recipient addresses used in the \"Cc\" header "
 "when sending the email."
 msgstr ""
+"``cc``: Список, или кортеж, получателей, которые будут указаны в заголовке "
+"\"Cc\"."
 
 #: ../../topics/email.txt:281
 msgid ""
 "``reply_to``: A list or tuple of recipient addresses used in the \"Reply-To"
 "\" header when sending the email."
 msgstr ""
+"``reply_to``: Список, или кортеж, получателей, которые будут указаны в "
+"заголовке \"Reply-To\"."
 
 #: ../../topics/email.txt:286
 msgid "The ``reply_to`` parameter was added."
-msgstr ""
+msgstr "Был добавлен параметр ``reply_to``."
 
 # b70ca86605534d2fb014544f230717d9
 # 3e9aa50d3c634fb9af2c6ef79719f563
 #: ../../topics/email.txt:288 ../../topics/email.txt:332
 msgid "For example::"
-msgstr ""
+msgstr "Например::"
 
 # fb393f9959b344d782f35908f19e6e95
 #: ../../topics/email.txt:294
 msgid "The class has the following methods:"
-msgstr ""
+msgstr "Класс содержит следующие методы:"
 
 #: ../../topics/email.txt:296
 msgid ""

@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated, 2012.
+# Automatically generated <>, 2012, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2012-02-15 15:13\n"
+"PO-Revision-Date: 2015-06-22 12:16+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -17,11 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 # c586a9a598fc419dae88177cd52bb841
 #: ../../ref/databases.txt:3
 msgid "Databases"
-msgstr ""
+msgstr "Базы данных"
 
 # 2c469103f40b4c8f8722bd15ef5031bd
 #: ../../ref/databases.txt:5
@@ -31,6 +32,10 @@ msgid ""
 "make design decisions on which features to support and which assumptions we "
 "can make safely."
 msgstr ""
+"Django пытается поддерживать возможности различных бэкендов по максимуму. "
+"Однако, базы данных работают по разному, и нам приходится принимать решение "
+"какие возможности поддерживать, чтобы они безопасно работали для всех "
+"бэкендов."
 
 # afce327157f24a8598e01f8c9a033125
 #: ../../ref/databases.txt:10
@@ -39,16 +44,18 @@ msgid ""
 "usage. Of course, it is not intended as a replacement for server-specific "
 "documentation or reference manuals."
 msgstr ""
+"Этот раздел описывает работу Django с различными базами данных. Конечно же "
+"он не заменит вам документацию базы данных."
 
 # afda96439a8b45f6a041cab55297c81e
 #: ../../ref/databases.txt:15
 msgid "General notes"
-msgstr ""
+msgstr "Общие замечания"
 
 # 90f8d13b66b746ba8634258c61eae1af
 #: ../../ref/databases.txt:20
 msgid "Persistent connections"
-msgstr ""
+msgstr "Постоянные соединения с базой данных"
 
 # b81264ecd32b4218b6be4c548d113190
 #: ../../ref/databases.txt:22
@@ -58,6 +65,10 @@ msgid ""
 "`CONN_MAX_AGE` parameter which defines the maximum lifetime of a connection. "
 "It can be set independently for each database."
 msgstr ""
+"Постоянные соединения улучшают производительность, позволяя не создавать "
+"новое подключение к базе данных при каждом запросе. Настройка :setting:"
+"`CONN_MAX_AGE` указывает как долго существует соединение. Эту настройку "
+"можно указывать для каждой базы данных отдельно."
 
 # a742c14c54404842bc8fa5c97fbd5cf0
 #: ../../ref/databases.txt:27
@@ -67,11 +78,15 @@ msgid ""
 "connections, set :setting:`CONN_MAX_AGE` to a positive number of seconds. "
 "For unlimited persistent connections, set it to ``None``."
 msgstr ""
+"По умолчанию она равна ``0``, и соединение будет закрывать после обработки "
+"каждого запроса. Это сделано для обратной совместимости. Чтобы активировать "
+"постоянное соединение, укажите количество секунд в :setting:`CONN_MAX_AGE`. "
+"Чтобы соединение существовало постоянно, укажите ``None``."
 
 # 0ce4f88fdd8444c5bf3dd57b240f8831
 #: ../../ref/databases.txt:33
 msgid "Connection management"
-msgstr ""
+msgstr "Управление соединениями с базой данных"
 
 # 0a849482b0a84c5f91b70967a1ab6dd8
 #: ../../ref/databases.txt:35
@@ -81,6 +96,10 @@ msgid ""
 "Django closes the connection once it exceeds the maximum age defined by :"
 "setting:`CONN_MAX_AGE` or when it isn't usable any longer."
 msgstr ""
+"Django выполняет подключение к базе данных при первом запросе. Он держит "
+"соединение и использует его для последующих запросов. Django закрывает "
+"соединение по истечению :setting:`CONN_MAX_AGE`, или когда оно не может быть "
+"больше использовано."
 
 # aaed5cba5fca4a40b3183b490f2272df
 #: ../../ref/databases.txt:40
@@ -89,6 +108,9 @@ msgid ""
 "it needs one and doesn't have one already — either because this is the first "
 "connection, or because the previous connection was closed."
 msgstr ""
+"Точнее, Django автоматически создаете соединение с базой данных, если оно "
+"необходимо, и нет открытого соединения, потому что это первое соединение, "
+"или предыдущее было закрыто."
 
 # cbe501c8d797469490d14dca7e5c346a
 #: ../../ref/databases.txt:44
@@ -99,6 +121,11 @@ msgid ""
 "Django doesn't attempt to use a connection that has been terminated by the "
 "database server. (This problem may only affect very low traffic sites.)"
 msgstr ""
+"В начале каждого запроса Django закрывает соединение, если истек его срок. "
+"Если ваша база данных закрывает соединение после определенного времени, вам "
+"следует указать меньшее значение в :setting:`CONN_MAX_AGE`, чтобы Django не "
+"пытался использовать закрытое соединение. (Эта проблема может возникнуть "
+"только на сайтах с низким трафиком.)"
 
 # 57d1287d9879475f9d4617e03bb4d55b
 #: ../../ref/databases.txt:50
@@ -110,11 +137,17 @@ msgid ""
 "errors affect at most one request; if the connection becomes unusable, the "
 "next request gets a fresh connection."
 msgstr ""
+"В конце каждого запроса Django закрывает соединение, если истек его срок, "
+"или, если соединение находится в состоянии неисправимой ошибки. Если в "
+"процессе обработки запроса произошла ошибка базы данных, Django проверяет "
+"работает ли соединение, и закрывает его, если оно не работает. Таким образом "
+"ошибка базы данных влияет только на один запрос, для последующих запросов "
+"будет создано новое соединение."
 
 # 6f99afc57ac748a4a0ae29a594a3e0f8
 #: ../../ref/databases.txt:58
 msgid "Caveats"
-msgstr ""
+msgstr "Предостережения"
 
 # 99416b3d20d94d379885a6ec16065813
 #: ../../ref/databases.txt:60
@@ -122,6 +155,8 @@ msgid ""
 "Since each thread maintains its own connection, your database must support "
 "at least as many simultaneous connections as you have worker threads."
 msgstr ""
+"Так как каждый поток использует отдельное подключение, ваша база данных "
+"должна поддерживать необходимое количество соединений."
 
 # ea0268d387ba44f1aabedf75bb978899
 #: ../../ref/databases.txt:63
@@ -133,6 +168,12 @@ msgid ""
 "that's unlikely to be reused. This will help keep the number of simultaneous "
 "connections to this database small."
 msgstr ""
+"В некоторых случаях большинство представлений могут не использовать базу "
+"данных, например, это база данных внешней системы, или благодаря "
+"кэшированию. В таких случаях укажите небольшое значение в :setting:"
+"`CONN_MAX_AGE` или ``0``, чтобы не поддерживать соединение, которое почти не "
+"используется. Это позволит уменьшить количество одновременных подключений к "
+"базе данных."
 
 # b4daee6f45c848d4aa99a75944c92289
 #: ../../ref/databases.txt:70
@@ -141,6 +182,8 @@ msgid ""
 "negating the effect of persistent connections. Don't enable them during "
 "development."
 msgstr ""
+"Сервер для разработки создает отдельны поток для каждого запроса, по этому "
+"нет смысла использовать постоянные подключения во время разработки."
 
 # 3e6e222d31b143d9b2933f3e83ecc64e
 #: ../../ref/databases.txt:74
@@ -153,11 +196,18 @@ msgid ""
 "appropriate value at the beginning of each request, or disable persistent "
 "connections."
 msgstr ""
+"При подключении к базе данных, устанавливаются различные параметры "
+"подключения в соответствии с используемым бэкендом. При постоянном "
+"соединении это не будет выполняться при каждом запросе. Если вы измените "
+"параметры подключения, например, уровень изоляции транзакций или часовой "
+"пояс, вам следует восстановить параметры по умолчанию после обработки "
+"запроса, или устанавливать в начале каждого запроса, или отключить "
+"постоянные соединения."
 
 # d78a6cc484b941139b56f7236cc0b45d
 #: ../../ref/databases.txt:83
 msgid "Encoding"
-msgstr ""
+msgstr "Кодировка"
 
 # ca2ef9ab579e4650b7059c953dcc52db
 #: ../../ref/databases.txt:85
@@ -167,11 +217,15 @@ msgid ""
 "your database for data that is valid in Django. See the database specific "
 "notes below for information on how to set up your database correctly."
 msgstr ""
+"Django предполагает, что все базы данных используют UTF-8. Использование "
+"другой кодировки может привести к неожиданному поведению, например ошибке "
+"\"value too long\", в то время, как данные правильны для Django. Смотрите "
+"ниже как настраивать различные базы данных."
 
 # 31727228b1a14d3f8a1b0187c5124f7f
 #: ../../ref/databases.txt:93
 msgid "PostgreSQL notes"
-msgstr ""
+msgstr "PostgreSQL"
 
 #: ../../ref/databases.txt:95
 msgid ""
@@ -179,37 +233,42 @@ msgid ""
 "`psycopg2`_ 2.4.5 or higher (or 2.5+ if you want to use :mod:`django.contrib."
 "postgres`)."
 msgstr ""
+"Django поддерживает PostgreSQL 9.0 и выше. Для этого необходимо использовать "
+"`psycopg2`_ 2.4.5 и выше (или 2.5+, если вы хотите использовать :mod:`django."
+"contrib.postgres`)."
 
 #: ../../ref/databases.txt:100
 msgid ""
 "If you're on Windows, check out the unofficial `compiled Windows version`_ "
 "of psycopg2."
 msgstr ""
+"Если вы используете Windows, можете использовать наши неофициальные `сборки "
+"psycopg2 под Windows <http://stickpeople.com/projects/python/win-psycopg/>`_."
 
 # 30cb07dfaa9044769304574c5423ff7a
 #: ../../ref/databases.txt:106
 msgid "PostgreSQL connection settings"
-msgstr ""
+msgstr "Настройки подключения PostgreSQL"
 
 # f6bc985e1c5c4bb8982405f26ffdb2bd
 #: ../../ref/databases.txt:108
 msgid "See :setting:`HOST` for details."
-msgstr ""
+msgstr "Смотрите подробности в описании :setting:`HOST`."
 
 # fa1343ffc1fd4b1285b92dd7d1eeef24
 #: ../../ref/databases.txt:111
 msgid "Optimizing PostgreSQL's configuration"
-msgstr ""
+msgstr "Оптимизация настроек PostgreSQL"
 
 # 70f4b63ce6ed45b8b866aa7208562559
 #: ../../ref/databases.txt:113
 msgid "Django needs the following parameters for its database connections:"
-msgstr ""
+msgstr "Django необходимы следующие параметры для подключения:"
 
 # 2b19ed1f91c847c096a397f8cd9c3395
 #: ../../ref/databases.txt:115
 msgid "``client_encoding``: ``'UTF8'``,"
-msgstr ""
+msgstr "``client_encoding``: ``'UTF8'``,"
 
 # d113d6f064f646a0940e70371ea5bb85
 #: ../../ref/databases.txt:116
@@ -217,6 +276,8 @@ msgid ""
 "``default_transaction_isolation``: ``'read committed'`` by default, or the "
 "value set in the connection options (see below),"
 msgstr ""
+"``default_transaction_isolation``: ``'read committed'`` по умолчанию, или "
+"значение их параметров подключения (смотрите ниже),"
 
 # bb1a61da0b2247049fa41ec346077b70
 #: ../../ref/databases.txt:118
@@ -224,6 +285,8 @@ msgid ""
 "``timezone``: ``'UTC'`` when :setting:`USE_TZ` is ``True``, value of :"
 "setting:`TIME_ZONE` otherwise."
 msgstr ""
+"``timezone``: ``'UTC'`` если :setting:`USE_TZ` равно ``True``, иначе "
+"значение :setting:`TIME_ZONE`."
 
 # 53031fc87a8d4a9081a7bc49a881781d
 #: ../../ref/databases.txt:121
@@ -233,6 +296,10 @@ msgid ""
 "configure them directly in :file:`postgresql.conf` or more conveniently per "
 "database user with `ALTER ROLE`_."
 msgstr ""
+"Если эти параметры уже содержат правильные значения, Django не будет "
+"устанавливать их при каждом запросе, что немного улучшит производительность. "
+"Вы можете настроить их непосредственно в :file:`postgresql.conf`, или для "
+"каждой базы данных отдельно, используя `ALTER ROLE`_."
 
 # 1e9064acf32a4bf28f4b32d6f808b31e
 #: ../../ref/databases.txt:126
@@ -240,11 +307,13 @@ msgid ""
 "Django will work just fine without this optimization, but each new "
 "connection will do some additional queries to set these parameters."
 msgstr ""
+"Django отлично работает и без этой оптимизации, но для каждого соединения "
+"будут выполняться дополнительные запросы для установки параметров."
 
 # 58d9120a9ab946dab447997bec4d3d71
 #: ../../ref/databases.txt:134
 msgid "Isolation level"
-msgstr ""
+msgstr "Уровень изоляции транзакций "
 
 # ceaa25f82ad04fa5a3df935b7ab437f5
 #: ../../ref/databases.txt:136
@@ -254,6 +323,11 @@ msgid ""
 "``SERIALIZABLE``, set it in the :setting:`OPTIONS` part of your database "
 "configuration in :setting:`DATABASES`::"
 msgstr ""
+"Как и в PostgreSQL, Django по умолчанию использует ``READ COMMITTED`` "
+"`уровень изоляции транзакций <http://www.postgresql.org/docs/current/static/"
+"transaction-iso.html>`_. Если вам нужен более высокий уровень изоляции, "
+"такой как ``REPEATABLE READ`` или ``SERIALIZABLE``, укажите его в "
+"параметрах :setting:`OPTIONS` настройки :setting:`DATABASES`::"
 
 # 98316c189010436b9120dc94ca60d115
 #: ../../ref/databases.txt:152
@@ -262,11 +336,14 @@ msgid ""
 "exceptions raised on serialization failures. This option is designed for "
 "advanced uses."
 msgstr ""
+"На более высоком уровне изоляции транзакций ваше приложение должно быть "
+"готовым обрабатывать исключения, которые могут возникнуть при сериализации. "
+"Этот параметр предназначен для опытных пользователей."
 
 # ccb30563456c40e6a87d40e2e826147e
 #: ../../ref/databases.txt:159
 msgid "Indexes for ``varchar`` and ``text`` columns"
-msgstr ""
+msgstr "Индексы для колонок ``varchar`` и ``text``"
 
 # d0ff741e979b4bcdb0abe3e6963d5f9a
 #: ../../ref/databases.txt:161
