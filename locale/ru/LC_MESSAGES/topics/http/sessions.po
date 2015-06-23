@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2015-06-19 14:18+0300\n"
+"PO-Revision-Date: 2015-06-23 16:04+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -266,7 +266,7 @@ msgstr ""
 # ec6d49c050d14dab948b1e5a2006f153
 #: ../../topics/http/sessions.txt:117
 msgid "Using cookie-based sessions"
-msgstr ""
+msgstr "Хранение сессии в куках"
 
 # a71aee354b404ba78c0085841f93336f
 #: ../../topics/http/sessions.txt:119
@@ -276,6 +276,10 @@ msgid ""
 "will be stored using Django's tools for :doc:`cryptographic signing </topics/"
 "signing>` and the :setting:`SECRET_KEY` setting."
 msgstr ""
+"Чтобы хранить сессию в куках, укажите ``\"django.contrib.sessions.backends."
+"signed_cookies\"`` в :setting:`SESSION_ENGINE`. Данные сессии будут "
+"сохранены в куках, используя :doc:`криптографическую подпись </topics/"
+"signing>` и значение :setting:`SECRET_KEY`."
 
 # e4e33c4a7d394892951f30b90445c176
 #: ../../topics/http/sessions.txt:126
@@ -283,6 +287,8 @@ msgid ""
 "It's recommended to leave the :setting:`SESSION_COOKIE_HTTPONLY` setting on "
 "``True`` to prevent access to the stored data from JavaScript."
 msgstr ""
+"Рекомендуем указать ``True`` в :setting:`SESSION_COOKIE_HTTPONLY`, чтобы "
+"запретить доступ JavaScript к кукам."
 
 # dc29c0b2da724a54b8a5e6da1293ed86
 #: ../../topics/http/sessions.txt:131
@@ -291,6 +297,9 @@ msgid ""
 "`~django.contrib.sessions.serializers.PickleSerializer`, **this can lead to "
 "arbitrary remote code execution.**"
 msgstr ""
+"**Если SECRET_KEY не хранить в безопасности при использовании** :class:"
+"`~django.contrib.sessions.serializers.PickleSerializer`, **можно пострадать "
+"от атаки удаленного выполнения кода.**"
 
 # d1def1eeef864f1ba07714b6b4d2ca01
 #: ../../topics/http/sessions.txt:135
@@ -299,6 +308,9 @@ msgid ""
 "falsified session data, which your site will trust, but also remotely "
 "execute arbitrary code, as the data is serialized using pickle."
 msgstr ""
+"Злоумышленник, узнав :setting:`SECRET_KEY`, может не только подделать данные "
+"сессии, но и выполнить удаленный код т.к. данные сессии используют "
+"``pickle``."
 
 # 963d45f876e541759b9405b6d9e5e86a
 #: ../../topics/http/sessions.txt:139
@@ -307,17 +319,19 @@ msgid ""
 "always kept completely secret, for any system which might be remotely "
 "accessible."
 msgstr ""
+"Если вы храните сессию в куках, храните ваш секретный ключ максимально "
+"надежно для всех систем, которые используются пользователем."
 
 # 765d44ef14c845b8bec8f40d40222af8
 #: ../../topics/http/sessions.txt:143
 msgid "**The session data is signed but not encrypted**"
-msgstr ""
+msgstr "**Сессионные данные подписаны, но не закодированы**"
 
 # ac3c5ffc3099406e806349f7c0306e95
 #: ../../topics/http/sessions.txt:145
 msgid ""
 "When using the cookies backend the session data can be read by the client."
-msgstr ""
+msgstr "Клиент может прочитать данные сессии, если вы храните их в куках."
 
 # 88580d3985de4e8ebafcf77e91a2e152
 #: ../../topics/http/sessions.txt:147
@@ -329,11 +343,18 @@ msgid ""
 "drops data. Even though Django compresses the data, it's still entirely "
 "possible to exceed the `common limit of 4096 bytes`_ per cookie."
 msgstr ""
+"MAC (Message Authentication Code) используется для защиты данных от подделки "
+"пользователем. Данные будут недействительными, если пользователь попытается "
+"их поменять. Аналогичное происходит, если клиент, который хранит коки "
+"(например, браузер пользователя), не может сохранить сессионную куку и "
+"удаляет её. Несмотря на то , что Django сжимает данные, вполне возможно "
+"превысить `принятый лимит 4096 байтов <http://tools.ietf.org/html/"
+"rfc2965#section-5.3>`_ на куку."
 
 # 8babd9d0353d441b9de97e0ffdb67643
 #: ../../topics/http/sessions.txt:154
 msgid "**No freshness guarantee**"
-msgstr ""
+msgstr "**Актуальность не гарантируется**"
 
 # b5ff074bb3854c1dbaaf7e4de2a0402e
 #: ../../topics/http/sessions.txt:156
@@ -351,11 +372,23 @@ msgid ""
 "detected as 'stale' if they are older than your :setting:"
 "`SESSION_COOKIE_AGE`."
 msgstr ""
+"Обратите внимание, хотя MAC может гарантировать авторизацию данных (что они "
+"были созданы вашим сайтом, а не кем-то другим), и целостность данных (данные "
+"не менялись и правильны), он не может гарантировать актуальность, то есть, "
+"что полученные данные последние, которые вы отсылали клиенту. Это означает, "
+"что при определенном использовании кук для сессии, ваш сайт может быть "
+"подвержен `replay атакам <https://en.wikipedia.org/wiki/Replay_attack>`_. В "
+"отличии от других бэкендов сессии, которые хранят данные на сервере и "
+"очищают их при выходе пользователя(log out), сессия в куках не очищается, "
+"когда пользователь выходит. По этому, если атакующий украдет куки "
+"пользователя, он может использовать их для входа даже после того, как "
+"пользователь вышел с сайта. Куки будут определены как устаревшие, если "
+"только они старее чем :setting:`SESSION_COOKIE_AGE`."
 
 # 877067e332ba49499ed9886106965f07
 #: ../../topics/http/sessions.txt:169
 msgid "**Performance**"
-msgstr ""
+msgstr "**Производительность**"
 
 # 66e767b8fc8e4ab6b19270da57d0b20d
 #: ../../topics/http/sessions.txt:171
@@ -363,11 +396,13 @@ msgid ""
 "Finally, the size of a cookie can have an impact on the `speed of your "
 "site`_."
 msgstr ""
+"Наконец, размер кук может повлиять на `производительность вашего сайта "
+"<http://yuiblog.com/blog/2007/03/01/performance-research-part-3/>`_."
 
 # 13ab0d8b75c44e1b9784ebe9712b04fe
 #: ../../topics/http/sessions.txt:178
 msgid "Using sessions in views"
-msgstr ""
+msgstr "Использование сессии в представлениях"
 
 # ef8b221dd11c4c6190ded0c867b57e7c
 #: ../../topics/http/sessions.txt:180
@@ -376,6 +411,9 @@ msgid ""
 "HttpRequest` object -- the first argument to any Django view function -- "
 "will have a ``session`` attribute, which is a dictionary-like object."
 msgstr ""
+"Когда ``SessionMiddleware`` активный, каждый объект :class:`~django.http."
+"HttpRequest` -- первый аргумент представления в Django -- будет содержать "
+"атрибут ``session``, который является объектом с интерфейсом словаря."
 
 # e4c121c3c3f24fb3b13826454803afbd
 #: ../../topics/http/sessions.txt:184
@@ -383,6 +421,8 @@ msgid ""
 "You can read it and write to ``request.session`` at any point in your view. "
 "You can edit it multiple times."
 msgstr ""
+"Вы можете читать и менять ``request.session`` в любом месте вашего "
+"представления множество раз."
 
 # 67a9e8d90959478a929deae5617ead30
 #: ../../topics/http/sessions.txt:189
@@ -390,16 +430,18 @@ msgid ""
 "This is the base class for all session objects. It has the following "
 "standard dictionary methods:"
 msgstr ""
+"Это базовый класс для всех объектов сессии. Он предоставляет набор "
+"стандартных методов словаря:"
 
 # 3bfee16658294a44bcab35d7f5815b1f
 #: ../../topics/http/sessions.txt:194
 msgid "Example: ``fav_color = request.session['fav_color']``"
-msgstr ""
+msgstr "Например: ``fav_color = request.session['fav_color']``"
 
 # d0c9eda3986b45ca8c72f746fcc39f3a
 #: ../../topics/http/sessions.txt:198
 msgid "Example: ``request.session['fav_color'] = 'blue'``"
-msgstr ""
+msgstr "Например: ``request.session['fav_color'] = 'blue'``"
 
 # 36f35854ef5e4137a412901815b1a6c9
 #: ../../topics/http/sessions.txt:202
@@ -407,26 +449,28 @@ msgid ""
 "Example: ``del request.session['fav_color']``. This raises ``KeyError`` if "
 "the given ``key`` isn't already in the session."
 msgstr ""
+"Например: ``del request.session['fav_color']``. Вызовет ``KeyError``, если "
+"``key`` еще не в сессии."
 
 # 535d1742591c46d2aa9097f7bdd173b6
 #: ../../topics/http/sessions.txt:207
 msgid "Example: ``'fav_color' in request.session``"
-msgstr ""
+msgstr "Например: ``'fav_color' in request.session``"
 
 # ac83c967b4dd4918b7e50785e53ec27e
 #: ../../topics/http/sessions.txt:211
 msgid "Example: ``fav_color = request.session.get('fav_color', 'red')``"
-msgstr ""
+msgstr "Например: ``fav_color = request.session.get('fav_color', 'red')``"
 
 # b7477f9200f7482798479175e49e824e
 #: ../../topics/http/sessions.txt:215
 msgid "Example: ``fav_color = request.session.pop('fav_color')``"
-msgstr ""
+msgstr "Например: ``fav_color = request.session.pop('fav_color')``"
 
 # c5c489a63e4d4ff79c8e8691acb1d969
 #: ../../topics/http/sessions.txt:225
 msgid "It also has these methods:"
-msgstr ""
+msgstr "Также содержит следующие методы:"
 
 #: ../../topics/http/sessions.txt:229
 msgid ""
@@ -435,6 +479,9 @@ msgid ""
 "can't be accessed again from the user's browser (for example, the :func:"
 "`django.contrib.auth.logout()` function calls it)."
 msgstr ""
+"Удаляет данные текущей сессии и сессионную куку. Можно использовать, если "
+"необходимо убедиться, что старые данные не доступны с браузера пользователя "
+"(например, функция :func:`django.contrib.auth.logout()` вызывает этот метод)."
 
 #: ../../topics/http/sessions.txt:236
 msgid ""
@@ -442,6 +489,8 @@ msgid ""
 "the behavior was to regenerate the session key value that was sent back to "
 "the user in the cookie."
 msgstr ""
+"Удаление сессионной куки было добавлено в Django 1.8. Ранее значение "
+"сессионной куки менялось и отправлялось пользователю в куках."
 
 # 2cf57ca83d7d4f98bafaefaff401d13c
 #: ../../topics/http/sessions.txt:242
@@ -450,6 +499,10 @@ msgid ""
 "Due to the way cookies work, you won't be able to test this until the user's "
 "next page request. See `Setting test cookies`_ below for more information."
 msgstr ""
+"Устанавливает тестовую куку, чтобы проверить, что браузер пользователя "
+"поддерживает куки. Из-за особенностей работы кук вы не сможете проверить "
+"тестовую куку, пока пользователь не запросит следующую страницу. Подробности "
+"смотрите ниже(FIXME)."
 
 # ef3c3d4e97ea41338773ff3678db7e97
 #: ../../topics/http/sessions.txt:249
@@ -459,11 +512,15 @@ msgid ""
 "to call ``set_test_cookie()`` on a previous, separate page request. See "
 "`Setting test cookies`_ below for more information."
 msgstr ""
+"Возвращает ``True`` или ``False``, в зависимости от того, принял ли бразуер "
+"пользователя тестовую куку. Из-за особенностей работы кук вам необходимо "
+"вызывать в предыдущем запросе ``set_test_cookie()``. Подробности смотрите "
+"ниже(FIXME)."
 
 # 4f4f255474d0466f920b2396ad778cbd
 #: ../../topics/http/sessions.txt:256
 msgid "Deletes the test cookie. Use this to clean up after yourself."
-msgstr ""
+msgstr "Удаляет тестовую куку. Используйте, чтобы убрать за собой."
 
 # 18ff3eca427c4999bbc8d417a510ae00
 #: ../../topics/http/sessions.txt:260

@@ -6,11 +6,14 @@ import sys
 import os
 from git import Repo
 from spelling_filters import IgnoreEnglishFilter
+from datetime import datetime
 
 repo = Repo('.')
+commit = repo.commit()
 
 html_context = {
-    'git_commit': str(repo.commit()),
+    'git_commit': str(commit),
+    'git_commit_date': datetime.fromtimestamp(commit.committed_date),
     'git_branch': str(repo.active_branch)
 }
 

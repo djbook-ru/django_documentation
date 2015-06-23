@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2015-06-22 17:39+0300\n"
+"PO-Revision-Date: 2015-06-23 14:49+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -613,6 +613,11 @@ msgid ""
 "while sending the message will be quashed. An empty list of recipients will "
 "not raise an exception."
 msgstr ""
+"``send(fail_silently=False)`` отправляет письмо. Если при создании объекта "
+"указали подключение, оно будет использоваться. Иначе будет создан экземпляр "
+"бэкенда для отправки почты по умолчанию. Если ``fail_silently`` равен "
+"``True``, все ошибки будут проигнорированы. Пустой список получателей не "
+"вызывает исключение."
 
 # 31c6484d511e42b38c88a006f510cbaf
 #: ../../topics/email.txt:303
@@ -624,6 +629,11 @@ msgid ""
 "probably want to override this method to put the content you want into the "
 "MIME object."
 msgstr ""
+"``message()`` создает объект ``django.core.mail.SafeMIMEText`` (дочерний "
+"класс ``email.MIMEText.MIMEText``), или ``django.core.mail."
+"SafeMIMEMultipart``, который содержит письмо для отправки. Если вам "
+"понадобиться переопределить класс :class:`~django.core.mail.EmailMessage`, "
+"скорее всего вы переопределите этот метод, чтобы изменить MIME объект."
 
 # 8805e477883e484688b1b51260e1431d
 #: ../../topics/email.txt:310
@@ -635,6 +645,11 @@ msgid ""
 "sent. If you add another way to specify recipients in your class, they need "
 "to be returned from this method as well."
 msgstr ""
+"``recipients()`` возвращает список всех получателей письма из атрибутов "
+"``to``, ``cc``, или ``bcc``. Вам может понадобиться переопределить этот "
+"метод, т.к. SMTP серверу необходимо указать список всех получателей. Если вы "
+"добавите новый способ указывать получателей, они должны возвращаться этим "
+"методом."
 
 # d7a2b97b323b4281b64b1e677c0d1965
 #: ../../topics/email.txt:317
@@ -642,6 +657,8 @@ msgid ""
 "``attach()`` creates a new file attachment and adds it to the message. There "
 "are two ways to call ``attach()``:"
 msgstr ""
+"``attach()`` создает новый вложенный файл и добавляет его к письму. Есть два "
+"способа вызвать ``attach()``:"
 
 # 9bdcb32558e44d71b420a26a1ae6806d
 #: ../../topics/email.txt:320
@@ -649,6 +666,8 @@ msgid ""
 "You can pass it a single argument that is an ``email.MIMEBase.MIMEBase`` "
 "instance. This will be inserted directly into the resulting message."
 msgstr ""
+"Можно передать экземпляр ``email.MIMEBase.MIMEBase``. Он будет добавлен "
+"непосредственно в письмо."
 
 # 46b09cfa02824f0cb5be061659d885c9
 #: ../../topics/email.txt:324
@@ -660,6 +679,10 @@ msgid ""
 "type for the attachment. If you omit ``mimetype``, the MIME content type "
 "will be guessed from the filename of the attachment."
 msgstr ""
+"Можно передать три аргумента: ``filename``, ``content`` и ``mimetype``. "
+"``filename`` -- название файла, ``content`` -- содержимое файла, "
+"``mimetype`` -- необязательный MIME тип файла. Если вы не укажите "
+"``mimetype``, он будет построен по названию файла."
 
 # 47beea0e04d546d9ae06532a5cc996fe
 #: ../../topics/email.txt:338
@@ -667,6 +690,8 @@ msgid ""
 "If you specify a ``mimetype`` of ``message/rfc822``, it will also accept :"
 "class:`django.core.mail.EmailMessage` and :py:class:`email.message.Message`."
 msgstr ""
+"Если вы укажите ``message/rfc822`` в ``mimetype``, можно передать :class:"
+"`django.core.mail.EmailMessage` и :py:class:`email.message.Message`."
 
 # cf70863b681a4bbdb903f1c591803044
 #: ../../topics/email.txt:341
@@ -675,6 +700,9 @@ msgid ""
 "in violation of :rfc:`2046#section-5.2.1`, which can cause issues with "
 "displaying the attachments in `Evolution`__ and `Thunderbird`__."
 msgstr ""
+"Также ``message/rfc822`` вложение не будет base64-кодировано в нарушение :"
+"rfc:`2046#section-5.2.1`, что может привести к проблемам с отображением "
+"вложений в `Evolution`__ и `Thunderbird`__."
 
 # ee01fb625bd74c3197a69962e720af95
 #: ../../topics/email.txt:348
@@ -684,6 +712,10 @@ msgid ""
 "MIME type to use for the attachment. If the MIME type is omitted, it will be "
 "guessed from the filename. The simplest use would be::"
 msgstr ""
+"``attach_file()`` создает новое вложения, используя файл с файловой системы. "
+"Вызовите, указав путь к файлу. Опционально можно указать MIME тип вложения. "
+"Если вы не укажите ``mimetype``, он будет построен по названию файла. Самый "
+"простой пример использования::"
 
 # b2540a9d8f5c41b1abad8c41dae12d6b
 #: ../../topics/email.txt:356
