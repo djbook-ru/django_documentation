@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2015-06-23 14:49+0300\n"
+"PO-Revision-Date: 2015-06-24 13:13+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -720,7 +720,7 @@ msgstr ""
 # b2540a9d8f5c41b1abad8c41dae12d6b
 #: ../../topics/email.txt:356
 msgid "Sending alternative content types"
-msgstr ""
+msgstr "Отправка содержимого разного типа"
 
 # cf52be0973144bb096d1d56d34ad88a4
 #: ../../topics/email.txt:358
@@ -734,11 +734,19 @@ msgid ""
 "the class initialization) are inherited directly from :class:`~django.core."
 "mail.EmailMessage`."
 msgstr ""
+"Вам может понадобиться отправлять сообщение в нескольких версиях. "
+"Классический пример отправлять HTML и текстовую версию сообщения. Django "
+"позволяет делать это, используя класс ``EmailMultiAlternatives``. Это "
+"дочерний класс :class:`~django.core.mail.EmailMessage` с методом "
+"``attach_alternative()``, которые добавляет дополнительную версию сообщения "
+"в письмо. Все остальные методы (включая конструктор) наследуются "
+"непосредственно от :class:`~django.core.mail.EmailMessage`."
 
 # 73f35b4fd3bd4d55875ce3e30429565c
 #: ../../topics/email.txt:366
 msgid "To send a text and HTML combination, you could write::"
 msgstr ""
+"Чтобы отправить и текстовое, и HTML сообщение, используйте следующий код::"
 
 # 1f9b4c3faf2e4658bfd636264092d24a
 #: ../../topics/email.txt:377
@@ -752,30 +760,37 @@ msgid ""
 "class to change the main content type. The major type will always be ``\"text"
 "\"``, but you can change the subtype. For example::"
 msgstr ""
+"По умолчанию  MIME-тип параметра ``body`` в :class:`~django.core.mail."
+"EmailMessage` равен ``\"text/plain\"``. Лучше не менять это значение, это "
+"гарантирует, что получатель сможет прочитать сообщение любым почтовым "
+"клиентом. Однако, если вы уверены, что получатель может принимать различные "
+"типа сообщений, вы можете использовать атрибут ``content_subtype`` класса :"
+"class:`~django.core.mail.EmailMessage`. Основной тип будет всегда ``\"text"
+"\"``, но вы можете поменять подтип. Например::"
 
 # 3b6929716b1945699aa60c1babd88fa6
 #: ../../topics/email.txt:394
 msgid "Email backends"
-msgstr ""
+msgstr "Бэкенды для отправки электронной почты"
 
 # 7159e68563284731b94c2ce298bd65ed
 #: ../../topics/email.txt:396
 msgid "The actual sending of an email is handled by the email backend."
-msgstr ""
+msgstr "Непосредственная отправка электронного письма происходит в бэкенде."
 
 # 36262a789c9348bb9d1dc5f82b724bc5
 #: ../../topics/email.txt:398
 msgid "The email backend class has the following methods:"
-msgstr ""
+msgstr "Бэкенд содержит следующие методы:"
 
 #: ../../topics/email.txt:400
 msgid "``open()`` instantiates a long-lived email-sending connection."
-msgstr ""
+msgstr "``open()`` создает длительное соединение."
 
 # 838ace8dd94f4feaaf7e6dd5d7c5a2a2
 #: ../../topics/email.txt:402
 msgid "``close()`` closes the current email-sending connection."
-msgstr ""
+msgstr "``close()`` закрывает текущее соединение."
 
 # 7514861be16e494bba3ed5aa6a9e875b
 #: ../../topics/email.txt:404
@@ -785,21 +800,27 @@ msgid ""
 "implicitly open the connection, and close the connection afterwards. If the "
 "connection is already open, it will be left open after mail has been sent."
 msgstr ""
+"``send_messages(email_messages)`` отправляет список объектов :class:`~django."
+"core.mail.EmailMessage`. Если нет открытого соединения, оно будет создано и "
+"закрыто после отправки. Если соединение уже открыто, оно останется открытым "
+"после отправки."
 
 #: ../../topics/email.txt:410
 msgid ""
 "It can also be used as a context manager, which will automatically call "
 "``open()`` and ``close()`` as needed::"
 msgstr ""
+"Может использоваться как контекстный менеджер, автоматически вызывая "
+"``open()`` и ``close()`` при необходимости::"
 
 #: ../../topics/email.txt:423
 msgid "The context manager protocol was added."
-msgstr ""
+msgstr "Был добавлен протокол контекстного менеджера."
 
 # adbcc82e310e4c89b28b911e2de4cce2
 #: ../../topics/email.txt:426
 msgid "Obtaining an instance of an email backend"
-msgstr ""
+msgstr "Получаем экземпляр бэкенда для отправки электронной почты"
 
 # 3ae46ac24ecf476ea61f812a62e7cf8a
 #: ../../topics/email.txt:428
@@ -807,6 +828,8 @@ msgid ""
 "The :meth:`get_connection` function in ``django.core.mail`` returns an "
 "instance of the email backend that you can use."
 msgstr ""
+"Функция :meth:`get_connection` из ``django.core.mail`` возвращает экземпляр "
+"бэкенда для отправки почты, который вы можете использовать."
 
 # a7c2b90fd3d14d988891c2d151391f98
 #: ../../topics/email.txt:435
@@ -815,6 +838,9 @@ msgid ""
 "email backend specified in :setting:`EMAIL_BACKEND`. If you specify the "
 "``backend`` argument, an instance of that backend will be instantiated."
 msgstr ""
+"По умолчанию вызов ``get_connection()`` вернет экземпляр бэкенда, указанного "
+"в :setting:`EMAIL_BACKEND`. Если указать аргумент ``backend``, будет создан "
+"указанный бэкенд."
 
 # 2c8a5735139846a3a5aadd4542747f89
 #: ../../topics/email.txt:439
@@ -823,6 +849,9 @@ msgid ""
 "errors. If ``fail_silently`` is True, exceptions during the email sending "
 "process will be silently ignored."
 msgstr ""
+"Аргумент ``fail_silently`` указывает как обрабатывать ошибки. Если "
+"``fail_silently`` равен ``True``, ошибки, которые возникли при оправке "
+"почты, будут проигнорированы."
 
 # 84e27676d42f40d58abb4ad2a4d26f60
 #: ../../topics/email.txt:443
@@ -830,6 +859,7 @@ msgid ""
 "All other arguments are passed directly to the constructor of the email "
 "backend."
 msgstr ""
+"Все остальные аргументы передаются непосредственно в конструктор бэкенда."
 
 # 931fa096b4794a3095ee2ed247cbb162
 #: ../../topics/email.txt:446
@@ -839,11 +869,14 @@ msgid ""
 "testing and development. If you have special email sending requirements, you "
 "can :ref:`write your own email backend <topic-custom-email-backend>`."
 msgstr ""
+"Django предоставляет несколько бэкендов. Эти бэкенды, кроме SMTP (который "
+"используется по умолчанию), полезны только при разработке или тестировании. "
+"Вы можете создать :ref:`собственный бэкенд <topic-custom-email-backend>`."
 
 # 64244a684ad94295be5ce4a85ce2fc01
 #: ../../topics/email.txt:454
 msgid "SMTP backend"
-msgstr ""
+msgstr "SMTP бэкенд"
 
 #: ../../topics/email.txt:458
 msgid ""
@@ -854,6 +887,12 @@ msgid ""
 "setting:`EMAIL_TIMEOUT`, :setting:`EMAIL_SSL_CERTFILE` and :setting:"
 "`EMAIL_SSL_KEYFILE` settings in your settings file."
 msgstr ""
+"Это бэкенд по умолчанию. Почта отправляется через SMTP сервер. Адрес сервера "
+"и параметры авторизации указаны в настройках :setting:`EMAIL_HOST`, :setting:"
+"`EMAIL_PORT`, :setting:`EMAIL_HOST_USER`, :setting:`EMAIL_HOST_PASSWORD`, :"
+"setting:`EMAIL_USE_TLS`, :setting:`EMAIL_USE_SSL`, :setting:"
+"`EMAIL_TIMEOUT`, :setting:`EMAIL_SSL_CERTFILE` и :setting:"
+"`EMAIL_SSL_KEYFILE`."
 
 # c903e1fc9247454b81156f17d832fb46
 #: ../../topics/email.txt:466
@@ -861,6 +900,8 @@ msgid ""
 "The SMTP backend is the default configuration inherited by Django. If you "
 "want to specify it explicitly, put the following in your settings::"
 msgstr ""
+"SMTP бэкенд используется в Django по умолчанию. Если вы хотите указать его "
+"явно, добавьте в настройки::"
 
 #: ../../topics/email.txt:473
 msgid ""
@@ -868,6 +909,9 @@ msgid ""
 "will be the one provided by :func:`socket.getdefaulttimeout()`, which "
 "defaults to ``None`` (no timeout)."
 msgstr ""
+"Был добавлен параметр ``timeout``. Если ``timeout`` не указан, будет "
+"использоваться результат :func:`socket.getdefaulttimeout()`, который по "
+"умолчанию ``None`` (без \"таймаута\")."
 
 #: ../../topics/email.txt:480
 msgid ""
@@ -875,11 +919,14 @@ msgid ""
 "settings were added. The ability to customize ``timeout`` using a setting (:"
 "setting:`EMAIL_TIMEOUT`) was added."
 msgstr ""
+"Были добавлены параметры ``ssl_keyfile`` и ``ssl_certfile``, и "
+"соответствующие настройки. Была добавлен возможность изменить ``timeout`` в "
+"настройке :setting:`EMAIL_TIMEOUT`."
 
 # f748655bc93e4df1b7fd35b2ce517bca
 #: ../../topics/email.txt:487
 msgid "Console backend"
-msgstr ""
+msgstr "Консольный бэкенд"
 
 # 3fce583a406e40d992209503b407ca63
 #: ../../topics/email.txt:489
@@ -889,6 +936,9 @@ msgid ""
 "backend writes to ``stdout``. You can use a different stream-like object by "
 "providing the ``stream`` keyword argument when constructing the connection."
 msgstr ""
+"Вместо отправки письма, бэкенд выведет его в стандартный вывод. По умолчанию "
+"консольный синдром пишет в ``stdout``. Вы можете использовать объекты-"
+"потоки, указав параметр ``stream`` при создании соединения."
 
 # 688dff80d01a43adbbc6fd5441e76e0e
 # c4f595a234624747b3e3dbe64c66be09
@@ -896,7 +946,7 @@ msgstr ""
 #: ../../topics/email.txt:494 ../../topics/email.txt:512
 #: ../../topics/email.txt:531
 msgid "To specify this backend, put the following in your settings::"
-msgstr ""
+msgstr "Чтобы указать этот бэкенд, добавьте следующее в настройки::"
 
 # a5b7f3e3ecfa43de9fae190164a246de
 # a622dd792123415887cad0bf6d13cac8
@@ -907,11 +957,13 @@ msgid ""
 "This backend is not intended for use in production -- it is provided as a "
 "convenience that can be used during development."
 msgstr ""
+"Этот бэкенд не следует использовать на боевом сервере, он создавался для "
+"разработки."
 
 # ad7fbec6a01b41bbac34d090d8ad5a99
 #: ../../topics/email.txt:504
 msgid "File backend"
-msgstr ""
+msgstr "Файловый бэкенд"
 
 # f156debf874148b19f7b7e1d3148a3c9
 #: ../../topics/email.txt:506
@@ -922,11 +974,15 @@ msgid ""
 "the ``file_path`` keyword when creating a connection with :meth:`~django."
 "core.mail.get_connection`."
 msgstr ""
+"Этот бэкенд пишет почту в файл. Новый файл создается при создании новой "
+"сессии этого бэкенда. Каталог, в котором создаются файлы, берется из "
+"настройки :setting:`EMAIL_FILE_PATH` или параметра ``file_path``, который "
+"передали при создании соединения :meth:`~django.core.mail.get_connection`."
 
 # c6605d3ae9ba4ef489a168e39a150535
 #: ../../topics/email.txt:523
 msgid "In-memory backend"
-msgstr ""
+msgstr "Бэкенд в памяти"
 
 # aeb9ae54e5d84a5e95675fb541b26f39
 #: ../../topics/email.txt:525
@@ -936,6 +992,10 @@ msgid ""
 "first message is sent. It's a list with an :class:`~django.core.mail."
 "EmailMessage` instance for each message that would be sent."
 msgstr ""
+"Бэкенд ``'locmem'`` сохраняет почту в специальном атрибуте модуля ``django."
+"core.mail``. Атрибут ``outbox`` создается при первой отправке письма. Это "
+"список экземпляров :class:`~django.core.mail.EmailMessage` отправленных "
+"писем."
 
 # bc8f1881de5f4f6aa8db3b89cd2395b6
 #: ../../topics/email.txt:535
@@ -943,11 +1003,13 @@ msgid ""
 "This backend is not intended for use in production -- it is provided as a "
 "convenience that can be used during development and testing."
 msgstr ""
+"Этот бэкенд не следует использовать на боевом сервере, он создавался для "
+"разработки."
 
 # c45ec957bfc54857b139d3b2b09f34ec
 #: ../../topics/email.txt:541
 msgid "Dummy backend"
-msgstr ""
+msgstr "Dummy бэкенд"
 
 # 5328a73e1f9f4dba9b563bfe9e39f532
 #: ../../topics/email.txt:543
@@ -955,11 +1017,13 @@ msgid ""
 "As the name suggests the dummy backend does nothing with your messages. To "
 "specify this backend, put the following in your settings::"
 msgstr ""
+"Этот бэкенд ничего не делает с почтой. Чтобы указать этот бэкенд, добавьте "
+"следующее в настройки::"
 
 # 51d221066dd44068a6bdcd9d322bb2f3
 #: ../../topics/email.txt:554
 msgid "Defining a custom email backend"
-msgstr ""
+msgstr "Создание собственного бэкенда"
 
 # 96c8ff5d1f564501a19bc59fc13c900b
 #: ../../topics/email.txt:556
@@ -968,6 +1032,9 @@ msgid ""
 "backend. The :setting:`EMAIL_BACKEND` setting in your settings file is then "
 "the Python import path for your backend class."
 msgstr ""
+"Вы можете создать собственный бэкенд для отправки почты. В настройка :"
+"setting:`EMAIL_BACKEND` необходимо указать путь для импорта класса вашего "
+"бэкенда."
 
 # 0721a868259642f1815c5c9dd12978f0
 #: ../../topics/email.txt:560
@@ -981,11 +1048,18 @@ msgid ""
 "the ``open()`` and ``close()`` methods. Refer to ``smtp.EmailBackend`` for a "
 "reference implementation."
 msgstr ""
+"Ваш бэкенд должен наследоваться от ``BaseEmailBackend``, который находится в "
+"модуле ``django.core.mail.backends.base``. Бэкенд должен определить метод "
+"``send_messages(email_messages)``. Этот метод принимает список объектов :"
+"class:`~django.core.mail.EmailMessage` и вернуть список успешно отправленных "
+"писем. Если ваш бэкенд в каком либо виде определяет постоянное подключение, "
+"вам следует определить методы ``open()`` и ``close()``. Примеры реализации "
+"можно найти в исходном коде ``smtp.EmailBackend``."
 
 # 48ba554cf5714fd1bcc268e0daf86d0b
 #: ../../topics/email.txt:572
 msgid "Sending multiple emails"
-msgstr ""
+msgstr "Отправка нескольких писем"
 
 # f434ddd93bec43cfa9618e1f854a2611
 #: ../../topics/email.txt:574
@@ -995,11 +1069,15 @@ msgid ""
 "emails to send, it makes sense to reuse an SMTP connection, rather than "
 "creating and destroying a connection every time you want to send an email."
 msgstr ""
+"Создание и закрытие SMTP-соединения (или любого другого сетевого "
+"подключения) -- это дорогой процесс. Если вам необходимо отправить большое "
+"количество писем, есть смысл использовать одно SMTP-соединения, а не "
+"создавать каждый раз новое."
 
 # 6ee7d02d97f14214a14b91c2c26c9b82
 #: ../../topics/email.txt:579
 msgid "There are two ways you tell an email backend to reuse a connection."
-msgstr ""
+msgstr "Есть два способа указать бэкенду использовать одно подключение."
 
 # 0dff056365294d5eaff2ee306e9cea96
 #: ../../topics/email.txt:581
@@ -1008,6 +1086,9 @@ msgid ""
 "takes a list of :class:`~django.core.mail.EmailMessage` instances (or "
 "subclasses), and sends them all using a single connection."
 msgstr ""
+"Первое, вы можете использовать метод ``send_messages()``. "
+"``send_messages()`` принимает список объектов :class:`~django.core.mail."
+"EmailMessage` (или наследников), и отправляет их, используя одно подключение."
 
 # b18d5218cbef4b9e963f9b476871135f
 #: ../../topics/email.txt:585
@@ -1017,6 +1098,9 @@ msgid ""
 "representing some periodic email you wish to send out, you could send these "
 "emails using a single call to send_messages::"
 msgstr ""
+"Например, если у вас есть функция ``get_notification_email()``, которая "
+"возвращает список объектов :class:`~django.core.mail.EmailMessage`, вы "
+"можете отправить их следующим образом::"
 
 # f9d3ffd70976475f873ab02700e82165
 #: ../../topics/email.txt:595
@@ -1024,6 +1108,8 @@ msgid ""
 "In this example, the call to ``send_messages()`` opens a connection on the "
 "backend, sends the list of messages, and then closes the connection again."
 msgstr ""
+"В этом примере ``send_messages()`` откроет соединение, отправит письма, и "
+"закроет соединение."
 
 # aa7cc6546d4b478c975cd68615505227
 #: ../../topics/email.txt:598
@@ -1034,11 +1120,15 @@ msgid ""
 "manually open the connection, you can control when it is closed. For "
 "example::"
 msgstr ""
+"Второй вариант -- использовать методы ``open()`` и ``close()``, чтобы явно "
+"контролировать соединение. ``send_messages()`` не будет создавать и "
+"закрывать соединение, если оно уже создано. Поэтому, если вы создадите "
+"соединение, вы можете контролировать, когда оно будет закрыто. Например::"
 
 # e17e223f46534fb89bb38084da494c47
 #: ../../topics/email.txt:628
 msgid "Configuring email for development"
-msgstr ""
+msgstr "Настройка почты при разработке"
 
 # 046029227f3c4814ba53c2738e85fbd5
 #: ../../topics/email.txt:630
@@ -1049,6 +1139,10 @@ msgid ""
 "to the right people under the right conditions, and that those emails will "
 "contain the correct content."
 msgstr ""
+"Иногда вы не хотите, чтобы Django отправлял почту Например, при разработке "
+"сайта. Вряд ли вы захотите отправлять тысячи писем, но при этом необходимо "
+"проверить, что код их отправляет правильным получателям с правильным "
+"содержимым."
 
 # 724026d9e865445ca76549bfee4b0109
 #: ../../topics/email.txt:636
@@ -1057,6 +1151,9 @@ msgid ""
 "`console <topic-email-console-backend>` email backend. This backend "
 "redirects all email to stdout, allowing you to inspect the content of mail."
 msgstr ""
+"Самый простой способ настроить почту для разработки -- использовать бэкенд :"
+"ref:`console <topic-email-console-backend>`. Этот бэкенд перенаправляет всю "
+"почту в stdout, позволяя увидеть содержимое писем."
 
 # 1716c985449d47fbba5b2b6def123270
 #: ../../topics/email.txt:640
@@ -1065,6 +1162,8 @@ msgid ""
 "during development -- this backend dumps the contents of every SMTP "
 "connection to a file that can be inspected at your leisure."
 msgstr ""
+"Также можно использовать :ref:`file <topic-email-file-backend>`. Этот бэкенд "
+"сохраняет содержимое каждого SMTP-соединения в файл."
 
 # 4e5477f2b1ce4921bd809497921c5a62
 #: ../../topics/email.txt:644
@@ -1074,6 +1173,9 @@ msgid ""
 "anything. Python has a built-in way to accomplish this with a single "
 "command::"
 msgstr ""
+"Еще один способ -- использовать локальный SMTP-сервер, который принимает "
+"письма и выводит их в консоль, но никуда их не оправляет. Python позволяет "
+"создать такой сервер одной командой::"
 
 # 24e80b69694e4a90a640d3ce304b4935
 #: ../../topics/email.txt:650
@@ -1084,6 +1186,11 @@ msgid ""
 "setting:`EMAIL_PORT` accordingly. For a more detailed discussion of SMTP "
 "server options, see the Python documentation for the :mod:`smtpd` module."
 msgstr ""
+"Эта команда запускает простой SMTP-сервер, который слушает 1025 порт на "
+"localhost. Этот сервер выводит заголовки и содержимое полученных писем в "
+"консоль. Вам необходимо указать в настройках :setting:`EMAIL_HOST` и :"
+"setting:`EMAIL_PORT`. Подробности об этом SMTP-сервер смотрите в "
+"документации Python к модулю :mod:`smtpd`."
 
 # 076a13b5db344733ad3b381398e166d3
 #: ../../topics/email.txt:656
@@ -1092,3 +1199,5 @@ msgid ""
 "application, see the :ref:`topics-testing-email` section of the testing "
 "documentation."
 msgstr ""
+"Информацию об отправке электронной почты при тестировании смотрите в "
+"разделе :ref:`topics-testing-email`."
