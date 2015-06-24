@@ -15,7 +15,7 @@ class Command(GithubCommandMixin, BaseCommand):
     log = logging.getLogger(__name__)
 
     def take_action(self, parsed_args):
-        repo = self.get_repo('Alerion/django_documentation')
+        repo = self.get_repo(self.app.repo_name)
 
         try:
             self.save_to_file({

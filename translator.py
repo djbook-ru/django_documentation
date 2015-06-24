@@ -71,6 +71,7 @@ class TranslatorApp(App):
         self.locale_path = os.path.join(self.doc_path, 'locale', 'ru', 'LC_MESSAGES')
         self.templates_path = os.path.join(self.doc_path, 'djbook', 'templates')
         self.html_path = os.path.join(self.doc_path, '_build', 'html')
+        self.repo_name = 'djbook-ru/django_documentation'
         # sitemap
         self.sitemap_base_url = 'http://djbook.ru/rel%s/' % conf.version
         self.sitemap_priority = '0.8'
