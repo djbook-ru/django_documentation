@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-19 15:06+0200\n"
-"PO-Revision-Date: 2015-06-26 11:55+0300\n"
+"PO-Revision-Date: 2015-07-08 23:13+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -217,7 +217,7 @@ msgstr ""
 # 3e318f095c9a4e76abccec0091250912
 #: ../../ref/contrib/flatpages.txt:108
 msgid "Using the middleware"
-msgstr ""
+msgstr "Использование промежуточного слоя(\"middleware\")"
 
 # e67fdd44cc13496c959c91fbd1217dd9
 #: ../../ref/contrib/flatpages.txt:110
@@ -225,6 +225,8 @@ msgid ""
 "The :class:`~django.contrib.flatpages.middleware.FlatpageFallbackMiddleware` "
 "can do all of the work."
 msgstr ""
+":class:`~django.contrib.flatpages.middleware.FlatpageFallbackMiddleware` "
+"обеспечивает работу статических страниц."
 
 # 47d483552e9c47a490a614f81c27fe19
 #: ../../ref/contrib/flatpages.txt:115
@@ -234,11 +236,15 @@ msgid ""
 "it checks for a flatpage with the given URL with a site ID that corresponds "
 "to the :setting:`SITE_ID` setting."
 msgstr ""
+"Каждый раз, когда приложение Django вызывает 404 ошибку, это промежуточный "
+"слой проверяет базу данных статических страниц на наличие запрашиваемого "
+"URL. Точнее выполняется поиск простой страницы с текущим URL и ID сайта из "
+"настройки :setting:`SITE_ID`."
 
 # 22405b9e6d4b4f7989d0b6a8b1c3a1ea
 #: ../../ref/contrib/flatpages.txt:120
 msgid "If it finds a match, it follows this algorithm:"
-msgstr ""
+msgstr "Если страница найдена:"
 
 # 3fef9474bc5e46c391b624e201926302
 #: ../../ref/contrib/flatpages.txt:122
@@ -246,6 +252,8 @@ msgid ""
 "If the flatpage has a custom template, it loads that template. Otherwise, it "
 "loads the template :file:`flatpages/default.html`."
 msgstr ""
+"Загружается собственный шаблон для страницы, если такой указан, иначе "
+"загружается :file:`flatpages/default.html`."
 
 # a723e23d2fa041cca45651a97bcb36b9
 #: ../../ref/contrib/flatpages.txt:125
@@ -254,6 +262,9 @@ msgid ""
 "the flatpage object. It uses :class:`~django.template.RequestContext` in "
 "rendering the template."
 msgstr ""
+"В шаблон передается одна переменная, ``flatpage``, которая содержит объект "
+"страницы. При рендеринге шаблона используется :class:`~django.template."
+"RequestContext`."
 
 # bcd3846d0b464e79a1974d393d7a6182
 #: ../../ref/contrib/flatpages.txt:130
@@ -262,12 +273,15 @@ msgid ""
 "the :setting:`APPEND_SLASH` setting) if the resulting URL refers to a valid "
 "flatpage. Redirects are permanent (301 status code)."
 msgstr ""
+"Промежуточный слой только добавляет слэш и перенаправляет (проверяя "
+"настройку :setting:`APPEND_SLASH`), если полученный URL указывает на "
+"статическую страницу. Перенаправление постоянные (301 код ответа)."
 
 # 0df71b610d664ef993165c489c17cdff
 #: ../../ref/contrib/flatpages.txt:134
 msgid ""
 "If it doesn't find a match, the request continues to be processed as usual."
-msgstr ""
+msgstr "Если страница не найдена, запрос обрабатывается как обычно."
 
 # 5a28e0aa30f3435292e68a209ad7e6fb
 #: ../../ref/contrib/flatpages.txt:136
@@ -275,11 +289,14 @@ msgid ""
 "The middleware only gets activated for 404s -- not for 500s or responses of "
 "any other status code."
 msgstr ""
+"Промежуточный слой активируется только при 404 ответе, 500 и прочие "
+"игнорируются."
 
 # fa2f0d79b3ab481bbfd2231e05bd24b7
 #: ../../ref/contrib/flatpages.txt:139
 msgid "Flatpages will not apply view middleware"
 msgstr ""
+"К простым страницам не применяется ``process_view`` промежуточных слоев"
 
 # 2d0e0fdfc8ed4435a88498454be45914
 #: ../../ref/contrib/flatpages.txt:141
@@ -290,6 +307,10 @@ msgid ""
 "which are successfully routed to a view via normal URL resolution apply view "
 "middleware."
 msgstr ""
+"Так как ``FlatpageFallbackMiddleware`` применяется после того, как поиск URL-"
+"а провалился и мы получили 404, ответ не будет обрабатываться :ref:`методом "
+"process_view промежуточных слоев <view-middleware>`. Только при успешной "
+"обработке URL-а и вызове представления вызываются эти методы."
 
 # e3e4bf02bed24ac98f5ad0fc4505f232
 #: ../../ref/contrib/flatpages.txt:147
