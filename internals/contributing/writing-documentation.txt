@@ -106,7 +106,7 @@ documentation:
 * **Web**, **World Wide Web**, **the Web** -- note Web is always
   capitalized when referring to the World Wide Web.
 
-* **Web site** -- use two words, with Web capitalized.
+* **website** -- use one word, without capitalization.
 
 Django-specific terminology
 ---------------------------
@@ -192,7 +192,7 @@ __ http://sphinx-doc.org/markup/
 
   To link, use ``:djadminopt:`--traceback```.
 
-* Links to Trac tickets (typically reserved for minor release notes)::
+* Links to Trac tickets (typically reserved for patch release notes)::
 
         :ticket:`12345`
 
@@ -210,7 +210,7 @@ Our policy for new features is:
 
 Our preferred way for marking new features is by prefacing the features'
 documentation with: "``.. versionadded:: X.Y``", followed by a mandatory
-blank line and an optional content (indented).
+blank line and an optional description (indented).
 
 General improvements, or other changes to the APIs that should be emphasized
 should use the "``.. versionchanged:: X.Y``" directive (with the same format
@@ -255,6 +255,21 @@ If a function, attribute, etc. is added, it's also okay to use a
 
 We can simply remove the ``.. versionadded:: A.B`` annotation without any
 indentation changes when the time comes.
+
+Minimizing images
+-----------------
+
+Optimize image compression where possible. For PNG files, use OptiPNG and
+AdvanceCOMP's ``advpng``:
+
+.. code-block:: console
+
+   $ cd docs/
+   $ optipng -o7 -zm1-9 -i0 -strip all `find . -type f -not -path "./_build/*" -name "*.png"`
+   $ advpng -z4 `find . -type f -not -path "./_build/*" -name "*.png"`
+
+This is based on OptiPNG version 0.7.5. Older versions may complain about the
+``--strip all`` option being lossy.
 
 An example
 ----------
@@ -312,14 +327,14 @@ example:
     ADMINS
     ------
 
-    Default: ``()`` (Empty tuple)
+    Default: ``[]`` (Empty list)
 
-    A tuple that lists people who get code error notifications. When
+    A list of all the people who get code error notifications. When
     ``DEBUG=False`` and a view raises an exception, Django will email these people
-    with the full exception information. Each member of the tuple should be a tuple
+    with the full exception information. Each member of the list should be a tuple
     of (Full name, email address). Example::
 
-        (('John', 'john@example.com'), ('Mary', 'mary@example.com'))
+        [('John', 'john@example.com'), ('Mary', 'mary@example.com')]
 
     Note that Django will email *all* of these people whenever an error happens.
     See :doc:`/howto/error-reporting` for more information.
@@ -354,14 +369,6 @@ look better:
         .. method:: File.close()
 
   That is, use metadata instead of titles.
-
-* Add more links -- nearly everything that's an inline code literal
-  right now can probably be turned into a xref.
-
-  See the ``literals_to_xrefs.py`` file in ``_ext`` -- it's a shell script
-  to help do this work.
-
-  This will probably be a continuing, never-ending project.
 
 * Whenever possible, use links. So, use ``:setting:`ADMINS``` instead
   of ````ADMINS````.

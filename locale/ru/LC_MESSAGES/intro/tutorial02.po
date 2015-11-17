@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-02 10:33+0300\n"
+"POT-Creation-Date: 2015-11-17 10:48+0200\n"
 "PO-Revision-Date: 2015-06-05 15:02+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -27,24 +27,572 @@ msgstr "Создаём своё первое приложение с Django, ч�
 
 # ee2059b16d0a4cceb86213baf936f0c4
 #: ../../intro/tutorial02.txt:5
+#, fuzzy
 msgid ""
 "This tutorial begins where :doc:`Tutorial 1 </intro/tutorial01>` left off. "
-"We're continuing the Web-poll application and will focus on Django's "
-"automatically-generated admin site."
+"We'll setup the database, create your first model, and get a quick "
+"introduction to Django's automatically-generated admin site."
 msgstr ""
 "Продолжаем начатое в :doc:`первой части </intro/tutorial01>` учебника. Мы "
 "продолжим разрабатывать приложение для голосования и создадим интерфейс "
 "администратора."
 
+#: ../../intro/tutorial02.txt:10
+msgid "Database setup"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:12
+msgid ""
+"Now, open up :file:`mysite/settings.py`. It's a normal Python module with "
+"module-level variables representing Django settings."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:15
+msgid ""
+"By default, the configuration uses SQLite. If you're new to databases, or "
+"you're just interested in trying Django, this is the easiest choice. SQLite "
+"is included in Python, so you won't need to install anything else to support "
+"your database. When starting your first real project, however, you may want "
+"to use a more robust database like PostgreSQL, to avoid database-switching "
+"headaches down the road."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:22
+msgid ""
+"If you wish to use another database, install the appropriate :ref:`database "
+"bindings <database-installation>` and change the following keys in the :"
+"setting:`DATABASES` ``'default'`` item to match your database connection "
+"settings:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:27
+msgid ""
+":setting:`ENGINE <DATABASE-ENGINE>` -- Either ``'django.db.backends."
+"sqlite3'``, ``'django.db.backends.postgresql'``, ``'django.db.backends."
+"mysql'``, or ``'django.db.backends.oracle'``. Other backends are :ref:`also "
+"available <third-party-notes>`."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:34
+msgid ""
+":setting:`NAME` -- The name of your database. If you're using SQLite, the "
+"database will be a file on your computer; in that case, :setting:`NAME` "
+"should be the full absolute path, including filename, of that file. The "
+"default value, ``os.path.join(BASE_DIR, 'db.sqlite3')``, will store the file "
+"in your project directory."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:40
+msgid ""
+"If you are not using SQLite as your database, additional settings such as :"
+"setting:`USER`, :setting:`PASSWORD`, and :setting:`HOST` must be added. For "
+"more details, see the reference documentation for :setting:`DATABASES`."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:46
+msgid ""
+"If you're using PostgreSQL or MySQL, make sure you've created a database by "
+"this point. Do that with \"``CREATE DATABASE database_name;``\" within your "
+"database's interactive prompt."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:50
+msgid ""
+"If you're using SQLite, you don't need to create anything beforehand - the "
+"database file will be created automatically when it is needed."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:53
+msgid ""
+"While you're editing :file:`mysite/settings.py`, set :setting:`TIME_ZONE` to "
+"your time zone."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:56
+msgid ""
+"Also, note the :setting:`INSTALLED_APPS` setting at the top of the file. "
+"That holds the names of all Django applications that are activated in this "
+"Django instance. Apps can be used in multiple projects, and you can package "
+"and distribute them for use by others in their projects."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:61
+msgid ""
+"By default, :setting:`INSTALLED_APPS` contains the following apps, all of "
+"which come with Django:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:64
+msgid ":mod:`django.contrib.admin` -- The admin site. You'll use it shortly."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:66
+msgid ":mod:`django.contrib.auth` -- An authentication system."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:68
+msgid ":mod:`django.contrib.contenttypes` -- A framework for content types."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:70
+msgid ":mod:`django.contrib.sessions` -- A session framework."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:72
+msgid ":mod:`django.contrib.messages` -- A messaging framework."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:74
+msgid ""
+":mod:`django.contrib.staticfiles` -- A framework for managing static files."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:77
+msgid ""
+"These applications are included by default as a convenience for the common "
+"case."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:79
+msgid ""
+"Some of these applications make use of at least one database table, though, "
+"so we need to create the tables in the database before we can use them. To "
+"do that, run the following command:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:87
+msgid ""
+"The :djadmin:`migrate` command looks at the :setting:`INSTALLED_APPS` "
+"setting and creates any necessary database tables according to the database "
+"settings in your :file:`mysite/settings.py` file and the database migrations "
+"shipped with the app (we'll cover those later). You'll see a message for "
+"each migration it applies. If you're interested, run the command-line client "
+"for your database and type ``\\dt`` (PostgreSQL), ``SHOW TABLES;`` (MySQL), "
+"``.schema`` (SQLite), or ``SELECT TABLE_NAME FROM USER_TABLES;`` (Oracle) to "
+"display the tables Django created."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:0
+msgid "For the minimalists"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:98
+msgid ""
+"Like we said above, the default applications are included for the common "
+"case, but not everybody needs them. If you don't need any or all of them, "
+"feel free to comment-out or delete the appropriate line(s) from :setting:"
+"`INSTALLED_APPS` before running :djadmin:`migrate`. The :djadmin:`migrate` "
+"command will only run migrations for apps in :setting:`INSTALLED_APPS`."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:108
+msgid "Creating models"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:110
+msgid ""
+"Now we'll define your models -- essentially, your database layout, with "
+"additional metadata."
+msgstr ""
+
 # 36bdeba62af8428d8fcd635b28080247
-#: ../../intro/tutorial02.txt:9
+#: ../../intro/tutorial02.txt:0
 msgid "Philosophy"
 msgstr "Философия"
 
-# 8efae26bb46545f3a0a1e0ba7c1714de
-#: ../../intro/tutorial02.txt:11
+#: ../../intro/tutorial02.txt:115
 msgid ""
-"Generating admin sites for your staff or clients to add, change and delete "
+"A model is the single, definitive source of truth about your data. It "
+"contains the essential fields and behaviors of the data you're storing. "
+"Django follows the :ref:`DRY Principle <dry>`. The goal is to define your "
+"data model in one place and automatically derive things from it."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:120
+msgid ""
+"This includes the migrations - unlike in Ruby On Rails, for example, "
+"migrations are entirely derived from your models file, and are essentially "
+"just a history that Django can roll through to update your database schema "
+"to match your current models."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:125
+msgid ""
+"In our simple poll app, we'll create two models: ``Question`` and "
+"``Choice``. A ``Question`` has a question and a publication date. A "
+"``Choice`` has two fields: the text of the choice and a vote tally. Each "
+"``Choice`` is associated with a ``Question``."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:130
+msgid ""
+"These concepts are represented by simple Python classes. Edit the :file:"
+"`polls/models.py` file so it looks like this:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:149
+msgid ""
+"The code is straightforward. Each model is represented by a class that "
+"subclasses :class:`django.db.models.Model`. Each model has a number of class "
+"variables, each of which represents a database field in the model."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:153
+msgid ""
+"Each field is represented by an instance of a :class:`~django.db.models."
+"Field` class -- e.g., :class:`~django.db.models.CharField` for character "
+"fields and :class:`~django.db.models.DateTimeField` for datetimes. This "
+"tells Django what type of data each field holds."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:158
+msgid ""
+"The name of each :class:`~django.db.models.Field` instance (e.g. "
+"``question_text`` or ``pub_date``) is the field's name, in machine-friendly "
+"format. You'll use this value in your Python code, and your database will "
+"use it as the column name."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:163
+msgid ""
+"You can use an optional first positional argument to a :class:`~django.db."
+"models.Field` to designate a human-readable name. That's used in a couple of "
+"introspective parts of Django, and it doubles as documentation. If this "
+"field isn't provided, Django will use the machine-readable name. In this "
+"example, we've only defined a human-readable name for ``Question.pub_date``. "
+"For all other fields in this model, the field's machine-readable name will "
+"suffice as its human-readable name."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:171
+msgid ""
+"Some :class:`~django.db.models.Field` classes have required arguments. :"
+"class:`~django.db.models.CharField`, for example, requires that you give it "
+"a :attr:`~django.db.models.CharField.max_length`. That's used not only in "
+"the database schema, but in validation, as we'll soon see."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:176
+msgid ""
+"A :class:`~django.db.models.Field` can also have various optional arguments; "
+"in this case, we've set the :attr:`~django.db.models.Field.default` value of "
+"``votes`` to 0."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:180
+msgid ""
+"Finally, note a relationship is defined, using :class:`~django.db.models."
+"ForeignKey`. That tells Django each ``Choice`` is related to a single "
+"``Question``. Django supports all the common database relationships: many-to-"
+"one, many-to-many, and one-to-one."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:186
+msgid "Activating models"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:188
+msgid ""
+"That small bit of model code gives Django a lot of information. With it, "
+"Django is able to:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:191
+msgid "Create a database schema (``CREATE TABLE`` statements) for this app."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:192
+msgid ""
+"Create a Python database-access API for accessing ``Question`` and "
+"``Choice`` objects."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:194
+msgid ""
+"But first we need to tell our project that the ``polls`` app is installed."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:198
+msgid ""
+"Django apps are \"pluggable\": You can use an app in multiple projects, and "
+"you can distribute apps, because they don't have to be tied to a given "
+"Django installation."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:202
+msgid ""
+"Edit the :file:`mysite/settings.py` file again, and change the :setting:"
+"`INSTALLED_APPS` setting to include the string ``'polls.apps.PollsConfig'``. "
+"It'll look like this:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:219
+msgid ""
+"Now Django knows to include the ``polls`` app. Let's run another command:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:225
+msgid "You should see something similar to the following:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:235
+msgid ""
+"By running ``makemigrations``, you're telling Django that you've made some "
+"changes to your models (in this case, you've made new ones) and that you'd "
+"like the changes to be stored as a *migration*."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:239
+msgid ""
+"Migrations are how Django stores changes to your models (and thus your "
+"database schema) - they're just files on disk. You can read the migration "
+"for your new model if you like; it's the file ``polls/"
+"migrations/0001_initial.py``. Don't worry, you're not expected to read them "
+"every time Django makes one, but they're designed to be human-editable in "
+"case you want to manually tweak how Django changes things."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:246
+msgid ""
+"There's a command that will run the migrations for you and manage your "
+"database schema automatically - that's called :djadmin:`migrate`, and we'll "
+"come to it in a moment - but first, let's see what SQL that migration would "
+"run. The :djadmin:`sqlmigrate` command takes migration names and returns "
+"their SQL:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:255
+msgid ""
+"You should see something similar to the following (we've reformatted it for "
+"readability):"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:291
+msgid "Note the following:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:293
+msgid ""
+"The exact output will vary depending on the database you are using. The "
+"example above is generated for PostgreSQL."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:296
+msgid ""
+"Table names are automatically generated by combining the name of the app "
+"(``polls``) and the lowercase name of the model -- ``question`` and "
+"``choice``. (You can override this behavior.)"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:300
+msgid ""
+"Primary keys (IDs) are added automatically. (You can override this, too.)"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:302
+msgid ""
+"By convention, Django appends ``\"_id\"`` to the foreign key field name. "
+"(Yes, you can override this, as well.)"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:305
+msgid ""
+"The foreign key relationship is made explicit by a ``FOREIGN KEY`` "
+"constraint. Don't worry about the ``DEFERRABLE`` parts; that's just telling "
+"PostgreSQL to not enforce the foreign key until the end of the transaction."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:309
+msgid ""
+"It's tailored to the database you're using, so database-specific field types "
+"such as ``auto_increment`` (MySQL), ``serial`` (PostgreSQL), or ``integer "
+"primary key autoincrement`` (SQLite) are handled for you automatically. Same "
+"goes for the quoting of field names -- e.g., using double quotes or single "
+"quotes."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:315
+msgid ""
+"The :djadmin:`sqlmigrate` command doesn't actually run the migration on your "
+"database - it just prints it to the screen so that you can see what SQL "
+"Django thinks is required. It's useful for checking what Django is going to "
+"do or if you have database administrators who require SQL scripts for "
+"changes."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:321
+msgid ""
+"If you're interested, you can also run :djadmin:`python manage.py check "
+"<check>`; this checks for any problems in your project without making "
+"migrations or touching the database."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:325
+msgid ""
+"Now, run :djadmin:`migrate` again to create those model tables in your "
+"database:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:336
+msgid ""
+"The :djadmin:`migrate` command takes all the migrations that haven't been "
+"applied (Django tracks which ones are applied using a special table in your "
+"database called ``django_migrations``) and runs them against your database - "
+"essentially, synchronizing the changes you made to your models with the "
+"schema in the database."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:342
+msgid ""
+"Migrations are very powerful and let you change your models over time, as "
+"you develop your project, without the need to delete your database or tables "
+"and make new ones - it specializes in upgrading your database live, without "
+"losing data. We'll cover them in more depth in a later part of the tutorial, "
+"but for now, remember the three-step guide to making model changes:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:348
+msgid "Change your models (in ``models.py``)."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:349
+msgid ""
+"Run :djadmin:`python manage.py makemigrations <makemigrations>` to create "
+"migrations for those changes"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:351
+msgid ""
+"Run :djadmin:`python manage.py migrate <migrate>` to apply those changes to "
+"the database."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:354
+msgid ""
+"The reason that there are separate commands to make and apply migrations is "
+"because you'll commit migrations to your version control system and ship "
+"them with your app; they not only make your development easier, they're also "
+"useable by other developers and in production."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:359
+msgid ""
+"Read the :doc:`django-admin documentation </ref/django-admin>` for full "
+"information on what the ``manage.py`` utility can do."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:363
+msgid "Playing with the API"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:365
+msgid ""
+"Now, let's hop into the interactive Python shell and play around with the "
+"free API Django gives you. To invoke the Python shell, use this command:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:372
+msgid ""
+"We're using this instead of simply typing \"python\", because :file:`manage."
+"py` sets the ``DJANGO_SETTINGS_MODULE`` environment variable, which gives "
+"Django the Python import path to your :file:`mysite/settings.py` file."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:0
+msgid "Bypassing manage.py"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:378
+msgid ""
+"If you'd rather not use :file:`manage.py`, no problem. Just set the :envvar:"
+"`DJANGO_SETTINGS_MODULE` environment variable to ``mysite.settings``, start "
+"a plain Python shell, and set up Django:"
+msgstr ""
+
+# 27cd4e40f9d6483e97863db19f55a820
+#: ../../intro/tutorial02.txt:387
+#, fuzzy
+msgid ""
+"If this raises an :exc:`AttributeError`, you're probably using a version of "
+"Django that doesn't match this tutorial version. You'll want to either "
+"switch to the older tutorial or the newer Django version."
+msgstr ""
+"значит вы используете неверную версию Django. Смотрите учебник для "
+"используемой версии или обновите Django."
+
+#: ../../intro/tutorial02.txt:391
+msgid ""
+"You must run ``python`` from the same directory :file:`manage.py` is in, or "
+"ensure that directory is on the Python path, so that ``import mysite`` works."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:395
+msgid ""
+"For more information on all of this, see the :doc:`django-admin "
+"documentation </ref/django-admin>`."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:398
+msgid ""
+"Once you're in the shell, explore the :doc:`database API </topics/db/"
+"queries>`::"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:438
+msgid ""
+"Wait a minute. ``<Question: Question object>`` is, utterly, an unhelpful "
+"representation of this object. Let's fix that by editing the ``Question`` "
+"model (in the ``polls/models.py`` file) and adding a :meth:`~django.db."
+"models.Model.__str__` method to both ``Question`` and ``Choice``:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:462
+msgid ""
+"It's important to add :meth:`~django.db.models.Model.__str__` methods to "
+"your models, not only for your own convenience when dealing with the "
+"interactive prompt, but also because objects' representations are used "
+"throughout Django's automatically-generated admin."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:467
+msgid ""
+"Note these are normal Python methods. Let's add a custom method, just for "
+"demonstration:"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:484
+msgid ""
+"Note the addition of ``import datetime`` and ``from django.utils import "
+"timezone``, to reference Python's standard :mod:`datetime` module and "
+"Django's time-zone-related utilities in :mod:`django.utils.timezone`, "
+"respectively. If you aren't familiar with time zone handling in Python, you "
+"can learn more in the :doc:`time zone support docs </topics/i18n/timezones>`."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:490
+msgid ""
+"Save these changes and start a new Python interactive shell by running "
+"``python manage.py shell`` again::"
+msgstr ""
+
+#: ../../intro/tutorial02.txt:569
+msgid ""
+"For more information on model relations, see :doc:`Accessing related objects "
+"</ref/models/relations>`. For more on how to use double underscores to "
+"perform field lookups via the API, see :ref:`Field lookups <field-lookups-"
+"intro>`. For full details on the database API, see our :doc:`Database API "
+"reference </topics/db/queries>`."
+msgstr ""
+
+#: ../../intro/tutorial02.txt:576
+msgid "Introducing the Django Admin"
+msgstr ""
+
+# 8efae26bb46545f3a0a1e0ba7c1714de
+#: ../../intro/tutorial02.txt:580
+#, fuzzy
+msgid ""
+"Generating admin sites for your staff or clients to add, change, and delete "
 "content is tedious work that doesn't require much creativity. For that "
 "reason, Django entirely automates creation of admin interfaces for models."
 msgstr ""
@@ -53,7 +601,7 @@ msgstr ""
 "значительно автоматизирует и упрощает эту задачу."
 
 # 338d2e3fd63b4011b073d9e86ca5f478
-#: ../../intro/tutorial02.txt:15
+#: ../../intro/tutorial02.txt:584
 msgid ""
 "Django was written in a newsroom environment, with a very clear separation "
 "between \"content publishers\" and the \"public\" site. Site managers use "
@@ -68,7 +616,7 @@ msgstr ""
 "универсальный интерфейс для редактирования содержимого сайта."
 
 # 0989045c478d4d5f9cce083c93f73d4b
-#: ../../intro/tutorial02.txt:21
+#: ../../intro/tutorial02.txt:590
 msgid ""
 "The admin isn't intended to be used by site visitors. It's for site managers."
 msgstr ""
@@ -76,12 +624,12 @@ msgstr ""
 "Он создан для менеджеров и администраторов сайта."
 
 # ec03aaced91b469c8a2e58890e00b6f5
-#: ../../intro/tutorial02.txt:25
+#: ../../intro/tutorial02.txt:594
 msgid "Creating an admin user"
 msgstr "Создание суперпользователя"
 
 # b691e600f00746328a2dde615e86903a
-#: ../../intro/tutorial02.txt:27
+#: ../../intro/tutorial02.txt:596
 msgid ""
 "First we'll need to create a user who can login to the admin site. Run the "
 "following command:"
@@ -90,29 +638,29 @@ msgstr ""
 "интерфейс администратора. Выполните следующую команду:"
 
 # cf798f4ca95649e290857cb6970a2a28
-#: ../../intro/tutorial02.txt:34
+#: ../../intro/tutorial02.txt:603
 msgid "Enter your desired username and press enter."
 msgstr "Введите имя пользователя и нажмите Enter."
 
 # 2c8496668c6d4ca48fb761d4cc72e533
-#: ../../intro/tutorial02.txt:40
+#: ../../intro/tutorial02.txt:609
 msgid "You will then be prompted for your desired email address:"
 msgstr "Теперь введите email:"
 
 # 996196207fe74960aee2e9ff586a5329
-#: ../../intro/tutorial02.txt:46
+#: ../../intro/tutorial02.txt:615
 msgid ""
 "The final step is to enter your password. You will be asked to enter your "
 "password twice, the second time as a confirmation of the first."
 msgstr "И наконец введите пароль."
 
 # 8002fe91c6f14bf586c7afa2d676b9a2
-#: ../../intro/tutorial02.txt:56
+#: ../../intro/tutorial02.txt:625
 msgid "Start the development server"
 msgstr "Запускаем сервер для разработки"
 
 # ddbfb4efb6fe42298c6ff98e289afb4e
-#: ../../intro/tutorial02.txt:58
+#: ../../intro/tutorial02.txt:627
 msgid ""
 "The Django admin site is activated by default. Let's start the development "
 "server and explore it."
@@ -120,13 +668,12 @@ msgstr ""
 "Интерфейс администратора включен по умолчанию. Давайте запустим встроенный "
 "сервер для разработки и посмотрим на него."
 
-# 48348df92a314b7db7eb4c19fabdbf9d
-#: ../../intro/tutorial02.txt:61
-msgid "Recall from Tutorial 1 that you start the development server like so:"
-msgstr "Напомним, что сервер для разработки запускается следующим образом:"
+#: ../../intro/tutorial02.txt:630
+msgid "If the server is not running start it like so:"
+msgstr ""
 
 # 809c2233a2e04344b3329183e6fa350a
-#: ../../intro/tutorial02.txt:67
+#: ../../intro/tutorial02.txt:636
 msgid ""
 "Now, open a Web browser and go to \"/admin/\" on your local domain -- e.g., "
 "http://127.0.0.1:8000/admin/. You should see the admin's login screen:"
@@ -136,45 +683,24 @@ msgstr ""
 "интерфейса администратора:"
 
 # 3acdde7f84f543499513b637c55dec31
-#: ../../intro/tutorial02.txt:73
+#: ../../intro/tutorial02.txt:642
+#, fuzzy
 msgid ""
 "Since :doc:`translation </topics/i18n/translation>` is turned on by default, "
 "the login screen may be displayed in your own language, depending on your "
-"browser's settings and on whether Django has a translation for this language."
+"browser's settings and if Django has a translation for this language."
 msgstr ""
 "Т.к. :doc:`translation </topics/i18n/translation>` включен по умолчанию, "
 "страница авторизации может быть на вашем родном языке, зависит от настроек "
 "браузера и наличия перевода для вашего языка."
 
-# f99fb87ee73e493ea070110db0f2dce3
-#: ../../intro/tutorial02.txt:77
-msgid "Doesn't match what you see?"
-msgstr "Не совпадает с тем, что вы видите?"
-
-# 7863b0d61722464f9808c40a98e7e18a
-#: ../../intro/tutorial02.txt:79
-msgid ""
-"If at this point, instead of the above login page, you get an error page "
-"reporting something like::"
-msgstr "Если вместо страницы авторизации вы получили ошибку::"
-
-# 27cd4e40f9d6483e97863db19f55a820
-#: ../../intro/tutorial02.txt:86
-msgid ""
-"then you're probably using a version of Django that doesn't match this "
-"tutorial version. You'll want to either switch to the older tutorial or the "
-"newer Django version."
-msgstr ""
-"значит вы используете неверную версию Django. Смотрите учебник для "
-"используемой версии или обновите Django."
-
 # 2f91c1b5464d44d0ad4a31cb5e61f586
-#: ../../intro/tutorial02.txt:91
+#: ../../intro/tutorial02.txt:647
 msgid "Enter the admin site"
 msgstr "Заходим в интерфейс администратора"
 
 # b4a220edac074b909e6af7fcec41c599
-#: ../../intro/tutorial02.txt:93
+#: ../../intro/tutorial02.txt:649
 msgid ""
 "Now, try logging in with the superuser account you created in the previous "
 "step. You should see the Django admin index page:"
@@ -183,7 +709,7 @@ msgstr ""
 "Django:"
 
 # 4c7f7818de634195801bccf118033f85
-#: ../../intro/tutorial02.txt:99
+#: ../../intro/tutorial02.txt:655
 msgid ""
 "You should see a few types of editable content: groups and users. They are "
 "provided by :mod:`django.contrib.auth`, the authentication framework shipped "
@@ -193,19 +719,19 @@ msgstr ""
 "предоставлены приложением авторизации Django :mod:`django.contrib.auth`."
 
 # 31bd7e2f1b8d4ea6bb1bbfd74a7c3705
-#: ../../intro/tutorial02.txt:104
+#: ../../intro/tutorial02.txt:660
 msgid "Make the poll app modifiable in the admin"
 msgstr "Добавим приложение голосования в интерфейс администратора"
 
 # 7170101a17544257b29adcb39f764fe6
-#: ../../intro/tutorial02.txt:106
+#: ../../intro/tutorial02.txt:662
 msgid "But where's our poll app? It's not displayed on the admin index page."
 msgstr ""
 "А где же наше приложение голосования? Оно не отображается в интерфейсе "
 "администратора."
 
 # 5a732d871e864d91a02317088657ffdf
-#: ../../intro/tutorial02.txt:108
+#: ../../intro/tutorial02.txt:664
 msgid ""
 "Just one thing to do: we need to tell the admin that ``Question`` objects "
 "have an admin interface. To do this, open the :file:`polls/admin.py` file, "
@@ -216,12 +742,12 @@ msgstr ""
 "отредактируем следующим образом::"
 
 # 1db75ea0b6744a888fa0c47b243bfd38
-#: ../../intro/tutorial02.txt:122
+#: ../../intro/tutorial02.txt:678
 msgid "Explore the free admin functionality"
 msgstr "Изучим возможности интерфейса администратора"
 
 # cbc4ff6cbb35489aa8a778d1f5414c79
-#: ../../intro/tutorial02.txt:124
+#: ../../intro/tutorial02.txt:680
 msgid ""
 "Now that we've registered ``Question``, Django knows that it should be "
 "displayed on the admin index page:"
@@ -230,12 +756,12 @@ msgstr ""
 "странице:"
 
 # 2e7aa9a9cf6d45e897d61ed00bdadd01
-#: ../../intro/tutorial02.txt:130
+#: ../../intro/tutorial02.txt:686
+#, fuzzy
 msgid ""
 "Click \"Questions\". Now you're at the \"change list\" page for questions. "
-"This page displays all the question in the database and lets you choose one "
-"to change it. There's the \"What's up?\" question we created in the first "
-"tutorial:"
+"This page displays all the questions in the database and lets you choose one "
+"to change it. There's the \"What's up?\" question we created earlier:"
 msgstr ""
 "Нажмите \"Questions\". Вы попали на страницу  \"списка объектов\" для "
 "голосований. Эта страница содержит все объекты из базы данных и позволяет "
@@ -243,22 +769,22 @@ msgstr ""
 "которое создали в первой части учебника:"
 
 # 1237861888334bbaa243a6fdd85c24d1
-#: ../../intro/tutorial02.txt:137
+#: ../../intro/tutorial02.txt:693
 msgid "Click the \"What's up?\" question to edit it:"
 msgstr "Нажмите \"What's up?\" чтобы отредактировать его:"
 
 # 0b66c36417aa4878bc7f2f0370189692
-#: ../../intro/tutorial02.txt:142
+#: ../../intro/tutorial02.txt:698
 msgid "Things to note here:"
 msgstr "Заметим:"
 
 # ee3f114817964980832c274e87c1794c
-#: ../../intro/tutorial02.txt:144
+#: ../../intro/tutorial02.txt:700
 msgid "The form is automatically generated from the ``Question`` model."
 msgstr "Поля формы формируются на основе описания модели ``Question``."
 
 # 77f3a0b29f0a46019a4895e30ce3f162
-#: ../../intro/tutorial02.txt:146
+#: ../../intro/tutorial02.txt:702
 msgid ""
 "The different model field types (:class:`~django.db.models.DateTimeField`, :"
 "class:`~django.db.models.CharField`) correspond to the appropriate HTML "
@@ -270,7 +796,7 @@ msgstr ""
 "Каждое поле знает как отобразить себя в интерфейсе администратора."
 
 # ab12635e022949448fed52da8934d3d0
-#: ../../intro/tutorial02.txt:151
+#: ../../intro/tutorial02.txt:707
 msgid ""
 "Each :class:`~django.db.models.DateTimeField` gets free JavaScript "
 "shortcuts. Dates get a \"Today\" shortcut and calendar popup, and times get "
@@ -281,19 +807,19 @@ msgstr ""
 "кнопка \"Сейчас\" и список распространенных значений."
 
 # 5a4190ed5b4c48dcb14e241158719b23
-#: ../../intro/tutorial02.txt:155
+#: ../../intro/tutorial02.txt:711
 msgid "The bottom part of the page gives you a couple of options:"
 msgstr "В нижней части страницы мы видим несколько кнопок:"
 
 # a23eacdf08f64f46bedc1cf71c2fb9eb
-#: ../../intro/tutorial02.txt:157
+#: ../../intro/tutorial02.txt:713
 msgid ""
 "Save -- Saves changes and returns to the change-list page for this type of "
 "object."
 msgstr "Save -- сохранить изменения и вернуться на страницу списка объектов."
 
 # d88f04ac66ad471ea9d361c433c003c8
-#: ../../intro/tutorial02.txt:160
+#: ../../intro/tutorial02.txt:716
 msgid ""
 "Save and continue editing -- Saves changes and reloads the admin page for "
 "this object."
@@ -302,7 +828,7 @@ msgstr ""
 "редактирования текущего объекта."
 
 # b4a26f892b82447da11d5595f0323a72
-#: ../../intro/tutorial02.txt:163
+#: ../../intro/tutorial02.txt:719
 msgid ""
 "Save and add another -- Saves changes and loads a new, blank form for this "
 "type of object."
@@ -311,24 +837,25 @@ msgstr ""
 "нового объекта."
 
 # 447c0e08683a4fdabb7a7c218325fe4a
-#: ../../intro/tutorial02.txt:166
+#: ../../intro/tutorial02.txt:722
 msgid "Delete -- Displays a delete confirmation page."
 msgstr "Delete -- Показывает страницу подтверждения удаления."
 
 # 1eb3551510194bba894050b509161e2d
-#: ../../intro/tutorial02.txt:168
+#: ../../intro/tutorial02.txt:724
+#, fuzzy
 msgid ""
 "If the value of \"Date published\" doesn't match the time when you created "
-"the question in Tutorial 1, it probably means you forgot to set the correct "
-"value for the :setting:`TIME_ZONE` setting. Change it, reload the page and "
-"check that the correct value appears."
+"the question in :doc:`Tutorial 1</intro/tutorial01>`, it probably means you "
+"forgot to set the correct value for the :setting:`TIME_ZONE` setting. Change "
+"it, reload the page and check that the correct value appears."
 msgstr ""
 "Если значение \"Date published\" не совпадает с временем создания объекта в "
 "первой части учебника, возможно, вы неверно определили настройку :setting:"
 "`TIME_ZONE`. Измените ее и перезагрузите страницу."
 
 # 7ca3dd6d8d0642bd89afce116e7b6439
-#: ../../intro/tutorial02.txt:173
+#: ../../intro/tutorial02.txt:729
 msgid ""
 "Change the \"Date published\" by clicking the \"Today\" and \"Now\" "
 "shortcuts. Then click \"Save and continue editing.\" Then click \"History\" "
@@ -341,635 +868,605 @@ msgstr ""
 "страницы. Вы увидите все изменения объекта, сделанные через интерфейс "
 "администратора, время изменений и пользователя, который их сделал:"
 
-# 80752a202cae40e4871223212bac4808
-#: ../../intro/tutorial02.txt:182
-msgid "Customize the admin form"
-msgstr "Настройка формы"
-
-# e0ece02837fb4fa0ad06061dd1c689ed
-#: ../../intro/tutorial02.txt:184
-msgid ""
-"Take a few minutes to marvel at all the code you didn't have to write. By "
-"registering the ``Question`` model with ``admin.site.register(Question)``, "
-"Django was able to construct a default form representation. Often, you'll "
-"want to customize how the admin form looks and works. You'll do this by "
-"telling Django the options you want when you register the object."
-msgstr ""
-"Потратим несколько минут, чтобы полюбоваться кодом, который нам не пришлось "
-"писать самостоятельно. После регистрации модели ``Question``, используя "
-"``admin.site.register(Question)``, Django создал форму для модели. Скорее "
-"всего, вам захочется изменить ее. Вы можете это сделать, используя параметры "
-"при регистрации модели."
-
-# 5b96f89a51224899bee68ac28f5b1935
-#: ../../intro/tutorial02.txt:190
-msgid ""
-"Let's see how this works by re-ordering the fields on the edit form. Replace "
-"the ``admin.site.register(Question)`` line with:"
-msgstr ""
-"Вот как это работает. Давайте поменяем порядок полей в форме. Замените "
-"``admin.site.register(Question)`` на:"
-
-# bb6affb2248940a8b73192daa18b4d9a
-#: ../../intro/tutorial02.txt:206
-msgid ""
-"You'll follow this pattern -- create a model admin object, then pass it as "
-"the second argument to ``admin.site.register()`` -- any time you need to "
-"change the admin options for an object."
-msgstr ""
-"Создаем объект ``ModelAdmin`` и предаем его в ``admin.site.register()``."
-
-# 0e5e8e342bfc4209b749648179533885
-#: ../../intro/tutorial02.txt:210
-msgid ""
-"This particular change above makes the \"Publication date\" come before the "
-"\"Question\" field:"
-msgstr ""
-"Теперь поле \"Publication date\" отображается перед полем \"Question\":"
-
-# b418517b1dd44c5faaae97ec946010d1
-#: ../../intro/tutorial02.txt:216
-msgid ""
-"This isn't impressive with only two fields, but for admin forms with dozens "
-"of fields, choosing an intuitive order is an important usability detail."
-msgstr ""
-"Для нескольких полей это выглядит не очень внушительно, но при большом "
-"количестве полей порядок может значительно повысить удобство."
-
-# 981db281c0f043e48268c5a8e2fa3137
-#: ../../intro/tutorial02.txt:219
-msgid ""
-"And speaking of forms with dozens of fields, you might want to split the "
-"form up into fieldsets:"
-msgstr ""
-"Для форм с большим количеством полей можно разбить форму на группу полей:"
-
-# c6cae3b5c1364cf3ae0503f15b4ef3dc
-#: ../../intro/tutorial02.txt:238
-msgid ""
-"The first element of each tuple in :attr:`~django.contrib.admin.ModelAdmin."
-"fieldsets` is the title of the fieldset. Here's what our form looks like now:"
-msgstr ""
-"Первый элемент кортежа в :attr:`~django.contrib.admin.ModelAdmin.fieldsets` "
-"-- название группы полей. Вот как будет выглядеть наша форма:"
-
-# 76405a45393746698a1c9c84995d62d2
-#: ../../intro/tutorial02.txt:245
-msgid ""
-"You can assign arbitrary HTML classes to each fieldset. Django provides a ``"
-"\"collapse\"`` class that displays a particular fieldset initially "
-"collapsed. This is useful when you have a long form that contains a number "
-"of fields that aren't commonly used:"
-msgstr ""
-"Вы можете добавить HTML классы для каждой группы полей. Django предоставляет "
-"класс ``\"collapse\"``, который отображает группу полей изначально скрытой. "
-"Это полезно, если форма содержит поля, которые редко редактируются:"
-
-# 54a9ebac1153441a8513d601e4d0543a
-#: ../../intro/tutorial02.txt:270
-msgid "Adding related objects"
-msgstr "Добавление связанных объектов"
-
-# 3fd43d45e7704d7eac21d37b5989c548
-#: ../../intro/tutorial02.txt:272
-msgid ""
-"OK, we have our Question admin page. But a ``Question`` has multiple "
-"``Choices``, and the admin page doesn't display choices."
-msgstr ""
-"Отлично, теперь модель ``Question`` имеет свою собственную страницу в "
-"интерфейсе администратора. Но ``Question`` содержит несколько ``Choices``, "
-"которые интерфейс администратора не отображает."
-
-# 2f10a55c8dda45cba443b03bec56a955
-#: ../../intro/tutorial02.txt:275
-msgid "Yet."
-msgstr "Пока что."
-
-# d74c025bacdc49c6a3a2f17cab22cfa8
-#: ../../intro/tutorial02.txt:277
-msgid ""
-"There are two ways to solve this problem. The first is to register "
-"``Choice`` with the admin just as we did with ``Question``. That's easy:"
-msgstr ""
-"Есть два способа это сделать. Первый - зарегистрировать модель ``Choice`` в "
-"интерфейсе администратора, так же как и ``Question``. Это просто:"
-
-# b41860db54b145d9b59f6baa3040dcd3
-#: ../../intro/tutorial02.txt:289
-msgid ""
-"Now \"Choices\" is an available option in the Django admin. The \"Add choice"
-"\" form looks like this:"
-msgstr ""
-"Теперь \"Choices\" отображается в интерфейсе администратора. Форма "
-"добавления варианта ответа выглядит следующим образом:"
-
-# 132f040a78464f61bbad333bf3664bad
-#: ../../intro/tutorial02.txt:295
-msgid ""
-"In that form, the \"Question\" field is a select box containing every "
-"question in the database. Django knows that a :class:`~django.db.models."
-"ForeignKey` should be represented in the admin as a ``<select>`` box. In our "
-"case, only one question exists at this point."
-msgstr ""
-"В этой форме поле \"Question\" представлено ``<select>`` с объектами "
-"``Question`` из базы данных. Django знает, что поле :class:`~django.db."
-"models.ForeignKey` должно быть представлено как ``<select>``. В нашем случае "
-"можно выбрать только один вопрос."
-
-# d7dee04e8e464d9193d3093348a94076
-#: ../../intro/tutorial02.txt:300
-msgid ""
-"Also note the \"Add Another\" link next to \"Question.\" Every object with a "
-"``ForeignKey`` relationship to another gets this for free. When you click "
-"\"Add Another,\" you'll get a popup window with the \"Add question\" form. "
-"If you add a question in that window and click \"Save,\" Django will save "
-"the question to the database and dynamically add it as the selected choice "
-"on the \"Add choice\" form you're looking at."
-msgstr ""
-"Обратите внимание на ссылку \"Add Another\" возле поля \"Question.\" Он "
-"будет добавлен для каждого поля ``ForeignKey``. При нажатии на \"Add Another,"
-"\" будет показано всплывающее окно с формой добавления вопроса. Если вы "
-"добавите вопрос и нажмете \"Save,\" Django сохранит объект в базу данных и "
-"выберет его в поле."
-
-# 7a04001c896146cf909daa925f508d1f
-#: ../../intro/tutorial02.txt:307
-msgid ""
-"But, really, this is an inefficient way of adding ``Choice`` objects to the "
-"system. It'd be better if you could add a bunch of Choices directly when you "
-"create the ``Question`` object. Let's make that happen."
-msgstr ""
-"Но, на самом деле, это совсем не удобный способ добавлять варианты ответов "
-"для вопроса. Было бы удобнее добавлять варианты ответов пачками при создании "
-"объекта ``Question``. Давайте сделаем это."
-
-# 5f222f52c64e4686884bbba892353bd3
-#: ../../intro/tutorial02.txt:311
-msgid ""
-"Remove the ``register()`` call for the ``Choice`` model. Then, edit the "
-"``Question`` registration code to read:"
-msgstr ""
-"Уберите вызов ``register()`` для модели ``Choice``. И отредактируйте код для "
-"регистрации ``Question`` в интерфейсе администратора:"
-
-# d78417ffc83b4ab49711e88415fe8643
-#: ../../intro/tutorial02.txt:336
-msgid ""
-"This tells Django: \"``Choice`` objects are edited on the ``Question`` admin "
-"page. By default, provide enough fields for 3 choices.\""
-msgstr ""
-"Это говорит Django: \"Варианты ответов редактируются на странице вопроса. По "
-"умолчанию, покажите 3 формы для добавления вариантов ответа.\""
-
-# 13060f9dd52840f980e2eab933b6ae3a
-#: ../../intro/tutorial02.txt:339
-msgid "Load the \"Add question\" page to see how that looks:"
-msgstr "Загрузите страницу  \"Add question\" и посмотрите как она выглядит:"
-
-# 2b8d1eb40e304d96907d02aebfca6fa1
-#: ../../intro/tutorial02.txt:344
-msgid ""
-"It works like this: There are three slots for related Choices -- as "
-"specified by ``extra`` -- and each time you come back to the \"Change\" page "
-"for an already-created object, you get another three extra slots."
-msgstr ""
-"Это работает следующим образом: Есть три формы для добавления вариантов "
-"ответа -- как определяет параметр ``extra`` -- и при каждой загрузке этой "
-"страницы будет три формы для добавления новых вариантов ответа."
-
-# 31ddd2df10f54822afc052015cd9f9b6
-#: ../../intro/tutorial02.txt:348
-msgid ""
-"At the end of the three current slots you will find an \"Add another Choice"
-"\" link.  If you click on it, a new slot will be added. If you want to "
-"remove the added slot, you can click on the X to the top right of the added "
-"slot. Note that you can't remove the original three slots. This image shows "
-"an added slot:"
-msgstr ""
-"В конце формы вы увидите  ссылку \"Add another Choice\".  Кликните и "
-"добавится новая форма. Чтобы удалить форму, нажмите на X. Заметим, что вы не "
-"можете удалить формы для существующих записей. Следующий рисунок показывает "
-"добавленные формы:"
-
-# 11a1718511a243df9a9e187a392fa142
-#: ../../intro/tutorial02.txt:356
-msgid ""
-"One small problem, though. It takes a lot of screen space to display all the "
-"fields for entering related ``Choice`` objects. For that reason, Django "
-"offers a tabular way of displaying inline related objects; you just need to "
-"change the ``ChoiceInline`` declaration to read:"
-msgstr ""
-"Однако есть одна проблема. Эти формы занимают много места. Для таких "
-"случаев, Django предлагает вариант отображения табами, переопределите "
-"``ChoiceInline`` следующим образом:"
-
-# ff31e79ce1cc4ae98aeac40371e13bd8
-#: ../../intro/tutorial02.txt:367
-msgid ""
-"With that ``TabularInline`` (instead of ``StackedInline``), the related "
-"objects are displayed in a more compact, table-based format:"
-msgstr ""
-"С ``TabularInline`` (вместо ``StackedInline``), формы для связанных объектов "
-"отображаются в более компактном табличном виде:"
-
-# a5043804180946599fbac0845623c096
-#: ../../intro/tutorial02.txt:373
-msgid ""
-"Note that there is an extra \"Delete?\" column that allows removing rows "
-"added using the \"Add Another Choice\" button and rows that have already "
-"been saved."
-msgstr ""
-"Обратите внимание на дополнительную колонку  \"Delete?\", которая позволяет "
-"удалить только что добавленные и существующие записи."
-
-# fe0840dfd6974b8398bf9d41d3b07349
-#: ../../intro/tutorial02.txt:377
-msgid "Customize the admin change list"
-msgstr "Настройка страницы списка объектов"
-
-# bbd13b3a8ebc4872ab251693ca4f39cf
-#: ../../intro/tutorial02.txt:379
-msgid ""
-"Now that the Question admin page is looking good, let's make some tweaks to "
-"the \"change list\" page -- the one that displays all the questions in the "
-"system."
-msgstr ""
-"Теперь, когда страница добавления/редактирования вопроса выглядит хорошо, "
-"давай улучшим страницу отображения списка вопросов."
-
-# 3cb2967475ca44669088584fd34362bf
-#: ../../intro/tutorial02.txt:382
-msgid "Here's what it looks like at this point:"
-msgstr "Вот как она выглядит сейчас:"
-
-# c6b6b8d7536f455b9700483586dd7564
-#: ../../intro/tutorial02.txt:387
-msgid ""
-"By default, Django displays the ``str()`` of each object. But sometimes it'd "
-"be more helpful if we could display individual fields. To do that, use the :"
-"attr:`~django.contrib.admin.ModelAdmin.list_display` admin option, which is "
-"a tuple of field names to display, as columns, on the change list page for "
-"the object:"
-msgstr ""
-"По умолчанию Django отображает результат выполнения ``str()`` для каждого "
-"объекта. Но чаще всего хочется показывать список полей. Для этого "
-"используйте параметр :attr:`~django.contrib.admin.ModelAdmin.list_display`, "
-"который является кортежем состоящим из названий полей модели:"
-
-# 2bc360aa5a864912a986974c7d7aec7e
-#: ../../intro/tutorial02.txt:400
-msgid ""
-"Just for good measure, let's also include the ``was_published_recently`` "
-"custom method from Tutorial 1:"
-msgstr ""
-"Для примера давайте еще и добавим метод ``was_published_recently`` из Части "
-"1 учебника:"
-
-# cf8a680befd14405a87ea4a829c29300
-#: ../../intro/tutorial02.txt:410
-msgid "Now the question change list page looks like this:"
-msgstr "Теперь страница списка вопросов выглядит следующим образом:"
-
-# 01a04c5ac2c7400281f4b1f0e3daa57d
-#: ../../intro/tutorial02.txt:415
-msgid ""
-"You can click on the column headers to sort by those values -- except in the "
-"case of the ``was_published_recently`` header, because sorting by the output "
-"of an arbitrary method is not supported. Also note that the column header "
-"for ``was_published_recently`` is, by default, the name of the method (with "
-"underscores replaced with spaces), and that each line contains the string "
-"representation of the output."
-msgstr ""
-"Вы можете нажать на заголовок колонки чтобы отсортировать записи по полю -- "
-"но не для ``was_published_recently``, так как сортировка по методу не "
-"поддерживается. Название колонки для ``was_published_recently`` по умолчанию "
-"равно названию метода (нижние подчеркивание заменяется на пробелы), а "
-"значение равно строковому представлению результата выполнения метода."
-
-# fed44405ef294b16b5dd0a0b4ac793f6
-#: ../../intro/tutorial02.txt:422
-msgid ""
-"You can improve that by giving that method (in :file:`polls/models.py`) a "
-"few attributes, as follows:"
-msgstr ""
-"Вы можете исправить это, добавив несколько атрибутов (в :file:`polls/models."
-"py`) этому методу:"
-
-#: ../../intro/tutorial02.txt:436
-msgid ""
-"For more information on these method properties, see :attr:`~django.contrib."
-"admin.ModelAdmin.list_display`."
-msgstr ""
-"Список всех доступных атрибутов можно найти в описании :attr:`~django."
-"contrib.admin.ModelAdmin.list_display`."
-
-# 267b45b9cd084cec80a9cce9f3473d13
-#: ../../intro/tutorial02.txt:439
-msgid ""
-"Edit your :file:`polls/admin.py` file again and add an improvement to the "
-"``Question`` change list page: filters using the :attr:`~django.contrib."
-"admin.ModelAdmin.list_filter`. Add the following line to ``QuestionAdmin``::"
-msgstr ""
-"Отредактируем файл :file:`polls/admin.py` снова и добавим на страницу списка "
-"вопросов Фильтры, используя :attr:`~django.contrib.admin.ModelAdmin."
-"list_filter`. Добавьте следующую строку в ``QuestionAdmin``::"
-
-# b9401dc5188249739f27766ccf180e7d
-#: ../../intro/tutorial02.txt:446
-msgid ""
-"That adds a \"Filter\" sidebar that lets people filter the change list by "
-"the ``pub_date`` field:"
-msgstr "Это добавляет \"Фильтр\" по полю ``pub_date`` в боковой панели:"
-
-# 8892439b8c734ab6b007f985adc58717
-#: ../../intro/tutorial02.txt:452
-msgid ""
-"The type of filter displayed depends on the type of field you're filtering "
-"on. Because ``pub_date`` is a :class:`~django.db.models.DateTimeField`, "
-"Django knows to give appropriate filter options: \"Any date,\" \"Today,\" "
-"\"Past 7 days,\" \"This month,\" \"This year.\""
-msgstr ""
-"Тип фильтра зависит от типа поля. Так как ``pub_date`` является :class:"
-"`~django.db.models.DateTimeField`, Django отображает соответствующие "
-"варианты для фильтрации: \"Any date,\" \"Today,\" \"Past 7 days,\" \"This "
-"month,\" \"This year.\""
-
-# dc585c8402e24679bf5dbfaabe588891
-#: ../../intro/tutorial02.txt:457
-msgid "This is shaping up well. Let's add some search capability::"
-msgstr "Теперь добавим поиск::"
-
-# 2d8508e7c9654ee7bbe2e1b1714f6051
-#: ../../intro/tutorial02.txt:461
-msgid ""
-"That adds a search box at the top of the change list. When somebody enters "
-"search terms, Django will search the ``question_text`` field. You can use as "
-"many fields as you'd like -- although because it uses a ``LIKE`` query "
-"behind the scenes, limiting the number of search fields to a reasonable "
-"number will make it easier for your database to do the search."
-msgstr ""
-"Это добавляет поле для поиска в верхней части страницы. При вводе запроса, "
-"Django будет искать по полю ``question_text``. Вы можете использовать любое "
-"количество полей -- учтите что используется запрос ``LIKE``, так что "
-"постарайтесь не перегрузить вашу базу данных."
-
-# 201153f402024039a5ca6c6243217882
-#: ../../intro/tutorial02.txt:467
-msgid ""
-"Now's also a good time to note that change lists give you free pagination. "
-"The default is to display 100 items per page. :attr:`Change list pagination "
-"<django.contrib.admin.ModelAdmin.list_per_page>`, :attr:`search boxes "
-"<django.contrib.admin.ModelAdmin.search_fields>`, :attr:`filters <django."
-"contrib.admin.ModelAdmin.list_filter>`, :attr:`date-hierarchies <django."
-"contrib.admin.ModelAdmin.date_hierarchy>`, and :attr:`column-header-ordering "
-"<django.contrib.admin.ModelAdmin.list_display>` all work together like you "
-"think they should."
-msgstr ""
-"Страница списка объектов также содержит постраничное отображение. По "
-"умолчанию отображается 100 объектов на страницу. :attr:`Поменять количество "
-"объектов на одной странице <django.contrib.admin.ModelAdmin."
-"list_per_page>`, :attr:`поля для поиска <django.contrib.admin.ModelAdmin."
-"search_fields>`, :attr:`фильтры <django.contrib.admin.ModelAdmin."
-"list_filter>`, :attr:`добавить иерархию по дате <django.contrib.admin."
-"ModelAdmin.date_hierarchy>` и :attr:`отображаемые поля <django.contrib.admin."
-"ModelAdmin.list_display>` - все это возможно."
-
-# 7363520b04114fd390f274dfbbbdebf6
-#: ../../intro/tutorial02.txt:477
-msgid "Customize the admin look and feel"
-msgstr "Настраиваем внешний вид"
-
-# efb5d17f97174e3aaf97afc8db9e58dd
-#: ../../intro/tutorial02.txt:479
-msgid ""
-"Clearly, having \"Django administration\" at the top of each admin page is "
-"ridiculous. It's just placeholder text."
-msgstr ""
-"\"Django administration\" в \"шапке\" страницы выглядит нелепо. Это просто "
-"замещающий текст."
-
-# 352de987ce924829ae446bf5454405bf
-#: ../../intro/tutorial02.txt:482
-msgid ""
-"That's easy to change, though, using Django's template system. The Django "
-"admin is powered by Django itself, and its interfaces use Django's own "
-"template system."
-msgstr ""
-"Его очень легко заменить, используя систему шаблонов Django. Интерфейс "
-"администратора работает благодаря Django и использует систему шаблонов "
-"Django."
-
-# b3a78c2d51634e9ab36341c8697511ce
-#: ../../intro/tutorial02.txt:489
-msgid "Customizing your *project's* templates"
-msgstr "Переопределение шаблонов *проекта*"
-
-# ffd0fc7e1d514d44860f4fc559c70cb3
-#: ../../intro/tutorial02.txt:491
-msgid ""
-"Create a ``templates`` directory in your project directory (the one that "
-"contains ``manage.py``). Templates can live anywhere on your filesystem that "
-"Django can access. (Django runs as whatever user your server runs.) However, "
-"keeping your templates within the project is a good convention to follow."
-msgstr ""
-"Создайте каталог ``templates`` в каталоге проекта (который содержит ``manage."
-"py``). Шаблоны могут располагаться где угодно, главное чтобы Django имел "
-"доступ к ним. (Django запускается под пользователем, под которым запущен "
-"сервер.) Но мы советуем располагать шаблоны внутри проекта."
-
-# 1a36d4c948874715b88ef74c180758aa
-#: ../../intro/tutorial02.txt:496
-msgid ""
-"Open your settings file (:file:`mysite/settings.py`, remember) and add a :"
-"setting:`DIRS <TEMPLATES-DIRS>` option in the :setting:`TEMPLATES` setting:"
-msgstr ""
-"Откройте файл настроек (напомним это :file:`mysite/settings.py`) и найдите "
-"опцию :setting:`DIRS <TEMPLATES-DIRS>` в настройке :setting:`TEMPLATES`:"
-
-# 1a36d4c948874715b88ef74c180758aa
-#: ../../intro/tutorial02.txt:518
-msgid ""
-":setting:`DIRS <TEMPLATES-DIRS>` is a list of filesystem directories to "
-"check when loading Django templates; it's a search path."
-msgstr ""
-":setting:`DIRS <TEMPLATES-DIRS>` -- это список путей к каталогам, который "
-"указывает, где Django будет искать шаблоны."
-
-# f78d9c4e64c44d7dbe87c6566c2a0dc3
-#: ../../intro/tutorial02.txt:521
-msgid ""
-"Now create a directory called ``admin`` inside ``templates``, and copy the "
-"template ``admin/base_site.html`` from within the default Django admin "
-"template directory in the source code of Django itself (``django/contrib/"
-"admin/templates``) into that directory."
-msgstr ""
-"Теперь создайте каталог ``admin`` в каталоге ``templates``, и скопируйте "
-"шаблон ``admin/base_site.html`` из встроенных шаблонов в исходниках Django "
-"(``django/contrib/admin/templates``) в этот каталог."
-
-# d887e1db080f45639ba1d138025af7a0
-#: ../../intro/tutorial02.txt:526
-msgid "Where are the Django source files?"
-msgstr "Где лежит исходный код Django?"
-
-# 84b172ca9fb7485db963b175b5980968
-#: ../../intro/tutorial02.txt:528
-msgid ""
-"If you have difficulty finding where the Django source files are located on "
-"your system, run the following command:"
-msgstr ""
-"Если вы не знаете где лежат исходники Django, выполните следующую команду:"
-
-#: ../../intro/tutorial02.txt:539
-msgid ""
-"Then, just edit the file and replace ``{{ site_header|default:_('Django "
-"administration') }}`` (including the curly braces) with your own site's name "
-"as you see fit. You should end up with a section of code like:"
-msgstr ""
-"Затем просто отредактируйте файл и замените ``{{ site_header|default:"
-"_('Django administration') }}`` (включая фигурные скобки) на название вашего "
-"сайта. Должно получиться наподобие:"
-
-# af610c99dee742dfb482d8d08801177d
-#: ../../intro/tutorial02.txt:550
-msgid ""
-"We use this approach to teach you how to override templates. In an actual "
-"project, you would probably use the :attr:`django.contrib.admin.AdminSite."
-"site_header` attribute to more easily make this particular customization."
-msgstr ""
-"Мы использовали такой подход, чтобы научить переопределять шаблоны. При "
-"разработке проекта для этого обычно используют атрибут :attr:`django.contrib."
-"admin.AdminSite.site_header`."
-
-# 5feb2de7940e41a7b83a9cd9f05da5f5
-#: ../../intro/tutorial02.txt:555
-msgid ""
-"This template file contains lots of text like ``{% block branding %}`` and "
-"``{{ title }}``. The ``{%`` and ``{{`` tags are part of Django's template "
-"language. When Django renders ``admin/base_site.html``, this template "
-"language will be evaluated to produce the final HTML page. Don't worry if "
-"you can't make any sense of the template right now -- we'll delve into "
-"Django's templating language in Tutorial 3."
-msgstr ""
-"Этот шаблон содержит текст подобный ``{% block branding %}`` и ``{{ title }}"
-"``. Теги ``{%`` и ``{{`` -- это части синтаксиса системы шаблонов Django. "
-"При выполнении шаблона ``admin/base_site.html`` Django создаст HTML "
-"страницу. Не волнуйтесь если ничего не понимаете в этом -- в шаблонах Django "
-"мы разберемся в Части 3."
-
-# 72cf7a56b85e4f08a18a8e39a3b50e9a
-#: ../../intro/tutorial02.txt:562
-msgid ""
-"Note that any of Django's default admin templates can be overridden. To "
-"override a template, just do the same thing you did with ``base_site.html`` "
-"-- copy it from the default directory into your custom directory, and make "
-"changes."
-msgstr ""
-"Любой шаблон интерфейса администратора можно переопределить. Чтобы "
-"переопределить шаблон, сделайте тоже что и с ``base_site.html`` -- "
-"скопируйте его в каталог с шаблонами проекта и внесите изменения."
-
-# 9e8e98d01c8f40d2ab3b248bd243f734
-#: ../../intro/tutorial02.txt:568
-msgid "Customizing your *application's* templates"
-msgstr "Настройка шаблонов *приложения*"
-
-# 5af4c4f427c140218405e8069e51c558
-#: ../../intro/tutorial02.txt:570
-msgid ""
-"Astute readers will ask: But if :setting:`DIRS <TEMPLATES-DIRS>` was empty "
-"by default, how was Django finding the default admin templates? The answer "
-"is that, since :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` is set to ``True``, "
-"Django automatically looks for a ``templates/`` subdirectory within each "
-"application package, for use as a fallback (don't forget that ``django."
-"contrib.admin`` is an application)."
-msgstr ""
-"Внимательные читатели спросят: если :setting:`DIRS <TEMPLATES-DIRS>` пустая "
-"по умолчанию, как Django находит шаблоны интерфейса администратора по "
-"умолчанию? Т.к. :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` по умолчанию "
-"``True``, Django пытается найти шаблон в подкаталоге ``templates/`` каждого "
-"приложении, если шаблон не найден другим способом (не забываем, что ``django."
-"contrib.admin`` -- это приложение)."
-
-# 7430c2aa6649410388a23d93a55daaeb
-#: ../../intro/tutorial02.txt:577
-msgid ""
-"Our poll application is not very complex and doesn't need custom admin "
-"templates. But if it grew more sophisticated and required modification of "
-"Django's standard admin templates for some of its functionality, it would be "
-"more sensible to modify the *application's* templates, rather than those in "
-"the *project*. That way, you could include the polls application in any new "
-"project and be assured that it would find the custom templates it needed."
-msgstr ""
-"Наше приложение простое и не требует переопределения шаблонов. Но если оно "
-"станет большим и сложным, и нам понадобится изменить его шаблоны, логичнее "
-"изменить шаблоны для *приложения*, а не для *проекта*. В таком случае вы "
-"сможете добавить приложения для голосования в любой проект и "
-"переопределенные шаблоны будут работать."
-
-# c421363e1155430f86e8777139495a85
-#: ../../intro/tutorial02.txt:584
-msgid ""
-"See the :ref:`template loading documentation <template-loading>` for more "
-"information about how Django finds its templates."
-msgstr ""
-"Смотрите :ref:`раздел о загрузке шаблонов <template-loading>`, чтобы узнать, "
-"как Django ищет шаблоны."
-
-# e56cb4a95bf840b6b695449ea3588fcb
-#: ../../intro/tutorial02.txt:588
-msgid "Customize the admin index page"
-msgstr "Настроим главную страницу"
-
-# 2bc787d295f0415a905b8a543d175fe5
-#: ../../intro/tutorial02.txt:590
-msgid ""
-"On a similar note, you might want to customize the look and feel of the "
-"Django admin index page."
-msgstr ""
-"Возможно, вам понадобится настроить главную страницу интерфейса "
-"администратора."
-
-# 0ea5203c05ce4ed69c16e6a5baba7a80
-#: ../../intro/tutorial02.txt:593
-msgid ""
-"By default, it displays all the apps in :setting:`INSTALLED_APPS` that have "
-"been registered with the admin application, in alphabetical order. You may "
-"want to make significant changes to the layout. After all, the index is "
-"probably the most important page of the admin, and it should be easy to use."
-msgstr ""
-"По умолчанию она показывает все приложения в алфавитном порядке из "
-"настройки :setting:`INSTALLED_APPS`, которые зарегистрированы в интерфейсе "
-"администратора. Главная страница очень важна и должна быть удобной."
-
-# b2ccca41b28648b7a5d1d21e465a33ab
-#: ../../intro/tutorial02.txt:598
-msgid ""
-"The template to customize is ``admin/index.html``. (Do the same as with "
-"``admin/base_site.html`` in the previous section -- copy it from the default "
-"directory to your custom template directory.) Edit the file, and you'll see "
-"it uses a template variable called ``app_list``. That variable contains "
-"every installed Django app. Instead of using that, you can hard-code links "
-"to object-specific admin pages in whatever way you think is best. Again, "
-"don't worry if you can't understand the template language -- we'll cover "
-"that in more detail in Tutorial 3."
-msgstr ""
-"Для главной страницы используется шаблон ``admin/index.html``. (Сделайте "
-"тоже что и с шаблоном ``admin/base_site.html`` из раздела выше -- скопируйте "
-"его из приложения Django в каталог шаблонов проекта.) Откройте файл и вы "
-"увидите использование переменной ``app_list``. Эта переменная содержит все "
-"отображаемые приложения. Вместо нее вы можете явно указать ссылки на нужные "
-"страницы. Опять же, не волнуйтесь что вы ничего не понимаете, шаблоны будут "
-"обсуждаться в Части 3."
-
 # 0aadffb0c497461987ef2b8789d9e918
-#: ../../intro/tutorial02.txt:607
+#: ../../intro/tutorial02.txt:737
+#, fuzzy
 msgid ""
-"When you're comfortable with the admin site, read :doc:`part 3 of this "
-"tutorial </intro/tutorial03>` to start working on public poll views."
+"When you're comfortable with the models API and have familiarized yourself "
+"with the admin site, read :doc:`part 3 of this tutorial</intro/tutorial03>` "
+"to learn about how to add more views to our polls app."
 msgstr ""
 "Если вы освоили интерфейс администратора, переходите к :doc:`третьей части "
 "этого учебника </intro/tutorial03>`."
+
+# 48348df92a314b7db7eb4c19fabdbf9d
+#~ msgid ""
+#~ "Recall from Tutorial 1 that you start the development server like so:"
+#~ msgstr "Напомним, что сервер для разработки запускается следующим образом:"
+
+# f99fb87ee73e493ea070110db0f2dce3
+#~ msgid "Doesn't match what you see?"
+#~ msgstr "Не совпадает с тем, что вы видите?"
+
+# 7863b0d61722464f9808c40a98e7e18a
+#~ msgid ""
+#~ "If at this point, instead of the above login page, you get an error page "
+#~ "reporting something like::"
+#~ msgstr "Если вместо страницы авторизации вы получили ошибку::"
+
+# 80752a202cae40e4871223212bac4808
+#~ msgid "Customize the admin form"
+#~ msgstr "Настройка формы"
+
+# e0ece02837fb4fa0ad06061dd1c689ed
+#~ msgid ""
+#~ "Take a few minutes to marvel at all the code you didn't have to write. By "
+#~ "registering the ``Question`` model with ``admin.site."
+#~ "register(Question)``, Django was able to construct a default form "
+#~ "representation. Often, you'll want to customize how the admin form looks "
+#~ "and works. You'll do this by telling Django the options you want when you "
+#~ "register the object."
+#~ msgstr ""
+#~ "Потратим несколько минут, чтобы полюбоваться кодом, который нам не "
+#~ "пришлось писать самостоятельно. После регистрации модели ``Question``, "
+#~ "используя ``admin.site.register(Question)``, Django создал форму для "
+#~ "модели. Скорее всего, вам захочется изменить ее. Вы можете это сделать, "
+#~ "используя параметры при регистрации модели."
+
+# 5b96f89a51224899bee68ac28f5b1935
+#~ msgid ""
+#~ "Let's see how this works by re-ordering the fields on the edit form. "
+#~ "Replace the ``admin.site.register(Question)`` line with:"
+#~ msgstr ""
+#~ "Вот как это работает. Давайте поменяем порядок полей в форме. Замените "
+#~ "``admin.site.register(Question)`` на:"
+
+# bb6affb2248940a8b73192daa18b4d9a
+#~ msgid ""
+#~ "You'll follow this pattern -- create a model admin object, then pass it "
+#~ "as the second argument to ``admin.site.register()`` -- any time you need "
+#~ "to change the admin options for an object."
+#~ msgstr ""
+#~ "Создаем объект ``ModelAdmin`` и предаем его в ``admin.site.register()``."
+
+# 0e5e8e342bfc4209b749648179533885
+#~ msgid ""
+#~ "This particular change above makes the \"Publication date\" come before "
+#~ "the \"Question\" field:"
+#~ msgstr ""
+#~ "Теперь поле \"Publication date\" отображается перед полем \"Question\":"
+
+# b418517b1dd44c5faaae97ec946010d1
+#~ msgid ""
+#~ "This isn't impressive with only two fields, but for admin forms with "
+#~ "dozens of fields, choosing an intuitive order is an important usability "
+#~ "detail."
+#~ msgstr ""
+#~ "Для нескольких полей это выглядит не очень внушительно, но при большом "
+#~ "количестве полей порядок может значительно повысить удобство."
+
+# 981db281c0f043e48268c5a8e2fa3137
+#~ msgid ""
+#~ "And speaking of forms with dozens of fields, you might want to split the "
+#~ "form up into fieldsets:"
+#~ msgstr ""
+#~ "Для форм с большим количеством полей можно разбить форму на группу полей:"
+
+# c6cae3b5c1364cf3ae0503f15b4ef3dc
+#~ msgid ""
+#~ "The first element of each tuple in :attr:`~django.contrib.admin."
+#~ "ModelAdmin.fieldsets` is the title of the fieldset. Here's what our form "
+#~ "looks like now:"
+#~ msgstr ""
+#~ "Первый элемент кортежа в :attr:`~django.contrib.admin.ModelAdmin."
+#~ "fieldsets` -- название группы полей. Вот как будет выглядеть наша форма:"
+
+# 76405a45393746698a1c9c84995d62d2
+#~ msgid ""
+#~ "You can assign arbitrary HTML classes to each fieldset. Django provides a "
+#~ "``\"collapse\"`` class that displays a particular fieldset initially "
+#~ "collapsed. This is useful when you have a long form that contains a "
+#~ "number of fields that aren't commonly used:"
+#~ msgstr ""
+#~ "Вы можете добавить HTML классы для каждой группы полей. Django "
+#~ "предоставляет класс ``\"collapse\"``, который отображает группу полей "
+#~ "изначально скрытой. Это полезно, если форма содержит поля, которые редко "
+#~ "редактируются:"
+
+# 54a9ebac1153441a8513d601e4d0543a
+#~ msgid "Adding related objects"
+#~ msgstr "Добавление связанных объектов"
+
+# 3fd43d45e7704d7eac21d37b5989c548
+#~ msgid ""
+#~ "OK, we have our Question admin page. But a ``Question`` has multiple "
+#~ "``Choices``, and the admin page doesn't display choices."
+#~ msgstr ""
+#~ "Отлично, теперь модель ``Question`` имеет свою собственную страницу в "
+#~ "интерфейсе администратора. Но ``Question`` содержит несколько "
+#~ "``Choices``, которые интерфейс администратора не отображает."
+
+# 2f10a55c8dda45cba443b03bec56a955
+#~ msgid "Yet."
+#~ msgstr "Пока что."
+
+# d74c025bacdc49c6a3a2f17cab22cfa8
+#~ msgid ""
+#~ "There are two ways to solve this problem. The first is to register "
+#~ "``Choice`` with the admin just as we did with ``Question``. That's easy:"
+#~ msgstr ""
+#~ "Есть два способа это сделать. Первый - зарегистрировать модель ``Choice`` "
+#~ "в интерфейсе администратора, так же как и ``Question``. Это просто:"
+
+# b41860db54b145d9b59f6baa3040dcd3
+#~ msgid ""
+#~ "Now \"Choices\" is an available option in the Django admin. The \"Add "
+#~ "choice\" form looks like this:"
+#~ msgstr ""
+#~ "Теперь \"Choices\" отображается в интерфейсе администратора. Форма "
+#~ "добавления варианта ответа выглядит следующим образом:"
+
+# 132f040a78464f61bbad333bf3664bad
+#~ msgid ""
+#~ "In that form, the \"Question\" field is a select box containing every "
+#~ "question in the database. Django knows that a :class:`~django.db.models."
+#~ "ForeignKey` should be represented in the admin as a ``<select>`` box. In "
+#~ "our case, only one question exists at this point."
+#~ msgstr ""
+#~ "В этой форме поле \"Question\" представлено ``<select>`` с объектами "
+#~ "``Question`` из базы данных. Django знает, что поле :class:`~django.db."
+#~ "models.ForeignKey` должно быть представлено как ``<select>``. В нашем "
+#~ "случае можно выбрать только один вопрос."
+
+# d7dee04e8e464d9193d3093348a94076
+#~ msgid ""
+#~ "Also note the \"Add Another\" link next to \"Question.\" Every object "
+#~ "with a ``ForeignKey`` relationship to another gets this for free. When "
+#~ "you click \"Add Another,\" you'll get a popup window with the \"Add "
+#~ "question\" form. If you add a question in that window and click \"Save,\" "
+#~ "Django will save the question to the database and dynamically add it as "
+#~ "the selected choice on the \"Add choice\" form you're looking at."
+#~ msgstr ""
+#~ "Обратите внимание на ссылку \"Add Another\" возле поля \"Question.\" Он "
+#~ "будет добавлен для каждого поля ``ForeignKey``. При нажатии на \"Add "
+#~ "Another,\" будет показано всплывающее окно с формой добавления вопроса. "
+#~ "Если вы добавите вопрос и нажмете \"Save,\" Django сохранит объект в базу "
+#~ "данных и выберет его в поле."
+
+# 7a04001c896146cf909daa925f508d1f
+#~ msgid ""
+#~ "But, really, this is an inefficient way of adding ``Choice`` objects to "
+#~ "the system. It'd be better if you could add a bunch of Choices directly "
+#~ "when you create the ``Question`` object. Let's make that happen."
+#~ msgstr ""
+#~ "Но, на самом деле, это совсем не удобный способ добавлять варианты "
+#~ "ответов для вопроса. Было бы удобнее добавлять варианты ответов пачками "
+#~ "при создании объекта ``Question``. Давайте сделаем это."
+
+# 5f222f52c64e4686884bbba892353bd3
+#~ msgid ""
+#~ "Remove the ``register()`` call for the ``Choice`` model. Then, edit the "
+#~ "``Question`` registration code to read:"
+#~ msgstr ""
+#~ "Уберите вызов ``register()`` для модели ``Choice``. И отредактируйте код "
+#~ "для регистрации ``Question`` в интерфейсе администратора:"
+
+# d78417ffc83b4ab49711e88415fe8643
+#~ msgid ""
+#~ "This tells Django: \"``Choice`` objects are edited on the ``Question`` "
+#~ "admin page. By default, provide enough fields for 3 choices.\""
+#~ msgstr ""
+#~ "Это говорит Django: \"Варианты ответов редактируются на странице вопроса. "
+#~ "По умолчанию, покажите 3 формы для добавления вариантов ответа.\""
+
+# 13060f9dd52840f980e2eab933b6ae3a
+#~ msgid "Load the \"Add question\" page to see how that looks:"
+#~ msgstr "Загрузите страницу  \"Add question\" и посмотрите как она выглядит:"
+
+# 2b8d1eb40e304d96907d02aebfca6fa1
+#~ msgid ""
+#~ "It works like this: There are three slots for related Choices -- as "
+#~ "specified by ``extra`` -- and each time you come back to the \"Change\" "
+#~ "page for an already-created object, you get another three extra slots."
+#~ msgstr ""
+#~ "Это работает следующим образом: Есть три формы для добавления вариантов "
+#~ "ответа -- как определяет параметр ``extra`` -- и при каждой загрузке этой "
+#~ "страницы будет три формы для добавления новых вариантов ответа."
+
+# 31ddd2df10f54822afc052015cd9f9b6
+#~ msgid ""
+#~ "At the end of the three current slots you will find an \"Add another "
+#~ "Choice\" link.  If you click on it, a new slot will be added. If you want "
+#~ "to remove the added slot, you can click on the X to the top right of the "
+#~ "added slot. Note that you can't remove the original three slots. This "
+#~ "image shows an added slot:"
+#~ msgstr ""
+#~ "В конце формы вы увидите  ссылку \"Add another Choice\".  Кликните и "
+#~ "добавится новая форма. Чтобы удалить форму, нажмите на X. Заметим, что вы "
+#~ "не можете удалить формы для существующих записей. Следующий рисунок "
+#~ "показывает добавленные формы:"
+
+# 11a1718511a243df9a9e187a392fa142
+#~ msgid ""
+#~ "One small problem, though. It takes a lot of screen space to display all "
+#~ "the fields for entering related ``Choice`` objects. For that reason, "
+#~ "Django offers a tabular way of displaying inline related objects; you "
+#~ "just need to change the ``ChoiceInline`` declaration to read:"
+#~ msgstr ""
+#~ "Однако есть одна проблема. Эти формы занимают много места. Для таких "
+#~ "случаев, Django предлагает вариант отображения табами, переопределите "
+#~ "``ChoiceInline`` следующим образом:"
+
+# ff31e79ce1cc4ae98aeac40371e13bd8
+#~ msgid ""
+#~ "With that ``TabularInline`` (instead of ``StackedInline``), the related "
+#~ "objects are displayed in a more compact, table-based format:"
+#~ msgstr ""
+#~ "С ``TabularInline`` (вместо ``StackedInline``), формы для связанных "
+#~ "объектов отображаются в более компактном табличном виде:"
+
+# a5043804180946599fbac0845623c096
+#~ msgid ""
+#~ "Note that there is an extra \"Delete?\" column that allows removing rows "
+#~ "added using the \"Add Another Choice\" button and rows that have already "
+#~ "been saved."
+#~ msgstr ""
+#~ "Обратите внимание на дополнительную колонку  \"Delete?\", которая "
+#~ "позволяет удалить только что добавленные и существующие записи."
+
+# fe0840dfd6974b8398bf9d41d3b07349
+#~ msgid "Customize the admin change list"
+#~ msgstr "Настройка страницы списка объектов"
+
+# bbd13b3a8ebc4872ab251693ca4f39cf
+#~ msgid ""
+#~ "Now that the Question admin page is looking good, let's make some tweaks "
+#~ "to the \"change list\" page -- the one that displays all the questions in "
+#~ "the system."
+#~ msgstr ""
+#~ "Теперь, когда страница добавления/редактирования вопроса выглядит хорошо, "
+#~ "давай улучшим страницу отображения списка вопросов."
+
+# 3cb2967475ca44669088584fd34362bf
+#~ msgid "Here's what it looks like at this point:"
+#~ msgstr "Вот как она выглядит сейчас:"
+
+# c6b6b8d7536f455b9700483586dd7564
+#~ msgid ""
+#~ "By default, Django displays the ``str()`` of each object. But sometimes "
+#~ "it'd be more helpful if we could display individual fields. To do that, "
+#~ "use the :attr:`~django.contrib.admin.ModelAdmin.list_display` admin "
+#~ "option, which is a tuple of field names to display, as columns, on the "
+#~ "change list page for the object:"
+#~ msgstr ""
+#~ "По умолчанию Django отображает результат выполнения ``str()`` для каждого "
+#~ "объекта. Но чаще всего хочется показывать список полей. Для этого "
+#~ "используйте параметр :attr:`~django.contrib.admin.ModelAdmin."
+#~ "list_display`, который является кортежем состоящим из названий полей "
+#~ "модели:"
+
+# 2bc360aa5a864912a986974c7d7aec7e
+#~ msgid ""
+#~ "Just for good measure, let's also include the ``was_published_recently`` "
+#~ "custom method from Tutorial 1:"
+#~ msgstr ""
+#~ "Для примера давайте еще и добавим метод ``was_published_recently`` из "
+#~ "Части 1 учебника:"
+
+# cf8a680befd14405a87ea4a829c29300
+#~ msgid "Now the question change list page looks like this:"
+#~ msgstr "Теперь страница списка вопросов выглядит следующим образом:"
+
+# 01a04c5ac2c7400281f4b1f0e3daa57d
+#~ msgid ""
+#~ "You can click on the column headers to sort by those values -- except in "
+#~ "the case of the ``was_published_recently`` header, because sorting by the "
+#~ "output of an arbitrary method is not supported. Also note that the column "
+#~ "header for ``was_published_recently`` is, by default, the name of the "
+#~ "method (with underscores replaced with spaces), and that each line "
+#~ "contains the string representation of the output."
+#~ msgstr ""
+#~ "Вы можете нажать на заголовок колонки чтобы отсортировать записи по полю "
+#~ "-- но не для ``was_published_recently``, так как сортировка по методу не "
+#~ "поддерживается. Название колонки для ``was_published_recently`` по "
+#~ "умолчанию равно названию метода (нижние подчеркивание заменяется на "
+#~ "пробелы), а значение равно строковому представлению результата выполнения "
+#~ "метода."
+
+# fed44405ef294b16b5dd0a0b4ac793f6
+#~ msgid ""
+#~ "You can improve that by giving that method (in :file:`polls/models.py`) a "
+#~ "few attributes, as follows:"
+#~ msgstr ""
+#~ "Вы можете исправить это, добавив несколько атрибутов (в :file:`polls/"
+#~ "models.py`) этому методу:"
+
+#~ msgid ""
+#~ "For more information on these method properties, see :attr:`~django."
+#~ "contrib.admin.ModelAdmin.list_display`."
+#~ msgstr ""
+#~ "Список всех доступных атрибутов можно найти в описании :attr:`~django."
+#~ "contrib.admin.ModelAdmin.list_display`."
+
+# 267b45b9cd084cec80a9cce9f3473d13
+#~ msgid ""
+#~ "Edit your :file:`polls/admin.py` file again and add an improvement to the "
+#~ "``Question`` change list page: filters using the :attr:`~django.contrib."
+#~ "admin.ModelAdmin.list_filter`. Add the following line to "
+#~ "``QuestionAdmin``::"
+#~ msgstr ""
+#~ "Отредактируем файл :file:`polls/admin.py` снова и добавим на страницу "
+#~ "списка вопросов Фильтры, используя :attr:`~django.contrib.admin."
+#~ "ModelAdmin.list_filter`. Добавьте следующую строку в ``QuestionAdmin``::"
+
+# b9401dc5188249739f27766ccf180e7d
+#~ msgid ""
+#~ "That adds a \"Filter\" sidebar that lets people filter the change list by "
+#~ "the ``pub_date`` field:"
+#~ msgstr "Это добавляет \"Фильтр\" по полю ``pub_date`` в боковой панели:"
+
+# 8892439b8c734ab6b007f985adc58717
+#~ msgid ""
+#~ "The type of filter displayed depends on the type of field you're "
+#~ "filtering on. Because ``pub_date`` is a :class:`~django.db.models."
+#~ "DateTimeField`, Django knows to give appropriate filter options: \"Any "
+#~ "date,\" \"Today,\" \"Past 7 days,\" \"This month,\" \"This year.\""
+#~ msgstr ""
+#~ "Тип фильтра зависит от типа поля. Так как ``pub_date`` является :class:"
+#~ "`~django.db.models.DateTimeField`, Django отображает соответствующие "
+#~ "варианты для фильтрации: \"Any date,\" \"Today,\" \"Past 7 days,\" \"This "
+#~ "month,\" \"This year.\""
+
+# dc585c8402e24679bf5dbfaabe588891
+#~ msgid "This is shaping up well. Let's add some search capability::"
+#~ msgstr "Теперь добавим поиск::"
+
+# 2d8508e7c9654ee7bbe2e1b1714f6051
+#~ msgid ""
+#~ "That adds a search box at the top of the change list. When somebody "
+#~ "enters search terms, Django will search the ``question_text`` field. You "
+#~ "can use as many fields as you'd like -- although because it uses a "
+#~ "``LIKE`` query behind the scenes, limiting the number of search fields to "
+#~ "a reasonable number will make it easier for your database to do the "
+#~ "search."
+#~ msgstr ""
+#~ "Это добавляет поле для поиска в верхней части страницы. При вводе "
+#~ "запроса, Django будет искать по полю ``question_text``. Вы можете "
+#~ "использовать любое количество полей -- учтите что используется запрос "
+#~ "``LIKE``, так что постарайтесь не перегрузить вашу базу данных."
+
+# 201153f402024039a5ca6c6243217882
+#~ msgid ""
+#~ "Now's also a good time to note that change lists give you free "
+#~ "pagination. The default is to display 100 items per page. :attr:`Change "
+#~ "list pagination <django.contrib.admin.ModelAdmin.list_per_page>`, :attr:"
+#~ "`search boxes <django.contrib.admin.ModelAdmin.search_fields>`, :attr:"
+#~ "`filters <django.contrib.admin.ModelAdmin.list_filter>`, :attr:`date-"
+#~ "hierarchies <django.contrib.admin.ModelAdmin.date_hierarchy>`, and :attr:"
+#~ "`column-header-ordering <django.contrib.admin.ModelAdmin.list_display>` "
+#~ "all work together like you think they should."
+#~ msgstr ""
+#~ "Страница списка объектов также содержит постраничное отображение. По "
+#~ "умолчанию отображается 100 объектов на страницу. :attr:`Поменять "
+#~ "количество объектов на одной странице <django.contrib.admin.ModelAdmin."
+#~ "list_per_page>`, :attr:`поля для поиска <django.contrib.admin.ModelAdmin."
+#~ "search_fields>`, :attr:`фильтры <django.contrib.admin.ModelAdmin."
+#~ "list_filter>`, :attr:`добавить иерархию по дате <django.contrib.admin."
+#~ "ModelAdmin.date_hierarchy>` и :attr:`отображаемые поля <django.contrib."
+#~ "admin.ModelAdmin.list_display>` - все это возможно."
+
+# 7363520b04114fd390f274dfbbbdebf6
+#~ msgid "Customize the admin look and feel"
+#~ msgstr "Настраиваем внешний вид"
+
+# efb5d17f97174e3aaf97afc8db9e58dd
+#~ msgid ""
+#~ "Clearly, having \"Django administration\" at the top of each admin page "
+#~ "is ridiculous. It's just placeholder text."
+#~ msgstr ""
+#~ "\"Django administration\" в \"шапке\" страницы выглядит нелепо. Это "
+#~ "просто замещающий текст."
+
+# 352de987ce924829ae446bf5454405bf
+#~ msgid ""
+#~ "That's easy to change, though, using Django's template system. The Django "
+#~ "admin is powered by Django itself, and its interfaces use Django's own "
+#~ "template system."
+#~ msgstr ""
+#~ "Его очень легко заменить, используя систему шаблонов Django. Интерфейс "
+#~ "администратора работает благодаря Django и использует систему шаблонов "
+#~ "Django."
+
+# b3a78c2d51634e9ab36341c8697511ce
+#~ msgid "Customizing your *project's* templates"
+#~ msgstr "Переопределение шаблонов *проекта*"
+
+# ffd0fc7e1d514d44860f4fc559c70cb3
+#~ msgid ""
+#~ "Create a ``templates`` directory in your project directory (the one that "
+#~ "contains ``manage.py``). Templates can live anywhere on your filesystem "
+#~ "that Django can access. (Django runs as whatever user your server runs.) "
+#~ "However, keeping your templates within the project is a good convention "
+#~ "to follow."
+#~ msgstr ""
+#~ "Создайте каталог ``templates`` в каталоге проекта (который содержит "
+#~ "``manage.py``). Шаблоны могут располагаться где угодно, главное чтобы "
+#~ "Django имел доступ к ним. (Django запускается под пользователем, под "
+#~ "которым запущен сервер.) Но мы советуем располагать шаблоны внутри "
+#~ "проекта."
+
+# 1a36d4c948874715b88ef74c180758aa
+#~ msgid ""
+#~ "Open your settings file (:file:`mysite/settings.py`, remember) and add a :"
+#~ "setting:`DIRS <TEMPLATES-DIRS>` option in the :setting:`TEMPLATES` "
+#~ "setting:"
+#~ msgstr ""
+#~ "Откройте файл настроек (напомним это :file:`mysite/settings.py`) и "
+#~ "найдите опцию :setting:`DIRS <TEMPLATES-DIRS>` в настройке :setting:"
+#~ "`TEMPLATES`:"
+
+# 1a36d4c948874715b88ef74c180758aa
+#~ msgid ""
+#~ ":setting:`DIRS <TEMPLATES-DIRS>` is a list of filesystem directories to "
+#~ "check when loading Django templates; it's a search path."
+#~ msgstr ""
+#~ ":setting:`DIRS <TEMPLATES-DIRS>` -- это список путей к каталогам, который "
+#~ "указывает, где Django будет искать шаблоны."
+
+# f78d9c4e64c44d7dbe87c6566c2a0dc3
+#~ msgid ""
+#~ "Now create a directory called ``admin`` inside ``templates``, and copy "
+#~ "the template ``admin/base_site.html`` from within the default Django "
+#~ "admin template directory in the source code of Django itself (``django/"
+#~ "contrib/admin/templates``) into that directory."
+#~ msgstr ""
+#~ "Теперь создайте каталог ``admin`` в каталоге ``templates``, и скопируйте "
+#~ "шаблон ``admin/base_site.html`` из встроенных шаблонов в исходниках "
+#~ "Django (``django/contrib/admin/templates``) в этот каталог."
+
+# d887e1db080f45639ba1d138025af7a0
+#~ msgid "Where are the Django source files?"
+#~ msgstr "Где лежит исходный код Django?"
+
+# 84b172ca9fb7485db963b175b5980968
+#~ msgid ""
+#~ "If you have difficulty finding where the Django source files are located "
+#~ "on your system, run the following command:"
+#~ msgstr ""
+#~ "Если вы не знаете где лежат исходники Django, выполните следующую команду:"
+
+#~ msgid ""
+#~ "Then, just edit the file and replace ``{{ site_header|default:_('Django "
+#~ "administration') }}`` (including the curly braces) with your own site's "
+#~ "name as you see fit. You should end up with a section of code like:"
+#~ msgstr ""
+#~ "Затем просто отредактируйте файл и замените ``{{ site_header|default:"
+#~ "_('Django administration') }}`` (включая фигурные скобки) на название "
+#~ "вашего сайта. Должно получиться наподобие:"
+
+# af610c99dee742dfb482d8d08801177d
+#~ msgid ""
+#~ "We use this approach to teach you how to override templates. In an actual "
+#~ "project, you would probably use the :attr:`django.contrib.admin.AdminSite."
+#~ "site_header` attribute to more easily make this particular customization."
+#~ msgstr ""
+#~ "Мы использовали такой подход, чтобы научить переопределять шаблоны. При "
+#~ "разработке проекта для этого обычно используют атрибут :attr:`django."
+#~ "contrib.admin.AdminSite.site_header`."
+
+# 5feb2de7940e41a7b83a9cd9f05da5f5
+#~ msgid ""
+#~ "This template file contains lots of text like ``{% block branding %}`` "
+#~ "and ``{{ title }}``. The ``{%`` and ``{{`` tags are part of Django's "
+#~ "template language. When Django renders ``admin/base_site.html``, this "
+#~ "template language will be evaluated to produce the final HTML page. Don't "
+#~ "worry if you can't make any sense of the template right now -- we'll "
+#~ "delve into Django's templating language in Tutorial 3."
+#~ msgstr ""
+#~ "Этот шаблон содержит текст подобный ``{% block branding %}`` и "
+#~ "``{{ title }}``. Теги ``{%`` и ``{{`` -- это части синтаксиса системы "
+#~ "шаблонов Django. При выполнении шаблона ``admin/base_site.html`` Django "
+#~ "создаст HTML страницу. Не волнуйтесь если ничего не понимаете в этом -- в "
+#~ "шаблонах Django мы разберемся в Части 3."
+
+# 72cf7a56b85e4f08a18a8e39a3b50e9a
+#~ msgid ""
+#~ "Note that any of Django's default admin templates can be overridden. To "
+#~ "override a template, just do the same thing you did with ``base_site."
+#~ "html`` -- copy it from the default directory into your custom directory, "
+#~ "and make changes."
+#~ msgstr ""
+#~ "Любой шаблон интерфейса администратора можно переопределить. Чтобы "
+#~ "переопределить шаблон, сделайте тоже что и с ``base_site.html`` -- "
+#~ "скопируйте его в каталог с шаблонами проекта и внесите изменения."
+
+# 9e8e98d01c8f40d2ab3b248bd243f734
+#~ msgid "Customizing your *application's* templates"
+#~ msgstr "Настройка шаблонов *приложения*"
+
+# 5af4c4f427c140218405e8069e51c558
+#~ msgid ""
+#~ "Astute readers will ask: But if :setting:`DIRS <TEMPLATES-DIRS>` was "
+#~ "empty by default, how was Django finding the default admin templates? The "
+#~ "answer is that, since :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` is set to "
+#~ "``True``, Django automatically looks for a ``templates/`` subdirectory "
+#~ "within each application package, for use as a fallback (don't forget that "
+#~ "``django.contrib.admin`` is an application)."
+#~ msgstr ""
+#~ "Внимательные читатели спросят: если :setting:`DIRS <TEMPLATES-DIRS>` "
+#~ "пустая по умолчанию, как Django находит шаблоны интерфейса администратора "
+#~ "по умолчанию? Т.к. :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` по умолчанию "
+#~ "``True``, Django пытается найти шаблон в подкаталоге ``templates/`` "
+#~ "каждого приложении, если шаблон не найден другим способом (не забываем, "
+#~ "что ``django.contrib.admin`` -- это приложение)."
+
+# 7430c2aa6649410388a23d93a55daaeb
+#~ msgid ""
+#~ "Our poll application is not very complex and doesn't need custom admin "
+#~ "templates. But if it grew more sophisticated and required modification of "
+#~ "Django's standard admin templates for some of its functionality, it would "
+#~ "be more sensible to modify the *application's* templates, rather than "
+#~ "those in the *project*. That way, you could include the polls application "
+#~ "in any new project and be assured that it would find the custom templates "
+#~ "it needed."
+#~ msgstr ""
+#~ "Наше приложение простое и не требует переопределения шаблонов. Но если "
+#~ "оно станет большим и сложным, и нам понадобится изменить его шаблоны, "
+#~ "логичнее изменить шаблоны для *приложения*, а не для *проекта*. В таком "
+#~ "случае вы сможете добавить приложения для голосования в любой проект и "
+#~ "переопределенные шаблоны будут работать."
+
+# c421363e1155430f86e8777139495a85
+#~ msgid ""
+#~ "See the :ref:`template loading documentation <template-loading>` for more "
+#~ "information about how Django finds its templates."
+#~ msgstr ""
+#~ "Смотрите :ref:`раздел о загрузке шаблонов <template-loading>`, чтобы "
+#~ "узнать, как Django ищет шаблоны."
+
+# e56cb4a95bf840b6b695449ea3588fcb
+#~ msgid "Customize the admin index page"
+#~ msgstr "Настроим главную страницу"
+
+# 2bc787d295f0415a905b8a543d175fe5
+#~ msgid ""
+#~ "On a similar note, you might want to customize the look and feel of the "
+#~ "Django admin index page."
+#~ msgstr ""
+#~ "Возможно, вам понадобится настроить главную страницу интерфейса "
+#~ "администратора."
+
+# 0ea5203c05ce4ed69c16e6a5baba7a80
+#~ msgid ""
+#~ "By default, it displays all the apps in :setting:`INSTALLED_APPS` that "
+#~ "have been registered with the admin application, in alphabetical order. "
+#~ "You may want to make significant changes to the layout. After all, the "
+#~ "index is probably the most important page of the admin, and it should be "
+#~ "easy to use."
+#~ msgstr ""
+#~ "По умолчанию она показывает все приложения в алфавитном порядке из "
+#~ "настройки :setting:`INSTALLED_APPS`, которые зарегистрированы в "
+#~ "интерфейсе администратора. Главная страница очень важна и должна быть "
+#~ "удобной."
+
+# b2ccca41b28648b7a5d1d21e465a33ab
+#~ msgid ""
+#~ "The template to customize is ``admin/index.html``. (Do the same as with "
+#~ "``admin/base_site.html`` in the previous section -- copy it from the "
+#~ "default directory to your custom template directory.) Edit the file, and "
+#~ "you'll see it uses a template variable called ``app_list``. That variable "
+#~ "contains every installed Django app. Instead of using that, you can hard-"
+#~ "code links to object-specific admin pages in whatever way you think is "
+#~ "best. Again, don't worry if you can't understand the template language -- "
+#~ "we'll cover that in more detail in Tutorial 3."
+#~ msgstr ""
+#~ "Для главной страницы используется шаблон ``admin/index.html``. (Сделайте "
+#~ "тоже что и с шаблоном ``admin/base_site.html`` из раздела выше -- "
+#~ "скопируйте его из приложения Django в каталог шаблонов проекта.) Откройте "
+#~ "файл и вы увидите использование переменной ``app_list``. Эта переменная "
+#~ "содержит все отображаемые приложения. Вместо нее вы можете явно указать "
+#~ "ссылки на нужные страницы. Опять же, не волнуйтесь что вы ничего не "
+#~ "понимаете, шаблоны будут обсуждаться в Части 3."
 
 # 7f94c607c39c4c2ab1a41fbf3f711f43
 #~ msgid ""

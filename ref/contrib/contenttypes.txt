@@ -103,8 +103,6 @@ created with the following values:
 * :attr:`~django.contrib.contenttypes.models.ContentType.model`
   will be set to ``'site'``.
 
-.. _the verbose_name attribute: ../model-api/#verbose_name
-
 Methods on ``ContentType`` instances
 ====================================
 
@@ -131,8 +129,7 @@ For example, we could look up the
 :class:`~django.contrib.auth.models.User` model::
 
     >>> from django.contrib.contenttypes.models import ContentType
-    >>> user_type = ContentType.objects.get(app_label="auth", model="user")
-    >>> user_type
+    >>> ContentType.objects.get(app_label="auth", model="user")
     <ContentType: user>
 
 And then use it to query for a particular
@@ -196,7 +193,7 @@ The ``ContentTypeManager``
         it's preferred to use this method over the usual
         ``ContentType.objects.get(pk=id)``
 
-    .. method:: get_for_model(model[, for_concrete_model=True])
+    .. method:: get_for_model(model, for_concrete_model=True)
 
         Takes either a model class or an instance of a model, and returns the
         :class:`~django.contrib.contenttypes.models.ContentType` instance
@@ -204,7 +201,7 @@ The ``ContentTypeManager``
         the :class:`~django.contrib.contenttypes.models.ContentType` of a proxy
         model.
 
-    .. method:: get_for_models(*models[, for_concrete_models=True])
+    .. method:: get_for_models(*models, for_concrete_models=True)
 
         Takes a variadic number of model classes, and returns a dictionary
         mapping the model classes to the
@@ -229,8 +226,7 @@ want to go to the trouble of obtaining the model's metadata to perform a manual
 lookup::
 
     >>> from django.contrib.auth.models import User
-    >>> user_type = ContentType.objects.get_for_model(User)
-    >>> user_type
+    >>> ContentType.objects.get_for_model(User)
     <ContentType: user>
 
 .. module:: django.contrib.contenttypes.fields
@@ -256,7 +252,7 @@ A simple example is a tagging system, which might look like this::
 
     class TaggedItem(models.Model):
         tag = models.SlugField()
-        content_type = models.ForeignKey(ContentType)
+        content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
         object_id = models.PositiveIntegerField()
         content_object = GenericForeignKey('content_type', 'object_id')
 
@@ -298,19 +294,6 @@ model:
        If ``False``, the field will be able to reference proxy models. Default
        is ``True``. This mirrors the ``for_concrete_model`` argument to
        :meth:`~django.contrib.contenttypes.models.ContentTypeManager.get_for_model`.
-
-    .. attribute:: GenericForeignKey.allow_unsaved_instance_assignment
-
-        .. versionadded:: 1.8
-
-        Works analogously to :attr:`ForeignKey.allow_unsaved_instance_assignment
-        <django.db.models.ForeignKey.allow_unsaved_instance_assignment>`.
-
-    .. deprecated:: 1.7
-
-        This class used to be defined in ``django.contrib.contenttypes.generic``.
-        Support for importing from this old location will be removed in Django
-        1.9.
 
 .. admonition:: Primary key type compatibility
 
@@ -377,15 +360,7 @@ Reverse generic relations
 
 .. class:: GenericRelation
 
-    .. deprecated:: 1.7
-
-        This class used to be defined in ``django.contrib.contenttypes.generic``.
-        Support for importing from this old location will be removed in Django
-        1.9.
-
     .. attribute:: related_query_name
-
-        .. versionadded:: 1.7
 
         The relation on the related object back to this object doesn't exist by
         default. Setting ``related_query_name`` creates a relation from the
@@ -394,6 +369,9 @@ Reverse generic relations
 
 If you know which models you'll be using most often, you can also add
 a "reverse" generic relationship to enable an additional API. For example::
+
+    from django.db import models
+    from django.contrib.contenttypes.fields import GenericRelation
 
     class Bookmark(models.Model):
         url = models.URLField()
@@ -410,8 +388,6 @@ be used to retrieve their associated ``TaggedItems``::
     >>> t2.save()
     >>> b.tags.all()
     [<TaggedItem: django>, <TaggedItem: python>]
-
-.. versionadded:: 1.7
 
 Defining :class:`~django.contrib.contenttypes.fields.GenericRelation` with
 ``related_query_name`` set allows querying from the related object::
@@ -479,19 +455,12 @@ signal.
 Generic relations and aggregation
 ---------------------------------
 
-:doc:`Django's database aggregation API </topics/db/aggregation>`
-doesn't work with a
+:doc:`Django's database aggregation API </topics/db/aggregation>` works with a
 :class:`~django.contrib.contenttypes.fields.GenericRelation`. For example, you
-might be tempted to try something like::
+can find out how many tags all the bookmarks have::
 
-    Bookmark.objects.aggregate(Count('tags'))
-
-This will not work correctly, however. The generic relation adds extra filters
-to the queryset to ensure the correct content type, but the
-:meth:`~django.db.models.query.QuerySet.aggregate` method doesn't take them
-into account. For now, if you need aggregates on generic relations, you'll
-need to calculate them without using the aggregation API.
-
+    >>> Bookmark.objects.aggregate(Count('tags'))
+    {'tags__count': 3}
 
 .. module:: django.contrib.contenttypes.forms
 
@@ -505,12 +474,6 @@ The :mod:`django.contrib.contenttypes.forms` module provides:
   :class:`~django.contrib.contenttypes.fields.GenericForeignKey`.
 
 .. class:: BaseGenericInlineFormSet
-
-    .. deprecated:: 1.7
-
-        This class used to be defined in ``django.contrib.contenttypes.generic``.
-        Support for importing from this old location will be removed in Django
-        1.9.
 
 .. function:: generic_inlineformset_factory(model, form=ModelForm, formset=BaseGenericInlineFormSet, ct_field="content_type", fk_field="object_id", fields=None, exclude=None, extra=3, can_order=False, can_delete=True, max_num=None, formfield_callback=None, validate_max=False, for_concrete_model=True, min_num=None, validate_min=False)
 
@@ -527,21 +490,10 @@ The :mod:`django.contrib.contenttypes.forms` module provides:
     :class:`~django.contrib.contenttypes.fields.GenericForeignKey.for_concrete_model`
     argument on ``GenericForeignKey``.
 
-    .. deprecated:: 1.7
-
-        This function used to be defined in ``django.contrib.contenttypes.generic``.
-        Support for importing from this old location will be removed in Django
-        1.9.
-
-    .. versionchanged:: 1.7
-
-        ``min_num`` and ``validate_min`` were added.
-
-
 .. module:: django.contrib.contenttypes.admin
 
 Generic relations in admin
-------------------------------------
+--------------------------
 
 The :mod:`django.contrib.contenttypes.admin` module provides
 :class:`~django.contrib.contenttypes.admin.GenericTabularInline` and
@@ -571,20 +523,8 @@ information.
         The name of the integer field that represents the ID of the related
         object. Defaults to ``object_id``.
 
-    .. deprecated:: 1.7
-
-        This class used to be defined in ``django.contrib.contenttypes.generic``.
-        Support for importing from this old location will be removed in Django
-        1.9.
-
 .. class:: GenericTabularInline
 .. class:: GenericStackedInline
 
     Subclasses of :class:`GenericInlineModelAdmin` with stacked and tabular
     layouts, respectively.
-
-    .. deprecated:: 1.7
-
-        These classes used to be defined in ``django.contrib.contenttypes.generic``.
-        Support for importing from this old location will be removed in Django
-        1.9.

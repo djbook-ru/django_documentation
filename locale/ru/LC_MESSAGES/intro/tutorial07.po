@@ -1,0 +1,466 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-17 10:48+0200\n"
+"PO-Revision-Date: 2015-11-17 10:48+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../../intro/tutorial07.txt:3
+msgid "Writing your first Django app, part 7"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:5
+msgid ""
+"This tutorial begins where :doc:`Tutorial 6 </intro/tutorial06>` left off. "
+"We're continuing the Web-poll application and will focus on customizing the "
+"Django's automatically-generated admin site that we first explored in :doc:"
+"`Tutorial 2 </intro/tutorial02>`."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:11
+msgid "Customize the admin form"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:13
+msgid ""
+"By registering the ``Question`` model with ``admin.site."
+"register(Question)``, Django was able to construct a default form "
+"representation. Often, you'll want to customize how the admin form looks and "
+"works. You'll do this by telling Django the options you want when you "
+"register the object."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:18
+msgid ""
+"Let's see how this works by reordering the fields on the edit form. Replace "
+"the ``admin.site.register(Question)`` line with:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:34
+msgid ""
+"You'll follow this pattern -- create a model admin class, then pass it as "
+"the second argument to ``admin.site.register()`` -- any time you need to "
+"change the admin options for an model."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:38
+msgid ""
+"This particular change above makes the \"Publication date\" come before the "
+"\"Question\" field:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:44
+msgid ""
+"This isn't impressive with only two fields, but for admin forms with dozens "
+"of fields, choosing an intuitive order is an important usability detail."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:47
+msgid ""
+"And speaking of forms with dozens of fields, you might want to split the "
+"form up into fieldsets:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:66
+msgid ""
+"The first element of each tuple in :attr:`~django.contrib.admin.ModelAdmin."
+"fieldsets` is the title of the fieldset. Here's what our form looks like now:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:74
+msgid "Adding related objects"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:76
+msgid ""
+"OK, we have our Question admin page, but a ``Question`` has multiple "
+"``Choice``\\s, and the admin page doesn't display choices."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:79
+msgid "Yet."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:81
+msgid ""
+"There are two ways to solve this problem. The first is to register "
+"``Choice`` with the admin just as we did with ``Question``. That's easy:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:93
+msgid ""
+"Now \"Choices\" is an available option in the Django admin. The \"Add choice"
+"\" form looks like this:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:99
+msgid ""
+"In that form, the \"Question\" field is a select box containing every "
+"question in the database. Django knows that a :class:`~django.db.models."
+"ForeignKey` should be represented in the admin as a ``<select>`` box. In our "
+"case, only one question exists at this point."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:104
+msgid ""
+"Also note the \"Add Another\" link next to \"Question.\" Every object with a "
+"``ForeignKey`` relationship to another gets this for free. When you click "
+"\"Add Another\", you'll get a popup window with the \"Add question\" form. "
+"If you add a question in that window and click \"Save\", Django will save "
+"the question to the database and dynamically add it as the selected choice "
+"on the \"Add choice\" form you're looking at."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:111
+msgid ""
+"But, really, this is an inefficient way of adding ``Choice`` objects to the "
+"system. It'd be better if you could add a bunch of Choices directly when you "
+"create the ``Question`` object. Let's make that happen."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:115
+msgid ""
+"Remove the ``register()`` call for the ``Choice`` model. Then, edit the "
+"``Question`` registration code to read:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:140
+msgid ""
+"This tells Django: \"``Choice`` objects are edited on the ``Question`` admin "
+"page. By default, provide enough fields for 3 choices.\""
+msgstr ""
+
+#: ../../intro/tutorial07.txt:143
+msgid "Load the \"Add question\" page to see how that looks:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:148
+msgid ""
+"It works like this: There are three slots for related Choices -- as "
+"specified by ``extra`` -- and each time you come back to the \"Change\" page "
+"for an already-created object, you get another three extra slots."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:152
+msgid ""
+"At the end of the three current slots you will find an \"Add another Choice"
+"\" link.  If you click on it, a new slot will be added. If you want to "
+"remove the added slot, you can click on the X to the top right of the added "
+"slot. Note that you can't remove the original three slots. This image shows "
+"an added slot:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:160
+msgid ""
+"One small problem, though. It takes a lot of screen space to display all the "
+"fields for entering related ``Choice`` objects. For that reason, Django "
+"offers a tabular way of displaying inline related objects; you just need to "
+"change the ``ChoiceInline`` declaration to read:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:171
+msgid ""
+"With that ``TabularInline`` (instead of ``StackedInline``), the related "
+"objects are displayed in a more compact, table-based format:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:177
+msgid ""
+"Note that there is an extra \"Delete?\" column that allows removing rows "
+"added using the \"Add Another Choice\" button and rows that have already "
+"been saved."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:181
+msgid "Customize the admin change list"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:183
+msgid ""
+"Now that the Question admin page is looking good, let's make some tweaks to "
+"the \"change list\" page -- the one that displays all the questions in the "
+"system."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:186
+msgid "Here's what it looks like at this point:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:191
+msgid ""
+"By default, Django displays the ``str()`` of each object. But sometimes it'd "
+"be more helpful if we could display individual fields. To do that, use the :"
+"attr:`~django.contrib.admin.ModelAdmin.list_display` admin option, which is "
+"a tuple of field names to display, as columns, on the change list page for "
+"the object:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:204
+msgid ""
+"Just for good measure, let's also include the ``was_published_recently()`` "
+"method from :doc:`Tutorial 2 </intro/tutorial02>`:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:214
+msgid "Now the question change list page looks like this:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:219
+msgid ""
+"You can click on the column headers to sort by those values -- except in the "
+"case of the ``was_published_recently`` header, because sorting by the output "
+"of an arbitrary method is not supported. Also note that the column header "
+"for ``was_published_recently`` is, by default, the name of the method (with "
+"underscores replaced with spaces), and that each line contains the string "
+"representation of the output."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:226
+msgid ""
+"You can improve that by giving that method (in :file:`polls/models.py`) a "
+"few attributes, as follows:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:240
+msgid ""
+"For more information on these method properties, see :attr:`~django.contrib."
+"admin.ModelAdmin.list_display`."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:243
+msgid ""
+"Edit your :file:`polls/admin.py` file again and add an improvement to the "
+"``Question`` change list page: filters using the :attr:`~django.contrib."
+"admin.ModelAdmin.list_filter`. Add the following line to ``QuestionAdmin``::"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:250
+msgid ""
+"That adds a \"Filter\" sidebar that lets people filter the change list by "
+"the ``pub_date`` field:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:256
+msgid ""
+"The type of filter displayed depends on the type of field you're filtering "
+"on. Because ``pub_date`` is a :class:`~django.db.models.DateTimeField`, "
+"Django knows to give appropriate filter options: \"Any date\", \"Today\", "
+"\"Past 7 days\", \"This month\", \"This year\"."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:261
+msgid "This is shaping up well. Let's add some search capability::"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:265
+msgid ""
+"That adds a search box at the top of the change list. When somebody enters "
+"search terms, Django will search the ``question_text`` field. You can use as "
+"many fields as you'd like -- although because it uses a ``LIKE`` query "
+"behind the scenes, limiting the number of search fields to a reasonable "
+"number will make it easier for your database to do the search."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:271
+msgid ""
+"Now's also a good time to note that change lists give you free pagination. "
+"The default is to display 100 items per page. :attr:`Change list pagination "
+"<django.contrib.admin.ModelAdmin.list_per_page>`, :attr:`search boxes "
+"<django.contrib.admin.ModelAdmin.search_fields>`, :attr:`filters <django."
+"contrib.admin.ModelAdmin.list_filter>`, :attr:`date-hierarchies <django."
+"contrib.admin.ModelAdmin.date_hierarchy>`, and :attr:`column-header-ordering "
+"<django.contrib.admin.ModelAdmin.list_display>` all work together like you "
+"think they should."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:281
+msgid "Customize the admin look and feel"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:283
+msgid ""
+"Clearly, having \"Django administration\" at the top of each admin page is "
+"ridiculous. It's just placeholder text."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:286
+msgid ""
+"That's easy to change, though, using Django's template system. The Django "
+"admin is powered by Django itself, and its interfaces use Django's own "
+"template system."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:293
+msgid "Customizing your *project's* templates"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:295
+msgid ""
+"Create a ``templates`` directory in your project directory (the one that "
+"contains ``manage.py``). Templates can live anywhere on your filesystem that "
+"Django can access. (Django runs as whatever user your server runs.) However, "
+"keeping your templates within the project is a good convention to follow."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:300
+msgid ""
+"Open your settings file (:file:`mysite/settings.py`, remember) and add a :"
+"setting:`DIRS <TEMPLATES-DIRS>` option in the :setting:`TEMPLATES` setting:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:322
+msgid ""
+":setting:`DIRS <TEMPLATES-DIRS>` is a list of filesystem directories to "
+"check when loading Django templates; it's a search path."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:0
+msgid "Organizing templates"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:327
+msgid ""
+"Just like the static files, we *could* have all our templates together, in "
+"one big templates directory, and it would work perfectly well. However, "
+"templates that  belongs to a particular application, we should put in the "
+"application’s template directory (e.g. ``polls/templates``) rather than the "
+"project’s (``templates``). We'll discuss in more detail in the :doc:"
+"`reusable apps tutorial </intro/reusable-apps>` *why* we do this."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:334
+msgid ""
+"Now create a directory called ``admin`` inside ``templates``, and copy the "
+"template ``admin/base_site.html`` from within the default Django admin "
+"template directory in the source code of Django itself (``django/contrib/"
+"admin/templates``) into that directory."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:0
+msgid "Where are the Django source files?"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:341
+msgid ""
+"If you have difficulty finding where the Django source files are located on "
+"your system, run the following command:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:348
+msgid ""
+"Then, just edit the file and replace ``{{ site_header|default:_('Django "
+"administration') }}`` (including the curly braces) with your own site's name "
+"as you see fit. You should end up with a section of code like:"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:359
+msgid ""
+"We use this approach to teach you how to override templates. In an actual "
+"project, you would probably use the :attr:`django.contrib.admin.AdminSite."
+"site_header` attribute to more easily make this particular customization."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:364
+msgid ""
+"This template file contains lots of text like ``{% block branding %}`` and "
+"``{{ title }}``. The ``{%`` and ``{{`` tags are part of Django's template "
+"language. When Django renders ``admin/base_site.html``, this template "
+"language will be evaluated to produce the final HTML page, just like we saw "
+"in :doc:`Tutorial 3 </intro/tutorial03>`."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:370
+msgid ""
+"Note that any of Django's default admin templates can be overridden. To "
+"override a template, just do the same thing you did with ``base_site.html`` "
+"-- copy it from the default directory into your custom directory, and make "
+"changes."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:376
+msgid "Customizing your *application's* templates"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:378
+msgid ""
+"Astute readers will ask: But if :setting:`DIRS <TEMPLATES-DIRS>` was empty "
+"by default, how was Django finding the default admin templates? The answer "
+"is that, since :setting:`APP_DIRS <TEMPLATES-APP_DIRS>` is set to ``True``, "
+"Django automatically looks for a ``templates/`` subdirectory within each "
+"application package, for use as a fallback (don't forget that ``django."
+"contrib.admin`` is an application)."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:385
+msgid ""
+"Our poll application is not very complex and doesn't need custom admin "
+"templates. But if it grew more sophisticated and required modification of "
+"Django's standard admin templates for some of its functionality, it would be "
+"more sensible to modify the *application's* templates, rather than those in "
+"the *project*. That way, you could include the polls application in any new "
+"project and be assured that it would find the custom templates it needed."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:392
+msgid ""
+"See the :ref:`template loading documentation <template-loading>` for more "
+"information about how Django finds its templates."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:396
+msgid "Customize the admin index page"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:398
+msgid ""
+"On a similar note, you might want to customize the look and feel of the "
+"Django admin index page."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:401
+msgid ""
+"By default, it displays all the apps in :setting:`INSTALLED_APPS` that have "
+"been registered with the admin application, in alphabetical order. You may "
+"want to make significant changes to the layout. After all, the index is "
+"probably the most important page of the admin, and it should be easy to use."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:406
+msgid ""
+"The template to customize is ``admin/index.html``. (Do the same as with "
+"``admin/base_site.html`` in the previous section -- copy it from the default "
+"directory to your custom template directory). Edit the file, and you'll see "
+"it uses a template variable called ``app_list``. That variable contains "
+"every installed Django app. Instead of using that, you can hard-code links "
+"to object-specific admin pages in whatever way you think is best."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:414
+msgid "What's next?"
+msgstr ""
+
+#: ../../intro/tutorial07.txt:416
+msgid ""
+"The beginner tutorial ends here. In the meantime, you might want to check "
+"out some pointers on :doc:`where to go from here </intro/whatsnext>`."
+msgstr ""
+
+#: ../../intro/tutorial07.txt:419
+msgid ""
+"If you are familiar with Python packaging and interested in learning how to "
+"turn polls into a \"reusable app\", check out :doc:`Advanced tutorial: How "
+"to write reusable apps</intro/reusable-apps>`."
+msgstr ""

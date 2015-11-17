@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-11 11:43+0300\n"
+"POT-Creation-Date: 2015-11-17 10:48+0200\n"
 "PO-Revision-Date: 2015-06-18 12:23+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -76,13 +76,26 @@ msgstr "Добавляет указанный объект модели к мн�
 msgid "Example::"
 msgstr "Например::"
 
-# 86c70515afe24f8581fcb3b65da608d9
 #: ../../ref/models/relations.txt:49
 msgid ""
 "In the example above, in the case of a :class:`~django.db.models.ForeignKey` "
-"relationship, ``e.save()`` is called by the related manager to perform the "
-"update. Using ``add()`` with a many-to-many relationship, however, will not "
-"call any ``save()`` methods, but rather create the relationships using :meth:"
+"relationship, :meth:`QuerySet.update() <django.db.models.query.QuerySet."
+"update>` is used to perform the update. This requires the objects to already "
+"be saved."
+msgstr ""
+
+#: ../../ref/models/relations.txt:55
+msgid ""
+"You can use the ``bulk=False`` argument to instead have the related manager "
+"perform the update by calling ``e.save()``."
+msgstr ""
+
+# 86c70515afe24f8581fcb3b65da608d9
+#: ../../ref/models/relations.txt:58
+#, fuzzy
+msgid ""
+"Using ``add()`` with a many-to-many relationship, however, will not call any "
+"``save()`` methods, but rather create the relationships using :meth:"
 "`QuerySet.bulk_create() <django.db.models.query.QuerySet.bulk_create>`. If "
 "you need to execute some custom logic when a relationship is created, listen "
 "to the :data:`~django.db.models.signals.m2m_changed` signal."
@@ -95,8 +108,15 @@ msgstr ""
 "логика при обновлении связей, обрабатывайте сигнал :data:`~django.db.models."
 "signals.m2m_changed`."
 
+#: ../../ref/models/relations.txt:67
+msgid ""
+"The ``bulk`` parameter was added. In older versions, foreign key updates "
+"were always done using ``save()``. Use ``bulk=False`` if you require the old "
+"behavior."
+msgstr ""
+
 # 6053c6088b0942b3ac4b66c23105e94b
-#: ../../ref/models/relations.txt:61
+#: ../../ref/models/relations.txt:73
 msgid ""
 "Creates a new object, saves it and puts it in the related object set. "
 "Returns the newly created object::"
@@ -105,12 +125,12 @@ msgstr ""
 "Возвращает созданный объект::"
 
 # 4bc23bbef79e4eb0a31c7a2fab77b24e
-#: ../../ref/models/relations.txt:73
+#: ../../ref/models/relations.txt:85
 msgid "This is equivalent to (but much simpler than)::"
 msgstr "Аналогично (но значительно проще)::"
 
 # 7a9070ca828748e9a2f59180bb96b09a
-#: ../../ref/models/relations.txt:84
+#: ../../ref/models/relations.txt:96
 msgid ""
 "Note that there's no need to specify the keyword argument of the model that "
 "defines the relationship. In the above example, we don't pass the parameter "
@@ -123,12 +143,12 @@ msgstr ""
 "должно содержать объект ``b``."
 
 # 084732d522a34c5dbf1b986daf386a4e
-#: ../../ref/models/relations.txt:91
+#: ../../ref/models/relations.txt:103
 msgid "Removes the specified model objects from the related object set::"
 msgstr "Удаляет указанный объект из списка связанных объектов::"
 
 # 0ce719d7aea5409e968995aab58d28c4
-#: ../../ref/models/relations.txt:97
+#: ../../ref/models/relations.txt:109
 msgid ""
 "Similar to :meth:`add()`, ``e.save()`` is called in the example above to "
 "perform the update. Using ``remove()`` with a many-to-many relationship, "
@@ -145,7 +165,7 @@ msgstr ""
 "`~django.db.models.signals.m2m_changed`."
 
 # fd2a15f9f77349f2bbf011184cf9f347
-#: ../../ref/models/relations.txt:105
+#: ../../ref/models/relations.txt:117
 msgid ""
 "For :class:`~django.db.models.ForeignKey` objects, this method only exists "
 "if ``null=True``. If the related field can't be set to ``None`` (``NULL``), "
@@ -162,7 +182,7 @@ msgstr ""
 "содержит ``null=True``, это невозможно."
 
 # 5486fc7ccf9f4afeb876cc9e908c5df0
-#: ../../ref/models/relations.txt:115
+#: ../../ref/models/relations.txt:127
 msgid ""
 "For :class:`~django.db.models.ForeignKey` objects, this method accepts a "
 "``bulk`` argument to control how to perform the operation. If ``True`` (the "
@@ -179,19 +199,19 @@ msgstr ""
 "post_save`, что работает немного медленне."
 
 # 3d87d6cce5af49eb9f725e6ff16904d3
-#: ../../ref/models/relations.txt:126
+#: ../../ref/models/relations.txt:138
 msgid "Removes all objects from the related object set::"
 msgstr "Удаляет все объекты из списка связанных::"
 
 # 15f3cf7e85814bb9b0130e689bd2e6ee
-#: ../../ref/models/relations.txt:131
+#: ../../ref/models/relations.txt:143
 msgid ""
 "Note this doesn't delete the related objects -- it just disassociates them."
 msgstr ""
 "Заметим, что связанные объекты не удаляются -- просто разрывается связь."
 
 # 394718a224f5421e9cbf1dd47ba05f2e
-#: ../../ref/models/relations.txt:134
+#: ../../ref/models/relations.txt:146
 msgid ""
 "Just like ``remove()``, ``clear()`` is only available on :class:`~django.db."
 "models.ForeignKey`\\s where ``null=True`` and it also accepts the ``bulk`` "
@@ -200,19 +220,47 @@ msgstr ""
 "Так же как и ``remove()``, ``clear()`` доступен только для :class:`~django."
 "db.models.ForeignKey` с ``null=True`` и принимает аргумент ``bulk``."
 
-# fd563485ae744e82af3d1f45e9f50649
-#: ../../ref/models/relations.txt:140
+# 3d87d6cce5af49eb9f725e6ff16904d3
+#: ../../ref/models/relations.txt:154
+#, fuzzy
+msgid "Replace the set of related objects::"
+msgstr "Удаляет все объекты из списка связанных::"
+
+#: ../../ref/models/relations.txt:159
 msgid ""
-"Note that ``add()``, ``create()``, ``remove()``, and ``clear()`` all apply "
-"database changes immediately for all types of related fields. In other "
-"words, there is no need to call ``save()`` on either end of the relationship."
+"This method accepts a ``clear`` argument to control how to perform the "
+"operation. If ``False`` (the default), the elements missing from the new set "
+"are removed using ``remove()`` and only the new ones are added. If "
+"``clear=True``, the ``clear()`` method is called instead and the whole set "
+"is added at once."
+msgstr ""
+
+#: ../../ref/models/relations.txt:165
+msgid "The ``bulk`` argument is passed on to :meth:`add`."
+msgstr ""
+
+#: ../../ref/models/relations.txt:167
+msgid ""
+"Note that since ``set()`` is a compound operation, it is subject to race "
+"conditions. For instance, new objects may be added to the database in "
+"between the call to ``clear()`` and the call to ``add()``."
+msgstr ""
+
+# fd563485ae744e82af3d1f45e9f50649
+#: ../../ref/models/relations.txt:173
+#, fuzzy
+msgid ""
+"Note that ``add()``, ``create()``, ``remove()``, ``clear()``, and ``set()`` "
+"all apply database changes immediately for all types of related fields. In "
+"other words, there is no need to call ``save()`` on either end of the "
+"relationship."
 msgstr ""
 "Обратите внимание, ``add()``, ``create()``, ``remove()`` и ``clear()`` сразу "
 "сохраняют изменения для всех типов связей. Другими словами, нет "
 "необходимости вызывать ``save()``."
 
 # f3219a2b71514126a525f33435dc4bb8
-#: ../../ref/models/relations.txt:145
+#: ../../ref/models/relations.txt:178
 msgid ""
 "Also, if you are using :ref:`an intermediate model <intermediary-"
 "manytomany>` for a many-to-many relationship, some of the related manager's "
@@ -223,12 +271,12 @@ msgstr ""
 "доступны."
 
 # 66ac372ef29f4d65a60c0cb8c01fac4c
-#: ../../ref/models/relations.txt:152
+#: ../../ref/models/relations.txt:185
 msgid "Direct Assignment"
 msgstr "Непосредственная смена значения"
 
 # 918cae70e5cc4882935ce22b3e485ff9
-#: ../../ref/models/relations.txt:154
+#: ../../ref/models/relations.txt:187
 msgid ""
 "A related object set can be replaced in bulk with one operation by assigning "
 "a new iterable of objects to it::"
@@ -237,17 +285,25 @@ msgstr ""
 "объектов::"
 
 # 1ae548beb8c140bda39f6d01f7e68280
-#: ../../ref/models/relations.txt:160
+#: ../../ref/models/relations.txt:193
+#, fuzzy
 msgid ""
 "If the foreign key relationship has ``null=True``, then the related manager "
-"will first call ``clear()`` to disassociate any existing objects in the "
-"related set before adding the contents of ``new_list``. Otherwise the "
-"objects in ``new_list`` will be added to the existing related object set."
+"will first disassociate any existing objects in the related set before "
+"adding the contents of ``new_list``. Otherwise the objects in ``new_list`` "
+"will be added to the existing related object set."
 msgstr ""
 "Если внешний ключ определен с ``null=True``, сначала будет вызван метод "
 "``clear()``, чтобы удалить все связанные объекты перед добавлением объектов "
 "из ``new_list``. Иначе объекты из ``new_list`` будут добавлены к списку "
 "существующих объектов."
+
+#: ../../ref/models/relations.txt:200
+msgid ""
+"In earlier versions, direct assignment used to perform ``clear()`` followed "
+"by ``add()``. It now performs a ``set()`` with the keyword argument "
+"``clear=False``."
+msgstr ""
 
 # db9a48e35e0b4a3d963eabee73afef81
 #~ msgid "These related managers have some extra methods:"

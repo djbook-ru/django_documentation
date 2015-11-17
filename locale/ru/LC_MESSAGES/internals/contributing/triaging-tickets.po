@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-19 15:06+0200\n"
+"POT-Creation-Date: 2015-11-17 10:48+0200\n"
 "PO-Revision-Date: 2012-02-15 15:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -806,4 +806,63 @@ msgid ""
 "instead leave a comment with your concerns on the ticket, or post a message "
 "to |django-developers|. It's okay to be unsure, but your input is still "
 "valuable."
+msgstr ""
+
+#: ../../internals/contributing/triaging-tickets.txt:425
+msgid "Bisecting a regression"
+msgstr ""
+
+#: ../../internals/contributing/triaging-tickets.txt:429
+msgid ""
+"A regression is a bug that's present in some newer version of Django but not "
+"in an older one. An extremely helpful piece of information is the commit "
+"that introduced the regression. Knowing the commit that caused the change in "
+"behavior helps identify if the change was intentional or if it was an "
+"inadvertent side-effect. Here's how you can determine this."
+msgstr ""
+
+#: ../../internals/contributing/triaging-tickets.txt:435
+msgid ""
+"Begin by writing a regression test for Django's test suite for the issue. "
+"For example, we'll pretend we're debugging a regression in migrations. After "
+"you've written the test and confirmed that it fails on the latest master, "
+"put it in a separate file that you can run standalone. For our example, "
+"we'll pretend we created ``tests/migrations/test_regression.py``, which can "
+"be run with::"
+msgstr ""
+
+#: ../../internals/contributing/triaging-tickets.txt:443
+msgid ""
+"Next, we mark the current point in history as being \"bad\" since the test "
+"fails::"
+msgstr ""
+
+#: ../../internals/contributing/triaging-tickets.txt:449
+msgid ""
+"Now, we need to find a point in git history before the regression was "
+"introduced (i.e. a point where the test passes). Use something like ``git "
+"checkout HEAD~100`` to checkout an earlier revision (100 commits earlier, in "
+"this case). Check if the test fails. If so, mark that point as \"bad"
+"\" (``git bisect bad``), then checkout an earlier revision and recheck. Once "
+"you find a revision where your test passes, mark it as \"good\"::"
+msgstr ""
+
+#: ../../internals/contributing/triaging-tickets.txt:460
+msgid ""
+"Now we're ready for the fun part: using ``git bisect run`` to automate the "
+"rest of the process::"
+msgstr ""
+
+#: ../../internals/contributing/triaging-tickets.txt:465
+msgid ""
+"You should see ``git bisect`` use a binary search to automatically checkout "
+"revisions between the good and bad commits until it finds the first \"bad\" "
+"commit where the test fails."
+msgstr ""
+
+#: ../../internals/contributing/triaging-tickets.txt:469
+msgid ""
+"Now, report your results on the Trac ticket, and please include the "
+"regression test as an attachment. When someone writes a fix for the bug, "
+"they'll already have your test as a starting point."
 msgstr ""

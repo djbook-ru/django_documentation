@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-02 10:33+0300\n"
+"POT-Creation-Date: 2015-11-17 10:48+0200\n"
 "PO-Revision-Date: 2015-03-19 15:06+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -57,7 +57,7 @@ msgstr ""
 msgid "Then, to leverage this in your migrations, do the following::"
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:71
+#: ../../howto/writing-migrations.txt:72
 msgid ""
 "If your ``RunPython`` or ``RunSQL`` operation only affects one model, it's "
 "good practice to pass ``model_name`` as a hint to make it as transparent as "
@@ -65,11 +65,11 @@ msgid ""
 "party apps."
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:76
+#: ../../howto/writing-migrations.txt:77
 msgid "Migrations that add unique fields"
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:78
+#: ../../howto/writing-migrations.txt:79
 msgid ""
 "Applying a \"plain\" migration that adds a unique non-nullable field to a "
 "table with existing rows will raise an error because the value used to "
@@ -77,67 +77,114 @@ msgid ""
 "constraint."
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:82
+#: ../../howto/writing-migrations.txt:83
 msgid ""
 "Therefore, the following steps should be taken. In this example, we'll add a "
 "non-nullable :class:`~django.db.models.UUIDField` with a default value. "
 "Modify the respective field according to your needs."
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:86
+#: ../../howto/writing-migrations.txt:87
 msgid ""
-"Add the field on your model with ``default=...`` and ``unique=True`` "
-"arguments. In the example, we use ``uuid.uuid4`` for the default."
-msgstr ""
-
-#: ../../howto/writing-migrations.txt:89
-msgid "Run the :djadmin:`makemigrations` command."
+"Add the field on your model with ``default=uuid.uuid4`` and ``unique=True`` "
+"arguments (choose an appropriate default for the type of the field you're "
+"adding)."
 msgstr ""
 
 #: ../../howto/writing-migrations.txt:91
-msgid "Edit the created migration file."
-msgstr ""
-
-#: ../../howto/writing-migrations.txt:93
-msgid "The generated migration class should look similar to this::"
-msgstr ""
-
-#: ../../howto/writing-migrations.txt:109
-msgid "You will need to make three changes:"
-msgstr ""
-
-#: ../../howto/writing-migrations.txt:111
 msgid ""
-"Add a second :class:`~django.db.migrations.operations.AddField` operation "
-"copied from the generated one and change it to :class:`~django.db.migrations."
-"operations.AlterField`."
+"Run the :djadmin:`makemigrations` command. This should generate a migration "
+"with an ``AddField`` operation."
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:115
+#: ../../howto/writing-migrations.txt:94
 msgid ""
-"On the first operation (``AddField``), change ``unique=True`` to "
-"``null=True`` -- this will create the intermediary null field."
+"Generate two empty migration files for the same app by running "
+"``makemigrations myapp --empty`` twice. We've renamed the migration files to "
+"give them meaningful names in the examples below."
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:118
+#: ../../howto/writing-migrations.txt:98
 msgid ""
-"Between the two operations, add a :class:`~django.db.migrations.operations."
-"RunPython` or :class:`~django.db.migrations.operations.RunSQL` operation to "
-"generate a unique value (UUID in the example) for each existing row."
+"Copy the ``AddField`` operation from the auto-generated migration (the first "
+"of the three new files) to the last migration and change ``AddField`` to "
+"``AlterField``. For example:"
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:123
-msgid "The resulting migration should look similar to this::"
-msgstr ""
-
-#: ../../howto/writing-migrations.txt:158
+#: ../../howto/writing-migrations.txt:127
 msgid ""
-"Now you can apply the migration as usual with the :djadmin:`migrate` command."
+"Edit the first migration file. The generated migration class should look "
+"similar to this:"
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:160
+#: ../../howto/writing-migrations.txt:147
+msgid ""
+"Change ``unique=True`` to ``null=True`` -- this will create the intermediary "
+"null field and defer creating the unique constraint until we've populated "
+"unique values on all the rows."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:151
+msgid ""
+"In the first empty migration file, add a :class:`~django.db.migrations."
+"operations.RunPython` or :class:`~django.db.migrations.operations.RunSQL` "
+"operation to generate a unique value (UUID in the example) for each existing "
+"row. For example:"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:183
+msgid ""
+"Now you can apply the migrations as usual with the :djadmin:`migrate` "
+"command."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:185
 msgid ""
 "Note there is a race condition if you allow objects to be created while this "
 "migration is running. Objects created after the ``AddField`` and before "
 "``RunPython`` will have their original ``uuid``’s overwritten."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:190
+msgid "Controlling the order of migrations"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:192
+msgid ""
+"Django determines the order in which migrations should be applied not by the "
+"filename of each migration, but by building a graph using two properties on "
+"the ``Migration`` class: ``dependencies`` and ``run_before``."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:196
+msgid ""
+"If you've used the :djadmin:`makemigrations` command you've probably already "
+"seen ``dependencies`` in action because auto-created migrations have this "
+"defined as part of their creation process."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:200
+msgid "The ``dependencies`` property is declared like this::"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:210
+msgid ""
+"Usually this will be enough, but from time to time you may need to ensure "
+"that your migration runs *before* other migrations. This is useful, for "
+"example, to make third-party apps' migrations run *after* your :setting:"
+"`AUTH_USER_MODEL` replacement."
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:215
+msgid ""
+"To achieve this, place all migrations that should depend on yours in the "
+"``run_before`` attribute on your ``Migration`` class::"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:225
+msgid ""
+"Prefer using ``dependencies`` over ``run_before`` when possible. You should "
+"only use ``run_before`` if it is undesirable or impractical to specify "
+"``dependencies`` in the migration which you want to run after the one you "
+"are writing."
 msgstr ""

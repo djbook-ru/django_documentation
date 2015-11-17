@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-19 15:06+0200\n"
+"POT-Creation-Date: 2015-11-17 10:48+0200\n"
 "PO-Revision-Date: 2015-06-18 15:32+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -47,25 +47,24 @@ msgstr ""
 msgid "Code layout"
 msgstr "Добавление собственной библиотеки"
 
-# dd61713ccf6d4cc2a9dc2074164a057b
 #: ../../howto/custom-template-tags.txt:16
 msgid ""
-"Custom template tags and filters must live inside a Django app. If they "
-"relate to an existing app it makes sense to bundle them there; otherwise, "
-"you should create a new app to hold them."
+"The most common place to specify custom template tags and filters is inside "
+"a Django app. If they relate to an existing app, it makes sense to bundle "
+"them there; otherwise, they can be added to a new app. When a Django app is "
+"added to :setting:`INSTALLED_APPS`, any tags it defines in the conventional "
+"location described below are automatically made available to load within "
+"templates."
 msgstr ""
-"Собственные теги и фильтры шаблонов должны определяться в приложении Django. "
-"Если они логически связаны с каким-то приложением, есть смысл добавить их в "
-"это приложение, иначе создайте новое приложение."
 
 # 4b941576efb446cb9304d544874aca63
-#: ../../howto/custom-template-tags.txt:20
+#: ../../howto/custom-template-tags.txt:22
+#, fuzzy
 msgid ""
 "The app should contain a ``templatetags`` directory, at the same level as "
 "``models.py``, ``views.py``, etc. If this doesn't already exist, create it - "
 "don't forget the ``__init__.py`` file to ensure the directory is treated as "
-"a Python package. After adding this module, you will need to restart your "
-"server before you can use the tags or filters in templates."
+"a Python package."
 msgstr ""
 "Приложение должно содержать каталог ``templatetags`` на том же уровне что и "
 "``models.py``, ``views.py`` и др. Если он не существует, создайте его. Не "
@@ -73,8 +72,18 @@ msgstr ""
 "пакет Python. После добавления этого модуля, необходимо перезапустить "
 "сервер, перед тем как использовать теги или фильтры в шаблонах."
 
+#: ../../howto/custom-template-tags.txt:0
+msgid "Development server won't automatically restart"
+msgstr ""
+
+#: ../../howto/custom-template-tags.txt:29
+msgid ""
+"After adding the ``templatetags``  module, you will need to restart your "
+"server before you can use the tags or filters in templates."
+msgstr ""
+
 # f7b1921d75f24e5cbd1aec472cadb266
-#: ../../howto/custom-template-tags.txt:26
+#: ../../howto/custom-template-tags.txt:32
 msgid ""
 "Your custom tags and filters will live in a module inside the "
 "``templatetags`` directory. The name of the module file is the name you'll "
@@ -86,7 +95,7 @@ msgstr ""
 "что убедитесь что оно не совпадает с названиями библиотек других приложений."
 
 # 9fa9a12cdf1b4547a50906f5bbb90a2f
-#: ../../howto/custom-template-tags.txt:31
+#: ../../howto/custom-template-tags.txt:37
 msgid ""
 "For example, if your custom tags/filters are in a file called ``poll_extras."
 "py``, your app layout might look like this::"
@@ -95,12 +104,12 @@ msgstr ""
 "приложение может выглядеть следующим образом::"
 
 # 589c12bd91d4456387dad76eb447ee84
-#: ../../howto/custom-template-tags.txt:42
+#: ../../howto/custom-template-tags.txt:48
 msgid "And in your template you would use the following:"
 msgstr "И в шаблоне вы будете использовать:"
 
 # 09091289f35f486a9bfa3167b401e115
-#: ../../howto/custom-template-tags.txt:48
+#: ../../howto/custom-template-tags.txt:54
 msgid ""
 "The app that contains the custom tags must be in :setting:`INSTALLED_APPS` "
 "in order for the :ttag:`{% load %}<load>` tag to work. This is a security "
@@ -113,7 +122,7 @@ msgstr ""
 "его. Это сделано в целях безопасности."
 
 # ddd2e843d0c947fabd3577306d9e4f8f
-#: ../../howto/custom-template-tags.txt:53
+#: ../../howto/custom-template-tags.txt:59
 msgid ""
 "There's no limit on how many modules you put in the ``templatetags`` "
 "package. Just keep in mind that a :ttag:`{% load %}<load>` statement will "
@@ -124,7 +133,7 @@ msgstr ""
 "название приложения."
 
 # 9eabe059f6d642b1bb4f7e14bd6552c1
-#: ../../howto/custom-template-tags.txt:57
+#: ../../howto/custom-template-tags.txt:63
 msgid ""
 "To be a valid tag library, the module must contain a module-level variable "
 "named ``register`` that is a ``template.Library`` instance, in which all the "
@@ -135,13 +144,22 @@ msgstr ""
 "``template.Library``, в которой регистрируются все определенные теги и "
 "фильтры. Так что в начале вашего модуля укажите следующие строки::"
 
+#: ../../howto/custom-template-tags.txt:74
+msgid ""
+"Alternatively, template tag modules can be registered through the "
+"``'libraries'`` argument to :class:`~django.template.backends.django."
+"DjangoTemplates`. This is useful if you want to use a different label from "
+"the template tag module name when loading template tags. It also enables you "
+"to register tags without installing an application."
+msgstr ""
+
 # c0021276e66940889b47fb8fa3ca046b
-#: ../../howto/custom-template-tags.txt:66
+#: ../../howto/custom-template-tags.txt:0
 msgid "Behind the scenes"
 msgstr "За кулисами"
 
 # f628c78c49a84033a7e4d36d9b88420d
-#: ../../howto/custom-template-tags.txt:68
+#: ../../howto/custom-template-tags.txt:83
 msgid ""
 "For a ton of examples, read the source code for Django's default filters and "
 "tags. They're in ``django/template/defaultfilters.py`` and ``django/template/"
@@ -152,17 +170,17 @@ msgstr ""
 "py`` и ``django/template/defaulttags.py``."
 
 # 67c2dfa2ad28430488469578143c4420
-#: ../../howto/custom-template-tags.txt:72
+#: ../../howto/custom-template-tags.txt:87
 msgid "For more information on the :ttag:`load` tag, read its documentation."
 msgstr "Подробности о теге :ttag:`load` читайте в этой документации."
 
 # f2d008daf93941118d689a96e8cf2148
-#: ../../howto/custom-template-tags.txt:77
+#: ../../howto/custom-template-tags.txt:92
 msgid "Writing custom template filters"
 msgstr "Создание собственного шаблонного фильтра"
 
 # 261cc73e2163475599a6c301261ac291
-#: ../../howto/custom-template-tags.txt:79
+#: ../../howto/custom-template-tags.txt:94
 msgid ""
 "Custom filters are just Python functions that take one or two arguments:"
 msgstr ""
@@ -170,12 +188,12 @@ msgstr ""
 "аргументов:"
 
 # 8ce1c3217c2d4132abb2cc29b488daa8
-#: ../../howto/custom-template-tags.txt:81
+#: ../../howto/custom-template-tags.txt:96
 msgid "The value of the variable (input) -- not necessarily a string."
 msgstr "Входящее значение -- не обязательно строка."
 
 # 82158502cd174ba0a94ff1f152dc8612
-#: ../../howto/custom-template-tags.txt:82
+#: ../../howto/custom-template-tags.txt:97
 msgid ""
 "The value of the argument -- this can have a default value, or be left out "
 "altogether."
@@ -184,7 +202,7 @@ msgstr ""
 "использовать аргументы."
 
 # b9cd9e8e897b436c903f950445c13fd7
-#: ../../howto/custom-template-tags.txt:85
+#: ../../howto/custom-template-tags.txt:100
 msgid ""
 "For example, in the filter ``{{ var|foo:\"bar\" }}``, the filter ``foo`` "
 "would be passed the variable ``var`` and the argument ``\"bar\"``."
@@ -193,7 +211,7 @@ msgstr ""
 "выполнена со значением переменной ``var`` и аргументом ``\"bar\"``."
 
 # 7a5927f30b4c4b1589268cb64d4d563f
-#: ../../howto/custom-template-tags.txt:88
+#: ../../howto/custom-template-tags.txt:103
 msgid ""
 "Since the template language doesn't provide exception handling, any "
 "exception raised from a template filter will be exposed as a server error. "
@@ -208,29 +226,29 @@ msgstr ""
 "вызвать исключение, чем скрыть баг."
 
 # bb10835e8415456981cd928dcf38b28b
-#: ../../howto/custom-template-tags.txt:95
+#: ../../howto/custom-template-tags.txt:110
 msgid "Here's an example filter definition::"
 msgstr "Пример фильтра::"
 
 # 67dd05820d36433fb99da74e11bfdaa6
-#: ../../howto/custom-template-tags.txt:101
+#: ../../howto/custom-template-tags.txt:116
 msgid "And here's an example of how that filter would be used:"
 msgstr "И пример как его использовать:"
 
 # 0afbfe0b81494412a2c1d84904da9039
-#: ../../howto/custom-template-tags.txt:107
+#: ../../howto/custom-template-tags.txt:122
 msgid ""
 "Most filters don't take arguments. In this case, just leave the argument out "
 "of your function. Example::"
 msgstr "Большинство фильтров не принимают аргументы. Например::"
 
 # b256539c12ba43feb482efcb52af16e5
-#: ../../howto/custom-template-tags.txt:115
+#: ../../howto/custom-template-tags.txt:130
 msgid "Registering custom filters"
 msgstr "Регистрация фильтров"
 
 # a9b056a648224fd29ab034ce7d5066f7
-#: ../../howto/custom-template-tags.txt:119
+#: ../../howto/custom-template-tags.txt:134
 msgid ""
 "Once you've written your filter definition, you need to register it with "
 "your ``Library`` instance, to make it available to Django's template "
@@ -240,31 +258,31 @@ msgstr ""
 "``Library``, чтобы использовать в шаблонах Django::"
 
 # 95482b0137dc4b4280b7c97ddc77946d
-#: ../../howto/custom-template-tags.txt:125
+#: ../../howto/custom-template-tags.txt:140
 msgid "The ``Library.filter()`` method takes two arguments:"
 msgstr "Метод ``Library.filter()`` принимает два аргумента:"
 
 # adbf65624be24133b3cf275d5728f120
-#: ../../howto/custom-template-tags.txt:127
+#: ../../howto/custom-template-tags.txt:142
 msgid "The name of the filter -- a string."
 msgstr "Название фильтра -- строка."
 
 # 94698c365d4a4dcc8ba0b9cff1c142cb
 # 20d12548aa7f48878299423c04f7722a
-#: ../../howto/custom-template-tags.txt:128
-#: ../../howto/custom-template-tags.txt:945
+#: ../../howto/custom-template-tags.txt:143
+#: ../../howto/custom-template-tags.txt:964
 msgid ""
 "The compilation function -- a Python function (not the name of the function "
 "as a string)."
 msgstr "Функция компиляции -- функция Python (не название функции строкой)."
 
 # 41a00276886b46ad83e9995f9d49e8fe
-#: ../../howto/custom-template-tags.txt:131
+#: ../../howto/custom-template-tags.txt:146
 msgid "You can use ``register.filter()`` as a decorator instead::"
 msgstr "Вы можете использовать ``register.filter()`` как декоратор::"
 
 # 49fbe16b2f0b4f608079edc03a46039c
-#: ../../howto/custom-template-tags.txt:141
+#: ../../howto/custom-template-tags.txt:156
 msgid ""
 "If you leave off the ``name`` argument, as in the second example above, "
 "Django will use the function's name as the filter name."
@@ -273,7 +291,7 @@ msgstr ""
 "будет использовать название функции в качестве названия фильтра."
 
 # 4a6f38f922a64819969e0c2c888cac15
-#: ../../howto/custom-template-tags.txt:144
+#: ../../howto/custom-template-tags.txt:159
 msgid ""
 "Finally, ``register.filter()`` also accepts three keyword arguments, "
 "``is_safe``, ``needs_autoescape``, and ``expects_localtime``. These "
@@ -287,12 +305,12 @@ msgstr ""
 "далее."
 
 # d894e696402041f8b229b92a1f321372
-#: ../../howto/custom-template-tags.txt:150
+#: ../../howto/custom-template-tags.txt:165
 msgid "Template filters that expect strings"
 msgstr "Шаблонные фильтры, которые обрабатывают строки"
 
 # a59eac4494fc4250a67cacd820c982cc
-#: ../../howto/custom-template-tags.txt:154
+#: ../../howto/custom-template-tags.txt:169
 msgid ""
 "If you're writing a template filter that only expects a string as the first "
 "argument, you should use the decorator ``stringfilter``. This will convert "
@@ -303,7 +321,7 @@ msgstr ""
 "передачей в функцию::"
 
 # d737caffadd141f2a9f4fb6b345f4218
-#: ../../howto/custom-template-tags.txt:168
+#: ../../howto/custom-template-tags.txt:183
 msgid ""
 "This way, you'll be able to pass, say, an integer to this filter, and it "
 "won't cause an ``AttributeError`` (because integers don't have ``lower()`` "
@@ -313,12 +331,12 @@ msgstr ""
 "``AttributeError`` (так как число не содержит метод ``lower()``)."
 
 # 1ef69d78a5ff4a5e9d283333ce6b32b9
-#: ../../howto/custom-template-tags.txt:175
+#: ../../howto/custom-template-tags.txt:190
 msgid "Filters and auto-escaping"
 msgstr "Фильтры и автоматическое экранирование"
 
 # c00ac3b691994b22b4ebccc9a3ad84e1
-#: ../../howto/custom-template-tags.txt:177
+#: ../../howto/custom-template-tags.txt:192
 msgid ""
 "When writing a custom filter, give some thought to how the filter will "
 "interact with Django's auto-escaping behavior. Note that three types of "
@@ -329,7 +347,7 @@ msgstr ""
 "передаваться в коде шаблона."
 
 # 04873eb679e84de8ba7e20858a89c1ea
-#: ../../howto/custom-template-tags.txt:181
+#: ../../howto/custom-template-tags.txt:196
 msgid ""
 "**Raw strings** are the native Python ``str`` or ``unicode`` types. On "
 "output, they're escaped if auto-escaping is in effect and presented "
@@ -340,7 +358,7 @@ msgstr ""
 "выводятся как есть."
 
 # a4465a3e668e44a19f26f588c1431628
-#: ../../howto/custom-template-tags.txt:185
+#: ../../howto/custom-template-tags.txt:200
 msgid ""
 "**Safe strings** are strings that have been marked safe from further "
 "escaping at output time. Any necessary escaping has already been done. "
@@ -353,7 +371,7 @@ msgstr ""
 "отобразить на странице."
 
 # ce5968ed4116452591a5f5fd559230e8
-#: ../../howto/custom-template-tags.txt:190
+#: ../../howto/custom-template-tags.txt:205
 msgid ""
 "Internally, these strings are of type ``SafeBytes`` or ``SafeText``. They "
 "share a common base class of ``SafeData``, so you can test for them using "
@@ -364,7 +382,7 @@ msgstr ""
 "проверять их следующим образом::"
 
 # 56b6dd0602324e8cbb200945f7f061af
-#: ../../howto/custom-template-tags.txt:198
+#: ../../howto/custom-template-tags.txt:213
 msgid ""
 "**Strings marked as \"needing escaping\"** are *always* escaped on output, "
 "regardless of whether they are in an :ttag:`autoescape` block or not. These "
@@ -376,7 +394,7 @@ msgstr ""
 "автоматическое экранирование или нет."
 
 # d1a4f2e8fc2c483698615373e1d2308f
-#: ../../howto/custom-template-tags.txt:203
+#: ../../howto/custom-template-tags.txt:218
 msgid ""
 "Internally, these strings are of type ``EscapeBytes`` or ``EscapeText``. "
 "Generally you don't have to worry about these; they exist for the "
@@ -387,12 +405,12 @@ msgstr ""
 "`escape`."
 
 # 2baba831c7234bd08d61eccd9445cd50
-#: ../../howto/custom-template-tags.txt:207
+#: ../../howto/custom-template-tags.txt:222
 msgid "Template filter code falls into one of two situations:"
 msgstr "При создании фильтра вы можете столкнуться со следующими ситуациями:"
 
 # 93cd4ba53b7447d9a73e04f40bedeebc
-#: ../../howto/custom-template-tags.txt:209
+#: ../../howto/custom-template-tags.txt:224
 msgid ""
 "Your filter does not introduce any HTML-unsafe characters (``<``, ``>``, "
 "``'``, ``\"`` or ``&``) into the result that were not already present. In "
@@ -407,7 +425,7 @@ msgstr ""
 "функции фильтра::"
 
 # 4db79f6294254a9abdff0faf7e140d3e
-#: ../../howto/custom-template-tags.txt:219
+#: ../../howto/custom-template-tags.txt:234
 msgid ""
 "This flag tells Django that if a \"safe\" string is passed into your filter, "
 "the result will still be \"safe\" and if a non-safe string is passed in, "
@@ -419,7 +437,7 @@ msgstr ""
 "\"небезопасную\" строку, Django автоматически экранирует результат фильтра."
 
 # 7f24aa2789b14113bd0bd2fa2990a645
-#: ../../howto/custom-template-tags.txt:223
+#: ../../howto/custom-template-tags.txt:238
 msgid ""
 "You can think of this as meaning \"this filter is safe -- it doesn't "
 "introduce any possibility of unsafe HTML.\""
@@ -428,7 +446,7 @@ msgstr ""
 "не добавляет небезопасный HTML в результат.\""
 
 # 2905af6ed6e94828922b1e9f0eaeb628
-#: ../../howto/custom-template-tags.txt:226
+#: ../../howto/custom-template-tags.txt:241
 msgid ""
 "The reason ``is_safe`` is necessary is because there are plenty of normal "
 "string operations that will turn a ``SafeData`` object back into a normal "
@@ -443,7 +461,7 @@ msgstr ""
 "изменениями."
 
 # 17c50f6ada20475d9c9f1b2b7376586d
-#: ../../howto/custom-template-tags.txt:232
+#: ../../howto/custom-template-tags.txt:247
 msgid ""
 "For example, suppose you have a filter that adds the string ``xx`` to the "
 "end of any input. Since this introduces no dangerous HTML characters to the "
@@ -456,7 +474,7 @@ msgstr ""
 "его с параметром ``is_safe``::"
 
 # 452e4ed1d04943159508fc34a8d617b7
-#: ../../howto/custom-template-tags.txt:241
+#: ../../howto/custom-template-tags.txt:256
 msgid ""
 "When this filter is used in a template where auto-escaping is enabled, "
 "Django will escape the output whenever the input is not already marked as "
@@ -467,14 +485,14 @@ msgstr ""
 "данные не были отмечены как \"безопасные\"."
 
 # c6c0b3b009f04591bd06d2ce5517f0ff
-#: ../../howto/custom-template-tags.txt:245
+#: ../../howto/custom-template-tags.txt:260
 msgid ""
 "By default, ``is_safe`` is ``False``, and you can omit it from any filters "
 "where it isn't required."
 msgstr "По умолчанию ``is_safe`` равен ``False``."
 
 # 1b88eb66a40d428682c4df0f8ccfd4ec
-#: ../../howto/custom-template-tags.txt:248
+#: ../../howto/custom-template-tags.txt:263
 msgid ""
 "Be careful when deciding if your filter really does leave safe strings as "
 "safe. If you're *removing* characters, you might inadvertently leave "
@@ -495,7 +513,7 @@ msgstr ""
 "быть внимательными."
 
 # 1da73419e1be4ccdbb3f0e174c50fcbf
-#: ../../howto/custom-template-tags.txt:258
+#: ../../howto/custom-template-tags.txt:273
 msgid ""
 "Marking a filter ``is_safe`` will coerce the filter's return value to a "
 "string.  If your filter should return a boolean or other non-string value, "
@@ -508,7 +526,7 @@ msgstr ""
 "строку 'False')."
 
 # bd90097a1dfd45fc900803c7f981221a
-#: ../../howto/custom-template-tags.txt:264
+#: ../../howto/custom-template-tags.txt:279
 msgid ""
 "Alternatively, your filter code can manually take care of any necessary "
 "escaping. This is necessary when you're introducing new HTML markup into the "
@@ -521,7 +539,7 @@ msgstr ""
 "быть помечен как безопасный чтобы избежать последующего экранирования."
 
 # 045f185a696243a9b5fd2898bd7ee593
-#: ../../howto/custom-template-tags.txt:270
+#: ../../howto/custom-template-tags.txt:285
 msgid ""
 "To mark the output as a safe string, use :func:`django.utils.safestring."
 "mark_safe`."
@@ -529,7 +547,7 @@ msgstr ""
 "Для этого используйте функцию :func:`django.utils.safestring.mark_safe`."
 
 # d405f12cc26042ea8b52e27665282e86
-#: ../../howto/custom-template-tags.txt:273
+#: ../../howto/custom-template-tags.txt:288
 msgid ""
 "Be careful, though. You need to do more than just mark the output as safe. "
 "You need to ensure it really *is* safe, and what you do depends on whether "
@@ -544,7 +562,7 @@ msgstr ""
 "так и выключенном."
 
 # dc5af2a846734def9cda752bac84f138
-#: ../../howto/custom-template-tags.txt:279
+#: ../../howto/custom-template-tags.txt:294
 msgid ""
 "In order for your filter to know the current auto-escaping state, set the "
 "``needs_autoescape`` flag to ``True`` when you register your filter "
@@ -565,7 +583,7 @@ msgstr ""
 "коде, экранирование было включено."
 
 # 9824e9971a024eb2b6dc8e357f219e36
-#: ../../howto/custom-template-tags.txt:288
+#: ../../howto/custom-template-tags.txt:303
 msgid ""
 "For example, let's write a filter that emphasizes the first character of a "
 "string::"
@@ -573,7 +591,7 @@ msgstr ""
 "Например, давайте создадим фильтр, который выделяет первый символ строки::"
 
 # 35f02a19f156453c9be8d77fa0c59914
-#: ../../howto/custom-template-tags.txt:307
+#: ../../howto/custom-template-tags.txt:322
 msgid ""
 "The ``needs_autoescape`` flag and the ``autoescape`` keyword argument mean "
 "that our function will know whether automatic escaping is in effect when the "
@@ -595,7 +613,7 @@ msgstr ""
 "``SafeData`` функция ``conditional_escape()`` вернет его без изменений."
 
 # 18b66f2fe3e34408abde7437fc68b89d
-#: ../../howto/custom-template-tags.txt:317
+#: ../../howto/custom-template-tags.txt:332
 msgid ""
 "Finally, in the above example, we remember to mark the result as safe so "
 "that our HTML is inserted directly into the template without further "
@@ -605,7 +623,7 @@ msgstr ""
 "непосредственно в шаблон без повторного экранирования."
 
 # 0d9d120e71124beda9ed36c3ffb18486
-#: ../../howto/custom-template-tags.txt:321
+#: ../../howto/custom-template-tags.txt:336
 msgid ""
 "There's no need to worry about the ``is_safe`` flag in this case (although "
 "including it wouldn't hurt anything). Whenever you manually handle the auto-"
@@ -617,12 +635,12 @@ msgstr ""
 "``is_safe`` ничего не изменит."
 
 # 95661f02584c48689dc234053f8cff45
-#: ../../howto/custom-template-tags.txt:326
+#: ../../howto/custom-template-tags.txt:341
 msgid "Avoiding XSS vulnerabilities when reusing built-in filters"
 msgstr "Защита от XSS уязвимостей при использовании встроенных фильтров."
 
 # 828fd787f2ce4ba79c78a3f602432510
-#: ../../howto/custom-template-tags.txt:330
+#: ../../howto/custom-template-tags.txt:345
 msgid ""
 "Django's built-in filters have ``autoescape=True`` by default in order to "
 "get the proper autoescaping behavior and avoid a cross-site script "
@@ -631,7 +649,7 @@ msgstr ""
 "Фильтры Django используют ``autoescape=True``, чтобы избежать XSS "
 "уязвимостей."
 
-#: ../../howto/custom-template-tags.txt:334
+#: ../../howto/custom-template-tags.txt:349
 msgid ""
 "In older versions of Django, be careful when reusing Django's built-in "
 "filters as ``autoescape`` defaults to ``None``. You'll need to pass "
@@ -642,7 +660,7 @@ msgstr ""
 "``autoescape=True``, чтобы активировать экранирование."
 
 # 7151b1fed6ec4cee81302f451137a3c9
-#: ../../howto/custom-template-tags.txt:338
+#: ../../howto/custom-template-tags.txt:353
 msgid ""
 "For example, if you wanted to write a custom filter called "
 "``urlize_and_linebreaks`` that combined the :tfilter:`urlize` and :tfilter:"
@@ -653,22 +671,22 @@ msgstr ""
 "выглядеть следующим образом::"
 
 # ac5b567df2a945f8907b381c81bb7ef6
-#: ../../howto/custom-template-tags.txt:351
+#: ../../howto/custom-template-tags.txt:366
 msgid "Then:"
 msgstr "Тогда:"
 
 # abd642cfcef042969fb459ce996f3eb4
-#: ../../howto/custom-template-tags.txt:357
+#: ../../howto/custom-template-tags.txt:372
 msgid "would be equivalent to:"
 msgstr "можно использовать вместо:"
 
 # f36f5a5e28fd4459870e647dc3a96401
-#: ../../howto/custom-template-tags.txt:366
+#: ../../howto/custom-template-tags.txt:381
 msgid "Filters and time zones"
 msgstr "Фильтры и временные зоны"
 
 # 29193eefb4f348238142b7cfb5d5a0d7
-#: ../../howto/custom-template-tags.txt:368
+#: ../../howto/custom-template-tags.txt:383
 msgid ""
 "If you write a custom filter that operates on :class:`~datetime.datetime` "
 "objects, you'll usually register it with the ``expects_localtime`` flag set "
@@ -679,7 +697,7 @@ msgstr ""
 "``expects_localtime`` со значением ``True``::"
 
 # a45bfcd869bc4bd6b7f05b98d98964f8
-#: ../../howto/custom-template-tags.txt:379
+#: ../../howto/custom-template-tags.txt:394
 msgid ""
 "When this flag is set, if the first argument to your filter is a time zone "
 "aware datetime, Django will convert it to the current time zone before "
@@ -693,11 +711,11 @@ msgstr ""
 "templates>`."
 
 # ed13ea738ccc4a51ab48a43bf33c5c25
-#: ../../howto/custom-template-tags.txt:387
+#: ../../howto/custom-template-tags.txt:402
 msgid "Writing custom template tags"
 msgstr "Создание собственного шаблонного тега"
 
-#: ../../howto/custom-template-tags.txt:389
+#: ../../howto/custom-template-tags.txt:404
 msgid ""
 "Tags are more complex than filters, because tags can do anything. Django "
 "provides a number of shortcuts that make writing most types of tags easier. "
@@ -709,15 +727,16 @@ msgstr ""
 "делом мы изучим их, затем узнаем как создать тег с нуля."
 
 # c71d3fbbe17c4aefaf1de73acbe39160
-#: ../../howto/custom-template-tags.txt:397
+#: ../../howto/custom-template-tags.txt:412
 msgid "Simple tags"
 msgstr "Простые теги"
 
 # 8c35e7287a6d4d12950c659f823a34d9
-#: ../../howto/custom-template-tags.txt:401
+#: ../../howto/custom-template-tags.txt:416
+#, fuzzy
 msgid ""
 "Many template tags take a number of arguments -- strings or template "
-"variables -- and return a string after doing some processing based solely on "
+"variables -- and return a result after doing some processing based solely on "
 "the input arguments and some external information. For example, a "
 "``current_time`` tag might accept a format string and return the time as a "
 "string formatted accordingly."
@@ -728,7 +747,7 @@ msgstr ""
 "время строкой в этом формате."
 
 # 9d5621098df8427fa87cd60f68f80b85
-#: ../../howto/custom-template-tags.txt:407
+#: ../../howto/custom-template-tags.txt:422
 msgid ""
 "To ease the creation of these types of tags, Django provides a helper "
 "function, ``simple_tag``. This function, which is a method of ``django."
@@ -743,17 +762,17 @@ msgstr ""
 
 # 6b3e303ef65b4eb4ad21e9536c98f37b
 # 5e75b0df73e74e3fa49141eb69c8e5ea
-#: ../../howto/custom-template-tags.txt:413
+#: ../../howto/custom-template-tags.txt:428
 msgid "Our ``current_time`` function could thus be written like this::"
 msgstr "Функцию ``current_time`` можно переписать следующим образом::"
 
 # c6de500bd826498ebd666df11cc966a3
-#: ../../howto/custom-template-tags.txt:424
+#: ../../howto/custom-template-tags.txt:439
 msgid "A few things to note about the ``simple_tag`` helper function:"
 msgstr "Несколько вещей которые следует помнить о функции ``simple_tag``:"
 
 # f795315efa1e400db96b4ccf63ba2b85
-#: ../../howto/custom-template-tags.txt:426
+#: ../../howto/custom-template-tags.txt:441
 msgid ""
 "Checking for the required number of arguments, etc., has already been done "
 "by the time our function is called, so we don't need to do that."
@@ -762,7 +781,7 @@ msgstr ""
 "функции, вам не нужно этого делать."
 
 # 8fd1abf6d182464d876142976ae65916
-#: ../../howto/custom-template-tags.txt:428
+#: ../../howto/custom-template-tags.txt:443
 msgid ""
 "The quotes around the argument (if any) have already been stripped away, so "
 "we just receive a plain string."
@@ -770,17 +789,39 @@ msgstr ""
 "Кавычки вокруг строк уже удалены, аргумент будет содержать готовую строку."
 
 # 876366724cb546fda452edf059c39ba4
-#: ../../howto/custom-template-tags.txt:430
+#: ../../howto/custom-template-tags.txt:445
 msgid ""
 "If the argument was a template variable, our function is passed the current "
 "value of the variable, not the variable itself."
 msgstr ""
 "Если аргумент является переменной шаблона, наша функция получит ее значение."
 
+#: ../../howto/custom-template-tags.txt:448
+msgid ""
+"Unlike other tag utilities, ``simple_tag`` passes its output through :func:"
+"`~django.utils.html.conditional_escape` if the template context is in "
+"autoescape mode, to ensure correct HTML and protect you from XSS "
+"vulnerabilities."
+msgstr ""
+
+#: ../../howto/custom-template-tags.txt:453
+msgid ""
+"If additional escaping is not desired, you will need to use :func:`~django."
+"utils.safestring.mark_safe` if you are absolutely sure that your code does "
+"not contain XSS vulnerabilities. For building small HTML snippets, use of :"
+"func:`~django.utils.html.format_html` instead of ``mark_safe()`` is strongly "
+"recommended."
+msgstr ""
+
+#: ../../howto/custom-template-tags.txt:461
+msgid ""
+"Auto-escaping for ``simple_tag`` as described in the previous two paragraphs "
+"was added."
+msgstr ""
+
 # 491b913f40d44336a2c90cc5a2455ef1
 # 14007f9accef408cb432b1e3f28e47fc
-#: ../../howto/custom-template-tags.txt:433
-#: ../../howto/custom-template-tags.txt:636
+#: ../../howto/custom-template-tags.txt:464
 msgid ""
 "If your template tag needs to access the current context, you can use the "
 "``takes_context`` argument when registering your tag::"
@@ -789,14 +830,13 @@ msgstr ""
 "при регистрации тега::"
 
 # 55dda13766674bb2805c87533cb77ace
-#: ../../howto/custom-template-tags.txt:441
+#: ../../howto/custom-template-tags.txt:472
 msgid "Note that the first argument *must* be called ``context``."
 msgstr "Заметим, что первый параметр *должен* называться ``context``."
 
 # 62cede74965d4780a4d64de8c23527b7
 # efee9a4cdca341cf9078447e86225e81
-#: ../../howto/custom-template-tags.txt:443
-#: ../../howto/custom-template-tags.txt:646
+#: ../../howto/custom-template-tags.txt:474
 msgid ""
 "For more information on how the ``takes_context`` option works, see the "
 "section on :ref:`inclusion tags<howto-custom-template-tags-inclusion-tags>`."
@@ -805,12 +845,12 @@ msgstr ""
 "`включающих тегах<howto-custom-template-tags-inclusion-tags>`."
 
 # 4692c882548143b3b6f0ddfd06d4e28f
-#: ../../howto/custom-template-tags.txt:446
+#: ../../howto/custom-template-tags.txt:477
 msgid "If you need to rename your tag, you can provide a custom name for it::"
 msgstr "Если вам нужно изменить название тега, передайте его параметром::"
 
 # f037c0b12f574d6483006557156f0114
-#: ../../howto/custom-template-tags.txt:454
+#: ../../howto/custom-template-tags.txt:485
 msgid ""
 "``simple_tag`` functions may accept any number of positional or keyword "
 "arguments. For example::"
@@ -821,9 +861,8 @@ msgstr ""
 # 8b37e2fdf88147b08b4627b32cb8a575
 # 3ebf874084b34138b91a6c0b8043c77c
 # 3d92934bca0548a9882d0a956d872368
-#: ../../howto/custom-template-tags.txt:464
-#: ../../howto/custom-template-tags.txt:600
-#: ../../howto/custom-template-tags.txt:659
+#: ../../howto/custom-template-tags.txt:495
+#: ../../howto/custom-template-tags.txt:643
 msgid ""
 "Then in the template any number of arguments, separated by spaces, may be "
 "passed to the template tag. Like in Python, the values for keyword arguments "
@@ -835,13 +874,25 @@ msgstr ""
 "можно указать, используя знак \"``=``\" после именованных аргументов. "
 "Например:"
 
+# 8c4118eb745246b3be25c9ea9a3c5b2d
+#: ../../howto/custom-template-tags.txt:506
+#, fuzzy
+msgid ""
+"It's possible to store the tag results in a template variable rather than "
+"directly outputting it. This is done by using the ``as`` argument followed "
+"by the variable name. Doing so enables you to output the content yourself "
+"where you see fit:"
+msgstr ""
+"Вы можете добавить результат в переменную шаблона, используя аргумент ``as`` "
+"и название переменной, и использовать его при необходимости:"
+
 # 856106180f614029ab1c95c3540357c6
-#: ../../howto/custom-template-tags.txt:476
+#: ../../howto/custom-template-tags.txt:519
 msgid "Inclusion tags"
 msgstr "Включающие теги"
 
 # f70ef51ecaa8497ca38817c99f1063af
-#: ../../howto/custom-template-tags.txt:480
+#: ../../howto/custom-template-tags.txt:523
 msgid ""
 "Another common type of template tag is the type that displays some data by "
 "rendering *another* template. For example, Django's admin interface uses "
@@ -860,12 +911,12 @@ msgstr ""
 "приложении администратора это тег ``submit_row``.)"
 
 # 86913ed25a944878947b3620ed511930
-#: ../../howto/custom-template-tags.txt:488
+#: ../../howto/custom-template-tags.txt:531
 msgid "These sorts of tags are called \"inclusion tags\"."
 msgstr "Такие теги называются \"включающие теги\"."
 
 # 2bc5d0cd19c94b578763b32daf43e26c
-#: ../../howto/custom-template-tags.txt:490
+#: ../../howto/custom-template-tags.txt:533
 msgid ""
 "Writing inclusion tags is probably best demonstrated by example. Let's write "
 "a tag that outputs a list of choices for a given ``Poll`` object, such as "
@@ -877,12 +928,12 @@ msgstr ""
 "`учебнике <creating-models>`. Мы будем использовать его следующим образом:"
 
 # ba998a55e44145228c977840f06672f3
-#: ../../howto/custom-template-tags.txt:498
+#: ../../howto/custom-template-tags.txt:541
 msgid "...and the output will be something like this:"
 msgstr "...результат будет выглядеть приблизительно следующим образом:"
 
 # 140aafc29037447f9c9650ae549d7b84
-#: ../../howto/custom-template-tags.txt:508
+#: ../../howto/custom-template-tags.txt:551
 msgid ""
 "First, define the function that takes the argument and produces a dictionary "
 "of data for the result. The important point here is we only need to return a "
@@ -895,7 +946,7 @@ msgstr ""
 "фрагмента шаблона. Например::"
 
 # 2918d76556744f9d8ff9d39bac249643
-#: ../../howto/custom-template-tags.txt:517
+#: ../../howto/custom-template-tags.txt:560
 msgid ""
 "Next, create the template used to render the tag's output. This template is "
 "a fixed feature of the tag: the tag writer specifies it, not the template "
@@ -907,7 +958,7 @@ msgstr ""
 "шаблон будет очень простым:"
 
 # 0b744f766ff4456280b209877a7d61ec
-#: ../../howto/custom-template-tags.txt:529
+#: ../../howto/custom-template-tags.txt:572
 msgid ""
 "Now, create and register the inclusion tag by calling the "
 "``inclusion_tag()`` method on a ``Library`` object. Following our example, "
@@ -919,7 +970,7 @@ msgstr ""
 "``results.html``, мы зарегистрируем тег следующим образом::"
 
 # 63ca6c54974e42bd97cb7f0ef5d32a1b
-#: ../../howto/custom-template-tags.txt:539
+#: ../../howto/custom-template-tags.txt:582
 msgid ""
 "Alternatively it is possible to register the inclusion tag using a :class:"
 "`django.template.Template` instance::"
@@ -928,12 +979,12 @@ msgstr ""
 "`django.template.Template`::"
 
 # 80515636eeaf4065a44b946dc2866c68
-#: ../../howto/custom-template-tags.txt:546
+#: ../../howto/custom-template-tags.txt:589
 msgid "...when first creating the function."
 msgstr "...при создании функции."
 
 # 39537f4e14fa4e59bb01c93d6feb15f0
-#: ../../howto/custom-template-tags.txt:548
+#: ../../howto/custom-template-tags.txt:591
 msgid ""
 "Sometimes, your inclusion tags might require a large number of arguments, "
 "making it a pain for template authors to pass in all the arguments and "
@@ -951,7 +1002,7 @@ msgstr ""
 "аргумент -- контекст текущего шаблона."
 
 # 07c7030096704f0c9e1404ddcb83acfa
-#: ../../howto/custom-template-tags.txt:555
+#: ../../howto/custom-template-tags.txt:598
 msgid ""
 "For example, say you're writing an inclusion tag that will always be used in "
 "a context that contains ``home_link`` and ``home_title`` variables that "
@@ -963,14 +1014,13 @@ msgstr ""
 "``home_title``. Вот как может выглядеть такой тег::"
 
 # 55dda13766674bb2805c87533cb77ace
-#: ../../howto/custom-template-tags.txt:566
-#: ../../howto/custom-template-tags.txt:644
+#: ../../howto/custom-template-tags.txt:609
 msgid ""
 "Note that the first parameter to the function *must* be called ``context``."
 msgstr "Заметим, что первый параметр *должен* называться ``context``."
 
 # af3445b39dec47c196e431a48c8efddd
-#: ../../howto/custom-template-tags.txt:568
+#: ../../howto/custom-template-tags.txt:611
 msgid ""
 "In that ``register.inclusion_tag()`` line, we specified "
 "``takes_context=True`` and the name of the template. Here's what the "
@@ -980,7 +1030,7 @@ msgstr ""
 "название включаемого шаблона. Вот как может выглядеть шаблон ``link.html``:"
 
 # 48dd19b096f54177b90ae036290fdf2f
-#: ../../howto/custom-template-tags.txt:576
+#: ../../howto/custom-template-tags.txt:619
 msgid ""
 "Then, any time you want to use that custom tag, load its library and call it "
 "without any arguments, like so:"
@@ -989,7 +1039,7 @@ msgstr ""
 "без аргументов:"
 
 # 70a6a81d504540098595d8a3237b589b
-#: ../../howto/custom-template-tags.txt:583
+#: ../../howto/custom-template-tags.txt:626
 msgid ""
 "Note that when you're using ``takes_context=True``, there's no need to pass "
 "arguments to the template tag. It automatically gets access to the context."
@@ -998,7 +1048,7 @@ msgstr ""
 "передавать аргументы. Тег будет иметь доступ ко всему контексту шаблона."
 
 # 7a2564baa6ee40119151961febd54476
-#: ../../howto/custom-template-tags.txt:586
+#: ../../howto/custom-template-tags.txt:629
 msgid ""
 "The ``takes_context`` parameter defaults to ``False``. When it's set to "
 "``True``, the tag is passed the context object, as in this example. That's "
@@ -1009,7 +1059,7 @@ msgstr ""
 "``True``, в тег будет передан объект контекста."
 
 # c809b792600e416ba9f23b34dbaaba4f
-#: ../../howto/custom-template-tags.txt:590
+#: ../../howto/custom-template-tags.txt:633
 msgid ""
 "``inclusion_tag`` functions may accept any number of positional or keyword "
 "arguments. For example::"
@@ -1018,18 +1068,25 @@ msgstr ""
 "аргументов. Например::"
 
 # 0b11deea0b4244769146666bc73e4dd9
-#: ../../howto/custom-template-tags.txt:612
+#: ../../howto/custom-template-tags.txt:655
 msgid "Assignment tags"
 msgstr "Присваивающий тег"
 
+#: ../../howto/custom-template-tags.txt:661
+msgid ""
+"``simple_tag`` can now store results in a template variable and should be "
+"used instead."
+msgstr ""
+
 # 801aa2bf145d49e2821e86b6418f90d6
-#: ../../howto/custom-template-tags.txt:616
+#: ../../howto/custom-template-tags.txt:664
+#, fuzzy
 msgid ""
 "To ease the creation of tags setting a variable in the context, Django "
 "provides a helper function, ``assignment_tag``. This function works the same "
-"way as :ref:`simple_tag<howto-custom-template-tags-simple-tags>`, except "
-"that it stores the tag's result in a specified context variable instead of "
-"directly outputting it."
+"way as :meth:`~django.template.Library.simple_tag` except that it stores the "
+"tag's result in a specified context variable instead of directly outputting "
+"it."
 msgstr ""
 "Для простого создания тегов, которые добавляют переменную в контекст, Django "
 "предоставляет функцию ``assignment_tag``. Эта функция работает так же, как "
@@ -1038,12 +1095,12 @@ msgstr ""
 
 # 6b3e303ef65b4eb4ad21e9536c98f37b
 # 5e75b0df73e74e3fa49141eb69c8e5ea
-#: ../../howto/custom-template-tags.txt:622
+#: ../../howto/custom-template-tags.txt:669
 msgid "Our earlier ``current_time`` function could thus be written like this::"
 msgstr "Функцию ``current_time`` можно переписать следующим образом::"
 
 # 8c4118eb745246b3be25c9ea9a3c5b2d
-#: ../../howto/custom-template-tags.txt:628
+#: ../../howto/custom-template-tags.txt:675
 msgid ""
 "You may then store the result in a template variable using the ``as`` "
 "argument followed by the variable name, and output it yourself where you see "
@@ -1052,21 +1109,12 @@ msgstr ""
 "Вы можете добавить результат в переменную шаблона, используя аргумент ``as`` "
 "и название переменной, и использовать его при необходимости:"
 
-# 5d0ac2caecd8431cadc1557c66a0ab1f
-#: ../../howto/custom-template-tags.txt:649
-msgid ""
-"``assignment_tag`` functions may accept any number of positional or keyword "
-"arguments. For example::"
-msgstr ""
-"``assignment_tag`` может принимать любое количество позиционных и "
-"именованных аргументов. Например::"
-
 # ed13ea738ccc4a51ab48a43bf33c5c25
-#: ../../howto/custom-template-tags.txt:669
+#: ../../howto/custom-template-tags.txt:684
 msgid "Advanced custom template tags"
 msgstr "Создание собственного шаблонного тега"
 
-#: ../../howto/custom-template-tags.txt:671
+#: ../../howto/custom-template-tags.txt:686
 msgid ""
 "Sometimes the basic features for custom template tag creation aren't enough. "
 "Don't worry, Django gives you complete access to the internals required to "
@@ -1077,12 +1125,12 @@ msgstr ""
 "позволяет создать свой тег с нуля."
 
 # b87a21637ded4b70acc2f21208f86249
-#: ../../howto/custom-template-tags.txt:676
+#: ../../howto/custom-template-tags.txt:691
 msgid "A quick overview"
 msgstr "Краткий обзор"
 
 # 58757bb008c34480ac92a1a141c9cbb4
-#: ../../howto/custom-template-tags.txt:678
+#: ../../howto/custom-template-tags.txt:693
 msgid ""
 "The template system works in a two-step process: compiling and rendering. To "
 "define a custom template tag, you specify how the compilation works and how "
@@ -1092,7 +1140,7 @@ msgstr ""
 "собственный тег вы определяете как выполняется компиляция и выполнение тега."
 
 # 1a486f0d89904bc89e6fca0d62e9663c
-#: ../../howto/custom-template-tags.txt:682
+#: ../../howto/custom-template-tags.txt:697
 msgid ""
 "When Django compiles a template, it splits the raw template text into "
 "''nodes''. Each node is an instance of ``django.template.Node`` and has a "
@@ -1111,7 +1159,7 @@ msgstr ""
 "окончательного результата."
 
 # e41c6a1ea0cb4ba9b49077a79d9c034e
-#: ../../howto/custom-template-tags.txt:689
+#: ../../howto/custom-template-tags.txt:704
 msgid ""
 "Thus, to define a custom template tag, you specify how the raw template tag "
 "is converted into a ``Node`` (the compilation function), and what the node's "
@@ -1122,12 +1170,12 @@ msgstr ""
 "метод ``render()``."
 
 # f10badb64ec04b6180fd9674e3b75ca2
-#: ../../howto/custom-template-tags.txt:694
+#: ../../howto/custom-template-tags.txt:709
 msgid "Writing the compilation function"
 msgstr "Создание функции компиляции"
 
 # 2046b9243e2f4748a80b8cf7176a1afe
-#: ../../howto/custom-template-tags.txt:696
+#: ../../howto/custom-template-tags.txt:711
 msgid ""
 "For each template tag the template parser encounters, it calls a Python "
 "function with the tag contents and the parser object itself. This function "
@@ -1139,7 +1187,7 @@ msgstr ""
 "вернуть экземпляр ``Node``."
 
 # 1c890c3335aa4adab2728573128ac6ee
-#: ../../howto/custom-template-tags.txt:700
+#: ../../howto/custom-template-tags.txt:715
 msgid ""
 "For example, let's write a full implementation of our simple template tag, "
 "``{% current_time %}``, that displays the current date/time, formatted "
@@ -1154,7 +1202,7 @@ msgstr ""
 "использоваться следующим образом:"
 
 # 504b0a0b72674fe18173711cafe94eb0
-#: ../../howto/custom-template-tags.txt:710
+#: ../../howto/custom-template-tags.txt:725
 msgid ""
 "The parser for this function should grab the parameter and create a ``Node`` "
 "object::"
@@ -1162,19 +1210,19 @@ msgstr "Парсер  функции должен получить параме�
 
 # 237aade3aed940678a3e47fef339ee91
 # fdcef6fb605c432d827d4ad1eb40eefb
-#: ../../howto/custom-template-tags.txt:729
-#: ../../howto/custom-template-tags.txt:781
+#: ../../howto/custom-template-tags.txt:744
+#: ../../howto/custom-template-tags.txt:796
 msgid "Notes:"
 msgstr "Заметки:"
 
 # a2397f5ab88a4289b5c1d2ad5fdee1d9
-#: ../../howto/custom-template-tags.txt:731
+#: ../../howto/custom-template-tags.txt:746
 msgid ""
 "``parser`` is the template parser object. We don't need it in this example."
 msgstr "``parser`` -- парсер шаблона. Он нам не нужен в данном примере."
 
 # af29359ec5f4402a9a6d09d0ec9d7013
-#: ../../howto/custom-template-tags.txt:734
+#: ../../howto/custom-template-tags.txt:749
 msgid ""
 "``token.contents`` is a string of the raw contents of the tag. In our "
 "example, it's ``'current_time \"%Y-%m-%d %I:%M %p\"'``."
@@ -1183,7 +1231,7 @@ msgstr ""
 "\"%Y-%m-%d %I:%M %p\"'``."
 
 # 9fee43ace8d5419d8eae5d75a013b530
-#: ../../howto/custom-template-tags.txt:737
+#: ../../howto/custom-template-tags.txt:752
 msgid ""
 "The ``token.split_contents()`` method separates the arguments on spaces "
 "while keeping quoted strings together. The more straightforward ``token."
@@ -1198,7 +1246,7 @@ msgstr ""
 "``token.split_contents()``."
 
 # 264654e7079148028219b9c356bcd947
-#: ../../howto/custom-template-tags.txt:743
+#: ../../howto/custom-template-tags.txt:758
 msgid ""
 "This function is responsible for raising ``django.template."
 "TemplateSyntaxError``, with helpful messages, for any syntax error."
@@ -1207,7 +1255,7 @@ msgstr ""
 "в случае синтаксической ошибки при использовании вашего тега."
 
 # 65a76edea16b4c6a9504c399d822e4c6
-#: ../../howto/custom-template-tags.txt:747
+#: ../../howto/custom-template-tags.txt:762
 msgid ""
 "The ``TemplateSyntaxError`` exceptions use the ``tag_name`` variable. Don't "
 "hard-code the tag's name in your error messages, because that couples the "
@@ -1220,7 +1268,7 @@ msgstr ""
 "название тега -- даже если тег не содержит аргументы."
 
 # 14537338da3c478599f5eff000a3ac8b
-#: ../../howto/custom-template-tags.txt:753
+#: ../../howto/custom-template-tags.txt:768
 msgid ""
 "The function returns a ``CurrentTimeNode`` with everything the node needs to "
 "know about this tag. In this case, it just passes the argument -- ``\"%Y-%m-"
@@ -1232,7 +1280,7 @@ msgstr ""
 "%p\"``. Кавычки удаляются с помощью ``format_string[1:-1]``."
 
 # a6a6dc4e855b451cacadbcbff7e1bc36
-#: ../../howto/custom-template-tags.txt:758
+#: ../../howto/custom-template-tags.txt:773
 msgid ""
 "The parsing is very low-level. The Django developers have experimented with "
 "writing small frameworks on top of this parsing system, using techniques "
@@ -1249,24 +1297,24 @@ msgstr ""
 "быстрым."
 
 # 3954eb744a55453f8ea949912cdf41fc
-#: ../../howto/custom-template-tags.txt:764
+#: ../../howto/custom-template-tags.txt:779
 msgid "Writing the renderer"
 msgstr "Реализация выполнения тега"
 
 # 1fbbba9f2bf14c16919625a858afad8e
-#: ../../howto/custom-template-tags.txt:766
+#: ../../howto/custom-template-tags.txt:781
 msgid ""
 "The second step in writing custom tags is to define a ``Node`` subclass that "
 "has a ``render()`` method."
 msgstr "Следующим этапом мы создаем подкласс ``Node`` с методом ``render()``."
 
 # 2cb75ea299204fcd9f6d5d8ee72948df
-#: ../../howto/custom-template-tags.txt:769
+#: ../../howto/custom-template-tags.txt:784
 msgid "Continuing the above example, we need to define ``CurrentTimeNode``::"
 msgstr "В продолжение нашего примера создадим класс ``CurrentTimeNode``::"
 
 # 7a0a0d37a6524b7fa487ca85c7e0f048
-#: ../../howto/custom-template-tags.txt:783
+#: ../../howto/custom-template-tags.txt:798
 msgid ""
 "``__init__()`` gets the ``format_string`` from ``do_current_time()``. Always "
 "pass any options/parameters/arguments to a ``Node`` via its ``__init__()``."
@@ -1276,12 +1324,12 @@ msgstr ""
 "``__init__()``."
 
 # 941c7c7628a64736b53c94c861f65a9c
-#: ../../howto/custom-template-tags.txt:787
+#: ../../howto/custom-template-tags.txt:802
 msgid "The ``render()`` method is where the work actually happens."
 msgstr "Метод ``render()`` выполняет основную работу."
 
 # 5d46462f3b3c42b78ae09c8576969c23
-#: ../../howto/custom-template-tags.txt:789
+#: ../../howto/custom-template-tags.txt:804
 msgid ""
 "``render()`` should generally fail silently, particularly in a production "
 "environment. In some cases however, particularly if ``context.template."
@@ -1296,7 +1344,7 @@ msgstr ""
 "если передать неверное количество или тип аргументов."
 
 # 708ab95f7c0043069f672a1718ba9ef8
-#: ../../howto/custom-template-tags.txt:796
+#: ../../howto/custom-template-tags.txt:811
 msgid ""
 "Ultimately, this decoupling of compilation and rendering results in an "
 "efficient template system, because a template can render multiple contexts "
@@ -1306,22 +1354,24 @@ msgstr ""
 "шаблон с несколькими контекстами без надобности выполнять парсинг каждый раз."
 
 # 6b2aaaf7b3984c6c83c1c3fabbe6bab3
-#: ../../howto/custom-template-tags.txt:801
+#: ../../howto/custom-template-tags.txt:818
 msgid "Auto-escaping considerations"
 msgstr "Работа с автоматическим экранированием"
 
 # 056eec36b011435cb2f080c06191dc37
-#: ../../howto/custom-template-tags.txt:803
+#: ../../howto/custom-template-tags.txt:820
+#, fuzzy
 msgid ""
 "The output from template tags is **not** automatically run through the auto-"
-"escaping filters. However, there are still a couple of things you should "
-"keep in mind when writing a template tag."
+"escaping filters (with the exception of :meth:`~django.template.Library."
+"simple_tag` as described above). However, there are still a couple of things "
+"you should keep in mind when writing a template tag."
 msgstr ""
 "Вывод тега **не** экранируется. Однако, есть несколько вещей которые следует "
 "помнить."
 
 # fe359f349db14bfc8da7c36e70ba6ea3
-#: ../../howto/custom-template-tags.txt:807
+#: ../../howto/custom-template-tags.txt:826
 msgid ""
 "If the ``render()`` function of your template stores the result in a context "
 "variable (rather than returning the result in a string), it should take care "
@@ -1338,7 +1388,7 @@ msgstr ""
 "экранирования значения."
 
 # 068213c734be49ca90143b6eaa74f35e
-#: ../../howto/custom-template-tags.txt:814
+#: ../../howto/custom-template-tags.txt:833
 msgid ""
 "Also, if your template tag creates a new context for performing some sub-"
 "rendering, set the auto-escape attribute to the current context's value. The "
@@ -1351,7 +1401,7 @@ msgstr ""
 "вы можете использовать. Например::"
 
 # df06f7d8b6ed4d11af9d36327084abad
-#: ../../howto/custom-template-tags.txt:826
+#: ../../howto/custom-template-tags.txt:845
 msgid ""
 "This is not a very common situation, but it's useful if you're rendering a "
 "template yourself. For example::"
@@ -1359,7 +1409,7 @@ msgstr ""
 "Это не совсем обычная ситуация, но может быть полезно если вы самостоятельно "
 "выполняете шаблон. Например::"
 
-#: ../../howto/custom-template-tags.txt:835
+#: ../../howto/custom-template-tags.txt:854
 msgid ""
 "The ``template`` attribute of ``Context`` objects was added in Django 1.8. :"
 "meth:`context.template.engine.get_template <django.template.Engine."
@@ -1374,7 +1424,7 @@ msgstr ""
 "который не принимает :class:`~django.template.Context`."
 
 # da8c6c46b81e4e839f56df4dcc1ceabd
-#: ../../howto/custom-template-tags.txt:842
+#: ../../howto/custom-template-tags.txt:861
 msgid ""
 "If we had neglected to pass in the current ``context.autoescape`` value to "
 "our new ``Context`` in this example, the results would have *always* been "
@@ -1386,12 +1436,12 @@ msgstr ""
 "использовании тега в блоке :ttag:`{% autoescape off %}<autoescape>`."
 
 # b46f5a83424b425482f2c948cb6cf1fb
-#: ../../howto/custom-template-tags.txt:850
+#: ../../howto/custom-template-tags.txt:869
 msgid "Thread-safety considerations"
 msgstr "Учитываем потокобезопасность"
 
 # a155746f3e0a4b7396c5b42abbde232d
-#: ../../howto/custom-template-tags.txt:852
+#: ../../howto/custom-template-tags.txt:871
 msgid ""
 "Once a node is parsed, its ``render`` method may be called any number of "
 "times. Since Django is sometimes run in multi-threaded environments, a "
@@ -1406,7 +1456,7 @@ msgstr ""
 "являются потокобезопасными."
 
 # cb9e90f191c04635b6290ef60de3acc0
-#: ../../howto/custom-template-tags.txt:858
+#: ../../howto/custom-template-tags.txt:877
 msgid ""
 "To make sure your template tags are thread safe, you should never store "
 "state information on the node itself. For example, Django provides a "
@@ -1418,13 +1468,13 @@ msgstr ""
 "`cycle`, который переключается между аргументами при каждом вызове:"
 
 # daff7756304d44e7bfd9e2c53b4f0c9f
-#: ../../howto/custom-template-tags.txt:871
+#: ../../howto/custom-template-tags.txt:890
 msgid ""
 "A naive implementation of ``CycleNode`` might look something like this::"
 msgstr "Реализация ``CycleNode`` могла бы выглядеть следующим образом::"
 
 # abcc2d99ee1241e89920c4b63c1f733f
-#: ../../howto/custom-template-tags.txt:883
+#: ../../howto/custom-template-tags.txt:902
 msgid ""
 "But, suppose we have two templates rendering the template snippet from above "
 "at the same time:"
@@ -1433,7 +1483,7 @@ msgstr ""
 "представленного выше:"
 
 # d08f0f47486d49f68786aae583679abb
-#: ../../howto/custom-template-tags.txt:886
+#: ../../howto/custom-template-tags.txt:905
 msgid ""
 "Thread 1 performs its first loop iteration, ``CycleNode.render()`` returns "
 "'row1'"
@@ -1442,7 +1492,7 @@ msgstr ""
 "возвращает 'row1'"
 
 # 434d9e02007e4f76b0824a95da9644bf
-#: ../../howto/custom-template-tags.txt:888
+#: ../../howto/custom-template-tags.txt:907
 msgid ""
 "Thread 2 performs its first loop iteration, ``CycleNode.render()`` returns "
 "'row2'"
@@ -1451,7 +1501,7 @@ msgstr ""
 "возвращает 'row2'"
 
 # 45fbed42fde649e78d87484214b636bf
-#: ../../howto/custom-template-tags.txt:890
+#: ../../howto/custom-template-tags.txt:909
 msgid ""
 "Thread 1 performs its second loop iteration, ``CycleNode.render()`` returns "
 "'row1'"
@@ -1460,7 +1510,7 @@ msgstr ""
 "возвращает 'row1'"
 
 # 1f129836ce474697a113494eaefcbc4e
-#: ../../howto/custom-template-tags.txt:892
+#: ../../howto/custom-template-tags.txt:911
 msgid ""
 "Thread 2 performs its second loop iteration, ``CycleNode.render()`` returns "
 "'row2'"
@@ -1469,7 +1519,7 @@ msgstr ""
 "возвращает 'row2'"
 
 # c2250343053b4189961bd3f79d6c388f
-#: ../../howto/custom-template-tags.txt:895
+#: ../../howto/custom-template-tags.txt:914
 msgid ""
 "The CycleNode is iterating, but it's iterating globally. As far as Thread 1 "
 "and Thread 2 are concerned, it's always returning the same value. This is "
@@ -1480,7 +1530,7 @@ msgstr ""
 "нужно!"
 
 # 7dc83b01196145a4afc208bc9f783934
-#: ../../howto/custom-template-tags.txt:899
+#: ../../howto/custom-template-tags.txt:918
 msgid ""
 "To address this problem, Django provides a ``render_context`` that's "
 "associated with the ``context`` of the template that is currently being "
@@ -1494,7 +1544,7 @@ msgstr ""
 "метода ``render``."
 
 # a9b1b9ca29394423b286251ba4479ee5
-#: ../../howto/custom-template-tags.txt:904
+#: ../../howto/custom-template-tags.txt:923
 msgid ""
 "Let's refactor our ``CycleNode`` implementation to use the "
 "``render_context``::"
@@ -1502,7 +1552,7 @@ msgstr ""
 "Давайте перепишем ``CycleNode`` чтобы использовать ``render_context``::"
 
 # 7e929c40d53c4b989ec09d368a01b36b
-#: ../../howto/custom-template-tags.txt:916
+#: ../../howto/custom-template-tags.txt:935
 msgid ""
 "Note that it's perfectly safe to store global information that will not "
 "change throughout the life of the ``Node`` as an attribute. In the case of "
@@ -1520,7 +1570,7 @@ msgstr ""
 "``CycleNode``, должна сохраняться в ``render_context``."
 
 # cb6e5b7e78d14b6ba23ef41aa74d19aa
-#: ../../howto/custom-template-tags.txt:925
+#: ../../howto/custom-template-tags.txt:944
 msgid ""
 "Notice how we used ``self`` to scope the ``CycleNode`` specific information "
 "within the ``render_context``. There may be multiple ``CycleNodes`` in a "
@@ -1537,12 +1587,12 @@ msgstr ""
 "``render_context[self]`` словарь."
 
 # 635efbbfd9a7445d9587f4f7747ba003
-#: ../../howto/custom-template-tags.txt:933
+#: ../../howto/custom-template-tags.txt:952
 msgid "Registering the tag"
 msgstr "Регистрация тега"
 
 # 551303317a7e466d916424759068775a
-#: ../../howto/custom-template-tags.txt:935
+#: ../../howto/custom-template-tags.txt:954
 msgid ""
 "Finally, register the tag with your module's ``Library`` instance, as "
 "explained in :ref:`writing custom template filters<howto-writing-custom-"
@@ -1552,12 +1602,12 @@ msgstr ""
 "описано :ref:`выше<howto-writing-custom-template-tags>`. Например::"
 
 # 44733858e6bf4ba6a33645cb08211dd9
-#: ../../howto/custom-template-tags.txt:941
+#: ../../howto/custom-template-tags.txt:960
 msgid "The ``tag()`` method takes two arguments:"
 msgstr "Метод ``tag()`` принимает два аргумента:"
 
 # 828a1e73a2564955b12544a246f18b53
-#: ../../howto/custom-template-tags.txt:943
+#: ../../howto/custom-template-tags.txt:962
 msgid ""
 "The name of the template tag -- a string. If this is left out, the name of "
 "the compilation function will be used."
@@ -1566,13 +1616,13 @@ msgstr ""
 "название функции."
 
 # 113f5020cb694fe68a741c0f42cbac7a
-#: ../../howto/custom-template-tags.txt:948
+#: ../../howto/custom-template-tags.txt:967
 msgid ""
 "As with filter registration, it is also possible to use this as a decorator::"
 msgstr "Как и для регистрации фильтра, можно использовать как декоратор::"
 
 # 6c8371a9c11046d1a1088c1c176ce3d4
-#: ../../howto/custom-template-tags.txt:958
+#: ../../howto/custom-template-tags.txt:977
 msgid ""
 "If you leave off the ``name`` argument, as in the second example above, "
 "Django will use the function's name as the tag name."
@@ -1581,12 +1631,12 @@ msgstr ""
 "использовать название функции в качестве названия тега."
 
 # cb0b4a24982a4d658f3c083ee79b1ecf
-#: ../../howto/custom-template-tags.txt:962
+#: ../../howto/custom-template-tags.txt:981
 msgid "Passing template variables to the tag"
 msgstr "Передача переменных шаблона в тег"
 
 # cf36f683ca0448558610542164c09786
-#: ../../howto/custom-template-tags.txt:964
+#: ../../howto/custom-template-tags.txt:983
 msgid ""
 "Although you can pass any number of arguments to a template tag using "
 "``token.split_contents()``, the arguments are all unpacked as string "
@@ -1598,7 +1648,7 @@ msgstr ""
 "Чтобы передать значение переменной шаблона, необходимо немного усложнить код."
 
 # 6b50eca1c2c946deb4949cfbef64b7d4
-#: ../../howto/custom-template-tags.txt:969
+#: ../../howto/custom-template-tags.txt:988
 msgid ""
 "While the previous examples have formatted the current time into a string "
 "and returned the string, suppose you wanted to pass in a :class:`~django.db."
@@ -1610,23 +1660,23 @@ msgstr ""
 "DateTimeField` и отформатировать это значение:"
 
 # 1b1c826df9044670a5e01a705cbd668b
-#: ../../howto/custom-template-tags.txt:978
+#: ../../howto/custom-template-tags.txt:997
 msgid "Initially, ``token.split_contents()`` will return three values:"
 msgstr "``token.split_contents()`` вернет три значения:"
 
 # a1930d17347a4e9b9d152e47092a23a6
-#: ../../howto/custom-template-tags.txt:980
+#: ../../howto/custom-template-tags.txt:999
 msgid "The tag name ``format_time``."
 msgstr "Название тега ``format_time``."
 
 # d2b1a32e78a54664b2797b2952153840
-#: ../../howto/custom-template-tags.txt:981
+#: ../../howto/custom-template-tags.txt:1000
 msgid ""
 "The string ``'blog_entry.date_updated'`` (without the surrounding quotes)."
 msgstr "Строку ``'blog_entry.date_updated'`` (без кавычек)."
 
 # 44c310f632b14b4b90b73b38ed8013c8
-#: ../../howto/custom-template-tags.txt:983
+#: ../../howto/custom-template-tags.txt:1002
 msgid ""
 "The formatting string ``'\"%Y-%m-%d %I:%M %p\"'``. The return value from "
 "``split_contents()`` will include the leading and trailing quotes for string "
@@ -1636,12 +1686,12 @@ msgstr ""
 "``split_contents()`` будет содержать кавычки для таких переменных."
 
 # 644bb640c790480aa20c52d453209807
-#: ../../howto/custom-template-tags.txt:987
+#: ../../howto/custom-template-tags.txt:1006
 msgid "Now your tag should begin to look like this::"
 msgstr "Теперь ваш тег будет выглядеть следующим образом::"
 
 # 29508a57ba874d2d90e73af96f0f3cc6
-#: ../../howto/custom-template-tags.txt:1005
+#: ../../howto/custom-template-tags.txt:1024
 msgid ""
 "You also have to change the renderer to retrieve the actual contents of the "
 "``date_updated`` property of the ``blog_entry`` object.  This can be "
@@ -1652,7 +1702,7 @@ msgstr ""
 "с использованием класса ``Variable()`` из ``django.template``."
 
 # dd09df09e4ab45d08bbd1d5ebccdd06f
-#: ../../howto/custom-template-tags.txt:1009
+#: ../../howto/custom-template-tags.txt:1028
 msgid ""
 "To use the ``Variable`` class, simply instantiate it with the name of the "
 "variable to be resolved, and then call ``variable.resolve(context)``. So, "
@@ -1662,7 +1712,7 @@ msgstr ""
 "переменной, потом вызовите ``variable.resolve(context)``. Например::"
 
 # be594d6e020c48f4bfcda50dc7b174ca
-#: ../../howto/custom-template-tags.txt:1025
+#: ../../howto/custom-template-tags.txt:1044
 msgid ""
 "Variable resolution will throw a ``VariableDoesNotExist`` exception if it "
 "cannot resolve the string passed to it in the current context of the page."
@@ -1671,12 +1721,12 @@ msgstr ""
 "значение переменной в текущем контексте."
 
 # a467c09456b643418e9e0f37a2d09532
-#: ../../howto/custom-template-tags.txt:1029
+#: ../../howto/custom-template-tags.txt:1048
 msgid "Setting a variable in the context"
 msgstr "Добавление переменной в контекст"
 
 # 2ce8c4df50644d5f95cc1e0e969cea9e
-#: ../../howto/custom-template-tags.txt:1031
+#: ../../howto/custom-template-tags.txt:1050
 msgid ""
 "The above examples simply output a value. Generally, it's more flexible if "
 "your template tags set template variables instead of outputting values. That "
@@ -1688,7 +1738,7 @@ msgstr ""
 "раз."
 
 # a5ec2f00c2544359b10cc84749f9c5a3
-#: ../../howto/custom-template-tags.txt:1035
+#: ../../howto/custom-template-tags.txt:1054
 msgid ""
 "To set a variable in the context, just use dictionary assignment on the "
 "context object in the ``render()`` method. Here's an updated version of "
@@ -1701,7 +1751,7 @@ msgstr ""
 "вместо вывода результата::"
 
 # 9bc76d5aaafd4780bbe065b6afebad8f
-#: ../../howto/custom-template-tags.txt:1050
+#: ../../howto/custom-template-tags.txt:1069
 msgid ""
 "Note that ``render()`` returns the empty string. ``render()`` should always "
 "return string output. If all the template tag does is set a variable, "
@@ -1712,17 +1762,17 @@ msgstr ""
 "переменной в контекст, метод ``render()`` должен вернуть пустую строку."
 
 # ebad61b12e814c97a451d0fcbd247aab
-#: ../../howto/custom-template-tags.txt:1054
+#: ../../howto/custom-template-tags.txt:1073
 msgid "Here's how you'd use this new version of the tag:"
 msgstr "Вот как вы можете использовать новую версию тега:"
 
 # a467c09456b643418e9e0f37a2d09532
-#: ../../howto/custom-template-tags.txt:1060
+#: ../../howto/custom-template-tags.txt:0
 msgid "Variable scope in context"
 msgstr "Область видимости переменной в контексте"
 
 # 06531cf5f8cf4d42a476ffb303d4909f
-#: ../../howto/custom-template-tags.txt:1062
+#: ../../howto/custom-template-tags.txt:1081
 msgid ""
 "Any variable set in the context will only be available in the same ``block`` "
 "of the template in which it was assigned. This behavior is intentional; it "
@@ -1734,7 +1784,7 @@ msgstr ""
 "намерено, чтобы переменные не конфликтовали с контекстом другого блока."
 
 # af2b919fd09f499b8be9c5239e256fb6
-#: ../../howto/custom-template-tags.txt:1067
+#: ../../howto/custom-template-tags.txt:1086
 msgid ""
 "But, there's a problem with ``CurrentTimeNode2``: The variable name "
 "``current_time`` is hard-coded. This means you'll need to make sure your "
@@ -1750,7 +1800,7 @@ msgstr ""
 "название переменной при вызове тега:"
 
 # 3093c1af0111471dab1f3049767142a5
-#: ../../howto/custom-template-tags.txt:1079
+#: ../../howto/custom-template-tags.txt:1098
 msgid ""
 "To do that, you'll need to refactor both the compilation function and "
 "``Node`` class, like so::"
@@ -1759,7 +1809,7 @@ msgstr ""
 "``Node``::"
 
 # ed22884d2c024407bcaee7e59d227627
-#: ../../howto/custom-template-tags.txt:1111
+#: ../../howto/custom-template-tags.txt:1130
 msgid ""
 "The difference here is that ``do_current_time()`` grabs the format string "
 "and the variable name, passing both to ``CurrentTimeNode3``."
@@ -1768,7 +1818,7 @@ msgstr ""
 "переменной и передает в конструктор ``CurrentTimeNode3``."
 
 # e72c95eadd7a49dbb860a5065efd9346
-#: ../../howto/custom-template-tags.txt:1114
+#: ../../howto/custom-template-tags.txt:1133
 msgid ""
 "Finally, if you only need to have a simple syntax for your custom context-"
 "updating template tag, you might want to consider using the :ref:`assignment "
@@ -1780,12 +1830,12 @@ msgstr ""
 "tags>`."
 
 # 0864842205cf44f0a9411a42ab7a6f8c
-#: ../../howto/custom-template-tags.txt:1121
+#: ../../howto/custom-template-tags.txt:1140
 msgid "Parsing until another block tag"
 msgstr "Создание блочного тега"
 
 # bb85f78297ea42dd93b0d3e0addae196
-#: ../../howto/custom-template-tags.txt:1123
+#: ../../howto/custom-template-tags.txt:1142
 msgid ""
 "Template tags can work in tandem. For instance, the standard :ttag:`{% "
 "comment %}<comment>` tag hides everything until ``{% endcomment %}``. To "
@@ -1798,12 +1848,12 @@ msgstr ""
 "тега."
 
 # d12c8ba7ad8448ed9f0cf96403a41b0c
-#: ../../howto/custom-template-tags.txt:1128
+#: ../../howto/custom-template-tags.txt:1147
 msgid "Here's how a simplified ``{% comment %}`` tag might be implemented::"
 msgstr "Вот простая реализация тега ``{% comment %}``::"
 
 # 6d47f0d512d94a30a3727ef5fd54ffce
-#: ../../howto/custom-template-tags.txt:1140
+#: ../../howto/custom-template-tags.txt:1159
 msgid ""
 "The actual implementation of :ttag:`{% comment %}<comment>` is slightly "
 "different in that it allows broken template tags to appear between ``{% "
@@ -1819,7 +1869,7 @@ msgstr ""
 "``parser.delete_first_token()``, такой вариант не генерирует список узлов."
 
 # af2b9e4acc4b4a76a633290792a75149
-#: ../../howto/custom-template-tags.txt:1147
+#: ../../howto/custom-template-tags.txt:1166
 msgid ""
 "``parser.parse()`` takes a tuple of names of block tags ''to parse until''. "
 "It returns an instance of ``django.template.NodeList``, which is a list of "
@@ -1832,7 +1882,7 @@ msgstr ""
 "указанных в кортеже."
 
 # 82fda08a59c04be6b8728f5a4ef57943
-#: ../../howto/custom-template-tags.txt:1152
+#: ../../howto/custom-template-tags.txt:1171
 msgid ""
 "In ``\"nodelist = parser.parse(('endcomment',))\"`` in the above example, "
 "``nodelist`` is a list of all nodes between the ``{% comment %}`` and ``{% "
@@ -1844,7 +1894,7 @@ msgstr ""
 "``{% endcomment %}``, не включая ``{% comment %}`` и ``{% endcomment %}``."
 
 # a515afe5dc7647a8a8fb5f212d24301d
-#: ../../howto/custom-template-tags.txt:1157
+#: ../../howto/custom-template-tags.txt:1176
 msgid ""
 "After ``parser.parse()`` is called, the parser hasn't yet \"consumed\" the "
 "``{% endcomment %}`` tag, so the code needs to explicitly call ``parser."
@@ -1854,7 +1904,7 @@ msgstr ""
 "endcomment %}``, поэтому необходимо вызвать ``parser.delete_first_token()``."
 
 # 2f600b0ed320466c8ff0d45e76535205
-#: ../../howto/custom-template-tags.txt:1161
+#: ../../howto/custom-template-tags.txt:1180
 msgid ""
 "``CommentNode.render()`` simply returns an empty string. Anything between "
 "``{% comment %}`` and ``{% endcomment %}`` is ignored."
@@ -1863,12 +1913,12 @@ msgstr ""
 "comment %}`` и ``{% endcomment %}`` игнорируется."
 
 # c0f02e8db35846e0abc8f81aca553102
-#: ../../howto/custom-template-tags.txt:1165
+#: ../../howto/custom-template-tags.txt:1184
 msgid "Parsing until another block tag, and saving contents"
 msgstr "Обработка блочного тега с сохранением содержимого"
 
 # 5104a8fd8f814d9b94bbb761a29168f1
-#: ../../howto/custom-template-tags.txt:1167
+#: ../../howto/custom-template-tags.txt:1186
 msgid ""
 "In the previous example, ``do_comment()`` discarded everything between ``{% "
 "comment %}`` and ``{% endcomment %}``. Instead of doing that, it's possible "
@@ -1879,7 +1929,7 @@ msgstr ""
 "над содержимым блочного тега."
 
 # c802603e6d084028ad6b09acb60867bf
-#: ../../howto/custom-template-tags.txt:1171
+#: ../../howto/custom-template-tags.txt:1190
 msgid ""
 "For example, here's a custom template tag, ``{% upper %}``, that capitalizes "
 "everything between itself and ``{% endupper %}``."
@@ -1888,12 +1938,12 @@ msgstr ""
 "тега ``{% endupper %}`` в верхний регистр."
 
 # 8c8791cda74942ab9e4b7221831ae9d0
-#: ../../howto/custom-template-tags.txt:1174
+#: ../../howto/custom-template-tags.txt:1193
 msgid "Usage:"
 msgstr "Пример использования:"
 
 # 39b888de02654eb6af5c3652b2143f21
-#: ../../howto/custom-template-tags.txt:1180
+#: ../../howto/custom-template-tags.txt:1199
 msgid ""
 "As in the previous example, we'll use ``parser.parse()``. But this time, we "
 "pass the resulting ``nodelist`` to the ``Node``::"
@@ -1902,7 +1952,7 @@ msgstr ""
 "этот раз полученный ``nodelist`` передадим в ``Node``::"
 
 # 083d504d1e674b3f893c364868913f02
-#: ../../howto/custom-template-tags.txt:1195
+#: ../../howto/custom-template-tags.txt:1214
 msgid ""
 "The only new concept here is the ``self.nodelist.render(context)`` in "
 "``UpperNode.render()``."
@@ -1911,7 +1961,7 @@ msgstr ""
 "render()``."
 
 # e5979651d15b4dabad2dc4e371b24e76
-#: ../../howto/custom-template-tags.txt:1198
+#: ../../howto/custom-template-tags.txt:1217
 msgid ""
 "For more examples of complex rendering, see the source code of :ttag:`{% for "
 "%}<for>` in ``django/template/defaulttags.py`` and :ttag:`{% if %}<if>` in "
@@ -1920,6 +1970,24 @@ msgstr ""
 "Более сложные примеры ищите в исходном коде реализации :ttag:`{% for %}"
 "<for>` в ``django/template/defaulttags.py`` и :ttag:`{% if %}<if>` в "
 "``django/template/smartif.py``."
+
+# dd61713ccf6d4cc2a9dc2074164a057b
+#~ msgid ""
+#~ "Custom template tags and filters must live inside a Django app. If they "
+#~ "relate to an existing app it makes sense to bundle them there; otherwise, "
+#~ "you should create a new app to hold them."
+#~ msgstr ""
+#~ "Собственные теги и фильтры шаблонов должны определяться в приложении "
+#~ "Django. Если они логически связаны с каким-то приложением, есть смысл "
+#~ "добавить их в это приложение, иначе создайте новое приложение."
+
+# 5d0ac2caecd8431cadc1557c66a0ab1f
+#~ msgid ""
+#~ "``assignment_tag`` functions may accept any number of positional or "
+#~ "keyword arguments. For example::"
+#~ msgstr ""
+#~ "``assignment_tag`` может принимать любое количество позиционных и "
+#~ "именованных аргументов. Например::"
 
 # cbd0ae84453e474d969c48aed77551f3
 #~ msgid "Tags are more complex than filters, because tags can do anything."

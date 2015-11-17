@@ -1,0 +1,287 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-17 10:48+0200\n"
+"PO-Revision-Date: 2015-11-17 10:48+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../../releases/1.8.3.txt:3
+msgid "Django 1.8.3 release notes"
+msgstr ""
+
+#: ../../releases/1.8.3.txt:5
+msgid "*July 8, 2015*"
+msgstr ""
+
+#: ../../releases/1.8.3.txt:7
+msgid "Django 1.8.3 fixes several security issues and bugs in 1.8.2."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:9
+msgid ""
+"Also, ``django.utils.deprecation.RemovedInDjango20Warning`` was renamed to "
+"``RemovedInDjango110Warning`` as the version roadmap was revised to 1.9, "
+"1.10, 1.11 (LTS), 2.0 (drops Python 2 support). For backwards compatibility, "
+"``RemovedInDjango20Warning`` remains as an importable alias."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:15
+msgid "Denial-of-service possibility by filling session store"
+msgstr ""
+
+#: ../../releases/1.8.3.txt:17
+msgid ""
+"In previous versions of Django, the session backends created a new empty "
+"record in the session storage anytime ``request.session`` was accessed and "
+"there was a session key provided in the request cookies that didn't already "
+"have a session record. This could allow an attacker to easily create many "
+"new session records simply by sending repeated requests with unknown session "
+"keys, potentially filling up the session store or causing other users' "
+"session records to be evicted."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:25
+msgid ""
+"The built-in session backends now create a session record only if the "
+"session is actually modified; empty session records are not created. Thus "
+"this potential DoS is now only possible if the site chooses to expose a "
+"session-modifying view to anonymous users."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:30
+msgid ""
+"As each built-in session backend was fixed separately (rather than a fix in "
+"the core sessions framework), maintainers of third-party session backends "
+"should check whether the same vulnerability is present in their backend and "
+"correct it if so."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:36
+msgid "Header injection possibility since validators accept newlines in input"
+msgstr ""
+
+#: ../../releases/1.8.3.txt:38
+msgid ""
+"Some of Django's built-in validators (:class:`~django.core.validators."
+"EmailValidator`, most seriously) didn't prohibit newline characters (due to "
+"the usage of ``$`` instead of ``\\Z`` in the regular expressions). If you "
+"use values with newlines in HTTP response or email headers, you can suffer "
+"from header injection attacks. Django itself isn't vulnerable because :class:"
+"`~django.http.HttpResponse` and the mail sending utilities in :mod:`django."
+"core.mail` prohibit newlines in HTTP and SMTP headers, respectively. While "
+"the validators have been fixed in Django, if you're creating HTTP responses "
+"or email messages in other ways, it's a good idea to ensure that those "
+"methods prohibit newlines as well. You might also want to validate that any "
+"existing data in your application doesn't contain unexpected newlines."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:51
+msgid ""
+":func:`~django.core.validators.validate_ipv4_address`, :func:`~django.core."
+"validators.validate_slug`, and :class:`~django.core.validators.URLValidator` "
+"are also affected, however, as of Django 1.6 the ``GenericIPAddresseField``, "
+"``IPAddressField``, ``SlugField``, and ``URLField`` form fields which use "
+"these validators all strip the input, so the possibility of newlines "
+"entering your data only exists if you are using these validators outside of "
+"the form fields."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:59
+msgid ""
+"The undocumented, internally unused ``validate_integer()`` function is now "
+"stricter as it validates using a regular expression instead of simply "
+"casting the value using ``int()`` and checking if an exception was raised."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:64
+msgid "Denial-of-service possibility in URL validation"
+msgstr ""
+
+#: ../../releases/1.8.3.txt:66
+msgid ""
+":class:`~django.core.validators.URLValidator` included a regular expression "
+"that was extremely slow to evaluate against certain invalid inputs. This "
+"regular expression has been simplified and optimized."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:71
+msgid "Bugfixes"
+msgstr ""
+
+#: ../../releases/1.8.3.txt:73
+msgid ""
+"Fixed ``BaseRangeField.prepare_value()`` to use each ``base_field``’s "
+"``prepare_value()`` method (:ticket:`24841`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:76
+msgid ""
+"Fixed crash during :djadmin:`makemigrations` if a migrations module either "
+"is missing ``__init__.py`` or is a file (:ticket:`24848`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:79
+msgid ""
+"Fixed ``QuerySet.exists()`` returning incorrect results after annotation "
+"with ``Count()`` (:ticket:`24835`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:82
+msgid "Corrected ``HStoreField.has_changed()`` (:ticket:`24844`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:84
+msgid ""
+"Reverted an optimization to the CSRF template context processor which caused "
+"a regression (:ticket:`24836`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:87
+msgid ""
+"Fixed a regression which caused template context processors to overwrite "
+"variables set on a ``RequestContext`` after it's created (:ticket:`24847`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:90
+msgid ""
+"Prevented the loss of ``null``/``not null`` column properties during field "
+"renaming of MySQL databases (:ticket:`24817`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:93
+msgid ""
+"Fixed a crash when using a reverse one-to-one relation in ``ModelAdmin."
+"list_display`` (:ticket:`24851`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:96
+msgid ""
+"Fixed quoting of SQL when renaming a field to ``AutoField`` in PostgreSQL (:"
+"ticket:`24892`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:99
+msgid ""
+"Fixed lack of unique constraint when changing a field from "
+"``primary_key=True`` to ``unique=True`` (:ticket:`24893`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:102
+msgid ""
+"Fixed queryset pickling when using ``prefetch_related()`` after deleting "
+"objects (:ticket:`24831`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:105
+msgid ""
+"Allowed using ``choices`` longer than 1 day with ``DurationField`` (:ticket:"
+"`24897`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:108
+msgid ""
+"Fixed a crash when loading squashed migrations from two apps with a "
+"dependency between them, where the dependent app's replaced migrations are "
+"partially applied (:ticket:`24895`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:112
+msgid ""
+"Fixed recording of applied status for squashed (replacement) migrations (:"
+"ticket:`24628`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:115
+msgid ""
+"Fixed queryset annotations when using ``Case`` expressions with "
+"``exclude()`` (:ticket:`24833`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:118
+msgid ""
+"Corrected join promotion for multiple ``Case`` expressions. Annotating a "
+"query with multiple  ``Case`` expressions could unexpectedly filter out "
+"results (:ticket:`24924`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:122
+msgid "Fixed usage of transforms in subqueries (:ticket:`24744`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:124
+msgid ""
+"Fixed ``SimpleTestCase.assertRaisesMessage()`` on Python 2.7.10 (:ticket:"
+"`24903`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:127
+msgid ""
+"Provided better backwards compatibility for the ``verbosity`` argument in "
+"``optparse`` management commands by casting it to an integer (:ticket:"
+"`24769`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:131
+msgid ""
+"Fixed ``prefetch_related()`` on databases other than PostgreSQL for models "
+"using UUID primary keys (:ticket:`24912`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:134
+msgid ""
+"Fixed removing ``unique_together`` constraints on MySQL (:ticket:`24972`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:136
+msgid ""
+"Fixed crash when uploading images with MIME types that Pillow doesn't "
+"detect, such as bitmap, in ``forms.ImageField`` (:ticket:`24948`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:139
+msgid ""
+"Fixed a regression when deleting a model through the admin that has a "
+"``GenericRelation`` with a ``related_query_name`` (:ticket:`24940`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:142
+msgid ""
+"Reallowed non-ASCII values for ``ForeignKey.related_name`` on Python 3 by "
+"fixing the false positive system check (:ticket:`25016`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:145
+msgid ""
+"Fixed inline forms that use a parent object that has a ``UUIDField`` primary "
+"key and a child object that has an ``AutoField`` primary key (:ticket:"
+"`24958`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:149
+msgid ""
+"Fixed a regression in the ``unordered_list`` template filter on certain "
+"inputs (:ticket:`25031`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:152
+msgid ""
+"Fixed a regression in ``URLValidator`` that invalidated Punycode TLDs (:"
+"ticket:`25059`)."
+msgstr ""
+
+#: ../../releases/1.8.3.txt:155
+msgid "Improved `pyinotify` ``runserver`` polling (:ticket:`23882`)."
+msgstr ""

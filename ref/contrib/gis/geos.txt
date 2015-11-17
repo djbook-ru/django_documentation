@@ -138,7 +138,7 @@ Geometry Objects
 ``GEOSGeometry``
 ----------------
 
-.. class:: GEOSGeometry(geo_input[, srid=None])
+.. class:: GEOSGeometry(geo_input, srid=None)
 
   :param geo_input: Geometry input value (string or buffer)
   :param srid: spatial reference identifier
@@ -171,6 +171,17 @@ Properties
 .. attribute:: GEOSGeometry.coords
 
 Returns the coordinates of the geometry as a tuple.
+
+.. attribute:: GEOSGeometry.dims
+
+Returns the dimension of the geometry:
+
+* ``0`` for :class:`Point`\s and :class:`MultiPoint`\s
+* ``1`` for :class:`LineString`\s and :class:`MultiLineString`\s
+* ``2`` for :class:`Polygon`\s and :class:`MultiPolygon`\s
+* ``-1`` for empty :class:`GeometryCollection`\s
+* the maximum dimension of its elements for non-empty
+  :class:`GeometryCollection`\s
 
 .. attribute:: GEOSGeometry.empty
 
@@ -282,7 +293,9 @@ that are a part of this geometry.
 
 .. attribute:: GEOSGeometry.json
 
-Returns the GeoJSON representation of the geometry.
+Returns the GeoJSON representation of the geometry. Note that the result is not
+a complete GeoJSON structure but only the ``geometry`` key content of a
+GeoJSON structure. See also :doc:`/ref/contrib/gis/serializers`.
 
 .. note::
 
@@ -338,7 +351,8 @@ return a boolean.
 
 .. method:: GEOSGeometry.contains(other)
 
-Returns ``True`` if :meth:`GEOSGeometry.within` is ``False``.
+Returns ``True`` if :meth:`other.within(this) <GEOSGeometry.within>` returns
+``True``.
 
 .. method:: GEOSGeometry.crosses(other)
 
@@ -550,7 +564,7 @@ is returned instead.
 .. note::
 
     Requires GDAL. Raises :class:`~django.contrib.gis.geos.GEOSException` if
-    GDAL is not available or if the SRID is ``None`` or less than 0.
+    GDAL is not available or if the geometry's SRID is ``None`` or less than 0.
 
 ``Point``
 ---------
@@ -738,15 +752,11 @@ For example::
 
   .. method:: crosses(other)
 
-    .. versionadded:: 1.7
-
     .. note::
 
        GEOS 3.3 is *required* to use this predicate.
 
   .. method:: disjoint(other)
-
-    .. versionadded:: 1.7
 
     .. note::
 
@@ -756,23 +766,17 @@ For example::
 
   .. method:: overlaps(other)
 
-    .. versionadded:: 1.7
-
     .. note::
 
        GEOS 3.3 is *required* to use this predicate.
 
   .. method:: touches(other)
 
-    .. versionadded:: 1.7
-
     .. note::
 
        GEOS 3.3 is *required* to use this predicate.
 
   .. method:: within(other)
-
-    .. versionadded:: 1.7
 
     .. note::
 
@@ -792,7 +796,7 @@ Example::
     >>> from django.contrib.gis.geos import fromfile
     >>> g = fromfile('/home/bob/geom.wkt')
 
-.. function:: fromstr(string, [,srid=None])
+.. function:: fromstr(string, srid=None)
 
    :param string: string that contains spatial data
    :type string: string

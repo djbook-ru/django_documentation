@@ -12,6 +12,103 @@ about each item can often be found in the release notes of two versions prior.
 2.0
 ---
 
+See the :ref:`Django 1.9 release notes<deprecated-features-1.9>` for more
+details on these changes.
+
+* The ``weak`` argument to ``django.dispatch.signals.Signal.disconnect()`` will
+  be removed.
+
+* The ``django.forms.extras`` package will be removed.
+
+* The ``assignment_tag`` helper will be removed.
+
+* The ``host`` argument to ``assertsRedirects`` will be removed. The
+  compatibility layer which allows absolute URLs to be considered equal to
+  relative ones when the path is identical will also be removed.
+
+* ``Field.rel`` will be removed.
+
+* ``Field.remote_field.to`` attribute will be removed.
+
+* The ``on_delete`` argument for ``ForeignKey`` and ``OneToOneField``  will be
+  required.
+
+* ``django.db.models.fields.add_lazy_relation()`` will be removed.
+
+* When time zone support is enabled, database backends that don't support time
+  zones won't convert aware datetimes to naive values in UTC anymore when such
+  values are passed as parameters to SQL queries executed outside of the ORM,
+  e.g. with ``cursor.execute()``.
+
+* The ``django.contrib.auth.tests.utils.skipIfCustomUser()`` decorator will be
+  removed.
+
+* The ``GeoManager`` and ``GeoQuerySet`` classes will be removed.
+
+* The ``django.contrib.gis.geoip`` module will be removed.
+
+* The ``supports_recursion`` check for template loaders will be removed from:
+
+  * ``django.template.engine.Engine.find_template()``
+  * ``django.template.loader_tags.ExtendsNode.find_template()``
+  * ``django.template.loaders.base.Loader.supports_recursion()``
+  * ``django.template.loaders.cached.Loader.supports_recursion()``
+
+* The ``load_template()`` and ``load_template_sources()`` template loader
+  methods will be removed.
+
+* The ``template_dirs`` argument for template loaders will be removed:
+
+  * ``django.template.loaders.base.Loader.get_template()``
+  * ``django.template.loaders.cached.Loader.cache_key()``
+  * ``django.template.loaders.cached.Loader.get_template()``
+  * ``django.template.loaders.cached.Loader.get_template_sources()``
+  * ``django.template.loaders.filesystem.Loader.get_template_sources()``
+
+* The ``django.template.loaders.base.Loader.__call__()`` method will be
+  removed.
+
+* Support for custom error views with a single positional parameter will be
+  dropped.
+
+* The ``mime_type`` attribute of ``django.utils.feedgenerator.Atom1Feed`` and
+  ``django.utils.feedgenerator.RssFeed`` will be removed in favor of
+  ``content_type``.
+
+* The ``app_name`` argument to :func:`~django.conf.urls.include()` will be
+  removed.
+
+* Support for passing a 3-tuple as the first argument to ``include()`` will
+  be removed.
+
+* Support for setting a URL instance namespace without an application
+  namespace will be removed.
+
+* ``Field._get_val_from_obj()`` will be removed in favor of
+  ``Field.value_from_object()``.
+
+* ``django.template.loaders.eggs.Loader`` will be removed.
+
+* The ``current_app`` parameter to the ``contrib.auth`` views will be removed.
+
+* The ``callable_obj`` keyword argument to
+  ``SimpleTestCase.assertRaisesMessage()`` will be removed.
+
+* Support for the ``allow_tags`` attribute on ``ModelAdmin`` methods will be
+  removed.
+
+* The ``enclosure`` keyword argument to ``SyndicationFeed.add_item()`` will be
+  removed.
+
+* The ``django.template.loader.LoaderOrigin`` and
+  ``django.template.base.StringOrigin`` aliases for
+  ``django.template.base.Origin`` will be removed.
+
+.. _deprecation-removed-in-1.10:
+
+1.10
+----
+
 See the :ref:`Django 1.8 release notes<deprecated-features-1.8>` for more
 details on these changes.
 
@@ -163,7 +260,7 @@ details on these changes.
   will be removed.
 
 * ``GeoQuerySet`` aggregate methods ``collect()``, ``extent()``, ``extent3d()``,
-  ``makeline()``, and ``union()`` will be removed.
+  ``make_line()``, and ``unionagg()`` will be removed.
 
 * Ability to specify ``ContentType.name`` when creating a content type instance
   will be removed.
@@ -171,6 +268,12 @@ details on these changes.
 * Support for the old signature of ``allow_migrate`` will be removed. It changed
   from ``allow_migrate(self, db, model)`` to
   ``allow_migrate(self, db, app_label, model_name=None, **hints)``.
+
+* Support for the syntax of ``{% cycle %}`` that uses comma-separated arguments
+  will be removed.
+
+* The warning that :class:`~django.core.signing.Signer` issues when given an
+  invalid separator will become an exception.
 
 .. _deprecation-removed-in-1.9:
 
@@ -196,9 +299,12 @@ details on these changes.
 * ``allow_syncdb`` on database routers will no longer automatically become
   ``allow_migrate``.
 
-* The legacy method of syncing apps without migrations will be removed,
-  and migrations will become compulsory for all apps. This includes automatic
-  loading of ``initial_data`` fixtures and support for initial SQL data.
+* Automatic syncing of apps without migrations will be removed. Migrations will
+  become compulsory for all apps unless you pass the ``--run-syncdb`` option to
+  ``migrate``.
+
+* Support for automatic loading of ``initial_data`` fixtures and initial SQL
+  data will be removed.
 
 * All models will need to be defined inside an installed application or
   declare an explicit :attr:`~django.db.models.Options.app_label`.
@@ -276,7 +382,7 @@ details on these changes.
 * ``django.db.backends.DatabaseValidation.validate_field`` will be removed in
   favor of the ``check_field`` method.
 
-* The ``check`` management command will be removed.
+* The ``validate`` management command will be removed.
 
 * ``django.utils.module_loading.import_by_path`` will be removed in favor of
   ``django.utils.module_loading.import_string``.
@@ -324,9 +430,6 @@ details on these changes.
   - the functions ``commit_unless_managed`` and ``rollback_unless_managed``,
     also defined in ``django.db.transaction``,
   - the ``TRANSACTIONS_MANAGED`` setting.
-
-  Upgrade paths are described in the :ref:`transaction management docs
-  <transactions-upgrading-from-1.5>`.
 
 * The :ttag:`cycle` and :ttag:`firstof` template tags will auto-escape their
   arguments. In 1.6 and 1.7, this behavior is provided by the version of these

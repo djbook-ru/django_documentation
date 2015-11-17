@@ -5,23 +5,10 @@ Migrations
 .. module:: django.db.migrations
    :synopsis: Schema migration support for Django models
 
-.. versionadded:: 1.7
-
 Migrations are Django's way of propagating changes you make to your models
 (adding a field, deleting a model, etc.) into your database schema. They're
 designed to be mostly automatic, but you'll need to know when to make
 migrations, when to run them, and the common problems you might run into.
-
-A Brief History
----------------
-
-Prior to version 1.7, Django only supported adding new models to the
-database; it was not possible to alter or remove existing models via the
-``syncdb`` command (the predecessor to :djadmin:`migrate`).
-
-Third-party tools, most notably `South <http://south.aeracode.org>`_,
-provided support for these additional types of change, but it was considered
-important enough that support was brought into core Django.
 
 The Commands
 ------------
@@ -36,11 +23,6 @@ and Django's handling of database schema:
   based on the changes you have made to your models.
 
 * :djadmin:`sqlmigrate`, which displays the SQL statements for a migration.
-
-It's worth noting that migrations are created and run on a per-app basis.
-In particular, it's possible to have apps that *do not use migrations* (these
-are referred to as "unmigrated" apps) - these apps will instead mimic the
-legacy behavior of just adding new models.
 
 You should think of migrations as a version control system for your database
 schema. ``makemigrations`` is responsible for packaging up your model changes
@@ -147,19 +129,10 @@ database to make sure they work as expected::
 
     $ python manage.py migrate
     Operations to perform:
-      Synchronize unmigrated apps: sessions, admin, messages, auth, staticfiles, contenttypes
       Apply all migrations: books
-    Synchronizing apps without migrations:
-      Creating tables...
-      Installing custom SQL...
-      Installing indexes...
-    Installed 0 object(s) from 0 fixture(s)
     Running migrations:
+      Rendering model states... DONE
       Applying books.0003_auto... OK
-
-The command runs in two stages; first, it synchronizes unmigrated apps
-(performing the same functionality that ``syncdb`` used to provide), and
-then it runs any migrations that have not yet been applied.
 
 Once the migration is applied, commit the migration and the models change
 to your version control system as a single commit - that way, when other
@@ -215,26 +188,6 @@ restrict to a single app. Restricting to a single app (either in
 ``makemigrations`` or ``migrate``) is a best-efforts promise, and not
 a guarantee; any other apps that need to be used to get dependencies correct
 will be.
-
-.. _unmigrated-dependencies:
-
-Be aware, however, that unmigrated apps cannot depend on migrated apps, by the
-very nature of not having migrations. This means that it is not generally
-possible to have an unmigrated app have a ``ForeignKey`` or ``ManyToManyField``
-to a migrated app; some cases may work, but it will eventually fail.
-
-.. warning::
-
-    Even if things appear to work with unmigrated apps depending on migrated
-    apps, Django may not generate all the necessary foreign key constraints!
-
-This is particularly apparent if you use swappable models (e.g.
-``AUTH_USER_MODEL``), as every app that uses swappable models will need
-to have migrations if you're unlucky. As time goes on, more and more
-third-party apps will get migrations, but in the meantime you can either
-give them migrations yourself (using :setting:`MIGRATION_MODULES` to
-store those modules outside of the app's own module if you wish), or
-keep the app with your user model unmigrated.
 
 .. _migration-files:
 
@@ -323,6 +276,33 @@ class to make it importable::
 Please refer to the notes about :ref:`historical-models` in migrations to see
 the implications that come along.
 
+Initial migrations
+~~~~~~~~~~~~~~~~~~
+
+.. attribute:: Migration.initial
+
+.. versionadded:: 1.9
+
+The "initial migrations" for an app are the migrations that create the first
+version of that app's tables. Usually an app will have just one initial
+migration, but in some cases of complex model interdependencies it may have two
+or more.
+
+Initial migrations are marked with an ``initial = True`` class attribute on the
+migration class. If an ``initial`` class attribute isn't found, a migration
+will be considered "initial" if it is the first migration in the app (i.e. if
+it has no dependencies on any other migration in the same app).
+
+When :djadmin:`migrate` is run with the :djadminopt:`--fake-initial` option,
+these initial migrations are treated specially. For an initial migration that
+creates one or more tables (``CreateModel`` operation), Django checks that all
+of those tables already exist in the database and fake-applies the migration
+if so. Similarly, for an initial migration that adds one or more fields
+(``AddField`` operation), Django checks that all of the respective columns
+already exist in the database and fake-applies the migration if so. Without
+:djadminopt:`--fake-initial`, initial migrations are treated no differently
+from any other migration.
+
 Adding migrations to apps
 -------------------------
 
@@ -353,7 +333,7 @@ Note that this only works given two things:
   that your database doesn't match your models, you'll just get errors when
   migrations try to modify those tables.
 
-.. versionchanged: 1.8
+.. versionchanged:: 1.8
 
     The ``--fake-initial`` flag to :djadmin:`migrate` was added. Previously,
     Django would always automatically fake-apply initial migrations if it
@@ -423,9 +403,10 @@ similar to the following::
             'id': 'fields.W900',  # pick a unique ID for your field.
         }
 
-After a deprecation period of your choosing (two major releases for fields in
-Django itself), change the ``system_check_deprecated_details`` attribute to
-``system_check_removed_details`` and update the dictionary similar to::
+After a deprecation period of your choosing (two or three feature releases for
+fields in Django itself), change the ``system_check_deprecated_details``
+attribute to ``system_check_removed_details`` and update the dictionary similar
+to::
 
     class IPAddressField(Field):
         system_check_removed_details = {
@@ -468,9 +449,13 @@ the file in the right place, suggest a name, and add dependencies for you)::
 Then, open up the file; it should look something like this::
 
     # -*- coding: utf-8 -*-
-    from django.db import models, migrations
+    # Generated by Django A.B on YYYY-MM-DD HH:MM
+    from __future__ import unicode_literals
+
+    from django.db import migrations, models
 
     class Migration(migrations.Migration):
+        initial = True
 
         dependencies = [
             ('yourappname', '0001_initial'),
@@ -495,7 +480,9 @@ and realized that not everyone has first and last names). All we
 need to do is use the historical model and iterate over the rows::
 
     # -*- coding: utf-8 -*-
-    from django.db import models, migrations
+    from __future__ import unicode_literals
+
+    from django.db import migrations, models
 
     def combine_names(apps, schema_editor):
         # We can't import the Person model directly as it may be a newer
@@ -506,6 +493,7 @@ need to do is use the historical model and iterate over the rows::
             person.save()
 
     class Migration(migrations.Migration):
+        initial = True
 
         dependencies = [
             ('yourappname', '0001_initial'),
@@ -584,7 +572,7 @@ possible depends on how closely intertwined your models are and if you have
 any :class:`~django.db.migrations.operations.RunSQL`
 or :class:`~django.db.migrations.operations.RunPython` operations (which can't
 be optimized through) - Django will then write it back out into a new set of
-initial migration files.
+migration files.
 
 These files are marked to say they replace the previously-squashed migrations,
 so they can coexist with the old migration files, and Django will intelligently
@@ -669,14 +657,16 @@ Django can serialize the following:
 - ``datetime.date``, ``datetime.time``, and ``datetime.datetime`` instances
   (include those that are timezone-aware)
 - ``decimal.Decimal`` instances
+- ``functools.partial`` instances which have serializable ``func``, ``args``,
+  and ``keywords`` values.
 - Any Django field
 - Any function or method reference (e.g. ``datetime.datetime.today``) (must be in module's top-level scope)
 - Any class reference (must be in module's top-level scope)
 - Anything with a custom ``deconstruct()`` method (:ref:`see below <custom-deconstruct-method>`)
 
-.. versionchanged:: 1.7.1
+.. versionchanged:: 1.9
 
-    Support for serializing timezone-aware datetimes was added.
+    Serialization support for `functools.partial` was added.
 
 Django can serialize the following on Python 3 only:
 
@@ -810,12 +800,6 @@ If you already have pre-existing migrations created with
   tables for the initial migrations already exist and mark them as applied
   without running them. (Django won't check that the table schema match your
   models, just that the right table names exist).
-
-That's it! The only complication is if you have a circular dependency loop
-of foreign keys; in this case, ``makemigrations`` might make more than one
-initial migration, and you'll need to mark them all as applied using::
-
-    python manage.py migrate --fake yourappnamehere
 
 .. versionchanged:: 1.8
 
