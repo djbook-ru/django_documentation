@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-17 10:48+0200\n"
+"POT-Creation-Date: 2015-12-02 11:18+0200\n"
 "PO-Revision-Date: 2015-11-17 10:48+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -23,11 +23,11 @@ msgid "Django 1.8.7 release notes"
 msgstr ""
 
 #: ../../releases/1.8.7.txt:5
-msgid "*Under development*"
+msgid "*November 24, 2015*"
 msgstr ""
 
 #: ../../releases/1.8.7.txt:7
-msgid "Django 1.8.7 fixes several bugs in 1.8.6."
+msgid "Django 1.8.7 fixes a security issue and several bugs in 1.8.6."
 msgstr ""
 
 #: ../../releases/1.8.7.txt:9
@@ -37,53 +37,100 @@ msgid ""
 msgstr ""
 
 #: ../../releases/1.8.7.txt:13
-msgid "Bugfixes"
+msgid "Fixed settings leak possibility in ``date`` template filter"
 msgstr ""
 
 #: ../../releases/1.8.7.txt:15
+msgid ""
+"If an application allows users to specify an unvalidated format for dates "
+"and passes this format to the :tfilter:`date` filter, e.g. ``{{ last_updated|"
+"date:user_date_format }}``, then a malicious user could obtain any secret in "
+"the application's settings by specifying a settings key instead of a date "
+"format. e.g. ``\"SECRET_KEY\"`` instead of ``\"j/m/Y\"``."
+msgstr ""
+
+#: ../../releases/1.8.7.txt:21
+msgid ""
+"To remedy this, the underlying function used by the ``date`` template "
+"filter, ``django.utils.formats.get_format()``, now only allows accessing the "
+"date/time formatting settings."
+msgstr ""
+
+#: ../../releases/1.8.7.txt:26
+msgid "Bugfixes"
+msgstr ""
+
+#: ../../releases/1.8.7.txt:28
 msgid ""
 "Fixed a crash of the debug view during the autumn DST change when :setting:"
 "`USE_TZ` is ``False`` and ``pytz`` is installed."
 msgstr ""
 
-#: ../../releases/1.8.7.txt:18
+#: ../../releases/1.8.7.txt:31
 msgid ""
 "Fixed a regression in 1.8.6 that caused database routers without an "
 "``allow_migrate()`` method to crash (:ticket:`25686`)."
 msgstr ""
 
-#: ../../releases/1.8.7.txt:21
+#: ../../releases/1.8.7.txt:34
 msgid ""
 "Fixed a regression in 1.8.6 by restoring the ability to use ``Manager`` "
 "objects for the ``queryset`` argument of ``ModelChoiceField`` (:ticket:"
 "`25683`)."
 msgstr ""
 
-#: ../../releases/1.8.7.txt:25
+#: ../../releases/1.8.7.txt:38
 msgid ""
 "Fixed a regression in 1.8.6 that caused an application with South migrations "
 "in the ``migrations`` directory to fail (:ticket:`25618`)."
 msgstr ""
 
-#: ../../releases/1.8.7.txt:28
+#: ../../releases/1.8.7.txt:41
 msgid ""
 "Fixed a data loss possibility with :class:`~django.db.models.Prefetch` if "
 "``to_attr`` is set to a ``ManyToManyField`` (:ticket:`25693`)."
 msgstr ""
 
-#: ../../releases/1.8.7.txt:31
+#: ../../releases/1.8.7.txt:44
 msgid ""
 "Fixed a regression in 1.8 by making ``gettext()`` once again return UTF-8 "
 "bytestrings on Python 2 if the input is a bytestring (:ticket:`25720`)."
 msgstr ""
 
-#: ../../releases/1.8.7.txt:34
+#: ../../releases/1.8.7.txt:47
 msgid ""
 "Fixed serialization of :class:`~django.contrib.postgres.fields."
 "DateRangeField` and :class:`~django.contrib.postgres.fields."
 "DateTimeRangeField` (:ticket:`24937`)."
 msgstr ""
 
-#: ../../releases/1.8.7.txt:38
+#: ../../releases/1.8.7.txt:51
 msgid "Fixed the exact lookup of ``ArrayField`` (:ticket:`25666`)."
+msgstr ""
+
+#: ../../releases/1.8.7.txt:53
+msgid ""
+"Fixed ``Model.refresh_from_db()`` updating of ``ForeignKey`` fields with "
+"``on_delete=models.SET_NULL`` (:ticket:`25715`)."
+msgstr ""
+
+#: ../../releases/1.8.7.txt:56
+msgid ""
+"Fixed a duplicate query regression in 1.8 on proxied model deletion (:ticket:"
+"`25685`)."
+msgstr ""
+
+#: ../../releases/1.8.7.txt:59
+msgid ""
+"Fixed ``set_FOO_order()`` crash when the ``ForeignKey`` of a model with "
+"``order_with_respect_to`` references a model with a ``OneToOneField`` "
+"primary key (:ticket:`25786`)."
+msgstr ""
+
+#: ../../releases/1.8.7.txt:63
+msgid ""
+"Fixed incorrect validation for ``PositiveIntegerField`` and "
+"``PositiveSmallIntegerField`` on MySQL resulting in values greater than "
+"4294967295 or 65535, respectively, passing validation and being silently "
+"truncated by the database (:ticket:`25767`)."
 msgstr ""
