@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-17 10:48+0200\n"
-"PO-Revision-Date: 2015-03-26 17:12+0200\n"
+"PO-Revision-Date: 2015-12-20 09:40+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -26,7 +26,6 @@ msgstr "Проверка форм и полей формы"
 
 # ac1b690f74b042c298278dda10323430
 #: ../../ref/forms/validation.txt:8
-#, fuzzy
 msgid ""
 "Form validation happens when the data is cleaned. If you want to customize "
 "this process, there are various places to make changes, each one serving a "
@@ -80,7 +79,6 @@ msgstr ""
 
 # 04298184d92a4633881ae2f50907ab83
 #: ../../ref/forms/validation.txt:28
-#, fuzzy
 msgid ""
 "Validation of a form is split into several steps, which can be customized or "
 "overridden:"
@@ -90,7 +88,6 @@ msgstr ""
 
 # bf72593d5dac40fb8e7663b66238a909
 #: ../../ref/forms/validation.txt:31
-#, fuzzy
 msgid ""
 "The ``to_python()`` method on a ``Field`` is the first step in every "
 "validation. It coerces the value to a correct datatype and raises "
@@ -108,7 +105,6 @@ msgstr ""
 
 # 7911286063994186b6f8e5b1241aebf2
 #: ../../ref/forms/validation.txt:38
-#, fuzzy
 msgid ""
 "The ``validate()`` method on a ``Field`` handles field-specific validation "
 "that is not suitable for a validator. It takes a value that has been coerced "
@@ -126,7 +122,6 @@ msgstr ""
 
 # fe6027ea91a847b49bc8b50ced749b74
 #: ../../ref/forms/validation.txt:45
-#, fuzzy
 msgid ""
 "The ``run_validators()`` method on a ``Field`` runs all of the field's "
 "validators and aggregates all the errors into a single ``ValidationError``. "
@@ -138,7 +133,6 @@ msgstr ""
 
 # f135d4480aca445093d1a22af064a12a
 #: ../../ref/forms/validation.txt:49
-#, fuzzy
 msgid ""
 "The ``clean()`` method on a ``Field`` subclass is responsible for running "
 "``to_python()``, ``validate()``, and ``run_validators()`` in the correct "
@@ -147,16 +141,15 @@ msgid ""
 "This method returns the clean data, which is then inserted into the "
 "``cleaned_data`` dictionary of the form."
 msgstr ""
-"Метод ``clean()`` поля отвечает за вызов методов ``to_python``, ``validate`` "
-"и ``run_validators`` в правильном порядке и передачу их ошибок. Как только "
-"любой из этих методов вызовет исключение ``ValidationError``, процесс "
-"проверки прекращается и ошибка передаётся выше. Этот метод возвращает "
-"проверенные данные, которые затем помещаются в словарь ``cleaned_data`` "
-"формы."
+"Метод ``clean()`` поля отвечает за вызов методов ``to_python()``, "
+"``validate()`` и ``run_validators()`` в правильном порядке и передачу их "
+"ошибок. Как только любой из этих методов вызовет исключение "
+"``ValidationError``, процесс проверки прекращается и ошибка передаётся выше. "
+"Этот метод возвращает проверенные данные, которые затем помещаются в словарь "
+"``cleaned_data`` формы."
 
 # 7ca929ced5d0428a9d4f5211dc0c98bc
 #: ../../ref/forms/validation.txt:56
-#, fuzzy
 msgid ""
 "The ``clean_<fieldname>()`` method is called on a form subclass -- where "
 "``<fieldname>`` is replaced with the name of the form field attribute. This "
@@ -173,7 +166,8 @@ msgstr ""
 "значения. Метод не принимает аргументы. Для получения значения поля "
 "обращайтесь к словарю\n"
 "``self.cleaned_data`` и помните, что там будет объект языка Python, а не "
-"строка, переданная формой."
+"строка, переданная формой (значение находится в ``cleaned_data`` т.к. уже "
+"была выполнена проверка методом ``clean()`` поля)."
 
 # 5745b3cc8fb841f8a831ff069fe4e987
 #: ../../ref/forms/validation.txt:66
@@ -192,7 +186,6 @@ msgstr ""
 
 # 8593ee3099c347bb82a1ac587d42c7a1
 #: ../../ref/forms/validation.txt:73
-#, fuzzy
 msgid ""
 "This method should return the cleaned value obtained from ``cleaned_data``, "
 "regardless of whether it changed anything or not."
@@ -202,7 +195,6 @@ msgstr ""
 
 # c491ab54304a4a75ac6aa00f16e30d8f
 #: ../../ref/forms/validation.txt:76
-#, fuzzy
 msgid ""
 "The form subclass's ``clean()`` method can perform validation that requires "
 "access to multiple form fields. This is where you might put in checks such "
@@ -621,10 +613,14 @@ msgid ""
 "``cleaned_data`` to the result of the ``super()`` call and use ``self."
 "cleaned_data`` instead::"
 msgstr ""
+"Вызов ``super(ContactForm, self).clean()`` обеспечивает проверку данных в "
+"родительском классе. Если ваша форма наследуется от класса, который не "
+"возвращает словарь ``cleaned_data`` из метода ``clean()`` (это не "
+"обязательно), не записывайте в ``cleaned_data`` результат вызова ``super()`` "
+"и используйте вместо этого ``self.cleaned_data``::"
 
 # 6c8bf7860b554c998fe30cfcfdc88874
 #: ../../ref/forms/validation.txt:385
-#, fuzzy
 msgid ""
 "The second approach for reporting validation errors might involve assigning "
 "the error message to one of the fields. In this case, let's assign an error "

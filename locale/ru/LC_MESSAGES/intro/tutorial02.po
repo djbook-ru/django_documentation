@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-17 10:48+0200\n"
-"PO-Revision-Date: 2015-06-05 15:02+0300\n"
+"PO-Revision-Date: 2015-12-20 11:21+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -27,25 +27,26 @@ msgstr "Создаём своё первое приложение с Django, ч�
 
 # ee2059b16d0a4cceb86213baf936f0c4
 #: ../../intro/tutorial02.txt:5
-#, fuzzy
 msgid ""
 "This tutorial begins where :doc:`Tutorial 1 </intro/tutorial01>` left off. "
 "We'll setup the database, create your first model, and get a quick "
 "introduction to Django's automatically-generated admin site."
 msgstr ""
 "Продолжаем начатое в :doc:`первой части </intro/tutorial01>` учебника. Мы "
-"продолжим разрабатывать приложение для голосования и создадим интерфейс "
-"администратора."
+"настроим базу данных, создадим свою первую модель и посмотрим на "
+"автоматически созданный интерфейс администратора."
 
 #: ../../intro/tutorial02.txt:10
 msgid "Database setup"
-msgstr ""
+msgstr "Настройка базы данных"
 
 #: ../../intro/tutorial02.txt:12
 msgid ""
 "Now, open up :file:`mysite/settings.py`. It's a normal Python module with "
 "module-level variables representing Django settings."
 msgstr ""
+"Теперь откроем файл :file:`mysite/settings.py`. Это обычный модуль Python с "
+"набором переменных, которые представляют настройки Django."
 
 #: ../../intro/tutorial02.txt:15
 msgid ""
@@ -56,6 +57,11 @@ msgid ""
 "to use a more robust database like PostgreSQL, to avoid database-switching "
 "headaches down the road."
 msgstr ""
+"По умолчанию в настройках указано использование SQLite. Если вы новичок в "
+"базах данных, или просто хотите попробовать Django, это самый простой выбор. "
+"SQLite уже включен в Python, и вам не нужно дополнительно что-то "
+"устанавливать. Однако, создавая свой первый настоящий проект, вам "
+"понадобиться более серьезная база данных, например PostgreSQL."
 
 #: ../../intro/tutorial02.txt:22
 msgid ""
@@ -64,6 +70,10 @@ msgid ""
 "setting:`DATABASES` ``'default'`` item to match your database connection "
 "settings:"
 msgstr ""
+"Если вы хотите использовать другую базу данных, установите :ref:`необходимые "
+"библиотеки <database-installation>` и поменяйте следующие ключи в элементе "
+"``'default'`` настройки :setting:`DATABASES`, чтобы они соответсвовали "
+"настройкам подключения к вашей базе данных:"
 
 #: ../../intro/tutorial02.txt:27
 msgid ""
@@ -72,6 +82,10 @@ msgid ""
 "mysql'``, or ``'django.db.backends.oracle'``. Other backends are :ref:`also "
 "available <third-party-notes>`."
 msgstr ""
+":setting:`ENGINE <DATABASE-ENGINE>` -- один из ``'django.db.backends."
+"sqlite3'``, ``'django.db.backends.postgresql'``, ``'django.db.backends."
+"mysql'`` или ``'django.db.backends.oracle'``. Также доступны :ref:"
+"`дополнительные бэкенды <third-party-notes>`."
 
 #: ../../intro/tutorial02.txt:34
 msgid ""
@@ -81,6 +95,11 @@ msgid ""
 "default value, ``os.path.join(BASE_DIR, 'db.sqlite3')``, will store the file "
 "in your project directory."
 msgstr ""
+":setting:`NAME` -- название вашей базы данных. Если вы используете SQLite, "
+"база данных будет файлов на вашем компьютере, в этом случае :setting:`NAME` "
+"содержит абсолютный путь, включая имя, к этому файлу. Значение по умолчанию, "
+"``os.path.join(BASE_DIR, 'db.sqlite3')``, создаст файл в каталоге вашего "
+"проекта."
 
 #: ../../intro/tutorial02.txt:40
 msgid ""
@@ -88,6 +107,9 @@ msgid ""
 "setting:`USER`, :setting:`PASSWORD`, and :setting:`HOST` must be added. For "
 "more details, see the reference documentation for :setting:`DATABASES`."
 msgstr ""
+"Если вы используете не SQLite,вам необходимо указать дополнительно :setting:"
+"`USER`, :setting:`PASSWORD` и :setting:`HOST`. Подробности смотрите в "
+"описании :setting:`DATABASES`."
 
 #: ../../intro/tutorial02.txt:46
 msgid ""
@@ -95,18 +117,25 @@ msgid ""
 "this point. Do that with \"``CREATE DATABASE database_name;``\" within your "
 "database's interactive prompt."
 msgstr ""
+"Если вы используете PostgreSQL или MySQL, убедитесь, что вы создали базу "
+"данных. Вы можете сделать это, выполнив \"``CREATE DATABASE database_name;``"
+"\" в консоли вашей базы данных."
 
 #: ../../intro/tutorial02.txt:50
 msgid ""
 "If you're using SQLite, you don't need to create anything beforehand - the "
 "database file will be created automatically when it is needed."
 msgstr ""
+"Если вы используете SQLite, вам ничего не нужно создавать заранее - файл "
+"базы данных будет создан автоматически при необходимости."
 
 #: ../../intro/tutorial02.txt:53
 msgid ""
 "While you're editing :file:`mysite/settings.py`, set :setting:`TIME_ZONE` to "
 "your time zone."
 msgstr ""
+"Отредактируйте :file:`mysite/settings.py` и укажите в :setting:`TIME_ZONE` "
+"ваш часовой пояс."
 
 #: ../../intro/tutorial02.txt:56
 msgid ""
@@ -115,43 +144,54 @@ msgid ""
 "Django instance. Apps can be used in multiple projects, and you can package "
 "and distribute them for use by others in their projects."
 msgstr ""
+"Также обратите  внимание на настройку :setting:`INSTALLED_APPS` в начале "
+"файла. Она содержит названия всех приложений Django, которые активированы в "
+"вашем проекте. Приложения могут использоваться на разных проектах, вы можете "
+"создать пакет, распространить его и позволить другим использовать его на "
+"своих проектах."
 
 #: ../../intro/tutorial02.txt:61
 msgid ""
 "By default, :setting:`INSTALLED_APPS` contains the following apps, all of "
 "which come with Django:"
 msgstr ""
+"По умолчанию, :setting:`INSTALLED_APPS` содержит следующие приложение, "
+"которые предоставляются Django:"
 
 #: ../../intro/tutorial02.txt:64
 msgid ":mod:`django.contrib.admin` -- The admin site. You'll use it shortly."
 msgstr ""
+":mod:`django.contrib.admin` -- интерфейс администратора. Скоро мы его будем "
+"использовать."
 
 #: ../../intro/tutorial02.txt:66
 msgid ":mod:`django.contrib.auth` -- An authentication system."
-msgstr ""
+msgstr ":mod:`django.contrib.auth` -- система авторизации."
 
 #: ../../intro/tutorial02.txt:68
 msgid ":mod:`django.contrib.contenttypes` -- A framework for content types."
-msgstr ""
+msgstr ":mod:`django.contrib.contenttypes` -- фреймверк типов даных."
 
 #: ../../intro/tutorial02.txt:70
 msgid ":mod:`django.contrib.sessions` -- A session framework."
-msgstr ""
+msgstr ":mod:`django.contrib.sessions` -- фреймверк сессии."
 
 #: ../../intro/tutorial02.txt:72
 msgid ":mod:`django.contrib.messages` -- A messaging framework."
-msgstr ""
+msgstr ":mod:`django.contrib.messages` -- фреймверк сообщений."
 
 #: ../../intro/tutorial02.txt:74
 msgid ""
 ":mod:`django.contrib.staticfiles` -- A framework for managing static files."
 msgstr ""
+":mod:`django.contrib.staticfiles` -- фреймверк для работы со статическими "
+"файлами."
 
 #: ../../intro/tutorial02.txt:77
 msgid ""
 "These applications are included by default as a convenience for the common "
 "case."
-msgstr ""
+msgstr "Эти приложения включены по умолчанию для покрытия основных задач."
 
 #: ../../intro/tutorial02.txt:79
 msgid ""
@@ -159,6 +199,9 @@ msgid ""
 "so we need to create the tables in the database before we can use them. To "
 "do that, run the following command:"
 msgstr ""
+"Некоторые приложения используют минимум одну таблицу в базе данных, поэтому "
+"нам необходимо их создать перед тем, как мы будем их использовать. Для этого "
+"выполним следующую команду:"
 
 #: ../../intro/tutorial02.txt:87
 msgid ""
@@ -171,10 +214,18 @@ msgid ""
 "``.schema`` (SQLite), or ``SELECT TABLE_NAME FROM USER_TABLES;`` (Oracle) to "
 "display the tables Django created."
 msgstr ""
+"Команда :djadmin:`migrate` проверяет настройку :setting:`INSTALLED_APPS` и "
+"создает все необходимые таблицы в базе данных, указанной в :file:`mysite/"
+"settings.py`, применяя миграции, которые находятся в приложении (мы "
+"расскажем об это ниже). Вы увидите сообщение для кажой примененной миграции. "
+"Если вам интересно, запустите консоль базы данных и введите ``\\dt`` "
+"(PostgreSQL), ``SHOW TABLES;`` (MySQL), ``.schema`` (SQLite), или ``SELECT "
+"TABLE_NAME FROM USER_TABLES;`` (Oracle), чтобы посмотреть таблицы, которые "
+"создал Django."
 
 #: ../../intro/tutorial02.txt:0
 msgid "For the minimalists"
-msgstr ""
+msgstr "Для минималистов"
 
 #: ../../intro/tutorial02.txt:98
 msgid ""
@@ -184,16 +235,24 @@ msgid ""
 "`INSTALLED_APPS` before running :djadmin:`migrate`. The :djadmin:`migrate` "
 "command will only run migrations for apps in :setting:`INSTALLED_APPS`."
 msgstr ""
+"Как мы сказали выше, приложения по умолчанию включены для большинства "
+"случаев, но не все они могут быть необходимы. Если какое-то приложение вам "
+"не нужно, закомментируйте или удалите соответствующие строки из :setting:"
+"`INSTALLED_APPS` перед запуском :djadmin:`migrate`. Команда :djadmin:"
+"`migrate` выполнит миграции только для приложений из :setting:"
+"`INSTALLED_APPS`."
 
 #: ../../intro/tutorial02.txt:108
 msgid "Creating models"
-msgstr ""
+msgstr "Создание моделей"
 
 #: ../../intro/tutorial02.txt:110
 msgid ""
 "Now we'll define your models -- essentially, your database layout, with "
 "additional metadata."
 msgstr ""
+"Теперь создадим ваши модели -- по сути структуру вашей базы данных с "
+"дополнительными мета-данными."
 
 # 36bdeba62af8428d8fcd635b28080247
 #: ../../intro/tutorial02.txt:0
