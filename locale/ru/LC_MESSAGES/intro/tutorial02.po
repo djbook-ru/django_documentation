@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012.
-# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-17 10:48+0200\n"
-"PO-Revision-Date: 2015-12-20 11:21+0200\n"
+"PO-Revision-Date: 2016-01-31 13:24+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -266,6 +266,9 @@ msgid ""
 "Django follows the :ref:`DRY Principle <dry>`. The goal is to define your "
 "data model in one place and automatically derive things from it."
 msgstr ""
+"Модель - это основной источник данных. Он содержит набор полей и поведение "
+"данных, которые вы храните. Django следует :ref:`принципу DRY<dry>`.. Смысл "
+"в том, чтобы определять модели в одном месте."
 
 #: ../../intro/tutorial02.txt:120
 msgid ""
@@ -274,6 +277,10 @@ msgid ""
 "just a history that Django can roll through to update your database schema "
 "to match your current models."
 msgstr ""
+"Частью работы с данными также являются миграции. В отличии от Ruby On Rails, "
+"например, миграции вынесены из файла моделей и являются просто историей, "
+"которую Django может использовать для изменения базы данных в соответствии с "
+"текущей структурой моделей."
 
 #: ../../intro/tutorial02.txt:125
 msgid ""
@@ -282,12 +289,18 @@ msgid ""
 "``Choice`` has two fields: the text of the choice and a vote tally. Each "
 "``Choice`` is associated with a ``Question``."
 msgstr ""
+"В нашем простом приложении голосования, мы создадим две модели: ``Question`` "
+"и ``Choice``. ``Question`` содержит вопрос и дату публикации. ``Choice`` "
+"содержит: текст ответа и количество голосов. Каждый объект ``Choice`` связан "
+"с объектом ``Question``."
 
 #: ../../intro/tutorial02.txt:130
 msgid ""
 "These concepts are represented by simple Python classes. Edit the :file:"
 "`polls/models.py` file so it looks like this:"
 msgstr ""
+"Эти понятия отображаются простыми классами Python. Отредактируйте файл :file:"
+"`polls/models.py`, чтобы он выглядел таким образом:"
 
 #: ../../intro/tutorial02.txt:149
 msgid ""
@@ -295,6 +308,9 @@ msgid ""
 "subclasses :class:`django.db.models.Model`. Each model has a number of class "
 "variables, each of which represents a database field in the model."
 msgstr ""
+"Код очень простой. Каждая модель представлена классом, унаследованным от :"
+"class:`django.db.models.Model`. Каждая модель содержит несколько атрибутов, "
+"каждый из которых отображает поле в таблице базы данных."
 
 #: ../../intro/tutorial02.txt:153
 msgid ""
@@ -303,6 +319,10 @@ msgid ""
 "fields and :class:`~django.db.models.DateTimeField` for datetimes. This "
 "tells Django what type of data each field holds."
 msgstr ""
+"Каждое поле представлено экземпляром класса :class:`~django.db.models.Field` "
+"-- например, :class:`~django.db.models.CharField` для текстовых полей и :"
+"class:`~django.db.models.DateTimeField` для полей даты и времени. Это "
+"указывает Django какие типы данных хранят эти поля."
 
 #: ../../intro/tutorial02.txt:158
 msgid ""
@@ -311,6 +331,10 @@ msgid ""
 "format. You'll use this value in your Python code, and your database will "
 "use it as the column name."
 msgstr ""
+"Названия каждого экземпляра :class:`~django.db.models.Field` (например, "
+"``question_text`` или ``pub_date`` ) это название поля, в \"машинном"
+"\"(machine-friendly) формате. Вы будете использовать эти названия в коде, а "
+"база данных будет использовать их как названия колонок."
 
 #: ../../intro/tutorial02.txt:163
 msgid ""
@@ -322,6 +346,13 @@ msgid ""
 "For all other fields in this model, the field's machine-readable name will "
 "suffice as its human-readable name."
 msgstr ""
+"Вы можете использовать первый необязательный аргумент конструктора класса :"
+"class:`~django.db.models.Field`, чтобы определить отображаемое, удобное для "
+"восприятия, название поля. Оно используется в некоторых компонентах Django, "
+"и полезно для документирования. Если это название не указано, Django будет "
+"использовать \"машинное\" название. В этом примере, мы указали отображаемое "
+"название только для поля ``Question.pub_date``. Для всех других полей будет "
+"использоваться \"машинное\" название."
 
 #: ../../intro/tutorial02.txt:171
 msgid ""
@@ -330,6 +361,11 @@ msgid ""
 "a :attr:`~django.db.models.CharField.max_length`. That's used not only in "
 "the database schema, but in validation, as we'll soon see."
 msgstr ""
+"Некоторые классы, унаследованные от :class:`~django.db.models.Field`, имеют "
+"обязательные аргументы. Например, :class:`~django.db.models.CharField` "
+"требует, чтобы вы передали ему :attr:`~django.db.models.CharField."
+"max_length`. Это используется не только в схеме базы данных, но и при "
+"валидации, как мы скоро увидим."
 
 #: ../../intro/tutorial02.txt:176
 msgid ""
@@ -337,6 +373,9 @@ msgid ""
 "in this case, we've set the :attr:`~django.db.models.Field.default` value of "
 "``votes`` to 0."
 msgstr ""
+":class:`~django.db.models.Field` может принимать различные необязательные "
+"аргументы; в нашем примере мы указали :attr:`~django.db.models.Field."
+"default` значение для `votes`` равное 0."
 
 #: ../../intro/tutorial02.txt:180
 msgid ""
@@ -345,31 +384,40 @@ msgid ""
 "``Question``. Django supports all the common database relationships: many-to-"
 "one, many-to-many, and one-to-one."
 msgstr ""
+"Заметим, что связь между моделями определяется с помощью :class:`~django.db."
+"models.ForeignKey`. Это указывает Django, что каждый ``Choice`` связан с "
+"одним объектом ``Question``. Django поддерживает все основные типы связей: "
+"многие-к-одному, многие-ко-многим и один-к-одному."
 
 #: ../../intro/tutorial02.txt:186
 msgid "Activating models"
-msgstr ""
+msgstr "Активация моделей"
 
 #: ../../intro/tutorial02.txt:188
 msgid ""
 "That small bit of model code gives Django a lot of information. With it, "
 "Django is able to:"
 msgstr ""
+"Эта небольшая часть кода моделей предоставляет Django большое количество "
+"информации, которая позволяет Django:"
 
 #: ../../intro/tutorial02.txt:191
 msgid "Create a database schema (``CREATE TABLE`` statements) for this app."
-msgstr ""
+msgstr "Создать структуру базы данных (``CREATE TABLE``) для приложения."
 
 #: ../../intro/tutorial02.txt:192
 msgid ""
 "Create a Python database-access API for accessing ``Question`` and "
 "``Choice`` objects."
 msgstr ""
+"Создать Python API для доступа к данным объектов ``Question`` и ``Choice``."
 
 #: ../../intro/tutorial02.txt:194
 msgid ""
 "But first we need to tell our project that the ``polls`` app is installed."
 msgstr ""
+"Но первым делом мы должны указать нашему проекту, что приложение ``polls`` "
+"установлено."
 
 #: ../../intro/tutorial02.txt:198
 msgid ""
@@ -377,6 +425,9 @@ msgid ""
 "you can distribute apps, because they don't have to be tied to a given "
 "Django installation."
 msgstr ""
+"Приложения Django \"подключаемые\": вы можете использовать приложение в "
+"нескольких проектах и вы можете распространять приложение, так как они не "
+"связаны с конкретным проектом Django."
 
 #: ../../intro/tutorial02.txt:202
 msgid ""
@@ -384,15 +435,19 @@ msgid ""
 "`INSTALLED_APPS` setting to include the string ``'polls.apps.PollsConfig'``. "
 "It'll look like this:"
 msgstr ""
+"Отредактируйте файл :file:`mysite/settings.py` и измените настройку :setting:"
+"`INSTALLED_APPS` добавив строку ``'polls'``. В результате получим:"
 
 #: ../../intro/tutorial02.txt:219
 msgid ""
 "Now Django knows to include the ``polls`` app. Let's run another command:"
 msgstr ""
+"Теперь Django знает, что необходимо использовать приложение ``polls``. "
+"Давайте выполним следующую команду:"
 
 #: ../../intro/tutorial02.txt:225
 msgid "You should see something similar to the following:"
-msgstr ""
+msgstr "Вы увидите приблизительно такое:"
 
 #: ../../intro/tutorial02.txt:235
 msgid ""
@@ -400,6 +455,9 @@ msgid ""
 "changes to your models (in this case, you've made new ones) and that you'd "
 "like the changes to be stored as a *migration*."
 msgstr ""
+"Выполняя ``makemigrations``, вы говорите Django, что внесли некоторые "
+"изменения в ваши модели (в нашем случае мы создали несколько новых) и хотели "
+"бы сохранить их в *миграции*."
 
 #: ../../intro/tutorial02.txt:239
 msgid ""
@@ -410,6 +468,12 @@ msgid ""
 "every time Django makes one, but they're designed to be human-editable in "
 "case you want to manually tweak how Django changes things."
 msgstr ""
+"Миграции используются Django для сохранения изменений ваших моделей (и "
+"структуры базы данных) - это просто файлы на диске. Вы можете изучить "
+"миграцию для создания ваших моделей, она находится в файле ``polls/"
+"migrations/0001_initial.py``. Не волнуйтесь, вам не нужно каждый раз их "
+"проверять. Но их формат удобен для чтения на случай, если вы захотите внести "
+"изменения."
 
 #: ../../intro/tutorial02.txt:246
 msgid ""
@@ -419,22 +483,30 @@ msgid ""
 "run. The :djadmin:`sqlmigrate` command takes migration names and returns "
 "their SQL:"
 msgstr ""
+"В Django есть команда, которая выполняет миграции и автоматически обновляет "
+"базу данных - она называется :djadmin:`migrate`. Мы скоро к ней вернемся, но "
+"сначала давайте посмотрим какой SQL выполнит эта миграция. Команда :djadmin:"
+"`sqlmigrate` получает название миграции и возвращает SQL:"
 
 #: ../../intro/tutorial02.txt:255
 msgid ""
 "You should see something similar to the following (we've reformatted it for "
 "readability):"
 msgstr ""
+"Вы увидите приблизительно такое (мы отформатировали результат для "
+"читабельности):"
 
 #: ../../intro/tutorial02.txt:291
 msgid "Note the following:"
-msgstr ""
+msgstr "Обратите внимание на следующее:"
 
 #: ../../intro/tutorial02.txt:293
 msgid ""
 "The exact output will vary depending on the database you are using. The "
 "example above is generated for PostgreSQL."
 msgstr ""
+"Полученные запросы зависят от базы данных, которую вы используете. Пример "
+"выше получен для PostgreSQL."
 
 #: ../../intro/tutorial02.txt:296
 msgid ""
@@ -442,17 +514,24 @@ msgid ""
 "(``polls``) and the lowercase name of the model -- ``question`` and "
 "``choice``. (You can override this behavior.)"
 msgstr ""
+"Названия таблиц созданы автоматически из названия приложения(``polls``) и "
+"названия модели в нижнем регистре -- ``question`` и ``choice``. (Вы можете "
+"переопределить это.)"
 
 #: ../../intro/tutorial02.txt:300
 msgid ""
 "Primary keys (IDs) are added automatically. (You can override this, too.)"
 msgstr ""
+"Первичные ключи (ID) добавлены автоматически. (Вы можете переопределить и "
+"это.)"
 
 #: ../../intro/tutorial02.txt:302
 msgid ""
 "By convention, Django appends ``\"_id\"`` to the foreign key field name. "
 "(Yes, you can override this, as well.)"
 msgstr ""
+"Django добавляет ``\"_id\"`` к названию внешнего ключа. (Да, вы можете "
+"переопределить и это.)"
 
 #: ../../intro/tutorial02.txt:305
 msgid ""
@@ -460,6 +539,9 @@ msgid ""
 "constraint. Don't worry about the ``DEFERRABLE`` parts; that's just telling "
 "PostgreSQL to not enforce the foreign key until the end of the transaction."
 msgstr ""
+"Связь явно определена через ``FOREIGN KEY`` constraint. Не волнуйтесь о "
+"``DEFERRABLE``, это просто указание для PostgreSQL не применять ограничения "
+"``FOREIGN KEY`` до окончания транзакции."
 
 #: ../../intro/tutorial02.txt:309
 msgid ""
@@ -469,6 +551,11 @@ msgid ""
 "goes for the quoting of field names -- e.g., using double quotes or single "
 "quotes."
 msgstr ""
+"Учитываются особенности базы данных, которую вы используете. Специфические "
+"типы данных такие как ``auto_increment`` (MySQL), ``serial`` (PostgreSQL), "
+"или ``integer primary key`` (SQLite) будут использоваться автоматически. "
+"Тоже касается и экранирование названий, что позволяет использовать в "
+"названии кавычки -- например, использование одинарных или двойных кавычек."
 
 #: ../../intro/tutorial02.txt:315
 msgid ""
@@ -478,6 +565,10 @@ msgid ""
 "do or if you have database administrators who require SQL scripts for "
 "changes."
 msgstr ""
+"Команда :djadmin:`sqlmigrate` не применяет миграцию к базе данных - она "
+"просто выводит запросы на экран, чтобы вы могли увидеть какой SQL создает "
+"Django. Это полезно, если вы хотите проверить что выполнит Django, или чтобы "
+"предоставить вашему администратору базы данных SQL скрипт."
 
 #: ../../intro/tutorial02.txt:321
 msgid ""
@@ -485,12 +576,17 @@ msgid ""
 "<check>`; this checks for any problems in your project without making "
 "migrations or touching the database."
 msgstr ""
+"Если необходимо, можете выполнить :djadmin:`python manage.py check <check>`. "
+"Эта команда ищет проблемы в вашем проекте не применяя миграции и не изменяя "
+"базу данных."
 
 #: ../../intro/tutorial02.txt:325
 msgid ""
 "Now, run :djadmin:`migrate` again to create those model tables in your "
 "database:"
 msgstr ""
+"Теперь, выполните команду :djadmin:`migrate` снова, чтобы создать таблицы "
+"для этих моделей в базе данных:"
 
 #: ../../intro/tutorial02.txt:336
 msgid ""
@@ -500,6 +596,10 @@ msgid ""
 "essentially, synchronizing the changes you made to your models with the "
 "schema in the database."
 msgstr ""
+"Команда :djadmin:`migrate` выполняет все миграции, которые ещё не "
+"выполнялись, (Django следит за всеми миграциями, используя таблицу в базе "
+"данных ``django_migrations``) и применяет изменения к базе данных, "
+"синхронизируя структуру базы данных со структурой ваших моделей."
 
 #: ../../intro/tutorial02.txt:342
 msgid ""
@@ -509,22 +609,30 @@ msgid ""
 "losing data. We'll cover them in more depth in a later part of the tutorial, "
 "but for now, remember the three-step guide to making model changes:"
 msgstr ""
+"Миграции - очень мощная штука. Они позволяют изменять ваши модели в процессе "
+"развития проекта без необходимости пересоздавать таблицы в базе данных. Их "
+"задача изменять базу данных без потери данных. Мы ещё вернемся к ним, а пока "
+"запомните эти инструкции по изменению моделей:"
 
 #: ../../intro/tutorial02.txt:348
 msgid "Change your models (in ``models.py``)."
-msgstr ""
+msgstr "Внесите изменения в модели (в ``models.py``)."
 
 #: ../../intro/tutorial02.txt:349
 msgid ""
 "Run :djadmin:`python manage.py makemigrations <makemigrations>` to create "
 "migrations for those changes"
 msgstr ""
+"Выполните :djadmin:`python manage.py makemigrations <makemigrations>` чтобы "
+"создать миграцию для ваших изменений"
 
 #: ../../intro/tutorial02.txt:351
 msgid ""
 "Run :djadmin:`python manage.py migrate <migrate>` to apply those changes to "
 "the database."
 msgstr ""
+"Выполните :djadmin:`python manage.py migrate <migrate>` чтобы применить "
+"изменения к базе данных."
 
 #: ../../intro/tutorial02.txt:354
 msgid ""
@@ -533,22 +641,29 @@ msgid ""
 "them with your app; they not only make your development easier, they're also "
 "useable by other developers and in production."
 msgstr ""
+"Две команды необходимы для того, чтобы хранить миграции в системе контроля "
+"версий. Они не только помогают вам, но и могут использоваться другими "
+"программистами вашего проекта."
 
 #: ../../intro/tutorial02.txt:359
 msgid ""
 "Read the :doc:`django-admin documentation </ref/django-admin>` for full "
 "information on what the ``manage.py`` utility can do."
 msgstr ""
+"О всех возможностях ``manage.py`` вы можете прочитать в :doc:`разделе о "
+"django-admin </ref/django-admin>`."
 
 #: ../../intro/tutorial02.txt:363
 msgid "Playing with the API"
-msgstr ""
+msgstr "Поиграемся с API"
 
 #: ../../intro/tutorial02.txt:365
 msgid ""
 "Now, let's hop into the interactive Python shell and play around with the "
 "free API Django gives you. To invoke the Python shell, use this command:"
 msgstr ""
+"Теперь, давайте воспользуемся консолью Python и поиграем с API, которое "
+"предоставляет Django. Чтобы запустить консоль Python выполните:"
 
 #: ../../intro/tutorial02.txt:372
 msgid ""
@@ -556,10 +671,13 @@ msgid ""
 "py` sets the ``DJANGO_SETTINGS_MODULE`` environment variable, which gives "
 "Django the Python import path to your :file:`mysite/settings.py` file."
 msgstr ""
+"Мы используем эту команду вместо просто \"python\", потому что :file:`manage."
+"py` устанавливает переменную окружения ``DJANGO_SETTINGS_MODULE``, которая "
+"указывает Django путь импорта для файла :file:`mysite/settings.py`."
 
 #: ../../intro/tutorial02.txt:0
 msgid "Bypassing manage.py"
-msgstr ""
+msgstr "Запуск без manage.py"
 
 #: ../../intro/tutorial02.txt:378
 msgid ""
@@ -567,35 +685,45 @@ msgid ""
 "`DJANGO_SETTINGS_MODULE` environment variable to ``mysite.settings``, start "
 "a plain Python shell, and set up Django:"
 msgstr ""
+"Если вы не желаете использовать :file:`manage.py`, не проблема. Просто "
+"установите переменную окружения :envvar:`DJANGO_SETTINGS_MODULE` в ``mysite."
+"settings``, запустите интерпретатор Python и инициализируйте Django:"
 
 # 27cd4e40f9d6483e97863db19f55a820
 #: ../../intro/tutorial02.txt:387
-#, fuzzy
 msgid ""
 "If this raises an :exc:`AttributeError`, you're probably using a version of "
 "Django that doesn't match this tutorial version. You'll want to either "
 "switch to the older tutorial or the newer Django version."
 msgstr ""
-"значит вы используете неверную версию Django. Смотрите учебник для "
-"используемой версии или обновите Django."
+"Если вы получили исключение :exc:`AttributeError`, возможно вы используете "
+"версию Django, которая не соответствует этому учебнику. Вам следует читать "
+"старую версию учебника или обновить Django."
 
 #: ../../intro/tutorial02.txt:391
 msgid ""
 "You must run ``python`` from the same directory :file:`manage.py` is in, or "
 "ensure that directory is on the Python path, so that ``import mysite`` works."
 msgstr ""
+"Запустить ``python`` необходимо в каталоге, в котором находится файл :file:"
+"`manage.py` (или убедитесь, что каталог находится в путях Python, и ``import "
+"mysite`` работает)."
 
 #: ../../intro/tutorial02.txt:395
 msgid ""
 "For more information on all of this, see the :doc:`django-admin "
 "documentation </ref/django-admin>`."
 msgstr ""
+"Полную информацию обо всем этом смотрите в :doc:`разделе о django-admin </"
+"ref/django-admin>`."
 
 #: ../../intro/tutorial02.txt:398
 msgid ""
 "Once you're in the shell, explore the :doc:`database API </topics/db/"
 "queries>`::"
 msgstr ""
+"Теперь, когда вы в консоли, исследуем :doc:`API базы данных </topics/db/"
+"queries>`::"
 
 #: ../../intro/tutorial02.txt:438
 msgid ""
@@ -604,6 +732,10 @@ msgid ""
 "model (in the ``polls/models.py`` file) and adding a :meth:`~django.db."
 "models.Model.__str__` method to both ``Question`` and ``Choice``:"
 msgstr ""
+"Одну минуту. ``<Question: Question object>`` -- крайне непрактичное "
+"отображение объекта. Давайте исправим это, отредактировав модель "
+"``Question`` (в файле ``polls/models.py``) и добавив метод :meth:`~django.db."
+"models.Model.__str__` для моделей ``Question`` и ``Choice``:"
 
 #: ../../intro/tutorial02.txt:462
 msgid ""
@@ -612,12 +744,17 @@ msgid ""
 "interactive prompt, but also because objects' representations are used "
 "throughout Django's automatically-generated admin."
 msgstr ""
+"Важно добавить метод :meth:`~django.db.models.Model.__str__` не только для "
+"красивого отображения в консоли, но так же и потому, что Django использует "
+"строковое представление объекта в интерфейсе администратора."
 
 #: ../../intro/tutorial02.txt:467
 msgid ""
 "Note these are normal Python methods. Let's add a custom method, just for "
 "demonstration:"
 msgstr ""
+"Заметим, это стандартные методы Python. Давайте добавим свой метод, просто "
+"для демонстрации:"
 
 #: ../../intro/tutorial02.txt:484
 msgid ""
@@ -627,12 +764,20 @@ msgid ""
 "respectively. If you aren't familiar with time zone handling in Python, you "
 "can learn more in the :doc:`time zone support docs </topics/i18n/timezones>`."
 msgstr ""
+"Мы добавили ``import datetime`` и ``from django.utils import timezone`` для "
+"использования стандартной библиотеки Python :mod:`datetime` и модуля Django "
+"для работы с временными зонами :mod:`django.utils.timezone` соответственно. "
+"Если вы не знакомы, как Python работает с временными зонами, вы можете "
+"прочитать об этом в :doc:`разделе о поддержке временных зон </topics/i18n/"
+"timezones>`."
 
 #: ../../intro/tutorial02.txt:490
 msgid ""
 "Save these changes and start a new Python interactive shell by running "
 "``python manage.py shell`` again::"
 msgstr ""
+"Сохраните эти изменения и запустите консоль Python снова, выполнив ``python "
+"manage.py shell``::"
 
 #: ../../intro/tutorial02.txt:569
 msgid ""
@@ -642,14 +787,19 @@ msgid ""
 "intro>`. For full details on the database API, see our :doc:`Database API "
 "reference </topics/db/queries>`."
 msgstr ""
+"Подробности о работе со связанными объектами смотрите в :doc:"
+"`соответствующем разделе </ref/models/relations>`. Подробности об "
+"использовании синтаксиса двойного нижнего подчеркивания читайте в разделе о :"
+"ref:`фильтрах полей <field-lookups-intro>`. Полная информация об API для "
+"работы с базой данных содержится в :doc:`соответствующем разделе </topics/db/"
+"queries>`."
 
 #: ../../intro/tutorial02.txt:576
 msgid "Introducing the Django Admin"
-msgstr ""
+msgstr "Введение в интерфейс администратор Django"
 
 # 8efae26bb46545f3a0a1e0ba7c1714de
 #: ../../intro/tutorial02.txt:580
-#, fuzzy
 msgid ""
 "Generating admin sites for your staff or clients to add, change, and delete "
 "content is tedious work that doesn't require much creativity. For that "
