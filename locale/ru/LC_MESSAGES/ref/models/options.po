@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated <>, 2012, 2013, 2014, 2015.
+# Automatically generated <>, 2012, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-17 10:48+0200\n"
-"PO-Revision-Date: 2015-03-26 17:29+0200\n"
+"PO-Revision-Date: 2016-03-17 16:02+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -62,6 +62,8 @@ msgid ""
 "If a model is defined outside of an application in :setting:"
 "`INSTALLED_APPS`, it must declare which app it belongs to::"
 msgstr ""
+"Если модель определена вне приложения из :setting:`INSTALLED_APPS`, она "
+"должна указать к какому приложению она относится::"
 
 #: ../../ref/models/options.txt:34
 msgid ""
@@ -69,6 +71,9 @@ msgid ""
 "or ``app_label.model_name`` you can use ``model._meta.label`` or ``model."
 "_meta.label_lower`` respectively."
 msgstr ""
+"Если вы хотите представить модель в формате ``app_label.object_name`` или "
+"``app_label.model_name``, вы можете использовать ``model._meta.label`` и "
+"``model._meta.label_lower`` соответственно."
 
 # 0c5bb9f034914b9eb4c722bec10c57fb
 #: ../../ref/models/options.txt:39
@@ -351,7 +356,6 @@ msgstr "``order_with_respect_to``"
 
 # 4002cd1d348744bbbf1c0008b896b268
 #: ../../ref/models/options.txt:176
-#, fuzzy
 msgid ""
 "Makes this object orderable with respect to the given field, usually a "
 "``ForeignKey``. This can be used to make related objects orderable with "
@@ -360,7 +364,8 @@ msgid ""
 "of answers matters, you'd do this::"
 msgstr ""
 "Объекты модели будут отсортированы относительно указанного поля. Почти "
-"всегда используется для связанных объектов. Например, модель "
+"всегда используется для ``ForeignKey``. Можно использовать для сортировки "
+"связанных объектов по значению из родительского объекта. Например, модель "
 "``Answer``(ответ) связана с моделью ``Question``(вопрос) через "
 "``ForeignKey``, вопрос содержит несколько ответов и порядок этих ответов "
 "имеет значение::"
@@ -404,7 +409,7 @@ msgstr ""
 
 #: ../../ref/models/options.txt:0
 msgid "``order_with_respect_to`` implicitly sets the ``ordering`` option"
-msgstr ""
+msgstr "``order_with_respect_to`` неявно использует ``ordering``"
 
 #: ../../ref/models/options.txt:223
 msgid ""
@@ -415,23 +420,26 @@ msgid ""
 "``order_with_respect_to`` will apply whenever you obtain a list of objects "
 "of this model."
 msgstr ""
+"Внутри ``order_with_respect_to`` добавляет колонку в базе данных ``_order`` "
+"и указывает её в опции модели :attr:`~Options.ordering`. Поэтому "
+"``order_with_respect_to`` и ``ordering`` не могут использоваться вместе, и "
+"сортировка из ``order_with_respect_to`` будет использоваться при любом "
+"получении объектов модели."
 
 # 26e37df93c814b3b9f803a843d8d4d2d
 #: ../../ref/models/options.txt:0
-#, fuzzy
 msgid "Changing ``order_with_respect_to``"
-msgstr "Меняем order_with_respect_to"
+msgstr "Изменение ``order_with_respect_to``"
 
 # 817102734fc7484cbe3ebbad76b9f146
 #: ../../ref/models/options.txt:232
-#, fuzzy
 msgid ""
 "Because ``order_with_respect_to`` adds a new database column, be sure to "
 "make and apply the appropriate migrations if you add or change "
 "``order_with_respect_to`` after your initial :djadmin:`migrate`."
 msgstr ""
-"``order_with_respect_to`` добавляет дополнительное поле в таблицу базы "
-"данных с названием ``_order``. Не забудьте создать и применить миграцию, "
+"Т.к. ``order_with_respect_to`` добавляет дополнительное поле в таблицу базы "
+"данных с названием ``_order``, не забудьте создать и применить миграцию, "
 "если вы добавите или поменяете ``order_with_respect_to`` первого запуска "
 "после :djadmin:`migrate`."
 
@@ -551,7 +559,7 @@ msgstr ""
 
 #: ../../ref/models/options.txt:301
 msgid "``required_db_features``"
-msgstr ""
+msgstr "``required_db_features``"
 
 #: ../../ref/models/options.txt:307
 msgid ""
@@ -562,10 +570,16 @@ msgid ""
 "several database backends. Avoid relations between models that may or may "
 "not be created as the ORM doesn't handle this."
 msgstr ""
+"Список функций базы данных, который необходимы для работы модели. "
+"Учитываются при миграции. Например, если указать ``['gis_enabled']``, "
+"таблица для модели будет создана только для базы данных, которая "
+"поддерживает GIS. Эта опция также полезна при тестировании на разных базах "
+"данных. Избегайте связей между моделями, которые не могут быть созданы в "
+"одной базе данных. ORM не умеет обрабатывать такие ситуации."
 
 #: ../../ref/models/options.txt:315
 msgid "``required_db_vendor``"
-msgstr ""
+msgstr "``required_db_vendor``"
 
 #: ../../ref/models/options.txt:321
 msgid ""
@@ -574,6 +588,10 @@ msgid ""
 "``oracle``. If this attribute is not empty and the current connection vendor "
 "doesn't match it, the model will not be synchronized."
 msgstr ""
+"Список поддерживаемых баз данных. Текущий список: ``sqlite``, "
+"``postgresql``, ``mysql``, ``oracle``. Если эта опция не пустая, и база "
+"данных не соответствует указанной, таблица для модели не будет создана при "
+"миграции."
 
 # 6671f64da69448f885651db539422937
 #: ../../ref/models/options.txt:327
@@ -740,31 +758,33 @@ msgstr ""
 
 #: ../../ref/models/options.txt:417
 msgid "Read-only ``Meta`` attributes"
-msgstr ""
+msgstr "Неизменяемые атрибуты ``Meta``"
 
 # 9b0631d9ac424ef78a2bbdf87ffdfe0e
 #: ../../ref/models/options.txt:420
-#, fuzzy
 msgid "``label``"
-msgstr "``app_label``"
+msgstr "``label``"
 
 #: ../../ref/models/options.txt:426
 msgid ""
 "Representation of the object, returns ``app_label.object_name``, e.g. "
 "``'polls.Question'``."
 msgstr ""
+"Представление объекта, возвращает ``app_label.object_name``, например "
+"``'polls.Question'``."
 
 # 9b0631d9ac424ef78a2bbdf87ffdfe0e
 #: ../../ref/models/options.txt:430
-#, fuzzy
 msgid "``label_lower``"
-msgstr "``app_label``"
+msgstr "``label_lower``"
 
 #: ../../ref/models/options.txt:436
 msgid ""
 "Representation of the model, returns ``app_label.model_name``, e.g. ``'polls."
 "question'``."
 msgstr ""
+"Представление объекта, возвращает ``app_label.model_name``, например "
+"``'polls.question'``."
 
 # 0b794b58c4fb4977b094107ee2471389
 #~ msgid ""

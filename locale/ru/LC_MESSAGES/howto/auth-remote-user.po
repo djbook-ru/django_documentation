@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated, 2012.
-# redvi <liberty195@gmail.com>, 2014, 2015.
+# redvi <liberty195@gmail.com>, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-17 10:48+0200\n"
-"PO-Revision-Date: 2015-03-26 17:58+0200\n"
+"PO-Revision-Date: 2016-03-17 13:50+0200\n"
 "Last-Translator: redvi <liberty195@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -43,7 +43,6 @@ msgstr ""
 
 # 5f7bf4bf1a254a29a43d54445581439b
 #: ../../howto/auth-remote-user.txt:18
-#, fuzzy
 msgid ""
 "When the Web server takes care of authentication it typically sets the "
 "``REMOTE_USER`` environment variable for use in the underlying application.  "
@@ -57,9 +56,9 @@ msgstr ""
 "окружения ``REMOTE_USER`` и использует её в базовом приложении. В Django, "
 "``REMOTE_USER`` доступна в атрибуте :attr:`request.META <django.http."
 "HttpRequest.META>`. Настройте Django для того, чтобы задействовать "
-"переменную ``REMOTE_USER``, используя классы  ``RemoteUserMiddleware`` и :"
-"class:`~django.contrib.auth.backends.RemoteUserBackend` из :mod:`django."
-"contrib.auth`."
+"переменную ``REMOTE_USER``, используя ``RemoteUserMiddleware``, "
+"``PersistentRemoteUserMiddleware`` и :class:`~django.contrib.auth.backends."
+"RemoteUserBackend` из :mod:`django.contrib.auth`."
 
 # 040a12c81e954f42842bea8391087f80
 #: ../../howto/auth-remote-user.txt:28
@@ -194,7 +193,7 @@ msgstr ""
 
 #: ../../howto/auth-remote-user.txt:103
 msgid "Using ``REMOTE_USER`` on login pages only"
-msgstr ""
+msgstr "Использование ``REMOTE_USER`` только на странице авторизации"
 
 #: ../../howto/auth-remote-user.txt:107
 msgid ""
@@ -207,6 +206,13 @@ msgid ""
 "and after successful authentication, the application is supposed to maintain "
 "the authenticated session itself."
 msgstr ""
+"``RemoteUserMiddleware`` предполагает, что HTTP заголовок ``REMOTE_USER`` "
+"присутствует для всех запросов. Это удобно для Basic HTTP Auth с помощью "
+"``htpasswd``, или других простых механизмов, но для Negotiate (GSSAPI/"
+"Kerberos), или других сложных механизмов авторизации, авторизация на \"front-"
+"end\" HTTP сервере используется только для нескольких URL-ов страниц входа, "
+"и после успешной авторизации предполагается, что приложения будет "
+"самостоятельно работать с сессией."
 
 #: ../../howto/auth-remote-user.txt:116
 msgid ""
@@ -216,6 +222,10 @@ msgid ""
 "in replacement of :class:`~django.contrib.auth.middleware."
 "RemoteUserMiddleware` in the documentation above."
 msgstr ""
+":class:`~django.contrib.auth.middleware.PersistentRemoteUserMiddleware` "
+"предоставляет такую возможность. Сессия пользователя поддерживается, пока "
+"пользователь явно не выполнит выход. Этот класс может использоваться вместо :"
+"class:`~django.contrib.auth.middleware.RemoteUserMiddleware`."
 
 # 878bfe56a60842bf9d17f1922c2a2bfa
 #~ msgid "``RemoteUserBackend``"

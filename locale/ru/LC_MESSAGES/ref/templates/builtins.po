@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012, 2013.
-# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-02 11:18+0200\n"
-"PO-Revision-Date: 2015-06-02 23:59+0300\n"
+"PO-Revision-Date: 2016-03-17 16:23+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -288,7 +288,6 @@ msgstr ""
 
 # 0a8e08eb0fb344e5ac9c527e2ebc11e7
 #: ../../ref/templates/builtins.txt:190
-#, fuzzy
 msgid ""
 "The ``{% cycle %}`` tag supports the much inferior old syntax from previous "
 "Django versions. You shouldn't use this in any new projects, but for the "
@@ -300,15 +299,14 @@ msgstr ""
 
 # 2936180a26334c6cbb429a762b3e78c3
 #: ../../ref/templates/builtins.txt:196
-#, fuzzy
 msgid ""
 "In this syntax, each value gets interpreted as a literal string, and there's "
 "no way to specify variable values, literal commas, or spaces. Support for "
 "this syntax will be removed in Django 1.10."
 msgstr ""
 "Такой синтаксис воспринимает все как строки, и нет возможности передать "
-"переменные, использовать запятую или пробел в качестве значения. Мы уже "
-"говорили что не следует использовать этот синтаксис в новых проектах?"
+"переменные, использовать запятую или пробел в качестве значения. Поддержка "
+"такого синтаксиса будет убрана в Django 1.10."
 
 # 4eccd8c6d2c94986ae50c0eaea2ffaa8
 #: ../../ref/templates/builtins.txt:203
@@ -446,9 +444,10 @@ msgid ""
 "You can use the syntax ``{% firstof var1 var2 var3 as value %}`` to store "
 "the output inside a variable."
 msgstr ""
+"Вы можете использовать синтаксис ``{% firstof var1 var2 var3 as value %}``, "
+"чтобы сохранить результат в переменной."
 
 #: ../../ref/templates/builtins.txt:293
-#, fuzzy
 msgid "The \"as\" syntax was added."
 msgstr "Была добавлена возможность использовать синтаксис \"as\"."
 
@@ -510,6 +509,13 @@ msgid ""
 "the dot operator in the :ref:`documentation of template variables <template-"
 "variables>`."
 msgstr ""
+"Помните, что при обращении через точку для словарю сначала ищется ключ, а "
+"затем метод. Если словарь ``data`` содержит ключ ``'items'``, ``data.items`` "
+"вернет ``data['items']`` вместо ``data.items()``. Избегайте использования "
+"ключей, которые совпадают с названиями методов, если вы хотите их "
+"использовать в шаблоне (``items``, ``values``, ``keys``, и т.д.). Порядок "
+"получения значения описан в :ref:`разделе о переменных шаблонов <template-"
+"variables>`."
 
 # 4cd0d0232504418bb34c9b929c590849
 #: ../../ref/templates/builtins.txt:338
@@ -879,7 +885,7 @@ msgstr ""
 
 #: ../../ref/templates/builtins.txt:580
 msgid "``ifequal`` and ``ifnotequal``"
-msgstr ""
+msgstr "``ifequal`` и ``ifnotequal``"
 
 #: ../../ref/templates/builtins.txt:582
 msgid ""
@@ -888,6 +894,10 @@ msgid ""
 "endifnotequal %}`` is superseded by ``{% if a != b %} ... {% endif %}``. The "
 "``ifequal`` and ``ifnotequal`` tags will be deprecated in a future release."
 msgstr ""
+"``{% ifequal a b %} ... {% endifequal %}`` -- устаревший вариант ``{% if a "
+"== b %} ... {% endif %}``. Аналогично ``{% ifnotequal a b %} ... {% "
+"endifnotequal %}`` заменены ``{% if a != b %} ... {% endif %}``. Теги "
+"``ifequal`` и ``ifnotequal`` будут удалены в будущих релизах."
 
 # dc71463312f14b9e8ee63b7f5d73d245
 #: ../../ref/templates/builtins.txt:590
@@ -990,21 +1000,21 @@ msgstr ""
 
 # cfc7fe2af4d6472e85172a5188ebc20d
 #: ../../ref/templates/builtins.txt:655
-#, fuzzy
 msgid ""
 "An included template is rendered within the context of the template that "
 "includes it. This example produces the output ``\"Hello, John!\"``:"
 msgstr ""
 "Включенный шаблон выполняется с контекстом шаблона, который его включает. "
-"Этот пример выводит ``\"Hello, John\"``:"
+"Этот пример выводит ``\"Hello, John!\"``:"
 
 # 8a6df6b596214e99b3a9e0af736b7c3d
 #: ../../ref/templates/builtins.txt:658
-#, fuzzy
 msgid ""
 "Context: variable ``person`` is set to ``\"John\"`` and variable "
 "``greeting`` is set to ``\"Hello\"``."
-msgstr "Контекст: переменная ``person`` равна ``\"john\"``."
+msgstr ""
+"Контекст: переменная ``person`` равна ``\"john\"`` и ``greeting`` равна ``"
+"\"Hello\"``."
 
 # eb4bc7b701fa41849af1e1d72aa871d7
 #: ../../ref/templates/builtins.txt:661
@@ -1047,10 +1057,18 @@ msgid ""
 "template`` logger with the exception that happens while rendering the "
 "included template and returns an empty string."
 msgstr ""
+"Если включаемый шаблон вызвал исключение (шаблон не найден, или содержит "
+"синтаксические ошибки), поведение зависит от опции ``debug`` :class:"
+"`шаблонизатора <django.template.Engine>` (если не указан, по умолчанию "
+"равна :setting:`DEBUG`). В режиме отладки будут вызваны исключения :exc:"
+"`~django.template.TemplateDoesNotExist` или :exc:`~django.template."
+"TemplateSyntaxError`. При выключенном режиме отладки ``{% include %}`` "
+"запишет предупреждение с полученной ошибкой в логгер ``django.template`` и "
+"вернет пустую строку."
 
 #: ../../ref/templates/builtins.txt:691
 msgid "Template logging now includes the warning logging mentioned above."
-msgstr ""
+msgstr "Логгер шаблонов теперь включает выше описанное предупреждение."
 
 # 03ad1edc9f804b23a69ea7d90e3dfa8c
 #: ../../ref/templates/builtins.txt:694
@@ -1272,15 +1290,14 @@ msgstr ""
 "текущего языка и настройки :ref:`format-localization`, например::"
 
 #: ../../ref/templates/builtins.txt:797
-#, fuzzy
 msgid ""
 "You can also use the syntax ``{% now \"Y\" as current_year %}`` to store the "
 "output (as a string) inside a variable. This is useful if you want to use "
 "``{% now %}`` inside a template tag like :ttag:`blocktrans` for example::"
 msgstr ""
-"Вы можете использовать синтаксис ``{% now \"Y\" as current_year %}``, чтобы "
-"сохранить результат в переменной. Это может быть полезно при использовании "
-"``{% now %}`` в теге :ttag:`blocktrans`::"
+"Вы также можете использовать синтаксис ``{% now \"Y\" as current_year %}``, "
+"чтобы сохранить результат в переменной. Это может быть полезно при "
+"использовании ``{% now %}`` в теге :ttag:`blocktrans`::"
 
 #: ../../ref/templates/builtins.txt:806
 msgid "The ability to use the \"as\" syntax was added."
@@ -1538,12 +1555,11 @@ msgstr "ssi"
 
 # 5c8775eb849643c88bf77c7a8a88ed90
 #: ../../ref/templates/builtins.txt:980
-#, fuzzy
 msgid ""
 "This tag has been deprecated and will be removed in Django 1.10. Use the :"
 "ttag:`include` tag instead."
 msgstr ""
-"Этот тег устарел и будет удален в Django 2.0. Используйте вместо него тег :"
+"Этот тег устарел и будет удален в Django 1.10. Используйте вместо него тег :"
 "ttag:`include`."
 
 # d064c27138d54bb6890d4464baaf430b
@@ -1725,7 +1741,6 @@ msgstr "url"
 
 # 6779852a481e4af2978436406509cf06
 #: ../../ref/templates/builtins.txt:1046
-#, fuzzy
 msgid ""
 "Returns an absolute path reference (a URL without the domain name) matching "
 "a given view and optional parameters. Any special characters in the "
@@ -1748,7 +1763,6 @@ msgstr ""
 
 # a9521b327f624f079c8663fa94b2efe2
 #: ../../ref/templates/builtins.txt:1055
-#, fuzzy
 msgid ""
 "The first argument is a :func:`~django.conf.urls.url` ``name``. It can be a "
 "quoted literal or any other context variable. Additional arguments are "
@@ -1756,12 +1770,12 @@ msgid ""
 "in the URL. The example above shows passing positional arguments. "
 "Alternatively you may use keyword syntax::"
 msgstr ""
-"Первый аргумент -- это путь к функции представления в формате ``package."
-"package.module.function``. Он может быть строкой в кавычках или любой другой "
-"контекстной переменной. Дополнительные аргументы необязательны. Это "
-"значения, разделенные пробелами, которые будут  использоваться как аргументы "
-"при формировании URL. Пример выше использует позиционные аргументы. Также "
-"можно использовать именованные аргументы::"
+"Первый аргумент -- это ``name`` из :func:`~django.conf.urls.url`. Он может "
+"быть строкой в кавычках или любой другой контекстной переменной. "
+"Дополнительные аргументы необязательны. Это значения, разделенные пробелами, "
+"которые будут использоваться как аргументы при формировании URL. Пример выше "
+"использует позиционные аргументы. Также можно использовать именованные "
+"аргументы::"
 
 # 77bb5cf1f1624546a9f0a128c46ed307
 #: ../../ref/templates/builtins.txt:1063
@@ -1859,23 +1873,21 @@ msgstr ""
 
 # 5c8775eb849643c88bf77c7a8a88ed90
 #: ../../ref/templates/builtins.txt:1119
-#, fuzzy
 msgid ""
 "You can also pass a dotted Python path to a view function, but this syntax "
 "is deprecated and will be removed in Django 1.10::"
 msgstr ""
-"Использование путей для импорта Python устарело и будет удалено в Django "
-"2.0::"
+"Вы также можете передать путь для импорта Python, но такой подход устарел и "
+"будет удален в Django 1.10::"
 
 # 3cf5f20b4ac1432fac056c9841ff28d8
 #: ../../ref/templates/builtins.txt:1126
-#, fuzzy
 msgid ""
 "Don't forget to put quotes around the :func:`~django.conf.urls.url` "
 "``name``, otherwise the value will be interpreted as a context variable!"
 msgstr ""
-"Не забудьте взять в кавычки путь до функции или имя шаблона, иначе значение "
-"будет интерпретировано как переменная!"
+"Не забудьте взять в кавычки ``name``, иначе значение будет интерпретировано "
+"как переменная!"
 
 # 6511c051d8a1473fa2c1d40ec6d7c62b
 #: ../../ref/templates/builtins.txt:1132
@@ -1891,7 +1903,6 @@ msgstr ""
 
 # a45dc7a561da46f3b52d5873187c4d4b
 #: ../../ref/templates/builtins.txt:1136
-#, fuzzy
 msgid ""
 "A common use is to allow a JavaScript template layer that collides with "
 "Django's syntax. For example::"
@@ -2202,7 +2213,6 @@ msgstr "Форматирует дату в соответствии с указ�
 
 # b65c6a4127b74c8f93ac323e23224600
 #: ../../ref/templates/builtins.txt:1296
-#, fuzzy
 msgid ""
 "Uses a similar format as PHP's ``date()`` function (https://php.net/date) "
 "with some differences."
@@ -3646,13 +3656,12 @@ msgstr "Конвертирует строку в нижний регистр."
 
 # 6380e4bedf684ac9b067a527f5a57943
 #: ../../ref/templates/builtins.txt:1851
-#, fuzzy
 msgid ""
 "If ``value`` is ``Totally LOVING this Album!``, the output will be ``totally "
 "loving this album!``."
 msgstr ""
-"Если ``value`` равно ``Joel\\nis a slug``, вывод будет ``Joel<br />is a "
-"slug``."
+"Если ``value`` равно ``Totally LOVING this Album!``, вывод будет ``totally "
+"loving this album!``."
 
 # ca0424eae1664a91b67053f9fa4a0480
 #: ../../ref/templates/builtins.txt:1857
@@ -4368,7 +4377,6 @@ msgstr ""
 
 # 6f07e8e9e4244938995c049371f1d0a7
 #: ../../ref/templates/builtins.txt:2299
-#, fuzzy
 msgid ""
 "An older, more restrictive and verbose input format is also supported: "
 "``['States', [['Kansas', [['Lawrence', []], ['Topeka', []]]], ['Illinois', "
@@ -4376,7 +4384,7 @@ msgid ""
 msgstr ""
 "Устаревший более строгий и подробный формат, также поддерживается, например: "
 "``['States', [['Kansas', [['Lawrence', []], ['Topeka', []]]], ['Illinois', "
-"[]]]]``, Поддержка двух синтаксисов будет удалена в Django 2.0."
+"[]]]]``, Поддержка двух синтаксисов будет удалена в Django 1.10."
 
 # b3df545a239b4241a923ead962c4a61a
 #: ../../ref/templates/builtins.txt:2306
@@ -4409,13 +4417,12 @@ msgstr "Экранирует значение для безопасного ис
 
 # 74f409a783a34db2bc6fb5ab6054118b
 #: ../../ref/templates/builtins.txt:2327
-#, fuzzy
 msgid ""
 "If ``value`` is ``\"https://www.example.org/foo?a=b&c=d\"``, the output will "
 "be ``\"https%3A//www.example.org/foo%3Fa%3Db%26c%3Dd\"``."
 msgstr ""
-"Если ``value`` равно ``\"http://www.example.org/foo?a=b&c=d\"``, будет "
-"возвращено ``\"http%3A//www.example.org/foo%3Fa%3Db%26c%3Dd\"``."
+"Если ``value`` равно ``\"https://www.example.org/foo?a=b&c=d\"``, будет "
+"возвращено ``\"https%3A//www.example.org/foo%3Fa%3Db%26c%3Dd\"``."
 
 # 7f236d86b6a042f58cf892e636149aa1
 #: ../../ref/templates/builtins.txt:2330
@@ -4438,13 +4445,12 @@ msgstr ""
 
 # 201c3e67c5fa4fba91902e01fc571453
 #: ../../ref/templates/builtins.txt:2338
-#, fuzzy
 msgid ""
 "If ``value`` is ``\"https://www.example.org/\"``, the output will be ``"
 "\"https%3A%2F%2Fwww.example.org%2F\"``."
 msgstr ""
-"Если ``value`` равно ``\"http://www.example.org/\"``, будет возвращено ``"
-"\"http%3A%2F%2Fwww.example.org%2F\"``."
+"Если ``value`` равно ``\"https://www.example.org/\"``, будет возвращено ``"
+"\"https%3A%2F%2Fwww.example.org%2F\"``."
 
 # ee59fec62e044af3a49fb13ac7b63796
 #: ../../ref/templates/builtins.txt:2344
@@ -4458,14 +4464,13 @@ msgstr "Конвертирует URL-ы и email-ы в тексте в \"кли�
 
 # 5ccc3cc2dd4b443189415b3c8a15c9c3
 #: ../../ref/templates/builtins.txt:2348
-#, fuzzy
 msgid ""
 "This template tag works on links prefixed with ``http://``, ``https://``, or "
 "``www.``. For example, ``https://goo.gl/aia1t`` will get converted but ``goo."
 "gl/aia1t`` won't."
 msgstr ""
 "Этот тег конвертирует ссылки с префиксами ``http://``, ``https://``, или "
-"``www.``. Например, ``http://goo.gl/aia1t`` будет конвертирован, ``goo.gl/"
+"``www.``. Например, ``https://goo.gl/aia1t`` будет конвертирован, ``goo.gl/"
 "aia1t`` -- нет."
 
 # cd6f50da59bf4916888b337dd5d9dcea
@@ -4635,14 +4640,14 @@ msgstr "yesno"
 
 # 5848c3253b3046f899fb86f7d4259f43
 #: ../../ref/templates/builtins.txt:2449
-#, fuzzy
 msgid ""
 "Maps values for ``True``, ``False``, and (optionally) ``None``, to the "
 "strings \"yes\", \"no\", \"maybe\", or a custom mapping passed as a comma-"
 "separated list, and returns one of those strings according to the value:"
 msgstr ""
-"Для true, false и (опционально) None выводит строки \"yes\", \"no\", \"maybe"
-"\", или другие, переданные как список значений, разделенный запятыми:"
+"Для ``True``, ``False`` и (опционально) ``None`` выводит строки \"yes\", \"no"
+"\", \"maybe\", или другие, переданные как список значений, разделенный "
+"запятыми:"
 
 # 5ad1ac9ab0a845dca59e08e3e237e0f8
 #: ../../ref/templates/builtins.txt:2458
@@ -4701,12 +4706,11 @@ msgstr "``\"yeah,no\"``"
 
 # 7cdd5b997e6940fdb02a13bec831e896
 #: ../../ref/templates/builtins.txt:2464
-#, fuzzy
 msgid ""
 "``no`` (converts ``None`` to ``False`` if no mapping for ``None`` is given)"
 msgstr ""
-"``\"no\"`` (конвертирует  ``None`` в ``False``, если значение для ``None`` "
-"не указано)"
+"``no`` (конвертирует  ``None`` в ``False``, если значение для ``None`` не "
+"указано)"
 
 # 1b236ddbe9834459be023c1574965b79
 #: ../../ref/templates/builtins.txt:2469
