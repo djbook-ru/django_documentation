@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012, 2013.
-# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-02 11:18+0200\n"
-"PO-Revision-Date: 2015-06-18 12:23+0300\n"
+"PO-Revision-Date: 2016-03-22 16:00+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -37,7 +37,6 @@ msgstr ""
 
 # 8db684042d98466aa16a0d154ee0faf0
 #: ../../ref/models/fields.txt:15
-#, fuzzy
 msgid ""
 "If the built-in fields don't do the trick, you can try `django-localflavor "
 "<https://github.com/django/django-localflavor>`_ (`documentation <https://"
@@ -45,16 +44,17 @@ msgid ""
 "code that are useful for particular countries and cultures."
 msgstr ""
 "Если существующие поля не предоставляют необходимого функционала, вы можете "
-"поискать в `django-localflavor <https://django-localflavor.readthedocs.org/"
-">`_, который содержит дополнительный функционал полезный для различных "
-"стран. Также вы можете легко :doc:`создать собственное поле для модели </"
-"howto/custom-model-fields>`."
+"поискать в `django-localflavor <https://github.com/django/django-"
+"localflavor>`_, который содержит дополнительный функционал полезный для "
+"различных стран."
 
 #: ../../ref/models/fields.txt:20
 msgid ""
 "Also, you can easily :doc:`write your own custom model fields </howto/custom-"
 "model-fields>`."
 msgstr ""
+"Также вы можете легко :doc:`создать собственное поле для модели </howto/"
+"custom-model-fields>`."
 
 # b1f19cc7b4d44b24bbcc23bdaf3ee60f
 #: ../../ref/models/fields.txt:25
@@ -315,9 +315,8 @@ msgstr "``db_index``"
 
 # c9014c14bbc34b37bc7e551859db8b90
 #: ../../ref/models/fields.txt:187
-#, fuzzy
 msgid "If ``True``, a database index will be created for this field."
-msgstr "При ``True`` это поле будет первичным ключом."
+msgstr "При ``True`` для поля будет создан индекс в базе данных."
 
 # 55032a4532e54bfea9e535058dc8e01a
 #: ../../ref/models/fields.txt:190
@@ -387,6 +386,9 @@ msgid ""
 "should be the value of the field they reference (``pk`` unless :attr:"
 "`~ForeignKey.to_field` is set) instead of model instances."
 msgstr ""
+"Для полей типа :class:`ForeignKey`, которые ссылаются на объекты модели, "
+"значением по умолчанию должно быть значение поля на которое они ссылаются "
+"(``pk``, если не указан :attr:`~ForeignKey.to_field`), а не объект модели."
 
 #: ../../ref/models/fields.txt:227
 msgid ""
@@ -918,7 +920,6 @@ msgstr ""
 
 # f32850092b49421897cd5b0a79858302
 #: ../../ref/models/fields.txt:495
-#, fuzzy
 msgid ""
 "Automatically set the field to now when the object is first created. Useful "
 "for creation of timestamps. Note that the current date is *always* used; "
@@ -930,19 +931,26 @@ msgstr ""
 "Значение поля будет автоматически установлено в текущую дату при "
 "создании(первом сохранении) объекта. Полезно для хранения времени создания. "
 "Заметим, что текущее время будет использовано *всегда*; это не просто "
-"значение по-умолчанию, которое вы можете переопределить."
+"значение по-умолчанию, которое вы можете переопределить. По этому, даже если "
+"вы укажите значение для этого поля, оно будет проигнорировано. Если вы "
+"хотите изменять значения этого поля, используйте следующее вместо "
+"``auto_now_add=True``:"
 
 #: ../../ref/models/fields.txt:502
 msgid ""
 "For :class:`DateField`: ``default=date.today`` - from :meth:`datetime.date."
 "today`"
 msgstr ""
+"Для :class:`DateField`: ``default=date.today`` - из :meth:`datetime.date."
+"today`"
 
 #: ../../ref/models/fields.txt:504
 msgid ""
 "For :class:`DateTimeField`: ``default=timezone.now`` - from :func:`django."
 "utils.timezone.now`"
 msgstr ""
+"Для :class:`DateTimeField`: ``default=timezone.now`` - из :func:`django."
+"utils.timezone.now`"
 
 # 7ce7b7d9be9646ac83ee43e2da746588
 #: ../../ref/models/fields.txt:507
@@ -1062,15 +1070,14 @@ msgstr "Для хранения числа до миллиарда и 10 зна�
 
 # 67119680598048e0be2289b889eeac18
 #: ../../ref/models/fields.txt:568 ../../ref/models/fields.txt:885
-#, fuzzy
 msgid ""
 "The default form widget for this field is a :class:`~django.forms."
 "NumberInput` when :attr:`~django.forms.Field.localize` is ``False`` or :"
 "class:`~django.forms.TextInput` otherwise."
 msgstr ""
 "Виджет по умолчанию в форме для этого поля - :class:`~django.forms."
-"TextInput`. Интерфейс администратора использует два виджета :class:`~django."
-"forms.TextInput` и JavaScript."
+"NumberInput`,  если :attr:`~django.forms.Field.localize` равен ``False``, "
+"иначе :class:`~django.forms.TextInput`."
 
 # d20e1f8cff3d4abd9f64e5b34dab3e86
 #: ../../ref/models/fields.txt:574
@@ -1162,10 +1169,13 @@ msgid ""
 "and can be set in two ways. In both cases, the value is passed to the :meth:"
 "`Storage.save() <django.core.files.storage.Storage.save>` method."
 msgstr ""
+"Этот атрибут позволяет указать каталог и название файла при его сохранении. "
+"Его можно использовать двумя способами. В обоих случаях значение будет "
+"передано в метод :meth:`Storage.save() <django.core.files.storage.Storage."
+"save>`."
 
 # ffe8dc7d538b48be84193da1edf66984
 #: ../../ref/models/fields.txt:628
-#, fuzzy
 msgid ""
 "If you specify a string value, it may contain :func:`~time.strftime` "
 "formatting, which will be replaced by the date/time of the file upload (so "
@@ -1173,7 +1183,7 @@ msgid ""
 msgstr ""
 "Поддерживает форматирование :func:`~time.strftime`, которое будет заменено "
 "на дату/время загруженного файла (и загружаемые файлы не заполнят один "
-"каталог)."
+"каталог). Например::"
 
 #: ../../ref/models/fields.txt:639
 msgid ""
@@ -1183,21 +1193,25 @@ msgid ""
 "uploaded files will be stored. If you are using a different storage, check "
 "that storage's documentation to see how it handles ``upload_to``."
 msgstr ""
+"Если вы используйте бэкенд по умолчанию :class:`~django.core.files.storage."
+"FileSystemStorage`, значение будет добавлено к :setting:`MEDIA_ROOT`, чтобы "
+"сформировать путь в файловой системе для сохранения файла. Если вы "
+"используете другой бэкенд, обратитесь к его документации, чтобы узнать как "
+"он обрабатывает ``upload_to``."
 
 # b13e63c3d15c4bda8e1619e28c867f0c
 #: ../../ref/models/fields.txt:646
-#, fuzzy
 msgid ""
 "``upload_to`` may also be a callable, such as a function. This will be "
 "called to obtain the upload path, including the filename. This callable must "
 "accept two arguments and return a Unix-style path (with forward slashes) to "
 "be passed along to the storage system. The two arguments are:"
 msgstr ""
-"Также принимается вызываемый объект, такой как функция, который будет вызван "
-"для получения пути к загруженному файлу, включая имя файла. Вызываемый "
-"объект должен принимать два обязательных аргумента, и возвращать путь в "
-"стиле Unix (с прямыми слэшами), который будет передан в систему хранения "
-"файлов(storage). Два аргумента это:"
+"``upload_to`` также принимается вызываемый объект, такой как функция, "
+"который будет вызван для получения пути к загруженному файлу, включая имя "
+"файла. Вызываемый объект должен принимать два обязательных аргумента, и "
+"возвращать путь в стиле Unix (с прямыми слэшами), который будет передан в "
+"систему хранения файлов(storage). Два аргумента это:"
 
 # e5a274e5ee6447eb983ed3e7aee124e4
 #: ../../ref/models/fields.txt:652
@@ -1762,7 +1776,6 @@ msgstr "``IntegerField``"
 
 # 8ff59a1ad1714952be0166a7b1267e7c
 #: ../../ref/models/fields.txt:940
-#, fuzzy
 msgid ""
 "An integer. Values from ``-2147483648`` to ``2147483647`` are safe in all "
 "databases supported by Django. The default form widget for this field is a :"
@@ -1770,7 +1783,9 @@ msgid ""
 "is ``False`` or :class:`~django.forms.TextInput` otherwise."
 msgstr ""
 "Число. Значение от ``-2147483648`` до ``2147483647`` для всех поддерживаемых "
-"баз данных Django. Форма использует виджет :class:`~django.forms.TextInput`."
+"баз данных Django. Форма использует виджет :class:`~django.forms."
+"NumberInput` при :attr:`~django.forms.Field.localize` равном ``False``, "
+"иначе :class:`~django.forms.TextInput`."
 
 # 10efef2ebb6146259b432f82eea2a6ce
 #: ../../ref/models/fields.txt:946
@@ -1930,12 +1945,12 @@ msgstr ""
 
 # 6b8cd9cf2523413cb14648f334c6a2b6
 #: ../../ref/models/fields.txt:1027
-#, fuzzy
 msgid ""
 "If ``True``, the field accepts Unicode letters in addition to ASCII letters. "
 "Defaults to ``False``."
 msgstr ""
-"При ``True`` поле может быть пустым. Значение по умолчанию -- ``False``."
+"При ``True`` поле может принимать Unicode символы кроме ASCII. Значение по "
+"умолчанию -- ``False``."
 
 # c96a689127ac4b0aa63cccadb6f38ea2
 #: ../../ref/models/fields.txt:1031
@@ -2098,17 +2113,19 @@ msgid ""
 "it was typically only passed as a keyword argument). It will be a required "
 "argument in Django 2.0."
 msgstr ""
+"``on_delete`` может теперь использоваться как второй позиционный аргумент "
+"(ранее использовался только как именованный аргумент). Будет обязательным "
+"аргументом в Django 2.0."
 
 # e8c653b65641489986a454054ebbfc2a
 #: ../../ref/models/fields.txt:1136
-#, fuzzy
 msgid ""
 "To create a recursive relationship -- an object that has a many-to-one "
 "relationship with itself -- use ``models.ForeignKey('self', on_delete=models."
 "CASCADE)``."
 msgstr ""
 "Для создания рекурсивной связи -- объект со связью многое-к-одному на себя "
-"-- используйте ``models.ForeignKey('self')``."
+"-- используйте ``models.ForeignKey('self', on_delete=models.CASCADE)``."
 
 # 9748ca87459c4f1282fbdd6c2a122cbd
 #: ../../ref/models/fields.txt:1142
@@ -2187,17 +2204,15 @@ msgstr "Параметры"
 
 # 5556ec4080254de79724c440589044ee
 #: ../../ref/models/fields.txt:1193
-#, fuzzy
 msgid ""
 ":class:`ForeignKey` accepts other arguments that define the details of how "
 "the relation works."
 msgstr ""
-":class:`ForeignKey` принимает дополнительные аргументы -- все не обязательны "
-"-- которые определяют, как должна работать связь."
+":class:`ForeignKey` принимает дополнительные аргументы, которые определяют, "
+"как должна работать связь."
 
 # 9f3747827cfa4f0f9a5c92df3a660289
 #: ../../ref/models/fields.txt:1198
-#, fuzzy
 msgid ""
 "When an object referenced by a :class:`ForeignKey` is deleted, Django will "
 "emulate the behavior of the SQL constraint specified by the :attr:"
@@ -2205,18 +2220,19 @@ msgid ""
 "`ForeignKey` and you want it to be set null when the referenced object is "
 "deleted::"
 msgstr ""
-"Когда объект, на который ссылается :class:`ForeignKey`, удаляется, Django по-"
-"умолчанию повторяет поведение ограничения ``ON DELETE CASCADE`` в SQL и "
-"удаляет объекты, содержащие ``ForeignKey``. Такое поведение может быть "
-"переопределено параметром :attr:`on_delete`. Например, если ваше поле :class:"
-"`ForeignKey` может содержать ``NULL`` и вы хотите, чтобы оно устанавливалось "
-"в ``NULL``  после удаления связанного объекта::"
+"Когда объект, на который ссылается :class:`ForeignKey`, удаляется, Django "
+"эмулирует поведение SQL правил, указанных в аргументе :attr:`on_delete`. "
+"Например, если ваше поле :class:`ForeignKey` может содержать ``NULL`` и вы "
+"хотите, чтобы оно устанавливалось в ``NULL``  после удаления связанного "
+"объекта::"
 
 #: ../../ref/models/fields.txt:1213
 msgid ""
 ":attr:`~ForeignKey.on_delete` will become a required argument in Django 2.0. "
 "In older versions it defaults to ``CASCADE``."
 msgstr ""
+":attr:`~ForeignKey.on_delete` будет обязательным аргументом в Django 2.0. В "
+"предыдущих версиях по умолчанию было ``CASCADE``."
 
 # 3d652d7d0a674ee3a3e5644c4ccb622f
 #: ../../ref/models/fields.txt:1216
@@ -2232,6 +2248,8 @@ msgid ""
 "Cascade deletes. Django emulates the behavior of the SQL constraint ON "
 "DELETE CASCADE and also deletes the object containing the ForeignKey."
 msgstr ""
+"Каскадное удаление. Django эмулирует поведение SQL правила ON DELETE CASCADE "
+"и так же удаляет объекты, связанные через ForeignKey."
 
 # 9c414319e02044d7bb5d1c6b84f5330c
 #: ../../ref/models/fields.txt:1226
@@ -2275,7 +2293,6 @@ msgstr ""
 
 # ec245c0521ea4cd0b673d172b0019256
 #: ../../ref/models/fields.txt:1263
-#, fuzzy
 msgid ""
 "Take no action. If your database backend enforces referential integrity, "
 "this will cause an :exc:`~django.db.IntegrityError` unless you manually add "
@@ -2284,7 +2301,7 @@ msgstr ""
 "Ничего не делать. Если используемый тип базы данных следит за целостностью "
 "связей, будет вызвано исключение :exc:`~django.db.IntegrityError`, за "
 "исключением, когда вы самостоятельно добавите  SQL правило ``ON DELETE`` для "
-"поля таблицы (возможно используя :ref:`загрузочный sql<initial-sql>`)."
+"поля таблицы."
 
 # 5de9f3bd2953460bb117f9b720ebef40
 #: ../../ref/models/fields.txt:1269
@@ -3472,7 +3489,6 @@ msgid "Attributes for fields with relations"
 msgstr "Атрибуты связывающих полей"
 
 #: ../../ref/models/fields.txt:1937
-#, fuzzy
 msgid ""
 "These attributes are used to query for the cardinality and other details of "
 "a relation. These attribute are present on all fields; however, they will "
@@ -3481,7 +3497,7 @@ msgid ""
 msgstr ""
 "Атрибуты, определяющие связь поля. Эти атрибуты присутствуют во всех полях, "
 "однако, только для связывающих полей(:attr:`Field.is_relation=True <Field."
-"is_relation>`) они содержат полезные значения."
+"is_relation>`) они содержат булевы значения(а не ``None``)."
 
 #: ../../ref/models/fields.txt:1944
 msgid ""
@@ -3520,7 +3536,6 @@ msgstr ""
 "такие как ``OneToOneField``, иначе ``False``."
 
 #: ../../ref/models/fields.txt:1966
-#, fuzzy
 msgid ""
 "Points to the model the field relates to. For example, ``Author`` in "
 "``ForeignKey(Author, on_delete=models.CASCADE)``. If a field has a generic "
@@ -3528,9 +3543,9 @@ msgid ""
 "``related_model`` will be ``None``."
 msgstr ""
 "Указывает на модель, на которую ссылается поле. Например, ``Author`` в "
-"``ForeignKey(Author)``. Если поле содержит связь с несколькими объектами "
-"(такие как ``GenericForeignKey`` или ``GenericRelation``) тогда "
-"``related_model`` будет ``None``."
+"``ForeignKey(Author, on_delete=models.CASCADE)``. Если поле содержит связь с "
+"несколькими объектами (такие как ``GenericForeignKey`` или "
+"``GenericRelation``) тогда ``related_model`` будет ``None``."
 
 # e6bf60e4fa32443da614fd5f86355554
 #~ msgid ""

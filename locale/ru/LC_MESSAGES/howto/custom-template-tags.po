@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012, 2013.
-# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-17 10:48+0200\n"
-"PO-Revision-Date: 2015-06-18 15:32+0300\n"
+"PO-Revision-Date: 2016-03-22 15:13+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -56,10 +56,14 @@ msgid ""
 "location described below are automatically made available to load within "
 "templates."
 msgstr ""
+"Обычно шаблонные теги и фильтры располагаются в приложении Django. Если они "
+"связаны с существующим приложением, это логично расположить его там. Иначе "
+"можно добавить их в новое приложение. Если приложение Django добавлено :"
+"setting:`INSTALLED_APPS`, все библиотеки тегов, расположенные в определенном "
+"модуле приложения, будут доступны для загрузки в шаблонах."
 
 # 4b941576efb446cb9304d544874aca63
 #: ../../howto/custom-template-tags.txt:22
-#, fuzzy
 msgid ""
 "The app should contain a ``templatetags`` directory, at the same level as "
 "``models.py``, ``views.py``, etc. If this doesn't already exist, create it - "
@@ -69,18 +73,19 @@ msgstr ""
 "Приложение должно содержать каталог ``templatetags`` на том же уровне что и "
 "``models.py``, ``views.py`` и др. Если он не существует, создайте его. Не "
 "забудьте создать файл ``__init__.py`` чтобы каталог мог использоваться как "
-"пакет Python. После добавления этого модуля, необходимо перезапустить "
-"сервер, перед тем как использовать теги или фильтры в шаблонах."
+"пакет Python."
 
 #: ../../howto/custom-template-tags.txt:0
 msgid "Development server won't automatically restart"
-msgstr ""
+msgstr "Сервер для разработки не перезапускается автоматически"
 
 #: ../../howto/custom-template-tags.txt:29
 msgid ""
 "After adding the ``templatetags``  module, you will need to restart your "
 "server before you can use the tags or filters in templates."
 msgstr ""
+"После добавления модуля ``templatetags`` вам необходимо перезапустить "
+"сервер, чтобы использовать теги и фильтры в шаблонах."
 
 # f7b1921d75f24e5cbd1aec472cadb266
 #: ../../howto/custom-template-tags.txt:32
@@ -152,6 +157,10 @@ msgid ""
 "the template tag module name when loading template tags. It also enables you "
 "to register tags without installing an application."
 msgstr ""
+"Модуль с шаблонными тегами можно также зарегистрировать через аргумент "
+"``'libraries'`` класса :class:`~django.template.backends.django."
+"DjangoTemplates`. Это полезно, если вы хотите изменить название библиотеки "
+"тегов. Также вы можете зарегистрировать библиотеку без установки приложения."
 
 # c0021276e66940889b47fb8fa3ca046b
 #: ../../howto/custom-template-tags.txt:0
@@ -733,7 +742,6 @@ msgstr "Простые теги"
 
 # 8c35e7287a6d4d12950c659f823a34d9
 #: ../../howto/custom-template-tags.txt:416
-#, fuzzy
 msgid ""
 "Many template tags take a number of arguments -- strings or template "
 "variables -- and return a result after doing some processing based solely on "
@@ -803,6 +811,10 @@ msgid ""
 "autoescape mode, to ensure correct HTML and protect you from XSS "
 "vulnerabilities."
 msgstr ""
+"В отличии от других утилит тегов, ``simple_tag`` обрабатывает результат "
+"функцией :func:`~django.utils.html.conditional_escape`, если контекст "
+"шаблона в режиме автоматического экранирования, чтобы убедиться в "
+"правильности HTML и защитить вас от XSS атак."
 
 #: ../../howto/custom-template-tags.txt:453
 msgid ""
@@ -812,12 +824,17 @@ msgid ""
 "func:`~django.utils.html.format_html` instead of ``mark_safe()`` is strongly "
 "recommended."
 msgstr ""
+"Если экранирование не нужно, вы можете использовать функцию :func:`~django."
+"utils.safestring.mark_safe`, если вы абсолютно уверены, что ваш код не "
+"содержит XSS уязвимостей. Для создание небольших кусков HTML настоятельно "
+"рекомендуется использовать :func:`~django.utils.html.format_html` вместо "
+"``mark_safe()``."
 
 #: ../../howto/custom-template-tags.txt:461
 msgid ""
 "Auto-escaping for ``simple_tag`` as described in the previous two paragraphs "
 "was added."
-msgstr ""
+msgstr "Было добавлено автоматическое экранирование для ``simple_tag``."
 
 # 491b913f40d44336a2c90cc5a2455ef1
 # 14007f9accef408cb432b1e3f28e47fc
@@ -876,7 +893,6 @@ msgstr ""
 
 # 8c4118eb745246b3be25c9ea9a3c5b2d
 #: ../../howto/custom-template-tags.txt:506
-#, fuzzy
 msgid ""
 "It's possible to store the tag results in a template variable rather than "
 "directly outputting it. This is done by using the ``as`` argument followed "
@@ -1076,11 +1092,10 @@ msgstr "Присваивающий тег"
 msgid ""
 "``simple_tag`` can now store results in a template variable and should be "
 "used instead."
-msgstr ""
+msgstr "``simple_tag`` теперь может сохранять результат в переменной шаблона."
 
 # 801aa2bf145d49e2821e86b6418f90d6
 #: ../../howto/custom-template-tags.txt:664
-#, fuzzy
 msgid ""
 "To ease the creation of tags setting a variable in the context, Django "
 "provides a helper function, ``assignment_tag``. This function works the same "
@@ -1090,8 +1105,8 @@ msgid ""
 msgstr ""
 "Для простого создания тегов, которые добавляют переменную в контекст, Django "
 "предоставляет функцию ``assignment_tag``. Эта функция работает так же, как "
-"и :ref:`simple_tag<howto-custom-template-tags-simple-tags>`, за исключением, "
-"что она добавляет результат в контекст, а не возвращает его."
+"и :meth:`~django.template.Library.simple_tag`, за исключением, что она "
+"добавляет результат в контекст, а не возвращает его."
 
 # 6b3e303ef65b4eb4ad21e9536c98f37b
 # 5e75b0df73e74e3fa49141eb69c8e5ea
@@ -1360,15 +1375,14 @@ msgstr "Работа с автоматическим экранирование�
 
 # 056eec36b011435cb2f080c06191dc37
 #: ../../howto/custom-template-tags.txt:820
-#, fuzzy
 msgid ""
 "The output from template tags is **not** automatically run through the auto-"
 "escaping filters (with the exception of :meth:`~django.template.Library."
 "simple_tag` as described above). However, there are still a couple of things "
 "you should keep in mind when writing a template tag."
 msgstr ""
-"Вывод тега **не** экранируется. Однако, есть несколько вещей которые следует "
-"помнить."
+"Вывод тега **не** экранируется(за исключением :meth:`~django.template."
+"Library.simple_tag`). Однако, есть несколько вещей которые следует помнить."
 
 # fe359f349db14bfc8da7c36e70ba6ea3
 #: ../../howto/custom-template-tags.txt:826

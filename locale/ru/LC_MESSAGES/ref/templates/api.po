@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-02 11:18+0200\n"
-"PO-Revision-Date: 2016-03-22 13:37+0200\n"
+"PO-Revision-Date: 2016-03-22 16:26+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -1632,23 +1632,29 @@ msgid ""
 "In previous versions of Django, custom loaders defined a single method: "
 "``load_template_source()``."
 msgstr ""
+"В предыдущих версиях Django собственные загрузчики шаблонов определяли "
+"только один метод: ``load_template_source()``."
 
 # f5de52746ee64836bff2111256443442
 #: ../../ref/templates/api.txt:1008
-#, fuzzy
 msgid "Loader methods"
-msgstr "Типы загрузчиков"
+msgstr "Методы загрузчика шаблонов"
 
 #: ../../ref/templates/api.txt:1012
 msgid ""
 "Loads templates from a given source, such as the filesystem or a database."
 msgstr ""
+"Загружает шаблоны из определенного источника, такого как файловая система "
+"или база данных."
 
 #: ../../ref/templates/api.txt:1016
 msgid ""
 "A method that takes a ``template_name`` and yields :class:`~django.template."
 "base.Origin` instances for each possible source."
 msgstr ""
+"Метод принимает ``template_name`` и возвращает итератора по экземплярам :"
+"class:`~django.template.base.Origin` для каждого возможного источника "
+"шаблонов."
 
 #: ../../ref/templates/api.txt:1020
 msgid ""
@@ -1657,6 +1663,9 @@ msgid ""
 "path of ``index.html`` as it appears in each template directory the loader "
 "looks at."
 msgstr ""
+"Например, загрузчик с файловой системы получает ``'index.html'`` в аргументе "
+"``template_name``.  Этот метод вернет итератор, который содержит полные пути "
+"к ``index.html`` для каждого каталога, в котором он выполняет поиск шаблонов."
 
 #: ../../ref/templates/api.txt:1025
 msgid ""
@@ -1664,12 +1673,17 @@ msgid ""
 "but it should ensure the path is valid. For instance, the filesystem loader "
 "makes sure the path lies under a valid template directory."
 msgstr ""
+"Этот метод не проверяет находится ли шаблон по указанному пути, но путь "
+"должен быть правильным. Например, загрузчик с файловой системы проверяет, "
+"что путь находится в каталоге с шаблонами."
 
 #: ../../ref/templates/api.txt:1032
 msgid ""
 "Returns the contents for a template given a :class:`~django.template.base."
 "Origin` instance."
 msgstr ""
+"Возвращает содержимое шаблона для переданного экземпляра :class:`~django."
+"template.base.Origin`."
 
 #: ../../ref/templates/api.txt:1035
 msgid ""
@@ -1678,6 +1692,9 @@ msgid ""
 "doesn't exist, this should raise a :exc:`~django.template."
 "TemplateDoesNotExist` error."
 msgstr ""
+"В этом методе загрузчик прочитает содержимое с файловой системы, или базы "
+"данных. Если шаблон не найден, метод должен вызвать исключение :exc:`~django."
+"template.TemplateDoesNotExist`."
 
 #: ../../ref/templates/api.txt:1042
 msgid ""
@@ -1686,6 +1703,10 @@ msgid ""
 "`get_contents`. This returns the first matching template. If no template is "
 "found, :exc:`~django.template.TemplateDoesNotExist` is raised."
 msgstr ""
+"Возвращает объект ``Template`` для переданного ``template_name``, проверяя "
+"все источники из :meth:`get_template_sources` и вызывая :meth:"
+"`get_contents`. Возвращает первый найденный шаблон. Если шаблон не найден, "
+"будет вызвано исключение :exc:`~django.template.TemplateDoesNotExist`."
 
 #: ../../ref/templates/api.txt:1048
 msgid ""
@@ -1693,6 +1714,9 @@ msgid ""
 "templates. This allow templates to extend other templates of the same name. "
 "It also used to avoid recursion errors."
 msgstr ""
+"Необязательный аргумент ``skip`` содержит список источников, которые "
+"игнорируются при наследовании шаблонов. Это позволяет шаблонам наследовать "
+"шаблоны с одинаковыми именами. Также позволяет избежать ошибки о рекурсии."
 
 #: ../../ref/templates/api.txt:1052
 msgid ""
@@ -1700,6 +1724,8 @@ msgid ""
 "`get_contents` for custom template loaders. ``get_template()`` will usually "
 "not need to be overridden."
 msgstr ""
+"Обычно достаточно определить методы :meth:`get_template_sources` и :meth:"
+"`get_contents`. ``get_template()`` обычно не нужно переопределять."
 
 #: ../../ref/templates/api.txt:1058
 msgid ""
@@ -1709,24 +1735,34 @@ msgid ""
 "filesystem-based loader may return the full path to the file as the "
 "``template_origin``, for example."
 msgstr ""
+"Возвращает кортеж (``template_string``, ``template_origin``), где "
+"``template_string`` строка с содержимым шаблона, а ``template_origin`` "
+"строка, указывающая источник шаблона. Например, загрузчик с файловой системы "
+"вернет полный путь к файлу с шаблоном в ``template_origin``."
 
 #: ../../ref/templates/api.txt:1064
 msgid ""
 "``template_dirs`` is an optional argument used to control which directories "
 "the loader will search."
 msgstr ""
+"``template_dirs`` -- необязательный аргумент, который определяет каталоги "
+"для поиска шаблона."
 
 #: ../../ref/templates/api.txt:1067
 msgid ""
 "This method is called automatically by :meth:`load_template` and should be "
 "overridden when writing custom template loaders."
 msgstr ""
+"Этот метод автоматически вызывается :meth:`load_template` и должен быть "
+"переопределен при создании собственного загрузчика."
 
 #: ../../ref/templates/api.txt:1072 ../../ref/templates/api.txt:1084
 msgid ""
 "Custom loaders should use :meth:`get_template` and :meth:`get_contents` "
 "instead."
 msgstr ""
+"Собственные загрузчики должны использовать :meth:`get_template` и :meth:"
+"`get_contents` вместо этого метода."
 
 #: ../../ref/templates/api.txt:1077
 msgid ""
@@ -1735,14 +1771,20 @@ msgid ""
 "template source. A filesystem-based loader may return the full path to the "
 "file as the ``template_origin``, for example."
 msgstr ""
+"Возвращает кортеж (``template``, ``template_origin``), где ``template`` это "
+"объект ``Template``, а ``template_origin`` строка, указывающая источник "
+"шаблона. Например, загрузчик с файловой системы вернет полный путь к файлу с "
+"шаблоном в ``template_origin``."
 
 #: ../../ref/templates/api.txt:0
 msgid "Building your own"
-msgstr ""
+msgstr "Создание собственного загрузчика"
 
 #: ../../ref/templates/api.txt:1089
 msgid "For examples, `read the source code for Django's built-in loaders`_."
 msgstr ""
+"Примеры кода можно найти в `исходниках Django <https://github.com/django/"
+"django/tree/master/django/template/loaders>`_."
 
 # f50582e848c742668750b398e5eb6c3e
 #: ../../ref/templates/api.txt:1096
@@ -1751,13 +1793,12 @@ msgstr "Расположение шаблона"
 
 # c9cb538fd5cd44b8a46433abba7149d7
 #: ../../ref/templates/api.txt:1098
-#, fuzzy
 msgid ""
 "Templates have an ``origin`` containing attributes depending on the source "
 "they are loaded from."
 msgstr ""
-"При :setting:`TEMPLATE_DEBUG` равном ``True`` объект шаблона содержит "
-"атрибут ``origin``, который указывает на расположение шаблона."
+"Шаблоны содержат атрибут ``origin``, поля которого зависят от загрузчика "
+"шаблона."
 
 #: ../../ref/templates/api.txt:1103
 msgid ""
@@ -1765,6 +1806,9 @@ msgid ""
 "LoaderOrigin`` or ``django.template.base.StringOrigin``. These have been "
 "replaced by ``django.template.base.Origin``."
 msgstr ""
+"Ранее при создании использовался ``django.template.loader.LoaderOrigin`` или "
+"``django.template.base.StringOrigin``. Теперь используется ``django.template."
+"base.Origin``."
 
 # e00e01fdf4e344019090411ed5fae6d5
 #: ../../ref/templates/api.txt:1112
@@ -1780,6 +1824,8 @@ msgid ""
 "If the template is instantiated directly rather than through a template "
 "loader, this is a string value of ``<unknown_source>``."
 msgstr ""
+"Если шаблон создан на прямую, без загрузчика шаблонов, это поле содержит "
+"``<unknown_source>``."
 
 # a206db0de1834dbf9d65e06f2f4e0caf
 #: ../../ref/templates/api.txt:1121
@@ -1791,6 +1837,8 @@ msgid ""
 "If the template is instantiated directly rather than through a template "
 "loader, this is ``None``."
 msgstr ""
+"Если шаблон создан на прямую, без загрузчика шаблонов, это поле содержит "
+"``None``."
 
 # d06dfea5b49b4d8281abf98eab374c33
 #~ msgid "The ``DEFAULT_MESSAGE_LEVELS`` variable was added."
