@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-02 11:18+0200\n"
-"PO-Revision-Date: 2016-03-23 14:58+0200\n"
+"PO-Revision-Date: 2016-03-24 13:11+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -417,33 +417,35 @@ msgstr ""
 
 # 56c0daca3ca74ecb8126f7928bab68a7
 #: ../../ref/request-response.txt:184
-#, fuzzy
 msgid ""
 "This will be used as the root URLconf for the current request, overriding "
 "the :setting:`ROOT_URLCONF` setting. See :ref:`how-django-processes-a-"
 "request` for details."
 msgstr ""
-"Не определяется Django, но будет использован если другой код (например, "
-"собственный функциональный слой(middleware)) установит его. Если определен, "
-"значение будет использоваться как URLconf текущего запроса вместо значения "
-"настройки :setting:`ROOT_URLCONF`. Подробности смотрите в разделе :ref:`how-"
-"django-processes-a-request`."
+"Будет использоваться как URLconf текущего запроса вместо значения настройки :"
+"setting:`ROOT_URLCONF`. Подробности смотрите в разделе :ref:`how-django-"
+"processes-a-request`."
 
 #: ../../ref/request-response.txt:188
 msgid ""
 "``urlconf`` can be set to ``None`` to revert any changes made by previous "
 "middleware and return to using the :setting:`ROOT_URLCONF`."
 msgstr ""
+"``urlconf`` можно установить в ``None``, чтобы отменить какие-либо "
+"изменения, сделанные предыдущими промежуточными слоями, и снова "
+"использовать :setting:`ROOT_URLCONF`."
 
 #: ../../ref/request-response.txt:193
 msgid ""
 "Setting ``urlconf=None`` raised :exc:`~django.core.exceptions."
 "ImproperlyConfigured` in older versions."
 msgstr ""
+"В предыдущих версиях установка ``urlconf=None`` вызывала :exc:`~django.core."
+"exceptions.ImproperlyConfigured`."
 
 #: ../../ref/request-response.txt:197
 msgid "Attributes set by middleware"
-msgstr ""
+msgstr "Атрибуты, которые устанавливаются промежуточным слоем(middleware)"
 
 #: ../../ref/request-response.txt:199
 msgid ""
@@ -451,6 +453,10 @@ msgid ""
 "the request. If you don't see the attribute on a request, be sure the "
 "appropriate middleware class is listed in :setting:`MIDDLEWARE_CLASSES`."
 msgstr ""
+"Некоторые промежуточные слои, включая встроенные в Django, добавляют "
+"атрибуты к объекту запроса. Если вы не нашли атрибут в объекте запроса, "
+"убедитесь, что нужный промежуточный слой добавлен в :setting:"
+"`MIDDLEWARE_CLASSES`."
 
 #: ../../ref/request-response.txt:205
 msgid ""
@@ -458,6 +464,8 @@ msgid ""
 "readable and writable, dictionary-like object that represents the current "
 "session."
 msgstr ""
+"Добавляется :class:`~django.contrib.sessions.middleware.SessionMiddleware`: "
+"объект с интерфейсом словаря, который содержит текущую сессию."
 
 #: ../../ref/request-response.txt:211
 msgid ""
@@ -466,10 +474,13 @@ msgid ""
 "contrib.sites.requests.RequestSite` as returned by :func:`~django.contrib."
 "sites.shortcuts.get_current_site()` representing the current site."
 msgstr ""
+"Добавляется :class:`~django.contrib.sites.middleware.CurrentSiteMiddleware`: "
+"экземпляр :class:`~django.contrib.sites.models.Site` или :class:`~django."
+"contrib.sites.requests.RequestSite`, который возвращается :func:`~django."
+"contrib.sites.shortcuts.get_current_site()`, отображает текущий сайт."
 
 # 62814af0b87449a0b6cdbf015fd22bca
 #: ../../ref/request-response.txt:219
-#, fuzzy
 msgid ""
 "From the :class:`~django.contrib.auth.middleware.AuthenticationMiddleware`: "
 "An instance of :setting:`AUTH_USER_MODEL` representing the currently logged-"
@@ -478,11 +489,12 @@ msgid ""
 "them apart with :meth:`~django.contrib.auth.models.User.is_authenticated`, "
 "like so::"
 msgstr ""
-"Содержит объект :setting:`AUTH_USER_MODEL` представляющий текущего "
-"\"залогиненного\" пользователя. Если пользователь не авторизирован, атрибут "
-"``user`` будет содержать ``django.contrib.auth.models.AnonymousUser``. Вы "
-"можете различить их используя :meth:`~django.contrib.auth.models.User."
-"is_authenticated`::"
+"Добавляется :class:`~django.contrib.auth.middleware."
+"AuthenticationMiddleware`: содержит объект :setting:`AUTH_USER_MODEL` "
+"представляющий текущего пользователя. Если пользователь не авторизирован, "
+"атрибут ``user`` будет содержать ``django.contrib.auth.models."
+"AnonymousUser``. Вы можете различить их используя :meth:`~django.contrib."
+"auth.models.User.is_authenticated`::"
 
 # 08c634bbd3554176b2dca88a53fd6a3d
 # 44d3adacb90c42afbf3855e352ba8cff
@@ -539,17 +551,15 @@ msgstr ""
 
 # ae6e91fbc7ed489093bd4dff5e8db3eb
 #: ../../ref/request-response.txt:275
-#, fuzzy
 msgid ""
 "Returns the originating port of the request using information from the "
 "``HTTP_X_FORWARDED_PORT`` (if :setting:`USE_X_FORWARDED_PORT` is enabled) "
 "and ``SERVER_PORT`` ``META`` variables, in that order."
 msgstr ""
-"Возвращает оригинальное имя хоста используя информацию из "
-"``HTTP_X_FORWARDED_HOST`` (если включена настройка :setting:"
-"`USE_X_FORWARDED_HOST`) и ``HTTP_HOST`` заголовков, в соответствующем "
-"порядке. Если эти значения не определенны, метод использует комбинацию "
-"``SERVER_NAME`` и ``SERVER_PORT`` как описано в :pep:`3333`."
+"Возвращает оригинальный порт запроса, используя данные из "
+"``HTTP_X_FORWARDED_PORT`` (если включена настройка :setting:"
+"`USE_X_FORWARDED_PORT`) и значение ``SERVER_PORT`` из ``META`` в указанном "
+"порядке."
 
 # a73e20a339eb4f188e60dab4dca03a5e
 #: ../../ref/request-response.txt:281
@@ -583,11 +593,10 @@ msgstr ""
 
 # cf14c0a45c4c40e4ab5e36c7e4a4605c
 #: ../../ref/request-response.txt:294
-#, fuzzy
 msgid ""
 "Example: ``\"https://example.com/music/bands/the_beatles/?print=true\"``"
 msgstr ""
-"Например: ``\"http://example.com/music/bands/the_beatles/?print=true\"``"
+"Например: ``\"https://example.com/music/bands/the_beatles/?print=true\"``"
 
 #: ../../ref/request-response.txt:298
 msgid ""
@@ -596,6 +605,10 @@ msgid ""
 "with the same scheme the current request has. If you need to redirect users "
 "to HTTPS, it's best to let your webserver redirect all HTTP traffic to HTTPS."
 msgstr ""
+"Не следует использовать HTTP и HTTPS на одному сайте. :meth:`~HttpRequest."
+"build_absolute_uri()` всегда сгенерирует полный URI с протоколом из запроса. "
+"Если вы хотите перенаправить пользователей на HTTPS, лучше позволить веб-"
+"серверу перенаправлять весь HTTP трафик на HTTPS."
 
 # 33430fc679cf40bd9c4a2bbd75e49f59
 #: ../../ref/request-response.txt:306
@@ -678,14 +691,13 @@ msgstr ""
 
 # 6a50c3808c924e42bf88ff9625b3157a
 #: ../../ref/request-response.txt:365
-#, fuzzy
 msgid ""
 "Methods implementing a file-like interface for reading from an HttpRequest "
 "instance. This makes it possible to consume an incoming request in a "
 "streaming fashion. A common use-case would be to process a big XML payload "
 "with an iterative parser without constructing a whole XML tree in memory."
 msgstr ""
-"Методы предоставляющие интерфейс файла для чтения данных из объекта "
+"Методы, предоставляющие интерфейс файла для чтения данных из объекта "
 "``HttpRequest``. Это дает возможность читать содержимое запроса в потоке. "
 "Один из вариантов использования -- это обработка большого XML-документа "
 "\"парсером\", без создания всего XML-дерева в памяти."
@@ -905,7 +917,6 @@ msgstr ""
 
 # 1fcd4aaa1f624352a28fa4c6abd2f1b8
 #: ../../ref/request-response.txt:507
-#, fuzzy
 msgid ""
 "Returns the data with the requested key, as a Python list. Returns an empty "
 "list if the key doesn't exist and no default value was provided. It's "
@@ -914,7 +925,7 @@ msgid ""
 msgstr ""
 "Возвращает данные для ключа в виде списка. Возвращает пустой список, если "
 "ключ не существует и не указанно значение по-умолчанию. Этот метод всегда "
-"возвращает список, если не указанно значение по-умолчанию."
+"возвращает список, если не указанно значение по-умолчанию другого типа."
 
 # 82a9458843c446c28a0970d9c4b03f15
 #: ../../ref/request-response.txt:514
@@ -1174,6 +1185,8 @@ msgid ""
 "``status_code`` outside the constructor will also modify the value of "
 "``reason_phrase``."
 msgstr ""
+"Если :attr:`reason_phrase` не установлен явно, изменение ``status_code`` вне "
+"конструктора также изменит ``reason_phrase``."
 
 # ed04331429e54e9995058732b65b9a6b
 #: ../../ref/request-response.txt:686 ../../ref/request-response.txt:1058
@@ -1185,12 +1198,17 @@ msgid ""
 "``reason_phrase`` no longer defaults to all capital letters. It now uses the "
 "`HTTP standard's`_ default reason phrases."
 msgstr ""
+"``reason_phrase`` теперь по умолчанию не в верхнем регистре. Теперь "
+"используются значения из `стандарта HTTP <https://www.ietf.org/rfc/rfc2616."
+"txt>`_."
 
 #: ../../ref/request-response.txt:695 ../../ref/request-response.txt:1067
 msgid ""
 "Unless explicitly set, ``reason_phrase`` is determined by the current value "
 "of :attr:`status_code`."
 msgstr ""
+"Если не указан явно, ``reason_phrase`` определяется из текущего значения :"
+"attr:`status_code`."
 
 # 647a9b26265d4c81923f0da7b74d2cc1
 #: ../../ref/request-response.txt:700
@@ -1365,7 +1383,6 @@ msgstr ""
 
 # a22675be92944b019d2dbe2154c35a1e
 #: ../../ref/request-response.txt:788
-#, fuzzy
 msgid ""
 "HTTPOnly_ is a flag included in a Set-Cookie HTTP response header. It is not "
 "part of the :rfc:`2109` standard for cookies, and it isn't honored "
@@ -1486,7 +1503,6 @@ msgstr ""
 
 # 8c4f9db3530a4debb7be739fa7d439fb
 #: ../../ref/request-response.txt:869
-#, fuzzy
 msgid ""
 "The first argument to the constructor is required -- the path to redirect "
 "to. This can be a fully qualified URL (e.g. ``'https://www.yahoo.com/"
@@ -1497,7 +1513,7 @@ msgid ""
 "this returns an HTTP status code 302."
 msgstr ""
 "Конструктор принимает один обязательный аргумент -- путь для "
-"перенаправления. Это может быть полный URL (например, ``'http://www.yahoo."
+"перенаправления. Это может быть полный URL (например, ``'https://www.yahoo."
 "com/search/'``) или абсолютный путь без домена (например, ``'/search/'``). "
 "Дополнительные необязательные аргументы можно найти в описании :class:"
 "`HttpResponse`. Возвращает код HTTP состояния равный 302."
@@ -1643,11 +1659,12 @@ msgid ""
 "The ``json_dumps_params`` parameter is a dictionary of keyword arguments to "
 "pass to the ``json.dumps()`` call used to generate the response."
 msgstr ""
+"Аргумент ``json_dumps_params`` содержит словарь именованных переменных, "
+"который передаются в  ``json.dumps()`` при генерации ответа."
 
 #: ../../ref/request-response.txt:956
-#, fuzzy
 msgid "The ``json_dumps_params`` argument was added."
-msgstr "Был добавлен параметр ``charset``."
+msgstr "Был добавлен аргумент  ``json_dumps_params``."
 
 # e7a2fd7c8d5d4f0ebd2845aa4c492dce
 #: ../../ref/request-response.txt:961

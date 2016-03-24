@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012.
-# Dmitriy Kostochko <alerion.um@gmail.com>, 2014, 2015.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-17 10:48+0200\n"
-"PO-Revision-Date: 2015-06-08 17:49+0300\n"
+"PO-Revision-Date: 2016-03-24 14:49+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -108,7 +108,6 @@ msgstr ""
 
 # 37dd5811322448dc82611ff8d83607fa
 #: ../../topics/db/transactions.txt:42
-#, fuzzy
 msgid ""
 "You may perform subtransactions using savepoints in your view code, "
 "typically with the :func:`atomic` context manager. However, at the end of "
@@ -405,20 +404,20 @@ msgstr ""
 
 # 2229167d23bc4066b6adbd298c2cf76b
 #: ../../topics/db/transactions.txt:202
-#, fuzzy
 msgid ""
 "You may use ``atomic`` when autocommit is turned off. It will only use "
 "savepoints, even for the outermost block."
 msgstr ""
-"Вы можете использовать ``atomic`` при выключенном \"autocommit\". Он создаст "
-"точки сохранения даже для самого внешнего блока, и вызовет исключение, если "
-"самый внешний блок указан с ``savepoint=False``."
+"Вы можете использовать ``atomic`` при выключенном \"autocommit\". Он "
+"использует только точки сохранения, даже для самого внешнего блока."
 
 #: ../../topics/db/transactions.txt:207
 msgid ""
 "Previously the outermost atomic block couldn't be declared with "
 "``savepoint=False`` when autocommit was turned off."
 msgstr ""
+"В предыдущих версиях самый внешний блок нельзя было объявить с "
+"``savepoint=False`` при выключенном \"autocommit\"."
 
 # 445150fe52704409a295ee1103f29015
 #: ../../topics/db/transactions.txt:0
@@ -531,7 +530,7 @@ msgstr ""
 
 #: ../../topics/db/transactions.txt:260
 msgid "Performing actions after commit"
-msgstr ""
+msgstr "Выполнение операция после коммита"
 
 #: ../../topics/db/transactions.txt:264
 msgid ""
@@ -540,6 +539,9 @@ msgid ""
 "might include a `Celery`_ task, an email notification, or a cache "
 "invalidation."
 msgstr ""
+"Иногда вам необходимо выполнить какие-либо действия связанные с текущей "
+"транзакцией в базе данных, но только при успешном коммите транзакции. Это "
+"может быть задача `Celery`_, отправка электронного письма, или сброс кэша."
 
 #: ../../topics/db/transactions.txt:270
 msgid ""
@@ -547,14 +549,17 @@ msgid ""
 "functions that should be executed after a transaction is successfully "
 "committed:"
 msgstr ""
+"Django предоставляет функцию :func:`on_commit`, которая позволяет добавить "
+"обработчик, вызываемый после успешного коммита транзакции:"
 
 #: ../../topics/db/transactions.txt:275
 msgid "Pass any function (that takes no arguments) to :func:`on_commit`::"
 msgstr ""
+"Передайте функцию (которая не требует аргументов) в :func:`on_commit`::"
 
 #: ../../topics/db/transactions.txt:284
 msgid "You can also wrap your function in a lambda::"
-msgstr ""
+msgstr "Можно также использовать lambda::"
 
 #: ../../topics/db/transactions.txt:288
 msgid ""
@@ -562,12 +567,16 @@ msgid ""
 "database write made where ``on_commit()`` is called would be successfully "
 "committed."
 msgstr ""
+"Обработчик будет выполнен сразу после гипотетической записи в базу данных, "
+"которая означает успешное завершение транзакции."
 
 #: ../../topics/db/transactions.txt:292
 msgid ""
 "If you call ``on_commit()`` while there isn't an active transaction, the "
 "callback will be executed immediately."
 msgstr ""
+"Если вызывать ``on_commit()`` пока транзакция активна, обработчик сразу "
+"выполнится."
 
 #: ../../topics/db/transactions.txt:295
 msgid ""
@@ -575,6 +584,8 @@ msgid ""
 "an unhandled exception is raised in an :func:`atomic` block), your function "
 "will be discarded and never called."
 msgstr ""
+"Если транзакция будет отменена (обычно при возникновении ошибки в блоке :"
+"func:`atomic`), обработчик никогда не выполнится и будет проигнорирован."
 
 # e5353a7c8bb648d6971c583a6fcb7b0a
 #: ../../topics/db/transactions.txt:300 ../../topics/db/transactions.txt:470
@@ -589,26 +600,35 @@ msgid ""
 "committed, but not if a rollback to that savepoint or any previous savepoint "
 "occurred during the transaction::"
 msgstr ""
+"Точки сохранения (например вложенные блоки :func:`atomic`) обрабатываются "
+"правильно. То есть обработчик, добавленный :func:`on_commit` после точки "
+"сохранения (во вложенных блоках :func:`atomic`), будет выполнен после "
+"коммита внешней транзакции, и не будет выполнен при откате до этой точки "
+"сохранения, или другой точки сохранения в текущей транзакции::"
 
 #: ../../topics/db/transactions.txt:316
 msgid ""
 "On the other hand, when a savepoint is rolled back (due to an exception "
 "being raised), the inner callable will not be called::"
 msgstr ""
+"Другими словами, при выполнении отката точки сохранения (из-за исключения), "
+"внутренний обработчик не будет вызван::"
 
 #: ../../topics/db/transactions.txt:332
 msgid "Order of execution"
-msgstr ""
+msgstr "Порядок выполнения"
 
 #: ../../topics/db/transactions.txt:334
 msgid ""
 "On-commit functions for a given transaction are executed in the order they "
 "were registered."
 msgstr ""
+"Обработчики коммита транзакции выполняются в порядке, в котором они были "
+"зарегистрированы."
 
 #: ../../topics/db/transactions.txt:338
 msgid "Exception handling"
-msgstr ""
+msgstr "Обработка исключений"
 
 #: ../../topics/db/transactions.txt:340
 msgid ""
@@ -617,10 +637,13 @@ msgid ""
 "This is, of course, the same behavior as if you'd executed the functions "
 "sequentially yourself without :func:`on_commit`."
 msgstr ""
+"Если один из обработчиков вызывал исключение во время транзакции, другие "
+"обработчики не будут вызваны. Такое поведение аналогично, если бы вы "
+"последовательно выполняли функции без :func:`on_commit`."
 
 #: ../../topics/db/transactions.txt:346
 msgid "Timing of execution"
-msgstr ""
+msgstr "Время выполнения обработчиков"
 
 #: ../../topics/db/transactions.txt:348
 msgid ""
@@ -635,6 +658,16 @@ msgid ""
 "support`_ and the `optional Two-Phase Commit Extensions in the Python DB-API "
 "specification`_."
 msgstr ""
+"Ваши обработчики вызываются *после* успешного коммита, и ошибка в "
+"обработчике не приведет к отмене транзакции. Они не являются *частью* "
+"транзакции. Для предполагаемых случаев использования (отправка электронных "
+"писем, Celery задача, и т.д.) такое поведение работает. Если нет (если "
+"выполнение обработчика настолько важно, что при ошибки должна быть выполнена "
+"отмена транзакции), тогда вам не следует использовать :func:`on_commit`. "
+"Вместо этого может помочь `двухфазный коммит <https://en.wikipedia.org/wiki/"
+"Two-phase_commit_protocol>`_, который `поддерживается psycopg <http://initd."
+"org/psycopg/docs/usage.html#tpc>_ и `спецификацией Python DB-API <https://"
+"www.python.org/dev/peps/pep-0249/#optional-two-phase-commit-extensions>`_."
 
 #: ../../topics/db/transactions.txt:359
 msgid ""
@@ -643,12 +676,17 @@ msgid ""
 "open an implicit transaction, preventing the connection from going back into "
 "autocommit mode)."
 msgstr ""
+"Обработчики не вызываются, пока не будет восстановлен \"autocommit\" (т.к. "
+"любой запрос в обработчике неявно создаст транзакцию и заблокирует переход "
+"подключения в \"autocommit\" режим)."
 
 #: ../../topics/db/transactions.txt:364
 msgid ""
 "When in autocommit mode and outside of an :func:`atomic` block, the function "
 "will run immediately, not on commit."
 msgstr ""
+"Если назначить обработчик в \"autocommit\" режиме вне блока :func:`atomic`, "
+"он будет выполнен моментально, а не после коммита."
 
 #: ../../topics/db/transactions.txt:367
 msgid ""
@@ -658,10 +696,15 @@ msgid ""
 "autocommit is disabled and you are not within an atomic block will result in "
 "an error."
 msgstr ""
+"Обработчики коммита транзакции работают только с :ref:`\"autocommit\" "
+"режимом <managing-autocommit>` и :func:`atomic` (или при :setting:"
+"`ATOMIC_REQUESTS <DATABASE-ATOMIC_REQUESTS>`) API транзакций. Вызвав :func:"
+"`on_commit` при отключенном \"autocommit\" и вне блока ``atomic`` приведет к "
+"ошибке."
 
 #: ../../topics/db/transactions.txt:378
 msgid "Use in tests"
-msgstr ""
+msgstr "Использование в тестах"
 
 #: ../../topics/db/transactions.txt:380
 msgid ""
@@ -672,16 +715,24 @@ msgid ""
 "need to test the results of an :func:`on_commit` callback, use a :class:"
 "`~django.test.TransactionTestCase` instead."
 msgstr ""
+"Встроенный класс :class:`~django.test.TestCase` оборачивает каждый тест в "
+"транзакцию и отменяет её после выполнения теста, чтобы обеспечить "
+"изолированность тестов. Это означает, что ни одна транзакция никогда не "
+"коммитится, и обработчики :func:`on_commit` никогда не будут вызваны. Если "
+"вам нужно протестировать выполнение обработчика :func:`on_commit`, "
+"используйте :class:`~django.test.TransactionTestCase`."
 
 #: ../../topics/db/transactions.txt:388
 msgid "Why no rollback hook?"
-msgstr ""
+msgstr "Почему нет обработчика отмены транзакции?"
 
 #: ../../topics/db/transactions.txt:390
 msgid ""
 "A rollback hook is harder to implement robustly than a commit hook, since a "
 "variety of things can cause an implicit rollback."
 msgstr ""
+"Обработчик отмены транзакции реализовать на много сложнее т.к. причин отката "
+"на много больше."
 
 #: ../../topics/db/transactions.txt:393
 msgid ""
@@ -689,6 +740,9 @@ msgid ""
 "was killed without a chance to shut down gracefully, your rollback hook will "
 "never run."
 msgstr ""
+"Например, если подключение к базе данных оборвалось из-за внезапной "
+"остановки процесса, ваш обработчик отмены транзакции никогда не сможет "
+"выполниться."
 
 #: ../../topics/db/transactions.txt:397
 msgid ""
@@ -698,6 +752,10 @@ msgid ""
 "succeeds. It’s a lot easier to undo something you never did in the first "
 "place!"
 msgstr ""
+"Решение простое: вместо того, чтобы выполнить что-то в блоке ``atomic`` и "
+"затем отменять это при отмене транзакции, используйте :func:`on_commit`, "
+"чтобы отложить эти действия на момент успешного выполнения транзакции. На "
+"много проще отметить то, что никогда не выполнялось!"
 
 # 94cc977612ae4fe9ad1ed461447a0238
 #: ../../topics/db/transactions.txt:404
