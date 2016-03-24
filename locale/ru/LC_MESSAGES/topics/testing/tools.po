@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated <>, 2014, 2015.
+# Automatically generated <>, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-17 10:48+0200\n"
-"PO-Revision-Date: 2015-06-03 00:09+0300\n"
+"PO-Revision-Date: 2016-03-24 17:11+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -660,6 +660,11 @@ msgid ""
 "`~django.contrib.auth.forms.AuthenticationForm` and therefore defaults to "
 "rejecting users who are inactive."
 msgstr ""
+"Неактивного пользователя (:attr:`is_active=False <django.contrib.auth.models."
+"User.is_active>`) нельзя авторизировать т.к. этот метод аналогичен "
+"представлению :func:`~django.contrib.auth.login`, которое использует форму :"
+"class:`~django.contrib.auth.forms.AuthenticationForm` и не выполняет "
+"авторизацию неактивных пользователей."
 
 # a266a73a7aad40fca400db232f8d079a
 #: ../../topics/testing/tools.txt:350
@@ -734,7 +739,6 @@ msgstr ""
 
 # 275f5fa10beb492e959c574639bd6ac3
 #: ../../topics/testing/tools.txt:391
-#, fuzzy
 msgid ""
 "If your site uses Django's :doc:`authentication system</topics/auth/index>`, "
 "you can use the ``force_login()`` method to simulate the effect of a user "
@@ -743,8 +747,10 @@ msgid ""
 "important."
 msgstr ""
 "Если ваш сайт использует :doc:`систему авторизации Django </topics/auth/"
-"index>`, вы можете использовать метод ``logout()`` чтобы эмулировать логаут "
-"пользователя."
+"index>`, вы можете использовать метод ``force_login()`` чтобы эмулировать "
+"авторизацию пользователя на вашем сайте. Используйте этот метод вместо :meth:"
+"`login`, если необходимо авторизировать пользователя в тестах и при этом не "
+"важен способ авторизации."
 
 #: ../../topics/testing/tools.txt:397
 msgid ""
@@ -753,6 +759,10 @@ msgid ""
 "User.is_active>`) are permitted to login and the user's credentials don't "
 "need to be provided."
 msgstr ""
+"В отличии от ``login()`` этот метод пропускает этапы авторизации и проверки "
+"пользователя: неактивные пользователи (:attr:`is_active=False <django."
+"contrib.auth.models.User.is_active>`) могут быть авторизированы и нет "
+"надобности указывать данные для авторизации(прим. пер. логин/пароль)."
 
 #: ../../topics/testing/tools.txt:402
 msgid ""
@@ -762,6 +772,11 @@ msgid ""
 "`~django.contrib.auth.authenticate` function called by :meth:`login` "
 "normally annotates the user like this."
 msgstr ""
+"Атрибут ``backend`` пользователя будет установлен в значение аргумента "
+"``backend`` (которые должен содержать путь для импорта Python), или "
+"``settings.AUTHENTICATION_BACKENDS[0]``, если аргумент не указан. Обычно "
+"этот атрибут устанавливает функция :func:`~django.contrib.auth."
+"authenticate`, вызываемая  :meth:`login`."
 
 #: ../../topics/testing/tools.txt:408
 msgid ""
@@ -769,6 +784,10 @@ msgid ""
 "algorithms are bypassed. Also, you can speed up ``login()`` by :ref:`using a "
 "weaker hasher while testing <speeding-up-tests-auth-hashers>`."
 msgstr ""
+"Этот метод быстрее ``login()`` т.к. пропускаются сложные алгоритмы "
+"хэширования паролей. Также вы можете ускорить ``login()``, используя :ref:"
+"`более простые алгоритмы хэширования паролей <speeding-up-tests-auth-"
+"hashers>`."
 
 # 275f5fa10beb492e959c574639bd6ac3
 #: ../../topics/testing/tools.txt:415
@@ -824,13 +843,12 @@ msgstr "Тестовый клиент, который отправил запр�
 
 # 5cde3acdd64c45c4813914b2ff95f435
 #: ../../topics/testing/tools.txt:442
-#, fuzzy
 msgid ""
 "The body of the response, as a bytestring. This is the final page content as "
 "rendered by the view, or any error message."
 msgstr ""
-"Содержимое ответа в виде строки. Окончательное содержимое страницы, которую "
-"вернуло представление, или содержимое об ошибке."
+"Содержимое ответа в виде байтовой строки. Окончательное содержимое страницы, "
+"которую вернуло представление, или содержимое об ошибке."
 
 # d2daba85ad8d4deba4d01cb477e64355
 #: ../../topics/testing/tools.txt:447
@@ -863,7 +881,7 @@ msgstr ""
 
 #: ../../topics/testing/tools.txt:0
 msgid "Not using Django templates?"
-msgstr ""
+msgstr "Не используйте шаблоны Django?"
 
 #: ../../topics/testing/tools.txt:463
 msgid ""
@@ -872,18 +890,26 @@ msgid ""
 "engine, :attr:`~django.template.response.SimpleTemplateResponse."
 "context_data` may be a suitable alternative on responses with that attribute."
 msgstr ""
+"Этот атрибут используется только бэкендом :class:`~django.template.backends."
+"django.DjangoTemplates`. Если вы используете другой шаблонизатор, возможно "
+"вам поможет :attr:`~django.template.response.SimpleTemplateResponse."
+"context_data`."
 
 #: ../../topics/testing/tools.txt:473
 msgid ""
 "The body of the response, parsed as JSON. Extra keyword arguments are passed "
 "to :func:`json.loads`. For example::"
 msgstr ""
+"Тело ответа, преобразованное как JSON. Дополнительные именованные аргументы "
+"передаются в :func:`json.loads`. Например::"
 
 #: ../../topics/testing/tools.txt:480
 msgid ""
 "If the ``Content-Type`` header is not ``\"application/json\"``, then a :exc:"
 "`ValueError` will be raised when trying to parse the response."
 msgstr ""
+"Если заголовок ``Content-Type`` не ``\"application/json\"``, будет вызвано "
+"исключение :exc:`ValueError`, при попытке вызывать этот метод."
 
 # 9a5deb17736f4d7aa3557d715bab4b03
 #: ../../topics/testing/tools.txt:485
@@ -927,6 +953,10 @@ msgid ""
 "template_name` may be a suitable alternative if you only need the name of "
 "the template used for rendering."
 msgstr ""
+"Этот атрибут содержит значение только при использовании :class:`~django."
+"template.backends.django.DjangoTemplates`. Если вы используете другой "
+"шаблонизатор, возможно вам поможет :attr:`~django.template.response."
+"SimpleTemplateResponse.template_name`."
 
 #: ../../topics/testing/tools.txt:518
 msgid ""

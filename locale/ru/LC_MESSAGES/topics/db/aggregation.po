@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012.
-# Dmitriy Kostochko <alerion.um@gmail.com>, 2014, 2015.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-17 10:48+0200\n"
-"PO-Revision-Date: 2015-06-17 17:03+0300\n"
+"PO-Revision-Date: 2016-03-24 16:05+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -210,7 +210,7 @@ msgstr ""
 
 #: ../../topics/db/aggregation.txt:190
 msgid "Combining multiple aggregations"
-msgstr ""
+msgstr "Объединение нескольких агрегаций"
 
 #: ../../topics/db/aggregation.txt:192
 msgid ""
@@ -220,6 +220,11 @@ msgid ""
 "will be generated if some of the joined tables contain more records than the "
 "others:"
 msgstr ""
+"Объединение нескольких агрегаций через ``annotate()`` может привести к "
+"`неправильному результату <https://code.djangoproject.com/ticket/10060>`_, т."
+"к. объединяются несколько таблиц. Из-за использования ``LEFT OUTER JOIN`` "
+"могут создаваться дублирующиеся записи, если объединенные таблицы содержат "
+"разное количество записей:"
 
 #: ../../topics/db/aggregation.txt:207
 msgid ""
@@ -227,6 +232,9 @@ msgid ""
 "class:`~django.db.models.Count` aggregate has a ``distinct`` parameter that "
 "may help:"
 msgstr ""
+"Для большинства агрегаций нет способа избежать этой проблемы. Однако, "
+"агрегация :class:`~django.db.models.Count` принимает аргумент ``distinct``, "
+"который может помочь:"
 
 #: ../../topics/db/aggregation.txt:0
 msgid "If in doubt, inspect the SQL query!"
@@ -286,7 +294,6 @@ msgstr ""
 
 # d3ea01a8b78740a5ae6612e5e141423b
 #: ../../topics/db/aggregation.txt:245
-#, fuzzy
 msgid ""
 "The same rules apply to the ``aggregate()`` clause. If you wanted to know "
 "the lowest and highest price of any book that is available for sale in any "
@@ -488,7 +495,6 @@ msgstr "Порядок ``annotate()`` и ``filter()``"
 
 # ef972f61ff3e4703846733c4a190eb0a
 #: ../../topics/db/aggregation.txt:344
-#, fuzzy
 msgid ""
 "When developing a complex query that involves both ``annotate()`` and "
 "``filter()`` clauses, pay particular attention to the order in which the "
@@ -500,43 +506,43 @@ msgstr ""
 
 # e3d1481616b24a6aa232bf62ca6d4f44
 #: ../../topics/db/aggregation.txt:348
-#, fuzzy
 msgid ""
 "When an ``annotate()`` clause is applied to a query, the annotation is "
 "computed over the state of the query up to the point where the annotation is "
 "requested. The practical implication of this is that ``filter()`` and "
 "``annotate()`` are not commutative operations."
 msgstr ""
-"После вызова метода ``annotate()``, \"аннотация\" добавляется к запросу, "
-"запрос используется в том же виде, как он есть на данный момент. Но "
-"``filter()`` и ``annotate()`` не независимые операции. Поэтому есть разница "
-"между запросом::"
+"При добавлении ``annotate()`` в запрос аннотация вычисляется над состоянием "
+"запроса, которое было на момент её добавления. По этому нужно учитывать, что "
+"операции ``filter()`` и ``annotate()`` не коммутативные(порядок важен)."
 
 #: ../../topics/db/aggregation.txt:353
 msgid "Given:"
-msgstr ""
+msgstr "Берем следующий набор данных:"
 
 #: ../../topics/db/aggregation.txt:355
 msgid "Publisher A has two books with ratings 4 and 5."
-msgstr ""
+msgstr "У издателя A есть две книги с рейтингом 4 и 5."
 
 #: ../../topics/db/aggregation.txt:356
 msgid "Publisher B has two books with ratings 1 and 4."
-msgstr ""
+msgstr "У издателя B есть две книги с рейтингом 1 и 4."
 
 #: ../../topics/db/aggregation.txt:357
 msgid "Publisher C has one book with rating 1."
-msgstr ""
+msgstr "У издателя C есть одна книга с рейтингом 1."
 
 #: ../../topics/db/aggregation.txt:359
 msgid "Here's an example with the ``Count`` aggregate::"
-msgstr ""
+msgstr "Пример с агрегацией ``Count``::"
 
 #: ../../topics/db/aggregation.txt:373
 msgid ""
 "Both queries return a list of publishers that have at least one book with a "
 "rating exceeding 3.0, hence publisher C is excluded."
 msgstr ""
+"Оба запроса вернули список издателей, у которых есть хотя бы одна книга с "
+"рейтингом выше 3.0, по этому издатель C исключен из выборки."
 
 #: ../../topics/db/aggregation.txt:376
 msgid ""
@@ -544,6 +550,9 @@ msgid ""
 "effect on the annotation. ``distinct=True`` is required to avoid a :ref:"
 "`cross-join bug <combining-multiple-aggregations>`."
 msgstr ""
+"В первом запросе аннотация следует перед фильтрацией, по этому фильтрация не "
+"влияет на аннотацию. ``distinct=True`` необходим, чтобы избежать :ref:`бага "
+"с объединением таблиц <combining-multiple-aggregations>`."
 
 #: ../../topics/db/aggregation.txt:380
 msgid ""
@@ -551,10 +560,13 @@ msgid ""
 "for each publisher. The filter precedes the annotation, so the filter "
 "constrains the objects considered when calculating the annotation."
 msgstr ""
+"Второй запрос вычисляет количество книг с рейтингом выше 3.0 для каждого "
+"издателя. Фильтрация следует перед аннотацией, тем самым влияет на данные, "
+"которые используются при вычислении аннотации."
 
 #: ../../topics/db/aggregation.txt:384
 msgid "Here's another example with the ``Avg`` aggregate::"
-msgstr ""
+msgstr "Еще один пример с ``Avg``::"
 
 #: ../../topics/db/aggregation.txt:398
 msgid ""
@@ -563,6 +575,9 @@ msgid ""
 "second query asks for the average of a publisher's book's ratings for only "
 "those ratings exceeding 3.0."
 msgstr ""
+"Первый запрос вычисляет средний рейтинг книг для издателей, у которых есть "
+"хотя бы одна книга с рейтингом выше 3.0. Второй вычисляет средний рейтинг "
+"для книг, рейтинг которых выше 3.0."
 
 #: ../../topics/db/aggregation.txt:403
 msgid ""
@@ -570,6 +585,9 @@ msgid ""
 "SQL queries so when in doubt, inspect the SQL with ``str(queryset.query)`` "
 "and write plenty of tests."
 msgstr ""
+"Тяжело интуитивно догадаться как ORM преобразует сложный ``QuerySet`` в SQL "
+"запрос. По этому изучайте созданный SQL в случае сомнений, используя "
+"``str(queryset.query)``, и покрывайте тестами."
 
 # 0371b8585a81415f98b67ef7c4de8f02
 #: ../../topics/db/aggregation.txt:408
