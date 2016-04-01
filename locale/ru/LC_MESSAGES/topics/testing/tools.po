@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Django 1.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-17 10:48+0200\n"
-"PO-Revision-Date: 2016-03-24 17:11+0200\n"
+"PO-Revision-Date: 2016-04-01 17:34+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -1288,6 +1288,12 @@ msgid ""
 "about this problem, you can disable this behavior by setting the "
 "``allow_database_queries`` class attribute to ``True`` on your test class."
 msgstr ""
+":class:`~SimpleTestCase` по умолчанию запрещает выполнять запросы в базу "
+"данных. Это позволяет предотвратить выполнение запросов, которые могут "
+"повлиять на другие тесты т.к. ``SimpleTestCase`` не создает отдельную "
+"транзакцию на каждый тест. Если вас не заботит эта проблема, вы можете "
+"отключить такое поведение, указав в атрибуте класса "
+"``allow_database_queries`` значение ``True``."
 
 # bdf7bb1699094fb3854fc7f707f9cc2c
 #: ../../topics/testing/tools.txt:684
@@ -1382,7 +1388,6 @@ msgstr ""
 
 # 4a1f0b520bed4aa4976e0fa11674b977
 #: ../../topics/testing/tools.txt:742
-#, fuzzy
 msgid ""
 "``TestCase`` running on a database that does not support rollback (e.g. "
 "MySQL with the MyISAM storage engine), and all instances of "
@@ -1391,22 +1396,20 @@ msgid ""
 msgstr ""
 "``TestCase``, который выполняется на базе данных, которая не поддерживает "
 "транзакции (например, MySQL с MyISAM), и все ``TransactionTestCase``, после "
-"завершения теста очищают таблицы и загружают начальные данные из фикстур для "
-"приложений, которые не содержат миграции."
+"завершения теста очищают таблицы."
 
 # 582cd14ed3e2419287306b730a351a3b
 #: ../../topics/testing/tools.txt:747
-#, fuzzy
 msgid ""
 "Apps :ref:`will not see their data reloaded <test-case-serialized-"
 "rollback>`; if you need this functionality (for example, third-party apps "
 "should enable this) you can set ``serialized_rollback = True`` inside the "
 "``TestCase`` body."
 msgstr ""
-"Для приложений с миграциями :ref:`данные не будут перезагружены <test-case-"
-"serialized-rollback>`; если это необходимо (например, распространяемые "
-"приложения должны использовать это) вы можете указать ``serialized_rollback "
-"= True`` для класса ``TestCase``."
+"Данные приложения :ref:`не будут перезагружены <test-case-serialized-"
+"rollback>`; если это необходимо (например, распространяемые приложения "
+"должны использовать это) вы можете указать ``serialized_rollback = True`` "
+"для класса ``TestCase``."
 
 # 1c2581043bd94c5a9f41706242bf684e
 #: ../../topics/testing/tools.txt:752
@@ -1422,7 +1425,6 @@ msgstr "TestCase"
 
 # e0d6c51697c64501a1792ff6d9314830
 #: ../../topics/testing/tools.txt:759
-#, fuzzy
 msgid ""
 "This class provides some additional capabilities that can be useful for "
 "testing websites."
@@ -1507,6 +1509,11 @@ msgid ""
 "them, you could reload them in the ``setUp()`` method with :meth:`~django.db."
 "models.Model.refresh_from_db`, for example."
 msgstr ""
+"Будьте осторожны, не меняйте объекты, которые были созданы в "
+"``setUpTestData()``, в тестовых метод. Изменение этих объектов, которые "
+"хранятся в памяти, будет влиять на все тесты текущего класса. Если вам все "
+"же необходимо их изменить, вы можете перезагрузить их в методе ``setUp()``, "
+"используя, например, :meth:`~django.db.models.Model.refresh_from_db`."
 
 #: ../../topics/testing/tools.txt:817
 msgid ""
@@ -1554,12 +1561,16 @@ msgid ""
 "available port in the ``8081-8179`` range. Its full URL can be accessed with "
 "``self.live_server_url`` during the tests."
 msgstr ""
+"По умолчанию сервер слушает ``localhost``, выбирая первый свободный порт из "
+"``8081-8179``. Полный URL к серверу можно получить в тестах через атрибут "
+"``self.live_server_url``."
 
 #: ../../topics/testing/tools.txt:844
 msgid ""
 "In earlier versions, the live server's default address was always "
 "``'localhost:8081'``."
 msgstr ""
+"В предыдущих версиях адрес сервера по умолчанию был ``'localhost:8081'``."
 
 #: ../../topics/testing/tools.txt:847
 msgid ""
@@ -1567,6 +1578,9 @@ msgid ""
 "the :djadmin:`test` command via the :djadminopt:`--liveserver` option, for "
 "example:"
 msgstr ""
+"Если вам необходим другой адрес сервера, вы можете указать его при запуске "
+"команды :djadmin:`test`, используя опцию :djadminopt:`--liveserver`, "
+"например:"
 
 #: ../../topics/testing/tools.txt:857
 msgid ""
@@ -1574,6 +1588,9 @@ msgid ""
 "instance. It now is a class property and can be accessed from class methods "
 "like ``setUpClass()``."
 msgstr ""
+"В предыдущих версиях ``live_server_url`` был доступен только из экземпляра "
+"класса. Теперь это атрибут класса и доступен в методах класса, например "
+"``setUpClass()``."
 
 # 846fe711824e4195a548d1b018a143bf
 #: ../../topics/testing/tools.txt:861
@@ -1638,10 +1655,19 @@ msgid ""
 "functionality. Replace it with ``django.test.LiveServerTestCase`` if you "
 "don't need that."
 msgstr ""
+"Теперь добавьте ``LiveServerTestCase``-тесты в ваше приложение (например: "
+"``myapp/tests.py``). В нашем примере мы используем приложение :mod:`~django."
+"contrib.staticfiles` и хотим, чтобы статические файлы были доступны во время "
+"тестов, как это работает при использовании сервера для разработки с "
+"настройкой ``DEBUG=True``, то есть без использования :djadmin:"
+"`collectstatic`. Мы будем использовать класс  :class:`~django.contrib."
+"staticfiles.testing.StaticLiveServerTestCase`, который предоставляет такую "
+"возможность. Если вам не нужен такой функционал, замените его на ``django."
+"test.LiveServerTestCase``."
 
 #: ../../topics/testing/tools.txt:902
 msgid "The code for this test may look as follows::"
-msgstr ""
+msgstr "Пример тестов::"
 
 # 00e2dca7440f45cf893a90bc41f9a7cb
 #: ../../topics/testing/tools.txt:928
@@ -1766,7 +1792,6 @@ msgstr "Загрузка фикстур"
 
 # 1606c6203a484c8f95f0e0b786cf689a
 #: ../../topics/testing/tools.txt:1050
-#, fuzzy
 msgid ""
 "A test case for a database-backed website isn't much use if there isn't any "
 "data in the database. To make it easy to put test data into the database, "
@@ -1953,13 +1978,12 @@ msgstr ""
 
 # 15bc477fc2df4bf29fba5126c08fea04
 #: ../../topics/testing/tools.txt:1169
-#, fuzzy
 msgid ""
 "This test case will flush *all* the test databases before running "
 "``test_index_page_view``."
 msgstr ""
 "Для этого тестов будут очищены *все* базы данных перед выполнением "
-"``testIndexPageView``."
+"``test_index_page_view``."
 
 # 8dfd60af8dac46ea963711454f11acf3
 #: ../../topics/testing/tools.txt:1172
@@ -2273,7 +2297,6 @@ msgstr ""
 
 # ef002c0bad7b44808a27eeebcb8fed07
 #: ../../topics/testing/tools.txt:1383
-#, fuzzy
 msgid ""
 "Asserts that execution of ``callable`` raises ``expected_exception`` and "
 "that ``expected_message`` is found in the exception's message. Any other "
@@ -2281,10 +2304,10 @@ msgid ""
 "TestCase.assertRaisesRegex` with the difference that ``expected_message`` "
 "isn't a regular expression."
 msgstr ""
-"Проверяет, что при выполнении функции ``callable_obj`` вызывается исключение "
+"Проверяет, что при выполнении функции ``callable`` вызывается исключение "
 "``expected_exception`` с сообщением ``expected_message``. Похож на :meth:"
-"`~unittest.TestCase.assertRaisesRegex`, ``expected_message`` не регулярное "
-"выражение."
+"`~unittest.TestCase.assertRaisesRegex`, но ``expected_message`` не "
+"регулярное выражение."
 
 #: ../../topics/testing/tools.txt:1389
 msgid ""
@@ -2292,12 +2315,17 @@ msgid ""
 "given, returns a context manager so that the code being tested can be "
 "written inline rather than as a function::"
 msgstr ""
+"Если передать только ``expected_exception`` и ``expected_message``, вернет "
+"контекстный менеджер, что позволит писать проверяемый код без добавления в "
+"функцию::"
 
 #: ../../topics/testing/tools.txt:1398
 msgid ""
 "Passing ``callable`` as a keyword argument called ``callable_obj`` is "
 "deprecated. Pass the callable as a positional argument instead."
 msgstr ""
+"Передача ``callable`` именованным аргументом ``callable_obj`` считается "
+"устаревшей. Теперь следует передавать как позиционный аргумент."
 
 # 454a88834294445aa9bce99fbb2e0203
 #: ../../topics/testing/tools.txt:1403
@@ -2441,13 +2469,12 @@ msgstr ""
 
 # 3b6cf42167b34582afba162f7ce7f86c
 #: ../../topics/testing/tools.txt:1470
-#, fuzzy
 msgid ""
 "Asserts that a ``Response`` instance produced the given ``status_code`` and "
 "that ``text`` does *not* appear in the content of the response."
 msgstr ""
-"Проверяет, что объект ``Response`` с указанным ``status_code`` и не содержит "
-"``text``."
+"Проверяет, что объект ``Response`` с указанным ``status_code`` и *не* "
+"содержит ``text``."
 
 # 9ad9ff20821849ddbe143bcd4e726d51
 #: ../../topics/testing/tools.txt:1481
@@ -2541,6 +2568,8 @@ msgid ""
 "The ``host`` argument is deprecated, as redirections are no longer forced to "
 "be absolute URLs."
 msgstr ""
+"Аргумент ``host`` устарел. Перенаправления теперь не обязательно указывать с "
+"абсолютным URL."
 
 # 602882a8569f48ad878f18e20c692878
 #: ../../topics/testing/tools.txt:1533

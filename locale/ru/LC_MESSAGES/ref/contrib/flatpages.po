@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated <>, 2012, 2015.
+# Automatically generated <>, 2012, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-17 10:48+0200\n"
-"PO-Revision-Date: 2015-07-08 23:13+0300\n"
+"PO-Revision-Date: 2016-04-01 17:57+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -321,6 +321,11 @@ msgid ""
 "first when processing the response, and ensures that any other response-"
 "processing middlewares see the real flatpage response rather than the 404."
 msgstr ""
+"Обратите внимание, порядок :setting:`MIDDLEWARE_CLASSES` важен. В общем вы "
+"можете указать :class:`~django.contrib.flatpages.middleware."
+"FlatpageFallbackMiddleware` в конце списка. Он будет выполнен первым при "
+"обработке ответа, и все остальные промежуточные слои(middleware) увидят "
+"ответ со страницей, а не 404."
 
 # 30e909fdeff143f694d2ee91dc023101
 #: ../../ref/contrib/flatpages.txt:154
@@ -328,11 +333,13 @@ msgid ""
 "For more on middleware, read the :doc:`middleware docs </topics/http/"
 "middleware>`."
 msgstr ""
+"Подробнее смотрите в разделе о :doc:`промежуточных слоях </topics/http/"
+"middleware>`."
 
 # 63b52545821440b1ae1682bd885376fc
 #: ../../ref/contrib/flatpages.txt:0
 msgid "Ensure that your 404 template works"
-msgstr ""
+msgstr "Убедитесь, что ваш 404 шаблон работает"
 
 # f7c82fba0d8b42b0a4719bdcb61dab66
 #: ../../ref/contrib/flatpages.txt:159
@@ -345,16 +352,22 @@ msgid ""
 "contrib.flatpages.middleware.FlatpageFallbackMiddleware` will not attempt to "
 "serve a flat page."
 msgstr ""
+"Обратите внимание, :class:`~django.contrib.flatpages.middleware."
+"FlatpageFallbackMiddleware` выполняет, только если другое представление "
+"вернуло 404 ответ. Если другое представление или промежуточный слой "
+"попытается вернуть 404 и получит исключение, ответ будет HTTP 500 "
+"(\"Internal Server Error\") и :class:`~django.contrib.flatpages.middleware."
+"FlatpageFallbackMiddleware` не будет выполнен."
 
 # e81a5d56363d4098b4b71aa87829f82e
 #: ../../ref/contrib/flatpages.txt:171
 msgid "How to add, change and delete flatpages"
-msgstr ""
+msgstr "Как добавить, изменить и удалить статические страницы"
 
 # 40bf244adf6342b38fa438ffef48ff1f
 #: ../../ref/contrib/flatpages.txt:176
 msgid "Via the admin interface"
-msgstr ""
+msgstr "Через интерфейс администратора"
 
 # 0b515a44e4c6438fae0aa108ef92a641
 #: ../../ref/contrib/flatpages.txt:178
@@ -363,6 +376,9 @@ msgid ""
 "\"Flatpages\" section on the admin index page. Edit flatpages as you edit "
 "any other object in the system."
 msgstr ""
+"Если вы активировали интерфейс администратора Django, вы увидите раздел "
+"\"Flatpages\" в админке. Редактируйте статические страницы как и другие "
+"объекты в базе данных."
 
 #: ../../ref/contrib/flatpages.txt:182
 msgid ""
@@ -371,15 +387,20 @@ msgid ""
 "party apps. It doesn't appear in the admin interface, but you can add it by "
 "registering a custom ``ModelAdmin`` for ``FlatPage``::"
 msgstr ""
+"Модель ``FlatPage`` содержит поле ``enable_comments``, которое не "
+"используется ``contrib.flatpages``, но может быть полезно для вашего проекта "
+"или приложений. Это поле не доступно через интерфейс администратора, но вы "
+"можете добавить его, зарегистрировав собственный ``ModelAdmin`` для "
+"``FlatPage``::"
 
 #: ../../ref/contrib/flatpages.txt:212
 msgid "The ``enable_comments`` field was removed from ``FlatPageAdmin``."
-msgstr ""
+msgstr "Поле ``enable_comments`` было удалено из ``FlatPageAdmin``."
 
 # 40730d7629d3474fa7e6ff37a8dcdffc
 #: ../../ref/contrib/flatpages.txt:215
 msgid "Via the Python API"
-msgstr ""
+msgstr "Через Python API"
 
 # cb8e5f692aac4b7fb6a42ed319496b2c
 #: ../../ref/contrib/flatpages.txt:219
@@ -389,11 +410,15 @@ msgid ""
 "access flatpage objects via the :doc:`Django database API </topics/db/"
 "queries>`."
 msgstr ""
+"Статические страницы представлены :doc:`моделью Django </topics/db/models>`, "
+"которая находится в `django/contrib/flatpages/models.py`_. Вы можете "
+"обратиться к объектам статических страницы через :doc:`Django ORM API </"
+"topics/db/queries>`."
 
 # 74e5a0d4b48c47238eeaf216c3f0b4de
 #: ../../ref/contrib/flatpages.txt:0
 msgid "Check for duplicate flatpage URLs."
-msgstr ""
+msgstr "Проверка уникальности URL статической страницы."
 
 #: ../../ref/contrib/flatpages.txt:230
 msgid ""
@@ -402,11 +427,16 @@ msgid ""
 "used in the admin performs this validation check, and can be imported from "
 "``django.contrib.flatpages.forms.FlatpageForm`` and used in your own views."
 msgstr ""
+"Если вы добавляете или изменяете статические страницы, скорее всего вам "
+"необходимо проверять, что URL страницы уникален для сайта. Форма, которая "
+"используется в админке, выполняет такую проверку, и может быть импортирована "
+"из ``django.contrib.flatpages.forms.FlatpageForm`` для использование в ваших "
+"представлениях."
 
 # dc91d6a3dee84e0abbc7ebc5f9c3bc41
 #: ../../ref/contrib/flatpages.txt:237
 msgid "Flatpage templates"
-msgstr ""
+msgstr "Шаблоны статических страниц"
 
 # efdef86ad45d425fadc334e1db8e977b
 #: ../../ref/contrib/flatpages.txt:239
