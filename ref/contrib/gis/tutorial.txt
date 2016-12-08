@@ -81,7 +81,7 @@ file. Edit the database connection settings to match your setup::
              'ENGINE': 'django.contrib.gis.db.backends.postgis',
              'NAME': 'geodjango',
              'USER': 'geo',
-         }
+        },
     }
 
 In addition, modify the :setting:`INSTALLED_APPS` setting to include
@@ -96,7 +96,7 @@ and ``world`` (your newly created application)::
         'django.contrib.messages',
         'django.contrib.staticfiles',
         'django.contrib.gis',
-        'world'
+        'world',
     ]
 
 Geographic Data
@@ -239,7 +239,7 @@ create a database migration:
 
     $ python manage.py makemigrations
     Migrations for 'world':
-      0001_initial.py:
+      world/migrations/0001_initial.py:
         - Create model WorldBorder
 
 Let's look at the SQL that will generate the table for the ``WorldBorder``
@@ -283,7 +283,7 @@ database:
 
     $ python manage.py migrate
     Operations to perform:
-      Apply all migrations: admin, world, contenttypes, auth, sessions
+      Apply all migrations: admin, auth, contenttypes, sessions, world
     Running migrations:
       ...
       Applying world.0001_initial... OK
@@ -303,7 +303,7 @@ besides the tools included within GeoDjango, you may also use the following:
   PostGIS.
 
 .. _ogr2ogr: http://www.gdal.org/ogr2ogr.html
-.. _shp2pgsql: http://postgis.net/docs/manual-1.5/ch04.html#shp2pgsql_usage
+.. _shp2pgsql: http://postgis.net/docs/using_postgis_dbmanagement.html#shp2pgsql_usage
 
 .. _gdalinterface:
 
@@ -435,7 +435,7 @@ with the following code::
 
     import os
     from django.contrib.gis.utils import LayerMapping
-    from models import WorldBorder
+    from .models import WorldBorder
 
     world_mapping = {
         'fips' : 'FIPS',
@@ -452,12 +452,15 @@ with the following code::
         'mpoly' : 'MULTIPOLYGON',
     }
 
-    world_shp = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data', 'TM_WORLD_BORDERS-0.3.shp'))
+    world_shp = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), 'data', 'TM_WORLD_BORDERS-0.3.shp'),
+    )
 
     def run(verbose=True):
-        lm = LayerMapping(WorldBorder, world_shp, world_mapping,
-                          transform=False, encoding='iso-8859-1')
-
+        lm = LayerMapping(
+            WorldBorder, world_shp, world_mapping,
+            transform=False, encoding='iso-8859-1',
+        )
         lm.save(strict=True, verbose=verbose)
 
 A few notes about what's going on:
@@ -588,9 +591,8 @@ Consortium (OGC). [#]_  Import the ``WorldBorder`` model, and perform
 a ``contains`` lookup using the ``pnt_wkt`` as the parameter::
 
     >>> from world.models import WorldBorder
-    >>> qs = WorldBorder.objects.filter(mpoly__contains=pnt_wkt)
-    >>> qs
-    [<WorldBorder: United States>]
+    >>> WorldBorder.objects.filter(mpoly__contains=pnt_wkt)
+    <QuerySet [<WorldBorder: United States>]>
 
 Here, you retrieved a ``QuerySet`` with only one model: the border of the
 United States (exactly what you would expect).
@@ -602,8 +604,7 @@ of a queryset::
 
     >>> from django.contrib.gis.geos import Point
     >>> pnt = Point(12.4604, 43.9420)
-    >>> sm = WorldBorder.objects.get(mpoly__intersects=pnt)
-    >>> sm
+    >>> WorldBorder.objects.get(mpoly__intersects=pnt)
     <WorldBorder: San Marino>
 
 The ``contains`` and ``intersects`` lookups are just a subset of the
@@ -638,7 +639,7 @@ of abstraction::
     "world_worldborder"."mpoly" FROM "world_worldborder"
     WHERE ST_Intersects("world_worldborder"."mpoly", ST_Transform(%s, 4326))
     >>> qs # printing evaluates the queryset
-    [<WorldBorder: United States>]
+    <QuerySet [<WorldBorder: United States>]>
 
 __ http://spatialreference.org/ref/epsg/32140/
 
@@ -697,7 +698,7 @@ GeoDjango extends :doc:`Django's admin application </ref/contrib/admin/index>`
 with support for editing geometry fields.
 
 Basics
-^^^^^^
+~~~~~~
 
 GeoDjango also supplements the Django admin by allowing users to create
 and modify geometries on a JavaScript slippy map (powered by `OpenLayers`_).
@@ -706,7 +707,7 @@ Let's dive right in.  Create a file called ``admin.py`` inside the
 ``world`` application with the following code::
 
     from django.contrib.gis import admin
-    from models import WorldBorder
+    from .models import WorldBorder
 
     admin.site.register(WorldBorder, admin.GeoModelAdmin)
 
@@ -744,7 +745,7 @@ position.
 .. _osmgeoadmin-intro:
 
 ``OSMGeoAdmin``
-^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~
 
 With the :class:`~django.contrib.gis.admin.OSMGeoAdmin`, GeoDjango uses
 a `Open Street Map`_ layer in the admin.

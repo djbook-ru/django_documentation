@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-02 11:18+0200\n"
+"POT-Creation-Date: 2016-12-08 11:07+0200\n"
 "PO-Revision-Date: 2016-03-21 13:32+0200\n"
 "Last-Translator: Sergey Karpenko <serg.karpenko@gmail.com>\n"
 "Language-Team: none\n"
@@ -49,12 +49,12 @@ msgstr ""
 
 # 7195fbc9e1ea42aea6ee65874631e463
 #: ../../ref/csrf.txt:16
+#, fuzzy
 msgid ""
 "The first defense against CSRF attacks is to ensure that GET requests (and "
-"other 'safe' methods, as defined by 9.1.1 Safe Methods, HTTP 1.1, :rfc:"
-"`2616#section-9.1.1`) are side-effect free. Requests via 'unsafe' methods, "
-"such as POST, PUT and DELETE, can then be protected by following the steps "
-"below."
+"other 'safe' methods, as defined by :rfc:`7231#section-4.2.1`) are side "
+"effect free. Requests via 'unsafe' methods, such as POST, PUT, and DELETE, "
+"can then be protected by following the steps below."
 msgstr ""
 "Первая защита против CSRF атак - это гарантирование того, что GET запросы (и "
 "другие 'безопасные' методы, определенные в 9.1.1 Safe Methods, HTTP 1.1, :"
@@ -63,24 +63,25 @@ msgstr ""
 "помощи шагов, описанных ниже."
 
 # f17f70c68a424cc98b1d1dd5b196a02f
-#: ../../ref/csrf.txt:27
+#: ../../ref/csrf.txt:26
 msgid "How to use it"
 msgstr "Как это использовать"
 
 # 5aa1bd70cfdb49acac1e51309e84fd80
-#: ../../ref/csrf.txt:29
+#: ../../ref/csrf.txt:28
 msgid "To take advantage of CSRF protection in your views, follow these steps:"
 msgstr ""
 "Для того чтобы включить CSRF защиту для ваших представлений, выполните "
 "следующие шаги:"
 
 # 838375db5f364490a35fd1623759cdcf
-#: ../../ref/csrf.txt:31
+#: ../../ref/csrf.txt:30
+#, fuzzy
 msgid ""
-"The CSRF middleware is activated by default in the :setting:"
-"`MIDDLEWARE_CLASSES` setting. If you override that setting, remember that "
-"``'django.middleware.csrf.CsrfViewMiddleware'`` should come before any view "
-"middleware that assume that CSRF attacks have been dealt with."
+"The CSRF middleware is activated by default in the :setting:`MIDDLEWARE` "
+"setting. If you override that setting, remember that ``'django.middleware."
+"csrf.CsrfViewMiddleware'`` should come before any view middleware that "
+"assume that CSRF attacks have been dealt with."
 msgstr ""
 "Промежуточный слой CSRF активирован по умолчанию и находится в настройке :"
 "setting:`MIDDLEWARE_CLASSES`. Если вы переопределяете эту настройку, "
@@ -89,7 +90,7 @@ msgstr ""
 "проверен на CSRF атаку."
 
 # d0ad7b6c4fca4fe2baa4f9190840fd35
-#: ../../ref/csrf.txt:36
+#: ../../ref/csrf.txt:35
 msgid ""
 "If you disabled it, which is not recommended, you can use :func:`~django."
 "views.decorators.csrf.csrf_protect` on particular views you want to protect "
@@ -100,17 +101,18 @@ msgstr ""
 "представлений, которые вы хотите защитить (смотри ниже)."
 
 # 013967a850fa4c5d825039ac03834d8d
-#: ../../ref/csrf.txt:40
+#: ../../ref/csrf.txt:39
+#, fuzzy
 msgid ""
 "In any template that uses a POST form, use the :ttag:`csrf_token` tag inside "
-"the ``<form>`` element if the form is for an internal URL, e.g.::"
+"the ``<form>`` element if the form is for an internal URL, e.g.:"
 msgstr ""
 "В любом шаблоне, который использует POST форму, используйте тег :ttag:"
 "`csrf_token` внутри элемента ``<form>`` если форма для внутреннего URL, т. "
 "е.::"
 
 # b7532e4f38eb4a669a58125f5ef93c83
-#: ../../ref/csrf.txt:45
+#: ../../ref/csrf.txt:46
 msgid ""
 "This should not be done for POST forms that target external URLs, since that "
 "would cause the CSRF token to be leaked, leading to a vulnerability."
@@ -118,56 +120,22 @@ msgstr ""
 "Это не должно делаться для POST форм, которые ссылаются на внешние URL'ы, "
 "поскольку это может вызвать утечку CSRF токена, что приводит к уязвимости."
 
-# f05da7ee205447c1869071b625dca66d
-#: ../../ref/csrf.txt:48
+#: ../../ref/csrf.txt:49
 msgid ""
-"In the corresponding view functions, ensure that the ``'django.template."
-"context_processors.csrf'`` context processor is being used. Usually, this "
-"can be done in one of two ways:"
+"In the corresponding view functions, ensure that :class:`~django.template."
+"RequestContext` is used to render the response so that ``{% csrf_token %}`` "
+"will work properly. If you're using the :func:`~django.shortcuts.render` "
+"function, generic views, or contrib apps, you are covered already since "
+"these all use ``RequestContext``."
 msgstr ""
-"В соответствующих функциях представления, убедитесь, что ``'django.template."
-"context_processors.csrf'`` контекстный процессор используется. Обычно, это "
-"может быть сделано в один из двух способов:"
-
-# ca7b13d5ce224a5091beea7501abf488
-#: ../../ref/csrf.txt:52
-msgid ""
-"Use RequestContext, which always uses ``'django.template.context_processors."
-"csrf'`` (no matter what template context processors are configured in the :"
-"setting:`TEMPLATES` setting). If you are using generic views or contrib "
-"apps, you are covered already, since these apps use RequestContext "
-"throughout."
-msgstr ""
-"Использовать RequestContext, который всегда использует ``'django.template."
-"context_processors.csrf'`` (не зависимо от параметра :setting:`TEMPLATES` ). "
-"Если вы используете общие представления или contrib приложения, вы уже "
-"застрахованы, так как эти приложения используют RequestContext повсюду."
-
-# ee5e3e0e9ae746f2bb3c1d108df7e763
-#: ../../ref/csrf.txt:58
-msgid ""
-"Manually import and use the processor to generate the CSRF token and add it "
-"to the template context. e.g.::"
-msgstr ""
-"Вручную импортировать и использовать процессор для генерации CSRF токена и "
-"добавить в шаблон контекста. т.е.::"
-
-# 57240f53491f42bd8a3ab2b8b552b934
-#: ../../ref/csrf.txt:70
-msgid ""
-"You may want to write your own :func:`~django.shortcuts."
-"render_to_response()` wrapper that takes care of this step for you."
-msgstr ""
-"Вы можете захотеть написать собственный :func:`~django.shortcuts."
-"render_to_response()` враппер, который позаботится об этом шаге для вас."
 
 # f232c03ab8d142149269de986ef665d2
-#: ../../ref/csrf.txt:77
+#: ../../ref/csrf.txt:58
 msgid "AJAX"
 msgstr "AJAX"
 
 # 23d61b228bef4326b76cfa4a2ce475d0
-#: ../../ref/csrf.txt:79
+#: ../../ref/csrf.txt:60
 msgid ""
 "While the above method can be used for AJAX POST requests, it has some "
 "inconveniences: you have to remember to pass the CSRF token in as POST data "
@@ -185,7 +153,7 @@ msgstr ""
 "заголовки для каждого запроса. "
 
 # 7dad51e75e4f4f848fa7486495027a1c
-#: ../../ref/csrf.txt:86
+#: ../../ref/csrf.txt:67
 msgid ""
 "As a first step, you must get the CSRF token itself. The recommended source "
 "for the token is the ``csrftoken`` cookie, which will be set if you've "
@@ -197,7 +165,7 @@ msgstr ""
 "описано выше."
 
 # a6b93cafd7e84843b73c4e9acf07b961
-#: ../../ref/csrf.txt:92
+#: ../../ref/csrf.txt:73
 msgid ""
 "The CSRF token cookie is named ``csrftoken`` by default, but you can control "
 "the cookie name via the :setting:`CSRF_COOKIE_NAME` setting."
@@ -206,7 +174,7 @@ msgstr ""
 "управлять именем куки при помощи параметра :setting:`CSRF_COOKIE_NAME`."
 
 # a6b93cafd7e84843b73c4e9acf07b961
-#: ../../ref/csrf.txt:95
+#: ../../ref/csrf.txt:76
 msgid ""
 "The CSRF header name is ``HTTP_X_CSRFTOKEN`` by default, but you can "
 "customize it using the :setting:`CSRF_HEADER_NAME` setting."
@@ -215,12 +183,12 @@ msgstr ""
 "управлять именем при помощи настройки :setting:`CSRF_HEADER_NAME`."
 
 # 5108646b803f456a892ae0dc31586e6d
-#: ../../ref/csrf.txt:98
+#: ../../ref/csrf.txt:79
 msgid "Acquiring the token is straightforward:"
 msgstr "Получение токена является простым:"
 
 # 35edebf25c004f9184e88c47b78c7ca5
-#: ../../ref/csrf.txt:120
+#: ../../ref/csrf.txt:101
 msgid ""
 "The above code could be simplified by using the `JavaScript Cookie library "
 "<https://github.com/js-cookie/js-cookie/>`_ to replace ``getCookie``:"
@@ -229,7 +197,7 @@ msgstr ""
 "Cookie <http://plugins.jquery.com/cookie/>`_ для замены ``getCookie``:"
 
 # 8baaa22c11284ab482fcd6b258459338
-#: ../../ref/csrf.txt:129
+#: ../../ref/csrf.txt:110
 msgid ""
 "The CSRF token is also present in the DOM, but only if explicitly included "
 "using :ttag:`csrf_token` in a template. The cookie contains the canonical "
@@ -244,7 +212,7 @@ msgstr ""
 "вы должны использовать куки. "
 
 # df2aff7bf00c4f3ab4df0c8fad5008fa
-#: ../../ref/csrf.txt:137
+#: ../../ref/csrf.txt:118
 msgid ""
 "If your view is not rendering a template containing the :ttag:`csrf_token` "
 "template tag, Django might not set the CSRF token cookie. This is common in "
@@ -256,7 +224,7 @@ msgstr ""
 "`csrf_token`, Django может не установить куки с CSRF токеном."
 
 # c2bd7771d02c403e8538958cc85ccfbf
-#: ../../ref/csrf.txt:143
+#: ../../ref/csrf.txt:124
 msgid ""
 "Finally, you'll have to actually set the header on your AJAX request, while "
 "protecting the CSRF token from being sent to other domains using `settings."
@@ -267,46 +235,31 @@ msgstr ""
 "используя `settings.crossDomain <https://api.jquery.com/jQuery.ajax>`_ в "
 "jQuery 1.5.1 и выше:"
 
-# 33feaa5541d34b8e985072f4bf8eedff
-#: ../../ref/csrf.txt:163
-msgid "Other template engines"
-msgstr "Другие шаблонизаторы"
-
-# 419cc2fb09e240b182b82e17e0d5f6ca
-#: ../../ref/csrf.txt:165
+#: ../../ref/csrf.txt:143
 msgid ""
-"When using a different template engine than Django's built-in engine, you "
-"can set the token in your forms manually after making sure it's available in "
-"the template context."
+"If you're using AngularJS 1.1.3 and newer, it's sufficient to configure the "
+"``$http`` provider with the cookie and header names:"
 msgstr ""
-"Если используются шаблонизаторы отличные от встроенного в Django, вы должны "
-"установить токен в ваших формах вручную после того как убедились, что он "
-"доступен в контексте шаблона."
 
-# 6ac7add28af74d1f9213e8a298522b07
-#: ../../ref/csrf.txt:169
-msgid ""
-"For example, in the Jinja2 template language, your form could contain the "
-"following:"
+#: ../../ref/csrf.txt:152
+msgid "Using CSRF in Jinja2 templates"
 msgstr ""
-"Например, в шаблонизаторе Jinja2 , ваша форма может содержать следующее:"
 
-# 50ba62e67cc242d9aae7beab1dbe4ab2
-#: ../../ref/csrf.txt:178
+#: ../../ref/csrf.txt:154
 msgid ""
-"You can use JavaScript similar to the :ref:`AJAX code <csrf-ajax>` above to "
-"get the value of the CSRF token."
+"Django's :class:`~django.template.backends.jinja2.Jinja2` template backend "
+"adds ``{{ csrf_input }}`` to the context of all templates which is "
+"equivalent to ``{% csrf_token %}`` in the Django template language. For "
+"example:"
 msgstr ""
-"Вы можете использовать JavaScript подобный :ref:`AJAX код <csrf-ajax>` для "
-"получения значения CSRF токена."
 
 # 14fcbcd062da4c1d8d5dc130bdc4aa8b
-#: ../../ref/csrf.txt:182
+#: ../../ref/csrf.txt:163
 msgid "The decorator method"
 msgstr "Подход с декоратором"
 
 # f654a08ec53d4d8eac92c26099e7300b
-#: ../../ref/csrf.txt:186
+#: ../../ref/csrf.txt:167
 msgid ""
 "Rather than adding ``CsrfViewMiddleware`` as a blanket protection, you can "
 "use the ``csrf_protect`` decorator, which has exactly the same "
@@ -323,7 +276,7 @@ msgstr ""
 "представление, но не всегда)."
 
 # 41c96d72eabe4e5abc49956e2189e508
-#: ../../ref/csrf.txt:192
+#: ../../ref/csrf.txt:173
 msgid ""
 "Use of the decorator by itself is **not recommended**, since if you forget "
 "to use it, you will have a security hole. The 'belt and braces' strategy of "
@@ -335,7 +288,7 @@ msgstr ""
 "к минимальным накладным расходам."
 
 # 5f5d800bae5443b59cc286cd503d4b1e
-#: ../../ref/csrf.txt:198
+#: ../../ref/csrf.txt:179
 msgid ""
 "Decorator that provides the protection of ``CsrfViewMiddleware`` to a view."
 msgstr ""
@@ -343,11 +296,11 @@ msgstr ""
 "представления."
 
 # 9582490c50fa4db28fb4b3a7fd07b9f1
-#: ../../ref/csrf.txt:200
+#: ../../ref/csrf.txt:181
 msgid "Usage::"
 msgstr "Использование::"
 
-#: ../../ref/csrf.txt:211 ../../ref/csrf.txt:307
+#: ../../ref/csrf.txt:192 ../../ref/csrf.txt:323
 msgid ""
 "If you are using class-based views, you can refer to :ref:`Decorating class-"
 "based views<decorating-class-based-views>`."
@@ -356,12 +309,12 @@ msgstr ""
 "`декорировании представлений-классов<decorating-class-based-views>`."
 
 # cbaca5259db14d6c811779d9e4c094ae
-#: ../../ref/csrf.txt:215
+#: ../../ref/csrf.txt:196
 msgid "Rejected requests"
 msgstr "Отклоненные запросы"
 
 # 508d0aa1e6ad4bbaa4f53e3e0292bef0
-#: ../../ref/csrf.txt:217
+#: ../../ref/csrf.txt:198
 msgid ""
 "By default, a '403 Forbidden' response is sent to the user if an incoming "
 "request fails the checks performed by ``CsrfViewMiddleware``.  This should "
@@ -375,7 +328,7 @@ msgstr ""
 "CSRF токен не был включен в POST форму."
 
 # 8fe7a0254a1f4c94b4df40a05367fa35
-#: ../../ref/csrf.txt:223
+#: ../../ref/csrf.txt:204
 msgid ""
 "The error page, however, is not very friendly, so you may want to provide "
 "your own view for handling this condition.  To do this, simply set the :"
@@ -385,33 +338,41 @@ msgstr ""
 "собственное представление для обработки этого состояния. Чтобы сделать это, "
 "просто установите параметр :setting:`CSRF_FAILURE_VIEW`."
 
+#: ../../ref/csrf.txt:208
+msgid ""
+"CSRF failures are logged as warnings to the :ref:`django-request-logger` "
+"logger."
+msgstr ""
+
 # ee4c5339f02a48f1bf0ae892c70ce713
-#: ../../ref/csrf.txt:230
+#: ../../ref/csrf.txt:214
 msgid "How it works"
 msgstr "Как это работает"
 
 # 0c5c08b90cfc41fc8e0180f6a9c23800
-#: ../../ref/csrf.txt:232
+#: ../../ref/csrf.txt:216
 msgid "The CSRF protection is based on the following things:"
 msgstr "CSRF базируется на следующих вещах:"
 
 # 34e89bef123443d796964bb1534d3c3c
-#: ../../ref/csrf.txt:234
+#: ../../ref/csrf.txt:218
+#, fuzzy
 msgid ""
-"A CSRF cookie that is set to a random value (a session independent nonce, as "
-"it is called), which other sites will not have access to."
+"A CSRF cookie that is based on a random secret value, which other sites will "
+"not have access to."
 msgstr ""
 "CSRF кука, которая устанавливается как случайное число (сессия независимого "
 "случайного слова, как это еще иногда называют), к которой другие сайты не "
 "будут иметь доступа."
 
 # c3edc4e970854af1958b33d9b0c013e5
-#: ../../ref/csrf.txt:237
+#: ../../ref/csrf.txt:221
+#, fuzzy
 msgid ""
-"This cookie is set by ``CsrfViewMiddleware``.  It is meant to be permanent, "
-"but since there is no way to set a cookie that never expires, it is sent "
-"with every response that has called ``django.middleware.csrf.get_token()`` "
-"(the function used internally to retrieve the CSRF token)."
+"This cookie is set by ``CsrfViewMiddleware``. It is sent with every response "
+"that has called ``django.middleware.csrf.get_token()`` (the function used "
+"internally to retrieve the CSRF token), if it wasn't already set on the "
+"request."
 msgstr ""
 "Эта кука устанавливается при помощи ``CsrfViewMiddleware``. Она должно быть "
 "постоянной, но так как нет способа установить куки, у которых никогда не "
@@ -419,23 +380,34 @@ msgstr ""
 "``django.middleware.csrf.get_token()`` (функция использовалась внутри для "
 "получения CSRF токена)."
 
-# 15d288d929bb463097d2ce68b18ec204
-#: ../../ref/csrf.txt:242
+#: ../../ref/csrf.txt:226
+msgid ""
+"In order to protect against `BREACH`_ attacks, the token is not simply the "
+"secret; a random salt is prepended to the secret and used to scramble it."
+msgstr ""
+
+#: ../../ref/csrf.txt:229
+msgid ""
+"For security reasons, the value of the secret is changed each time a user "
+"logs in."
+msgstr ""
+
+#: ../../ref/csrf.txt:232
 msgid ""
 "A hidden form field with the name 'csrfmiddlewaretoken' present in all "
-"outgoing POST forms.  The value of this field is the value of the CSRF "
-"cookie."
+"outgoing POST forms. The value of this field is, again, the value of the "
+"secret, with a salt which is both added to it and used to scramble it. The "
+"salt is regenerated on every call to ``get_token()`` so that the form field "
+"value is changed in every such response."
 msgstr ""
-"Все POST формы содержат скрытое поле 'csrfmiddlewaretoken'. Значение поля "
-"равно CSRF куке."
 
 # 54c5e0af63d64022bd56d460aaca6278
-#: ../../ref/csrf.txt:246
+#: ../../ref/csrf.txt:238
 msgid "This part is done by the template tag."
 msgstr "Эта часть выполняет шаблонным тегом."
 
 # 184d8fb00b784dcbb49626b7bcb740bc
-#: ../../ref/csrf.txt:248
+#: ../../ref/csrf.txt:240
 msgid ""
 "For all incoming requests that are not using HTTP GET, HEAD, OPTIONS or "
 "TRACE, a CSRF cookie must be present, and the 'csrfmiddlewaretoken' field "
@@ -445,21 +417,37 @@ msgstr ""
 "CSRF куку, и поле 'csrfmiddlewaretoken' с правильным значением. Иначе "
 "пользователь получит 403 ошибку."
 
+#: ../../ref/csrf.txt:244
+msgid ""
+"When validating the 'csrfmiddlewaretoken' field value, only the secret, not "
+"the full token, is compared with the secret in the cookie value. This allows "
+"the use of ever-changing tokens. While each request may use its own token, "
+"the secret remains common to all."
+msgstr ""
+
 # e02df7c1aa394501b51875a63e531cf1
-#: ../../ref/csrf.txt:252
+#: ../../ref/csrf.txt:249
 msgid "This check is done by ``CsrfViewMiddleware``."
 msgstr "Эта проверка выполняется в ``CsrfViewMiddleware``."
 
-# d5750bc06dc74cd2afa2b992dbab76e1
-#: ../../ref/csrf.txt:254
+#: ../../ref/csrf.txt:251
 msgid ""
 "In addition, for HTTPS requests, strict referer checking is done by "
-"``CsrfViewMiddleware``.  This is necessary to address a Man-In-The-Middle "
-"attack that is possible under HTTPS when using a session independent nonce, "
-"due to the fact that HTTP 'Set-Cookie' headers are (unfortunately) accepted "
-"by clients that are talking to a site under HTTPS.  (Referer checking is not "
-"done for HTTP requests because the presence of the Referer header is not "
-"reliable enough under HTTP.)"
+"``CsrfViewMiddleware``. This means that even if a subdomain can set or "
+"modify cookies on your domain, it can't force a user to post to your "
+"application since that request won't come from your own exact domain."
+msgstr ""
+
+# d5750bc06dc74cd2afa2b992dbab76e1
+#: ../../ref/csrf.txt:256
+#, fuzzy
+msgid ""
+"This also addresses a man-in-the-middle attack that's possible under HTTPS "
+"when using a session independent secret, due to the fact that HTTP ``Set-"
+"Cookie`` headers are (unfortunately) accepted by clients even when they are "
+"talking to a site under HTTPS. (Referer checking is not done for HTTP "
+"requests because the presence of the ``Referer`` header isn't reliable "
+"enough under HTTP.)"
 msgstr ""
 "В дополнение для HTTPS запросов в ``CsrfViewMiddleware`` проверяется "
 "\"referer\"(источник запроса). Это необходимо для предотвращения MITM-"
@@ -469,7 +457,7 @@ msgstr ""
 "HTTPS. (Такая проверка не выполняется для HTTP запросов т.к. \"Referer\" "
 "заголовок легко подменить при использовании HTTP.)"
 
-#: ../../ref/csrf.txt:262
+#: ../../ref/csrf.txt:263
 msgid ""
 "If the :setting:`CSRF_COOKIE_DOMAIN` setting is set, the referer is compared "
 "against it. This setting supports subdomains. For example, "
@@ -483,7 +471,7 @@ msgstr ""
 "запросы с ``www.example.com`` и ``api.example.com``. Если настройка не "
 "указана, \"referer\" должен быть равен HTTP заголовку ``Host``."
 
-#: ../../ref/csrf.txt:268
+#: ../../ref/csrf.txt:269
 msgid ""
 "Expanding the accepted referers beyond the current host or cookie domain can "
 "be done with the :setting:`CSRF_TRUSTED_ORIGINS` setting."
@@ -492,7 +480,7 @@ msgstr ""
 "используйте :setting:`CSRF_TRUSTED_ORIGINS`."
 
 # 549b4fc53ea34b33b4fc73cda7b6880d
-#: ../../ref/csrf.txt:271
+#: ../../ref/csrf.txt:272
 msgid ""
 "This ensures that only forms that have originated from trusted domains can "
 "be used to POST data back."
@@ -501,13 +489,14 @@ msgstr ""
 "доменов, могут передавать POST данные."
 
 # 423f53098e664e3d844befacf0a9469b
-#: ../../ref/csrf.txt:274
+#: ../../ref/csrf.txt:275
+#, fuzzy
 msgid ""
 "It deliberately ignores GET requests (and other requests that are defined as "
-"'safe' by :rfc:`2616`). These requests ought never to have any potentially "
+"'safe' by :rfc:`7231`). These requests ought never to have any potentially "
 "dangerous side effects , and so a CSRF attack with a GET request ought to be "
-"harmless. :rfc:`2616` defines POST, PUT and DELETE as 'unsafe', and all "
-"other methods are assumed to be unsafe, for maximum protection."
+"harmless. :rfc:`7231` defines POST, PUT, and DELETE as 'unsafe', and all "
+"other methods are also assumed to be unsafe, for maximum protection."
 msgstr ""
 "GET игнорируются сознательно (и все другие запросы, которые считаются "
 "\"безопасными\" в соответствии с :rfc:`2616`). Эти запросы никогда не должны "
@@ -515,17 +504,34 @@ msgstr ""
 "запрос должен быть безвредным. :rfc:`2616` определяет POST, PUT и DELETE как "
 "\"небезопасные\"."
 
-#: ../../ref/csrf.txt:282
+#: ../../ref/csrf.txt:281
+msgid ""
+"The CSRF protection cannot protect against man-in-the-middle attacks, so "
+"use :ref:`HTTPS <security-recommendation-ssl>` with :ref:`http-strict-"
+"transport-security`. It also assumes :ref:`validation of the HOST header "
+"<host-headers-virtual-hosting>` and that there aren't any :ref:`cross-site "
+"scripting vulnerabilities <cross-site-scripting>` on your site (because XSS "
+"vulnerabilities already let an attacker do anything a CSRF vulnerability "
+"allows and much worse)."
+msgstr ""
+
+#: ../../ref/csrf.txt:291
 msgid "Checking against the :setting:`CSRF_COOKIE_DOMAIN` setting was added."
 msgstr "Была добавлена проверка настройки :setting:`CSRF_COOKIE_DOMAIN`."
 
+#: ../../ref/csrf.txt:295
+msgid ""
+"Added salting to the token and started changing it with each request to "
+"protect against `BREACH`_ attacks."
+msgstr ""
+
 # 9d4a61f1ef8e4f1aa5218b5271b54a51
-#: ../../ref/csrf.txt:285
+#: ../../ref/csrf.txt:301
 msgid "Caching"
 msgstr "Кеширование"
 
 # 9565bab3964f421aa72d336649ba1521
-#: ../../ref/csrf.txt:287
+#: ../../ref/csrf.txt:303
 msgid ""
 "If the :ttag:`csrf_token` template tag is used by a template (or the "
 "``get_token`` function is called some other way), ``CsrfViewMiddleware`` "
@@ -541,7 +547,7 @@ msgstr ""
 "слоями)."
 
 # b969dde627974ce69b9813d8d88135d6
-#: ../../ref/csrf.txt:293
+#: ../../ref/csrf.txt:309
 msgid ""
 "However, if you use cache decorators on individual views, the CSRF "
 "middleware will not yet have been able to set the Vary header or the CSRF "
@@ -556,12 +562,12 @@ msgstr ""
 "декоратор :func:`django.views.decorators.csrf.csrf_protect`::"
 
 # 87373caa67ec4f60b0cc30a06c96b0dd
-#: ../../ref/csrf.txt:311
+#: ../../ref/csrf.txt:327
 msgid "Testing"
 msgstr "Тестирование"
 
 # 5fa9d1da3268495ba9e9a8e693e6e232
-#: ../../ref/csrf.txt:313
+#: ../../ref/csrf.txt:329
 msgid ""
 "The ``CsrfViewMiddleware`` will usually be a big hindrance to testing view "
 "functions, due to the need for the CSRF token which must be sent with every "
@@ -577,7 +583,7 @@ msgstr ""
 "всем остальном (например, установка кук) запросы работают как обычно."
 
 # 5a38a4c8d4d14333a51a30d87f1f23f9
-#: ../../ref/csrf.txt:320
+#: ../../ref/csrf.txt:336
 msgid ""
 "If, for some reason, you *want* the test client to perform CSRF checks, you "
 "can create an instance of the test client that enforces CSRF checks::"
@@ -586,12 +592,12 @@ msgstr ""
 "проверку CSRF, вы можете создать специальный экземпляр тестового клиента::"
 
 # 5a7c5df138de446e93db27bc3404d3bc
-#: ../../ref/csrf.txt:330
+#: ../../ref/csrf.txt:346
 msgid "Limitations"
 msgstr "Ограничения"
 
 # 5231722850d74a31af2d4f75269fe237
-#: ../../ref/csrf.txt:332
+#: ../../ref/csrf.txt:348
 msgid ""
 "Subdomains within a site will be able to set cookies on the client for the "
 "whole domain.  By setting the cookie and using a corresponding token, "
@@ -612,12 +618,12 @@ msgstr ""
 "контроль над поддоменом непроверенным людям -- плохая идея."
 
 # 573b3d1d4bcf43328cebf630780f80db
-#: ../../ref/csrf.txt:341
+#: ../../ref/csrf.txt:357
 msgid "Edge cases"
 msgstr "Особые случаи"
 
 # 304195a4ecc2448bb775168e2cd7c77d
-#: ../../ref/csrf.txt:343
+#: ../../ref/csrf.txt:359
 msgid ""
 "Certain views can have unusual requirements that mean they don't fit the "
 "normal pattern envisaged here. A number of utilities can be useful in these "
@@ -629,11 +635,11 @@ msgstr ""
 "функций, которые могут пригодиться в таком случае."
 
 # 408270a3d74546d3b253cb965062cb0f
-#: ../../ref/csrf.txt:349
+#: ../../ref/csrf.txt:365
 msgid "Utilities"
 msgstr "Утилиты"
 
-#: ../../ref/csrf.txt:351
+#: ../../ref/csrf.txt:367
 msgid ""
 "The examples below assume you are using function-based views. If you are "
 "working with class-based views, you can refer to :ref:`Decorating class-"
@@ -644,7 +650,7 @@ msgstr ""
 "разделу<decorating-class-based-views>`."
 
 # 9be623bdb5594ad5b775e095421830bc
-#: ../../ref/csrf.txt:357
+#: ../../ref/csrf.txt:373
 msgid ""
 "This decorator marks a view as being exempt from the protection ensured by "
 "the middleware. Example::"
@@ -653,7 +659,7 @@ msgstr ""
 "Например::"
 
 # c2f6da3fac7b4aa6914d4354111af8cc
-#: ../../ref/csrf.txt:369
+#: ../../ref/csrf.txt:385
 msgid ""
 "Normally the :ttag:`csrf_token` template tag will not work if "
 "``CsrfViewMiddleware.process_view`` or an equivalent like ``csrf_protect`` "
@@ -668,34 +674,34 @@ msgstr ""
 "``csrf_protect``, но не возвращает ответ с ошибкой."
 
 # 62e23e60ec01408a9da1ba5831aa9fb9
-#: ../../ref/csrf.txt:375
+#: ../../ref/csrf.txt:391
 msgid "Example::"
 msgstr "Примеры::"
 
 # 6e2204eae6604c0f80bfc3175c2f2ef0
-#: ../../ref/csrf.txt:388
+#: ../../ref/csrf.txt:404
 msgid "This decorator forces a view to send the CSRF cookie."
 msgstr "Этот декоратор заставляет представление послать CSRF куку."
 
 # 0cadc87fef8a46c59634d538501bc558
-#: ../../ref/csrf.txt:391
+#: ../../ref/csrf.txt:407
 msgid "Scenarios"
 msgstr "Сценарии"
 
 # 7104be2cb3364c9fa94f7d937f3a6c0c
-#: ../../ref/csrf.txt:394
+#: ../../ref/csrf.txt:410
 msgid "CSRF protection should be disabled for just a few views"
 msgstr "Необходимо отключить CSRF защиту для некоторых представлений"
 
 # faf6e15047594d7e8bc0443e7d784229
-#: ../../ref/csrf.txt:396
+#: ../../ref/csrf.txt:412
 msgid "Most views requires CSRF protection, but a few do not."
 msgstr ""
 "Для большинства представлений необходима CSRF защита, но для некоторых "
 "необходимо отключить."
 
 # bbceaa9494cb40fdb0a469c0eabc072c
-#: ../../ref/csrf.txt:398
+#: ../../ref/csrf.txt:414
 msgid ""
 "Solution: rather than disabling the middleware and applying ``csrf_protect`` "
 "to all the views that need it, enable the middleware and use :func:`~django."
@@ -707,12 +713,12 @@ msgstr ""
 "csrf.csrf_exempt`."
 
 # 7339face7df240a9ad584eff88321ed5
-#: ../../ref/csrf.txt:403
+#: ../../ref/csrf.txt:419
 msgid "CsrfViewMiddleware.process_view not used"
 msgstr "CsrfViewMiddleware.process_view не выполняется"
 
 # e406f8402a894616b07bb8b4b61f6b8c
-#: ../../ref/csrf.txt:405
+#: ../../ref/csrf.txt:421
 msgid ""
 "There are cases when ``CsrfViewMiddleware.process_view`` may not have run "
 "before your view is run - 404 and 500 handlers, for example - but you still "
@@ -723,19 +729,19 @@ msgstr ""
 "вам все еще необходим CSRF токен для формы."
 
 # 3a76d88675c541b6bec0215f58d91da1
-#: ../../ref/csrf.txt:409
+#: ../../ref/csrf.txt:425
 msgid "Solution: use :func:`~django.views.decorators.csrf.requires_csrf_token`"
 msgstr ""
 "Решение: используйте :func:`~django.views.decorators.csrf."
 "requires_csrf_token`"
 
 # f21d9f721a3544c782a5f0755aa8e24f
-#: ../../ref/csrf.txt:412
+#: ../../ref/csrf.txt:428
 msgid "Unprotected view needs the CSRF token"
 msgstr "Для незащищенного представления необходим CSRF токен"
 
 # 4f7ef41329a24befb38ed9f1845e363f
-#: ../../ref/csrf.txt:414
+#: ../../ref/csrf.txt:430
 msgid ""
 "There may be some views that are unprotected and have been exempted by "
 "``csrf_exempt``, but still need to include the CSRF token."
@@ -744,7 +750,7 @@ msgstr ""
 "помощью декоратора ``csrf_exempt``, но им необходим CSRF токен."
 
 # 0c231c1d7fa548929a432a73011c656d
-#: ../../ref/csrf.txt:417
+#: ../../ref/csrf.txt:433
 msgid ""
 "Solution: use :func:`~django.views.decorators.csrf.csrf_exempt` followed by :"
 "func:`~django.views.decorators.csrf.requires_csrf_token`. (i.e. "
@@ -756,12 +762,12 @@ msgstr ""
 "\" декоратором)."
 
 # 332d32bb12a347d3ab100736ae3b5167
-#: ../../ref/csrf.txt:422
+#: ../../ref/csrf.txt:438
 msgid "View needs protection for one path"
 msgstr "Представлению необходима проверка CSRF только для определенного пути"
 
 # 33789304ec1c4e3195382e04c882bfcf
-#: ../../ref/csrf.txt:424
+#: ../../ref/csrf.txt:440
 msgid ""
 "A view needs CSRF protection under one set of conditions only, and mustn't "
 "have it for the rest of the time."
@@ -770,7 +776,7 @@ msgstr ""
 "не нужна для всех остальных случаев."
 
 # 2e3242c86cd24439b552cc0fa42792d8
-#: ../../ref/csrf.txt:427
+#: ../../ref/csrf.txt:443
 msgid ""
 "Solution: use :func:`~django.views.decorators.csrf.csrf_exempt` for the "
 "whole view function, and :func:`~django.views.decorators.csrf.csrf_protect` "
@@ -781,12 +787,12 @@ msgstr ""
 "csrf_protect` при определенном условии внутри функции. Например::"
 
 # 17ea45a7afd646968eaac9c7562983ea
-#: ../../ref/csrf.txt:446
+#: ../../ref/csrf.txt:462
 msgid "Page uses AJAX without any HTML form"
 msgstr "Страница использует AJAX, не имея ни одной HTML формы"
 
 # c5adda6301d94e36a3dd8a037007be6b
-#: ../../ref/csrf.txt:448
+#: ../../ref/csrf.txt:464
 msgid ""
 "A page makes a POST request via AJAX, and the page does not have an HTML "
 "form with a :ttag:`csrf_token` that would cause the required CSRF cookie to "
@@ -796,7 +802,7 @@ msgstr ""
 "тегом :ttag:`csrf_token`, который вызывает отправку CSRF куки."
 
 # 3ecbdb7a7faa4cf28b58eef2bdfefd14
-#: ../../ref/csrf.txt:451
+#: ../../ref/csrf.txt:467
 msgid ""
 "Solution: use :func:`~django.views.decorators.csrf.ensure_csrf_cookie` on "
 "the view that sends the page."
@@ -805,12 +811,12 @@ msgstr ""
 "ensure_csrf_cookie` в представлении, которое отсылает страницу."
 
 # 4ee2420d0c06436fb249ee3e47a6fc5e
-#: ../../ref/csrf.txt:455
+#: ../../ref/csrf.txt:471
 msgid "Contrib and reusable apps"
 msgstr "Встроенные и распространяемые приложения"
 
 # 7d50932d0a6f4917b541700a2c8756c4
-#: ../../ref/csrf.txt:457
+#: ../../ref/csrf.txt:473
 msgid ""
 "Because it is possible for the developer to turn off the "
 "``CsrfViewMiddleware``, all relevant views in contrib apps use the "
@@ -827,61 +833,190 @@ msgstr ""
 "атак."
 
 # 68343fb2ad7a434093855e38e4a271d8
-#: ../../ref/csrf.txt:464
+#: ../../ref/csrf.txt:480
 msgid "Settings"
 msgstr "Параметры"
 
 # b4d8a97bee124e6e973e5aac22c9b09f
-#: ../../ref/csrf.txt:466
+#: ../../ref/csrf.txt:482
 msgid "A number of settings can be used to control Django's CSRF behavior:"
 msgstr ""
 "Параметры, которые могут быть использованы для управления поведением CSRF в "
 "Django:"
 
 # 91405b4c1e594c6bbbff32fa1c09bd1f
-#: ../../ref/csrf.txt:468
+#: ../../ref/csrf.txt:484
 msgid ":setting:`CSRF_COOKIE_AGE`"
 msgstr ":setting:`CSRF_COOKIE_AGE`"
 
 # 5ea793d5868d4b1981eaf094175c65dc
-#: ../../ref/csrf.txt:469
+#: ../../ref/csrf.txt:485
 msgid ":setting:`CSRF_COOKIE_DOMAIN`"
 msgstr ":setting:`CSRF_COOKIE_DOMAIN`"
 
 # add05897f6334227952b310205c18eba
-#: ../../ref/csrf.txt:470
+#: ../../ref/csrf.txt:486
 msgid ":setting:`CSRF_COOKIE_HTTPONLY`"
 msgstr ":setting:`CSRF_COOKIE_HTTPONLY`"
 
 # dfd98d61dde04fe79b826f5f6ea681d7
-#: ../../ref/csrf.txt:471
+#: ../../ref/csrf.txt:487
 msgid ":setting:`CSRF_COOKIE_NAME`"
 msgstr ":setting:`CSRF_COOKIE_NAME`"
 
 # ae733eea82cf4e7daffbc6e4d8bf49ef
-#: ../../ref/csrf.txt:472
+#: ../../ref/csrf.txt:488
 msgid ":setting:`CSRF_COOKIE_PATH`"
 msgstr ":setting:`CSRF_COOKIE_PATH`"
 
 # 9a4dfb5bd04547939a4f4d0935f3a6b2
-#: ../../ref/csrf.txt:473
+#: ../../ref/csrf.txt:489
 msgid ":setting:`CSRF_COOKIE_SECURE`"
 msgstr ":setting:`CSRF_COOKIE_SECURE`"
 
 # b60e97e3dea24f2093ef8255b359f5e0
-#: ../../ref/csrf.txt:474
+#: ../../ref/csrf.txt:490
 msgid ":setting:`CSRF_FAILURE_VIEW`"
 msgstr ":setting:`CSRF_FAILURE_VIEW`"
 
 # dfd98d61dde04fe79b826f5f6ea681d7
-#: ../../ref/csrf.txt:475
+#: ../../ref/csrf.txt:491
 msgid ":setting:`CSRF_HEADER_NAME`"
 msgstr ":setting:`CSRF_HEADER_NAME`"
 
 # 5ea793d5868d4b1981eaf094175c65dc
-#: ../../ref/csrf.txt:476
+#: ../../ref/csrf.txt:492
 msgid ":setting:`CSRF_TRUSTED_ORIGINS`"
 msgstr ":setting:`CSRF_TRUSTED_ORIGINS`"
+
+#: ../../ref/csrf.txt:495
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: ../../ref/csrf.txt:498
+msgid ""
+"Is posting an arbitrary CSRF token pair (cookie and POST data) a "
+"vulnerability?"
+msgstr ""
+
+#: ../../ref/csrf.txt:500
+msgid ""
+"No, this is by design. Without a man-in-the-middle attack, there is no way "
+"for an attacker to send a CSRF token cookie to a victim's browser, so a "
+"successful attack would need to obtain the victim's browser's cookie via XSS "
+"or similar, in which case an attacker usually doesn't need CSRF attacks."
+msgstr ""
+
+#: ../../ref/csrf.txt:505
+msgid ""
+"Some security audit tools flag this as a problem but as mentioned before, an "
+"attacker cannot steal a user's browser's CSRF cookie. \"Stealing\" or "
+"modifying *your own* token using Firebug, Chrome dev tools, etc. isn't a "
+"vulnerability."
+msgstr ""
+
+#: ../../ref/csrf.txt:510
+msgid ""
+"Is the fact that Django's CSRF protection isn't linked to a session a "
+"problem?"
+msgstr ""
+
+#: ../../ref/csrf.txt:512
+msgid ""
+"No, this is by design. Not linking CSRF protection to a session allows using "
+"the protection on sites such as a `pastebin` that allow submissions from "
+"anonymous users which don't have a session."
+msgstr ""
+
+#: ../../ref/csrf.txt:517
+msgid "Why might a user encounter a CSRF validation failure after logging in?"
+msgstr ""
+
+#: ../../ref/csrf.txt:519
+msgid ""
+"For security reasons, CSRF tokens are rotated each time a user logs in. Any "
+"page with a form generated before a login will have an old, invalid CSRF "
+"token and need to be reloaded. This might happen if a user uses the back "
+"button after a login or if they log in in a different browser tab."
+msgstr ""
+
+# f05da7ee205447c1869071b625dca66d
+#~ msgid ""
+#~ "In the corresponding view functions, ensure that the ``'django.template."
+#~ "context_processors.csrf'`` context processor is being used. Usually, this "
+#~ "can be done in one of two ways:"
+#~ msgstr ""
+#~ "В соответствующих функциях представления, убедитесь, что ``'django."
+#~ "template.context_processors.csrf'`` контекстный процессор используется. "
+#~ "Обычно, это может быть сделано в один из двух способов:"
+
+# ca7b13d5ce224a5091beea7501abf488
+#~ msgid ""
+#~ "Use RequestContext, which always uses ``'django.template."
+#~ "context_processors.csrf'`` (no matter what template context processors "
+#~ "are configured in the :setting:`TEMPLATES` setting). If you are using "
+#~ "generic views or contrib apps, you are covered already, since these apps "
+#~ "use RequestContext throughout."
+#~ msgstr ""
+#~ "Использовать RequestContext, который всегда использует ``'django.template."
+#~ "context_processors.csrf'`` (не зависимо от параметра :setting:"
+#~ "`TEMPLATES` ). Если вы используете общие представления или contrib "
+#~ "приложения, вы уже застрахованы, так как эти приложения используют "
+#~ "RequestContext повсюду."
+
+# ee5e3e0e9ae746f2bb3c1d108df7e763
+#~ msgid ""
+#~ "Manually import and use the processor to generate the CSRF token and add "
+#~ "it to the template context. e.g.::"
+#~ msgstr ""
+#~ "Вручную импортировать и использовать процессор для генерации CSRF токена "
+#~ "и добавить в шаблон контекста. т.е.::"
+
+# 57240f53491f42bd8a3ab2b8b552b934
+#~ msgid ""
+#~ "You may want to write your own :func:`~django.shortcuts."
+#~ "render_to_response()` wrapper that takes care of this step for you."
+#~ msgstr ""
+#~ "Вы можете захотеть написать собственный :func:`~django.shortcuts."
+#~ "render_to_response()` враппер, который позаботится об этом шаге для вас."
+
+# 33feaa5541d34b8e985072f4bf8eedff
+#~ msgid "Other template engines"
+#~ msgstr "Другие шаблонизаторы"
+
+# 419cc2fb09e240b182b82e17e0d5f6ca
+#~ msgid ""
+#~ "When using a different template engine than Django's built-in engine, you "
+#~ "can set the token in your forms manually after making sure it's available "
+#~ "in the template context."
+#~ msgstr ""
+#~ "Если используются шаблонизаторы отличные от встроенного в Django, вы "
+#~ "должны установить токен в ваших формах вручную после того как убедились, "
+#~ "что он доступен в контексте шаблона."
+
+# 6ac7add28af74d1f9213e8a298522b07
+#~ msgid ""
+#~ "For example, in the Jinja2 template language, your form could contain the "
+#~ "following:"
+#~ msgstr ""
+#~ "Например, в шаблонизаторе Jinja2 , ваша форма может содержать следующее:"
+
+# 50ba62e67cc242d9aae7beab1dbe4ab2
+#~ msgid ""
+#~ "You can use JavaScript similar to the :ref:`AJAX code <csrf-ajax>` above "
+#~ "to get the value of the CSRF token."
+#~ msgstr ""
+#~ "Вы можете использовать JavaScript подобный :ref:`AJAX код <csrf-ajax>` "
+#~ "для получения значения CSRF токена."
+
+# 15d288d929bb463097d2ce68b18ec204
+#~ msgid ""
+#~ "A hidden form field with the name 'csrfmiddlewaretoken' present in all "
+#~ "outgoing POST forms.  The value of this field is the value of the CSRF "
+#~ "cookie."
+#~ msgstr ""
+#~ "Все POST формы содержат скрытое поле 'csrfmiddlewaretoken'. Значение поля "
+#~ "равно CSRF куке."
 
 # 08f96c0fc48b4c18b5d367dc41d2b0ca
 #~ msgid ""

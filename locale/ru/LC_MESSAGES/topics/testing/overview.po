@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-17 10:48+0200\n"
+"POT-Creation-Date: 2016-12-08 11:07+0200\n"
 "PO-Revision-Date: 2016-03-17 12:51+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -87,7 +87,7 @@ msgstr ""
 msgid "For more details about :mod:`unittest`, see the Python documentation."
 msgstr "Подробности о :mod:`unittest` смотрите в документации Python."
 
-#: ../../topics/testing/overview.txt:0
+#: ../../topics/testing/overview.txt:49
 msgid "Where should the tests live?"
 msgstr "Где должны находиться тесты?"
 
@@ -193,16 +193,17 @@ msgstr ""
 
 # 90b85a49c6b3404b9ffc82935ba2868a
 #: ../../topics/testing/overview.txt:113
+#, fuzzy
 msgid ""
 "If you press ``Ctrl-C`` while the tests are running, the test runner will "
 "wait for the currently running test to complete and then exit gracefully. "
 "During a graceful exit the test runner will output details of any test "
 "failures, report on how many tests were run and how many errors and failures "
 "were encountered, and destroy any test databases as usual. Thus pressing "
-"``Ctrl-C`` can be very useful if you forget to pass the :djadminopt:`--"
-"failfast` option, notice that some tests are unexpectedly failing, and want "
-"to get details on the failures without waiting for the full test run to "
-"complete."
+"``Ctrl-C`` can be very useful if you forget to pass the :option:`--failfast "
+"<test --failfast>` option, notice that some tests are unexpectedly failing "
+"and want to get details on the failures without waiting for the full test "
+"run to complete."
 msgstr ""
 "Если нажать ``Ctrl-C`` при выполнении тестов, будет завершен текущий тест и "
 "затем остановлено выполнение тестов. После остановки будет выведен результат "
@@ -212,7 +213,7 @@ msgstr ""
 "выполнился с ошибкой."
 
 # 797f5c1fb7774f4fbf6d7a6a13bb33ad
-#: ../../topics/testing/overview.txt:122
+#: ../../topics/testing/overview.txt:123
 msgid ""
 "If you do not want to wait for the currently running test to finish, you can "
 "press ``Ctrl-C`` a second time and the test run will halt immediately, but "
@@ -224,12 +225,12 @@ msgstr ""
 "результатов выполнения тестов и тестовая база данных не будет удалена."
 
 # 72eda77501b742739133d4bd11120194
-#: ../../topics/testing/overview.txt:0
+#: ../../topics/testing/overview.txt:128
 msgid "Test with warnings enabled"
 msgstr "Выполнение тестов с включенными предупреждениями"
 
 # e6dfe4745a614113b9d127f62f2ad338
-#: ../../topics/testing/overview.txt:129
+#: ../../topics/testing/overview.txt:130
 msgid ""
 "It's a good idea to run your tests with Python warnings enabled: ``python -"
 "Wall manage.py test``. The ``-Wall`` flag tells Python to display "
@@ -247,12 +248,12 @@ msgstr ""
 "неправильный, но требует лучшей реализации."
 
 # 3d3d574515cc4b73980fbb1c68a42708
-#: ../../topics/testing/overview.txt:140
+#: ../../topics/testing/overview.txt:141
 msgid "The test database"
 msgstr "Тестовая база данных"
 
 # 7b52813d752b43ab8b9b7f64deb43eaa
-#: ../../topics/testing/overview.txt:142
+#: ../../topics/testing/overview.txt:143
 msgid ""
 "Tests that require a database (namely, model tests) will not use your \"real"
 "\" (production) database. Separate, blank databases are created for the "
@@ -263,7 +264,7 @@ msgstr ""
 "пустая база данных."
 
 # b82c76dd38e142908dd9bf7300234736
-#: ../../topics/testing/overview.txt:145
+#: ../../topics/testing/overview.txt:146
 msgid ""
 "Regardless of whether the tests pass or fail, the test databases are "
 "destroyed when all the tests have been executed."
@@ -271,12 +272,13 @@ msgstr ""
 "Независимо от результата выполнения тестов тестовая база будет удалена после "
 "выполнения тестов."
 
-#: ../../topics/testing/overview.txt:150
+#: ../../topics/testing/overview.txt:149
+#, fuzzy
 msgid ""
-"You can prevent the test databases from being destroyed by adding the :"
-"djadminopt:`--keepdb` flag to the test command. This will preserve the test "
-"database between runs. If the database does not exist, it will first be "
-"created. Any migrations will also be applied in order to keep it up to date."
+"You can prevent the test databases from being destroyed by using the :option:"
+"`test --keepdb` option. This will preserve the test database between runs. "
+"If the database does not exist, it will first be created. Any migrations "
+"will also be applied in order to keep it up to date."
 msgstr ""
 "Вы можете защитить тестовые базы данных от уничтожения, добавив флаг :"
 "djadminopt:`--keepdb` к команде запуска теста. Это защитит тестовые базы "
@@ -284,15 +286,18 @@ msgstr ""
 "создана. Любые миграции также будут применены в соответствующем порядке."
 
 # 0348a217f372486c86032bb05ec06d71
-#: ../../topics/testing/overview.txt:156
+#: ../../topics/testing/overview.txt:154
+#, fuzzy
 msgid ""
-"By default the test databases get their names by prepending ``test_`` to the "
-"value of the :setting:`NAME` settings for the databases defined in :setting:"
-"`DATABASES`. When using the SQLite database engine the tests will by default "
-"use an in-memory database (i.e., the database will be created in memory, "
-"bypassing the filesystem entirely!). If you want to use a different database "
-"name, specify :setting:`NAME <TEST_NAME>` in the :setting:`TEST <DATABASE-"
-"TEST>` dictionary for any given database in :setting:`DATABASES`."
+"The default test database names are created by prepending ``test_`` to the "
+"value of each :setting:`NAME` in :setting:`DATABASES`. When using SQLite, "
+"the tests will use an in-memory database by default (i.e., the database will "
+"be created in memory, bypassing the filesystem entirely!). The :setting:"
+"`TEST <DATABASE-TEST>` dictionary in :setting:`DATABASES` offers a number of "
+"settings to configure your test database. For example, if you want to use a "
+"different database name, specify :setting:`NAME <TEST_NAME>` in the :setting:"
+"`TEST <DATABASE-TEST>` dictionary for any given database in :setting:"
+"`DATABASES`."
 msgstr ""
 "По умолчанию название тестовой базы данных формируется путем добавления "
 "префикса ``test_`` к значению настройки :setting:`NAME` баз данных, "
@@ -303,7 +308,7 @@ msgstr ""
 "`TEST <DATABASE-TEST>` для баз данных, указанных в :setting:`DATABASES`."
 
 # 79a3ac5a9d054616a8ecfd5f27c84346
-#: ../../topics/testing/overview.txt:165
+#: ../../topics/testing/overview.txt:163
 msgid ""
 "On PostgreSQL, :setting:`USER` will also need read access to the built-in "
 "``postgres`` database."
@@ -312,7 +317,7 @@ msgstr ""
 "встроенной базы данных ``postgres``."
 
 # 2eca4cfd2a214377bcdbc976704181c6
-#: ../../topics/testing/overview.txt:168
+#: ../../topics/testing/overview.txt:166
 msgid ""
 "Aside from using a separate database, the test runner will otherwise use all "
 "of the same database settings you have in your settings file: :setting:"
@@ -328,7 +333,7 @@ msgstr ""
 "данных."
 
 # ca854cf37a72493087695de8b08270a6
-#: ../../topics/testing/overview.txt:175
+#: ../../topics/testing/overview.txt:173
 msgid ""
 "For fine-grained control over the character encoding of your test database, "
 "use the :setting:`CHARSET <TEST_CHARSET>` TEST option. If you're using "
@@ -342,9 +347,10 @@ msgstr ""
 "можно также указать :setting:`COLLATION <TEST_COLLATION>`. Подробнее о "
 "настройках можно прочитать в :doc:`соответствующем разделе </ref/settings>`."
 
-#: ../../topics/testing/overview.txt:182
+#: ../../topics/testing/overview.txt:180
+#, fuzzy
 msgid ""
-"If using a SQLite in-memory database with Python 3.4+ and SQLite 3.7.13+, "
+"If using an SQLite in-memory database with Python 3.4+ and SQLite 3.7.13+, "
 "`shared cache <https://www.sqlite.org/sharedcache.html>`_ will be enabled, "
 "so you can write tests with ability to share the database between threads."
 msgstr ""
@@ -353,20 +359,13 @@ msgstr ""
 "sqlite.org/sharedcache.html>`_, таким образом, вы сможете созавать тесты с "
 "возможностью разделения базы данных между потоками."
 
-#: ../../topics/testing/overview.txt:188
-msgid ""
-"The ability to use SQLite with a shared cache as described above was added."
-msgstr ""
-"Была добавлена упомянутая выше возможность использования SQLite с "
-"разделяемым кэшем."
-
 # 9a6d6717ce624aa5a25c4d91c33d36ee
-#: ../../topics/testing/overview.txt:0
+#: ../../topics/testing/overview.txt:184
 msgid "Finding data from your production database when running tests?"
 msgstr "Запросы к настоящей базе дынных при выполнении тестов"
 
 # 50d0932429d642d2a7ea58b360f0fe2a
-#: ../../topics/testing/overview.txt:192
+#: ../../topics/testing/overview.txt:186
 msgid ""
 "If your code attempts to access the database when its modules are compiled, "
 "this will occur *before* the test database is set up, with potentially "
@@ -382,7 +381,7 @@ msgstr ""
 "практика*. Избегайте этого."
 
 # c3cef5c3b7f4470488e30bab367e2f89
-#: ../../topics/testing/overview.txt:199
+#: ../../topics/testing/overview.txt:193
 msgid ""
 "This also applies to customized implementations of :meth:`~django.apps."
 "AppConfig.ready()`."
@@ -390,7 +389,7 @@ msgstr ""
 "Это также относиться и к методу :meth:`~django.apps.AppConfig.ready()`."
 
 # 67e4a351b90847a3b0e4957a74bd17a0
-#: ../../topics/testing/overview.txt:204
+#: ../../topics/testing/overview.txt:198
 msgid ""
 "The :ref:`advanced multi-db testing topics <topics-testing-advanced-"
 "multidb>`."
@@ -399,12 +398,12 @@ msgstr ""
 "testing-advanced-multidb>`."
 
 # 68f136d436e24f1a940fced8d9d6978c
-#: ../../topics/testing/overview.txt:209
+#: ../../topics/testing/overview.txt:203
 msgid "Order in which tests are executed"
 msgstr "Порядок выполнения тестов"
 
 # 9fcd4b7c31554e3fadc3e4ce1636d483
-#: ../../topics/testing/overview.txt:211
+#: ../../topics/testing/overview.txt:205
 msgid ""
 "In order to guarantee that all ``TestCase`` code starts with a clean "
 "database, the Django test runner reorders tests in the following way:"
@@ -413,12 +412,12 @@ msgstr ""
 "тесты в следующем порядке:"
 
 # ed08057435074f30919e91385f999b6b
-#: ../../topics/testing/overview.txt:214
+#: ../../topics/testing/overview.txt:208
 msgid "All :class:`~django.test.TestCase` subclasses are run first."
 msgstr "Сначала классы-наследники :class:`~django.test.TestCase`."
 
 # d6b5ebcd817948ac9782afe95f1910dd
-#: ../../topics/testing/overview.txt:216
+#: ../../topics/testing/overview.txt:210
 msgid ""
 "Then, all other Django-based tests (test cases based on :class:`~django.test."
 "SimpleTestCase`, including :class:`~django.test.TransactionTestCase`) are "
@@ -429,7 +428,7 @@ msgstr ""
 "test.TransactionTestCase`). Эти тесты могут быть выполнены в любом порядке."
 
 # b4621cd1bd714dbfbc077a160f9cb5a1
-#: ../../topics/testing/overview.txt:221
+#: ../../topics/testing/overview.txt:215
 msgid ""
 "Then any other :class:`unittest.TestCase` tests (including doctests) that "
 "may alter the database without restoring it to its original state are run."
@@ -438,7 +437,7 @@ msgstr ""
 "которые могут изменять базу данных без восстановления начального состояния."
 
 # 4b723c3208004e4fa37baddf6f136b34
-#: ../../topics/testing/overview.txt:226
+#: ../../topics/testing/overview.txt:220
 msgid ""
 "The new ordering of tests may reveal unexpected dependencies on test case "
 "ordering. This is the case with doctests that relied on state left in the "
@@ -450,23 +449,24 @@ msgstr ""
 "определенным :class:`~django.test.TransactionTestCase`. Такие тесты следует "
 "исправить, чтобы они могли выполняться независимо."
 
-#: ../../topics/testing/overview.txt:233
+#: ../../topics/testing/overview.txt:225
+#, fuzzy
 msgid ""
-"You may reverse the execution order inside groups by passing :djadminopt:`--"
-"reverse` to the test command. This can help with ensuring your tests are "
-"independent from each other."
+"You may reverse the execution order inside groups using the :option:`test --"
+"reverse` option. This can help with ensuring your tests are independent from "
+"each other."
 msgstr ""
 "Вы можете обратить порядок исполнения внутри группы, передав флаг :"
 "djadminopt:`--reverse` в команду запуска теста. Это может помочь в проверке "
 "того, что ваши тесты независимы друг от друга."
 
 # cca5ba49494b40dea38ef8e62b01f06f
-#: ../../topics/testing/overview.txt:240
+#: ../../topics/testing/overview.txt:232
 msgid "Rollback emulation"
 msgstr "Эмуляция отката изменений"
 
 # c9380d5a96df46f48994dd015ee7f9e9
-#: ../../topics/testing/overview.txt:242
+#: ../../topics/testing/overview.txt:234
 msgid ""
 "Any initial data loaded in migrations will only be available in ``TestCase`` "
 "tests and not in ``TransactionTestCase`` tests, and additionally only on "
@@ -483,7 +483,7 @@ msgstr ""
 "testing.StaticLiveServerTestCase`."
 
 # ef95bfefea02444ebbb965df57ffd120
-#: ../../topics/testing/overview.txt:249
+#: ../../topics/testing/overview.txt:241
 msgid ""
 "Django can reload that data for you on a per-testcase basis by setting the "
 "``serialized_rollback`` option to ``True`` in the body of the ``TestCase`` "
@@ -496,7 +496,7 @@ msgstr ""
 "выполнение тестов приблизительно в 3 раза."
 
 # 7c3c7aa4249141409fe7a1ab595669a2
-#: ../../topics/testing/overview.txt:254
+#: ../../topics/testing/overview.txt:246
 msgid ""
 "Third-party apps or those developing against MyISAM will need to set this; "
 "in general, however, you should be developing your own projects against a "
@@ -509,7 +509,7 @@ msgstr ""
 "эта настройка не понадобится."
 
 # ee62cdb536b2456d86f34d741e913dde
-#: ../../topics/testing/overview.txt:259
+#: ../../topics/testing/overview.txt:251
 msgid ""
 "The initial serialization is usually very quick, but if you wish to exclude "
 "some apps from this process (and speed up test runs slightly), you may add "
@@ -520,7 +520,7 @@ msgstr ""
 "выполнение тестов), вы можете указать их в настройке :setting:"
 "`TEST_NON_SERIALIZED_APPS`."
 
-#: ../../topics/testing/overview.txt:265
+#: ../../topics/testing/overview.txt:257
 msgid ""
 "To prevent serialized data from being loaded twice, setting "
 "``serialized_rollback=True`` disables the :data:`~django.db.models.signals."
@@ -531,12 +531,12 @@ msgstr ""
 "`~django.db.models.signals.post_migrate` при очистке тестовой базы данных."
 
 # aed89693cb414352a34d81414d96c0f5
-#: ../../topics/testing/overview.txt:271
+#: ../../topics/testing/overview.txt:263
 msgid "Other test conditions"
 msgstr "Другие условия выполнения тестов"
 
 # 03e9e972af3f4f98aa439cf44f1f5e5c
-#: ../../topics/testing/overview.txt:273
+#: ../../topics/testing/overview.txt:265
 msgid ""
 "Regardless of the value of the :setting:`DEBUG` setting in your "
 "configuration file, all Django tests run with :setting:`DEBUG`\\=False. This "
@@ -548,7 +548,7 @@ msgstr ""
 "при выполнении тестов код будет работать так же, как и на боевом сервере."
 
 # 176c789a0f6f4d3ca1c6851697d4fa84
-#: ../../topics/testing/overview.txt:278
+#: ../../topics/testing/overview.txt:270
 msgid ""
 "Caches are not cleared after each test, and running \"manage.py test fooapp"
 "\" can insert data from the tests into the cache of a live system if you run "
@@ -562,12 +562,12 @@ msgstr ""
 "в будущем <https://code.djangoproject.com/ticket/11505>`_."
 
 # a9ea38b8c27f4b6e95728c5f62c7f9fd
-#: ../../topics/testing/overview.txt:286
+#: ../../topics/testing/overview.txt:278
 msgid "Understanding the test output"
 msgstr "Разбираем вывод в консоль при выполнении тестов"
 
 # 76a5322dbc594adf8844942ed86bafe6
-#: ../../topics/testing/overview.txt:288
+#: ../../topics/testing/overview.txt:280
 msgid ""
 "When you run your tests, you'll see a number of messages as the test runner "
 "prepares itself. You can control the level of detail of these messages with "
@@ -577,7 +577,7 @@ msgstr ""
 "указать уровень подробности вывода, используя опцию ``verbosity``::"
 
 # 1745770b6a14433f89d3262b6d640109
-#: ../../topics/testing/overview.txt:296
+#: ../../topics/testing/overview.txt:288
 msgid ""
 "This tells you that the test runner is creating a test database, as "
 "described in the previous section."
@@ -586,7 +586,7 @@ msgstr ""
 "выше."
 
 # 2a3e39f2ca4049258e8fd3dab0ab2b7f
-#: ../../topics/testing/overview.txt:299
+#: ../../topics/testing/overview.txt:291
 msgid ""
 "Once the test database has been created, Django will run your tests. If "
 "everything goes well, you'll see something like this::"
@@ -595,7 +595,7 @@ msgstr ""
 "выполнены успешно, вы увидите приблизительно такое::"
 
 # 1f72c54b22924a8096f7cfea19893fe7
-#: ../../topics/testing/overview.txt:307
+#: ../../topics/testing/overview.txt:299
 msgid ""
 "If there are test failures, however, you'll see full details about which "
 "tests failed::"
@@ -603,7 +603,7 @@ msgstr ""
 "Если некоторые тесты не выполнились успешно, будут выведены подробности::"
 
 # 1668885098ff44ad8be72ed84679d48e
-#: ../../topics/testing/overview.txt:323
+#: ../../topics/testing/overview.txt:315
 msgid ""
 "A full explanation of this error output is beyond the scope of this "
 "document, but it's pretty intuitive. You can consult the documentation of "
@@ -614,7 +614,7 @@ msgstr ""
 "mod:`unittest`."
 
 # 05e4a7d89bb843479206a3b0abef1f58
-#: ../../topics/testing/overview.txt:327
+#: ../../topics/testing/overview.txt:319
 msgid ""
 "Note that the return code for the test-runner script is 1 for any number of "
 "failed and erroneous tests. If all the tests pass, the return code is 0. "
@@ -626,17 +626,34 @@ msgstr ""
 "если вы запускаете тесты в shell скрипте и необходим результат выполнения."
 
 # 3bf706d749bf4855a9edb9dce7bdf3c1
-#: ../../topics/testing/overview.txt:335
+#: ../../topics/testing/overview.txt:327
 msgid "Speeding up the tests"
 msgstr "Оптимизация тестов"
 
-# cafa96f6a0fb4d16a536440a0d71b413
-#: ../../topics/testing/overview.txt:337
+# 0a86a5f18d1642b3b9e51bf882440819
+#: ../../topics/testing/overview.txt:330
+#, fuzzy
+msgid "Running tests in parallel"
+msgstr "Запуск тестов"
+
+#: ../../topics/testing/overview.txt:332
 msgid ""
-"In recent versions of Django, the default password hasher is rather slow by "
-"design. If during your tests you are authenticating many users, you may want "
-"to use a custom settings file and set the :setting:`PASSWORD_HASHERS` "
-"setting to a faster hashing algorithm::"
+"As long as your tests are properly isolated, you can run them in parallel to "
+"gain a speed up on multi-core hardware. See :option:`test --parallel`."
+msgstr ""
+
+#: ../../topics/testing/overview.txt:336
+msgid "Password hashing"
+msgstr ""
+
+# cafa96f6a0fb4d16a536440a0d71b413
+#: ../../topics/testing/overview.txt:338
+#, fuzzy
+msgid ""
+"The default password hasher is rather slow by design. If you're "
+"authenticating many users in your tests, you may want to use a custom "
+"settings file and set the :setting:`PASSWORD_HASHERS` setting to a faster "
+"hashing algorithm::"
 msgstr ""
 "В последней версии Django при генерации хэша для паролей используется "
 "медленный алгоритм. Если вы создаете большое количество пользователей в "
@@ -651,6 +668,13 @@ msgid ""
 msgstr ""
 "Не забудьте также добавить в :setting:`PASSWORD_HASHERS` все хэширующие "
 "алгоритмы, которые используются в фикстурах."
+
+#~ msgid ""
+#~ "The ability to use SQLite with a shared cache as described above was "
+#~ "added."
+#~ msgstr ""
+#~ "Была добавлена упомянутая выше возможность использования SQLite с "
+#~ "разделяемым кэшем."
 
 # 7b5ae86bf4d547f69adae12a43be5750
 #~ msgid "unittest2"

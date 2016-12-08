@@ -235,9 +235,10 @@ There are two ways to send signals in Django.
 .. method:: Signal.send(sender, **kwargs)
 .. method:: Signal.send_robust(sender, **kwargs)
 
-To send a signal, call either :meth:`Signal.send` or :meth:`Signal.send_robust`.
-You must provide the ``sender`` argument (which is a class most of the time),
-and may provide as many other keyword arguments as you like.
+To send a signal, call either :meth:`Signal.send` (all built-in signals use
+this) or :meth:`Signal.send_robust`. You must provide the ``sender`` argument
+(which is a class most of the time) and may provide as many other keyword
+arguments as you like.
 
 For example, here's how sending our ``pizza_done`` signal might look::
 
@@ -261,10 +262,8 @@ be notified of a signal in the face of an error.
 and ensures all receivers are notified of the signal. If an error occurs, the
 error instance is returned in the tuple pair for the receiver that raised the error.
 
-.. versionadded:: 1.8
-
-    The tracebacks are present on the ``__traceback__`` attribute
-    of the errors returned when calling ``send_robust()``.
+The tracebacks are present on the ``__traceback__`` attribute of the errors
+returned when calling ``send_robust()``.
 
 Disconnecting signals
 =====================
@@ -277,10 +276,6 @@ arguments are as described in :meth:`.Signal.connect`. The method returns
 
 The ``receiver`` argument indicates the registered receiver to disconnect. It
 may be ``None`` if ``dispatch_uid`` is used to identify the receiver.
-
-.. versionchanged:: 1.8
-
-    The boolean return value was added.
 
 .. deprecated:: 1.9
 

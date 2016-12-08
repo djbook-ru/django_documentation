@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-17 10:48+0200\n"
+"POT-Creation-Date: 2016-12-08 11:07+0200\n"
 "PO-Revision-Date: 2015-12-10 00:26+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -61,27 +61,157 @@ msgstr ""
 "промежуточных слоев, которые можно использовать в проекте. Они описаны в "
 "разделе о :doc:`встроенных промежуточных слоях </ref/middleware>`."
 
+#: ../../topics/http/middleware.txt:21
+msgid ""
+"A new style of middleware was introduced for use with the new :setting:"
+"`MIDDLEWARE` setting. If you're using the old :setting:`MIDDLEWARE_CLASSES` "
+"setting, you'll need to :ref:`adapt old, custom middleware <upgrading-"
+"middleware>` before using the new setting. This document describes new-style "
+"middleware. Refer to this page in older versions of the documentation for a "
+"description of how old-style middleware works."
+msgstr ""
+
+# 4103ae15c4df4e579f0b56cfbc38613b
+#: ../../topics/http/middleware.txt:30
+msgid "Writing your own middleware"
+msgstr "Создание собственного промежуточного слоя"
+
+#: ../../topics/http/middleware.txt:32
+msgid ""
+"A middleware factory is a callable that takes a ``get_response`` callable "
+"and returns a middleware. A middleware is a callable that takes a request "
+"and returns a response, just like a view."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:36
+msgid "A middleware can be written as a function that looks like this::"
+msgstr ""
+
+#: ../../topics/http/middleware.txt:54
+msgid ""
+"Or it can be written as a class whose instances are callable, like this::"
+msgstr ""
+
+#: ../../topics/http/middleware.txt:72
+msgid ""
+"The ``get_response`` callable provided by Django might be the actual view "
+"(if this is the last listed middleware) or it might be the next middleware "
+"in the chain. The current middleware doesn't need to know or care what "
+"exactly it is, just that it represents whatever comes next."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:77
+msgid ""
+"The above is a slight simplification -- the ``get_response`` callable for "
+"the last middleware in the chain won't be the actual view but rather a "
+"wrapper method from the handler which takes care of applying :ref:`view "
+"middleware <view-middleware>`, calling the view with appropriate URL "
+"arguments, and applying :ref:`template-response <template-response-"
+"middleware>` and :ref:`exception <exception-middleware>` middleware."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:84
+msgid "Middleware can live anywhere on your Python path."
+msgstr ""
+
+# 4ab431f1159e4453b51ef2c3b635ee6a
+#: ../../topics/http/middleware.txt:87
+#, fuzzy
+msgid "``__init__(get_response)``"
+msgstr "``__init__``"
+
+#: ../../topics/http/middleware.txt:89
+msgid ""
+"Middleware factories must accept a ``get_response`` argument. You can also "
+"initialize some global state for the middleware. Keep in mind a couple of "
+"caveats:"
+msgstr ""
+
+# 275eb6f469f34bc1a52589963edc28d5
+#: ../../topics/http/middleware.txt:93
+#, fuzzy
+msgid ""
+"Django initializes your middleware with only the ``get_response`` argument, "
+"so you can't define ``__init__()`` as requiring any other arguments."
+msgstr ""
+"Django инициализирует промежуточный слой без аргументов, поэтому метод "
+"``__init__`` не должен определять обязательные аргументы."
+
+# ab80e1bdf7af4ad19af38aaca25afe9b
+#: ../../topics/http/middleware.txt:96
+#, fuzzy
+msgid ""
+"Unlike the ``__call__()`` method which is called once per request, "
+"``__init__()`` is called only *once*, when the Web server starts."
+msgstr ""
+"В отличии от методов ``process_*``, которые вызываются при каждом запросе, "
+"``__init__`` вызывается только *один раз*, когда Web-сервер принимает первый "
+"запрос."
+
+# ab80e1bdf7af4ad19af38aaca25afe9b
+#: ../../topics/http/middleware.txt:101
+#, fuzzy
+msgid ""
+"In older versions, ``__init__()`` wasn't called until the Web server "
+"responded to its first request."
+msgstr ""
+"В отличии от методов ``process_*``, которые вызываются при каждом запросе, "
+"``__init__`` вызывается только *один раз*, когда Web-сервер принимает первый "
+"запрос."
+
+#: ../../topics/http/middleware.txt:104
+msgid ""
+"In older versions, ``__init__()`` didn't accept any arguments. To allow your "
+"middleware to be used in Django 1.9 and earlier, make ``get_response`` an "
+"optional argument (``get_response=None``)."
+msgstr ""
+
+# 5d4b468fa68e4ab9b4f7d016f6a5e6bf
+#: ../../topics/http/middleware.txt:109
+msgid "Marking middleware as unused"
+msgstr "Помечаем промежуточный слой как неиспользуемый"
+
+# 77683dd6ec98441d8c4007d3f18810c8
+#: ../../topics/http/middleware.txt:111
+#, fuzzy
+msgid ""
+"It's sometimes useful to determine at startup time whether a piece of "
+"middleware should be used. In these cases, your middleware's ``__init__()`` "
+"method may raise :exc:`~django.core.exceptions.MiddlewareNotUsed`. Django "
+"will then remove that middleware from the middleware process and log a debug "
+"message to the :ref:`django-request-logger` logger when :setting:`DEBUG` is "
+"``True``."
+msgstr ""
+"Иногда полезно в процессе работы приложения указать, что промежуточный слой "
+"не должен использоваться. В таком случае в методе ``__init__`` можно "
+"вызывать исключение :exc:`django.core.exceptions.MiddlewareNotUsed`. Django "
+"исключит этот промежуточный слой из процесса обработки и запишет отладочное "
+"сообщение в логгер ``django.request``, если параметр конфигурации :setting:"
+"`DEBUG` был установлен в ``True``."
+
 # a3d4917dd30a40898417f88e7a4c7137
-#: ../../topics/http/middleware.txt:20
+#: ../../topics/http/middleware.txt:118
 msgid "Activating middleware"
 msgstr "Подключение промежуточных слоёв"
 
 # 4e0960bd92554a6d92e85f9113a44a02
-#: ../../topics/http/middleware.txt:22
+#: ../../topics/http/middleware.txt:120
+#, fuzzy
 msgid ""
-"To activate a middleware component, add it to the :setting:"
-"`MIDDLEWARE_CLASSES` list in your Django settings."
+"To activate a middleware component, add it to the :setting:`MIDDLEWARE` list "
+"in your Django settings."
 msgstr ""
 "Чтобы подключить промежуточный слой, добавьте его в список :setting:"
 "`MIDDLEWARE_CLASSES` в настройках Django."
 
 # ff702c496c8547539bdb8da35260497e
-#: ../../topics/http/middleware.txt:25
+#: ../../topics/http/middleware.txt:123
+#, fuzzy
 msgid ""
-"In :setting:`MIDDLEWARE_CLASSES`, each middleware component is represented "
-"by a string: the full Python path to the middleware's class name. For "
-"example, here's the default value created by :djadmin:`django-admin "
-"startproject <startproject>`::"
+"In :setting:`MIDDLEWARE`, each middleware component is represented by a "
+"string: the full Python path to the middleware factory's class or function "
+"name. For example, here's the default value created by :djadmin:`django-"
+"admin startproject <startproject>`::"
 msgstr ""
 "В параметре конфигурации :setting:`MIDDLEWARE_CLASSES` каждый промежуточный "
 "слой представлен строкой: полный путь для импорта класса промежуточного "
@@ -89,26 +219,27 @@ msgstr ""
 "создается с помощью :djadmin:`django-admin startproject <startproject>`::"
 
 # 4d1e962758b14a32b948f4fa03a6ecc0
-#: ../../topics/http/middleware.txt:41
+#: ../../topics/http/middleware.txt:138
+#, fuzzy
 msgid ""
-"A Django installation doesn't require any middleware — :setting:"
-"`MIDDLEWARE_CLASSES` can be empty, if you'd like — but it's strongly "
-"suggested that you at least use :class:`~django.middleware.common."
-"CommonMiddleware`."
+"A Django installation doesn't require any middleware — :setting:`MIDDLEWARE` "
+"can be empty, if you'd like — but it's strongly suggested that you at least "
+"use :class:`~django.middleware.common.CommonMiddleware`."
 msgstr ""
 "Django не требует никаких промежуточных слоёв для своей работы — :setting:"
 "`MIDDLEWARE_CLASSES` может быть пустым — но мы настоятельно рекомендуем "
 "использовать хотя бы :class:`~django.middleware.common.CommonMiddleware`."
 
 # 119b053851984d52bdc2246961a9e7da
-#: ../../topics/http/middleware.txt:46
+#: ../../topics/http/middleware.txt:142
+#, fuzzy
 msgid ""
-"The order in :setting:`MIDDLEWARE_CLASSES` matters because a middleware can "
-"depend on other middleware. For instance, :class:`~django.contrib.auth."
-"middleware.AuthenticationMiddleware` stores the authenticated user in the "
-"session; therefore, it must run after :class:`~django.contrib.sessions."
-"middleware.SessionMiddleware`. See :ref:`middleware-ordering` for some "
-"common hints about ordering of Django middleware classes."
+"The order in :setting:`MIDDLEWARE` matters because a middleware can depend "
+"on other middleware. For instance, :class:`~django.contrib.auth.middleware."
+"AuthenticationMiddleware` stores the authenticated user in the session; "
+"therefore, it must run after :class:`~django.contrib.sessions.middleware."
+"SessionMiddleware`. See :ref:`middleware-ordering` for some common hints "
+"about ordering of Django middleware classes."
 msgstr ""
 "Порядок :setting:`MIDDLEWARE_CLASSES` важен, т.к. один промежуточный слой "
 "может зависеть от другого. Например, :class:`~django.contrib.auth.middleware."
@@ -117,131 +248,58 @@ msgstr ""
 "SessionMiddleware`. Смотрите советы, как лучше упорядочить промежуточные "
 "слои, в :ref:`middleware-ordering`."
 
-# 5cbc54358bf044cbbeebfb64a1fa4198
-#: ../../topics/http/middleware.txt:55
-msgid "Hooks and application order"
-msgstr "\"Хуки\" и порядок обработки"
+#: ../../topics/http/middleware.txt:151
+msgid "Middleware order and layering"
+msgstr ""
 
 # f99add29d5cf4c6f98dcebb0a572d5b9
-#: ../../topics/http/middleware.txt:57
+#: ../../topics/http/middleware.txt:153
+#, fuzzy
 msgid ""
 "During the request phase, before calling the view, Django applies middleware "
-"in the order it's defined in :setting:`MIDDLEWARE_CLASSES`, top-down. Two "
-"hooks are available:"
+"in the order it's defined in :setting:`MIDDLEWARE`, top-down."
 msgstr ""
 "Во время обработки запроса, перед вызовом представления, Django применяет "
 "промежуточные слои в порядке указанном в :setting:`MIDDLEWARE_CLASSES`, "
 "сверху вниз. Доступны два \"хука\":"
 
-# 880ba98ddb1848fead77fc34143e5069
-#: ../../topics/http/middleware.txt:61
-msgid ":meth:`process_request`"
-msgstr ":meth:`process_request`"
-
-# 21b4d3a7e2d846baa8f35448ffb0c2ef
-#: ../../topics/http/middleware.txt:62
-msgid ":meth:`process_view`"
-msgstr ":meth:`process_view`"
-
-# b131a3fcec9e4ec5bfa20e3dabfc9ebc
-#: ../../topics/http/middleware.txt:64
+#: ../../topics/http/middleware.txt:156
 msgid ""
-"During the response phase, after calling the view, middleware are applied in "
-"reverse order, from the bottom up. Three hooks are available:"
+"You can think of it like an onion: each middleware class is a \"layer\" that "
+"wraps the view, which is in the core of the onion. If the request passes "
+"through all the layers of the onion (each one calls ``get_response`` to pass "
+"the request in to the next layer), all the way to the view at the core, the "
+"response will then pass through every layer (in reverse order) on the way "
+"back out."
 msgstr ""
-"На этапе обработки ответа, после вызова представления, промежуточные слои "
-"применяются в обратном порядке, снизу вверх. Доступны три \"хука\":"
 
-# 1c4ed4afe46a43279dd5030d947fd2ec
-#: ../../topics/http/middleware.txt:67
-msgid ":meth:`process_exception` (only if the view raised an exception)"
-msgstr ""
-":meth:`process_exception` (только, если представление вызвало исключение)"
-
-# 1a1b3cdb81a541639d656a3d34107a77
-#: ../../topics/http/middleware.txt:68
-msgid ":meth:`process_template_response` (only for template responses)"
-msgstr ":meth:`process_template_response` (только для ответа с шаблоном)"
-
-# 4a9f3567893f49389a4e23033878f834
-#: ../../topics/http/middleware.txt:69
-msgid ":meth:`process_response`"
-msgstr ":meth:`process_response`"
-
-# a2e56d2611b24a8388f56171cbaa9e99
-#: ../../topics/http/middleware.txt:76
+#: ../../topics/http/middleware.txt:163
 msgid ""
-"If you prefer, you can also think of it like an onion: each middleware class "
-"is a \"layer\" that wraps the view."
+"If one of the layers decides to short-circuit and return a response without "
+"ever calling its ``get_response``, none of the layers of the onion inside "
+"that layer (including the view) will see the request or the response. The "
+"response will only return through the same layers that the request passed in "
+"through."
 msgstr ""
-"Можете смотреть на это, как на луковицу: каждый промежуточный слой "
-"оборачивает представление."
 
-# 701b67bbff604970b3884769778fbe0b
-#: ../../topics/http/middleware.txt:79
-msgid "The behavior of each hook is described below."
-msgstr "Поведение каждого \"хука\" описано ниже."
+#: ../../topics/http/middleware.txt:169
+msgid "Other middleware hooks"
+msgstr ""
 
-# 4103ae15c4df4e579f0b56cfbc38613b
-#: ../../topics/http/middleware.txt:82
-msgid "Writing your own middleware"
-msgstr "Создание собственного промежуточного слоя"
-
-# 0a668593921e4ab5b2b70b29bb6bc5de
-#: ../../topics/http/middleware.txt:84
+#: ../../topics/http/middleware.txt:171
 msgid ""
-"Writing your own middleware is easy. Each middleware component is a single "
-"Python class that defines one or more of the following methods:"
+"Besides the basic request/response middleware pattern described earlier, you "
+"can add three other special methods to class-based middleware:"
 msgstr ""
-"Создать свой промежуточный слой очень просто. Это просто класс Python, "
-"который предоставляет один или несколько методов:"
-
-# a4b71a34535c4134b7007005b28ded88
-#: ../../topics/http/middleware.txt:90
-msgid "``process_request``"
-msgstr "``process_request``"
-
-# 571bf4c2ebdc4bb686a5cb889de96f7f
-#: ../../topics/http/middleware.txt:94
-msgid "``request`` is an :class:`~django.http.HttpRequest` object."
-msgstr "``request`` -- это объект :class:`~django.http.HttpRequest`."
-
-# 398a6b7bda154d639f43f9c9f08240a2
-#: ../../topics/http/middleware.txt:96
-msgid ""
-"``process_request()`` is called on each request, before Django decides which "
-"view to execute."
-msgstr ""
-"``process_request()`` вызывается для каждого запроса перед тем, как Django "
-"решит какое представление вызывать."
-
-# 6cd3db7186f041af846d342f015b15a3
-#: ../../topics/http/middleware.txt:99
-msgid ""
-"It should return either ``None`` or an :class:`~django.http.HttpResponse` "
-"object. If it returns ``None``, Django will continue processing this "
-"request, executing any other ``process_request()`` middleware, then, "
-"``process_view()`` middleware, and finally, the appropriate view. If it "
-"returns an :class:`~django.http.HttpResponse` object, Django won't bother "
-"calling any other request, view or exception middleware, or the appropriate "
-"view; it'll apply response middleware to that :class:`~django.http."
-"HttpResponse`, and return the result."
-msgstr ""
-"Метод должен вернуть ``None`` или объект an :class:`~django.http."
-"HttpResponse`. Если вернул ``None``, Django продолжит обработку запроса, "
-"вызывая ``process_request()`` других промежуточных слоёв, затем метод "
-"``process_view()`` промежуточного слоя, и в конце представление. Если вернул "
-"объект :class:`~django.http.HttpResponse`, Django остановит обработку "
-"запроса, применит промежуточные слои для объекта :class:`~django.http."
-"HttpResponse`, и вернет результат."
 
 # f61cc5c1a2104797a18a8efcd1a96723
-#: ../../topics/http/middleware.txt:111
-msgid "``process_view``"
+#: ../../topics/http/middleware.txt:177
+#, fuzzy
+msgid "``process_view()``"
 msgstr "``process_view``"
 
 # 475cd1b6909d48f9a507d6fc5b696566
-#: ../../topics/http/middleware.txt:115
+#: ../../topics/http/middleware.txt:181
 msgid ""
 "``request`` is an :class:`~django.http.HttpRequest` object. ``view_func`` is "
 "the Python function that Django is about to use. (It's the actual function "
@@ -259,21 +317,22 @@ msgstr ""
 "``view_kwargs`` не включают первый аргумент представления (``request``)."
 
 # 5b64a357145d45a0a8314e4910f66464
-#: ../../topics/http/middleware.txt:123
+#: ../../topics/http/middleware.txt:189
 msgid "``process_view()`` is called just before Django calls the view."
 msgstr ""
 "``process_view()`` вызывается непосредственно перед вызовом представления."
 
 # 1c7c872a3c67466c951a3191d8cee89b
-#: ../../topics/http/middleware.txt:125
+#: ../../topics/http/middleware.txt:191
+#, fuzzy
 msgid ""
 "It should return either ``None`` or an :class:`~django.http.HttpResponse` "
 "object. If it returns ``None``, Django will continue processing this "
 "request, executing any other ``process_view()`` middleware and, then, the "
 "appropriate view. If it returns an :class:`~django.http.HttpResponse` "
-"object, Django won't bother calling any other view or exception middleware, "
-"or the appropriate view; it'll apply response middleware to that :class:"
-"`~django.http.HttpResponse`, and return the result."
+"object, Django won't bother calling the appropriate view; it'll apply "
+"response middleware to that :class:`~django.http.HttpResponse` and return "
+"the result."
 msgstr ""
 "Метод должен вернуть ``None`` или объект :class:`~django.http.HttpResponse`. "
 "Если вернул ``None``, Django продолжит обработку запроса, вызывая "
@@ -283,10 +342,11 @@ msgstr ""
 "HttpResponse`, и вернет результат."
 
 # a0d78985134941b1a3612a92bfe9f317
-#: ../../topics/http/middleware.txt:135
+#: ../../topics/http/middleware.txt:200
+#, fuzzy
 msgid ""
 "Accessing :attr:`request.POST <django.http.HttpRequest.POST>` inside "
-"middleware from ``process_request`` or ``process_view`` will prevent any "
+"middleware before the view runs or in ``process_view()`` will prevent any "
 "view running after the middleware from being able to :ref:`modify the upload "
 "handlers for the request <modifying_upload_handlers_on_the_fly>`, and should "
 "normally be avoided."
@@ -298,7 +358,7 @@ msgstr ""
 "делать."
 
 # 11bb5a5222894158b83f63a0f8b22440
-#: ../../topics/http/middleware.txt:141
+#: ../../topics/http/middleware.txt:206
 msgid ""
 "The :class:`~django.middleware.csrf.CsrfViewMiddleware` class can be "
 "considered an exception, as it provides the :func:`~django.views.decorators."
@@ -312,13 +372,60 @@ msgstr ""
 "csrf_protect`, которые позволяют представлениям явно контролировать на каком "
 "этапе выполнять CSRF проверку."
 
+# 40fa93b90d5d45faa019d5b954e44a8f
+#: ../../topics/http/middleware.txt:215
+#, fuzzy
+msgid "``process_exception()``"
+msgstr "``process_exception``"
+
+# ce62b3c3172946bfbcb4250d33663230
+#: ../../topics/http/middleware.txt:219
+msgid ""
+"``request`` is an :class:`~django.http.HttpRequest` object. ``exception`` is "
+"an ``Exception`` object raised by the view function."
+msgstr ""
+"``request``  -- объект :class:`~django.http.HttpRequest`. ``exception`` -- "
+"``Exception``, вызванное функцией представления."
+
+# e668d0901692409b9df9c9058801267f
+#: ../../topics/http/middleware.txt:222
+#, fuzzy
+msgid ""
+"Django calls ``process_exception()`` when a view raises an exception. "
+"``process_exception()`` should return either ``None`` or an :class:`~django."
+"http.HttpResponse` object. If it returns an :class:`~django.http."
+"HttpResponse` object, the template response and response middleware will be "
+"applied and the resulting response returned to the browser. Otherwise, :ref:"
+"`default exception handling <error-views>` kicks in."
+msgstr ""
+"Django вызывает ``process_exception()``, если представление вызывало "
+"исключение. ``process_exception()`` должен возвращать ``None`` или объект :"
+"class:`~django.http.HttpResponse`. Если вернул объект :class:`~django.http."
+"HttpResponse`, будет выполнена обработка ответа промежуточными слоями и "
+"результат отправится браузеру. Если вернул ``None``, будет выполнена "
+"стандартная обработка исключений."
+
+# 1e291cb311d44047919954af42128bf0
+#: ../../topics/http/middleware.txt:229
+#, fuzzy
+msgid ""
+"Again, middleware are run in reverse order during the response phase, which "
+"includes ``process_exception``. If an exception middleware returns a "
+"response, the ``process_exception`` methods of the middleware classes above "
+"that middleware won't be called at all."
+msgstr ""
+"При обработке ответа промежуточные слои применяются в обратном порядке, это "
+"относится и к методу ``process_exception``. Если этот метод вернул объект "
+"ответа, промежуточные слои выше будут пропущены."
+
 # 8b8cae5546f7425badc2700185f17f0e
-#: ../../topics/http/middleware.txt:150
-msgid "``process_template_response``"
+#: ../../topics/http/middleware.txt:237
+#, fuzzy
+msgid "``process_template_response()``"
 msgstr "``process_template_response``"
 
 # a59093f9028945eda5948790286161ba
-#: ../../topics/http/middleware.txt:154
+#: ../../topics/http/middleware.txt:241
 msgid ""
 "``request`` is an :class:`~django.http.HttpRequest` object. ``response`` is "
 "the :class:`~django.template.response.TemplateResponse` object (or "
@@ -329,7 +436,7 @@ msgstr ""
 "аналогичный), который вернуло представление или промежуточный слой."
 
 # 28f0d68e59f84c3aae510249c0e9f427
-#: ../../topics/http/middleware.txt:158
+#: ../../topics/http/middleware.txt:245
 msgid ""
 "``process_template_response()`` is called just after the view has finished "
 "executing, if the response instance has a ``render()`` method, indicating "
@@ -341,7 +448,7 @@ msgstr ""
 "`~django.template.response.TemplateResponse` или аналог."
 
 # b62486fd3d8d48d4a3a6e539f14b7a75
-#: ../../topics/http/middleware.txt:162
+#: ../../topics/http/middleware.txt:249
 msgid ""
 "It must return a response object that implements a ``render`` method. It "
 "could alter the given ``response`` by changing ``response.template_name`` "
@@ -355,7 +462,7 @@ msgstr ""
 "аналогичного."
 
 # fe08a4cc9cf649638d1a70ba90436f42
-#: ../../topics/http/middleware.txt:167
+#: ../../topics/http/middleware.txt:254
 msgid ""
 "You don't need to explicitly render responses -- responses will be "
 "automatically rendered once all template response middleware has been called."
@@ -364,7 +471,7 @@ msgstr ""
 "отрендерены после выполнения всех промежуточных слоёв."
 
 # 5841a4e9fb3644bfb86754aea7dbef79
-#: ../../topics/http/middleware.txt:171
+#: ../../topics/http/middleware.txt:258
 msgid ""
 "Middleware are run in reverse order during the response phase, which "
 "includes ``process_template_response()``."
@@ -372,80 +479,13 @@ msgstr ""
 "Промежуточные слои выполняются в обратном порядке при обработке ответа, это "
 "относится и к методу ``process_template_response()``."
 
-# e0b0cfa902b24e57be40f2f876702552
-#: ../../topics/http/middleware.txt:177
-msgid "``process_response``"
-msgstr "``process_response``"
-
-# 46033949974b4bc6b7fc72446d4e57d4
-#: ../../topics/http/middleware.txt:181
-msgid ""
-"``request`` is an :class:`~django.http.HttpRequest` object. ``response`` is "
-"the :class:`~django.http.HttpResponse` or :class:`~django.http."
-"StreamingHttpResponse` object returned by a Django view or by a middleware."
-msgstr ""
-"``request`` -- объект :class:`~django.http.HttpRequest`. ``response`` -- "
-"объект :class:`~django.http.HttpResponse` или :class:`~django.http."
-"StreamingHttpResponse`, которые вернуло представление или промежуточный слой."
-
-# e42c457e0516472cb11eeb76e467e5a2
-#: ../../topics/http/middleware.txt:186
-msgid ""
-"``process_response()`` is called on all responses before they're returned to "
-"the browser."
-msgstr ""
-"``process_response()`` вызывается для каждого ответа перед тем, как он будет "
-"оптравлен браузеру."
-
-# e19e3fa65eca422e986d722f3e8fbde8
-#: ../../topics/http/middleware.txt:189
-msgid ""
-"It must return an :class:`~django.http.HttpResponse` or :class:`~django.http."
-"StreamingHttpResponse` object. It could alter the given ``response``, or it "
-"could create and return a brand-new :class:`~django.http.HttpResponse` or :"
-"class:`~django.http.StreamingHttpResponse`."
-msgstr ""
-"Этот метод должен вернуть объект :class:`~django.http.HttpResponse` или :"
-"class:`~django.http.StreamingHttpResponse`. Он может изменить переданный "
-"``response``, или же создать и вернуть новый экземпляр :class:`~django.http."
-"HttpResponse` или :class:`~django.http.StreamingHttpResponse`."
-
-# e46bf4fa509d4c6ea0bea80acc7d39d5
-#: ../../topics/http/middleware.txt:195
-msgid ""
-"Unlike the ``process_request()`` and ``process_view()`` methods, the "
-"``process_response()`` method is always called, even if the "
-"``process_request()`` and ``process_view()`` methods of the same middleware "
-"class were skipped (because an earlier middleware method returned an :class:"
-"`~django.http.HttpResponse`). In particular, this means that your "
-"``process_response()`` method cannot rely on setup done in "
-"``process_request()``."
-msgstr ""
-"В отличии от методов ``process_request()`` и ``process_view()``, метод "
-"``process_response()`` вызывается всегда, даже если методы "
-"``process_request()`` и ``process_view()`` этого промежуточного слоя были "
-"пропущены (т.к. предыдущий промежуточный слой вернул объект :class:`~django."
-"http.HttpResponse`). Это означает, что метод ``process_response()`` не может "
-"полагаться на действия, выполняемые в ``process_request()``."
-
-# dd5f061962d8464b8a84a00c8ee6c099
-#: ../../topics/http/middleware.txt:203
-msgid ""
-"Finally, remember that during the response phase, middleware are applied in "
-"reverse order, from the bottom up. This means classes defined at the end of :"
-"setting:`MIDDLEWARE_CLASSES` will be run first."
-msgstr ""
-"И не забывайте, что при обработке ответа промежуточные слои выполняются в "
-"обратном порядке -- снизу вверх. Это значит, что классы, указанные в конце :"
-"setting:`MIDDLEWARE_CLASSES`, будет выполнены в первую очередь."
-
 # 334243e70cbc4f458ee50cbb3e3d4798
-#: ../../topics/http/middleware.txt:208
+#: ../../topics/http/middleware.txt:262
 msgid "Dealing with streaming responses"
 msgstr "Работа с потоковыми ответами"
 
 # 79205467a94e484a9e33de5b9ffe5497
-#: ../../topics/http/middleware.txt:210
+#: ../../topics/http/middleware.txt:264
 msgid ""
 "Unlike :class:`~django.http.HttpResponse`, :class:`~django.http."
 "StreamingHttpResponse` does not have a ``content`` attribute. As a result, "
@@ -460,7 +500,7 @@ msgstr ""
 "ответа::"
 
 # da146a7f1e3e444d939237c57e9fee36
-#: ../../topics/http/middleware.txt:223
+#: ../../topics/http/middleware.txt:277
 msgid ""
 "``streaming_content`` should be assumed to be too large to hold in memory. "
 "Response middleware may wrap it in a new generator, but must not consume it. "
@@ -471,153 +511,332 @@ msgstr ""
 "загружать его полностью. Генератор-обертка обычно выглядит следующим "
 "образом::"
 
-# 40fa93b90d5d45faa019d5b954e44a8f
-#: ../../topics/http/middleware.txt:234
-msgid "``process_exception``"
-msgstr "``process_exception``"
-
-# ce62b3c3172946bfbcb4250d33663230
-#: ../../topics/http/middleware.txt:238
-msgid ""
-"``request`` is an :class:`~django.http.HttpRequest` object. ``exception`` is "
-"an ``Exception`` object raised by the view function."
+#: ../../topics/http/middleware.txt:286
+msgid "Exception handling"
 msgstr ""
-"``request``  -- объект :class:`~django.http.HttpRequest`. ``exception`` -- "
-"``Exception``, вызванное функцией представления."
 
-# e668d0901692409b9df9c9058801267f
-#: ../../topics/http/middleware.txt:241
+#: ../../topics/http/middleware.txt:288
 msgid ""
-"Django calls ``process_exception()`` when a view raises an exception. "
-"``process_exception()`` should return either ``None`` or an :class:`~django."
-"http.HttpResponse` object. If it returns an :class:`~django.http."
-"HttpResponse` object, the template response and response middleware will be "
-"applied, and the resulting response returned to the browser. Otherwise, "
-"default exception handling kicks in."
+"Django automatically converts exceptions raised by the view or by middleware "
+"into an appropriate HTTP response with an error status code. :ref:`Certain "
+"exceptions <error-views>` are converted to 4xx status codes, while an "
+"unknown exception is converted to a 500 status code."
 msgstr ""
-"Django вызывает ``process_exception()``, если представление вызывало "
-"исключение. ``process_exception()`` должен возвращать ``None`` или объект :"
-"class:`~django.http.HttpResponse`. Если вернул объект :class:`~django.http."
-"HttpResponse`, будет выполнена обработка ответа промежуточными слоями и "
-"результат отправится браузеру. Если вернул ``None``, будет выполнена "
-"стандартная обработка исключений."
 
-# 1e291cb311d44047919954af42128bf0
-#: ../../topics/http/middleware.txt:248
+#: ../../topics/http/middleware.txt:293
 msgid ""
-"Again, middleware are run in reverse order during the response phase, which "
-"includes ``process_exception``. If an exception middleware returns a "
-"response, the middleware classes above that middleware will not be called at "
-"all."
+"This conversion takes place before and after each middleware (you can think "
+"of it as the thin film in between each layer of the onion), so that every "
+"middleware can always rely on getting some kind of HTTP response back from "
+"calling its ``get_response`` callable. Middleware don't need to worry about "
+"wrapping their call to ``get_response`` in a ``try/except`` and handling an "
+"exception that might have been raised by a later middleware or the view. "
+"Even if the very next middleware in the chain raises an :class:`~django.http."
+"Http404` exception, for example, your middleware won't see that exception; "
+"instead it will get an :class:`~django.http.HttpResponse` object with a :"
+"attr:`~django.http.HttpResponse.status_code` of 404."
 msgstr ""
-"При обработке ответа промежуточные слои применяются в обратном порядке, это "
-"относится и к методу ``process_exception``. Если этот метод вернул объект "
-"ответа, промежуточные слои выше будут пропущены."
 
-# 4ab431f1159e4453b51ef2c3b635ee6a
-#: ../../topics/http/middleware.txt:253
-msgid "``__init__``"
-msgstr "``__init__``"
+#: ../../topics/http/middleware.txt:307
+msgid "Upgrading pre-Django 1.10-style middleware"
+msgstr ""
+
+#: ../../topics/http/middleware.txt:312
+msgid ""
+"Django provides ``django.utils.deprecation.MiddlewareMixin`` to ease "
+"creating middleware classes that are compatible with both :setting:"
+"`MIDDLEWARE` and the old :setting:`MIDDLEWARE_CLASSES`. All middleware "
+"classes included with Django are compatible with both settings."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:317
+msgid ""
+"The mixin provides an ``__init__()`` method that accepts an optional "
+"``get_response`` argument and stores it in ``self.get_response``."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:320
+msgid "The ``__call__()`` method:"
+msgstr ""
+
+#: ../../topics/http/middleware.txt:322
+msgid "Calls ``self.process_request(request)`` (if defined)."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:323
+msgid ""
+"Calls ``self.get_response(request)`` to get the response from later "
+"middleware and the view."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:325
+msgid "Calls ``self.process_response(request, response)`` (if defined)."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:326
+msgid "Returns the response."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:328
+msgid ""
+"If used with :setting:`MIDDLEWARE_CLASSES`, the ``__call__()`` method will "
+"never be used; Django calls ``process_request()`` and ``process_response()`` "
+"directly."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:332
+msgid ""
+"In most cases, inheriting from this mixin will be sufficient to make an old-"
+"style middleware compatible with the new system with sufficient backwards-"
+"compatibility. The new short-circuiting semantics will be harmless or even "
+"beneficial to the existing middleware. In a few cases, a middleware class "
+"may need some changes to adjust to the new semantics."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:338
+msgid ""
+"These are the behavioral differences between using :setting:`MIDDLEWARE` "
+"and :setting:`MIDDLEWARE_CLASSES`:"
+msgstr ""
+
+#: ../../topics/http/middleware.txt:341
+msgid ""
+"Under :setting:`MIDDLEWARE_CLASSES`, every middleware will always have its "
+"``process_response`` method called, even if an earlier middleware short-"
+"circuited by returning a response from its ``process_request`` method. "
+"Under :setting:`MIDDLEWARE`, middleware behaves more like an onion: the "
+"layers that a response goes through on the way out are the same layers that "
+"saw the request on the way in. If a middleware short-circuits, only that "
+"middleware and the ones before it in :setting:`MIDDLEWARE` will see the "
+"response."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:350
+msgid ""
+"Under :setting:`MIDDLEWARE_CLASSES`, ``process_exception`` is applied to "
+"exceptions raised from a middleware ``process_request`` method. Under :"
+"setting:`MIDDLEWARE`, ``process_exception`` applies only to exceptions "
+"raised from the view (or from the ``render`` method of a :class:`~django."
+"template.response.TemplateResponse`). Exceptions raised from a middleware "
+"are converted to the appropriate HTTP response and then passed to the next "
+"middleware."
+msgstr ""
+
+#: ../../topics/http/middleware.txt:358
+msgid ""
+"Under :setting:`MIDDLEWARE_CLASSES`, if a ``process_response`` method raises "
+"an exception, the ``process_response`` methods of all earlier middleware are "
+"skipped and a ``500 Internal Server Error`` HTTP response is always returned "
+"(even if the exception raised was e.g. an :class:`~django.http.Http404`). "
+"Under :setting:`MIDDLEWARE`, an exception raised from a middleware will "
+"immediately be converted to the appropriate HTTP response, and then the next "
+"middleware in line will see that response. Middleware are never skipped due "
+"to a middleware raising an exception."
+msgstr ""
+
+# 5cbc54358bf044cbbeebfb64a1fa4198
+#~ msgid "Hooks and application order"
+#~ msgstr "\"Хуки\" и порядок обработки"
+
+# 880ba98ddb1848fead77fc34143e5069
+#~ msgid ":meth:`process_request`"
+#~ msgstr ":meth:`process_request`"
+
+# 21b4d3a7e2d846baa8f35448ffb0c2ef
+#~ msgid ":meth:`process_view`"
+#~ msgstr ":meth:`process_view`"
+
+# b131a3fcec9e4ec5bfa20e3dabfc9ebc
+#~ msgid ""
+#~ "During the response phase, after calling the view, middleware are applied "
+#~ "in reverse order, from the bottom up. Three hooks are available:"
+#~ msgstr ""
+#~ "На этапе обработки ответа, после вызова представления, промежуточные слои "
+#~ "применяются в обратном порядке, снизу вверх. Доступны три \"хука\":"
+
+# 1c4ed4afe46a43279dd5030d947fd2ec
+#~ msgid ":meth:`process_exception` (only if the view raised an exception)"
+#~ msgstr ""
+#~ ":meth:`process_exception` (только, если представление вызвало исключение)"
+
+# 1a1b3cdb81a541639d656a3d34107a77
+#~ msgid ":meth:`process_template_response` (only for template responses)"
+#~ msgstr ":meth:`process_template_response` (только для ответа с шаблоном)"
+
+# 4a9f3567893f49389a4e23033878f834
+#~ msgid ":meth:`process_response`"
+#~ msgstr ":meth:`process_response`"
+
+# a2e56d2611b24a8388f56171cbaa9e99
+#~ msgid ""
+#~ "If you prefer, you can also think of it like an onion: each middleware "
+#~ "class is a \"layer\" that wraps the view."
+#~ msgstr ""
+#~ "Можете смотреть на это, как на луковицу: каждый промежуточный слой "
+#~ "оборачивает представление."
+
+# 701b67bbff604970b3884769778fbe0b
+#~ msgid "The behavior of each hook is described below."
+#~ msgstr "Поведение каждого \"хука\" описано ниже."
+
+# 0a668593921e4ab5b2b70b29bb6bc5de
+#~ msgid ""
+#~ "Writing your own middleware is easy. Each middleware component is a "
+#~ "single Python class that defines one or more of the following methods:"
+#~ msgstr ""
+#~ "Создать свой промежуточный слой очень просто. Это просто класс Python, "
+#~ "который предоставляет один или несколько методов:"
+
+# a4b71a34535c4134b7007005b28ded88
+#~ msgid "``process_request``"
+#~ msgstr "``process_request``"
+
+# 571bf4c2ebdc4bb686a5cb889de96f7f
+#~ msgid "``request`` is an :class:`~django.http.HttpRequest` object."
+#~ msgstr "``request`` -- это объект :class:`~django.http.HttpRequest`."
+
+# 398a6b7bda154d639f43f9c9f08240a2
+#~ msgid ""
+#~ "``process_request()`` is called on each request, before Django decides "
+#~ "which view to execute."
+#~ msgstr ""
+#~ "``process_request()`` вызывается для каждого запроса перед тем, как "
+#~ "Django решит какое представление вызывать."
+
+# 6cd3db7186f041af846d342f015b15a3
+#~ msgid ""
+#~ "It should return either ``None`` or an :class:`~django.http.HttpResponse` "
+#~ "object. If it returns ``None``, Django will continue processing this "
+#~ "request, executing any other ``process_request()`` middleware, then, "
+#~ "``process_view()`` middleware, and finally, the appropriate view. If it "
+#~ "returns an :class:`~django.http.HttpResponse` object, Django won't bother "
+#~ "calling any other request, view or exception middleware, or the "
+#~ "appropriate view; it'll apply response middleware to that :class:`~django."
+#~ "http.HttpResponse`, and return the result."
+#~ msgstr ""
+#~ "Метод должен вернуть ``None`` или объект an :class:`~django.http."
+#~ "HttpResponse`. Если вернул ``None``, Django продолжит обработку запроса, "
+#~ "вызывая ``process_request()`` других промежуточных слоёв, затем метод "
+#~ "``process_view()`` промежуточного слоя, и в конце представление. Если "
+#~ "вернул объект :class:`~django.http.HttpResponse`, Django остановит "
+#~ "обработку запроса, применит промежуточные слои для объекта :class:"
+#~ "`~django.http.HttpResponse`, и вернет результат."
+
+# e0b0cfa902b24e57be40f2f876702552
+#~ msgid "``process_response``"
+#~ msgstr "``process_response``"
+
+# 46033949974b4bc6b7fc72446d4e57d4
+#~ msgid ""
+#~ "``request`` is an :class:`~django.http.HttpRequest` object. ``response`` "
+#~ "is the :class:`~django.http.HttpResponse` or :class:`~django.http."
+#~ "StreamingHttpResponse` object returned by a Django view or by a "
+#~ "middleware."
+#~ msgstr ""
+#~ "``request`` -- объект :class:`~django.http.HttpRequest`. ``response`` -- "
+#~ "объект :class:`~django.http.HttpResponse` или :class:`~django.http."
+#~ "StreamingHttpResponse`, которые вернуло представление или промежуточный "
+#~ "слой."
+
+# e42c457e0516472cb11eeb76e467e5a2
+#~ msgid ""
+#~ "``process_response()`` is called on all responses before they're returned "
+#~ "to the browser."
+#~ msgstr ""
+#~ "``process_response()`` вызывается для каждого ответа перед тем, как он "
+#~ "будет оптравлен браузеру."
+
+# e19e3fa65eca422e986d722f3e8fbde8
+#~ msgid ""
+#~ "It must return an :class:`~django.http.HttpResponse` or :class:`~django."
+#~ "http.StreamingHttpResponse` object. It could alter the given "
+#~ "``response``, or it could create and return a brand-new :class:`~django."
+#~ "http.HttpResponse` or :class:`~django.http.StreamingHttpResponse`."
+#~ msgstr ""
+#~ "Этот метод должен вернуть объект :class:`~django.http.HttpResponse` или :"
+#~ "class:`~django.http.StreamingHttpResponse`. Он может изменить переданный "
+#~ "``response``, или же создать и вернуть новый экземпляр :class:`~django."
+#~ "http.HttpResponse` или :class:`~django.http.StreamingHttpResponse`."
+
+# e46bf4fa509d4c6ea0bea80acc7d39d5
+#~ msgid ""
+#~ "Unlike the ``process_request()`` and ``process_view()`` methods, the "
+#~ "``process_response()`` method is always called, even if the "
+#~ "``process_request()`` and ``process_view()`` methods of the same "
+#~ "middleware class were skipped (because an earlier middleware method "
+#~ "returned an :class:`~django.http.HttpResponse`). In particular, this "
+#~ "means that your ``process_response()`` method cannot rely on setup done "
+#~ "in ``process_request()``."
+#~ msgstr ""
+#~ "В отличии от методов ``process_request()`` и ``process_view()``, метод "
+#~ "``process_response()`` вызывается всегда, даже если методы "
+#~ "``process_request()`` и ``process_view()`` этого промежуточного слоя были "
+#~ "пропущены (т.к. предыдущий промежуточный слой вернул объект :class:"
+#~ "`~django.http.HttpResponse`). Это означает, что метод "
+#~ "``process_response()`` не может полагаться на действия, выполняемые в "
+#~ "``process_request()``."
+
+# dd5f061962d8464b8a84a00c8ee6c099
+#~ msgid ""
+#~ "Finally, remember that during the response phase, middleware are applied "
+#~ "in reverse order, from the bottom up. This means classes defined at the "
+#~ "end of :setting:`MIDDLEWARE_CLASSES` will be run first."
+#~ msgstr ""
+#~ "И не забывайте, что при обработке ответа промежуточные слои выполняются в "
+#~ "обратном порядке -- снизу вверх. Это значит, что классы, указанные в "
+#~ "конце :setting:`MIDDLEWARE_CLASSES`, будет выполнены в первую очередь."
 
 # 2aea601c51d146afb739b9130e161b1b
-#: ../../topics/http/middleware.txt:255
-msgid ""
-"Most middleware classes won't need an initializer since middleware classes "
-"are essentially placeholders for the ``process_*`` methods. If you do need "
-"some global state you may use ``__init__`` to set up. However, keep in mind "
-"a couple of caveats:"
-msgstr ""
-"Большинство классов промежуточного слоя не требуют инициализации т.к. по "
-"сути являют набором ``process_*`` методов. Если вам необходимо какое-то "
-"глобальное состояние, вы можете использовать метод ``__init__`` для его "
-"инициализации. Однако помните о некоторых моментах:"
+#~ msgid ""
+#~ "Most middleware classes won't need an initializer since middleware "
+#~ "classes are essentially placeholders for the ``process_*`` methods. If "
+#~ "you do need some global state you may use ``__init__`` to set up. "
+#~ "However, keep in mind a couple of caveats:"
+#~ msgstr ""
+#~ "Большинство классов промежуточного слоя не требуют инициализации т.к. по "
+#~ "сути являют набором ``process_*`` методов. Если вам необходимо какое-то "
+#~ "глобальное состояние, вы можете использовать метод ``__init__`` для его "
+#~ "инициализации. Однако помните о некоторых моментах:"
 
-# 275eb6f469f34bc1a52589963edc28d5
-#: ../../topics/http/middleware.txt:260
-msgid ""
-"Django initializes your middleware without any arguments, so you can't "
-"define ``__init__`` as requiring any arguments."
-msgstr ""
-"Django инициализирует промежуточный слой без аргументов, поэтому метод "
-"``__init__`` не должен определять обязательные аргументы."
-
-# ab80e1bdf7af4ad19af38aaca25afe9b
-#: ../../topics/http/middleware.txt:263
-msgid ""
-"Unlike the ``process_*`` methods which get called once per request, "
-"``__init__`` gets called only *once*, when the Web server responds to the "
-"first request."
-msgstr ""
-"В отличии от методов ``process_*``, которые вызываются при каждом запросе, "
-"``__init__`` вызывается только *один раз*, когда Web-сервер принимает первый "
-"запрос."
-
-# 5d4b468fa68e4ab9b4f7d016f6a5e6bf
-#: ../../topics/http/middleware.txt:268
-msgid "Marking middleware as unused"
-msgstr "Помечаем промежуточный слой как неиспользуемый"
-
-# 77683dd6ec98441d8c4007d3f18810c8
-#: ../../topics/http/middleware.txt:270
-msgid ""
-"It's sometimes useful to determine at run-time whether a piece of middleware "
-"should be used. In these cases, your middleware's ``__init__`` method may "
-"raise :exc:`django.core.exceptions.MiddlewareNotUsed`. Django will then "
-"remove that piece of middleware from the middleware process and a debug "
-"message will be logged to the ``django.request`` logger when :setting:"
-"`DEBUG` is set to ``True``."
-msgstr ""
-"Иногда полезно в процессе работы приложения указать, что промежуточный слой "
-"не должен использоваться. В таком случае в методе ``__init__`` можно "
-"вызывать исключение :exc:`django.core.exceptions.MiddlewareNotUsed`. Django "
-"исключит этот промежуточный слой из процесса обработки и запишет отладочное "
-"сообщение в логгер ``django.request``, если параметр конфигурации :setting:"
-"`DEBUG` был установлен в ``True``."
-
-#: ../../topics/http/middleware.txt:279
-msgid ""
-"Previously, :exc:`~django.core.exceptions.MiddlewareNotUsed` exceptions "
-"weren't logged."
-msgstr ""
-"Ранее, исключение, :exc:`~django.core.exceptions.MiddlewareNotUsed` не "
-"попадало в журнал."
+#~ msgid ""
+#~ "Previously, :exc:`~django.core.exceptions.MiddlewareNotUsed` exceptions "
+#~ "weren't logged."
+#~ msgstr ""
+#~ "Ранее, исключение, :exc:`~django.core.exceptions.MiddlewareNotUsed` не "
+#~ "попадало в журнал."
 
 # fd06570ca7074d8cb336176101cd8e0b
-#: ../../topics/http/middleware.txt:283
-msgid "Guidelines"
-msgstr "Советы"
+#~ msgid "Guidelines"
+#~ msgstr "Советы"
 
 # 887504fc929d431e9ce737124c2c2012
-#: ../../topics/http/middleware.txt:285
-msgid "Middleware classes don't have to subclass anything."
-msgstr "Класс промежуточного слоя не должен наследоваться от другого класса."
+#~ msgid "Middleware classes don't have to subclass anything."
+#~ msgstr ""
+#~ "Класс промежуточного слоя не должен наследоваться от другого класса."
 
 # 823ac78eb8ea4cd9a43a2dd86d9cf735
-#: ../../topics/http/middleware.txt:287
-msgid ""
-"The middleware class can live anywhere on your Python path. All Django cares "
-"about is that the :setting:`MIDDLEWARE_CLASSES` setting includes the path to "
-"it."
-msgstr ""
-"Класс может находиться где угодно в путях Python. Главное указать путь к "
-"нему в :setting:`MIDDLEWARE_CLASSES`."
+#~ msgid ""
+#~ "The middleware class can live anywhere on your Python path. All Django "
+#~ "cares about is that the :setting:`MIDDLEWARE_CLASSES` setting includes "
+#~ "the path to it."
+#~ msgstr ""
+#~ "Класс может находиться где угодно в путях Python. Главное указать путь к "
+#~ "нему в :setting:`MIDDLEWARE_CLASSES`."
 
 # edc413f69b2e40fb80b878dcf877dc30
-#: ../../topics/http/middleware.txt:291
-msgid ""
-"Feel free to look at :doc:`Django's available middleware </ref/middleware>` "
-"for examples."
-msgstr ""
-"Вы можете найти примеры кода в :doc:`промежуточных слоях Django</ref/"
-"middleware>`."
+#~ msgid ""
+#~ "Feel free to look at :doc:`Django's available middleware </ref/"
+#~ "middleware>` for examples."
+#~ msgstr ""
+#~ "Вы можете найти примеры кода в :doc:`промежуточных слоях Django</ref/"
+#~ "middleware>`."
 
 # 19d38223e5ce43a4873087b7d591b808
-#: ../../topics/http/middleware.txt:294
-msgid ""
-"If you write a middleware component that you think would be useful to other "
-"people, contribute to the community! :doc:`Let us know </internals/"
-"contributing/index>`, and we'll consider adding it to Django."
-msgstr ""
-"Если вы создали полезный промежуточный слой, поделитесь ним с сообществом! :"
-"doc:`Напишите нам </internals/contributing/index>`, и возможно мы добавим "
-"его в Django."
+#~ msgid ""
+#~ "If you write a middleware component that you think would be useful to "
+#~ "other people, contribute to the community! :doc:`Let us know </internals/"
+#~ "contributing/index>`, and we'll consider adding it to Django."
+#~ msgstr ""
+#~ "Если вы создали полезный промежуточный слой, поделитесь ним с "
+#~ "сообществом! :doc:`Напишите нам </internals/contributing/index>`, и "
+#~ "возможно мы добавим его в Django."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-17 10:48+0200\n"
+"POT-Creation-Date: 2016-12-08 11:07+0200\n"
 "PO-Revision-Date: 2016-01-31 13:28+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -171,9 +171,10 @@ msgstr ""
 
 # cb030e7a1ec242d98eda404f0934af41
 #: ../../intro/tutorial03.txt:58
+#, fuzzy
 msgid ""
 "This tutorial provides basic instruction in the use of URLconfs, and you can "
-"refer to :mod:`django.core.urlresolvers` for more information."
+"refer to :mod:`django.urls` for more information."
 msgstr ""
 "В этом разделе мы опишем основы использования настроек URL-ов, больше "
 "информации вы можете найти в разделе :mod:`django.core.urlresolvers`."
@@ -216,17 +217,17 @@ msgstr ""
 
 # f4c6fcd56a2d4d8d86cad8b74de45552
 #: ../../intro/tutorial03.txt:106
+#, fuzzy
 msgid ""
 "When somebody requests a page from your website -- say, \"/polls/34/\", "
 "Django will load the ``mysite.urls`` Python module because it's pointed to "
 "by the :setting:`ROOT_URLCONF` setting. It finds the variable named "
-"``urlpatterns`` and traverses the regular expressions in order. The :func:"
-"`~django.conf.urls.include` functions we are using simply reference other "
-"URLconfs. Note that the regular expressions for the :func:`~django.conf.urls."
-"include` functions don't have a ``$`` (end-of-string match character) but "
-"rather a trailing slash. Whenever Django encounters :func:`~django.conf.urls."
-"include`, it chops off whatever part of the URL matched up to that point and "
-"sends the remaining string to the included URLconf for further processing."
+"``urlpatterns`` and traverses the regular expressions in order. After "
+"finding the match at ``'^polls/'``, it strips off the matching text (``"
+"\"polls/\"``) and sends the remaining text -- ``\"34/\"`` -- to the 'polls."
+"urls' URLconf for further processing. There it matches ``r'^(?"
+"P<question_id>[0-9]+)/$'``, resulting in a call to the ``detail()`` view "
+"like so::"
 msgstr ""
 "При запросе страницы -- например, \"/polls/34/\", Django загружает модуль "
 "``mysite.urls`` т.к. он указан в :setting:`ROOT_URLCONF`. Находит переменную "
@@ -237,45 +238,8 @@ msgstr ""
 "func:`~django.conf.urls.include`, он отрезает распознанную часть URL, все "
 "что осталось передает в указанный URLconf для дальнейшей обработки."
 
-# dcb12cdbdd8149838380307414d6bdbe
-#: ../../intro/tutorial03.txt:118
-msgid ""
-"The idea behind :func:`~django.conf.urls.include` is to make it easy to plug-"
-"and-play URLs. Since polls are in their own URLconf (``polls/urls.py``), "
-"they can be placed under \"/polls/\", or under \"/fun_polls/\", or under \"/"
-"content/polls/\", or any other path root, and the app will still work."
-msgstr ""
-"Идея использования :func:`~django.conf.urls.include` и разделения URLconf "
-"состоит в том, чтобы легко подключать и изменять конфигурацию URL-ов. "
-"Теперь, когда приложение голосования содержит собственный URLconf(``polls/"
-"urls.py``), вы можете подключить его в \"/polls/\", или \"/fun_polls/\", или "
-"в \"/content/polls/\", или другой путь и приложение будет работать."
-
-# 3eeac260c3fa44a5a7e5cbc2046c4a93
-#: ../../intro/tutorial03.txt:124
-msgid "Here's what happens if a user goes to \"/polls/34/\" in this system:"
-msgstr "Вот что произойдет при запросе к \"/polls/34/\":"
-
-# 5e30a94af6f6422091c8ea6f6ecae338
-#: ../../intro/tutorial03.txt:126
-msgid "Django will find the match at ``'^polls/'``"
-msgstr "Django найдет ``'^polls/'``"
-
-# 59e53ede773341e68436f4b613e4c57e
-#: ../../intro/tutorial03.txt:128
-msgid ""
-"Then, Django will strip off the matching text (``\"polls/\"``) and send the "
-"remaining text -- ``\"34/\"`` -- to the 'polls.urls' URLconf for further "
-"processing which matches ``r'^(?P<question_id>[0-9]+)/$'`` resulting in a "
-"call to the ``detail()`` view like so::"
-msgstr ""
-"Затем Django обрежет распознанную часть (``\"polls/\"``) и передаст остаток "
-"-- ``\"34/\"`` -- в 'polls.urls' для дальнейшей обработки, который будет "
-"распознан ``r'^(?P<question_id>[0-9]+)/$'`` и будет вызвана функция "
-"``detail()``::"
-
 # e68fe2de50e143c087374c25c7fbc798
-#: ../../intro/tutorial03.txt:135
+#: ../../intro/tutorial03.txt:117
 msgid ""
 "The ``question_id='34'`` part comes from ``(?P<question_id>[0-9]+)``. Using "
 "parentheses around a pattern \"captures\" the text matched by that pattern "
@@ -291,7 +255,7 @@ msgstr ""
 "``[0-9]+``, которое распознает цифры."
 
 # 7ff0aac158694f4d92c28727242b5ec4
-#: ../../intro/tutorial03.txt:141
+#: ../../intro/tutorial03.txt:123
 msgid ""
 "Because the URL patterns are regular expressions, there really is no limit "
 "on what you can do with them. And there's no need to add URL cruft such as "
@@ -303,17 +267,17 @@ msgstr ""
 "html``, пока это вам не понадобится. В таком случае добавьте что-то вроде::"
 
 # 13bbfbd28c63492caeb5f275f5977700
-#: ../../intro/tutorial03.txt:148
+#: ../../intro/tutorial03.txt:130
 msgid "But, don't do that. It's silly."
 msgstr "Но не делайте так. Это глупо."
 
 # 309a7ba6b31a438e9b6932f720d493ca
-#: ../../intro/tutorial03.txt:151
+#: ../../intro/tutorial03.txt:133
 msgid "Write views that actually do something"
 msgstr "Добавим функционал в наши представления"
 
 # b5cbead2e2ec4fbda6ac32120e2b16ec
-#: ../../intro/tutorial03.txt:153
+#: ../../intro/tutorial03.txt:135
 msgid ""
 "Each view is responsible for doing one of two things: returning an :class:"
 "`~django.http.HttpResponse` object containing the content for the requested "
@@ -326,7 +290,7 @@ msgstr ""
 "ваше усмотрение."
 
 # af5b10f7d16141ed8173dda5dc743613
-#: ../../intro/tutorial03.txt:158
+#: ../../intro/tutorial03.txt:140
 msgid ""
 "Your view can read records from a database, or not. It can use a template "
 "system such as Django's -- or a third-party Python template system -- or "
@@ -339,7 +303,7 @@ msgstr ""
 "архив \"на лету\", все что угодно, используя любые библиотеки Python."
 
 # 848efaff283440c48a2f37e47a842067
-#: ../../intro/tutorial03.txt:163
+#: ../../intro/tutorial03.txt:145
 msgid ""
 "All Django wants is that :class:`~django.http.HttpResponse`. Or an exception."
 msgstr ""
@@ -347,7 +311,7 @@ msgstr ""
 "исключение."
 
 # 0ace0a50ebf74f1aa4c0c57c84f9e6a5
-#: ../../intro/tutorial03.txt:165
+#: ../../intro/tutorial03.txt:147
 msgid ""
 "Because it's convenient, let's use Django's own database API, which we "
 "covered in :doc:`Tutorial 2 </intro/tutorial02>`. Here's one stab at a new "
@@ -360,7 +324,7 @@ msgstr ""
 "нового к самому старому:"
 
 # a644bb267bc74d52bef3ab7cf57e1541
-#: ../../intro/tutorial03.txt:185
+#: ../../intro/tutorial03.txt:167
 msgid ""
 "There's a problem here, though: the page's design is hard-coded in the view. "
 "If you want to change the way the page looks, you'll have to edit this "
@@ -372,7 +336,7 @@ msgstr ""
 "воспользуемся системой шаблонов Django, чтобы отделить представление от кода."
 
 # 1623748df8db4afbaf1e807e4c459c3e
-#: ../../intro/tutorial03.txt:190
+#: ../../intro/tutorial03.txt:172
 msgid ""
 "First, create a directory called ``templates`` in your ``polls`` directory. "
 "Django will look for templates in there."
@@ -381,7 +345,7 @@ msgstr ""
 "Django будет искать шаблоны в этом каталоге."
 
 # 965d05237fb54ed797c2e74c80fa4f77
-#: ../../intro/tutorial03.txt:193
+#: ../../intro/tutorial03.txt:175
 msgid ""
 "Your project's :setting:`TEMPLATES` setting describes how Django will load "
 "and render templates. The default settings file configures a "
@@ -396,7 +360,7 @@ msgstr ""
 "указанных в :setting:`INSTALLED_APPS`."
 
 # 45c2c9c413854e30961f34195393c8c9
-#: ../../intro/tutorial03.txt:199
+#: ../../intro/tutorial03.txt:181
 msgid ""
 "Within the ``templates`` directory you have just created, create another "
 "directory called ``polls``, and within that create a file called ``index."
@@ -412,12 +376,12 @@ msgstr ""
 "html``."
 
 # 97001aa78bc147d28d5cb4be1481a545
-#: ../../intro/tutorial03.txt:0
+#: ../../intro/tutorial03.txt:188
 msgid "Template namespacing"
 msgstr "Пространства имен для шаблонов"
 
 # 77b1136270174814ae56498b86bdd4c0
-#: ../../intro/tutorial03.txt:208
+#: ../../intro/tutorial03.txt:190
 msgid ""
 "Now we *might* be able to get away with putting our templates directly in "
 "``polls/templates`` (rather than creating another ``polls`` subdirectory), "
@@ -436,12 +400,12 @@ msgstr ""
 "один* подкаталог с названием, аналогичным названию приложения."
 
 # 93a83f92747d44f2b7b49c7646f09cc9
-#: ../../intro/tutorial03.txt:217
+#: ../../intro/tutorial03.txt:199
 msgid "Put the following code in that template:"
 msgstr "Добавьте следующий код в шаблон:"
 
 # 8d0db311ebaa45f9b922ae4770fe46ae
-#: ../../intro/tutorial03.txt:232
+#: ../../intro/tutorial03.txt:214
 msgid ""
 "Now let's update our ``index`` view in ``polls/views.py`` to use the "
 "template:"
@@ -450,7 +414,7 @@ msgstr ""
 "использовать шаблон:"
 
 # b4fa1222550d417db6deebe8228bba84
-#: ../../intro/tutorial03.txt:251
+#: ../../intro/tutorial03.txt:233
 msgid ""
 "That code loads the template called  ``polls/index.html`` and passes it a "
 "context. The context is a dictionary mapping template variable names to "
@@ -461,7 +425,7 @@ msgstr ""
 "соответствующие им значения."
 
 # 24013aa672af4fd080dc6e43311d0562
-#: ../../intro/tutorial03.txt:255
+#: ../../intro/tutorial03.txt:237
 msgid ""
 "Load the page by pointing your browser at \"/polls/\", and you should see a "
 "bulleted-list containing the \"What's up\" question from :doc:`Tutorial 2 </"
@@ -472,12 +436,12 @@ msgstr ""
 "ведет на страницу опроса."
 
 # 5c7195c45508434bab3a585df8fb061b
-#: ../../intro/tutorial03.txt:260
+#: ../../intro/tutorial03.txt:242
 msgid "A shortcut: :func:`~django.shortcuts.render`"
 msgstr "Функция :func:`~django.shortcuts.render`"
 
 # f94955e9e07946a58bf0476118a5943f
-#: ../../intro/tutorial03.txt:262
+#: ../../intro/tutorial03.txt:244
 msgid ""
 "It's a very common idiom to load a template, fill a context and return an :"
 "class:`~django.http.HttpResponse` object with the result of the rendered "
@@ -489,13 +453,13 @@ msgstr ""
 "функцию для всех этих операций. Вот как будет выглядеть наш ``index()``:"
 
 # 0981bf469c3f4bffb0cc3b59c0be8399
-#: ../../intro/tutorial03.txt:280
+#: ../../intro/tutorial03.txt:262
+#, fuzzy
 msgid ""
 "Note that once we've done this in all these views, we no longer need to "
-"import :mod:`~django.template.loader`, :class:`~django.template."
-"RequestContext` and :class:`~django.http.HttpResponse` (you'll want to keep "
-"``HttpResponse`` if you still have the stub methods for ``detail``, "
-"``results``, and ``vote``)."
+"import :mod:`~django.template.loader` and :class:`~django.http.HttpResponse` "
+"(you'll want to keep ``HttpResponse`` if you still have the stub methods for "
+"``detail``, ``results``, and ``vote``)."
 msgstr ""
 "Так как мы используем такой подход во всех наших представлениях, нет "
 "необходимости импортировать :mod:`~django.template.loader`, :class:`~django."
@@ -504,7 +468,7 @@ msgstr ""
 "``results`` и ``vote``)."
 
 # 72318c4437f243c691dd0066338b16bc
-#: ../../intro/tutorial03.txt:285
+#: ../../intro/tutorial03.txt:267
 msgid ""
 "The :func:`~django.shortcuts.render` function takes the request object as "
 "its first argument, a template name as its second argument and a dictionary "
@@ -517,12 +481,12 @@ msgstr ""
 "выполненный шаблон с указанным контекстом."
 
 # 44d8c973240645b19878ca5847db67b7
-#: ../../intro/tutorial03.txt:291
+#: ../../intro/tutorial03.txt:273
 msgid "Raising a 404 error"
 msgstr "Вызов 404 исключения"
 
 # ddf20155adc44a8ab8f3e8bf23b6001c
-#: ../../intro/tutorial03.txt:293
+#: ../../intro/tutorial03.txt:275
 msgid ""
 "Now, let's tackle the question detail view -- the page that displays the "
 "question text for a given poll. Here's the view:"
@@ -531,7 +495,7 @@ msgstr ""
 "ответа. Вот так будет выглядеть наше представление:"
 
 # 86d6ccfb0900405d9cafe67dcd132d0c
-#: ../../intro/tutorial03.txt:311
+#: ../../intro/tutorial03.txt:293
 msgid ""
 "The new concept here: The view raises the :exc:`~django.http.Http404` "
 "exception if a question with the requested ID doesn't exist."
@@ -540,7 +504,7 @@ msgstr ""
 "указанным ID не существует."
 
 # 43d5f1c9531d4dc0a52406b5ad703ef4
-#: ../../intro/tutorial03.txt:314
+#: ../../intro/tutorial03.txt:296
 msgid ""
 "We'll discuss what you could put in that ``polls/detail.html`` template a "
 "bit later, but if you'd like to quickly get the above example working, a "
@@ -550,17 +514,17 @@ msgstr ""
 "вот сразу, чтобы все заработало, вот его содержимое:"
 
 # 0a6dea78a32f49e4b8534f1b07ef00b3
-#: ../../intro/tutorial03.txt:323
+#: ../../intro/tutorial03.txt:305
 msgid "will get you started for now."
 msgstr "чтобы можно было загрузить страницу."
 
 # aaa6010e3ced4b79af0d6f2f5417f070
-#: ../../intro/tutorial03.txt:326
+#: ../../intro/tutorial03.txt:308
 msgid "A shortcut: :func:`~django.shortcuts.get_object_or_404`"
 msgstr "Функция :func:`~django.shortcuts.get_object_or_404`"
 
 # 4eee416028884fc79143afae2b8e17a5
-#: ../../intro/tutorial03.txt:328
+#: ../../intro/tutorial03.txt:310
 msgid ""
 "It's a very common idiom to use :meth:`~django.db.models.query.QuerySet.get` "
 "and raise :exc:`~django.http.Http404` if the object doesn't exist. Django "
@@ -572,7 +536,7 @@ msgstr ""
 "представление ``detail()``:"
 
 # 830169f09d92437e957745fe722aa7cf
-#: ../../intro/tutorial03.txt:343
+#: ../../intro/tutorial03.txt:325
 msgid ""
 "The :func:`~django.shortcuts.get_object_or_404` function takes a Django "
 "model as its first argument and an arbitrary number of keyword arguments, "
@@ -587,12 +551,12 @@ msgstr ""
 "http.Http404`."
 
 # 09b283e7f586442c81216ba8e5167325
-#: ../../intro/tutorial03.txt:0
+#: ../../intro/tutorial03.txt:331
 msgid "Philosophy"
 msgstr "Философия"
 
 # 674303397dbb4734a23b9aba4468346a
-#: ../../intro/tutorial03.txt:351
+#: ../../intro/tutorial03.txt:333
 msgid ""
 "Why do we use a helper function :func:`~django.shortcuts.get_object_or_404` "
 "instead of automatically catching the :exc:`~django.core.exceptions."
@@ -607,7 +571,7 @@ msgstr ""
 "exceptions.ObjectDoesNotExist`?"
 
 # f253fde43f9a4d3690f56afdfa033884
-#: ../../intro/tutorial03.txt:357
+#: ../../intro/tutorial03.txt:339
 msgid ""
 "Because that would couple the model layer to the view layer. One of the "
 "foremost design goals of Django is to maintain loose coupling. Some "
@@ -618,7 +582,7 @@ msgstr ""
 "связанная функциональность находится в модуле :mod:`django.shortcuts`."
 
 # 48fea9f564054bdea0d046bbb3ca06bc
-#: ../../intro/tutorial03.txt:361
+#: ../../intro/tutorial03.txt:343
 msgid ""
 "There's also a :func:`~django.shortcuts.get_list_or_404` function, which "
 "works just as :func:`~django.shortcuts.get_object_or_404` -- except using :"
@@ -633,12 +597,12 @@ msgstr ""
 "Http404`, если получен пустой список."
 
 # 3adf70cf3b784f20849f76a011f17587
-#: ../../intro/tutorial03.txt:368
+#: ../../intro/tutorial03.txt:350
 msgid "Use the template system"
 msgstr "Использование системы шаблонов"
 
 # cc12bd0bfe544a2abcbfacb319c277ef
-#: ../../intro/tutorial03.txt:370
+#: ../../intro/tutorial03.txt:352
 msgid ""
 "Back to the ``detail()`` view for our poll application. Given the context "
 "variable ``question``, here's what the ``polls/detail.html`` template might "
@@ -648,7 +612,7 @@ msgstr ""
 "``polls/detail.html``, использующий контекстную переменную ``question``:"
 
 # e476899cdc454041b8645fe14ca7e60f
-#: ../../intro/tutorial03.txt:384
+#: ../../intro/tutorial03.txt:366
 msgid ""
 "The template system uses dot-lookup syntax to access variable attributes. In "
 "the example of ``{{ question.question_text }}``, first Django does a "
@@ -663,7 +627,7 @@ msgstr ""
 "искаться индекс в списке."
 
 # 70e8e225c2f24fe1899de54f65e0b571
-#: ../../intro/tutorial03.txt:390
+#: ../../intro/tutorial03.txt:372
 msgid ""
 "Method-calling happens in the :ttag:`{% for %}<for>` loop: ``question."
 "choice_set.all`` is interpreted as the Python code ``question.choice_set."
@@ -676,7 +640,7 @@ msgstr ""
 "ttag:`{% for %}<for>`."
 
 # 090a8a0c54a448e0b8bffd1954854670
-#: ../../intro/tutorial03.txt:395
+#: ../../intro/tutorial03.txt:377
 msgid ""
 "See the :doc:`template guide </topics/templates>` for more about templates."
 msgstr ""
@@ -684,12 +648,12 @@ msgstr ""
 "topics/templates>`."
 
 # c4e4f621bde246daaccd0c9a37c70bbd
-#: ../../intro/tutorial03.txt:398
+#: ../../intro/tutorial03.txt:380
 msgid "Removing hardcoded URLs in templates"
 msgstr "Избавляемся от \"хардкода\" URL-ов в шаблонах"
 
 # e8721bb0f3d842049fc7a75f7e3da50b
-#: ../../intro/tutorial03.txt:400
+#: ../../intro/tutorial03.txt:382
 msgid ""
 "Remember, when we wrote the link to a question in the ``polls/index.html`` "
 "template, the link was partially hardcoded like this:"
@@ -698,7 +662,7 @@ msgstr ""
 "прописана прямо в коде:"
 
 # aa1b07befe2949ee8fd03600a6d68077
-#: ../../intro/tutorial03.txt:407
+#: ../../intro/tutorial03.txt:389
 msgid ""
 "The problem with this hardcoded, tightly-coupled approach is that it becomes "
 "challenging to change URLs on projects with a lot of templates. However, "
@@ -713,7 +677,7 @@ msgstr ""
 "ссылаться на шаблоны URL-ов используя шаблонный тег ``{% url %}``:"
 
 # d9798f7887a34d8985c9830456a2357d
-#: ../../intro/tutorial03.txt:417
+#: ../../intro/tutorial03.txt:399
 msgid ""
 "The way this works is by looking up the URL definition as specified in the "
 "``polls.urls`` module. You can see exactly where the URL name of 'detail' is "
@@ -723,7 +687,7 @@ msgstr ""
 "наш URL с названием 'detail'::"
 
 # 72fb2e5d200b4e39b1beb3dac1e01d42
-#: ../../intro/tutorial03.txt:426
+#: ../../intro/tutorial03.txt:408
 msgid ""
 "If you want to change the URL of the polls detail view to something else, "
 "perhaps to something like ``polls/specifics/12/`` instead of doing it in the "
@@ -734,12 +698,12 @@ msgstr ""
 "py``::"
 
 # af882d84bddb4eeeb01aa09b33fa7839
-#: ../../intro/tutorial03.txt:436
+#: ../../intro/tutorial03.txt:418
 msgid "Namespacing URL names"
 msgstr "Пространства имен в названиях URL-ов"
 
 # 1c088ae6aa5545a5b22cc4c80dbc6bb8
-#: ../../intro/tutorial03.txt:438
+#: ../../intro/tutorial03.txt:420
 msgid ""
 "The tutorial project has just one app, ``polls``. In real Django projects, "
 "there might be five, ten, twenty apps or more. How does Django differentiate "
@@ -756,7 +720,7 @@ msgstr ""
 "использовании тега ``{% url %}``?"
 
 # 1e09f745dc4746978bbd36be509825cf
-#: ../../intro/tutorial03.txt:445
+#: ../../intro/tutorial03.txt:427
 msgid ""
 "The answer is to add namespaces to your  URLconf. In the ``polls/urls.py`` "
 "file, go ahead and add an ``app_name`` to set the application namespace:"
@@ -765,17 +729,17 @@ msgstr ""
 "py`` и добавим пространство имен в ``app_name``:"
 
 # cfe6c24ecf7148ab9a750ee9f02feac2
-#: ../../intro/tutorial03.txt:461
+#: ../../intro/tutorial03.txt:445
 msgid "Now change your ``polls/index.html`` template from:"
 msgstr "Теперь поменяем в шаблоне ``polls/index.html``:"
 
 # 1f6222b18daf42bcb2beb8b391412088
-#: ../../intro/tutorial03.txt:468
+#: ../../intro/tutorial03.txt:452
 msgid "to point at the namespaced detail view:"
 msgstr "чтобы использовать пространство имен URL-ов:"
 
 # 02c4d147ec0b415faef98c71873e5b53
-#: ../../intro/tutorial03.txt:475
+#: ../../intro/tutorial03.txt:459
 msgid ""
 "When you're comfortable with writing views, read :doc:`part 4 of this "
 "tutorial </intro/tutorial04>` to learn about simple form processing and "
@@ -784,6 +748,40 @@ msgstr ""
 "Научившись создавать представления, перейдем к :doc:`четвёртой части "
 "учебника </intro/tutorial04>`, чтобы научиться обрабатывать формы и "
 "использовать встроенные представления."
+
+# dcb12cdbdd8149838380307414d6bdbe
+#~ msgid ""
+#~ "The idea behind :func:`~django.conf.urls.include` is to make it easy to "
+#~ "plug-and-play URLs. Since polls are in their own URLconf (``polls/urls."
+#~ "py``), they can be placed under \"/polls/\", or under \"/fun_polls/\", or "
+#~ "under \"/content/polls/\", or any other path root, and the app will still "
+#~ "work."
+#~ msgstr ""
+#~ "Идея использования :func:`~django.conf.urls.include` и разделения URLconf "
+#~ "состоит в том, чтобы легко подключать и изменять конфигурацию URL-ов. "
+#~ "Теперь, когда приложение голосования содержит собственный URLconf(``polls/"
+#~ "urls.py``), вы можете подключить его в \"/polls/\", или \"/fun_polls/\", "
+#~ "или в \"/content/polls/\", или другой путь и приложение будет работать."
+
+# 3eeac260c3fa44a5a7e5cbc2046c4a93
+#~ msgid "Here's what happens if a user goes to \"/polls/34/\" in this system:"
+#~ msgstr "Вот что произойдет при запросе к \"/polls/34/\":"
+
+# 5e30a94af6f6422091c8ea6f6ecae338
+#~ msgid "Django will find the match at ``'^polls/'``"
+#~ msgstr "Django найдет ``'^polls/'``"
+
+# 59e53ede773341e68436f4b613e4c57e
+#~ msgid ""
+#~ "Then, Django will strip off the matching text (``\"polls/\"``) and send "
+#~ "the remaining text -- ``\"34/\"`` -- to the 'polls.urls' URLconf for "
+#~ "further processing which matches ``r'^(?P<question_id>[0-9]+)/$'`` "
+#~ "resulting in a call to the ``detail()`` view like so::"
+#~ msgstr ""
+#~ "Затем Django обрежет распознанную часть (``\"polls/\"``) и передаст "
+#~ "остаток -- ``\"34/\"`` -- в 'polls.urls' для дальнейшей обработки, "
+#~ "который будет распознан ``r'^(?P<question_id>[0-9]+)/$'`` и будет вызвана "
+#~ "функция ``detail()``::"
 
 # eb368fb3ef5c474396ff837e4967f966
 #~ msgid "Write your first view"

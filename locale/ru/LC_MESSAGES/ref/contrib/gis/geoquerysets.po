@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-02 11:18+0200\n"
+"POT-Creation-Date: 2016-12-08 11:07+0200\n"
 "PO-Revision-Date: 2012-02-15 15:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -28,17 +28,14 @@ msgstr ""
 msgid "Spatial Lookups"
 msgstr ""
 
-# 13da49456dfc415c997fa3e7a5d93dc0
 #: ../../ref/contrib/gis/geoquerysets.txt:14
 msgid ""
-"Just like when using the :ref:`queryset-api`, interaction with "
-"``GeoQuerySet`` by :ref:`chaining filters <chaining-filters>`. Instead of "
-"the regular Django :ref:`field-lookups`, the spatial lookups in this section "
-"are available for :class:`GeometryField`."
+"The spatial lookups in this section are available for :class:`GeometryField` "
+"and :class:`RasterField`."
 msgstr ""
 
 # 71f47b64e8d7454fad34e57f7ec69f7c
-#: ../../ref/contrib/gis/geoquerysets.txt:19
+#: ../../ref/contrib/gis/geoquerysets.txt:17
 msgid ""
 "For an introduction, see the :ref:`spatial lookups introduction <spatial-"
 "lookups-intro>`.  For an overview of what lookups are compatible with a "
@@ -46,25 +43,220 @@ msgid ""
 "table <spatial-lookup-compatibility>`."
 msgstr ""
 
-# 277a4a7a77544bfaa51b332399ff6c9e
+#: ../../ref/contrib/gis/geoquerysets.txt:24
+msgid "Spatial lookups now support raster input."
+msgstr ""
+
 #: ../../ref/contrib/gis/geoquerysets.txt:27
-msgid "bbcontains"
+msgid "Lookups with rasters"
 msgstr ""
 
-# 1dae971b550e40ce82cf3aecc17f6f3f
-# da53f67992aa45b4be8c05e78b6a1aaa
-# b85f6e089f064060811b9a247677f89f
 #: ../../ref/contrib/gis/geoquerysets.txt:29
-#: ../../ref/contrib/gis/geoquerysets.txt:51
-#: ../../ref/contrib/gis/geoquerysets.txt:73
-msgid "*Availability*: PostGIS, MySQL, SpatiaLite"
+msgid ""
+"All examples in the reference below are given for geometry fields and "
+"inputs, but the lookups can be used the same way with rasters on both sides. "
+"Whenever a lookup doesn't support raster input, the input is automatically "
+"converted to a geometry where necessary using the `ST_Polygon <http://"
+"postgis.net/docs/RT_ST_Polygon.html>`_ function. See also the :ref:"
+"`introduction to raster lookups <spatial-lookup-raster>`."
 msgstr ""
 
-# 8361965b2d584485a6e45ef4c59b169b
-#: ../../ref/contrib/gis/geoquerysets.txt:31
+#: ../../ref/contrib/gis/geoquerysets.txt:36
 msgid ""
-"Tests if the geometry field's bounding box completely contains the lookup "
-"geometry's bounding box."
+"The database operators used by the lookups can be divided into three "
+"categories:"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:38
+msgid ""
+"Native raster support ``N``: the operator accepts rasters natively on both "
+"sides of the lookup, and raster input can be mixed with geometry inputs."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:41
+msgid ""
+"Bilateral raster support ``B``: the operator supports rasters only if both "
+"sides of the lookup receive raster inputs. Raster data is automatically "
+"converted to geometries for mixed lookups."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:45
+msgid ""
+"Geometry conversion support ``C``. The lookup does not have native raster "
+"support, all raster data is automatically converted to geometries."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:48
+msgid ""
+"The examples below show the SQL equivalent for the lookups in the different "
+"types of raster support. The same pattern applies to all spatial lookups."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:52
+msgid "Case"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:52
+msgid "Lookup"
+msgstr ""
+
+# 114527f8482c4963b991d3f999c372ee
+# 96721c0486a54602b82a300d9c8f9102
+# 709f205a75144dc1a11cf37d5c107c81
+# a1b2892c82e54ca4b6888aebd8b06443
+# 0c15911272c3412e9d6de38c10d724e8
+# d8fd2ddca9614e0ea43a40629b9d9740
+# 158b39cd0b924822bddee1ef0d48c08f
+# de98c26bd0474fc2b60cb3e568e36b56
+# 0ec3b025ebda4531be01f394c8e9cb2b
+# e3ad15c5ad4a4a8ba8f3558ee682c1b5
+# a3d09a0e8299407f9fbe090f28e84835
+# 565a6411d2c1402c83796fc35913884c
+# 4e28f8986067442d9a78901f427ee6eb
+# 7ac4774af4004bdd9fc25a17a93cb2b8
+# 25f3a8dbef92483989ad2f37fb3f9bc3
+# 35bc52fa329b45638a6bfec89b87c9a8
+# 8382d59d5faf45b2a538829422803d6b
+#: ../../ref/contrib/gis/geoquerysets.txt:52
+#: ../../ref/contrib/gis/geoquerysets.txt:84
+#: ../../ref/contrib/gis/geoquerysets.txt:106
+#: ../../ref/contrib/gis/geoquerysets.txt:128
+#: ../../ref/contrib/gis/geoquerysets.txt:149
+#: ../../ref/contrib/gis/geoquerysets.txt:172
+#: ../../ref/contrib/gis/geoquerysets.txt:192
+#: ../../ref/contrib/gis/geoquerysets.txt:213
+#: ../../ref/contrib/gis/geoquerysets.txt:233
+#: ../../ref/contrib/gis/geoquerysets.txt:253
+#: ../../ref/contrib/gis/geoquerysets.txt:290
+#: ../../ref/contrib/gis/geoquerysets.txt:400
+#: ../../ref/contrib/gis/geoquerysets.txt:422
+#: ../../ref/contrib/gis/geoquerysets.txt:624
+#: ../../ref/contrib/gis/geoquerysets.txt:644
+#: ../../ref/contrib/gis/geoquerysets.txt:664
+#: ../../ref/contrib/gis/geoquerysets.txt:684
+#: ../../ref/contrib/gis/geoquerysets.txt:707
+msgid "SQL Equivalent"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:54
+#: ../../ref/contrib/gis/geoquerysets.txt:55
+msgid "N, B"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:54
+msgid "``rast__contains=rst``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:54
+msgid "``ST_Contains(rast, rst)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:55
+msgid "``rast__1__contains=(rst, 2)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:55
+msgid "``ST_Contains(rast, 1, rst, 2)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:56
+#: ../../ref/contrib/gis/geoquerysets.txt:57
+#: ../../ref/contrib/gis/geoquerysets.txt:58
+#: ../../ref/contrib/gis/geoquerysets.txt:59
+msgid "B, C"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:56
+msgid "``rast__contains=geom``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:56
+msgid "``ST_Contains(ST_Polygon(rast), geom)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:57
+msgid "``rast__1__contains=geom``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:57
+msgid "``ST_Contains(ST_Polygon(rast, 1), geom)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:58
+msgid "``poly__contains=rst``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:58
+msgid "``ST_Contains(poly, ST_Polygon(rst))``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:59
+msgid "``poly__contains=(rst, 1)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:59
+msgid "``ST_Contains(poly, ST_Polygon(rst, 1))``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:60
+#: ../../ref/contrib/gis/geoquerysets.txt:61
+#: ../../ref/contrib/gis/geoquerysets.txt:62
+#: ../../ref/contrib/gis/geoquerysets.txt:63
+msgid "C"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:60
+msgid "``rast__crosses=rst``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:60
+msgid "``ST_Crosses(ST_Polygon(rast), ST_Polygon(rst))``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:61
+msgid "``rast__1__crosses=(rst, 2)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:61
+msgid "``ST_Crosses(ST_Polygon(rast, 1), ST_Polygon(rst, 2))``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:62
+msgid "``rast__crosses=geom``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:62
+msgid "``ST_Crosses(ST_Polygon(rast), geom)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:63
+msgid "``poly__crosses=rst``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:63
+msgid "``ST_Crosses(poly, ST_Polygon(rst))``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:66
+msgid ""
+"Spatial lookups with rasters are only supported for PostGIS backends "
+"(denominated as PGRaster in this section)."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:72
+msgid "``bbcontains``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:74
+#: ../../ref/contrib/gis/geoquerysets.txt:96
+#: ../../ref/contrib/gis/geoquerysets.txt:118
+msgid "*Availability*: PostGIS, MySQL, SpatiaLite, PGRaster (Native)"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:76
+msgid ""
+"Tests if the geometry or raster field's bounding box completely contains the "
+"lookup geometry's bounding box."
 msgstr ""
 
 # 46d859f45989410aa2292d4986efbf9e
@@ -102,41 +294,41 @@ msgstr ""
 # 1be7827113a84e73ad8c5698cca21d85
 # 0cac82f4ffca4538bb291cb98f4c32e4
 # 344006b0f1ac4905bc219b3ddad7ced6
-#: ../../ref/contrib/gis/geoquerysets.txt:34
-#: ../../ref/contrib/gis/geoquerysets.txt:56
-#: ../../ref/contrib/gis/geoquerysets.txt:78
-#: ../../ref/contrib/gis/geoquerysets.txt:99
-#: ../../ref/contrib/gis/geoquerysets.txt:122
-#: ../../ref/contrib/gis/geoquerysets.txt:142
-#: ../../ref/contrib/gis/geoquerysets.txt:163
-#: ../../ref/contrib/gis/geoquerysets.txt:183
-#: ../../ref/contrib/gis/geoquerysets.txt:203
-#: ../../ref/contrib/gis/geoquerysets.txt:240
-#: ../../ref/contrib/gis/geoquerysets.txt:280
-#: ../../ref/contrib/gis/geoquerysets.txt:304
-#: ../../ref/contrib/gis/geoquerysets.txt:321
-#: ../../ref/contrib/gis/geoquerysets.txt:343
-#: ../../ref/contrib/gis/geoquerysets.txt:366
-#: ../../ref/contrib/gis/geoquerysets.txt:384
-#: ../../ref/contrib/gis/geoquerysets.txt:402
-#: ../../ref/contrib/gis/geoquerysets.txt:421
-#: ../../ref/contrib/gis/geoquerysets.txt:439
-#: ../../ref/contrib/gis/geoquerysets.txt:457
-#: ../../ref/contrib/gis/geoquerysets.txt:475
-#: ../../ref/contrib/gis/geoquerysets.txt:493
-#: ../../ref/contrib/gis/geoquerysets.txt:535
-#: ../../ref/contrib/gis/geoquerysets.txt:555
-#: ../../ref/contrib/gis/geoquerysets.txt:575
-#: ../../ref/contrib/gis/geoquerysets.txt:595
-#: ../../ref/contrib/gis/geoquerysets.txt:618
-#: ../../ref/contrib/gis/geoquerysets.txt:931
-#: ../../ref/contrib/gis/geoquerysets.txt:1086
-#: ../../ref/contrib/gis/geoquerysets.txt:1124
-#: ../../ref/contrib/gis/geoquerysets.txt:1304
-#: ../../ref/contrib/gis/geoquerysets.txt:1332
-#: ../../ref/contrib/gis/geoquerysets.txt:1349
-#: ../../ref/contrib/gis/geoquerysets.txt:1365
-#: ../../ref/contrib/gis/geoquerysets.txt:1388
+#: ../../ref/contrib/gis/geoquerysets.txt:79
+#: ../../ref/contrib/gis/geoquerysets.txt:101
+#: ../../ref/contrib/gis/geoquerysets.txt:123
+#: ../../ref/contrib/gis/geoquerysets.txt:144
+#: ../../ref/contrib/gis/geoquerysets.txt:167
+#: ../../ref/contrib/gis/geoquerysets.txt:187
+#: ../../ref/contrib/gis/geoquerysets.txt:208
+#: ../../ref/contrib/gis/geoquerysets.txt:228
+#: ../../ref/contrib/gis/geoquerysets.txt:248
+#: ../../ref/contrib/gis/geoquerysets.txt:285
+#: ../../ref/contrib/gis/geoquerysets.txt:309
+#: ../../ref/contrib/gis/geoquerysets.txt:378
+#: ../../ref/contrib/gis/geoquerysets.txt:395
+#: ../../ref/contrib/gis/geoquerysets.txt:417
+#: ../../ref/contrib/gis/geoquerysets.txt:440
+#: ../../ref/contrib/gis/geoquerysets.txt:458
+#: ../../ref/contrib/gis/geoquerysets.txt:476
+#: ../../ref/contrib/gis/geoquerysets.txt:495
+#: ../../ref/contrib/gis/geoquerysets.txt:513
+#: ../../ref/contrib/gis/geoquerysets.txt:531
+#: ../../ref/contrib/gis/geoquerysets.txt:549
+#: ../../ref/contrib/gis/geoquerysets.txt:567
+#: ../../ref/contrib/gis/geoquerysets.txt:619
+#: ../../ref/contrib/gis/geoquerysets.txt:639
+#: ../../ref/contrib/gis/geoquerysets.txt:659
+#: ../../ref/contrib/gis/geoquerysets.txt:679
+#: ../../ref/contrib/gis/geoquerysets.txt:702
+#: ../../ref/contrib/gis/geoquerysets.txt:1015
+#: ../../ref/contrib/gis/geoquerysets.txt:1170
+#: ../../ref/contrib/gis/geoquerysets.txt:1208
+#: ../../ref/contrib/gis/geoquerysets.txt:1322
+#: ../../ref/contrib/gis/geoquerysets.txt:1350
+#: ../../ref/contrib/gis/geoquerysets.txt:1367
+#: ../../ref/contrib/gis/geoquerysets.txt:1387
+#: ../../ref/contrib/gis/geoquerysets.txt:1410
 msgid "Example::"
 msgstr ""
 
@@ -157,61 +349,24 @@ msgstr ""
 # 372c3af207cd4e589cdcd865fec482b5
 # 4a114ea8ca6d4075b971049ccf1f63b3
 # d03cb96fcab54d7d869e20425e9a23e0
-#: ../../ref/contrib/gis/geoquerysets.txt:39
-#: ../../ref/contrib/gis/geoquerysets.txt:61
-#: ../../ref/contrib/gis/geoquerysets.txt:83
-#: ../../ref/contrib/gis/geoquerysets.txt:104
-#: ../../ref/contrib/gis/geoquerysets.txt:127
-#: ../../ref/contrib/gis/geoquerysets.txt:147
-#: ../../ref/contrib/gis/geoquerysets.txt:168
-#: ../../ref/contrib/gis/geoquerysets.txt:188
-#: ../../ref/contrib/gis/geoquerysets.txt:208
-#: ../../ref/contrib/gis/geoquerysets.txt:245
-#: ../../ref/contrib/gis/geoquerysets.txt:326
-#: ../../ref/contrib/gis/geoquerysets.txt:348
-#: ../../ref/contrib/gis/geoquerysets.txt:540
-#: ../../ref/contrib/gis/geoquerysets.txt:560
-#: ../../ref/contrib/gis/geoquerysets.txt:580
-#: ../../ref/contrib/gis/geoquerysets.txt:600
-#: ../../ref/contrib/gis/geoquerysets.txt:623
+#: ../../ref/contrib/gis/geoquerysets.txt:84
+#: ../../ref/contrib/gis/geoquerysets.txt:106
+#: ../../ref/contrib/gis/geoquerysets.txt:128
+#: ../../ref/contrib/gis/geoquerysets.txt:149
+#: ../../ref/contrib/gis/geoquerysets.txt:172
+#: ../../ref/contrib/gis/geoquerysets.txt:192
+#: ../../ref/contrib/gis/geoquerysets.txt:213
+#: ../../ref/contrib/gis/geoquerysets.txt:233
+#: ../../ref/contrib/gis/geoquerysets.txt:253
+#: ../../ref/contrib/gis/geoquerysets.txt:290
+#: ../../ref/contrib/gis/geoquerysets.txt:400
+#: ../../ref/contrib/gis/geoquerysets.txt:422
+#: ../../ref/contrib/gis/geoquerysets.txt:624
+#: ../../ref/contrib/gis/geoquerysets.txt:644
+#: ../../ref/contrib/gis/geoquerysets.txt:664
+#: ../../ref/contrib/gis/geoquerysets.txt:684
+#: ../../ref/contrib/gis/geoquerysets.txt:707
 msgid "Backend"
-msgstr ""
-
-# 114527f8482c4963b991d3f999c372ee
-# 96721c0486a54602b82a300d9c8f9102
-# 709f205a75144dc1a11cf37d5c107c81
-# a1b2892c82e54ca4b6888aebd8b06443
-# 0c15911272c3412e9d6de38c10d724e8
-# d8fd2ddca9614e0ea43a40629b9d9740
-# 158b39cd0b924822bddee1ef0d48c08f
-# de98c26bd0474fc2b60cb3e568e36b56
-# 0ec3b025ebda4531be01f394c8e9cb2b
-# e3ad15c5ad4a4a8ba8f3558ee682c1b5
-# a3d09a0e8299407f9fbe090f28e84835
-# 565a6411d2c1402c83796fc35913884c
-# 4e28f8986067442d9a78901f427ee6eb
-# 7ac4774af4004bdd9fc25a17a93cb2b8
-# 25f3a8dbef92483989ad2f37fb3f9bc3
-# 35bc52fa329b45638a6bfec89b87c9a8
-# 8382d59d5faf45b2a538829422803d6b
-#: ../../ref/contrib/gis/geoquerysets.txt:39
-#: ../../ref/contrib/gis/geoquerysets.txt:61
-#: ../../ref/contrib/gis/geoquerysets.txt:83
-#: ../../ref/contrib/gis/geoquerysets.txt:104
-#: ../../ref/contrib/gis/geoquerysets.txt:127
-#: ../../ref/contrib/gis/geoquerysets.txt:147
-#: ../../ref/contrib/gis/geoquerysets.txt:168
-#: ../../ref/contrib/gis/geoquerysets.txt:188
-#: ../../ref/contrib/gis/geoquerysets.txt:208
-#: ../../ref/contrib/gis/geoquerysets.txt:245
-#: ../../ref/contrib/gis/geoquerysets.txt:326
-#: ../../ref/contrib/gis/geoquerysets.txt:348
-#: ../../ref/contrib/gis/geoquerysets.txt:540
-#: ../../ref/contrib/gis/geoquerysets.txt:560
-#: ../../ref/contrib/gis/geoquerysets.txt:580
-#: ../../ref/contrib/gis/geoquerysets.txt:600
-#: ../../ref/contrib/gis/geoquerysets.txt:623
-msgid "SQL Equivalent"
 msgstr ""
 
 # 40dbbe38780b41288beda00e5a4b5388
@@ -231,28 +386,28 @@ msgstr ""
 # 61aa0d6096a549d583e32a53da256bf7
 # 40c47144c5b8430ea296b5c0fecbbf92
 # 4ac3a8dc0ede4247bff5c0a42f8f981a
-#: ../../ref/contrib/gis/geoquerysets.txt:41
-#: ../../ref/contrib/gis/geoquerysets.txt:63
-#: ../../ref/contrib/gis/geoquerysets.txt:85
-#: ../../ref/contrib/gis/geoquerysets.txt:106
-#: ../../ref/contrib/gis/geoquerysets.txt:129
-#: ../../ref/contrib/gis/geoquerysets.txt:149
-#: ../../ref/contrib/gis/geoquerysets.txt:170
-#: ../../ref/contrib/gis/geoquerysets.txt:190
-#: ../../ref/contrib/gis/geoquerysets.txt:210
-#: ../../ref/contrib/gis/geoquerysets.txt:247
-#: ../../ref/contrib/gis/geoquerysets.txt:328
-#: ../../ref/contrib/gis/geoquerysets.txt:350
-#: ../../ref/contrib/gis/geoquerysets.txt:542
-#: ../../ref/contrib/gis/geoquerysets.txt:562
-#: ../../ref/contrib/gis/geoquerysets.txt:582
-#: ../../ref/contrib/gis/geoquerysets.txt:602
-#: ../../ref/contrib/gis/geoquerysets.txt:625
+#: ../../ref/contrib/gis/geoquerysets.txt:86
+#: ../../ref/contrib/gis/geoquerysets.txt:108
+#: ../../ref/contrib/gis/geoquerysets.txt:130
+#: ../../ref/contrib/gis/geoquerysets.txt:151
+#: ../../ref/contrib/gis/geoquerysets.txt:174
+#: ../../ref/contrib/gis/geoquerysets.txt:194
+#: ../../ref/contrib/gis/geoquerysets.txt:215
+#: ../../ref/contrib/gis/geoquerysets.txt:235
+#: ../../ref/contrib/gis/geoquerysets.txt:255
+#: ../../ref/contrib/gis/geoquerysets.txt:292
+#: ../../ref/contrib/gis/geoquerysets.txt:402
+#: ../../ref/contrib/gis/geoquerysets.txt:424
+#: ../../ref/contrib/gis/geoquerysets.txt:626
+#: ../../ref/contrib/gis/geoquerysets.txt:646
+#: ../../ref/contrib/gis/geoquerysets.txt:666
+#: ../../ref/contrib/gis/geoquerysets.txt:686
+#: ../../ref/contrib/gis/geoquerysets.txt:709
 msgid "PostGIS"
 msgstr ""
 
 # 031bb7f882c04fc6b29a59fe04b6e0bd
-#: ../../ref/contrib/gis/geoquerysets.txt:41
+#: ../../ref/contrib/gis/geoquerysets.txt:86
 msgid "``poly ~ geom``"
 msgstr ""
 
@@ -264,21 +419,21 @@ msgstr ""
 # 2bf4dd4d93b34962861840e22d8e7d58
 # 978bef7186a1427db3d46c4f48b77f62
 # 0bb9c51ceebd4fae82b255d45fdb0854
-#: ../../ref/contrib/gis/geoquerysets.txt:42
-#: ../../ref/contrib/gis/geoquerysets.txt:64
-#: ../../ref/contrib/gis/geoquerysets.txt:86
-#: ../../ref/contrib/gis/geoquerysets.txt:108
-#: ../../ref/contrib/gis/geoquerysets.txt:212
-#: ../../ref/contrib/gis/geoquerysets.txt:249
-#: ../../ref/contrib/gis/geoquerysets.txt:329
-#: ../../ref/contrib/gis/geoquerysets.txt:351
+#: ../../ref/contrib/gis/geoquerysets.txt:87
+#: ../../ref/contrib/gis/geoquerysets.txt:109
+#: ../../ref/contrib/gis/geoquerysets.txt:131
+#: ../../ref/contrib/gis/geoquerysets.txt:153
+#: ../../ref/contrib/gis/geoquerysets.txt:257
+#: ../../ref/contrib/gis/geoquerysets.txt:294
+#: ../../ref/contrib/gis/geoquerysets.txt:403
+#: ../../ref/contrib/gis/geoquerysets.txt:425
 msgid "MySQL"
 msgstr ""
 
 # 08a534de97d741fa907988800d208c54
 # 0175fb7ed1b446e882389e4998518762
-#: ../../ref/contrib/gis/geoquerysets.txt:42
-#: ../../ref/contrib/gis/geoquerysets.txt:108
+#: ../../ref/contrib/gis/geoquerysets.txt:87
+#: ../../ref/contrib/gis/geoquerysets.txt:153
 msgid "``MBRContains(poly, geom)``"
 msgstr ""
 
@@ -295,114 +450,102 @@ msgstr ""
 # cd005948a65c4b9d9e8c679187a3dff4
 # d2baf0e9dd3f4e92bbb286bf7acd852f
 # c1540a3603174aaa9d7ec7123943da23
-#: ../../ref/contrib/gis/geoquerysets.txt:43
-#: ../../ref/contrib/gis/geoquerysets.txt:65
-#: ../../ref/contrib/gis/geoquerysets.txt:87
-#: ../../ref/contrib/gis/geoquerysets.txt:109
-#: ../../ref/contrib/gis/geoquerysets.txt:191
-#: ../../ref/contrib/gis/geoquerysets.txt:213
-#: ../../ref/contrib/gis/geoquerysets.txt:250
-#: ../../ref/contrib/gis/geoquerysets.txt:331
-#: ../../ref/contrib/gis/geoquerysets.txt:353
-#: ../../ref/contrib/gis/geoquerysets.txt:544
-#: ../../ref/contrib/gis/geoquerysets.txt:564
-#: ../../ref/contrib/gis/geoquerysets.txt:584
-#: ../../ref/contrib/gis/geoquerysets.txt:604
+#: ../../ref/contrib/gis/geoquerysets.txt:88
+#: ../../ref/contrib/gis/geoquerysets.txt:110
+#: ../../ref/contrib/gis/geoquerysets.txt:132
+#: ../../ref/contrib/gis/geoquerysets.txt:154
+#: ../../ref/contrib/gis/geoquerysets.txt:236
+#: ../../ref/contrib/gis/geoquerysets.txt:258
+#: ../../ref/contrib/gis/geoquerysets.txt:295
+#: ../../ref/contrib/gis/geoquerysets.txt:405
+#: ../../ref/contrib/gis/geoquerysets.txt:427
+#: ../../ref/contrib/gis/geoquerysets.txt:628
+#: ../../ref/contrib/gis/geoquerysets.txt:648
+#: ../../ref/contrib/gis/geoquerysets.txt:668
+#: ../../ref/contrib/gis/geoquerysets.txt:688
 msgid "SpatiaLite"
 msgstr ""
 
 # 5aea77278e3f4fa8988fa014f6ef755a
-#: ../../ref/contrib/gis/geoquerysets.txt:43
+#: ../../ref/contrib/gis/geoquerysets.txt:88
 msgid "``MbrContains(poly, geom)``"
 msgstr ""
 
-# 95873e43a98b4682aba6034b6a1c8147
-#: ../../ref/contrib/gis/geoquerysets.txt:49
-msgid "bboverlaps"
+#: ../../ref/contrib/gis/geoquerysets.txt:94
+msgid "``bboverlaps``"
 msgstr ""
 
 # b1d188c3a5e84ea89fd3102da8627d36
-#: ../../ref/contrib/gis/geoquerysets.txt:53
+#: ../../ref/contrib/gis/geoquerysets.txt:98
 msgid ""
 "Tests if the geometry field's bounding box overlaps the lookup geometry's "
 "bounding box."
 msgstr ""
 
 # 082b5a7f7a3a4aa79463478ac423efe7
-#: ../../ref/contrib/gis/geoquerysets.txt:63
+#: ../../ref/contrib/gis/geoquerysets.txt:108
 msgid "``poly && geom``"
 msgstr ""
 
 # e356e10dd5784883a8a0e3e47cd654b8
-#: ../../ref/contrib/gis/geoquerysets.txt:64
+#: ../../ref/contrib/gis/geoquerysets.txt:109
 msgid "``MBROverlaps(poly, geom)``"
 msgstr ""
 
 # 6802bf7136ac46b893daa94c649b94cd
-#: ../../ref/contrib/gis/geoquerysets.txt:65
+#: ../../ref/contrib/gis/geoquerysets.txt:110
 msgid "``MbrOverlaps(poly, geom)``"
 msgstr ""
 
-# cc2055f5f675445e9102df4ef6d4ffda
-#: ../../ref/contrib/gis/geoquerysets.txt:71
-msgid "contained"
+#: ../../ref/contrib/gis/geoquerysets.txt:116
+msgid "``contained``"
 msgstr ""
 
 # 331dcefce23a4ae38f304ee96c7a5246
-#: ../../ref/contrib/gis/geoquerysets.txt:75
+#: ../../ref/contrib/gis/geoquerysets.txt:120
 msgid ""
 "Tests if the geometry field's bounding box is completely contained by the "
 "lookup geometry's bounding box."
 msgstr ""
 
 # 816ed768f27c4a8a8365c17828e359c8
-#: ../../ref/contrib/gis/geoquerysets.txt:85
+#: ../../ref/contrib/gis/geoquerysets.txt:130
 msgid "``poly @ geom``"
 msgstr ""
 
 # 0a7a21ff8ea64c1a84d50e109573c21b
 # 1a198dbba5594f30a5a2eef4273e4359
-#: ../../ref/contrib/gis/geoquerysets.txt:86
-#: ../../ref/contrib/gis/geoquerysets.txt:351
+#: ../../ref/contrib/gis/geoquerysets.txt:131
+#: ../../ref/contrib/gis/geoquerysets.txt:425
 msgid "``MBRWithin(poly, geom)``"
 msgstr ""
 
 # ababca895c3843dca7ac7a93c8c23635
-#: ../../ref/contrib/gis/geoquerysets.txt:87
+#: ../../ref/contrib/gis/geoquerysets.txt:132
 msgid "``MbrWithin(poly, geom)``"
 msgstr ""
 
-# 17b1a49c071c410f92f49c897e021c7c
-#: ../../ref/contrib/gis/geoquerysets.txt:93
-msgid "contains"
+#: ../../ref/contrib/gis/geoquerysets.txt:138
+msgid "``contains``"
 msgstr ""
 
-# b1cfc4eac0fb468a9217c5500c99253e
-# 8948c5578b11470999bd582e7880e712
-# 3b8c2f1b93c84fd0913d2d9b16056061
-# 062199504cd944dfbc8d721c5f390642
-# c15d3a4c95924799900e8b910c0b109b
-# e41859d3125e48178303df4047b36156
-# fecdc33c44c1499887c72e22398e92a1
-# 914949ffe5244c98aaad7c9b3cb32ab5
-#: ../../ref/contrib/gis/geoquerysets.txt:95
-#: ../../ref/contrib/gis/geoquerysets.txt:199
-#: ../../ref/contrib/gis/geoquerysets.txt:221
-#: ../../ref/contrib/gis/geoquerysets.txt:229
-#: ../../ref/contrib/gis/geoquerysets.txt:236
-#: ../../ref/contrib/gis/geoquerysets.txt:258
-#: ../../ref/contrib/gis/geoquerysets.txt:317
-#: ../../ref/contrib/gis/geoquerysets.txt:339
-msgid "*Availability*: PostGIS, Oracle, MySQL, SpatiaLite"
+#: ../../ref/contrib/gis/geoquerysets.txt:140
+#: ../../ref/contrib/gis/geoquerysets.txt:244
+#: ../../ref/contrib/gis/geoquerysets.txt:274
+#: ../../ref/contrib/gis/geoquerysets.txt:281
+#: ../../ref/contrib/gis/geoquerysets.txt:322
+#: ../../ref/contrib/gis/geoquerysets.txt:413
+msgid ""
+"*Availability*: PostGIS, Oracle, MySQL, SpatiaLite, PGRaster (Bilateral)"
 msgstr ""
 
 # b3f29db9e38d40be9d09faf69fb96884
-#: ../../ref/contrib/gis/geoquerysets.txt:97
+#: ../../ref/contrib/gis/geoquerysets.txt:142
 msgid "Tests if the geometry field spatially contains the lookup geometry."
 msgstr ""
 
 # 89762ff652f242ca8dc09f1693a81771
-#: ../../ref/contrib/gis/geoquerysets.txt:106
+#: ../../ref/contrib/gis/geoquerysets.txt:151
 msgid "``ST_Contains(poly, geom)``"
 msgstr ""
 
@@ -419,35 +562,198 @@ msgstr ""
 # 42cbd8c0467a4c7f9115ce49a7dba708
 # 14b2c033605d4512bcad5c3cf9dc4eb2
 # 076d3e95bec847d3860ce092367bc850
-#: ../../ref/contrib/gis/geoquerysets.txt:107
-#: ../../ref/contrib/gis/geoquerysets.txt:150
-#: ../../ref/contrib/gis/geoquerysets.txt:171
-#: ../../ref/contrib/gis/geoquerysets.txt:211
-#: ../../ref/contrib/gis/geoquerysets.txt:248
-#: ../../ref/contrib/gis/geoquerysets.txt:295
-#: ../../ref/contrib/gis/geoquerysets.txt:330
-#: ../../ref/contrib/gis/geoquerysets.txt:352
-#: ../../ref/contrib/gis/geoquerysets.txt:543
-#: ../../ref/contrib/gis/geoquerysets.txt:563
-#: ../../ref/contrib/gis/geoquerysets.txt:583
-#: ../../ref/contrib/gis/geoquerysets.txt:603
-#: ../../ref/contrib/gis/geoquerysets.txt:626
+#: ../../ref/contrib/gis/geoquerysets.txt:152
+#: ../../ref/contrib/gis/geoquerysets.txt:195
+#: ../../ref/contrib/gis/geoquerysets.txt:216
+#: ../../ref/contrib/gis/geoquerysets.txt:256
+#: ../../ref/contrib/gis/geoquerysets.txt:293
+#: ../../ref/contrib/gis/geoquerysets.txt:369
+#: ../../ref/contrib/gis/geoquerysets.txt:404
+#: ../../ref/contrib/gis/geoquerysets.txt:426
+#: ../../ref/contrib/gis/geoquerysets.txt:627
+#: ../../ref/contrib/gis/geoquerysets.txt:647
+#: ../../ref/contrib/gis/geoquerysets.txt:667
+#: ../../ref/contrib/gis/geoquerysets.txt:687
+#: ../../ref/contrib/gis/geoquerysets.txt:710
 msgid "Oracle"
 msgstr ""
 
 # 005254f718a944eaafe294d794053381
-#: ../../ref/contrib/gis/geoquerysets.txt:107
+#: ../../ref/contrib/gis/geoquerysets.txt:152
 msgid "``SDO_CONTAINS(poly, geom)``"
 msgstr ""
 
 # 328a6747beef4b4fbe62a7939fb7a461
-#: ../../ref/contrib/gis/geoquerysets.txt:109
+#: ../../ref/contrib/gis/geoquerysets.txt:154
 msgid "``Contains(poly, geom)``"
 msgstr ""
 
-# f437f098ac4d43f08a1cad200423c112
-#: ../../ref/contrib/gis/geoquerysets.txt:115
-msgid "contains_properly"
+#: ../../ref/contrib/gis/geoquerysets.txt:160
+msgid "``contains_properly``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:162
+#: ../../ref/contrib/gis/geoquerysets.txt:471
+#: ../../ref/contrib/gis/geoquerysets.txt:490
+msgid "*Availability*: PostGIS, PGRaster (Bilateral)"
+msgstr ""
+
+# 3ec0788df7344041ba5f0cee9bd4595d
+#: ../../ref/contrib/gis/geoquerysets.txt:164
+msgid ""
+"Returns true if the lookup geometry intersects the interior of the geometry "
+"field, but not the boundary (or exterior). [#fncontainsproperly]_"
+msgstr ""
+
+# 8a79585475834e6eb1cac3dd34eb543b
+#: ../../ref/contrib/gis/geoquerysets.txt:174
+msgid "``ST_ContainsProperly(poly, geom)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:180
+msgid "``coveredby``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:182
+#: ../../ref/contrib/gis/geoquerysets.txt:203
+msgid "*Availability*: PostGIS, Oracle, PGRaster (Bilateral)"
+msgstr ""
+
+# 95448d3826f34d2b8c1067d82cd8635f
+#: ../../ref/contrib/gis/geoquerysets.txt:184
+msgid ""
+"Tests if no point in the geometry field is outside the lookup geometry. "
+"[#fncovers]_"
+msgstr ""
+
+# ee8a9445fdf64f7c910489a1f5480b3c
+#: ../../ref/contrib/gis/geoquerysets.txt:194
+msgid "``ST_CoveredBy(poly, geom)``"
+msgstr ""
+
+# c1ad17c077db4ad6a9e26be4266e5c80
+#: ../../ref/contrib/gis/geoquerysets.txt:195
+msgid "``SDO_COVEREDBY(poly, geom)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:201
+msgid "``covers``"
+msgstr ""
+
+# 5225a6e4c773462b8c5cd5692a7eea07
+#: ../../ref/contrib/gis/geoquerysets.txt:205
+msgid ""
+"Tests if no point in the lookup geometry is outside the geometry field. "
+"[#fncovers]_"
+msgstr ""
+
+# 1a42e705f0d346c5994eba81ec5e2c8f
+#: ../../ref/contrib/gis/geoquerysets.txt:215
+msgid "``ST_Covers(poly, geom)``"
+msgstr ""
+
+# aa505a24898a4b2197b0c42cfbaeeb96
+#: ../../ref/contrib/gis/geoquerysets.txt:216
+msgid "``SDO_COVERS(poly, geom)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:222
+msgid "``crosses``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:224
+msgid "*Availability*: PostGIS, SpatiaLite, PGRaster (Conversion)"
+msgstr ""
+
+# 18d5c7bc2c174e5189d36f3182aedf31
+#: ../../ref/contrib/gis/geoquerysets.txt:226
+msgid "Tests if the geometry field spatially crosses the lookup geometry."
+msgstr ""
+
+# 37a7a5659690485186b0a87f3d8d026e
+#: ../../ref/contrib/gis/geoquerysets.txt:235
+msgid "``ST_Crosses(poly, geom)``"
+msgstr ""
+
+# 7cac46d0a8c547438a84cf1b72dd9125
+#: ../../ref/contrib/gis/geoquerysets.txt:236
+msgid "``Crosses(poly, geom)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:242
+msgid "``disjoint``"
+msgstr ""
+
+# 1f39324fb324427ab49e048f7e1cd2d5
+#: ../../ref/contrib/gis/geoquerysets.txt:246
+msgid ""
+"Tests if the geometry field is spatially disjoint from the lookup geometry."
+msgstr ""
+
+# 1590df52b4d44974ada6b340335e42af
+#: ../../ref/contrib/gis/geoquerysets.txt:255
+msgid "``ST_Disjoint(poly, geom)``"
+msgstr ""
+
+# eb52163d23f843ce97e80f3ec488ded0
+#: ../../ref/contrib/gis/geoquerysets.txt:256
+msgid "``SDO_GEOM.RELATE(poly, 'DISJOINT', geom, 0.05)``"
+msgstr ""
+
+# a1e9f56153fe40858c4b58968f2d150a
+#: ../../ref/contrib/gis/geoquerysets.txt:257
+msgid "``MBRDisjoint(poly, geom)``"
+msgstr ""
+
+# 6c56e0f543204ba096dc3abd7e131716
+#: ../../ref/contrib/gis/geoquerysets.txt:258
+msgid "``Disjoint(poly, geom)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:264
+msgid "``equals``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:266
+msgid ""
+"*Availability*: PostGIS, Oracle, MySQL, SpatiaLite, PGRaster (Conversion)"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:272
+msgid "``exact``, ``same_as``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:279
+msgid "``intersects``"
+msgstr ""
+
+# 77439776d5ca4aa1bdb24885a309f340
+#: ../../ref/contrib/gis/geoquerysets.txt:283
+msgid "Tests if the geometry field spatially intersects the lookup geometry."
+msgstr ""
+
+# 8613f8bd48454c1db5097145d704004b
+#: ../../ref/contrib/gis/geoquerysets.txt:292
+msgid "``ST_Intersects(poly, geom)``"
+msgstr ""
+
+# f89dd3a0b86041c68cedb879dbe74cca
+#: ../../ref/contrib/gis/geoquerysets.txt:293
+msgid "``SDO_OVERLAPBDYINTERSECT(poly, geom)``"
+msgstr ""
+
+# 946a543e4e3f4150a8d50572825f54cd
+#: ../../ref/contrib/gis/geoquerysets.txt:294
+msgid "``MBRIntersects(poly, geom)``"
+msgstr ""
+
+# 70c8a24295324c51bb47b026339ed2bb
+#: ../../ref/contrib/gis/geoquerysets.txt:295
+msgid "``Intersects(poly, geom)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:301
+msgid "``isvalid``"
 msgstr ""
 
 # d79c6007c1de4979a151263bbad33608
@@ -465,203 +771,570 @@ msgstr ""
 # 1b96b27f80de47f686814b2f24c5d14a
 # 1821fb8b023a4c3c8a5f1b2ad3eec583
 # 70482fe20af14b42b22a42d17b898eb2
-#: ../../ref/contrib/gis/geoquerysets.txt:117
-#: ../../ref/contrib/gis/geoquerysets.txt:361
-#: ../../ref/contrib/gis/geoquerysets.txt:379
-#: ../../ref/contrib/gis/geoquerysets.txt:397
-#: ../../ref/contrib/gis/geoquerysets.txt:416
-#: ../../ref/contrib/gis/geoquerysets.txt:434
-#: ../../ref/contrib/gis/geoquerysets.txt:452
-#: ../../ref/contrib/gis/geoquerysets.txt:470
-#: ../../ref/contrib/gis/geoquerysets.txt:488
-#: ../../ref/contrib/gis/geoquerysets.txt:848
-#: ../../ref/contrib/gis/geoquerysets.txt:1182
-#: ../../ref/contrib/gis/geoquerysets.txt:1343
-#: ../../ref/contrib/gis/geoquerysets.txt:1360
+#: ../../ref/contrib/gis/geoquerysets.txt:305
+#: ../../ref/contrib/gis/geoquerysets.txt:932
+#: ../../ref/contrib/gis/geoquerysets.txt:1266
+#: ../../ref/contrib/gis/geoquerysets.txt:1361
 msgid "*Availability*: PostGIS"
 msgstr ""
 
-# 3ec0788df7344041ba5f0cee9bd4595d
-#: ../../ref/contrib/gis/geoquerysets.txt:119
+#: ../../ref/contrib/gis/geoquerysets.txt:307
+msgid "Tests if the geometry is valid."
+msgstr ""
+
+# 366c0c96edf8442dbec5c8f60a878660
+# 928b1f28e43446a1baf431f747c9615d
+# 5ca2261f26794390919f40331f7aef50
+# 8b48131a30ad4852ba173e1829ea7a8c
+# 7086dc4e263c4382b3e5da6872e3886a
+# 74d34d1e73074c22a922bcaa128c45c8
+# 16ee5d4631a344299fc7e99bc9693e63
+# 1a2d2ebc5acc40d1bcbe6089b165fe07
+#: ../../ref/contrib/gis/geoquerysets.txt:313
+#: ../../ref/contrib/gis/geoquerysets.txt:444
+#: ../../ref/contrib/gis/geoquerysets.txt:462
+#: ../../ref/contrib/gis/geoquerysets.txt:480
+#: ../../ref/contrib/gis/geoquerysets.txt:499
+#: ../../ref/contrib/gis/geoquerysets.txt:517
+#: ../../ref/contrib/gis/geoquerysets.txt:535
+#: ../../ref/contrib/gis/geoquerysets.txt:553
+#: ../../ref/contrib/gis/geoquerysets.txt:571
+msgid "PostGIS equivalent::"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:320
+msgid "``overlaps``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:327
+msgid "``relate``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:329
+msgid "*Availability*: PostGIS, Oracle, SpatiaLite, PGRaster (Conversion)"
+msgstr ""
+
+# 98a7c08f0b094cc499fb95ce524f4fbe
+#: ../../ref/contrib/gis/geoquerysets.txt:331
 msgid ""
-"Returns true if the lookup geometry intersects the interior of the geometry "
-"field, but not the boundary (or exterior). [#fncontainsproperly]_"
+"Tests if the geometry field is spatially related to the lookup geometry by "
+"the values given in the given pattern.  This lookup requires a tuple "
+"parameter, ``(geom, pattern)``; the form of ``pattern`` will depend on the "
+"spatial backend:"
 msgstr ""
 
-# 8a79585475834e6eb1cac3dd34eb543b
-#: ../../ref/contrib/gis/geoquerysets.txt:129
-msgid "``ST_ContainsProperly(poly, geom)``"
+# c10c440b3b4244aa87248ace4c542024
+#: ../../ref/contrib/gis/geoquerysets.txt:336
+msgid "PostGIS & SpatiaLite"
 msgstr ""
 
-# 5fd5b3dfd74d4769bfd9a12ed603f837
-#: ../../ref/contrib/gis/geoquerysets.txt:135
-msgid "coveredby"
-msgstr ""
-
-# 520950bdf5c64df889ef921b26689304
-# 5b9e48a1812f48169e9bd12553601f62
-# 260ae54701794859aea46865903f965e
-# 59e3d79f33f54cba946e94333b27e1ff
-#: ../../ref/contrib/gis/geoquerysets.txt:137
-#: ../../ref/contrib/gis/geoquerysets.txt:158
-#: ../../ref/contrib/gis/geoquerysets.txt:864
-msgid "*Availability*: PostGIS, Oracle"
-msgstr ""
-
-# 95448d3826f34d2b8c1067d82cd8635f
-#: ../../ref/contrib/gis/geoquerysets.txt:139
+# bbd9edc01bbb410d8c7500002f384eb7
+#: ../../ref/contrib/gis/geoquerysets.txt:337
 msgid ""
-"Tests if no point in the geometry field is outside the lookup geometry. "
-"[#fncovers]_"
+"On these spatial backends the intersection pattern is a string comprising "
+"nine characters, which  define intersections between  the interior, "
+"boundary, and exterior of the geometry field and the lookup geometry. The "
+"intersection pattern matrix may only use the following characters: ``1``, "
+"``2``, ``T``, ``F``, or ``*``.  This lookup type allows users to \"fine tune"
+"\" a specific geometric relationship consistent with the DE-9IM model. "
+"[#fnde9im]_"
 msgstr ""
 
-# ee8a9445fdf64f7c910489a1f5480b3c
-#: ../../ref/contrib/gis/geoquerysets.txt:149
-msgid "``ST_CoveredBy(poly, geom)``"
+#: ../../ref/contrib/gis/geoquerysets.txt:344
+msgid "Geometry example::"
 msgstr ""
 
-# c1ad17c077db4ad6a9e26be4266e5c80
-#: ../../ref/contrib/gis/geoquerysets.txt:150
-msgid "``SDO_COVEREDBY(poly, geom)``"
+# f76facc553b44bca92e4da72e25deeae
+#: ../../ref/contrib/gis/geoquerysets.txt:350
+#: ../../ref/contrib/gis/geoquerysets.txt:363
+msgid "PostGIS SQL equivalent::"
 msgstr ""
 
-# ac7b681fcb8545a396c60d28408f2ca5
-#: ../../ref/contrib/gis/geoquerysets.txt:156
-msgid "covers"
+# e0f181ca926d4ed482cea12ab64cf9d1
+#: ../../ref/contrib/gis/geoquerysets.txt:354
+msgid "SpatiaLite SQL equivalent::"
 msgstr ""
 
-# 5225a6e4c773462b8c5cd5692a7eea07
-#: ../../ref/contrib/gis/geoquerysets.txt:160
+#: ../../ref/contrib/gis/geoquerysets.txt:358
+msgid "Raster example::"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:371
 msgid ""
-"Tests if no point in the lookup geometry is outside the geometry field. "
-"[#fncovers]_"
+"Here the relation pattern is comprised of at least one of the nine relation "
+"strings: ``TOUCH``, ``OVERLAPBDYDISJOINT``, ``OVERLAPBDYINTERSECT``, "
+"``EQUAL``, ``INSIDE``, ``COVEREDBY``, ``CONTAINS``, ``COVERS``, ``ON``, and "
+"``ANYINTERACT``.   Multiple strings may be combined with the logical Boolean "
+"operator OR, for example, ``'inside+touch'``. [#fnsdorelate]_  The relation "
+"strings are case-insensitive."
 msgstr ""
 
-# 1a42e705f0d346c5994eba81ec5e2c8f
-#: ../../ref/contrib/gis/geoquerysets.txt:170
-msgid "``ST_Covers(poly, geom)``"
+# fa334201231f4fabbd5dfa8a0e5c2214
+#: ../../ref/contrib/gis/geoquerysets.txt:382
+msgid "Oracle SQL equivalent::"
 msgstr ""
 
-# aa505a24898a4b2197b0c42cfbaeeb96
-#: ../../ref/contrib/gis/geoquerysets.txt:171
-msgid "``SDO_COVERS(poly, geom)``"
+#: ../../ref/contrib/gis/geoquerysets.txt:389
+msgid "``touches``"
 msgstr ""
 
-# 357d249140614f2caa41f915da989b2b
-#: ../../ref/contrib/gis/geoquerysets.txt:177
-msgid "crosses"
+# b1cfc4eac0fb468a9217c5500c99253e
+# 8948c5578b11470999bd582e7880e712
+# 3b8c2f1b93c84fd0913d2d9b16056061
+# 062199504cd944dfbc8d721c5f390642
+# c15d3a4c95924799900e8b910c0b109b
+# e41859d3125e48178303df4047b36156
+# fecdc33c44c1499887c72e22398e92a1
+# 914949ffe5244c98aaad7c9b3cb32ab5
+#: ../../ref/contrib/gis/geoquerysets.txt:391
+msgid "*Availability*: PostGIS, Oracle, MySQL, SpatiaLite"
 msgstr ""
 
-# c77761bc14794ef1a31904ed480d23f4
-# a16789f76a464f0b866c4a8b19775544
-# 8064d1360eb84069aae9a6c2d6c9238c
-# 9e5037baf35c453e925ba9441523d562
-# 0470d3385bf64103b242e70b420fdce6
-# ecee6a19d5d54870b7f80a310321093d
-#: ../../ref/contrib/gis/geoquerysets.txt:179
-#: ../../ref/contrib/gis/geoquerysets.txt:814
-#: ../../ref/contrib/gis/geoquerysets.txt:879
-#: ../../ref/contrib/gis/geoquerysets.txt:949
-#: ../../ref/contrib/gis/geoquerysets.txt:1049
-#: ../../ref/contrib/gis/geoquerysets.txt:1117
-#: ../../ref/contrib/gis/geoquerysets.txt:1150
-msgid "*Availability*: PostGIS, SpatiaLite"
+# 9266cf0a9c6c4a50a2cdd8523bed4fb3
+#: ../../ref/contrib/gis/geoquerysets.txt:393
+msgid "Tests if the geometry field spatially touches the lookup geometry."
 msgstr ""
 
-# 18d5c7bc2c174e5189d36f3182aedf31
-#: ../../ref/contrib/gis/geoquerysets.txt:181
-msgid "Tests if the geometry field spatially crosses the lookup geometry."
+# f32b534694ba4fcc96ef9787695542f7
+#: ../../ref/contrib/gis/geoquerysets.txt:402
+msgid "``ST_Touches(poly, geom)``"
 msgstr ""
 
-# 37a7a5659690485186b0a87f3d8d026e
-#: ../../ref/contrib/gis/geoquerysets.txt:190
-msgid "``ST_Crosses(poly, geom)``"
+# 4ee400d046c040b99bc31e819102064d
+#: ../../ref/contrib/gis/geoquerysets.txt:403
+msgid "``MBRTouches(poly, geom)``"
 msgstr ""
 
-# 7cac46d0a8c547438a84cf1b72dd9125
-#: ../../ref/contrib/gis/geoquerysets.txt:191
-msgid "``Crosses(poly, geom)``"
+# 7b9edf8565124bf7bf4e529fb90e171a
+#: ../../ref/contrib/gis/geoquerysets.txt:404
+msgid "``SDO_TOUCH(poly, geom)``"
 msgstr ""
 
-# e006ebd390cd4c84aa8bbf0c65399555
-#: ../../ref/contrib/gis/geoquerysets.txt:197
-msgid "disjoint"
+# c163841a063a4805be407641f07070db
+#: ../../ref/contrib/gis/geoquerysets.txt:405
+msgid "``Touches(poly, geom)``"
 msgstr ""
 
-# 1f39324fb324427ab49e048f7e1cd2d5
-#: ../../ref/contrib/gis/geoquerysets.txt:201
+#: ../../ref/contrib/gis/geoquerysets.txt:411
+msgid "``within``"
+msgstr ""
+
+# adcd1de3472744f49e1c8d0d03aa270a
+#: ../../ref/contrib/gis/geoquerysets.txt:415
+msgid "Tests if the geometry field is spatially within the lookup geometry."
+msgstr ""
+
+# 4fd4ced4adad4df29d609bf851fe3ea4
+#: ../../ref/contrib/gis/geoquerysets.txt:424
+msgid "``ST_Within(poly, geom)``"
+msgstr ""
+
+# 5080011fe8c3448fa7cc139fb1836c56
+#: ../../ref/contrib/gis/geoquerysets.txt:426
+msgid "``SDO_INSIDE(poly, geom)``"
+msgstr ""
+
+# 940e573715b74727b47bd690825d7faa
+#: ../../ref/contrib/gis/geoquerysets.txt:427
+msgid "``Within(poly, geom)``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:433
+msgid "``left``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:435
+#: ../../ref/contrib/gis/geoquerysets.txt:453
+#: ../../ref/contrib/gis/geoquerysets.txt:508
+#: ../../ref/contrib/gis/geoquerysets.txt:526
+#: ../../ref/contrib/gis/geoquerysets.txt:544
+#: ../../ref/contrib/gis/geoquerysets.txt:562
+msgid "*Availability*: PostGIS, PGRaster (Conversion)"
+msgstr ""
+
+# 99c064262b8c40879b82fc4d6956c59b
+#: ../../ref/contrib/gis/geoquerysets.txt:437
 msgid ""
-"Tests if the geometry field is spatially disjoint from the lookup geometry."
+"Tests if the geometry field's bounding box is strictly to the left of the "
+"lookup geometry's bounding box."
 msgstr ""
 
-# 1590df52b4d44974ada6b340335e42af
-#: ../../ref/contrib/gis/geoquerysets.txt:210
-msgid "``ST_Disjoint(poly, geom)``"
+#: ../../ref/contrib/gis/geoquerysets.txt:451
+msgid "``right``"
 msgstr ""
 
-# eb52163d23f843ce97e80f3ec488ded0
-#: ../../ref/contrib/gis/geoquerysets.txt:211
-msgid "``SDO_GEOM.RELATE(poly, 'DISJOINT', geom, 0.05)``"
+# f1d6d307f7764bf592af962305585cae
+#: ../../ref/contrib/gis/geoquerysets.txt:455
+msgid ""
+"Tests if the geometry field's bounding box is strictly to the right of the "
+"lookup geometry's bounding box."
 msgstr ""
 
-# a1e9f56153fe40858c4b58968f2d150a
-#: ../../ref/contrib/gis/geoquerysets.txt:212
-msgid "``MBRDisjoint(poly, geom)``"
+#: ../../ref/contrib/gis/geoquerysets.txt:469
+msgid "``overlaps_left``"
 msgstr ""
 
-# 6c56e0f543204ba096dc3abd7e131716
-#: ../../ref/contrib/gis/geoquerysets.txt:213
-msgid "``Disjoint(poly, geom)``"
+# b9507ed0a78f4cdb9405ca0f3e90f476
+#: ../../ref/contrib/gis/geoquerysets.txt:473
+msgid ""
+"Tests if the geometry field's bounding box overlaps or is to the left of the "
+"lookup geometry's bounding box."
 msgstr ""
 
-# c23844446c2444b8a38ed5c3cabe60c3
-#: ../../ref/contrib/gis/geoquerysets.txt:219
-msgid "equals"
+#: ../../ref/contrib/gis/geoquerysets.txt:488
+msgid "``overlaps_right``"
 msgstr ""
 
-# f0b2eb006a4f4b38946e7be33a95f0ee
-#: ../../ref/contrib/gis/geoquerysets.txt:227
-msgid "exact, same_as"
+# c1f818bdf6874b8eb652bb0e9ee27d65
+#: ../../ref/contrib/gis/geoquerysets.txt:492
+msgid ""
+"Tests if the geometry field's bounding box overlaps or is to the right of "
+"the lookup geometry's bounding box."
 msgstr ""
 
-# 8dc83f596df2469c9a9cf7a840a3b0fa
-#: ../../ref/contrib/gis/geoquerysets.txt:234
-msgid "intersects"
+#: ../../ref/contrib/gis/geoquerysets.txt:506
+msgid "``overlaps_above``"
 msgstr ""
 
-# 77439776d5ca4aa1bdb24885a309f340
-#: ../../ref/contrib/gis/geoquerysets.txt:238
-msgid "Tests if the geometry field spatially intersects the lookup geometry."
+# 62594f38a9224f66ad23c8e7b38a253b
+#: ../../ref/contrib/gis/geoquerysets.txt:510
+msgid ""
+"Tests if the geometry field's bounding box overlaps or is above the lookup "
+"geometry's bounding box."
 msgstr ""
 
-# 8613f8bd48454c1db5097145d704004b
-#: ../../ref/contrib/gis/geoquerysets.txt:247
-msgid "``ST_Intersects(poly, geom)``"
+#: ../../ref/contrib/gis/geoquerysets.txt:524
+msgid "``overlaps_below``"
 msgstr ""
 
-# f89dd3a0b86041c68cedb879dbe74cca
-#: ../../ref/contrib/gis/geoquerysets.txt:248
-msgid "``SDO_OVERLAPBDYINTERSECT(poly, geom)``"
+# 8268209289b94adda5e5803f19cda7a5
+#: ../../ref/contrib/gis/geoquerysets.txt:528
+msgid ""
+"Tests if the geometry field's bounding box overlaps or is below the lookup "
+"geometry's bounding box."
 msgstr ""
 
-# 946a543e4e3f4150a8d50572825f54cd
-#: ../../ref/contrib/gis/geoquerysets.txt:249
-msgid "``MBRIntersects(poly, geom)``"
+#: ../../ref/contrib/gis/geoquerysets.txt:542
+msgid "``strictly_above``"
 msgstr ""
 
-# 70c8a24295324c51bb47b026339ed2bb
-#: ../../ref/contrib/gis/geoquerysets.txt:250
-msgid "``Intersects(poly, geom)``"
+# 9e6fe434270042bcbf7cc8021ed73ea2
+# 88145196e17541caa8504d77b3e1bc62
+#: ../../ref/contrib/gis/geoquerysets.txt:546
+msgid ""
+"Tests if the geometry field's bounding box is strictly above the lookup "
+"geometry's bounding box."
 msgstr ""
 
-# acd742cb619f4585ab859b51620625c0
-#: ../../ref/contrib/gis/geoquerysets.txt:256
-msgid "overlaps"
+#: ../../ref/contrib/gis/geoquerysets.txt:560
+msgid "``strictly_below``"
 msgstr ""
 
-# 3ad754618e9642e78cdefdb709feb7f6
-#: ../../ref/contrib/gis/geoquerysets.txt:263
-msgid "relate"
+# 6ccd0d091b654e4d93a8f9fe2f9a8eac
+#: ../../ref/contrib/gis/geoquerysets.txt:564
+msgid ""
+"Tests if the geometry field's bounding box is strictly below the lookup "
+"geometry's bounding box."
+msgstr ""
+
+# 1d9f681dac9f4fb5bf75ddf7617fc380
+#: ../../ref/contrib/gis/geoquerysets.txt:579
+msgid "Distance Lookups"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:581
+msgid "*Availability*: PostGIS, Oracle, SpatiaLite, PGRaster (Native)"
+msgstr ""
+
+# 89f936c605164a7bb10eddf54e30808d
+#: ../../ref/contrib/gis/geoquerysets.txt:583
+msgid ""
+"For an overview on performing distance queries, please refer to the :ref:"
+"`distance queries introduction <distance-queries>`."
+msgstr ""
+
+# f3d6379c99da49e9afbd3c0e358c26e9
+#: ../../ref/contrib/gis/geoquerysets.txt:586
+msgid "Distance lookups take the following form::"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:592
+msgid ""
+"The value passed into a distance lookup is a tuple; the first two values are "
+"mandatory, and are the geometry to calculate distances to, and a distance "
+"value (either a number in units of the field, a :class:`~django.contrib.gis."
+"measure.Distance` object, or a `query expression <ref/models/expressions>`). "
+"To pass a band index to the lookup, use a 3-tuple where the second entry is "
+"the band index."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:599
+msgid ""
+"With PostGIS, on every distance lookup but :lookup:`dwithin`, an optional "
+"element, ``'spheroid'``, may be included to tell GeoDjango to use the more "
+"accurate spheroid distance calculation functions on fields with a geodetic "
+"coordinate system (e.g., ``ST_Distance_Spheroid`` would be used instead of "
+"``ST_Distance_Sphere``). The simpler ``ST_Distance`` function is used with "
+"projected coordinate systems. Rasters are converted to geometries for "
+"spheroid based lookups."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:609
+msgid "The ability to pass an expression as the distance value was added."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:614
+msgid "``distance_gt``"
+msgstr ""
+
+# 4355d49d01c94e20bff978773aaceda1
+#: ../../ref/contrib/gis/geoquerysets.txt:616
+msgid ""
+"Returns models where the distance to the geometry field from the lookup "
+"geometry is greater than the given distance value."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:626
+msgid "``ST_Distance/ST_Distance_Sphere(poly, geom) > 5``"
+msgstr ""
+
+# 39a86cb720354c7ca50e9d7bad93ea79
+#: ../../ref/contrib/gis/geoquerysets.txt:627
+msgid "``SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) > 5``"
+msgstr ""
+
+# bb5c3f7a6ab34139b32f3665dfaf2d14
+#: ../../ref/contrib/gis/geoquerysets.txt:628
+msgid "``Distance(poly, geom) > 5``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:634
+msgid "``distance_gte``"
+msgstr ""
+
+# 9759e7cb5bc149759be995e547e4a850
+#: ../../ref/contrib/gis/geoquerysets.txt:636
+msgid ""
+"Returns models where the distance to the geometry field from the lookup "
+"geometry is greater than or equal to the given distance value."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:646
+msgid "``ST_Distance/ST_Distance_Sphere(poly, geom) >= 5``"
+msgstr ""
+
+# acea87a689e5432dbfeb767a99e40c03
+#: ../../ref/contrib/gis/geoquerysets.txt:647
+msgid "``SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) >= 5``"
+msgstr ""
+
+# adbb686db3a24844ad7ce1873b437672
+#: ../../ref/contrib/gis/geoquerysets.txt:648
+msgid "``Distance(poly, geom) >= 5``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:654
+msgid "``distance_lt``"
+msgstr ""
+
+# 85cc3ac0c2204177881b128d9ead1352
+#: ../../ref/contrib/gis/geoquerysets.txt:656
+msgid ""
+"Returns models where the distance to the geometry field from the lookup "
+"geometry is less than the given distance value."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:666
+msgid "``ST_Distance/ST_Distance_Sphere(poly, geom) < 5``"
+msgstr ""
+
+# fa68849ec2b04d56b048551beea34316
+#: ../../ref/contrib/gis/geoquerysets.txt:667
+msgid "``SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) < 5``"
+msgstr ""
+
+# b1dc2a0b94c34cf3811caadfd6424515
+#: ../../ref/contrib/gis/geoquerysets.txt:668
+msgid "``Distance(poly, geom) < 5``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:674
+msgid "``distance_lte``"
+msgstr ""
+
+# daf8ae2fb7854fb184f6747e23640d36
+#: ../../ref/contrib/gis/geoquerysets.txt:676
+msgid ""
+"Returns models where the distance to the geometry field from the lookup "
+"geometry is less than or equal to the given distance value."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:686
+msgid "``ST_Distance/ST_Distance_Sphere(poly, geom) <= 5``"
+msgstr ""
+
+# 8d5c9fcd85a1428891417b78bcb491f1
+#: ../../ref/contrib/gis/geoquerysets.txt:687
+msgid "``SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) <= 5``"
+msgstr ""
+
+# 3062456b1b064621b2a7b58c7f81f052
+#: ../../ref/contrib/gis/geoquerysets.txt:688
+msgid "``Distance(poly, geom) <= 5``"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:694
+msgid "``dwithin``"
+msgstr ""
+
+# 663460d8aa9c4986a12cf5630a4f577c
+#: ../../ref/contrib/gis/geoquerysets.txt:696
+msgid ""
+"Returns models where the distance to the geometry field from the lookup "
+"geometry are within the given distance from one another. Note that you can "
+"only provide :class:`~django.contrib.gis.measure.Distance` objects if the "
+"targeted geometries are in a projected system. For geographic geometries, "
+"you should use units of the geometry field (e.g. degrees for ``WGS84``) ."
+msgstr ""
+
+# 32ad8124a28b424d8a37a731df244c8f
+#: ../../ref/contrib/gis/geoquerysets.txt:709
+msgid "``ST_DWithin(poly, geom, 5)``"
+msgstr ""
+
+# 98e3230f7d1a48808c26d59370c49024
+#: ../../ref/contrib/gis/geoquerysets.txt:710
+msgid "``SDO_WITHIN_DISTANCE(poly, geom, 5)``"
+msgstr ""
+
+# 16a5e048762f419db2e3fdb498c7f650
+#: ../../ref/contrib/gis/geoquerysets.txt:715
+msgid "This lookup is not available on SpatiaLite."
+msgstr ""
+
+# 5017141f20e1475a9fd253ac0b4fe8e4
+#: ../../ref/contrib/gis/geoquerysets.txt:720
+msgid "``GeoQuerySet`` Methods"
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:724
+msgid ""
+"Using ``GeoQuerySet`` methods is now deprecated in favor of the new :doc:"
+"`functions`. Albeit a little more verbose, they are much more powerful in "
+"how it is possible to combine them to build more complex queries."
+msgstr ""
+
+# a2088ce1a8cd4d3daefe11b1a35ea5dd
+#: ../../ref/contrib/gis/geoquerysets.txt:728
+msgid ""
+"``GeoQuerySet`` methods specify that a spatial operation be performed on "
+"each spatial operation on each geographic field in the queryset and store "
+"its output in a new attribute on the model (which is generally the name of "
+"the ``GeoQuerySet`` method)."
+msgstr ""
+
+# 0ae697035bff4d7f80bf02edaa020afc
+#: ../../ref/contrib/gis/geoquerysets.txt:733
+msgid ""
+"There are also aggregate ``GeoQuerySet`` methods which return a single value "
+"instead of a queryset.  This section will describe the API and availability "
+"of every ``GeoQuerySet`` method available in GeoDjango."
+msgstr ""
+
+#: ../../ref/contrib/gis/geoquerysets.txt:739
+msgid ""
+"What methods are available depend on your spatial backend.  See the :ref:"
+"`compatibility table <database-functions-compatibility>` for more details."
+msgstr ""
+
+# a903111461d248a0b225a8d10b6146bf
+#: ../../ref/contrib/gis/geoquerysets.txt:743
+msgid ""
+"With a few exceptions, the following keyword arguments may be used with all "
+"``GeoQuerySet`` methods:"
+msgstr ""
+
+# 6a7bbd9f2e414a02a253f1eb139a3e1c
+# 835c21b6ffe1405199de01797bb426b5
+# 676a3e6feeae4c2484871f0f6d1e600f
+# 8ed4d195de524c6bb8c5bed4de5a2db2
+# 789518180ace488584098aac39882fd9
+# cc1a53681e644d3590bb9ff8cd8e3e16
+#: ../../ref/contrib/gis/geoquerysets.txt:747
+#: ../../ref/contrib/gis/geoquerysets.txt:1139
+#: ../../ref/contrib/gis/geoquerysets.txt:1177
+#: ../../ref/contrib/gis/geoquerysets.txt:1215
+#: ../../ref/contrib/gis/geoquerysets.txt:1240
+#: ../../ref/contrib/gis/geoquerysets.txt:1312
+msgid "Keyword Argument"
+msgstr ""
+
+# 18ceff902e7e48cf86888dac1d8a2f6a
+# dd313caacb684ebaaa3a2a8fca14f6dd
+# 7804e24b5398436889e5f56b2b7d0dd6
+# e5d95b767a5d4149b301f17c7d971590
+# 785e7d20d6394935a178c8ec98531347
+# 026229759f6c43c5a37cdbd95ce0cc1f
+# 23ef4247c315428db62724b83375b16a
+#: ../../ref/contrib/gis/geoquerysets.txt:747
+#: ../../ref/contrib/gis/geoquerysets.txt:980
+#: ../../ref/contrib/gis/geoquerysets.txt:1139
+#: ../../ref/contrib/gis/geoquerysets.txt:1177
+#: ../../ref/contrib/gis/geoquerysets.txt:1215
+#: ../../ref/contrib/gis/geoquerysets.txt:1240
+#: ../../ref/contrib/gis/geoquerysets.txt:1312
+msgid "Description"
+msgstr ""
+
+# 4052a74c00c944a8857ff0f242e1c8af
+#: ../../ref/contrib/gis/geoquerysets.txt:749
+msgid "``field_name``"
+msgstr ""
+
+# 00dd5f55cd874ec7bad0747ec8dd7f59
+#: ../../ref/contrib/gis/geoquerysets.txt:749
+msgid ""
+"By default, ``GeoQuerySet`` methods use the first geographic field "
+"encountered in the model.  This keyword should be used to specify another "
+"geographic field (e.g., ``field_name='point2'``) when there are multiple "
+"geographic fields in a model."
+msgstr ""
+
+# 79c79e1b249c437680f1835c7e510890
+#: ../../ref/contrib/gis/geoquerysets.txt:755
+msgid ""
+"On PostGIS, the ``field_name`` keyword may also be used on geometry fields "
+"in models that are related via a ``ForeignKey`` relation (e.g., "
+"``field_name='related__point'``)."
+msgstr ""
+
+# ba177ddd6d9a40ccab60ee6c6fa5d59e
+#: ../../ref/contrib/gis/geoquerysets.txt:760
+msgid "``model_att``"
+msgstr ""
+
+# e81d03ccd20e4d849fdfc76ee87e019a
+#: ../../ref/contrib/gis/geoquerysets.txt:760
+msgid ""
+"By default, ``GeoQuerySet`` methods typically attach their output in an "
+"attribute with the same name as the ``GeoQuerySet`` method.  Setting this "
+"keyword with the desired attribute name will override this default "
+"behavior.  For example, ``qs = Zipcode.objects.centroid(model_att='c')`` "
+"will attach the centroid of the ``Zipcode`` geometry field in a ``c`` "
+"attribute on every model rather than in a ``centroid`` attribute."
+msgstr ""
+
+# b98bf8fbf24942e7a1c32cdfd06f4a5d
+#: ../../ref/contrib/gis/geoquerysets.txt:770
+msgid ""
+"This keyword is required if a method name clashes with an existing "
+"``GeoQuerySet`` method -- if you wanted to use the ``area()`` method on "
+"model with a ``PolygonField`` named ``area``, for example."
+msgstr ""
+
+# 0f8fc1bef6384c7bae3ea499534646e6
+#: ../../ref/contrib/gis/geoquerysets.txt:778
+msgid "Measurement"
 msgstr ""
 
 # ea44f87609db41bfbd337eb0871d3902
@@ -675,564 +1348,50 @@ msgstr ""
 # 2945c49638704d2a894ce77562a4d700
 # 7ea8aaf78f3b4355b840684a191602f3
 # 3aa49e68ce3c4d14b9f2474bd98ef7ab
-#: ../../ref/contrib/gis/geoquerysets.txt:265
-#: ../../ref/contrib/gis/geoquerysets.txt:507
-#: ../../ref/contrib/gis/geoquerysets.txt:695
-#: ../../ref/contrib/gis/geoquerysets.txt:799
-#: ../../ref/contrib/gis/geoquerysets.txt:829
+#: ../../ref/contrib/gis/geoquerysets.txt:779
+#: ../../ref/contrib/gis/geoquerysets.txt:883
 #: ../../ref/contrib/gis/geoquerysets.txt:913
-#: ../../ref/contrib/gis/geoquerysets.txt:956
-#: ../../ref/contrib/gis/geoquerysets.txt:1081
-#: ../../ref/contrib/gis/geoquerysets.txt:1197
-#: ../../ref/contrib/gis/geoquerysets.txt:1214
-#: ../../ref/contrib/gis/geoquerysets.txt:1376
+#: ../../ref/contrib/gis/geoquerysets.txt:997
+#: ../../ref/contrib/gis/geoquerysets.txt:1040
+#: ../../ref/contrib/gis/geoquerysets.txt:1165
+#: ../../ref/contrib/gis/geoquerysets.txt:1281
+#: ../../ref/contrib/gis/geoquerysets.txt:1298
+#: ../../ref/contrib/gis/geoquerysets.txt:1345
+#: ../../ref/contrib/gis/geoquerysets.txt:1398
 msgid "*Availability*: PostGIS, Oracle, SpatiaLite"
 msgstr ""
 
-# 98a7c08f0b094cc499fb95ce524f4fbe
-#: ../../ref/contrib/gis/geoquerysets.txt:267
-msgid ""
-"Tests if the geometry field is spatially related to the lookup geometry by "
-"the values given in the given pattern.  This lookup requires a tuple "
-"parameter, ``(geom, pattern)``; the form of ``pattern`` will depend on the "
-"spatial backend:"
-msgstr ""
-
-# c10c440b3b4244aa87248ace4c542024
-#: ../../ref/contrib/gis/geoquerysets.txt:272
-msgid "PostGIS & SpatiaLite"
-msgstr ""
-
-# bbd9edc01bbb410d8c7500002f384eb7
-#: ../../ref/contrib/gis/geoquerysets.txt:273
-msgid ""
-"On these spatial backends the intersection pattern is a string comprising "
-"nine characters, which  define intersections between  the interior, "
-"boundary, and exterior of the geometry field and the lookup geometry. The "
-"intersection pattern matrix may only use the following characters: ``1``, "
-"``2``, ``T``, ``F``, or ``*``.  This lookup type allows users to \"fine tune"
-"\" a specific geometric relationship consistent with the DE-9IM model. "
-"[#fnde9im]_"
-msgstr ""
-
-# f76facc553b44bca92e4da72e25deeae
-#: ../../ref/contrib/gis/geoquerysets.txt:286
-msgid "PostGIS SQL equivalent::"
-msgstr ""
-
-# e0f181ca926d4ed482cea12ab64cf9d1
-#: ../../ref/contrib/gis/geoquerysets.txt:290
-msgid "SpatiaLite SQL equivalent::"
-msgstr ""
-
-# f15557ff3a1f4796b0af51320ac8fd03
-#: ../../ref/contrib/gis/geoquerysets.txt:297
-msgid ""
-"Here the relation pattern is comprised at least one of the nine relation "
-"strings: ``TOUCH``, ``OVERLAPBDYDISJOINT``, ``OVERLAPBDYINTERSECT``, "
-"``EQUAL``, ``INSIDE``, ``COVEREDBY``, ``CONTAINS``, ``COVERS``, ``ON``, and "
-"``ANYINTERACT``.   Multiple strings may be combined with the logical Boolean "
-"operator OR, for example, ``'inside+touch'``. [#fnsdorelate]_  The relation "
-"strings are case-insensitive."
-msgstr ""
-
-# fa334201231f4fabbd5dfa8a0e5c2214
-#: ../../ref/contrib/gis/geoquerysets.txt:308
-msgid "Oracle SQL equivalent::"
-msgstr ""
-
-# 28f06a33df484498a7715251f018434b
-#: ../../ref/contrib/gis/geoquerysets.txt:315
-msgid "touches"
-msgstr ""
-
-# 9266cf0a9c6c4a50a2cdd8523bed4fb3
-#: ../../ref/contrib/gis/geoquerysets.txt:319
-msgid "Tests if the geometry field spatially touches the lookup geometry."
-msgstr ""
-
-# f32b534694ba4fcc96ef9787695542f7
-#: ../../ref/contrib/gis/geoquerysets.txt:328
-msgid "``ST_Touches(poly, geom)``"
-msgstr ""
-
-# 4ee400d046c040b99bc31e819102064d
-#: ../../ref/contrib/gis/geoquerysets.txt:329
-msgid "``MBRTouches(poly, geom)``"
-msgstr ""
-
-# 7b9edf8565124bf7bf4e529fb90e171a
-#: ../../ref/contrib/gis/geoquerysets.txt:330
-msgid "``SDO_TOUCH(poly, geom)``"
-msgstr ""
-
-# c163841a063a4805be407641f07070db
-#: ../../ref/contrib/gis/geoquerysets.txt:331
-msgid "``Touches(poly, geom)``"
-msgstr ""
-
-# 48c95e08dc354569b1c2c52fd9c40c2d
-#: ../../ref/contrib/gis/geoquerysets.txt:337
-msgid "within"
-msgstr ""
-
-# adcd1de3472744f49e1c8d0d03aa270a
-#: ../../ref/contrib/gis/geoquerysets.txt:341
-msgid "Tests if the geometry field is spatially within the lookup geometry."
-msgstr ""
-
-# 4fd4ced4adad4df29d609bf851fe3ea4
-#: ../../ref/contrib/gis/geoquerysets.txt:350
-msgid "``ST_Within(poly, geom)``"
-msgstr ""
-
-# 5080011fe8c3448fa7cc139fb1836c56
-#: ../../ref/contrib/gis/geoquerysets.txt:352
-msgid "``SDO_INSIDE(poly, geom)``"
-msgstr ""
-
-# 940e573715b74727b47bd690825d7faa
-#: ../../ref/contrib/gis/geoquerysets.txt:353
-msgid "``Within(poly, geom)``"
-msgstr ""
-
-# 9feb4c9d9a0e400a8628577a00f2d0fa
-#: ../../ref/contrib/gis/geoquerysets.txt:359
-msgid "left"
-msgstr ""
-
-# 99c064262b8c40879b82fc4d6956c59b
-#: ../../ref/contrib/gis/geoquerysets.txt:363
-msgid ""
-"Tests if the geometry field's bounding box is strictly to the left of the "
-"lookup geometry's bounding box."
-msgstr ""
-
-# 366c0c96edf8442dbec5c8f60a878660
-# 928b1f28e43446a1baf431f747c9615d
-# 5ca2261f26794390919f40331f7aef50
-# 8b48131a30ad4852ba173e1829ea7a8c
-# 7086dc4e263c4382b3e5da6872e3886a
-# 74d34d1e73074c22a922bcaa128c45c8
-# 16ee5d4631a344299fc7e99bc9693e63
-# 1a2d2ebc5acc40d1bcbe6089b165fe07
-#: ../../ref/contrib/gis/geoquerysets.txt:370
-#: ../../ref/contrib/gis/geoquerysets.txt:388
-#: ../../ref/contrib/gis/geoquerysets.txt:406
-#: ../../ref/contrib/gis/geoquerysets.txt:425
-#: ../../ref/contrib/gis/geoquerysets.txt:443
-#: ../../ref/contrib/gis/geoquerysets.txt:461
-#: ../../ref/contrib/gis/geoquerysets.txt:479
-#: ../../ref/contrib/gis/geoquerysets.txt:497
-msgid "PostGIS equivalent::"
-msgstr ""
-
-# b975b49975174cb4b528a530dbeeb27d
-#: ../../ref/contrib/gis/geoquerysets.txt:377
-msgid "right"
-msgstr ""
-
-# f1d6d307f7764bf592af962305585cae
-#: ../../ref/contrib/gis/geoquerysets.txt:381
-msgid ""
-"Tests if the geometry field's bounding box is strictly to the right of the "
-"lookup geometry's bounding box."
-msgstr ""
-
-# 92c87170a40441a58fffcf1d0a02ff9b
-#: ../../ref/contrib/gis/geoquerysets.txt:395
-msgid "overlaps_left"
-msgstr ""
-
-# b9507ed0a78f4cdb9405ca0f3e90f476
-#: ../../ref/contrib/gis/geoquerysets.txt:399
-msgid ""
-"Tests if the geometry field's bounding box overlaps or is to the left of the "
-"lookup geometry's bounding box."
-msgstr ""
-
-# dd204b9fca86401ca3a8e120c7b45583
-#: ../../ref/contrib/gis/geoquerysets.txt:414
-msgid "overlaps_right"
-msgstr ""
-
-# c1f818bdf6874b8eb652bb0e9ee27d65
-#: ../../ref/contrib/gis/geoquerysets.txt:418
-msgid ""
-"Tests if the geometry field's bounding box overlaps or is to the right of "
-"the lookup geometry's bounding box."
-msgstr ""
-
-# b0fedbdcd2ba4c11a5f0246825877fb2
-#: ../../ref/contrib/gis/geoquerysets.txt:432
-msgid "overlaps_above"
-msgstr ""
-
-# 62594f38a9224f66ad23c8e7b38a253b
-#: ../../ref/contrib/gis/geoquerysets.txt:436
-msgid ""
-"Tests if the geometry field's bounding box overlaps or is above the lookup "
-"geometry's bounding box."
-msgstr ""
-
-# ae0b6379e28e4e75bb682b4204fd39ee
-#: ../../ref/contrib/gis/geoquerysets.txt:450
-msgid "overlaps_below"
-msgstr ""
-
-# 8268209289b94adda5e5803f19cda7a5
-#: ../../ref/contrib/gis/geoquerysets.txt:454
-msgid ""
-"Tests if the geometry field's bounding box overlaps or is below the lookup "
-"geometry's bounding box."
-msgstr ""
-
-# 9ea4aedc41b0473ba6c22112eb8004ca
-#: ../../ref/contrib/gis/geoquerysets.txt:468
-msgid "strictly_above"
-msgstr ""
-
-# 9e6fe434270042bcbf7cc8021ed73ea2
-# 88145196e17541caa8504d77b3e1bc62
-#: ../../ref/contrib/gis/geoquerysets.txt:472
-msgid ""
-"Tests if the geometry field's bounding box is strictly above the lookup "
-"geometry's bounding box."
-msgstr ""
-
-# c7d182df448d4fa19ebe3271cf119b8b
-#: ../../ref/contrib/gis/geoquerysets.txt:486
-msgid "strictly_below"
-msgstr ""
-
-# 6ccd0d091b654e4d93a8f9fe2f9a8eac
-#: ../../ref/contrib/gis/geoquerysets.txt:490
-msgid ""
-"Tests if the geometry field's bounding box is strictly below the lookup "
-"geometry's bounding box."
-msgstr ""
-
-# 1d9f681dac9f4fb5bf75ddf7617fc380
-#: ../../ref/contrib/gis/geoquerysets.txt:505
-msgid "Distance Lookups"
-msgstr ""
-
-# 89f936c605164a7bb10eddf54e30808d
-#: ../../ref/contrib/gis/geoquerysets.txt:509
-msgid ""
-"For an overview on performing distance queries, please refer to the :ref:"
-"`distance queries introduction <distance-queries>`."
-msgstr ""
-
-# f3d6379c99da49e9afbd3c0e358c26e9
-#: ../../ref/contrib/gis/geoquerysets.txt:512
-msgid "Distance lookups take the following form::"
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:516
-msgid ""
-"The value passed into a distance lookup is a tuple; the first two values are "
-"mandatory, and are the geometry to calculate distances to, and a distance "
-"value (either a number in units of the field or a :class:`~django.contrib."
-"gis.measure.Distance` object).  On every distance lookup but :lookup:"
-"`dwithin`, an optional third element, ``'spheroid'``, may be included to "
-"tell GeoDjango to use the more accurate spheroid distance calculation "
-"functions on fields with a geodetic coordinate system (e.g., "
-"``ST_Distance_Spheroid`` would be used instead of ``ST_Distance_Sphere``). "
-"The simpler ``ST_Distance`` function is used with projected coordinate "
-"systems."
-msgstr ""
-
-# 6541c022a57d4cb5a1ec8809cf8d42d9
-#: ../../ref/contrib/gis/geoquerysets.txt:530
-msgid "distance_gt"
-msgstr ""
-
-# 4355d49d01c94e20bff978773aaceda1
-#: ../../ref/contrib/gis/geoquerysets.txt:532
-msgid ""
-"Returns models where the distance to the geometry field from the lookup "
-"geometry is greater than the given distance value."
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:542
-msgid "``ST_Distance/ST_Distance_Sphere(poly, geom) > 5``"
-msgstr ""
-
-# 39a86cb720354c7ca50e9d7bad93ea79
-#: ../../ref/contrib/gis/geoquerysets.txt:543
-msgid "``SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) > 5``"
-msgstr ""
-
-# bb5c3f7a6ab34139b32f3665dfaf2d14
-#: ../../ref/contrib/gis/geoquerysets.txt:544
-msgid "``Distance(poly, geom) > 5``"
-msgstr ""
-
-# 3ec4cb77f93a4106b8e5335a1870930c
-#: ../../ref/contrib/gis/geoquerysets.txt:550
-msgid "distance_gte"
-msgstr ""
-
-# 9759e7cb5bc149759be995e547e4a850
-#: ../../ref/contrib/gis/geoquerysets.txt:552
-msgid ""
-"Returns models where the distance to the geometry field from the lookup "
-"geometry is greater than or equal to the given distance value."
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:562
-msgid "``ST_Distance/ST_Distance_Sphere(poly, geom) >= 5``"
-msgstr ""
-
-# acea87a689e5432dbfeb767a99e40c03
-#: ../../ref/contrib/gis/geoquerysets.txt:563
-msgid "``SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) >= 5``"
-msgstr ""
-
-# adbb686db3a24844ad7ce1873b437672
-#: ../../ref/contrib/gis/geoquerysets.txt:564
-msgid "``Distance(poly, geom) >= 5``"
-msgstr ""
-
-# 8a5b4310bc3142e18eb4f199073f728a
-#: ../../ref/contrib/gis/geoquerysets.txt:570
-msgid "distance_lt"
-msgstr ""
-
-# 85cc3ac0c2204177881b128d9ead1352
-#: ../../ref/contrib/gis/geoquerysets.txt:572
-msgid ""
-"Returns models where the distance to the geometry field from the lookup "
-"geometry is less than the given distance value."
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:582
-msgid "``ST_Distance/ST_Distance_Sphere(poly, geom) < 5``"
-msgstr ""
-
-# fa68849ec2b04d56b048551beea34316
-#: ../../ref/contrib/gis/geoquerysets.txt:583
-msgid "``SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) < 5``"
-msgstr ""
-
-# b1dc2a0b94c34cf3811caadfd6424515
-#: ../../ref/contrib/gis/geoquerysets.txt:584
-msgid "``Distance(poly, geom) < 5``"
-msgstr ""
-
-# 7712d4edd03248ca8cfa0b246a2b2121
-#: ../../ref/contrib/gis/geoquerysets.txt:590
-msgid "distance_lte"
-msgstr ""
-
-# daf8ae2fb7854fb184f6747e23640d36
-#: ../../ref/contrib/gis/geoquerysets.txt:592
-msgid ""
-"Returns models where the distance to the geometry field from the lookup "
-"geometry is less than or equal to the given distance value."
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:602
-msgid "``ST_Distance/ST_Distance_Sphere(poly, geom) <= 5``"
-msgstr ""
-
-# 8d5c9fcd85a1428891417b78bcb491f1
-#: ../../ref/contrib/gis/geoquerysets.txt:603
-msgid "``SDO_GEOM.SDO_DISTANCE(poly, geom, 0.05) <= 5``"
-msgstr ""
-
-# 3062456b1b064621b2a7b58c7f81f052
-#: ../../ref/contrib/gis/geoquerysets.txt:604
-msgid "``Distance(poly, geom) <= 5``"
-msgstr ""
-
-# c363d09eabc246d59c6d2b5465782262
-#: ../../ref/contrib/gis/geoquerysets.txt:610
-msgid "dwithin"
-msgstr ""
-
-# 663460d8aa9c4986a12cf5630a4f577c
-#: ../../ref/contrib/gis/geoquerysets.txt:612
-msgid ""
-"Returns models where the distance to the geometry field from the lookup "
-"geometry are within the given distance from one another. Note that you can "
-"only provide :class:`~django.contrib.gis.measure.Distance` objects if the "
-"targeted geometries are in a projected system. For geographic geometries, "
-"you should use units of the geometry field (e.g. degrees for ``WGS84``) ."
-msgstr ""
-
-# 32ad8124a28b424d8a37a731df244c8f
-#: ../../ref/contrib/gis/geoquerysets.txt:625
-msgid "``ST_DWithin(poly, geom, 5)``"
-msgstr ""
-
-# 98e3230f7d1a48808c26d59370c49024
-#: ../../ref/contrib/gis/geoquerysets.txt:626
-msgid "``SDO_WITHIN_DISTANCE(poly, geom, 5)``"
-msgstr ""
-
-# 16a5e048762f419db2e3fdb498c7f650
-#: ../../ref/contrib/gis/geoquerysets.txt:631
-msgid "This lookup is not available on SpatiaLite."
-msgstr ""
-
-# 5017141f20e1475a9fd253ac0b4fe8e4
-#: ../../ref/contrib/gis/geoquerysets.txt:636
-msgid "``GeoQuerySet`` Methods"
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:640
-msgid ""
-"Using ``GeoQuerySet`` methods is now deprecated in favor of the new :doc:"
-"`functions`. Albeit a little more verbose, they are much more powerful in "
-"how it is possible to combine them to build more complex queries."
-msgstr ""
-
-# a2088ce1a8cd4d3daefe11b1a35ea5dd
-#: ../../ref/contrib/gis/geoquerysets.txt:644
-msgid ""
-"``GeoQuerySet`` methods specify that a spatial operation be performed on "
-"each spatial operation on each geographic field in the queryset and store "
-"its output in a new attribute on the model (which is generally the name of "
-"the ``GeoQuerySet`` method)."
-msgstr ""
-
-# 0ae697035bff4d7f80bf02edaa020afc
-#: ../../ref/contrib/gis/geoquerysets.txt:649
-msgid ""
-"There are also aggregate ``GeoQuerySet`` methods which return a single value "
-"instead of a queryset.  This section will describe the API and availability "
-"of every ``GeoQuerySet`` method available in GeoDjango."
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:655
-msgid ""
-"What methods are available depend on your spatial backend.  See the :ref:"
-"`compatibility table <database-functions-compatibility>` for more details."
-msgstr ""
-
-# a903111461d248a0b225a8d10b6146bf
-#: ../../ref/contrib/gis/geoquerysets.txt:659
-msgid ""
-"With a few exceptions, the following keyword arguments may be used with all "
-"``GeoQuerySet`` methods:"
-msgstr ""
-
-# 6a7bbd9f2e414a02a253f1eb139a3e1c
-# 835c21b6ffe1405199de01797bb426b5
-# 676a3e6feeae4c2484871f0f6d1e600f
-# 8ed4d195de524c6bb8c5bed4de5a2db2
-# 789518180ace488584098aac39882fd9
-# cc1a53681e644d3590bb9ff8cd8e3e16
-#: ../../ref/contrib/gis/geoquerysets.txt:663
-#: ../../ref/contrib/gis/geoquerysets.txt:1055
-#: ../../ref/contrib/gis/geoquerysets.txt:1093
-#: ../../ref/contrib/gis/geoquerysets.txt:1131
-#: ../../ref/contrib/gis/geoquerysets.txt:1156
-#: ../../ref/contrib/gis/geoquerysets.txt:1294
-msgid "Keyword Argument"
-msgstr ""
-
-# 18ceff902e7e48cf86888dac1d8a2f6a
-# dd313caacb684ebaaa3a2a8fca14f6dd
-# 7804e24b5398436889e5f56b2b7d0dd6
-# e5d95b767a5d4149b301f17c7d971590
-# 785e7d20d6394935a178c8ec98531347
-# 026229759f6c43c5a37cdbd95ce0cc1f
-# 23ef4247c315428db62724b83375b16a
-#: ../../ref/contrib/gis/geoquerysets.txt:663
-#: ../../ref/contrib/gis/geoquerysets.txt:896
-#: ../../ref/contrib/gis/geoquerysets.txt:1055
-#: ../../ref/contrib/gis/geoquerysets.txt:1093
-#: ../../ref/contrib/gis/geoquerysets.txt:1131
-#: ../../ref/contrib/gis/geoquerysets.txt:1156
-#: ../../ref/contrib/gis/geoquerysets.txt:1294
-msgid "Description"
-msgstr ""
-
-# 4052a74c00c944a8857ff0f242e1c8af
-#: ../../ref/contrib/gis/geoquerysets.txt:665
-msgid "``field_name``"
-msgstr ""
-
-# 00dd5f55cd874ec7bad0747ec8dd7f59
-#: ../../ref/contrib/gis/geoquerysets.txt:665
-msgid ""
-"By default, ``GeoQuerySet`` methods use the first geographic field "
-"encountered in the model.  This keyword should be used to specify another "
-"geographic field (e.g., ``field_name='point2'``) when there are multiple "
-"geographic fields in a model."
-msgstr ""
-
-# 79c79e1b249c437680f1835c7e510890
-#: ../../ref/contrib/gis/geoquerysets.txt:671
-msgid ""
-"On PostGIS, the ``field_name`` keyword may also be used on geometry fields "
-"in models that are related via a ``ForeignKey`` relation (e.g., "
-"``field_name='related__point'``)."
-msgstr ""
-
-# ba177ddd6d9a40ccab60ee6c6fa5d59e
-#: ../../ref/contrib/gis/geoquerysets.txt:676
-msgid "``model_att``"
-msgstr ""
-
-# e81d03ccd20e4d849fdfc76ee87e019a
-#: ../../ref/contrib/gis/geoquerysets.txt:676
-msgid ""
-"By default, ``GeoQuerySet`` methods typically attach their output in an "
-"attribute with the same name as the ``GeoQuerySet`` method.  Setting this "
-"keyword with the desired attribute name will override this default "
-"behavior.  For example, ``qs = Zipcode.objects.centroid(model_att='c')`` "
-"will attach the centroid of the ``Zipcode`` geometry field in a ``c`` "
-"attribute on every model rather than in a ``centroid`` attribute."
-msgstr ""
-
-# b98bf8fbf24942e7a1c32cdfd06f4a5d
-#: ../../ref/contrib/gis/geoquerysets.txt:686
-msgid ""
-"This keyword is required if a method name clashes with an existing "
-"``GeoQuerySet`` method -- if you wanted to use the ``area()`` method on "
-"model with a ``PolygonField`` named ``area``, for example."
-msgstr ""
-
-# 0f8fc1bef6384c7bae3ea499534646e6
-#: ../../ref/contrib/gis/geoquerysets.txt:694
-msgid "Measurement"
-msgstr ""
-
 # 751724c184524e9da8085c0b2d606303
-#: ../../ref/contrib/gis/geoquerysets.txt:698
+#: ../../ref/contrib/gis/geoquerysets.txt:782
 msgid "``area``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:704
+#: ../../ref/contrib/gis/geoquerysets.txt:788
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Area` function "
 "instead."
 msgstr ""
 
 # a7ebbb29baaf4320b65b4d346d46f36c
-#: ../../ref/contrib/gis/geoquerysets.txt:707
+#: ../../ref/contrib/gis/geoquerysets.txt:791
 msgid ""
 "Returns the area of the geographic field in an ``area`` attribute on each "
 "element of this GeoQuerySet."
 msgstr ""
 
 # 62b43d1edda14864aeb6d56eac59c361
-#: ../../ref/contrib/gis/geoquerysets.txt:711
+#: ../../ref/contrib/gis/geoquerysets.txt:795
 msgid "``distance``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:717
+#: ../../ref/contrib/gis/geoquerysets.txt:801
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Distance` function "
 "instead."
 msgstr ""
 
 # 2839d3f9ac714b06830df4680ae4d0bc
-#: ../../ref/contrib/gis/geoquerysets.txt:720
+#: ../../ref/contrib/gis/geoquerysets.txt:804
 msgid ""
 "This method takes a geometry as a parameter, and attaches a ``distance`` "
 "attribute to every model in the returned queryset that contains the distance "
@@ -1241,14 +1400,14 @@ msgid ""
 msgstr ""
 
 # 64c3f582b78d4886a43cc0709bff1f47
-#: ../../ref/contrib/gis/geoquerysets.txt:724
+#: ../../ref/contrib/gis/geoquerysets.txt:808
 msgid ""
 "In the following example (taken from the `GeoDjango distance tests`__), the "
 "distance from the `Tasmanian`__ city of Hobart to every other :class:"
 "`PointField` in the ``AustraliaCity`` queryset is calculated::"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:744
+#: ../../ref/contrib/gis/geoquerysets.txt:828
 msgid ""
 "Because the ``distance`` attribute is a :class:`~django.contrib.gis.measure."
 "Distance` object, you can easily express the value in the units of your "
@@ -1258,36 +1417,36 @@ msgid ""
 msgstr ""
 
 # f7f96d1589ab4e28a5d1d09e0f3fc8c1
-#: ../../ref/contrib/gis/geoquerysets.txt:755
+#: ../../ref/contrib/gis/geoquerysets.txt:839
 msgid "``length``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:761
+#: ../../ref/contrib/gis/geoquerysets.txt:845
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Length` function "
 "instead."
 msgstr ""
 
 # a43e7fb017204374a7009755ac154076
-#: ../../ref/contrib/gis/geoquerysets.txt:764
+#: ../../ref/contrib/gis/geoquerysets.txt:848
 msgid ""
 "Returns the length of the geometry field in a ``length`` attribute (a :class:"
 "`~django.contrib.gis.measure.Distance` object) on each model in the queryset."
 msgstr ""
 
 # 8a111c2be0e8485698dfa78031d19ba3
-#: ../../ref/contrib/gis/geoquerysets.txt:769
+#: ../../ref/contrib/gis/geoquerysets.txt:853
 msgid "``perimeter``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:775
+#: ../../ref/contrib/gis/geoquerysets.txt:859
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Perimeter` function "
 "instead."
 msgstr ""
 
 # 2f49cba89581458b9bb54247a08e436c
-#: ../../ref/contrib/gis/geoquerysets.txt:778
+#: ../../ref/contrib/gis/geoquerysets.txt:862
 msgid ""
 "Returns the perimeter of the geometry field in a ``perimeter`` attribute (a :"
 "class:`~django.contrib.gis.measure.Distance` object) on each model in the "
@@ -1295,12 +1454,12 @@ msgid ""
 msgstr ""
 
 # 74595a597bf9412680d61fd453b50be0
-#: ../../ref/contrib/gis/geoquerysets.txt:783
+#: ../../ref/contrib/gis/geoquerysets.txt:867
 msgid "Geometry Relationships"
 msgstr ""
 
 # fb2b4e870ad449ab93bf9bbe7cd56046
-#: ../../ref/contrib/gis/geoquerysets.txt:785
+#: ../../ref/contrib/gis/geoquerysets.txt:869
 msgid ""
 "The following methods take no arguments, and attach geometry objects each "
 "element of the :class:`GeoQuerySet` that is the result of relationship "
@@ -1308,54 +1467,71 @@ msgid ""
 msgstr ""
 
 # 484fafeb66b34f70968175f3aa949df2
-#: ../../ref/contrib/gis/geoquerysets.txt:790
+#: ../../ref/contrib/gis/geoquerysets.txt:874
 msgid "``centroid``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:796
+#: ../../ref/contrib/gis/geoquerysets.txt:880
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Centroid` function "
 "instead."
 msgstr ""
 
 # e56a4257fbd1426ba8c9ce1c1e8418b5
-#: ../../ref/contrib/gis/geoquerysets.txt:801
+#: ../../ref/contrib/gis/geoquerysets.txt:885
 msgid ""
 "Returns the ``centroid`` value for the geographic field in a ``centroid`` "
 "attribute on each element of the ``GeoQuerySet``."
 msgstr ""
 
 # 18f2eb1fd31949ff9cf2235cd654a956
-#: ../../ref/contrib/gis/geoquerysets.txt:805
+#: ../../ref/contrib/gis/geoquerysets.txt:889
 msgid "``envelope``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:811
+#: ../../ref/contrib/gis/geoquerysets.txt:895
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Envelope` function "
 "instead."
 msgstr ""
 
+# c77761bc14794ef1a31904ed480d23f4
+# a16789f76a464f0b866c4a8b19775544
+# 8064d1360eb84069aae9a6c2d6c9238c
+# 9e5037baf35c453e925ba9441523d562
+# 0470d3385bf64103b242e70b420fdce6
+# ecee6a19d5d54870b7f80a310321093d
+#: ../../ref/contrib/gis/geoquerysets.txt:898
+#: ../../ref/contrib/gis/geoquerysets.txt:963
+#: ../../ref/contrib/gis/geoquerysets.txt:1033
+#: ../../ref/contrib/gis/geoquerysets.txt:1133
+#: ../../ref/contrib/gis/geoquerysets.txt:1201
+#: ../../ref/contrib/gis/geoquerysets.txt:1234
+#: ../../ref/contrib/gis/geoquerysets.txt:1332
+#: ../../ref/contrib/gis/geoquerysets.txt:1378
+msgid "*Availability*: PostGIS, SpatiaLite"
+msgstr ""
+
 # 7bffa93e21e5438583552800e298eb1f
-#: ../../ref/contrib/gis/geoquerysets.txt:816
+#: ../../ref/contrib/gis/geoquerysets.txt:900
 msgid ""
 "Returns a geometry representing the bounding box of the geometry field in an "
 "``envelope`` attribute on each element of the ``GeoQuerySet``."
 msgstr ""
 
 # 5f38f3c609e748a88a461d5f2a11ca56
-#: ../../ref/contrib/gis/geoquerysets.txt:820
+#: ../../ref/contrib/gis/geoquerysets.txt:904
 msgid "``point_on_surface``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:826
+#: ../../ref/contrib/gis/geoquerysets.txt:910
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.PointOnSurface` "
 "function instead."
 msgstr ""
 
 # fe3a93e8fa5b4cdb854499cb031446d4
-#: ../../ref/contrib/gis/geoquerysets.txt:831
+#: ../../ref/contrib/gis/geoquerysets.txt:915
 msgid ""
 "Returns a Point geometry guaranteed to lie on the surface of the geometry "
 "field in a ``point_on_surface`` attribute on each element of the queryset; "
@@ -1363,23 +1539,23 @@ msgid ""
 msgstr ""
 
 # f4d2c738b35349babb0222184d4cf103
-#: ../../ref/contrib/gis/geoquerysets.txt:836
+#: ../../ref/contrib/gis/geoquerysets.txt:920
 msgid "Geometry Editors"
 msgstr ""
 
 # fa2e84c3249d4103a8c19891f3bf6c32
-#: ../../ref/contrib/gis/geoquerysets.txt:839
+#: ../../ref/contrib/gis/geoquerysets.txt:923
 msgid "``force_rhr``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:845
+#: ../../ref/contrib/gis/geoquerysets.txt:929
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.ForceRHR` function "
 "instead."
 msgstr ""
 
 # f7950f57f6c94bc986a7aa8de1106dc0
-#: ../../ref/contrib/gis/geoquerysets.txt:850
+#: ../../ref/contrib/gis/geoquerysets.txt:934
 msgid ""
 "Returns a modified version of the polygon/multipolygon in which all of the "
 "vertices follow the Right-Hand-Rule, and attaches as a ``force_rhr`` "
@@ -1387,47 +1563,55 @@ msgid ""
 msgstr ""
 
 # 3426e64c58fd4b24b2f18125745c188e
-#: ../../ref/contrib/gis/geoquerysets.txt:855
+#: ../../ref/contrib/gis/geoquerysets.txt:939
 msgid "``reverse_geom``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:861
+#: ../../ref/contrib/gis/geoquerysets.txt:945
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Reverse` function "
 "instead."
 msgstr ""
 
+# 520950bdf5c64df889ef921b26689304
+# 5b9e48a1812f48169e9bd12553601f62
+# 260ae54701794859aea46865903f965e
+# 59e3d79f33f54cba946e94333b27e1ff
+#: ../../ref/contrib/gis/geoquerysets.txt:948
+msgid "*Availability*: PostGIS, Oracle"
+msgstr ""
+
 # 6d953db2ff724b43b9c1997402647202
-#: ../../ref/contrib/gis/geoquerysets.txt:866
+#: ../../ref/contrib/gis/geoquerysets.txt:950
 msgid ""
 "Reverse the coordinate order of the geometry field, and attaches as a "
 "``reverse`` attribute on each element of the queryset."
 msgstr ""
 
 # d21e1e33681d4ceea4e71c73257ec7cc
-#: ../../ref/contrib/gis/geoquerysets.txt:870
+#: ../../ref/contrib/gis/geoquerysets.txt:954
 msgid "``scale``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:876
+#: ../../ref/contrib/gis/geoquerysets.txt:960
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Scale` function "
 "instead."
 msgstr ""
 
 # c69e1d10178041d59eef29cf93a2e7a8
-#: ../../ref/contrib/gis/geoquerysets.txt:882
+#: ../../ref/contrib/gis/geoquerysets.txt:966
 msgid "``snap_to_grid``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:888
+#: ../../ref/contrib/gis/geoquerysets.txt:972
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.SnapToGrid` function "
 "instead."
 msgstr ""
 
 # 009a00cf1aa64e039e2475eb15cd4612
-#: ../../ref/contrib/gis/geoquerysets.txt:891
+#: ../../ref/contrib/gis/geoquerysets.txt:975
 msgid ""
 "Snap all points of the input geometry to the grid.  How the geometry is "
 "snapped to the grid depends on how many numeric (either float, integer, or "
@@ -1435,53 +1619,53 @@ msgid ""
 msgstr ""
 
 # 0644f3ec11c44017996da88a591cdb8b
-#: ../../ref/contrib/gis/geoquerysets.txt:896
+#: ../../ref/contrib/gis/geoquerysets.txt:980
 msgid "Number of Arguments"
 msgstr ""
 
 # ab7532e5d40f41fba952a4d757258997
-#: ../../ref/contrib/gis/geoquerysets.txt:898
+#: ../../ref/contrib/gis/geoquerysets.txt:982
 msgid "1"
 msgstr ""
 
 # afb1de9f91f94471aba1208f37b089b0
-#: ../../ref/contrib/gis/geoquerysets.txt:898
+#: ../../ref/contrib/gis/geoquerysets.txt:982
 msgid "A single size to snap bot the X and Y grids to."
 msgstr ""
 
 # 2a98b42ee260460c9580ed0f3964a3a2
-#: ../../ref/contrib/gis/geoquerysets.txt:899
+#: ../../ref/contrib/gis/geoquerysets.txt:983
 msgid "2"
 msgstr ""
 
 # 797a0470065c4b92badaad7c79b9700a
-#: ../../ref/contrib/gis/geoquerysets.txt:899
+#: ../../ref/contrib/gis/geoquerysets.txt:983
 msgid "X and Y sizes to snap the grid to."
 msgstr ""
 
 # 6a6d9cc7a074427085fd59c0e55e2637
-#: ../../ref/contrib/gis/geoquerysets.txt:900
+#: ../../ref/contrib/gis/geoquerysets.txt:984
 msgid "4"
 msgstr ""
 
 # 1339a3204a93404bad7593fcbe4ce131
-#: ../../ref/contrib/gis/geoquerysets.txt:900
+#: ../../ref/contrib/gis/geoquerysets.txt:984
 msgid "X, Y sizes and the corresponding X, Y origins."
 msgstr ""
 
 # 80f3615415fb45438134c3728c29bb07
-#: ../../ref/contrib/gis/geoquerysets.txt:904
+#: ../../ref/contrib/gis/geoquerysets.txt:988
 msgid "``transform``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:910
+#: ../../ref/contrib/gis/geoquerysets.txt:994
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Transform` function "
 "instead."
 msgstr ""
 
 # f3ac79d7dea6420fa8ec969d7c69a70c
-#: ../../ref/contrib/gis/geoquerysets.txt:915
+#: ../../ref/contrib/gis/geoquerysets.txt:999
 msgid ""
 "The ``transform`` method transforms the geometry field of a model to the "
 "spatial reference system specified by the ``srid`` parameter.  If no "
@@ -1489,7 +1673,7 @@ msgid ""
 msgstr ""
 
 # 1a32cf5f08ba4d92974ab6025e5f8774
-#: ../../ref/contrib/gis/geoquerysets.txt:921
+#: ../../ref/contrib/gis/geoquerysets.txt:1005
 msgid ""
 "Unlike other ``GeoQuerySet`` methods, ``transform`` stores its output \"in-"
 "place\".  In other words, no new attribute for the transformed geometry is "
@@ -1497,7 +1681,7 @@ msgid ""
 msgstr ""
 
 # ebb234f9ef464e9692e05c8d8b34d483
-#: ../../ref/contrib/gis/geoquerysets.txt:927
+#: ../../ref/contrib/gis/geoquerysets.txt:1011
 msgid ""
 "What spatial reference system an integer SRID corresponds to may depend on "
 "the spatial database used.  In other words, the SRID numbers used for Oracle "
@@ -1505,30 +1689,30 @@ msgid ""
 msgstr ""
 
 # 01c1638ae782417eba5a43d658b2a8c4
-#: ../../ref/contrib/gis/geoquerysets.txt:941
+#: ../../ref/contrib/gis/geoquerysets.txt:1025
 msgid "``translate``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:946
+#: ../../ref/contrib/gis/geoquerysets.txt:1030
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Translate` function "
 "instead."
 msgstr ""
 
 # c048f1ce72814a21845ba5285593bc78
-#: ../../ref/contrib/gis/geoquerysets.txt:951
+#: ../../ref/contrib/gis/geoquerysets.txt:1035
 msgid ""
 "Translates the geometry field to a new location using the given numeric "
 "parameters as offsets."
 msgstr ""
 
 # 05cd84cae4b449b2a6802b7f4598ffc3
-#: ../../ref/contrib/gis/geoquerysets.txt:955
+#: ../../ref/contrib/gis/geoquerysets.txt:1039
 msgid "Geometry Operations"
 msgstr ""
 
 # f9d6c7297f8547479458b70da651e16b
-#: ../../ref/contrib/gis/geoquerysets.txt:958
+#: ../../ref/contrib/gis/geoquerysets.txt:1042
 msgid ""
 "The following methods all take a geometry as a parameter and attach a "
 "geometry to each element of the ``GeoQuerySet`` that is the result of the "
@@ -1536,18 +1720,18 @@ msgid ""
 msgstr ""
 
 # 4ca7443374bf4ab68c7a654791c13a58
-#: ../../ref/contrib/gis/geoquerysets.txt:962
+#: ../../ref/contrib/gis/geoquerysets.txt:1046
 msgid "``difference``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:968
+#: ../../ref/contrib/gis/geoquerysets.txt:1052
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Difference` function "
 "instead."
 msgstr ""
 
 # f53a2768571341ac9beab18985954693
-#: ../../ref/contrib/gis/geoquerysets.txt:971
+#: ../../ref/contrib/gis/geoquerysets.txt:1055
 msgid ""
 "Returns the spatial difference of the geographic field with the given "
 "geometry in a ``difference`` attribute on each element of the "
@@ -1555,18 +1739,18 @@ msgid ""
 msgstr ""
 
 # 5e04efa8c9ea416cb38c5cd142da545e
-#: ../../ref/contrib/gis/geoquerysets.txt:977
+#: ../../ref/contrib/gis/geoquerysets.txt:1061
 msgid "``intersection``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:983
+#: ../../ref/contrib/gis/geoquerysets.txt:1067
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Intersection` "
 "function instead."
 msgstr ""
 
 # 19e97833a9b34e5889dd97cf3847af9f
-#: ../../ref/contrib/gis/geoquerysets.txt:986
+#: ../../ref/contrib/gis/geoquerysets.txt:1070
 msgid ""
 "Returns the spatial intersection of the geographic field with the given "
 "geometry in an ``intersection`` attribute on each element of the "
@@ -1574,18 +1758,18 @@ msgid ""
 msgstr ""
 
 # b67960f0a085428896c5816842db1e90
-#: ../../ref/contrib/gis/geoquerysets.txt:991
+#: ../../ref/contrib/gis/geoquerysets.txt:1075
 msgid "``sym_difference``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:997
+#: ../../ref/contrib/gis/geoquerysets.txt:1081
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.SymDifference` "
 "function instead."
 msgstr ""
 
 # c05102472e8c4069914bf3020da3d25b
-#: ../../ref/contrib/gis/geoquerysets.txt:1000
+#: ../../ref/contrib/gis/geoquerysets.txt:1084
 msgid ""
 "Returns the symmetric difference of the geographic field with the given "
 "geometry in a ``sym_difference`` attribute on each element of the "
@@ -1593,30 +1777,30 @@ msgid ""
 msgstr ""
 
 # a8326f2b6546450f8199d47da9acc772
-#: ../../ref/contrib/gis/geoquerysets.txt:1005
+#: ../../ref/contrib/gis/geoquerysets.txt:1089
 msgid "``union``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1011
+#: ../../ref/contrib/gis/geoquerysets.txt:1095
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.Union` function "
 "instead."
 msgstr ""
 
 # 8aff23bfd0d84c688dd9ec9c4a63e03a
-#: ../../ref/contrib/gis/geoquerysets.txt:1014
+#: ../../ref/contrib/gis/geoquerysets.txt:1098
 msgid ""
 "Returns the union of the geographic field with the given geometry in an "
 "``union`` attribute on each element of the ``GeoQuerySet``."
 msgstr ""
 
 # 7020e6572b6945d187e2d5104314475b
-#: ../../ref/contrib/gis/geoquerysets.txt:1019
+#: ../../ref/contrib/gis/geoquerysets.txt:1103
 msgid "Geometry Output"
 msgstr ""
 
 # 597f90b093ff4cd980eda4621cbb66ba
-#: ../../ref/contrib/gis/geoquerysets.txt:1021
+#: ../../ref/contrib/gis/geoquerysets.txt:1105
 msgid ""
 "The following ``GeoQuerySet`` methods will return an attribute that has the "
 "value of the geometry field in each model converted to the requested output "
@@ -1624,36 +1808,36 @@ msgid ""
 msgstr ""
 
 # 1e0b809951734364a8c8d8b8c31b2aad
-#: ../../ref/contrib/gis/geoquerysets.txt:1025
+#: ../../ref/contrib/gis/geoquerysets.txt:1109
 msgid "``geohash``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1031
+#: ../../ref/contrib/gis/geoquerysets.txt:1115
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.GeoHash` function "
 "instead."
 msgstr ""
 
 # a911baae1f5b4d279b555bc609dd5135
-#: ../../ref/contrib/gis/geoquerysets.txt:1034
+#: ../../ref/contrib/gis/geoquerysets.txt:1118
 msgid ""
 "Attaches a ``geohash`` attribute to every model the queryset containing the "
 "`GeoHash`__ representation of the geometry."
 msgstr ""
 
 # e7188006ccd2449284a5526f57a48d92
-#: ../../ref/contrib/gis/geoquerysets.txt:1040
+#: ../../ref/contrib/gis/geoquerysets.txt:1124
 msgid "``geojson``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1046
+#: ../../ref/contrib/gis/geoquerysets.txt:1130
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.AsGeoJSON` function "
 "instead."
 msgstr ""
 
 # c9a0b943bdab41079ddc242d433ab0b9
-#: ../../ref/contrib/gis/geoquerysets.txt:1051
+#: ../../ref/contrib/gis/geoquerysets.txt:1135
 msgid ""
 "Attaches a ``geojson`` attribute to every model in the queryset that "
 "contains the `GeoJSON`__ representation of the geometry."
@@ -1663,64 +1847,64 @@ msgstr ""
 # 917e3aa3330a46559c0b0100f6abf17c
 # ccc374e4dbd94c68919fbf0a74183de0
 # 62e576e7d12f41f9923879e3377d9f40
-#: ../../ref/contrib/gis/geoquerysets.txt:1057
-#: ../../ref/contrib/gis/geoquerysets.txt:1095
-#: ../../ref/contrib/gis/geoquerysets.txt:1133
-#: ../../ref/contrib/gis/geoquerysets.txt:1162
+#: ../../ref/contrib/gis/geoquerysets.txt:1141
+#: ../../ref/contrib/gis/geoquerysets.txt:1179
+#: ../../ref/contrib/gis/geoquerysets.txt:1217
+#: ../../ref/contrib/gis/geoquerysets.txt:1246
 msgid "``precision``"
 msgstr ""
 
 # 5d875d92426b4485a342e5059b930013
-#: ../../ref/contrib/gis/geoquerysets.txt:1057
+#: ../../ref/contrib/gis/geoquerysets.txt:1141
 msgid ""
 "It may be used to specify the number of significant digits for the "
 "coordinates in the GeoJSON representation -- the default value is 8."
 msgstr ""
 
 # 6eca5a8df15d42afbf0653123aaed266
-#: ../../ref/contrib/gis/geoquerysets.txt:1061
+#: ../../ref/contrib/gis/geoquerysets.txt:1145
 msgid "``crs``"
 msgstr ""
 
 # d970522a067e499686528953b855d8c3
-#: ../../ref/contrib/gis/geoquerysets.txt:1061
+#: ../../ref/contrib/gis/geoquerysets.txt:1145
 msgid ""
 "Set this to ``True`` if you want the coordinate reference system to be "
 "included in the returned GeoJSON."
 msgstr ""
 
 # 690542e5965f4203a47a23824514676a
-#: ../../ref/contrib/gis/geoquerysets.txt:1065
+#: ../../ref/contrib/gis/geoquerysets.txt:1149
 msgid "``bbox``"
 msgstr ""
 
 # 31d38c1980024d7e905e834292915242
-#: ../../ref/contrib/gis/geoquerysets.txt:1065
+#: ../../ref/contrib/gis/geoquerysets.txt:1149
 msgid ""
 "Set this to ``True`` if you want the bounding box to be included in the "
 "returned GeoJSON."
 msgstr ""
 
 # 4180b59fa8c247cca58aee70f29f4253
-#: ../../ref/contrib/gis/geoquerysets.txt:1072
+#: ../../ref/contrib/gis/geoquerysets.txt:1156
 msgid "``gml``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1078
+#: ../../ref/contrib/gis/geoquerysets.txt:1162
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.AsGML` function "
 "instead."
 msgstr ""
 
 # 4ff5e98e4bb44f84a413a851e19acbc1
-#: ../../ref/contrib/gis/geoquerysets.txt:1083
+#: ../../ref/contrib/gis/geoquerysets.txt:1167
 msgid ""
 "Attaches a ``gml`` attribute to every model in the queryset that contains "
 "the `Geographic Markup Language (GML)`__ representation of the geometry."
 msgstr ""
 
 # 90399836daae4240b96f40381a865aaa
-#: ../../ref/contrib/gis/geoquerysets.txt:1095
+#: ../../ref/contrib/gis/geoquerysets.txt:1179
 msgid ""
 "This keyword is for PostGIS only.  It may be used to specify the number of "
 "significant digits for the coordinates in the GML representation -- the "
@@ -1728,30 +1912,30 @@ msgid ""
 msgstr ""
 
 # f37f16c6e6c4466ca5a15713459716d7
-#: ../../ref/contrib/gis/geoquerysets.txt:1100
+#: ../../ref/contrib/gis/geoquerysets.txt:1184
 msgid "``version``"
 msgstr ""
 
 # 8183262d09614b319c38227c29f46d59
-#: ../../ref/contrib/gis/geoquerysets.txt:1100
+#: ../../ref/contrib/gis/geoquerysets.txt:1184
 msgid ""
 "This keyword is for PostGIS only.  It may be used to specify the GML version "
 "used, and may only be values of 2 or 3.  The default value is 2."
 msgstr ""
 
 # 3788863466f64e149bba5d9b675d58ab
-#: ../../ref/contrib/gis/geoquerysets.txt:1108
+#: ../../ref/contrib/gis/geoquerysets.txt:1192
 msgid "``kml``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1114
+#: ../../ref/contrib/gis/geoquerysets.txt:1198
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.AsKML` function "
 "instead."
 msgstr ""
 
 # b5777fdefb9448e9a7affd62eae34236
-#: ../../ref/contrib/gis/geoquerysets.txt:1119
+#: ../../ref/contrib/gis/geoquerysets.txt:1203
 msgid ""
 "Attaches a ``kml`` attribute to every model in the queryset that contains "
 "the `Keyhole Markup Language (KML)`__ representation of the geometry fields. "
@@ -1760,85 +1944,85 @@ msgid ""
 msgstr ""
 
 # e6ac5d1ac8274b5e8a81a09559ffd26a
-#: ../../ref/contrib/gis/geoquerysets.txt:1133
+#: ../../ref/contrib/gis/geoquerysets.txt:1217
 msgid ""
 "This keyword may be used to specify the number of significant digits for the "
 "coordinates in the KML representation -- the default value is 8."
 msgstr ""
 
 # 60d9044f85e54caea6d5e94c8418d937
-#: ../../ref/contrib/gis/geoquerysets.txt:1141
+#: ../../ref/contrib/gis/geoquerysets.txt:1225
 msgid "``svg``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1147
+#: ../../ref/contrib/gis/geoquerysets.txt:1231
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.AsSVG` function "
 "instead."
 msgstr ""
 
 # 984502aded3a4b5f87eeaa2e8522d4c7
-#: ../../ref/contrib/gis/geoquerysets.txt:1152
+#: ../../ref/contrib/gis/geoquerysets.txt:1236
 msgid ""
 "Attaches a ``svg`` attribute to every model in the queryset that contains "
 "the `Scalable Vector Graphics (SVG)`__ path data of the geometry fields."
 msgstr ""
 
 # de1b1f45cfbb4384b482d5a71a6cd3ca
-#: ../../ref/contrib/gis/geoquerysets.txt:1158
+#: ../../ref/contrib/gis/geoquerysets.txt:1242
 msgid "``relative``"
 msgstr ""
 
 # 3e25e56d1ec54606b18a8aeb04577da7
-#: ../../ref/contrib/gis/geoquerysets.txt:1158
+#: ../../ref/contrib/gis/geoquerysets.txt:1242
 msgid ""
 "If set to ``True``, the path data will be implemented in terms of relative "
 "moves.  Defaults to ``False``, meaning that absolute moves are used instead."
 msgstr ""
 
 # 4ad1cbf1e2d5460f9414165551a109ca
-#: ../../ref/contrib/gis/geoquerysets.txt:1162
+#: ../../ref/contrib/gis/geoquerysets.txt:1246
 msgid ""
 "This keyword may be used to specify the number of significant digits for the "
 "coordinates in the SVG representation -- the default value is 8."
 msgstr ""
 
 # 7d802674df65494f9bc95f38da27482b
-#: ../../ref/contrib/gis/geoquerysets.txt:1170
+#: ../../ref/contrib/gis/geoquerysets.txt:1254
 msgid "Miscellaneous"
 msgstr ""
 
 # 35429542ca6b420c800329a436586053
-#: ../../ref/contrib/gis/geoquerysets.txt:1173
+#: ../../ref/contrib/gis/geoquerysets.txt:1257
 msgid "``mem_size``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1179
+#: ../../ref/contrib/gis/geoquerysets.txt:1263
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.MemSize` function "
 "instead."
 msgstr ""
 
 # 3509f41e28c6484ab4635c0f3b9c6a9e
-#: ../../ref/contrib/gis/geoquerysets.txt:1184
+#: ../../ref/contrib/gis/geoquerysets.txt:1268
 msgid ""
 "Returns the memory size (number of bytes) that the geometry field takes in a "
 "``mem_size`` attribute  on each element of the ``GeoQuerySet``."
 msgstr ""
 
 # 086fc8520f2b4c218fdad3796ee1755d
-#: ../../ref/contrib/gis/geoquerysets.txt:1188
+#: ../../ref/contrib/gis/geoquerysets.txt:1272
 msgid "``num_geom``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1194
+#: ../../ref/contrib/gis/geoquerysets.txt:1278
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.NumGeometries` "
 "function instead."
 msgstr ""
 
 # 0646cc48c60b4b43b5dd91dc218182cf
-#: ../../ref/contrib/gis/geoquerysets.txt:1199
+#: ../../ref/contrib/gis/geoquerysets.txt:1283
 msgid ""
 "Returns the number of geometries in a ``num_geom`` attribute on each element "
 "of the ``GeoQuerySet`` if the geometry field is a collection (e.g., a "
@@ -1846,108 +2030,30 @@ msgid ""
 msgstr ""
 
 # 10f74a4e5171475688b85e93b599a9e5
-#: ../../ref/contrib/gis/geoquerysets.txt:1205
+#: ../../ref/contrib/gis/geoquerysets.txt:1289
 msgid "``num_points``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1211
+#: ../../ref/contrib/gis/geoquerysets.txt:1295
 msgid ""
 "Use the :class:`~django.contrib.gis.db.models.functions.NumPoints` function "
 "instead."
 msgstr ""
 
 # 82d4224007514bfd9ae345db24a560de
-#: ../../ref/contrib/gis/geoquerysets.txt:1216
+#: ../../ref/contrib/gis/geoquerysets.txt:1300
 msgid ""
 "Returns the number of points in the first linestring in the geometry field "
 "in a ``num_points`` attribute on each element of the ``GeoQuerySet``; "
 "otherwise sets with ``None``."
 msgstr ""
 
-# b083be8322da46a9a95b94c212226a0b
-#: ../../ref/contrib/gis/geoquerysets.txt:1221
-msgid "Spatial Aggregates"
-msgstr ""
-
-# d908491528cd4780bfd9d2d77422815f
-#: ../../ref/contrib/gis/geoquerysets.txt:1224
-msgid "Aggregate Methods"
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:1228
-msgid ""
-"Aggregate methods are now deprecated. Prefer using their function-based "
-"equivalents."
-msgstr ""
-
-# f60d7f00e99f44ca9e4b7847af7087ca
-#: ../../ref/contrib/gis/geoquerysets.txt:1232
-msgid "``collect``"
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:1238
-msgid "Use the :class:`Collect` aggregate instead."
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:1240
-msgid "Shortcut for ``aggregate(Collect(<field>))``."
-msgstr ""
-
-# 2b680b4add6545d6a57a697a085fbfaa
-#: ../../ref/contrib/gis/geoquerysets.txt:1243
-msgid "``extent``"
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:1249
-#: ../../ref/contrib/gis/geoquerysets.txt:1260
-msgid "Use the :class:`Extent` aggregate instead."
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:1251
-msgid "Shortcut for ``aggregate(Extent(<field>))``."
-msgstr ""
-
-# f99a47076b6b4ca19b283cc8f8bb5b04
-#: ../../ref/contrib/gis/geoquerysets.txt:1254
-msgid "``extent3d``"
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:1262
-msgid "Shortcut for ``aggregate(Extent3D(<field>))``."
-msgstr ""
-
-# 6579a6556cf7451ab35fa3547fe6c9f4
-#: ../../ref/contrib/gis/geoquerysets.txt:1265
-msgid "``make_line``"
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:1271
-msgid "Use the :class:`MakeLine` aggregate instead."
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:1273
-msgid "Shortcut for ``aggregate(MakeLine(<field>))``."
-msgstr ""
-
-# e61e4140aa3d423e8f74650dea2dd17f
-#: ../../ref/contrib/gis/geoquerysets.txt:1276
-msgid "``unionagg``"
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:1282
-msgid "Use the :class:`Union` aggregate instead."
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:1284
-msgid "Shortcut for ``aggregate(Union(<field>))``."
-msgstr ""
-
 # 11d6f926492a444ea93c7a8376689d96
-#: ../../ref/contrib/gis/geoquerysets.txt:1287
+#: ../../ref/contrib/gis/geoquerysets.txt:1305
 msgid "Aggregate Functions"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1289
+#: ../../ref/contrib/gis/geoquerysets.txt:1307
 msgid ""
 "Django provides some GIS-specific aggregate functions. For details on how to "
 "use these aggregate functions, see :doc:`the topic guide on aggregation </"
@@ -1955,27 +2061,23 @@ msgid ""
 msgstr ""
 
 # 584bf84d66b3405d83d02c1746977f47
-#: ../../ref/contrib/gis/geoquerysets.txt:1296
+#: ../../ref/contrib/gis/geoquerysets.txt:1314
 msgid "``tolerance``"
 msgstr ""
 
 # 49ff8581a3064ac283e526af10911c04
-#: ../../ref/contrib/gis/geoquerysets.txt:1296
+#: ../../ref/contrib/gis/geoquerysets.txt:1314
 msgid ""
 "This keyword is for Oracle only.  It is for the tolerance value used by the "
 "``SDOAGGRTYPE`` procedure; the  `Oracle documentation`__ has more details."
 msgstr ""
 
 # b1a002e3e4d2409e843a8b9ef59b3133
-#: ../../ref/contrib/gis/geoquerysets.txt:1310
+#: ../../ref/contrib/gis/geoquerysets.txt:1328
 msgid "``Collect``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1314
-msgid "*Availability*: PostGIS, Spatialite (≥3.0)"
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:1316
+#: ../../ref/contrib/gis/geoquerysets.txt:1334
 msgid ""
 "Returns a ``GEOMETRYCOLLECTION`` or a ``MULTI`` geometry object from the "
 "geometry column. This is analogous to a simplified version of the :class:"
@@ -1985,26 +2087,22 @@ msgid ""
 msgstr ""
 
 # cafd114965254399842512165d0d271f
-#: ../../ref/contrib/gis/geoquerysets.txt:1323
+#: ../../ref/contrib/gis/geoquerysets.txt:1341
 msgid "``Extent``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1327
-msgid "*Availability*: PostGIS, Oracle, Spatialite (≥3.0)"
-msgstr ""
-
-#: ../../ref/contrib/gis/geoquerysets.txt:1329
+#: ../../ref/contrib/gis/geoquerysets.txt:1347
 msgid ""
 "Returns the extent of all ``geo_field`` in the ``QuerySet`` as a four-tuple, "
 "comprising the lower left coordinate and the upper right coordinate."
 msgstr ""
 
 # 4b506a82c4a04ecfbb5e2b96c3d545c8
-#: ../../ref/contrib/gis/geoquerysets.txt:1339
+#: ../../ref/contrib/gis/geoquerysets.txt:1357
 msgid "``Extent3D``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1345
+#: ../../ref/contrib/gis/geoquerysets.txt:1363
 msgid ""
 "Returns the 3D extent of all ``geo_field`` in the ``QuerySet`` as a six-"
 "tuple, comprising the lower left coordinate and upper right coordinate (each "
@@ -2012,22 +2110,26 @@ msgid ""
 msgstr ""
 
 # ac7bcc9b762149d8b5b9c6745b117bbe
-#: ../../ref/contrib/gis/geoquerysets.txt:1356
+#: ../../ref/contrib/gis/geoquerysets.txt:1374
 msgid "``MakeLine``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1362
+#: ../../ref/contrib/gis/geoquerysets.txt:1380
 msgid ""
 "Returns a ``LineString`` constructed from the point field geometries in the "
 "``QuerySet``. Currently, ordering the queryset has no effect."
 msgstr ""
 
+#: ../../ref/contrib/gis/geoquerysets.txt:1385
+msgid "SpatiaLite support was added."
+msgstr ""
+
 # d64448890c544b9fabf59c01ff9ca4e1
-#: ../../ref/contrib/gis/geoquerysets.txt:1372
+#: ../../ref/contrib/gis/geoquerysets.txt:1394
 msgid "``Union``"
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1378
+#: ../../ref/contrib/gis/geoquerysets.txt:1400
 msgid ""
 "This method returns a :class:`~django.contrib.gis.geos.GEOSGeometry` object "
 "comprising the union of every geometry in the queryset. Please note that use "
@@ -2035,26 +2137,26 @@ msgid ""
 "time on large querysets."
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1385
+#: ../../ref/contrib/gis/geoquerysets.txt:1407
 msgid ""
 "If the computation time for using this method is too expensive, consider "
 "using :class:`Collect` instead."
 msgstr ""
 
 # 2f993093b3c44d8a810890909e25f004
-#: ../../ref/contrib/gis/geoquerysets.txt:1393
+#: ../../ref/contrib/gis/geoquerysets.txt:1415
 msgid "Footnotes"
 msgstr ""
 
 # 37ea179ed6d444d69671f4eb1c537d0f
-#: ../../ref/contrib/gis/geoquerysets.txt:1394
+#: ../../ref/contrib/gis/geoquerysets.txt:1416
 msgid ""
 "*See* `OpenGIS Simple Feature Specification For SQL <http://www.opengis.org/"
 "docs/99-049.pdf>`_, at Ch. 2.1.13.2, p. 2-13 (The Dimensionally Extended "
 "Nine-Intersection Model)."
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1395
+#: ../../ref/contrib/gis/geoquerysets.txt:1417
 msgid ""
 "*See* `SDO_RELATE documentation <https://docs.oracle.com/cd/B19306_01/"
 "appdev.102/b14255/sdo_operat.htm#sthref845>`_, from Ch. 11 of the Oracle "
@@ -2062,15 +2164,15 @@ msgid ""
 msgstr ""
 
 # e897945e331546a1927268fe3a6656f4
-#: ../../ref/contrib/gis/geoquerysets.txt:1396
+#: ../../ref/contrib/gis/geoquerysets.txt:1418
 msgid ""
 "For an explanation of this routine, read `Quirks of the \"Contains\" Spatial "
 "Predicate <http://lin-ear-th-inking.blogspot.com/2007/06/subtleties-of-ogc-"
 "covers-spatial.html>`_ by Martin Davis (a PostGIS developer)."
 msgstr ""
 
-#: ../../ref/contrib/gis/geoquerysets.txt:1397
+#: ../../ref/contrib/gis/geoquerysets.txt:1419
 msgid ""
 "Refer to the PostGIS ``ST_ContainsProperly`` `documentation <http://postgis."
-"net/docs/manual-1.5/ST_ContainsProperly.html>`_ for more details."
+"net/docs/ST_ContainsProperly.html>`_ for more details."
 msgstr ""

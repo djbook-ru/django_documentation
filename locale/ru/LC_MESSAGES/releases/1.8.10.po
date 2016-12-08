@@ -1,0 +1,158 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.10\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-08 11:07+0200\n"
+"PO-Revision-Date: 2016-12-08 11:07+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../../releases/1.8.10.txt:3
+msgid "Django 1.8.10 release notes"
+msgstr ""
+
+#: ../../releases/1.8.10.txt:5
+msgid "*March 1, 2016*"
+msgstr ""
+
+#: ../../releases/1.8.10.txt:7
+msgid "Django 1.8.10 fixes two security issues and several bugs in 1.8.9."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:10
+msgid ""
+"CVE-2016-2512: Malicious redirect and possible XSS attack via user-supplied "
+"redirect URLs containing basic auth"
+msgstr ""
+
+#: ../../releases/1.8.10.txt:12
+msgid ""
+"Django relies on user input in some cases (e.g. :func:`django.contrib.auth."
+"views.login` and :doc:`i18n </topics/i18n/index>`) to redirect the user to "
+"an \"on success\" URL. The security check for these redirects (namely "
+"``django.utils.http.is_safe_url()``) considered some URLs with basic "
+"authentication credentials \"safe\" when they shouldn't be."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:18
+msgid ""
+"For example, a URL like ``http://mysite.example.com\\@attacker.com`` would "
+"be considered safe if the request's host is ``http://mysite.example.com``, "
+"but redirecting to this URL sends the user to ``attacker.com``."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:22
+msgid ""
+"Also, if a developer relies on ``is_safe_url()`` to provide safe redirect "
+"targets and puts such a URL into a link, they could suffer from an XSS "
+"attack."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:26
+msgid ""
+"CVE-2016-2513: User enumeration through timing difference on password hasher "
+"work factor upgrade"
+msgstr ""
+
+#: ../../releases/1.8.10.txt:28
+msgid ""
+"In each major version of Django since 1.6, the default number of iterations "
+"for the ``PBKDF2PasswordHasher`` and its subclasses has increased. This "
+"improves the security of the password as the speed of hardware increases, "
+"however, it also creates a timing difference between a login request for a "
+"user with a password encoded in an older number of iterations and login "
+"request for a nonexistent user (which runs the default hasher's default "
+"number of iterations since Django 1.6)."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:36
+msgid ""
+"This only affects users who haven't logged in since the iterations were "
+"increased. The first time a user logs in after an iterations increase, their "
+"password is updated with the new iterations and there is no longer a timing "
+"difference."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:41
+msgid ""
+"The new ``BasePasswordHasher.harden_runtime()`` method allows hashers to "
+"bridge the runtime gap between the work factor (e.g. iterations) supplied in "
+"existing encoded passwords and the default work factor of the hasher. This "
+"method is implemented for ``PBKDF2PasswordHasher``  and "
+"``BCryptPasswordHasher``. The number of rounds for the latter hasher hasn't "
+"changed since Django 1.4, but some projects may subclass it and increase the "
+"work factor as needed."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:48
+msgid ""
+"A warning will be emitted for any :ref:`third-party password hashers that "
+"don't implement <write-your-own-password-hasher>` a ``harden_runtime()`` "
+"method."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:51
+msgid ""
+"If you have different password hashes in your database (such as SHA1 hashes "
+"from users who haven't logged in since the default hasher switched to PBKDF2 "
+"in Django 1.4), the timing difference on a login request for these users may "
+"be even greater and this fix doesn't remedy that difference (or any "
+"difference when changing hashers). You may be able to :ref:`upgrade those "
+"hashes <wrapping-password-hashers>` to prevent a timing attack for that case."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:59
+msgid "Bugfixes"
+msgstr ""
+
+#: ../../releases/1.8.10.txt:61
+msgid ""
+"Fixed a crash on PostgreSQL that prevented using ``TIME_ZONE=None`` and "
+"``USE_TZ=False`` (:ticket:`26177`)."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:64
+msgid ""
+"Added system checks for query name clashes of hidden relationships (:ticket:"
+"`26162`)."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:67
+msgid ""
+"Made ``forms.FileField`` and ``utils.translation.lazy_number()`` picklable (:"
+"ticket:`26212`)."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:70
+msgid ""
+"Fixed :class:`~django.contrib.postgres.fields.RangeField` and :class:"
+"`~django.contrib.postgres.fields.ArrayField` serialization with ``None`` "
+"values (:ticket:`26215`)."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:74
+msgid ""
+"Reallowed dashes in top-level domain names of URLs checked by "
+"``URLValidator`` to fix a regression in Django 1.8 (:ticket:`26204`)."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:77
+msgid "Fixed ``BoundField`` to reallow slices of subwidgets (:ticket:`26267`)."
+msgstr ""
+
+#: ../../releases/1.8.10.txt:79
+msgid ""
+"Prevented ``ContentTypeManager`` instances from sharing their cache (:ticket:"
+"`26286`)."
+msgstr ""

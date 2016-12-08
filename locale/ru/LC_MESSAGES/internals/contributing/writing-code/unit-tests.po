@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-17 10:48+0200\n"
+"POT-Creation-Date: 2016-12-08 11:07+0200\n"
 "PO-Revision-Date: 2012-02-15 15:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -68,7 +68,7 @@ msgid ""
 "sample settings module that uses the SQLite database. To run the tests::"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:0
+#: ../../internals/contributing/writing-code/unit-tests.txt:37
 msgid "Windows users"
 msgstr ""
 
@@ -98,54 +98,51 @@ msgstr ""
 msgid "Using another ``settings`` module"
 msgstr ""
 
-# 3253a2612f254d1ea64b46aca5dcf83a
 #: ../../internals/contributing/writing-code/unit-tests.txt:53
 msgid ""
-"The included settings module allows you to run the test suite using SQLite. "
-"If you want to test behavior using a different database (and if you're "
-"proposing patches for Django, it's a good idea to test across databases), "
-"you may need to define your own settings file."
+"The included settings module (``tests/test_sqlite.py``) allows you to run "
+"the test suite using SQLite. If you want to run the tests using a different "
+"database, you'll need to define your own settings file. Some tests, such as "
+"those for ``contrib.postgres``, are specific to a particular database "
+"backend and will be skipped if run with a different backend."
 msgstr ""
 
 # e124829e407e456485e0ef9cc9093577
-#: ../../internals/contributing/writing-code/unit-tests.txt:58
+#: ../../internals/contributing/writing-code/unit-tests.txt:59
 msgid ""
 "To run the tests with different settings, ensure that the module is on your "
 "``PYTHONPATH`` and pass the module with ``--settings``."
 msgstr ""
 
 # 3073f0ac8cba4fd6a2ab695d229004b4
-#: ../../internals/contributing/writing-code/unit-tests.txt:61
+#: ../../internals/contributing/writing-code/unit-tests.txt:62
 msgid ""
 "The :setting:`DATABASES` setting in any test settings module needs to define "
 "two databases:"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:64
+#: ../../internals/contributing/writing-code/unit-tests.txt:65
 msgid ""
 "A ``default`` database. This database should use the backend that you want "
 "to use for primary testing."
 msgstr ""
 
-# 40b6e19508b94f4e84d56784e3f45570
-#: ../../internals/contributing/writing-code/unit-tests.txt:67
+#: ../../internals/contributing/writing-code/unit-tests.txt:68
 msgid ""
-"A database with the alias ``other``. The ``other`` database is used to "
-"establish that queries can be directed to different databases. As a result, "
-"this database can use any backend you want. It doesn't need to use the same "
-"backend as the ``default`` database (although it can use the same backend if "
-"you want to). It cannot be the same database as the ``default``."
+"A database with the alias ``other``. The ``other`` database is used to test "
+"that queries can be directed to different databases. This database should "
+"use the same backend as the ``default``, and it must have a different name."
 msgstr ""
 
 # c068275419c641f79f922df6259c3934
-#: ../../internals/contributing/writing-code/unit-tests.txt:73
+#: ../../internals/contributing/writing-code/unit-tests.txt:72
 msgid ""
 "If you're using a backend that isn't SQLite, you will need to provide other "
 "details for each database:"
 msgstr ""
 
 # 0d6c486a64b24a16b6868bc19f218bf0
-#: ../../internals/contributing/writing-code/unit-tests.txt:76
+#: ../../internals/contributing/writing-code/unit-tests.txt:75
 msgid ""
 "The :setting:`USER` option needs to specify an existing user account for the "
 "database. That user needs permission to execute ``CREATE DATABASE`` so that "
@@ -153,21 +150,21 @@ msgid ""
 msgstr ""
 
 # 7509d45e119643c5bc4ce0b94abafeb2
-#: ../../internals/contributing/writing-code/unit-tests.txt:80
+#: ../../internals/contributing/writing-code/unit-tests.txt:79
 msgid ""
 "The :setting:`PASSWORD` option needs to provide the password for the :"
 "setting:`USER` that has been specified."
 msgstr ""
 
 # 2fbfd83e643a45999378ec81f2b9f602
-#: ../../internals/contributing/writing-code/unit-tests.txt:83
+#: ../../internals/contributing/writing-code/unit-tests.txt:82
 msgid ""
 "Test databases get their names by prepending ``test_`` to the value of the :"
 "setting:`NAME` settings for the databases defined in :setting:`DATABASES`. "
 "These test databases are deleted when the tests are finished."
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:87
+#: ../../internals/contributing/writing-code/unit-tests.txt:86
 msgid ""
 "You will also need to ensure that your database uses UTF-8 as the default "
 "character set. If your database server doesn't use UTF-8 as a default "
@@ -176,12 +173,12 @@ msgid ""
 msgstr ""
 
 # 4a0335ab1ebe45c28dfb7ee71f18b7b0
-#: ../../internals/contributing/writing-code/unit-tests.txt:95
+#: ../../internals/contributing/writing-code/unit-tests.txt:94
 msgid "Running only some of the tests"
 msgstr ""
 
 # ea053a8beae34339a84a8c7641e20cc4
-#: ../../internals/contributing/writing-code/unit-tests.txt:97
+#: ../../internals/contributing/writing-code/unit-tests.txt:96
 msgid ""
 "Django's entire test suite takes a while to run, and running every single "
 "test could be redundant if, say, you just added a test to Django that you "
@@ -190,182 +187,209 @@ msgid ""
 "on the command line."
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:103
+#: ../../internals/contributing/writing-code/unit-tests.txt:102
 msgid ""
 "For example, if you'd like to run tests only for generic relations and "
 "internationalization, type::"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:108
+#: ../../internals/contributing/writing-code/unit-tests.txt:107
 msgid ""
 "How do you find out the names of individual tests? Look in ``tests/`` — each "
 "directory name there is the name of a test."
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:111
+#: ../../internals/contributing/writing-code/unit-tests.txt:110
 msgid ""
 "If you just want to run a particular class of tests, you can specify a list "
 "of paths to individual test classes. For example, to run the "
 "``TranslationTests`` of the ``i18n`` module, type::"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:117
+#: ../../internals/contributing/writing-code/unit-tests.txt:116
 msgid ""
 "Going beyond that, you can specify an individual test method like this::"
 msgstr ""
 
 # 2b5783bf7f9d4eb498dabd1ab0987cfd
-#: ../../internals/contributing/writing-code/unit-tests.txt:122
+#: ../../internals/contributing/writing-code/unit-tests.txt:121
 msgid "Running the Selenium tests"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:124
+#: ../../internals/contributing/writing-code/unit-tests.txt:123
 msgid ""
-"Some tests require Selenium and a Web browser (Firefox, Google Chrome, or "
-"Internet Explorer). To allow those tests to be run rather than skipped, you "
-"must install the selenium_ package into your Python path and run the tests "
-"with the ``--selenium`` option::"
+"Some tests require Selenium and a Web browser. To run these tests, you must "
+"install the selenium_ package and run the tests with the ``--"
+"selenium=<BROWSERS>`` option. For example, if you have Firefox and Google "
+"Chrome installed::"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:130
+msgid ""
+"See the `selenium.webdriver`_ package for the list of available browsers."
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:132
+msgid ""
+"Specifying ``--selenium`` automatically sets ``--tags=selenium`` to run only "
+"the tests that require selenium."
 msgstr ""
 
 # 51ddc4d63958491fa20595ea0c4a0b6d
-#: ../../internals/contributing/writing-code/unit-tests.txt:134
+#: ../../internals/contributing/writing-code/unit-tests.txt:140
 msgid "Running all the tests"
 msgstr ""
 
 # ed809e0a8f7845b0a41463907306c47f
-#: ../../internals/contributing/writing-code/unit-tests.txt:136
+#: ../../internals/contributing/writing-code/unit-tests.txt:142
 msgid ""
 "If you want to run the full suite of tests, you'll need to install a number "
 "of dependencies:"
 msgstr ""
 
+#: ../../internals/contributing/writing-code/unit-tests.txt:145
+msgid "argon2-cffi_ 16.1.0+"
+msgstr ""
+
 # cf4953fa34434bd98607823acbdca5b9
-#: ../../internals/contributing/writing-code/unit-tests.txt:139
+#: ../../internals/contributing/writing-code/unit-tests.txt:146
 msgid "bcrypt_"
 msgstr ""
 
 # 450c4ab6d86f4ee793845c2d4d537f0c
-#: ../../internals/contributing/writing-code/unit-tests.txt:140
+#: ../../internals/contributing/writing-code/unit-tests.txt:147
 msgid "docutils_"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:141
+#: ../../internals/contributing/writing-code/unit-tests.txt:148
+msgid "enum34_ (Python 2 only)"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:149
 msgid "geoip2_"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:142
+#: ../../internals/contributing/writing-code/unit-tests.txt:150
 msgid "jinja2_ 2.7+"
 msgstr ""
 
 # d43da6407f6046619265b99d2f1ef170
-#: ../../internals/contributing/writing-code/unit-tests.txt:143
+#: ../../internals/contributing/writing-code/unit-tests.txt:151
 msgid "numpy_"
 msgstr ""
 
 # 5ae1cc2741784cbab149bbd656cccc68
-#: ../../internals/contributing/writing-code/unit-tests.txt:144
+#: ../../internals/contributing/writing-code/unit-tests.txt:152
 msgid "Pillow_"
 msgstr ""
 
 # e5b45162283043aba59f6455959c0a1e
-#: ../../internals/contributing/writing-code/unit-tests.txt:145
+#: ../../internals/contributing/writing-code/unit-tests.txt:153
 msgid "PyYAML_"
 msgstr ""
 
 # 6a4528996e91415298e5cb65b1250c6e
-#: ../../internals/contributing/writing-code/unit-tests.txt:146
+#: ../../internals/contributing/writing-code/unit-tests.txt:154
 msgid "pytz_"
 msgstr ""
 
 # e5f1f6413085443494b60687677dc34a
-#: ../../internals/contributing/writing-code/unit-tests.txt:147
+#: ../../internals/contributing/writing-code/unit-tests.txt:155
 msgid "setuptools_"
 msgstr ""
 
 # 2d2310f2f7f945ecbf8120f224eb85a7
-#: ../../internals/contributing/writing-code/unit-tests.txt:148
+#: ../../internals/contributing/writing-code/unit-tests.txt:156
 msgid "memcached_, plus a :ref:`supported Python binding <memcached>`"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:149
+#: ../../internals/contributing/writing-code/unit-tests.txt:157
 msgid "mock_ (for Python 2)"
 msgstr ""
 
 # 0e44a578c09f4424babf3890177abbc3
-#: ../../internals/contributing/writing-code/unit-tests.txt:150
+#: ../../internals/contributing/writing-code/unit-tests.txt:158
 msgid "gettext_ (:ref:`gettext_on_windows`)"
 msgstr ""
 
 # f1b694a9c6ac43a4b3c94f8ab0d3f5a8
-#: ../../internals/contributing/writing-code/unit-tests.txt:151
+#: ../../internals/contributing/writing-code/unit-tests.txt:159
 msgid "selenium_"
 msgstr ""
 
 # fe087a21fb024d559c6cd68f73151c2f
-#: ../../internals/contributing/writing-code/unit-tests.txt:152
+#: ../../internals/contributing/writing-code/unit-tests.txt:160
 msgid "sqlparse_"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:154
+#: ../../internals/contributing/writing-code/unit-tests.txt:162
 msgid ""
 "You can find these dependencies in `pip requirements files`_ inside the "
 "``tests/requirements`` directory of the Django source tree and install them "
 "like so::"
 msgstr ""
 
+#: ../../internals/contributing/writing-code/unit-tests.txt:168
+msgid ""
+"If you encounter an error during the installation, your system might be "
+"missing a dependency for one or more of the Python packages. Consult the "
+"failing package's documentation or search the Web with the error message "
+"that you encounter."
+msgstr ""
+
 # 9a65bbd24798451b896d8f5e54b7fc92
-#: ../../internals/contributing/writing-code/unit-tests.txt:160
+#: ../../internals/contributing/writing-code/unit-tests.txt:173
 msgid ""
 "You can also install the database adapter(s) of your choice using ``oracle."
 "txt``, ``mysql.txt``, or ``postgres.txt``."
 msgstr ""
 
 # 25156f7691584645a8e54ce3d1345a5e
-#: ../../internals/contributing/writing-code/unit-tests.txt:163
+#: ../../internals/contributing/writing-code/unit-tests.txt:176
 msgid ""
 "If you want to test the memcached cache backend, you'll also need to define "
 "a :setting:`CACHES` setting that points at your memcached instance."
 msgstr ""
 
 # 0af84f879705482cbe8c54c50ff96e3c
-#: ../../internals/contributing/writing-code/unit-tests.txt:166
+#: ../../internals/contributing/writing-code/unit-tests.txt:179
 msgid ""
 "To run the GeoDjango tests, you will need to :doc:`setup a spatial database "
 "and install the Geospatial libraries</ref/contrib/gis/install/index>`."
 msgstr ""
 
 # 83e53172de334482ad19920fc908f65c
-#: ../../internals/contributing/writing-code/unit-tests.txt:169
+#: ../../internals/contributing/writing-code/unit-tests.txt:182
 msgid ""
 "Each of these dependencies is optional. If you're missing any of them, the "
 "associated tests will be skipped."
 msgstr ""
 
 # 50b73dbd4de54cc3a9219d4ed1f62756
-#: ../../internals/contributing/writing-code/unit-tests.txt:189
+#: ../../internals/contributing/writing-code/unit-tests.txt:204
 msgid "Code coverage"
 msgstr ""
 
 # be14d98212fe4462a0e80ecb788c2568
-#: ../../internals/contributing/writing-code/unit-tests.txt:191
+#: ../../internals/contributing/writing-code/unit-tests.txt:206
 msgid ""
 "Contributors are encouraged to run coverage on the test suite to identify "
 "areas that need additional tests. The coverage tool installation and use is "
 "described in :ref:`testing code coverage<topics-testing-code-coverage>`."
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:195
+#: ../../internals/contributing/writing-code/unit-tests.txt:210
 msgid ""
 "Coverage should be run in a single process to obtain accurate statistics. To "
 "run coverage on the Django test suite using the standard test settings::"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:200
+#: ../../internals/contributing/writing-code/unit-tests.txt:215
 msgid "After running coverage, generate the html report by running::"
 msgstr ""
 
 # 82149140a35e4ad7a1ab7142a0955992
-#: ../../internals/contributing/writing-code/unit-tests.txt:204
+#: ../../internals/contributing/writing-code/unit-tests.txt:219
 msgid ""
 "When running coverage for the Django tests, the included ``.coveragerc`` "
 "settings file  defines ``coverage_html`` as the output directory for the "
@@ -374,11 +398,11 @@ msgid ""
 msgstr ""
 
 # 079c1a9b6caf40f5ababb6bbee062616
-#: ../../internals/contributing/writing-code/unit-tests.txt:212
+#: ../../internals/contributing/writing-code/unit-tests.txt:227
 msgid "Contrib apps"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:214
+#: ../../internals/contributing/writing-code/unit-tests.txt:229
 msgid ""
 "Tests for contrib apps can be found in the ``tests/`` directory, typically "
 "under ``<app_name>_tests``. For example, tests for ``contrib.auth`` are "
@@ -386,36 +410,36 @@ msgid ""
 msgstr ""
 
 # 5344b987684e4918b0c97ba4a3378c82
-#: ../../internals/contributing/writing-code/unit-tests.txt:221
+#: ../../internals/contributing/writing-code/unit-tests.txt:236
 msgid "Troubleshooting"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:224
+#: ../../internals/contributing/writing-code/unit-tests.txt:239
 msgid "Many test failures with ``UnicodeEncodeError``"
 msgstr ""
 
 # d8cbdce855784117ad7df658d9d21beb
-#: ../../internals/contributing/writing-code/unit-tests.txt:226
+#: ../../internals/contributing/writing-code/unit-tests.txt:241
 msgid ""
 "If the ``locales`` package is not installed, some tests will fail with a "
 "``UnicodeEncodeError``."
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:229
+#: ../../internals/contributing/writing-code/unit-tests.txt:244
 msgid "You can resolve this on Debian-based systems, for example, by running::"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:235
+#: ../../internals/contributing/writing-code/unit-tests.txt:250
 msgid "Tests that only fail in combination"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:237
+#: ../../internals/contributing/writing-code/unit-tests.txt:252
 msgid ""
 "In case a test passes when run in isolation but fails within the whole "
 "suite, we have some tools to help analyze the problem."
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:240
+#: ../../internals/contributing/writing-code/unit-tests.txt:255
 msgid ""
 "The ``--bisect`` option of ``runtests.py`` will run the failing test while "
 "halving the test set it is run together with on each iteration, often making "
@@ -423,13 +447,13 @@ msgid ""
 "failure."
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:245
+#: ../../internals/contributing/writing-code/unit-tests.txt:260
 msgid ""
 "For example, suppose that the failing test that works on its own is "
 "``ModelTest.test_eq``, then using::"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:250
+#: ../../internals/contributing/writing-code/unit-tests.txt:265
 msgid ""
 "will try to determine a test that interferes with the given one. First, the "
 "test is run with the first half of the test suite. If a failure occurs, the "
@@ -440,18 +464,18 @@ msgid ""
 "the set of failing tests is minimized."
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:258
+#: ../../internals/contributing/writing-code/unit-tests.txt:273
 msgid ""
 "The ``--pair`` option runs the given test alongside every other test from "
 "the suite, letting you check if another test has side-effects that cause the "
 "failure. So::"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:264
+#: ../../internals/contributing/writing-code/unit-tests.txt:279
 msgid "will pair ``test_eq`` with every test label."
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:266
+#: ../../internals/contributing/writing-code/unit-tests.txt:281
 msgid ""
 "With both ``--bisect`` and ``--pair``, if you already suspect which cases "
 "might be responsible for the failure, you may limit tests to be cross-"
@@ -459,33 +483,29 @@ msgid ""
 "labels>` after the first one::"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:273
+#: ../../internals/contributing/writing-code/unit-tests.txt:288
 msgid ""
 "You can also try running any set of tests in reverse using the ``--reverse`` "
 "option in order to verify that executing tests in a different order does not "
 "cause any trouble::"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:280
+#: ../../internals/contributing/writing-code/unit-tests.txt:295
 msgid "Seeing the SQL queries run during a test"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:282
+#: ../../internals/contributing/writing-code/unit-tests.txt:297
 msgid ""
 "If you wish to examine the SQL being run in failing tests, you can turn on :"
 "ref:`SQL logging <django-db-logger>` using the ``--debug-sql`` option. If "
 "you combine this with ``--verbosity=2``, all SQL queries will be output::"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:290
-msgid "The ``--reverse`` and ``--debug-sql`` options were added."
-msgstr ""
-
-#: ../../internals/contributing/writing-code/unit-tests.txt:293
+#: ../../internals/contributing/writing-code/unit-tests.txt:304
 msgid "Seeing the full traceback of a test failure"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:295
+#: ../../internals/contributing/writing-code/unit-tests.txt:306
 msgid ""
 "By default tests are run in parallel with one process per core. When the "
 "tests are run in parallel, however, you'll only see a truncated traceback "
@@ -493,14 +513,70 @@ msgid ""
 "option::"
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:301
+#: ../../internals/contributing/writing-code/unit-tests.txt:312
 msgid ""
 "You can also use the ``DJANGO_TEST_PROCESSES`` environment variable for this "
 "purpose."
 msgstr ""
 
-#: ../../internals/contributing/writing-code/unit-tests.txt:306
+#: ../../internals/contributing/writing-code/unit-tests.txt:317
 msgid ""
 "Support for running tests in parallel and the ``--parallel`` option were "
 "added."
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:321
+msgid "Tips for writing tests"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:326
+msgid "Isolating model registration"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:328
+msgid ""
+"To avoid polluting the global :attr:`~django.apps.apps` registry and prevent "
+"unnecessary table creation, models defined in a test method should be bound "
+"to a temporary ``Apps`` instance::"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:349
+msgid ""
+"Since this pattern involves a lot of boilerplate, Django provides the :func:"
+"`~django.test.utils.isolate_apps` decorator. It's used like this::"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:363
+msgid "Setting ``app_label``"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:365
+msgid ""
+"Models defined in a test method with no explicit :attr:`~django.db.models."
+"Options.app_label` are automatically assigned the label of the app in which "
+"their test class is located."
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:369
+msgid ""
+"In order to make sure the models defined within the context of :func:"
+"`~django.test.utils.isolate_apps` instances are correctly installed, you "
+"should pass the set of targeted ``app_label`` as arguments:"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:392
+msgid "The decorator can also be applied to classes::"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:405
+msgid ""
+"The temporary ``Apps`` instance used to isolate model registration can be "
+"retrieved as an attribute when used as a class decorator by using the "
+"``attr_name`` parameter::"
+msgstr ""
+
+#: ../../internals/contributing/writing-code/unit-tests.txt:420
+msgid ""
+"Or as an argument on the test method when used as a method decorator by "
+"using the ``kwarg_name`` parameter::"
 msgstr ""

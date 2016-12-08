@@ -18,13 +18,13 @@ Sessions are implemented via a piece of :doc:`middleware </ref/middleware>`.
 
 To enable session functionality, do the following:
 
-* Edit the :setting:`MIDDLEWARE_CLASSES` setting and make sure
-  it contains ``'django.contrib.sessions.middleware.SessionMiddleware'``.
-  The default ``settings.py`` created by ``django-admin startproject``
-  has ``SessionMiddleware`` activated.
+* Edit the :setting:`MIDDLEWARE` setting and make sure it contains
+  ``'django.contrib.sessions.middleware.SessionMiddleware'``. The default
+  ``settings.py`` created by ``django-admin startproject`` has
+  ``SessionMiddleware`` activated.
 
 If you don't want to use sessions, you might as well remove the
-``SessionMiddleware`` line from :setting:`MIDDLEWARE_CLASSES` and
+``SessionMiddleware`` line from :setting:`MIDDLEWARE` and
 ``'django.contrib.sessions'`` from your :setting:`INSTALLED_APPS`.
 It'll save you a small bit of overhead.
 
@@ -205,7 +205,7 @@ You can edit it multiple times.
 
       Example: ``fav_color = request.session.get('fav_color', 'red')``
 
-    .. method:: pop(key, default=None)
+    .. method:: pop(key, default=__not_given)
 
       Example: ``fav_color = request.session.pop('fav_color', 'blue')``
 
@@ -225,12 +225,6 @@ You can edit it multiple times.
       cookie. This is used if you want to ensure that the previous session data
       can't be accessed again from the user's browser (for example, the
       :func:`django.contrib.auth.logout()` function calls it).
-
-      .. versionchanged:: 1.8
-
-          Deletion of the session cookie is a behavior new in Django 1.8.
-          Previously, the behavior was to regenerate the session key value that
-          was sent back to the user in the cookie.
 
     .. method:: set_test_cookie()
 
@@ -335,8 +329,8 @@ easily available on the internet. Although the cookie session storage signs the
 cookie-stored data to prevent tampering, a :setting:`SECRET_KEY` leak
 immediately escalates to a remote code execution vulnerability.
 
-Bundled Serializers
-^^^^^^^^^^^^^^^^^^^
+Bundled serializers
+~~~~~~~~~~~~~~~~~~~
 
 .. class:: serializers.JSONSerializer
 
@@ -354,6 +348,9 @@ Bundled Serializers
         >>> request.session['0']
         'bar'
 
+    Similarly, data that can't be encoded in JSON, such as non-UTF8 bytes like
+    ``'\xd9'`` (which raises :exc:`UnicodeDecodeError`), can't be stored.
+
     See the :ref:`custom-serializers` section for more details on limitations
     of JSON serialization.
 
@@ -365,8 +362,8 @@ Bundled Serializers
 
 .. _custom-serializers:
 
-Write Your Own Serializer
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Write your own serializer
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Note that unlike :class:`~django.contrib.sessions.serializers.PickleSerializer`,
 the :class:`~django.contrib.sessions.serializers.JSONSerializer` cannot handle
@@ -376,7 +373,7 @@ including ``datetime`` and ``Decimal`` in JSON backed sessions, you will need
 to write a custom serializer (or convert such values to a JSON serializable
 object before storing them in ``request.session``). While serializing these
 values is fairly straightforward
-(``django.core.serializers.json.DateTimeAwareJSONEncoder`` may be helpful),
+(:class:`~django.core.serializers.json.DjangoJSONEncoder` may be helpful),
 writing a decoder that can reliably get back the same thing that you put in is
 more fragile. For example, you run the risk of returning a ``datetime`` that
 was actually a string that just happened to be in the same format chosen for
@@ -457,6 +454,9 @@ yourself. Do this after you've verified that the test cookie worked.
 
 Here's a typical usage example::
 
+    from django.http import HttpResponse
+    from django.shortcuts import render
+
     def login(request):
         if request.method == 'POST':
             if request.session.test_cookie_worked():
@@ -465,7 +465,7 @@ Here's a typical usage example::
             else:
                 return HttpResponse("Please enable cookies and try again.")
         request.session.set_test_cookie()
-        return render_to_response('foo/login_form.html')
+        return render(request, 'foo/login_form.html')
 
 Using sessions out of views
 ===========================
@@ -487,22 +487,19 @@ An API is available to manipulate session data outside of a view::
     >>> s = SessionStore()
     >>> # stored as seconds since epoch since datetimes are not serializable in JSON.
     >>> s['last_login'] = 1376587691
-    >>> s.save()
+    >>> s.create()
     >>> s.session_key
     '2b1189a188b44ad18c35e113ac6ceead'
-
     >>> s = SessionStore(session_key='2b1189a188b44ad18c35e113ac6ceead')
     >>> s['last_login']
     1376587691
 
-In order to mitigate session fixation attacks, sessions keys that don't exist
-are regenerated::
-
-    >>> from django.contrib.sessions.backends.db import SessionStore
-    >>> s = SessionStore(session_key='no-such-session-here')
-    >>> s.save()
-    >>> s.session_key
-    'ff882814010ccbc3c870523934fee5a2'
+``SessionStore.create()`` is designed to create a new session (i.e. one not
+loaded from the session store and with ``session_key=None``). ``save()`` is
+designed to save an existing session (i.e. one loaded from the session store).
+Calling ``save()`` on a new session may also work but has a small chance of
+generating a ``session_key`` that collides with an existing one. ``create()``
+calls ``save()`` and loops until an unused ``session_key`` is generated.
 
 If you're using the ``django.contrib.sessions.backends.db`` backend, each
 session is just a normal Django model. The ``Session`` model is defined in
@@ -637,6 +634,7 @@ behavior:
 * :setting:`SESSION_EXPIRE_AT_BROWSER_CLOSE`
 * :setting:`SESSION_FILE_PATH`
 * :setting:`SESSION_SAVE_EVERY_REQUEST`
+* :setting:`SESSION_SERIALIZER`
 
 .. _topics-session-security:
 
@@ -663,7 +661,7 @@ Technical details
 
 * The session dictionary accepts any :mod:`json` serializable value when using
   :class:`~django.contrib.sessions.serializers.JSONSerializer` or any
-  pickleable Python object when using
+  picklable Python object when using
   :class:`~django.contrib.sessions.serializers.PickleSerializer`. See the
   :mod:`pickle` module for more information.
 
@@ -812,9 +810,6 @@ to query the database for all active sessions for an account)::
 
     class CustomSession(AbstractBaseSession):
         account_id = models.IntegerField(null=True, db_index=True)
-
-        class Meta:
-            app_label = 'mysessions'
 
         @classmethod
         def get_session_store_class(cls):

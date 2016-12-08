@@ -19,8 +19,8 @@ This document explains the APIs for :class:`HttpRequest` and
 :class:`HttpResponse` objects, which are defined in the :mod:`django.http`
 module.
 
-HttpRequest objects
-===================
+``HttpRequest`` objects
+=======================
 
 .. class:: HttpRequest
 
@@ -83,6 +83,20 @@ All attributes should be considered read-only, unless stated otherwise.
     accessing the form data. Any subsequent attribute accesses (such as reading
     from ``GET`` or ``POST``) will use the new ``encoding`` value.  Useful if
     you know the form data is not in the :setting:`DEFAULT_CHARSET` encoding.
+
+.. attribute:: HttpRequest.content_type
+
+    .. versionadded:: 1.10
+
+    A string representing the MIME type of the request, parsed from the
+    ``CONTENT_TYPE`` header.
+
+.. attribute:: HttpRequest.content_params
+
+    .. versionadded:: 1.10
+
+    A dictionary of key/value parameters included in the ``CONTENT_TYPE``
+    header.
 
 .. attribute:: HttpRequest.GET
 
@@ -160,11 +174,11 @@ All attributes should be considered read-only, unless stated otherwise.
 
 .. attribute:: HttpRequest.resolver_match
 
-    An instance of :class:`~django.core.urlresolvers.ResolverMatch` representing
-    the resolved url. This attribute is only set after url resolving took place,
-    which means it's available in all views but not in middleware methods which
-    are executed before url resolving takes place (like ``process_request``, you
-    can use ``process_view`` instead).
+    An instance of :class:`~django.urls.ResolverMatch` representing the
+    resolved URL. This attribute is only set after URL resolving took place,
+    which means it's available in all views but not in middleware which are
+    executed before URL resolving takes place (you can use it in
+    :meth:`process_view` though).
 
 Attributes set by application code
 ----------------------------------
@@ -174,10 +188,8 @@ application.
 
 .. attribute:: HttpRequest.current_app
 
-    .. versionadded:: 1.8
-
     The :ttag:`url` template tag will use its value as the ``current_app``
-    argument to :func:`~django.core.urlresolvers.reverse()`.
+    argument to :func:`~django.urls.reverse()`.
 
 .. attribute:: HttpRequest.urlconf
 
@@ -198,7 +210,7 @@ Attributes set by middleware
 
 Some of the middleware included in Django's contrib apps set attributes on the
 request. If you don't see the attribute on a request, be sure the appropriate
-middleware class is listed in :setting:`MIDDLEWARE_CLASSES`.
+middleware class is listed in :setting:`MIDDLEWARE`.
 
 .. attribute:: HttpRequest.session
 
@@ -221,9 +233,9 @@ middleware class is listed in :setting:`MIDDLEWARE_CLASSES`.
     logged-in user. If the user isn't currently logged in, ``user`` will be set
     to an instance of :class:`~django.contrib.auth.models.AnonymousUser`. You
     can tell them apart with
-    :meth:`~django.contrib.auth.models.User.is_authenticated`, like so::
+    :attr:`~django.contrib.auth.models.User.is_authenticated`, like so::
 
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             ... # Do something for logged-in users.
         else:
             ... # Do something for anonymous users.
@@ -245,7 +257,9 @@ Methods
         behind multiple proxies. One solution is to use middleware to rewrite
         the proxy headers, as in the following example::
 
-            class MultipleProxyMiddleware(object):
+            from django.utils.deprecation import MiddlewareMixin
+
+            class MultipleProxyMiddleware(MiddlewareMixin):
                 FORWARDED_FOR_FIELDS = [
                     'HTTP_X_FORWARDED_FOR',
                     'HTTP_X_FORWARDED_HOST',
@@ -298,7 +312,7 @@ Methods
         Mixing HTTP and HTTPS on the same site is discouraged, therefore
         :meth:`~HttpRequest.build_absolute_uri()` will always generate an
         absolute URI with the same scheme the current request has. If you need
-        to redirect users to HTTPS, it's best to let your webserver redirect
+        to redirect users to HTTPS, it's best to let your Web server redirect
         all HTTP traffic to HTTPS.
 
 .. method:: HttpRequest.get_signed_cookie(key, default=RAISE_ERROR, salt='', max_age=None)
@@ -376,8 +390,8 @@ Methods
             process(element)
 
 
-QueryDict objects
-=================
+``QueryDict`` objects
+=====================
 
 .. class:: QueryDict
 
@@ -414,10 +428,6 @@ a subclass of dictionary. Exceptions are outlined here:
 
     Strings for setting both keys and values will be converted from ``encoding``
     to unicode. If encoding is not set, it defaults to :setting:`DEFAULT_CHARSET`.
-
-    .. versionchanged:: 1.8
-
-        In previous versions, ``query_string`` was a required positional argument.
 
 .. method:: QueryDict.__getitem__(key)
 
@@ -460,7 +470,7 @@ a subclass of dictionary. Exceptions are outlined here:
         >>> q.getlist('a')
         ['1', '2']
         >>> q['a'] # returns the last
-        ['2']
+        '2'
 
 .. method:: QueryDict.items()
 
@@ -577,8 +587,8 @@ In addition, ``QueryDict`` has the following methods:
         >>> q.urlencode(safe='/')
         'next=/a%26b/'
 
-HttpResponse objects
-====================
+``HttpResponse`` objects
+========================
 
 .. class:: HttpResponse
 
@@ -614,10 +624,16 @@ Passing iterators
 
 Finally, you can pass ``HttpResponse`` an iterator rather than strings.
 ``HttpResponse`` will consume the iterator immediately, store its content as a
-string, and discard it.
+string, and discard it. Objects with a ``close()`` method such as files and
+generators are immediately closed.
 
 If you need the response to be streamed from the iterator to the client, you
 must use the :class:`StreamingHttpResponse` class instead.
+
+.. versionchanged:: 1.10
+
+    Objects with a ``close()`` method used to be closed when the WSGI server
+    called ``close()`` on the response.
 
 Setting header fields
 ~~~~~~~~~~~~~~~~~~~~~
@@ -664,8 +680,6 @@ Attributes
 
 .. attribute:: HttpResponse.charset
 
-    .. versionadded:: 1.8
-
     A string denoting the charset in which the response will be encoded. If not
     given at ``HttpResponse`` instantiation time, it will be extracted from
     ``content_type`` and if that is unsuccessful, the
@@ -673,7 +687,7 @@ Attributes
 
 .. attribute:: HttpResponse.status_code
 
-    The `HTTP status code`_ for the response.
+    The :rfc:`HTTP status code <7231#section-6>` for the response.
 
     .. versionchanged:: 1.9
 
@@ -688,9 +702,8 @@ Attributes
     .. versionchanged:: 1.9
 
         ``reason_phrase`` no longer defaults to all capital letters. It now
-        uses the `HTTP standard's`_ default reason phrases.
-
-        .. _`HTTP standard's`: https://www.ietf.org/rfc/rfc2616.txt
+        uses the :rfc:`HTTP standard's <7231#section-6.1>` default reason
+        phrases.
 
         Unless explicitly set, ``reason_phrase`` is determined by the current
         value of :attr:`status_code`.
@@ -703,8 +716,6 @@ Attributes
     differently from regular responses.
 
 .. attribute:: HttpResponse.closed
-
-    .. versionadded:: 1.8
 
     ``True`` if the response has been closed.
 
@@ -727,7 +738,7 @@ Methods
     specified, it is formed by the :setting:`DEFAULT_CONTENT_TYPE` and
     :setting:`DEFAULT_CHARSET` settings, by default: "`text/html; charset=utf-8`".
 
-    ``status`` is the `HTTP status code`_ for the response.
+    ``status`` is the :rfc:`HTTP status code <7231#section-6>` for the response.
 
     ``reason`` is the HTTP response phrase. If not provided, a default phrase
     will be used.
@@ -735,10 +746,6 @@ Methods
     ``charset`` is the charset in which the response will be encoded. If not
     given it will be extracted from ``content_type``, and if that
     is unsuccessful, the :setting:`DEFAULT_CHARSET` setting will be used.
-
-    .. versionadded:: 1.8
-
-        The ``charset`` parameter was added.
 
 .. method:: HttpResponse.__setitem__(header, value)
 
@@ -760,8 +767,6 @@ Methods
     header with the given name.
 
 .. method:: HttpResponse.setdefault(header, value)
-
-    .. versionadded:: 1.8
 
     Sets a header unless it has already been set.
 
@@ -834,31 +839,37 @@ Methods
 
 .. method:: HttpResponse.getvalue()
 
-    .. versionadded:: 1.8
-
     Returns the value of :attr:`HttpResponse.content`. This method makes
     an :class:`HttpResponse` instance a stream-like object.
 
-.. method:: HttpResponse.writable()
+.. method:: HttpResponse.readable()
 
-    .. versionadded:: 1.8
+   .. versionadded:: 1.10
+
+    Always ``False``. This method makes an :class:`HttpResponse` instance a
+    stream-like object.
+
+.. method:: HttpResponse.seekable()
+
+   .. versionadded:: 1.10
+
+    Always ``False``. This method makes an :class:`HttpResponse` instance a
+    stream-like object.
+
+.. method:: HttpResponse.writable()
 
     Always ``True``. This method makes an :class:`HttpResponse` instance a
     stream-like object.
 
 .. method:: HttpResponse.writelines(lines)
 
-    .. versionadded:: 1.8
-
     Writes a list of lines to the response. Line separators are not added. This
     method makes an :class:`HttpResponse` instance a stream-like object.
 
-.. _HTTP status code: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10
-
 .. _ref-httpresponse-subclasses:
 
-HttpResponse subclasses
------------------------
+``HttpResponse`` subclasses
+---------------------------
 
 Django includes a number of ``HttpResponse`` subclasses that handle different
 types of HTTP responses. Like ``HttpResponse``, these subclasses live in
@@ -923,8 +934,8 @@ types of HTTP responses. Like ``HttpResponse``, these subclasses live in
     :class:`~django.template.response.SimpleTemplateResponse`, and the
     ``render`` method must itself return a valid response object.
 
-JsonResponse objects
-====================
+``JsonResponse`` objects
+========================
 
 .. class:: JsonResponse(data, encoder=DjangoJSONEncoder, safe=True, json_dumps_params=None, **kwargs)
 
@@ -939,7 +950,7 @@ JsonResponse objects
     JSON-serializable object.
 
     The ``encoder``, which defaults to
-    ``django.core.serializers.json.DjangoJSONEncoder``, will be used to
+    :class:`django.core.serializers.json.DjangoJSONEncoder`, will be used to
     serialize the data. See :ref:`JSON serialization
     <serialization-formats-json>` for more details about this serializer.
 
@@ -978,8 +989,8 @@ Without passing ``safe=False``, a :exc:`TypeError` will be raised.
 
 .. warning::
 
-    Before the `5th edition of EcmaScript
-    <http://www.ecma-international.org/publications/standards/Ecma-262.htm>`_
+    Before the `5th edition of ECMAScript
+    <http://www.ecma-international.org/ecma-262/5.1/index.html#sec-11.1.4>`_
     it was possible to poison the JavaScript ``Array`` constructor. For this
     reason, Django does not allow passing non-dict objects to the
     :class:`~django.http.JsonResponse` constructor by default.  However, most
@@ -996,8 +1007,8 @@ parameter to the constructor method::
 
 .. _httpresponse-streaming:
 
-StreamingHttpResponse objects
-=============================
+``StreamingHttpResponse`` objects
+=================================
 
 .. class:: StreamingHttpResponse
 
@@ -1045,7 +1056,7 @@ Attributes
 
 .. attribute:: StreamingHttpResponse.status_code
 
-    The `HTTP status code`_ for the response.
+    The :rfc:`HTTP status code <7231#section-6>` for the response.
 
     .. versionchanged:: 1.9
 
@@ -1060,9 +1071,8 @@ Attributes
     .. versionchanged:: 1.9
 
         ``reason_phrase`` no longer defaults to all capital letters. It now
-        uses the `HTTP standard's`_ default reason phrases.
-
-        .. _`HTTP standard's`: https://www.ietf.org/rfc/rfc2616.txt
+        uses the :rfc:`HTTP standard's <7231#section-6.1>` default reason
+        phrases.
 
         Unless explicitly set, ``reason_phrase`` is determined by the current
         value of :attr:`status_code`.
@@ -1071,8 +1081,8 @@ Attributes
 
     This is always ``True``.
 
-FileResponse objects
-====================
+``FileResponse`` objects
+========================
 
 .. class:: FileResponse
 

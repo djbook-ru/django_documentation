@@ -1,0 +1,252 @@
+# Russian translations for Django package.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 1.10\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-08 11:07+0200\n"
+"PO-Revision-Date: 2016-12-08 11:07+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../../ref/contrib/postgres/search.txt:3
+msgid "Full text search"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:7
+msgid ""
+"The database functions in the ``django.contrib.postgres.search`` module ease "
+"the use of PostgreSQL's `full text search engine <http://www.postgresql.org/"
+"docs/current/static/textsearch.html>`_."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:11
+msgid ""
+"For the examples in this document, we'll use the models defined in :doc:`/"
+"topics/db/queries`."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:16
+msgid ""
+"For a high-level overview of searching, see the :doc:`topic documentation </"
+"topics/db/search>`."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:22
+msgid "The ``search`` lookup"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:26
+msgid ""
+"The simplest way to use full text search is to search a single term against "
+"a single column in the database. For example::"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:32
+msgid ""
+"This creates a ``to_tsvector`` in the database from the ``body_text`` field "
+"and a ``plainto_tsquery`` from the search term ``'Cheese'``, both using the "
+"default database search configuration. The results are obtained by matching "
+"the query and the vector."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:37
+msgid ""
+"To use the ``search`` lookup, ``'django.contrib.postgres'`` must be in your :"
+"setting:`INSTALLED_APPS`."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:41
+msgid "``SearchVector``"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:45
+msgid ""
+"Searching against a single field is great but rather limiting. The ``Entry`` "
+"instances we're searching belong to a ``Blog``, which has a ``tagline`` "
+"field. To query against both fields, use a ``SearchVector``::"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:55
+msgid ""
+"The arguments to ``SearchVector`` can be any :class:`~django.db.models."
+"Expression` or the name of a field. Multiple arguments will be concatenated "
+"together using a space so that the search document includes them all."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:60
+msgid ""
+"``SearchVector`` objects can be combined together, allowing you to reuse "
+"them. For example::"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:68
+msgid ""
+"See :ref:`postgresql-fts-search-configuration` and :ref:`postgresql-fts-"
+"weighting-queries` for an explanation of the ``config`` and ``weight`` "
+"parameters."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:73
+msgid "``SearchQuery``"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:77
+msgid ""
+"``SearchQuery`` translates the terms the user provides into a search query "
+"object that the database compares to a search vector. By default, all the "
+"words the user provides are passed through the stemming algorithms, and then "
+"it looks for matches for all of the resulting terms."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:82
+msgid ""
+"``SearchQuery`` terms can be combined logically to provide more flexibility::"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:89
+msgid ""
+"See :ref:`postgresql-fts-search-configuration` for an explanation of the "
+"``config`` parameter."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:93
+msgid "``SearchRank``"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:97
+msgid ""
+"So far, we've just returned the results for which any match between the "
+"vector and the query are possible. It's likely you may wish to order the "
+"results by some sort of relevancy. PostgreSQL provides a ranking function "
+"which takes into account how often the query terms appear in the document, "
+"how close together the terms are in the document, and how important the part "
+"of the document is where they occur. The better the match, the higher the "
+"value of the rank. To order by relevancy::"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:111
+msgid ""
+"See :ref:`postgresql-fts-weighting-queries` for an explanation of the "
+"``weights`` parameter."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:117
+msgid "Changing the search configuration"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:119
+msgid ""
+"You can specify the ``config`` attribute to a :class:`SearchVector` and :"
+"class:`SearchQuery` to use a different search configuration. This allows "
+"using a different language parsers and dictionaries as defined by the "
+"database::"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:129
+msgid "The value of ``config`` could also be stored in another column::"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:140
+msgid "Weighting queries"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:142
+msgid ""
+"Every field may not have the same relevance in a query, so you can set "
+"weights of various vectors before you combine them::"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:150
+msgid ""
+"The weight should be one of the following letters: D, C, B, A. By default, "
+"these weights refer to the numbers ``0.1``, ``0.2``, ``0.4``, and ``1.0``, "
+"respectively. If you wish to weight them differently, pass a list of four "
+"floats to :class:`SearchRank` as ``weights`` in the same order above::"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:159
+msgid "Performance"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:161
+msgid ""
+"Special database configuration isn't necessary to use any of these "
+"functions, however, if you're searching more than a few hundred records, "
+"you're likely to run into performance problems. Full text search is a more "
+"intensive process than comparing the size of an integer, for example."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:166
+msgid ""
+"In the event that all the fields you're querying on are contained within one "
+"particular model, you can create a functional index which matches the search "
+"vector you wish to use. The PostgreSQL documentation has details on "
+"`creating indexes for full text search <http://www.postgresql.org/docs/"
+"current/static/textsearch-tables.html#TEXTSEARCH-TABLES-INDEX>`_."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:173
+msgid "``SearchVectorField``"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:177
+msgid ""
+"If this approach becomes too slow, you can add a ``SearchVectorField`` to "
+"your model. You'll need to keep it populated with triggers, for example, as "
+"described in the `PostgreSQL documentation`_. You can then query the field "
+"as if it were an annotated ``SearchVector``::"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:189
+msgid "Trigram similarity"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:191
+msgid ""
+"Another approach to searching is trigram similarity. A trigram is a group of "
+"three consecutive characters. In addition to the :lookup:`trigram_similar` "
+"lookup, you can use a couple of other expressions."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:195
+msgid ""
+"To use them, you need to activate the `pg_trgm extension <http://www."
+"postgresql.org/docs/current/interactive/pgtrgm.html>`_ on PostgreSQL. You "
+"can install it using the :class:`~django.contrib.postgres.operations."
+"TrigramExtension` migration operation."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:202
+msgid "``TrigramSimilarity``"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:208
+msgid ""
+"Accepts a field name or expression, and a string or expression. Returns the "
+"trigram similarity between the two arguments."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:211
+#: ../../ref/contrib/postgres/search.txt:232
+msgid "Usage example::"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:223
+msgid "``TrigramDistance``"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:229
+msgid ""
+"Accepts a field name or expression, and a string or expression. Returns the "
+"trigram distance between the two arguments."
+msgstr ""

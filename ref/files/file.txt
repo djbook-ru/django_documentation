@@ -1,3 +1,4 @@
+===================
 The ``File`` object
 ===================
 
@@ -6,8 +7,8 @@ for basic file handling in Django.
 
 .. currentmodule:: django.core.files
 
-The ``File`` Class
-------------------
+The ``File`` class
+==================
 
 .. class:: File(file_object)
 
@@ -29,6 +30,17 @@ The ``File`` Class
     .. attribute:: file
 
         The underlying :py:term:`file object` that this class wraps.
+
+        .. admonition:: Be careful with this attribute in subclasses.
+
+            Some subclasses of :class:`File`, including
+            :class:`~django.core.files.base.ContentFile` and
+            :class:`~django.db.models.fields.files.FieldFile`, may replace this
+            attribute with an object other than a Python :py:term:`file object`.
+            In these cases, this attribute may itself be a :class:`File`
+            subclass (and not necessarily the same subclass). Whenever
+            possible, use the attributes and methods of the subclass itself
+            rather than the those of the subclass's ``file`` attribute.
 
     .. attribute:: mode
 
@@ -52,15 +64,6 @@ The ``File`` Class
     .. method:: __iter__()
 
         Iterate over the file yielding one line at a time.
-
-        .. versionchanged:: 1.8
-
-            ``File`` now uses `universal newlines`_. The following are
-            recognized as ending a line: the Unix end-of-line convention
-            ``'\n'``, the Windows convention ``'\r\n'``, and the old Macintosh
-            convention ``'\r'``.
-
-            .. _universal newlines: https://www.python.org/dev/peps/pep-0278
 
     .. method:: chunks(chunk_size=None)
 
@@ -98,8 +101,8 @@ The ``File`` Class
 
 .. currentmodule:: django.core.files.base
 
-The ``ContentFile`` Class
--------------------------
+The ``ContentFile`` class
+=========================
 
 .. class:: ContentFile(File)
 
@@ -115,8 +118,8 @@ The ``ContentFile`` Class
 
 .. currentmodule:: django.core.files.images
 
-The ``ImageFile`` Class
------------------------
+The ``ImageFile`` class
+=======================
 
 .. class:: ImageFile(file_object)
 
@@ -136,7 +139,7 @@ The ``ImageFile`` Class
 .. currentmodule:: django.core.files
 
 Additional methods on files attached to objects
------------------------------------------------
+===============================================
 
 Any :class:`File` that is associated with an object (as with ``Car.photo``,
 below) will also have a couple of extra methods:

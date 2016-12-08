@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-17 10:48+0200\n"
+"POT-Creation-Date: 2016-12-08 11:07+0200\n"
 "PO-Revision-Date: 2015-12-06 16:42+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -79,7 +79,8 @@ msgstr ""
 
 # fe0fade2addb4972b3f7d298915ae8af
 #: ../../topics/db/managers.txt:41
-msgid "Custom Managers"
+#, fuzzy
+msgid "Custom managers"
 msgstr "Собственные менеджеры"
 
 # cae7b650d65442d793661597ff14b8fc
@@ -104,7 +105,8 @@ msgstr ""
 
 # 3828c8cc5fb24680a5dfa72edbf75764
 #: ../../topics/db/managers.txt:51
-msgid "Adding extra Manager methods"
+#, fuzzy
+msgid "Adding extra manager methods"
 msgstr "Добавление методов в менеджер"
 
 # 85247f8eb9ff4a38beab864162fff358
@@ -160,7 +162,8 @@ msgstr ""
 
 # f6db6b6561494262bedd213f56be440f
 #: ../../topics/db/managers.txt:101
-msgid "Modifying initial Manager QuerySets"
+#, fuzzy
+msgid "Modifying a manager's initial ``QuerySet``"
 msgstr "Изменение базового QuerySets менеджера"
 
 # 98d182820abf498fbd132b2e102716a6
@@ -234,7 +237,7 @@ msgstr ""
 "для вашей модели."
 
 # 140b18b8413b4f039fc3a5fad89b03fb
-#: ../../topics/db/managers.txt:151 ../../topics/db/managers.txt:270
+#: ../../topics/db/managers.txt:151 ../../topics/db/managers.txt:300
 msgid "For example::"
 msgstr "Например::"
 
@@ -253,7 +256,7 @@ msgid "Default managers"
 msgstr "Менеджеры по умолчанию"
 
 # 0510fbadbf384944acd75afd4b53a43c
-#: ../../topics/db/managers.txt:177
+#: ../../topics/db/managers.txt:179
 msgid ""
 "If you use custom ``Manager`` objects, take note that the first ``Manager`` "
 "Django encounters (in the order in which they're defined in the model) has a "
@@ -273,19 +276,40 @@ msgstr ""
 "``get_queryset()``, не попасть в ситуацию, когда вы не можете получить "
 "нужный объект."
 
+#: ../../topics/db/managers.txt:188
+msgid ""
+"You can specify a custom default manager using :attr:`Meta."
+"default_manager_name <django.db.models.Options.default_manager_name>`."
+msgstr ""
+
+#: ../../topics/db/managers.txt:191
+msgid ""
+"If you're writing some code that must handle an unknown model, for example, "
+"in a third-party app that implements a generic view, use this manager (or :"
+"attr:`~Model._base_manager`) rather than assuming the model has an "
+"``objects`` manager."
+msgstr ""
+
+# fe0fade2addb4972b3f7d298915ae8af
+#: ../../topics/db/managers.txt:197
+#, fuzzy
+msgid "Base managers"
+msgstr "Менеджеры по умолчанию"
+
 # 04a59d1b7d54470f99cb87a7ef34aa99
-#: ../../topics/db/managers.txt:190
+#: ../../topics/db/managers.txt:204
 msgid "Using managers for related object access"
 msgstr "Использования менеджеров для получения связанных объектов"
 
 # 571edc9b4cd0425885b44082768ea012
-#: ../../topics/db/managers.txt:192
+#: ../../topics/db/managers.txt:206
+#, fuzzy
 msgid ""
-"By default, Django uses an instance of a \"plain\" manager class when "
-"accessing related objects (i.e. ``choice.poll``), not the default manager on "
-"the related object. This is because Django needs to be able to retrieve the "
-"related object, even if it would otherwise be filtered out (and hence be "
-"inaccessible) by the default manager."
+"By default, Django uses an instance of the ``Model._base_manager`` manager "
+"class when accessing related objects (i.e. ``choice.question``), not the "
+"``_default_manager`` on the related object. This is because Django needs to "
+"be able to retrieve the related object, even if it would otherwise be "
+"filtered out (and hence be inaccessible) by the default manager."
 msgstr ""
 "По умолчанию, Django использует \"обычный\" класс менеджера для получения "
 "связанных объектов (например, ``choice.poll``), а не менеджер по умолчанию "
@@ -294,26 +318,70 @@ msgstr ""
 "умолчанию."
 
 # ca74f3a91ebc4f69a363ca7b86670e9a
-#: ../../topics/db/managers.txt:198
+#: ../../topics/db/managers.txt:212
+#, fuzzy
 msgid ""
-"If the normal plain manager class (:class:`django.db.models.Manager`) is not "
-"appropriate for your circumstances, you can force Django to use the same "
-"class as the default manager for your model by setting the "
-"``use_for_related_fields`` attribute on the manager class. This is "
-"documented fully below_."
+"If the normal base manager class (:class:`django.db.models.Manager`) isn't "
+"appropriate for your circumstances, you can tell Django which class to use "
+"by setting :attr:`Meta.base_manager_name <django.db.models.Options."
+"base_manager_name>`."
 msgstr ""
 "Если стандартный менеджер(:class:`django.db.models.Manager`) вас не "
 "устраивает, вы можете указать Django  использовать ваш менеджер по умолчанию "
 "используя аргумент ``use_for_related_fields`` в классе менеджера. Все это "
 "описано в manager-types_."
 
+#: ../../topics/db/managers.txt:217
+msgid ""
+"Manager's aren't used when querying on related models. For example, if the "
+"``Question`` model :ref:`from the tutorial <creating-models>` had a "
+"``deleted`` field and a base manager that filters out instances with "
+"``deleted=True``, a queryset like ``Choice.objects."
+"filter(question__name__startswith='What')`` would include choices related to "
+"deleted questions."
+msgstr ""
+
+# b7a8e8663841420d87034926a3774a87
+#: ../../topics/db/managers.txt:224
+#, fuzzy
+msgid "Don't filter away any results in this type of manager subclass"
+msgstr "Не фильтруйте результаты запроса"
+
+# 3f856d857cf141bd80a168a0047a78be
+#: ../../topics/db/managers.txt:226
+#, fuzzy
+msgid ""
+"This manager is used to access objects that are related to from some other "
+"model. In those situations, Django has to be able to see all the objects for "
+"the model it is fetching, so that *anything* which is referred to can be "
+"retrieved."
+msgstr ""
+"Одно из назначений автоматически создаваемого менеджера - доступ к связанным "
+"объектам. В этом случае Django должен иметь возможность получить *все* "
+"связанные объекты."
+
+# b5730aa46e4242f2b7e48819889e0000
+#: ../../topics/db/managers.txt:231
+#, fuzzy
+msgid ""
+"If you override the ``get_queryset()`` method and filter out any rows, "
+"Django will return incorrect results. Don't do that. A manager that filters "
+"results in ``get_queryset()`` is not appropriate for use as a default "
+"manager."
+msgstr ""
+"Если вы переопределите метод ``get_queryset()`` и отфильтруете часть "
+"результата, Django вернет неверный результат. Не делайте этого. Менеджер, "
+"который фильтрует результат запроса в ``get_queryset()``, не подходит на "
+"роль автоматически создаваемого менеджера."
+
 # cfffd1fc6f2a4ae1a7f15133a6e0f643
-#: ../../topics/db/managers.txt:208
-msgid "Calling custom ``QuerySet`` methods from the ``Manager``"
+#: ../../topics/db/managers.txt:238
+#, fuzzy
+msgid "Calling custom ``QuerySet`` methods from the manager"
 msgstr "Вызов собственных методов ``QuerySet`` из ``Manager``"
 
 # 549bcd9343934337839058c26cc9c88e
-#: ../../topics/db/managers.txt:210
+#: ../../topics/db/managers.txt:240
 msgid ""
 "While most methods from the standard ``QuerySet`` are accessible directly "
 "from the ``Manager``, this is only the case for the extra methods defined on "
@@ -324,7 +392,7 @@ msgstr ""
 "переопределенного ``QuerySet``::"
 
 # e7e875769c8a414c993c3fa27a0248ce
-#: ../../topics/db/managers.txt:237
+#: ../../topics/db/managers.txt:267
 msgid ""
 "This example allows you to call both ``authors()`` and ``editors()`` "
 "directly from the manager ``Person.people``."
@@ -333,12 +401,13 @@ msgstr ""
 "из менеджера ``Person.people``."
 
 # 86f250222c7a42a488ae601afaf66a1e
-#: ../../topics/db/managers.txt:243
-msgid "Creating ``Manager`` with ``QuerySet`` methods"
+#: ../../topics/db/managers.txt:273
+#, fuzzy
+msgid "Creating a manager with ``QuerySet`` methods"
 msgstr "Создание ``Manager`` с методами ``QuerySet``"
 
 # a9575a8c69104e99a08adc8d90e9c30a
-#: ../../topics/db/managers.txt:245
+#: ../../topics/db/managers.txt:275
 msgid ""
 "In lieu of the above approach which requires duplicating methods on both the "
 "``QuerySet`` and the ``Manager``, :meth:`QuerySet.as_manager() <django.db."
@@ -351,7 +420,7 @@ msgstr ""
 "методами ``QuerySet``::"
 
 # 210881b248ce48259c62a0851649f4c6
-#: ../../topics/db/managers.txt:254
+#: ../../topics/db/managers.txt:284
 msgid ""
 "The ``Manager`` instance created by :meth:`QuerySet.as_manager() <django.db."
 "models.query.QuerySet.as_manager>` will be virtually identical to the "
@@ -362,7 +431,7 @@ msgstr ""
 "``PersonManager`` из примера выше."
 
 # 5c6b774e86d34e818c3d42cd3878de5f
-#: ../../topics/db/managers.txt:258
+#: ../../topics/db/managers.txt:288
 msgid ""
 "Not every ``QuerySet`` method makes sense at the ``Manager`` level; for "
 "instance we intentionally prevent the :meth:`QuerySet.delete() <django.db."
@@ -374,17 +443,17 @@ msgstr ""
 "намерено не добавляется в класс ``Manager``."
 
 # 9e966217a5fc4d66a156342b7f56af07
-#: ../../topics/db/managers.txt:263
+#: ../../topics/db/managers.txt:293
 msgid "Methods are copied according to the following rules:"
 msgstr "Методы копируются в соответствии со следующими правилами:"
 
 # 2e015f4f91854e59a0233885f218e321
-#: ../../topics/db/managers.txt:265
+#: ../../topics/db/managers.txt:295
 msgid "Public methods are copied by default."
 msgstr "Публичные методы копируются по умолчанию."
 
 # 725398a4a9ca482ca42fac1e1094fd2e
-#: ../../topics/db/managers.txt:266
+#: ../../topics/db/managers.txt:296
 msgid ""
 "Private methods (starting with an underscore) are not copied by default."
 msgstr ""
@@ -392,7 +461,7 @@ msgstr ""
 "умолчанию."
 
 # bb8785762a914037ac000e36f25bed42
-#: ../../topics/db/managers.txt:267
+#: ../../topics/db/managers.txt:297
 msgid ""
 "Methods with a ``queryset_only`` attribute set to ``False`` are always "
 "copied."
@@ -400,19 +469,20 @@ msgstr ""
 "Методы с атрибутом ``queryset_only`` равным ``False`` всегда копируются."
 
 # a55a58a936e34733a1f983458c1f12c0
-#: ../../topics/db/managers.txt:268
+#: ../../topics/db/managers.txt:298
 msgid ""
 "Methods with a ``queryset_only`` attribute set to ``True`` are never copied."
 msgstr ""
 "Методы с атрибутом ``queryset_only`` равным ``True`` никогда не копируются."
 
 # c2eff6ac3b8f43089f4d6c181267bed8
-#: ../../topics/db/managers.txt:292
-msgid "from_queryset"
+#: ../../topics/db/managers.txt:322
+#, fuzzy
+msgid "``from_queryset()``"
 msgstr "from_queryset"
 
 # c840835c06ac4db0a89eb8dbbd9e744d
-#: ../../topics/db/managers.txt:296
+#: ../../topics/db/managers.txt:326
 msgid ""
 "For advanced usage you might want both a custom ``Manager`` and a custom "
 "``QuerySet``. You can do that by calling ``Manager.from_queryset()`` which "
@@ -425,57 +495,28 @@ msgstr ""
 "``QuerySet``::"
 
 # 50d2008cdb014b00be083cc4343d1536
-#: ../../topics/db/managers.txt:312
+#: ../../topics/db/managers.txt:342
 msgid "You may also store the generated class into a variable::"
 msgstr "Созданный класс можно сохранить в переменной::"
 
 # 791f89fd06434976b913c8dd0d7275ce
-#: ../../topics/db/managers.txt:322
+#: ../../topics/db/managers.txt:352
 msgid "Custom managers and model inheritance"
 msgstr "Собственные менеджеры и наследование моделей"
 
-# bed45920458446329f7eec9461583868
-#: ../../topics/db/managers.txt:324
+#: ../../topics/db/managers.txt:354
 msgid ""
-"Class inheritance and model managers aren't quite a perfect match for each "
-"other. Managers are often specific to the classes they are defined on and "
-"inheriting them in subclasses isn't necessarily a good idea. Also, because "
-"the first manager declared is the *default manager*, it is important to "
-"allow that to be controlled. So here's how Django handles custom managers "
-"and :ref:`model inheritance <model-inheritance>`:"
+"Here's how Django handles custom managers and :ref:`model inheritance <model-"
+"inheritance>`:"
 msgstr ""
-"Наследование моделей и менеджеры взаимодействуют не совсем просто. Обычно "
-"менеджеры предназначены для работы с моделью, к которой принадлежат, поэтому "
-"наследовать их в дочерних моделях - не всегда хорошая идея. К тому же первый "
-"менеджер в модели будет *менеджером по умолчанию*, и очень важно, чтобы это "
-"так и работало. Вот как Django решает эти проблемы при :ref:`наследовании "
-"моделей <model-inheritance>`:"
-
-# 048894b8e7ba48c0b87b68cd7ecaaa8f
-#: ../../topics/db/managers.txt:331
-msgid ""
-"Managers defined on non-abstract base classes are *not* inherited by child "
-"classes. If you want to reuse a manager from a non-abstract base, redeclare "
-"it explicitly on the child class. These sorts of managers are likely to be "
-"fairly specific to the class they are defined on, so inheriting them can "
-"often lead to unexpected results (particularly as far as the default manager "
-"goes). Therefore, they aren't passed onto child classes."
-msgstr ""
-"Менеджеры из не абстрактной базовой модели *не* наследуются дочерними. Если "
-"вы хотите унаследовать менеджер из не абстрактной родительской модели, "
-"добавьте его в дочернюю модель. Такие менеджеры обычно тесно связаны с "
-"моделью, поэтому их наследование может привести к проблемам (по крайней мере "
-"менеджер по умолчанию). Таким образом, они не передаются на дочерние классы."
 
 # 02ef7837aaa54c9a89d20ce2854cbe07
-#: ../../topics/db/managers.txt:339
+#: ../../topics/db/managers.txt:357
+#, fuzzy
 msgid ""
-"Managers from abstract base classes are always inherited by the child class, "
-"using Python's normal name resolution order (names on the child class "
-"override all others; then come names on the first parent class, and so on). "
-"Abstract base classes are designed to capture information and behavior that "
-"is common to their child classes. Defining common managers is an appropriate "
-"part of this common information."
+"Managers from base classes are always inherited by the child class, using "
+"Python's normal name resolution order (names on the child class override all "
+"others; then come names on the first parent class, and so on)."
 msgstr ""
 "Менеджеры абстрактного класса наследуются дочерним классом, используя "
 "правила именования Python (имена дочернего класса переопределяют имена "
@@ -483,22 +524,30 @@ msgstr ""
 "дочерних классов. Определение общих менеджеров - важная часть абстрактных "
 "моделей."
 
-# c9cba1e2b12d41f5aec01df6056f8f07
-#: ../../topics/db/managers.txt:346
+#: ../../topics/db/managers.txt:362
 msgid ""
-"The default manager on a class is either the first manager declared on the "
-"class, if that exists, or the default manager of the first abstract base "
-"class in the parent hierarchy, if that exists. If no default manager is "
-"explicitly declared, Django's normal default manager is used."
+"If no managers are declared on a model and/or its parents, Django "
+"automatically creates the ``objects`` manager."
 msgstr ""
-"Менеджером по умолчанию становится первый менеджер, определенный в модели. "
-"Если он отсутствует, используется менеджер по умолчанию первого абстрактного "
-"класса среди родительских моделей, если он существует. Если таким образом не "
-"удалось определить менеджер по умолчанию, используется стандартный менеджер "
-"Django."
+
+#: ../../topics/db/managers.txt:365
+msgid ""
+"The default manager on a class is either the one chosen with :attr:`Meta."
+"default_manager_name <django.db.models.Options.default_manager_name>`, or "
+"the first manager declared on the model, or the default manager of the first "
+"parent model."
+msgstr ""
+
+#: ../../topics/db/managers.txt:372
+msgid ""
+"In older versions, manager inheritance varied depending on the type of model "
+"inheritance (i.e. :ref:`abstract-base-classes`, :ref:`multi-table-"
+"inheritance`, or :ref:`proxy-models`), especially with regards to electing "
+"the default manager."
+msgstr ""
 
 # 505bc79c9ef04a128006b02be2c90e1e
-#: ../../topics/db/managers.txt:352
+#: ../../topics/db/managers.txt:377
 msgid ""
 "These rules provide the necessary flexibility if you want to install a "
 "collection of custom managers on a group of models, via an abstract base "
@@ -511,7 +560,7 @@ msgstr ""
 "класс::"
 
 # e9076b62c5c9481b975e594b091660d1
-#: ../../topics/db/managers.txt:364
+#: ../../topics/db/managers.txt:389
 msgid ""
 "If you use this directly in a subclass, ``objects`` will be the default "
 "manager if you declare no managers in the base class::"
@@ -520,7 +569,7 @@ msgstr ""
 "мы не определим другой менеджер в дочерней модели ::"
 
 # 72bd2e49210d4a60837d7123a7887f24
-#: ../../topics/db/managers.txt:372
+#: ../../topics/db/managers.txt:397
 msgid ""
 "If you want to inherit from ``AbstractBase``, but provide a different "
 "default manager, you can provide the default manager on the child class::"
@@ -530,7 +579,7 @@ msgstr ""
 "способом::"
 
 # 1d0f1648cf7c40058e686c45cf81b56f
-#: ../../topics/db/managers.txt:380
+#: ../../topics/db/managers.txt:405
 msgid ""
 "Here, ``default_manager`` is the default. The ``objects`` manager is still "
 "available, since it's inherited. It just isn't used as the default."
@@ -540,7 +589,7 @@ msgstr ""
 "менеджер по умолчанию."
 
 # f9f5ba5a373546f1ab62beaa748acc9a
-#: ../../topics/db/managers.txt:383
+#: ../../topics/db/managers.txt:408
 msgid ""
 "Finally for this example, suppose you want to add extra managers to the "
 "child class, but still use the default from ``AbstractBase``. You can't add "
@@ -558,7 +607,7 @@ msgstr ""
 "добавить в наследование *после* базовой::"
 
 # dcdc236e20144827b9e1ed54fdfcaed1
-#: ../../topics/db/managers.txt:402
+#: ../../topics/db/managers.txt:427
 msgid ""
 "Note that while you can *define* a custom manager on the abstract model, you "
 "can't *invoke* any methods using the abstract model. That is::"
@@ -568,12 +617,12 @@ msgstr ""
 "модель. То есть::"
 
 # 09d0beb4e8764e569aed50df51194c38
-#: ../../topics/db/managers.txt:407
+#: ../../topics/db/managers.txt:432
 msgid "is legal, but::"
 msgstr "будет работать, но::"
 
 # 8df39bcbdb7540d0a4e9d37b94a128ac
-#: ../../topics/db/managers.txt:411
+#: ../../topics/db/managers.txt:436
 msgid ""
 "will raise an exception. This is because managers are intended to "
 "encapsulate logic for managing collections of objects. Since you can't have "
@@ -588,12 +637,12 @@ msgstr ""
 "абстрактной моделью, добавьте его в ``staticmethod`` или ``classmethod``."
 
 # 4c9a9a892dde44e9bd42926f1ee9584d
-#: ../../topics/db/managers.txt:418
+#: ../../topics/db/managers.txt:443
 msgid "Implementation concerns"
 msgstr "Проблемы реализации"
 
 # ac9c0bc2e9194ff59fc02491554e1b3b
-#: ../../topics/db/managers.txt:420
+#: ../../topics/db/managers.txt:445
 msgid ""
 "Whatever features you add to your custom ``Manager``, it must be possible to "
 "make a shallow copy of a ``Manager`` instance; i.e., the following code must "
@@ -603,7 +652,7 @@ msgstr ""
 "работать такой код::"
 
 # 63f6ee7f3bc4483eadda8d9472a9520b
-#: ../../topics/db/managers.txt:428
+#: ../../topics/db/managers.txt:453
 msgid ""
 "Django makes shallow copies of manager objects during certain queries; if "
 "your Manager cannot be copied, those queries will fail."
@@ -612,7 +661,7 @@ msgstr ""
 "Если ваш менеджер нельзя скопировать, эти запросы перестанут работать."
 
 # 5cb300a201834905b90e9f40ef7df99f
-#: ../../topics/db/managers.txt:431
+#: ../../topics/db/managers.txt:456
 msgid ""
 "This won't be an issue for most custom managers. If you are just adding "
 "simple methods to your ``Manager``, it is unlikely that you will "
@@ -627,176 +676,180 @@ msgstr ""
 "контролирует состояние объекта, вы должны убедиться что объект можно "
 "скопировать."
 
+# bed45920458446329f7eec9461583868
+#~ msgid ""
+#~ "Class inheritance and model managers aren't quite a perfect match for "
+#~ "each other. Managers are often specific to the classes they are defined "
+#~ "on and inheriting them in subclasses isn't necessarily a good idea. Also, "
+#~ "because the first manager declared is the *default manager*, it is "
+#~ "important to allow that to be controlled. So here's how Django handles "
+#~ "custom managers and :ref:`model inheritance <model-inheritance>`:"
+#~ msgstr ""
+#~ "Наследование моделей и менеджеры взаимодействуют не совсем просто. Обычно "
+#~ "менеджеры предназначены для работы с моделью, к которой принадлежат, "
+#~ "поэтому наследовать их в дочерних моделях - не всегда хорошая идея. К "
+#~ "тому же первый менеджер в модели будет *менеджером по умолчанию*, и очень "
+#~ "важно, чтобы это так и работало. Вот как Django решает эти проблемы при :"
+#~ "ref:`наследовании моделей <model-inheritance>`:"
+
+# 048894b8e7ba48c0b87b68cd7ecaaa8f
+#~ msgid ""
+#~ "Managers defined on non-abstract base classes are *not* inherited by "
+#~ "child classes. If you want to reuse a manager from a non-abstract base, "
+#~ "redeclare it explicitly on the child class. These sorts of managers are "
+#~ "likely to be fairly specific to the class they are defined on, so "
+#~ "inheriting them can often lead to unexpected results (particularly as far "
+#~ "as the default manager goes). Therefore, they aren't passed onto child "
+#~ "classes."
+#~ msgstr ""
+#~ "Менеджеры из не абстрактной базовой модели *не* наследуются дочерними. "
+#~ "Если вы хотите унаследовать менеджер из не абстрактной родительской "
+#~ "модели, добавьте его в дочернюю модель. Такие менеджеры обычно тесно "
+#~ "связаны с моделью, поэтому их наследование может привести к проблемам (по "
+#~ "крайней мере менеджер по умолчанию). Таким образом, они не передаются на "
+#~ "дочерние классы."
+
+# c9cba1e2b12d41f5aec01df6056f8f07
+#~ msgid ""
+#~ "The default manager on a class is either the first manager declared on "
+#~ "the class, if that exists, or the default manager of the first abstract "
+#~ "base class in the parent hierarchy, if that exists. If no default manager "
+#~ "is explicitly declared, Django's normal default manager is used."
+#~ msgstr ""
+#~ "Менеджером по умолчанию становится первый менеджер, определенный в "
+#~ "модели. Если он отсутствует, используется менеджер по умолчанию первого "
+#~ "абстрактного класса среди родительских моделей, если он существует. Если "
+#~ "таким образом не удалось определить менеджер по умолчанию, используется "
+#~ "стандартный менеджер Django."
+
 # 35f77fec45744528b21cad7e6ddf8002
-#: ../../topics/db/managers.txt:442
-msgid "Controlling automatic Manager types"
-msgstr "Тип автоматически создаваемого менеджера"
+#~ msgid "Controlling automatic Manager types"
+#~ msgstr "Тип автоматически создаваемого менеджера"
 
 # 67be4a6f3ed9419ca311ab1922ac0e05
-#: ../../topics/db/managers.txt:444
-msgid ""
-"This document has already mentioned a couple of places where Django creates "
-"a manager class for you: `default managers`_ and the \"plain\" manager used "
-"to `access related objects`_. There are other places in the implementation "
-"of Django where temporary plain managers are needed. Those automatically "
-"created managers will normally be instances of the :class:`django.db.models."
-"Manager` class."
-msgstr ""
-"Этот раздел уже упоминался несколько раз там, где говорилось, что Django "
-"создает менеджер для тебя: `default managers`_ и \"стандартный\" менеджер, "
-"используемые для `access related objects`_.  Есть и другие ситуация, когда "
-"Django создает временные менеджеры. Обычно, это экземпляры класса :class:"
-"`django.db.models.Manager`."
+#~ msgid ""
+#~ "This document has already mentioned a couple of places where Django "
+#~ "creates a manager class for you: `default managers`_ and the \"plain\" "
+#~ "manager used to `access related objects`_. There are other places in the "
+#~ "implementation of Django where temporary plain managers are needed. Those "
+#~ "automatically created managers will normally be instances of the :class:"
+#~ "`django.db.models.Manager` class."
+#~ msgstr ""
+#~ "Этот раздел уже упоминался несколько раз там, где говорилось, что Django "
+#~ "создает менеджер для тебя: `default managers`_ и \"стандартный\" "
+#~ "менеджер, используемые для `access related objects`_.  Есть и другие "
+#~ "ситуация, когда Django создает временные менеджеры. Обычно, это "
+#~ "экземпляры класса :class:`django.db.models.Manager`."
 
 # 03ed13cb362043568f2572baeb6f9f84
-#: ../../topics/db/managers.txt:454
-msgid ""
-"Throughout this section, we will use the term \"automatic manager\" to mean "
-"a manager that Django creates for you -- either as a default manager on a "
-"model with no managers, or to use temporarily when accessing related objects."
-msgstr ""
-"В этом разделе мы будем использовать термин \"автоматически созданный "
-"менеджер\" подразумевая менеджер, который Django создает для вас  -- будь то "
-"менеджер по умолчанию для модели без определенных менеджеров, или временный "
-"менеджер для доступа к связанным объектам."
+#~ msgid ""
+#~ "Throughout this section, we will use the term \"automatic manager\" to "
+#~ "mean a manager that Django creates for you -- either as a default manager "
+#~ "on a model with no managers, or to use temporarily when accessing related "
+#~ "objects."
+#~ msgstr ""
+#~ "В этом разделе мы будем использовать термин \"автоматически созданный "
+#~ "менеджер\" подразумевая менеджер, который Django создает для вас  -- будь "
+#~ "то менеджер по умолчанию для модели без определенных менеджеров, или "
+#~ "временный менеджер для доступа к связанным объектам."
 
-#: ../../topics/db/managers.txt:458
-msgid ""
-"Sometimes this default class won't be the right choice. The default manager "
-"may not have all the methods you need to work with your data. A custom "
-"manager class of your own will allow you to create custom ``QuerySet`` "
-"objects to give you the information you need."
-msgstr ""
-"В некоторых случаях класс по умолчанию может вам не подходить, и не "
-"содержать всех необходимых методов для работы с вашими данными. Класс "
-"собственного менеджера позволит вам создать свой ``QuerySet``, который "
-"предоставляет необходимую вам информацию."
+#~ msgid ""
+#~ "Sometimes this default class won't be the right choice. The default "
+#~ "manager may not have all the methods you need to work with your data. A "
+#~ "custom manager class of your own will allow you to create custom "
+#~ "``QuerySet`` objects to give you the information you need."
+#~ msgstr ""
+#~ "В некоторых случаях класс по умолчанию может вам не подходить, и не "
+#~ "содержать всех необходимых методов для работы с вашими данными. Класс "
+#~ "собственного менеджера позволит вам создать свой ``QuerySet``, который "
+#~ "предоставляет необходимую вам информацию."
 
 # 7546beb312184e7d973a94263ce477d5
-#: ../../topics/db/managers.txt:463
-msgid ""
-"Django provides a way for custom manager developers to say that their "
-"manager class should be used for automatic managers whenever it is the "
-"default manager on a model. This is done by setting the "
-"``use_for_related_fields`` attribute on the manager class::"
-msgstr ""
-"Django позволяет указать, что созданный вам менеджер должен использоваться "
-"как \"автоматически созданный менеджер\", каждый раз когда он добавлен в "
-"модель как менеджер по умолчанию. Это можно сделать, используя атрибут "
-"``use_for_related_fields``::"
+#~ msgid ""
+#~ "Django provides a way for custom manager developers to say that their "
+#~ "manager class should be used for automatic managers whenever it is the "
+#~ "default manager on a model. This is done by setting the "
+#~ "``use_for_related_fields`` attribute on the manager class::"
+#~ msgstr ""
+#~ "Django позволяет указать, что созданный вам менеджер должен "
+#~ "использоваться как \"автоматически созданный менеджер\", каждый раз когда "
+#~ "он добавлен в модель как менеджер по умолчанию. Это можно сделать, "
+#~ "используя атрибут ``use_for_related_fields``::"
 
 # 7b38bf56190a4b59a93b19cf80e01d39
-#: ../../topics/db/managers.txt:472
-msgid ""
-"If this attribute is set on the *default* manager for a model (only the "
-"default manager is considered in these situations), Django will use that "
-"class whenever it needs to automatically create a manager for the class.  "
-"Otherwise, it will use :class:`django.db.models.Manager`."
-msgstr ""
-"Если этот атрибут используется для менеджера *по умолчанию* (это работает "
-"только для менеджера по умолчанию), Django будет использовать его каждый раз "
-"при автоматическом создании менеджера, иначе будет использован :class:"
-"`django.db.models.Manager`."
+#~ msgid ""
+#~ "If this attribute is set on the *default* manager for a model (only the "
+#~ "default manager is considered in these situations), Django will use that "
+#~ "class whenever it needs to automatically create a manager for the class.  "
+#~ "Otherwise, it will use :class:`django.db.models.Manager`."
+#~ msgstr ""
+#~ "Если этот атрибут используется для менеджера *по умолчанию* (это работает "
+#~ "только для менеджера по умолчанию), Django будет использовать его каждый "
+#~ "раз при автоматическом создании менеджера, иначе будет использован :class:"
+#~ "`django.db.models.Manager`."
 
 # b19ba8e8a1664648b054acba19515c8a
-#: ../../topics/db/managers.txt:0
-msgid "Historical Note"
-msgstr "Историческая справка"
+#~ msgid "Historical Note"
+#~ msgstr "Историческая справка"
 
 # b120df99300441f3a13a836b55d762c8
-#: ../../topics/db/managers.txt:479
-msgid ""
-"Given the purpose for which it's used, the name of this attribute "
-"(``use_for_related_fields``) might seem a little odd. Originally, the "
-"attribute only controlled the type of manager used for related field access, "
-"which is where the name came from. As it became clear the concept was more "
-"broadly useful, the name hasn't been changed. This is primarily so that "
-"existing code will :doc:`continue to work </misc/api-stability>` in future "
-"Django versions."
-msgstr ""
-"С учетом целей, для которых он используется, имя этого атрибута "
-"(``use_for_related_fields``) может звучать немного странно. Изначально этот "
-"атрибут использовался для определения менеджера для доступа к связанным "
-"объектам, вот откуда это название. В то время, когда стало понятно на "
-"сколько это широко можно использовать эту концепцию, имя не изменилось. Это "
-"было сделано, чтобы существующий код :doc:`продолжал работать </misc/api-"
-"stability>` в следующих версиях Django."
+#~ msgid ""
+#~ "Given the purpose for which it's used, the name of this attribute "
+#~ "(``use_for_related_fields``) might seem a little odd. Originally, the "
+#~ "attribute only controlled the type of manager used for related field "
+#~ "access, which is where the name came from. As it became clear the concept "
+#~ "was more broadly useful, the name hasn't been changed. This is primarily "
+#~ "so that existing code will :doc:`continue to work </misc/api-stability>` "
+#~ "in future Django versions."
+#~ msgstr ""
+#~ "С учетом целей, для которых он используется, имя этого атрибута "
+#~ "(``use_for_related_fields``) может звучать немного странно. Изначально "
+#~ "этот атрибут использовался для определения менеджера для доступа к "
+#~ "связанным объектам, вот откуда это название. В то время, когда стало "
+#~ "понятно на сколько это широко можно использовать эту концепцию, имя не "
+#~ "изменилось. Это было сделано, чтобы существующий код :doc:`продолжал "
+#~ "работать </misc/api-stability>` в следующих версиях Django."
 
 # 856be24e84aa47aabe7f65cd2c2b9315
-#: ../../topics/db/managers.txt:488
-msgid "Writing correct Managers for use in automatic Manager instances"
-msgstr "Каким должен быть класс автоматически создаваемого менеджера"
+#~ msgid "Writing correct Managers for use in automatic Manager instances"
+#~ msgstr "Каким должен быть класс автоматически создаваемого менеджера"
 
 # 09808f0f6b504919930aa73ba28b5b72
-#: ../../topics/db/managers.txt:490
-msgid ""
-"The ``use_for_related_fields`` feature is primarily for managers that need "
-"to return a custom ``QuerySet`` subclass. In providing this functionality in "
-"your manager, there are a couple of things to remember."
-msgstr ""
-"``use_for_related_fields`` используется для возвращения специального "
-"подкласса ``QuerySet``. Реализуя подобный функционал, необходимо помнить о "
-"нескольких правилах."
-
-# b7a8e8663841420d87034926a3774a87
-#: ../../topics/db/managers.txt:495
-msgid "Do not filter away any results in this type of manager subclass"
-msgstr "Не фильтруйте результаты запроса"
-
-# 3f856d857cf141bd80a168a0047a78be
-#: ../../topics/db/managers.txt:497
-msgid ""
-"One reason an automatic manager is used is to access objects that are "
-"related to from some other model. In those situations, Django has to be able "
-"to see all the objects for the model it is fetching, so that *anything* "
-"which is referred to can be retrieved."
-msgstr ""
-"Одно из назначений автоматически создаваемого менеджера - доступ к связанным "
-"объектам. В этом случае Django должен иметь возможность получить *все* "
-"связанные объекты."
-
-# b5730aa46e4242f2b7e48819889e0000
-#: ../../topics/db/managers.txt:502
-msgid ""
-"If you override the ``get_queryset()`` method and filter out any rows, "
-"Django will return incorrect results. Don't do that. A manager that filters "
-"results in ``get_queryset()`` is not appropriate for use as an automatic "
-"manager."
-msgstr ""
-"Если вы переопределите метод ``get_queryset()`` и отфильтруете часть "
-"результата, Django вернет неверный результат. Не делайте этого. Менеджер, "
-"который фильтрует результат запроса в ``get_queryset()``, не подходит на "
-"роль автоматически создаваемого менеджера."
+#~ msgid ""
+#~ "The ``use_for_related_fields`` feature is primarily for managers that "
+#~ "need to return a custom ``QuerySet`` subclass. In providing this "
+#~ "functionality in your manager, there are a couple of things to remember."
+#~ msgstr ""
+#~ "``use_for_related_fields`` используется для возвращения специального "
+#~ "подкласса ``QuerySet``. Реализуя подобный функционал, необходимо помнить "
+#~ "о нескольких правилах."
 
 # 7db1d09d1bc04699aba6bf65670aa0aa
-#: ../../topics/db/managers.txt:507
-msgid "Set ``use_for_related_fields`` when you define the class"
-msgstr "Добавляйте ``use_for_related_fields`` при определении класса"
+#~ msgid "Set ``use_for_related_fields`` when you define the class"
+#~ msgstr "Добавляйте ``use_for_related_fields`` при определении класса"
 
 # c3015c48723d49479915f56c2bcf33f3
-#: ../../topics/db/managers.txt:509
-msgid ""
-"The ``use_for_related_fields`` attribute must be set on the manager *class*, "
-"not on an *instance* of the class. The earlier example shows the correct way "
-"to set it, whereas the following will not work::"
-msgstr ""
-"Атрибут ``use_for_related_fields`` должен быть добавлен в *класс* менеджера, "
-"не в *экземпляр* класса. Пример выше показывает верный вариант, в то время "
-"как этот не будет работать::"
+#~ msgid ""
+#~ "The ``use_for_related_fields`` attribute must be set on the manager "
+#~ "*class*, not on an *instance* of the class. The earlier example shows the "
+#~ "correct way to set it, whereas the following will not work::"
+#~ msgstr ""
+#~ "Атрибут ``use_for_related_fields`` должен быть добавлен в *класс* "
+#~ "менеджера, не в *экземпляр* класса. Пример выше показывает верный "
+#~ "вариант, в то время как этот не будет работать::"
 
 # 217bc644c3894cf09b20027f2547e4e6
-#: ../../topics/db/managers.txt:529
-msgid ""
-"You also shouldn't change the attribute on the class object after it has "
-"been used in a model, since the attribute's value is processed when the "
-"model class is created and not subsequently reread. Set the attribute on the "
-"manager class when it is first defined, as in the initial example of this "
-"section and everything will work smoothly."
-msgstr ""
-"Вы также не должны изменять атрибут экземпляра класса менеджера, т.к. "
-"значение атрибута класса обрабатывается в момент объявления класса и в "
-"дальнейшем не переопределяется. Устанавливайте атрибут в классе менеджера "
-"при его объявлении, как в примере выше, и все будет работать правильно."
+#~ msgid ""
+#~ "You also shouldn't change the attribute on the class object after it has "
+#~ "been used in a model, since the attribute's value is processed when the "
+#~ "model class is created and not subsequently reread. Set the attribute on "
+#~ "the manager class when it is first defined, as in the initial example of "
+#~ "this section and everything will work smoothly."
+#~ msgstr ""
+#~ "Вы также не должны изменять атрибут экземпляра класса менеджера, т.к. "
+#~ "значение атрибута класса обрабатывается в момент объявления класса и в "
+#~ "дальнейшем не переопределяется. Устанавливайте атрибут в классе менеджера "
+#~ "при его объявлении, как в примере выше, и все будет работать правильно."
 
 # b8cd5397754b418f8b6d06fd129cdf08
 #~ msgid ""
