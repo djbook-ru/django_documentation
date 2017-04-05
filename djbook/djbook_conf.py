@@ -14,7 +14,8 @@ commit = repo.commit()
 html_context = {
     'git_commit': str(commit),
     'git_commit_date': datetime.fromtimestamp(commit.committed_date),
-    'git_branch': str(repo.active_branch)
+    'git_branch': str(repo.active_branch),
+    'prev_version': '1.10'
 }
 
 html_theme_path = ["_theme", "djbook/_theme"]

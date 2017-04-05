@@ -379,8 +379,6 @@ Use the ``django.test.Client`` class to make requests.
 
     .. method:: Client.force_login(user, backend=None)
 
-        .. versionadded:: 1.9
-
         If your site uses Django's :doc:`authentication
         system</topics/auth/index>`, you can use the ``force_login()`` method
         to simulate the effect of a user logging into the site. Use this method
@@ -460,8 +458,6 @@ Specifically, a ``Response`` object has the following attributes:
             may be a suitable alternative on responses with that attribute.
 
     .. method:: json(**kwargs)
-
-        .. versionadded:: 1.9
 
         The body of the response, parsed as JSON. Extra keyword arguments are
         passed to :func:`json.loads`. For example::
@@ -696,8 +692,6 @@ If your tests make any database queries, use subclasses
 
 .. attribute:: SimpleTestCase.allow_database_queries
 
-    .. versionadded:: 1.9
-
     :class:`~SimpleTestCase` disallows database queries by default. This
     helps to avoid executing write queries which will affect other tests
     since each ``SimpleTestCase`` test isn't run in a transaction. If you
@@ -858,50 +852,16 @@ This allows the use of automated test clients other than the
 client, to execute a series of functional tests inside a browser and simulate a
 real user's actions.
 
-By default the live server listens on ``localhost`` and picks the first
-available port in the ``8081-8179`` range. Its full URL can be accessed with
+The live server listens on ``localhost`` and binds to port 0 which uses a free
+port assigned by the operating system. The server's URL can be accessed with
 ``self.live_server_url`` during the tests.
 
-.. versionchanged:: 1.9
+.. versionchanged:: 1.11
 
-    In earlier versions, the live server's default address was always
-    ``'localhost:8081'``.
-
-If you'd like to select another address, you may pass a different one using the
-:option:`test --liveserver` option, for example:
-
-.. code-block:: console
-
-    $ ./manage.py test --liveserver=localhost:8082
-
-.. versionchanged:: 1.9
-
-    In older versions ``live_server_url`` could only be accessed from an
-    instance. It now is a class property and can be accessed from class methods
-    like ``setUpClass()``.
-
-Another way of changing the default server address is by setting the
-`DJANGO_LIVE_TEST_SERVER_ADDRESS` environment variable somewhere in your
-code (for example, in a :ref:`custom test runner<topics-testing-test_runner>`)::
-
-    import os
-    os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = 'localhost:8082'
-
-In the case where the tests are run by multiple processes in parallel (for
-example, in the context of several simultaneous `continuous integration`_
-builds), the processes will compete for the same address, and therefore your
-tests might randomly fail with an "Address already in use" error. To avoid this
-problem, you can pass a comma-separated list of ports or ranges of ports (at
-least as many as the number of potential parallel processes). For example:
-
-.. code-block:: console
-
-    $ ./manage.py test --liveserver=localhost:8082,8090-8100,9000-9200,7041
-
-Then, during test execution, each new live test server will try every specified
-port until it finds one that is free and takes it.
-
-.. _continuous integration: https://en.wikipedia.org/wiki/Continuous_integration
+    In older versions, Django tried a predefined port range which could be
+    customized in various ways including the ``DJANGO_LIVE_TEST_SERVER_ADDRESS``
+    environment variable. This is removed in favor of the simpler "bind to port
+    0" technique.
 
 To demonstrate how to use ``LiveServerTestCase``, let's write a simple Selenium
 test. First of all, you need to install the `selenium package`_ into your
@@ -1168,7 +1128,7 @@ This test case will flush *all* the test databases before running
 ``test_index_page_view``.
 
 The ``multi_db`` flag also affects into which databases the
-attr:`TransactionTestCase.fixtures` are loaded. By default (when
+:attr:`TransactionTestCase.fixtures` are loaded. By default (when
 ``multi_db=False``), fixtures are only loaded into the ``default`` database.
 If ``multi_db=True``, fixtures are loaded into all databases.
 
@@ -1511,7 +1471,7 @@ your test suite.
     point of the redirect chain.
 
     If ``fetch_redirect_response`` is ``False``, the final page won't be
-    loaded. Since the test client can't fetch externals URLs, this is
+    loaded. Since the test client can't fetch external URLs, this is
     particularly useful if ``expected_url`` isn't part of your Django app.
 
     Scheme is handled correctly when making comparisons between two URLs. If

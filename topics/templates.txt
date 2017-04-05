@@ -36,6 +36,13 @@ For historical reasons, both the generic support for template engines and the
 implementation of the Django template language live in the ``django.template``
 namespace.
 
+.. warning::
+
+    The template system isn't safe against untrusted template authors. For
+    example, a site shouldn't allow its users to provide their own templates,
+    since template authors can do things like perform XSS attacks and access
+    properties of template variables that may contain sensitive information.
+
 .. _template-engines:
 
 Support for template engines
@@ -141,10 +148,6 @@ If loading a template fails, the following two exceptions, defined in
         exceptions raised when trying to load a template. This is used by
         functions, such as :func:`~django.template.loader.get_template`, that
         try to load a given template from multiple engines.
-
-    .. versionadded:: 1.9
-
-        The ``backend``, ``tried``, and ``chain`` arguments were added.
 
 .. exception:: TemplateSyntaxError(msg)
 
@@ -255,6 +258,10 @@ templates, Django provides a shortcut function which automates the process.
     ``request``
         An optional :class:`~django.http.HttpRequest` that will be available
         during the template's rendering process.
+
+    ``using``
+        An optional template engine :setting:`NAME <TEMPLATES-NAME>`. The
+        search for the template will be restricted to that engine.
 
     Usage example::
 
@@ -374,10 +381,6 @@ applications. This generic name was kept for backwards-compatibility.
   Tags and filters from built-in libraries can be used without first calling
   the :ttag:`{% load %} <load>` tag.
 
-.. versionadded:: 1.9
-
-    The ``libraries`` and ``builtins`` arguments were added.
-
 .. module:: django.template.backends.jinja2
 
 .. class:: Jinja2
@@ -406,13 +409,53 @@ adds defaults that differ from Jinja2's for a few options:
 * ``'auto_reload'``: ``settings.DEBUG``
 * ``'undefined'``: ``DebugUndefined if settings.DEBUG else Undefined``
 
+``Jinja2`` engines also accept the following :setting:`OPTIONS
+<TEMPLATES-OPTIONS>`:
+
+* ``'context_processors'``: a list of dotted Python paths to callables that
+  are used to populate the context when a template is rendered with a request.
+  These callables take a request object as their argument and return a
+  :class:`dict` of items to be merged into the context.
+
+  It defaults to an empty list.
+
+  .. admonition:: Using context processors with Jinja2 templates is discouraged.
+
+    Context processors are useful with Django templates because Django templates
+    don't support calling functions with arguments. Since Jinja2 doesn't have
+    that limitation, it's recommended to put the function that you would use as a
+    context processor in the global variables available to the template using
+    ``jinja2.Environment`` as described below. You can then call that function in
+    the template:
+
+    .. code-block:: jinja
+
+      {{ function(request) }}
+
+    Some Django templates context processors return a fixed value. For Jinja2
+    templates, this layer of indirection isn't necessary since you can add
+    constants directly in ``jinja2.Environment``.
+
+    The original use case for adding context processors for Jinja2 involved:
+
+    * Making an expensive computation that depends on the request.
+    * Needing the result in every template.
+    * Using the result multiple times in each template.
+
+    Unless all of these conditions are met, passing a function to the template is
+    simpler and more in line with the design of Jinja2.
+
+.. versionadded:: 1.11
+
+    The ``'context_processors'`` option was added.
+
 The default configuration is purposefully kept to a minimum. If a template is
 rendered with a request (e.g. when using :py:func:`~django.shortcuts.render`),
 the ``Jinja2`` backend adds the globals ``request``, ``csrf_input``, and
 ``csrf_token`` to the context. Apart from that, this backend doesn't create a
-Django-flavored environment. It doesn't know about Django context processors,
-filters, and tags. In order to use Django-specific APIs, you must configure
-them into the environment.
+Django-flavored environment. It doesn't know about Django filters and tags.
+In order to use Django-specific APIs, you must configure them into the
+environment.
 
 For example, you can create ``myproject/jinja2.py`` with this content::
 
@@ -514,10 +557,6 @@ See `DEP 182`_ for more information.
 
 Debug integration for custom engines
 ------------------------------------
-
-.. versionadded:: 1.9
-
-    Debug page integration for non-Django template engines was added.
 
 The Django debug page has hooks to provide detailed information when a template
 error arises. Custom template engines can use these hooks to enhance the

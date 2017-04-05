@@ -213,9 +213,18 @@ subclass::
 
         date_hierarchy = 'pub_date'
 
+    You can also specify a field on a related model using the ``__`` lookup,
+    for example::
+
+        date_hierarchy = 'author__pub_date'
+
     This will intelligently populate itself based on available data,
     e.g. if all the dates are in one month, it'll show the day-level
     drill-down only.
+
+    .. versionchanged:: 1.11
+
+        The ability to reference fields on related models was added.
 
     .. note::
 
@@ -225,8 +234,6 @@ subclass::
         enabled (:setting:`USE_TZ = True <USE_TZ>`).
 
 .. attribute:: ModelAdmin.empty_value_display
-
-    .. versionadded:: 1.9
 
     This attribute overrides the default display value for record's fields that
     are empty (``None``, empty string, etc.). The default value is ``-`` (a
@@ -634,6 +641,10 @@ subclass::
           :func:`~django.utils.html.format_html_join`, or
           :func:`~django.utils.safestring.mark_safe` instead.
 
+    * As some examples have already demonstrated, when using a callable, a
+      model method, or a ``ModelAdmin`` method, you can customize the column's
+      title by adding a ``short_description`` attribute to the callable.
+
     * If the value of a field is ``None``, an empty string, or an iterable
       without elements, Django will display ``-`` (a dash). You can override
       this with :attr:`AdminSite.empty_value_display`::
@@ -656,10 +667,6 @@ subclass::
                    return obj.birth_date
 
               birth_date_view.empty_value_display = 'unknown'
-
-      .. versionadded:: 1.9
-
-          The ability to customize ``empty_value_display`` was added.
 
     * If the string given is a method of the model, ``ModelAdmin`` or a
       callable that returns True or False Django will display a pretty
@@ -974,7 +981,7 @@ subclass::
         class FilterWithCustomTemplate(admin.SimpleListFilter):
             template = "custom_template.html"
 
-    See the default template provided by django (``admin/filter.html``) for
+    See the default template provided by Django (``admin/filter.html``) for
     a concrete example.
 
 .. attribute:: ModelAdmin.list_max_show_all
@@ -1052,7 +1059,7 @@ subclass::
     slug (e.g. substituting dashes for spaces).
 
     ``prepopulated_fields`` doesn't accept ``DateTimeField``, ``ForeignKey``,
-    nor ``ManyToManyField`` fields.
+    ``OneToOneField``, and ``ManyToManyField`` fields.
 
 .. attribute:: ModelAdmin.preserve_filters
 
@@ -1315,6 +1322,12 @@ templates used by the :class:`ModelAdmin` views:
 
     Path to a custom template, used by :meth:`history_view`.
 
+.. attribute:: ModelAdmin.popup_response_template
+
+    .. versionadded:: 1.11
+
+    Path to a custom template, used by :meth:`response_add`,
+    :meth:`response_change`, and :meth:`response_delete`.
 
 .. _model-admin-methods:
 
@@ -1323,15 +1336,18 @@ templates used by the :class:`ModelAdmin` views:
 
 .. warning::
 
-    :meth:`ModelAdmin.save_model` and :meth:`ModelAdmin.delete_model` must
-    save/delete the object, they are not for veto purposes, rather they allow
-    you to perform extra operations.
+    When overriding :meth:`ModelAdmin.save_model` and
+    :meth:`ModelAdmin.delete_model`, your code must save/delete the
+    object. They aren't meant for veto purposes, rather they allow you to
+    perform extra operations.
 
 .. method:: ModelAdmin.save_model(request, obj, form, change)
 
     The ``save_model`` method is given the ``HttpRequest``, a model instance,
-    a ``ModelForm`` instance and a boolean value based on whether it is adding
-    or changing the object. Here you can do any pre- or post-save operations.
+    a ``ModelForm`` instance, and a boolean value based on whether it is adding
+    or changing the object. Overriding this method allows doing pre- or
+    post-save operations. Call ``super().save_model()`` to save the object
+    using :meth:`.Model.save`.
 
     For example to attach ``request.user`` to the object prior to saving::
 
@@ -1340,12 +1356,14 @@ templates used by the :class:`ModelAdmin` views:
         class ArticleAdmin(admin.ModelAdmin):
             def save_model(self, request, obj, form, change):
                 obj.user = request.user
-                obj.save()
+                super(ArticleAdmin, self).save_model(request, obj, form, change)
 
 .. method:: ModelAdmin.delete_model(request, obj)
 
     The ``delete_model`` method is given the ``HttpRequest`` and a model
-    instance. Use this method to do pre- or post-delete operations.
+    instance. Overriding this method allows doing pre- or post-delete
+    operations. Call ``super().delete_model()`` to delete the object using
+    :meth:`.Model.delete`.
 
 .. method:: ModelAdmin.save_formset(request, form, formset, change)
 
@@ -1456,6 +1474,14 @@ templates used by the :class:`ModelAdmin` views:
     names on the changelist that will be linked to the change view, as described
     in the :attr:`ModelAdmin.list_display_links` section.
 
+.. method:: ModelAdmin.get_exclude(request, obj=None)
+
+    .. versionadded:: 1.11
+
+    The ``get_exclude`` method is given the ``HttpRequest`` and the ``obj``
+    being edited (or ``None`` on an add form) and is expected to return a list
+    of fields, as described in :attr:`ModelAdmin.exclude`.
+
 .. method:: ModelAdmin.get_fields(request, obj=None)
 
     The ``get_fields`` method is given the ``HttpRequest`` and the ``obj``
@@ -1476,8 +1502,6 @@ templates used by the :class:`ModelAdmin` views:
     :attr:`~ModelAdmin.list_filter` attribute.
 
 .. method:: ModelAdmin.get_list_select_related(request)
-
-    .. versionadded:: 1.9
 
     The ``get_list_select_related`` method is given the ``HttpRequest`` and
     should return a boolean or list as :attr:`ModelAdmin.list_select_related`
@@ -1587,8 +1611,6 @@ templates used by the :class:`ModelAdmin` views:
     ``AdminSite.admin_view()``::
 
         url(r'^my_view/$', self.admin_site.admin_view(self.my_view, cacheable=True))
-
-    .. versionadded:: 1.9
 
     ``ModelAdmin`` views have ``model_admin`` attributes. Other
     ``AdminSite`` views have ``admin_site`` attributes.
@@ -1936,12 +1958,6 @@ To avoid conflicts with user-supplied scripts or libraries, Django's jQuery
 in your own admin JavaScript without including a second copy, you can use the
 ``django.jQuery`` object on changelist and add/edit views.
 
-.. versionchanged:: 1.9
-
-    The embedded jQuery was upgraded from 1.11.2 to 2.1.4. This drops
-    support for Internet Explorer 8 and below. You can restore support by
-    :ref:`including your own version of jQuery 1.X <admin-browser-support-19>`.
-
 .. versionchanged:: 1.10
 
     The embedded jQuery was upgraded from 2.1.4 to 2.2.3.
@@ -2211,7 +2227,7 @@ The ``InlineModelAdmin`` class adds:
 
             def get_max_num(self, request, obj=None, **kwargs):
                 max_num = 10
-                if obj.parent:
+                if obj and obj.parent:
                     return max_num - 5
                 return max_num
 
@@ -2510,6 +2526,11 @@ app or per model. The following can:
 * ``change_list.html``
 * ``delete_confirmation.html``
 * ``object_history.html``
+* ``popup_response.html``
+
+.. versionchanged:: 1.11
+
+    The ability to override the ``popup_response.html`` template was added.
 
 For those templates that cannot be overridden in this way, you may still
 override them for your entire project. Just place the new version in your
@@ -2596,8 +2617,6 @@ Templates can override or extend base admin templates as described in
 
 .. attribute:: AdminSite.empty_value_display
 
-    .. versionadded:: 1.9
-
     The string to use for displaying empty values in the admin site's change
     list. Defaults to a dash. The value can also be overridden on a per
     ``ModelAdmin`` basis and on a custom field within a ``ModelAdmin`` by
@@ -2659,10 +2678,6 @@ Templates can override or extend base admin templates as described in
       * ``admin_url``: admin changelist URL for the model
       * ``add_url``: admin URL to add a new model instance
 
-    .. versionchanged:: 1.9
-
-        The ``available_apps`` variable was added.
-
 .. method:: AdminSite.has_permission(request)
 
     Returns ``True`` if the user for the given ``HttpRequest`` has permission
@@ -2701,11 +2716,6 @@ In this example, we register the default ``AdminSite`` instance
     urlpatterns = [
         url(r'^admin/', admin.site.urls),
     ]
-
-.. versionchanged:: 1.9
-
-    In previous versions, you would pass ``admin.site.urls`` to
-    :func:`~django.conf.urls.include()`.
 
 .. _customizing-adminsite:
 
@@ -2798,18 +2808,34 @@ a pattern for your new view.
 
 .. _auth_password_reset:
 
-Adding a password-reset feature
+Adding a password reset feature
 -------------------------------
 
-You can add a password-reset feature to the admin site by adding a few lines to
+You can add a password reset feature to the admin site by adding a few lines to
 your URLconf. Specifically, add these four patterns::
 
     from django.contrib.auth import views as auth_views
 
-    url(r'^admin/password_reset/$', auth_views.password_reset, name='admin_password_reset'),
-    url(r'^admin/password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),
-    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', auth_views.password_reset_confirm, name='password_reset_confirm'),
-    url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
+    url(
+        r'^admin/password_reset/$',
+        auth_views.PasswordResetView.as_view(),
+        name='admin_password_reset',
+    ),
+    url(
+        r'^admin/password_reset/done/$',
+        auth_views.PasswordResetDoneView.as_view(),
+        name='password_reset_done',
+    ),
+    url(
+        r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
+        auth_views.PasswordResetConfirmView.as_view(),
+        name='password_reset_confirm',
+    ),
+    url(
+        r'^reset/done/$',
+        auth_views.PasswordResetCompleteView.as_view(),
+        name='password_reset_complete',
+    ),
 
 (This assumes you've added the admin at ``admin/`` and requires that you put
 the URLs starting with ``^admin/`` before the line that includes the admin app

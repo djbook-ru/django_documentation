@@ -103,7 +103,15 @@ what's passed by :class:`~django.template.backends.django.DjangoTemplates`.
       * ``'django.template.loaders.app_directories.Loader'`` if and only if
         ``app_dirs`` is ``True``.
 
+      If ``debug`` is ``False``, these loaders are wrapped in
+      :class:`django.template.loaders.cached.Loader`.
+
       See :ref:`template-loaders` for details.
+
+      .. versionchanged:: 1.11
+
+          Enabling of the cached template loader when ``debug`` is ``False``
+          was added.
 
     * ``string_if_invalid`` is the output, as a string, that the template
       system should use for invalid (e.g. misspelled) variables.
@@ -140,10 +148,6 @@ what's passed by :class:`~django.template.backends.django.DjangoTemplates`.
       Tags and filters from built-in libraries can be used without first calling
       the :ttag:`{% load %}<load>` tag.
 
-.. versionadded:: 1.9
-
-    The ``libraries`` and ``builtins`` arguments were added.
-
 .. staticmethod:: Engine.get_default()
 
     When a Django project configures one and only one
@@ -163,7 +167,7 @@ what's passed by :class:`~django.template.backends.django.DjangoTemplates`.
     Loads a template with the given name, compiles it and returns a
     :class:`Template` object.
 
-.. method:: Engine.select_template(self, template_name_list)
+.. method:: Engine.select_template(template_name_list)
 
     Like :meth:`~Engine.get_template`, except it takes a list of names
     and returns the first template that was found.
@@ -449,8 +453,6 @@ dictionary syntax::
 
 .. method:: Context.setdefault(key, default=None)
 
-    .. versionadded:: 1.9
-
     If ``key`` is in the context, returns its value. Otherwise inserts ``key``
     with a value of ``default`` and returns ``default``.
 
@@ -532,10 +534,6 @@ matching ``pop()`` is called.
     'second level'
     >>> c['foo']
     'first level'
-
-.. versionadded:: 1.9
-
-    The ability to use ``update()`` as a context manager was added.
 
 Using a ``Context`` as a stack comes in handy in :ref:`some custom template
 tags <howto-writing-custom-template-tags>`.
@@ -849,6 +847,26 @@ loaders that come with Django:
             'DIRS': [os.path.join(BASE_DIR, 'templates')],
         }]
 
+    You can also override ``'DIRS'`` and specify specific directories for a
+    particular filesystem loader::
+
+        TEMPLATES = [{
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'OPTIONS': {
+                'loaders': [
+                    (
+                        'django.template.loaders.filesystem.Loader',
+                        [os.path.join(BASE_DIR, 'templates')],
+                    ),
+                ],
+            },
+        }]
+
+    .. versionchanged:: 1.11
+
+        The ability to specify directories for a particular filesystem loader
+        was added.
+
 ``django.template.loaders.app_directories.Loader``
 
 .. class:: app_directories.Loader
@@ -909,18 +927,22 @@ loaders that come with Django:
 
 .. class:: cached.Loader
 
-    By default, the templating system will read and compile your templates every
-    time they need to be rendered. While the Django templating system is quite
-    fast, the overhead from reading and compiling templates can add up.
+    By default (when :setting:`DEBUG` is ``True``), the template system reads
+    and compiles your templates every time they're rendered. While the Django
+    template system is quite fast, the overhead from reading and compiling
+    templates can add up.
 
-    The cached template loader is a class-based loader that you configure with
-    a list of other loaders that it should wrap. The wrapped loaders are used to
-    locate unknown templates when they are first encountered. The cached loader
-    then stores the compiled ``Template`` in memory. The cached ``Template``
-    instance is returned for subsequent requests to load the same template.
+    You configure the cached template loader with a list of other loaders that
+    it should wrap. The wrapped loaders are used to locate unknown templates
+    when they're first encountered. The cached loader then stores the compiled
+    ``Template`` in memory. The cached ``Template`` instance is returned for
+    subsequent requests to load the same template.
 
-    For example, to enable template caching with the ``filesystem`` and
-    ``app_directories`` template loaders you might use the following settings::
+    This loader is automatically enabled if :setting:`DEBUG` is ``False`` and
+    :setting:`OPTIONS['loaders'] <TEMPLATES-OPTIONS>` isn't specified.
+
+    You can also enable template caching with some custom template loaders
+    using settings like this::
 
         TEMPLATES = [{
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -930,6 +952,7 @@ loaders that come with Django:
                     ('django.template.loaders.cached.Loader', [
                         'django.template.loaders.filesystem.Loader',
                         'django.template.loaders.app_directories.Loader',
+                        'path.to.custom.Loader',
                     ]),
                 ],
             },
@@ -944,7 +967,10 @@ loaders that come with Django:
         information, see :ref:`template tag thread safety considerations
         <template_tag_thread_safety>`.
 
-    This loader is disabled by default.
+    .. versionchanged:: 1.11
+
+        The automatic enabling of the cached template loader when ``debug`` is
+        ``False`` was added.
 
 ``django.template.loaders.locmem.Loader``
 
@@ -981,11 +1007,6 @@ It's possible to load templates from additional sources using custom template
 loaders. Custom ``Loader`` classes should inherit from
 ``django.template.loaders.base.Loader`` and define the ``get_contents()`` and
 ``get_template_sources()`` methods.
-
-.. versionchanged:: 1.9
-
-    In previous versions of Django, custom loaders defined a single method:
-    ``load_template_source()``.
 
 Loader methods
 --------------
@@ -1080,13 +1101,6 @@ Template origin
 
 Templates have an ``origin`` containing attributes depending on the source
 they are loaded from.
-
-.. versionchanged:: 1.9
-
-    Django used to create an origin based on
-    ``django.template.loader.LoaderOrigin`` or
-    ``django.template.base.StringOrigin``. These have been replaced by
-    ``django.template.base.Origin``.
 
 .. class:: Origin
 

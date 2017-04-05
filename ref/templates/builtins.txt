@@ -185,6 +185,9 @@ call to ``{% cycle %}`` doesn't specify ``silent``::
     {% cycle 'row1' 'row2' as rowcolors silent %}
     {% cycle rowcolors %}
 
+You can use the :ttag:`resetcycle` tag to make a ``{% cycle %}`` tag restart
+from its first value when it's next encountered.
+
 .. templatetag:: debug
 
 ``debug``
@@ -295,10 +298,6 @@ Or if only some variables should be escaped, you can use::
 
 You can use the syntax ``{% firstof var1 var2 var3 as value %}`` to store the
 output inside a variable.
-
-.. versionadded:: 1.9
-
-    The "as" syntax was added.
 
 .. templatetag:: for
 
@@ -732,9 +731,10 @@ is turned off, ``{% include %}`` logs a warning to the ``django.template``
 logger with the exception that happens while rendering the included template
 and returns an empty string.
 
-.. versionchanged:: 1.9
+.. deprecated:: 1.11
 
-    Template logging now includes the warning logging mentioned above.
+    Silencing exceptions raised while rendering the ``{% include %}`` template
+    tag is deprecated. In Django 2.1, the exception will be raised.
 
 .. note::
     The :ttag:`include` tag should be considered as an implementation of
@@ -904,12 +904,35 @@ resulting list. Here, we're regrouping the ``cities`` list by the ``country``
 attribute and calling the result ``country_list``.
 
 ``{% regroup %}`` produces a list (in this case, ``country_list``) of
-**group objects**. Each group object has two attributes:
+**group objects**. Group objects are instances of
+:py:func:`~collections.namedtuple` with two fields:
 
 * ``grouper`` -- the item that was grouped by (e.g., the string "India" or
   "Japan").
 * ``list`` -- a list of all items in this group (e.g., a list of all cities
   with country='India').
+
+.. versionchanged:: 1.11
+
+    The group object was changed from a dictionary to a
+    :py:func:`~collections.namedtuple`.
+
+Because ``{% regroup %}`` produces :py:func:`~collections.namedtuple` objects,
+you can also write the previous example as::
+
+    {% regroup cities by country as country_list %}
+
+    <ul>
+    {% for country, local_cities in country_list %}
+        <li>{{ country }}
+        <ul>
+            {% for city in local_cities %}
+              <li>{{ city.name }}: {{ city.population }}</li>
+            {% endfor %}
+        </ul>
+        </li>
+    {% endfor %}
+    </ul>
 
 Note that ``{% regroup %}`` does not order its input! Our example relies on
 the fact that the ``cities`` list was ordered by ``country`` in the first place.
@@ -978,6 +1001,57 @@ attribute, allowing  you to group on the display string rather than the
 
 ``{{ country.grouper }}`` will now display the value fields from the
 ``choices`` set rather than the keys.
+
+.. templatetag:: resetcycle
+
+``resetcycle``
+--------------
+
+.. versionadded:: 1.11
+
+Resets a previous `cycle`_ so that it restarts from its first item at its next
+encounter. Without arguments, ``{% resetcycle %}`` will reset the last
+``{% cycle %}`` defined in the template.
+
+Example usage::
+
+    {% for coach in coach_list %}
+        <h1>{{ coach.name }}</h1>
+        {% for athlete in coach.athlete_set.all %}
+            <p class="{% cycle 'odd' 'even' %}">{{ athlete.name }}</p>
+        {% endfor %}
+        {% resetcycle %}
+    {% endfor %}
+
+This example would return this HTML::
+
+    <h1>José Mourinho</h1>
+    <p class="odd">Thibaut Courtois</p>
+    <p class="even">John Terry</p>
+    <p class="odd">Eden Hazard</p>
+
+    <h1>Carlo Ancelotti</h1>
+    <p class="odd">Manuel Neuer</p>
+    <p class="even">Thomas Müller</p>
+
+Notice how the first block ends with ``class="odd"`` and the new one starts
+with ``class="odd"``. Without the ``{% resetcycle %}`` tag, the second block
+would start with ``class="even"``.
+
+You can also reset named cycle tags::
+
+    {% for item in list %}
+        <p class="{% cycle 'odd' 'even' as stripe %} {% cycle 'major' 'minor' 'minor' 'minor' 'minor' as tick %}">
+            {{ item.data }}
+        </p>
+        {% ifchanged item.category %}
+            <h1>{{ item.category }}</h1>
+            {% if not forloop.first %}{% resetcycle tick %}{% endif %}
+        {% endifchanged %}
+    {% endfor %}
+
+In this example, we have both the alternating odd/even rows and a "major" row
+every fifth row. Only the five-row cycle is reset when a category changes.
 
 .. templatetag:: spaceless
 
@@ -1396,12 +1470,18 @@ for example, ``"es"``, then for::
 the output would be the string ``"09/01/2008"`` (the ``"SHORT_DATE_FORMAT"``
 format specifier for the ``es`` locale as shipped with Django is ``"d/m/Y"``).
 
-When used without a format string::
+When used without a format string, the ``DATE_FORMAT`` format specifier is
+used. Assuming the same settings as the previous example::
 
     {{ value|date }}
 
-...the formatting string defined in the :setting:`DATE_FORMAT` setting will be
-used, without applying any localization.
+outputs ``9 de Enero de 2008`` (the ``DATE_FORMAT`` format specifier for the
+``es`` locale is ``r'j \d\e F \d\e Y'``.
+
+.. versionchanged:: 1.10
+
+    In older versions, the :setting:`DATE_FORMAT` setting (without
+    localization) is always used when a format string isn't given.
 
 You can combine ``date`` with the :tfilter:`time` filter to render a full
 representation of a ``datetime`` value. E.g.::
@@ -1437,7 +1517,7 @@ For example::
 
     {{ value|default_if_none:"nothing" }}
 
-If ``value`` is ``None``, the output will be the string ``"nothing"``.
+If ``value`` is ``None``, the output will be ``nothing``.
 
 .. templatefilter:: dictsort
 
@@ -2122,12 +2202,19 @@ attached timezone information (a :ref:`time-zone-aware
 accept the timezone-related :ref:`format specifiers
 <date-and-time-formatting-specifiers>` ``'e'``, ``'O'`` , ``'T'`` and ``'Z'``.
 
-When used without a format string::
+When used without a format string, the ``TIME_FORMAT`` format specifier is
+used::
 
     {{ value|time }}
 
-...the formatting string defined in the :setting:`TIME_FORMAT` setting will be
-used, without applying any localization.
+is the same as::
+
+    {{ value|time:"TIME_FORMAT" }}
+
+.. versionchanged:: 1.10
+
+    In older versions, the :setting:`TIME_FORMAT` setting (without
+    localization) is always used when a format string isn't given.
 
 .. templatefilter:: timesince
 

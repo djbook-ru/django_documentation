@@ -85,8 +85,8 @@ to, or in lieu of custom ``field.clean()`` methods.
 
     .. attribute:: regex
 
-        The regular expression pattern to search for the provided ``value``,
-        or a pre-compiled regular expression. By default, raises a
+        The regular expression pattern to search for within the provided
+        ``value``, or a pre-compiled regular expression. By default, raises a
         :exc:`~django.core.exceptions.ValidationError` with :attr:`message`
         and :attr:`code` if a match is not found. That standard behavior can
         be reversed by setting :attr:`inverse_match` to ``True``, in which case
@@ -187,8 +187,6 @@ to, or in lieu of custom ``field.clean()`` methods.
 
 .. data:: validate_unicode_slug
 
-    .. versionadded:: 1.9
-
     A :class:`RegexValidator` instance that ensures a value consists of only
     Unicode letters, numbers, underscores, or hyphens.
 
@@ -227,8 +225,6 @@ to, or in lieu of custom ``field.clean()`` methods.
 ----------------------
 
 .. function:: int_list_validator(sep=',', message=None, code='invalid', allow_negative=False)
-
-    .. versionadded:: 1.9
 
     Returns a :class:`RegexValidator` instance that ensures a string consists
     of integers separated by ``sep``. It allows negative integers when
@@ -275,8 +271,6 @@ to, or in lieu of custom ``field.clean()`` methods.
 
 .. class:: DecimalValidator(max_digits, decimal_places)
 
-    .. versionadded:: 1.9
-
     Raises :exc:`~django.core.exceptions.ValidationError` with the following
     codes:
 
@@ -285,3 +279,30 @@ to, or in lieu of custom ``field.clean()`` methods.
       ``decimal_places``.
     - ``'max_whole_digits'`` if the number of whole digits is larger than
       the difference between ``max_digits`` and ``decimal_places``.
+
+``FileExtensionValidator``
+--------------------------
+
+.. class:: FileExtensionValidator(allowed_extensions, message, code)
+
+    .. versionadded:: 1.11
+
+    Raises a :exc:`~django.core.exceptions.ValidationError` with a code of
+    ``'invalid_extension'`` if the ``value`` cannot be found in
+    ``allowed_extensions``.
+
+    .. warning::
+
+        Don't rely on validation of the file extension to determine a file's
+        type. Files can be renamed to have any extension no matter what data
+        they contain.
+
+``validate_image_file_extension``
+---------------------------------
+
+.. data:: validate_image_file_extension
+
+    .. versionadded:: 1.11
+
+    Uses Pillow to ensure that the ``value`` is `a valid image extension
+    <https://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html>`_.

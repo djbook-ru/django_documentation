@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-08 11:07+0200\n"
+"POT-Creation-Date: 2017-04-05 11:28+0300\n"
 "PO-Revision-Date: 2015-12-06 16:42+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -366,8 +366,7 @@ msgstr ""
 msgid ""
 "If you override the ``get_queryset()`` method and filter out any rows, "
 "Django will return incorrect results. Don't do that. A manager that filters "
-"results in ``get_queryset()`` is not appropriate for use as a default "
-"manager."
+"results in ``get_queryset()`` is not appropriate for use as a base manager."
 msgstr ""
 "Если вы переопределите метод ``get_queryset()`` и отфильтруете часть "
 "результата, Django вернет неверный результат. Не делайте этого. Менеджер, "
@@ -540,14 +539,16 @@ msgstr ""
 
 #: ../../topics/db/managers.txt:372
 msgid ""
-"In older versions, manager inheritance varied depending on the type of model "
-"inheritance (i.e. :ref:`abstract-base-classes`, :ref:`multi-table-"
-"inheritance`, or :ref:`proxy-models`), especially with regards to electing "
-"the default manager."
+"Some inheritance behaviors described above don't apply unless you set "
+"``manager_inheritance_from_future = True`` on the model's ``Meta`` class. In "
+"older versions and if you don't set that attribute, manager inheritance "
+"varies depending on the type of model inheritance (:ref:`abstract-base-"
+"classes`, :ref:`multi-table-inheritance`, or :ref:`proxy-models`), "
+"especially with regards to electing the default manager."
 msgstr ""
 
 # 505bc79c9ef04a128006b02be2c90e1e
-#: ../../topics/db/managers.txt:377
+#: ../../topics/db/managers.txt:379
 msgid ""
 "These rules provide the necessary flexibility if you want to install a "
 "collection of custom managers on a group of models, via an abstract base "
@@ -560,7 +561,7 @@ msgstr ""
 "класс::"
 
 # e9076b62c5c9481b975e594b091660d1
-#: ../../topics/db/managers.txt:389
+#: ../../topics/db/managers.txt:391
 msgid ""
 "If you use this directly in a subclass, ``objects`` will be the default "
 "manager if you declare no managers in the base class::"
@@ -569,7 +570,7 @@ msgstr ""
 "мы не определим другой менеджер в дочерней модели ::"
 
 # 72bd2e49210d4a60837d7123a7887f24
-#: ../../topics/db/managers.txt:397
+#: ../../topics/db/managers.txt:399
 msgid ""
 "If you want to inherit from ``AbstractBase``, but provide a different "
 "default manager, you can provide the default manager on the child class::"
@@ -579,7 +580,7 @@ msgstr ""
 "способом::"
 
 # 1d0f1648cf7c40058e686c45cf81b56f
-#: ../../topics/db/managers.txt:405
+#: ../../topics/db/managers.txt:407
 msgid ""
 "Here, ``default_manager`` is the default. The ``objects`` manager is still "
 "available, since it's inherited. It just isn't used as the default."
@@ -589,7 +590,7 @@ msgstr ""
 "менеджер по умолчанию."
 
 # f9f5ba5a373546f1ab62beaa748acc9a
-#: ../../topics/db/managers.txt:408
+#: ../../topics/db/managers.txt:410
 msgid ""
 "Finally for this example, suppose you want to add extra managers to the "
 "child class, but still use the default from ``AbstractBase``. You can't add "
@@ -607,7 +608,7 @@ msgstr ""
 "добавить в наследование *после* базовой::"
 
 # dcdc236e20144827b9e1ed54fdfcaed1
-#: ../../topics/db/managers.txt:427
+#: ../../topics/db/managers.txt:429
 msgid ""
 "Note that while you can *define* a custom manager on the abstract model, you "
 "can't *invoke* any methods using the abstract model. That is::"
@@ -617,12 +618,12 @@ msgstr ""
 "модель. То есть::"
 
 # 09d0beb4e8764e569aed50df51194c38
-#: ../../topics/db/managers.txt:432
+#: ../../topics/db/managers.txt:434
 msgid "is legal, but::"
 msgstr "будет работать, но::"
 
 # 8df39bcbdb7540d0a4e9d37b94a128ac
-#: ../../topics/db/managers.txt:436
+#: ../../topics/db/managers.txt:438
 msgid ""
 "will raise an exception. This is because managers are intended to "
 "encapsulate logic for managing collections of objects. Since you can't have "
@@ -637,12 +638,12 @@ msgstr ""
 "абстрактной моделью, добавьте его в ``staticmethod`` или ``classmethod``."
 
 # 4c9a9a892dde44e9bd42926f1ee9584d
-#: ../../topics/db/managers.txt:443
+#: ../../topics/db/managers.txt:445
 msgid "Implementation concerns"
 msgstr "Проблемы реализации"
 
 # ac9c0bc2e9194ff59fc02491554e1b3b
-#: ../../topics/db/managers.txt:445
+#: ../../topics/db/managers.txt:447
 msgid ""
 "Whatever features you add to your custom ``Manager``, it must be possible to "
 "make a shallow copy of a ``Manager`` instance; i.e., the following code must "
@@ -652,7 +653,7 @@ msgstr ""
 "работать такой код::"
 
 # 63f6ee7f3bc4483eadda8d9472a9520b
-#: ../../topics/db/managers.txt:453
+#: ../../topics/db/managers.txt:455
 msgid ""
 "Django makes shallow copies of manager objects during certain queries; if "
 "your Manager cannot be copied, those queries will fail."
@@ -661,7 +662,7 @@ msgstr ""
 "Если ваш менеджер нельзя скопировать, эти запросы перестанут работать."
 
 # 5cb300a201834905b90e9f40ef7df99f
-#: ../../topics/db/managers.txt:456
+#: ../../topics/db/managers.txt:458
 msgid ""
 "This won't be an issue for most custom managers. If you are just adding "
 "simple methods to your ``Manager``, it is unlikely that you will "

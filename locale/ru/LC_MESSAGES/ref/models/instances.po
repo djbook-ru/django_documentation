@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-08 11:07+0200\n"
+"POT-Creation-Date: 2017-04-05 11:28+0300\n"
 "PO-Revision-Date: 2016-03-17 15:30+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -626,57 +626,43 @@ msgstr "Что происходит при сохранении?"
 msgid "When you save an object, Django performs the following steps:"
 msgstr "При сохранении объекта Django выполняет следующие шаги:"
 
-# 49a649847dc940979b384aa452c71120
+# 91052ed0d4524864805f7340fb7cc2f3
 #: ../../ref/models/instances.txt:416
+#, fuzzy
 msgid ""
-"**Emit a pre-save signal.** The :doc:`signal </ref/signals>` :attr:`django."
-"db.models.signals.pre_save` is sent, allowing any functions listening for "
-"that signal to take some customized action."
+"**Emit a pre-save signal.** The :data:`~django.db.models.signals.pre_save` "
+"signal is sent, allowing any functions listening for that signal to do "
+"something."
 msgstr ""
-"**Посылается сигнал pre-save.** Посылается сигнал :attr:`django.db.models."
-"signals.pre_save`, позволяя функциям, обрабатывающим этот сигнал, выполнить "
-"какие-либо действия."
+"**Посылается сигнал post-save.** Посылается сигнал :attr:`django.db.models."
+"signals.post_save`, позволяя функциям, обрабатывающим этот сигнал, выполнить "
+"какие-либо действия."
 
-# 40caa366c585447dafced6ad65484e31
-#: ../../ref/models/instances.txt:421
+#: ../../ref/models/instances.txt:420
 msgid ""
-"**Pre-process the data.** Each field on the object is asked to perform any "
-"automated data modification that the field may need to perform."
+"**Preprocess the data.** Each field's :meth:`~django.db.models.Field."
+"pre_save` method is called to perform any automated data modification that's "
+"needed. For example, the date/time fields override ``pre_save()`` to "
+"implement :attr:`~django.db.models.DateField.auto_now_add` and :attr:"
+"`~django.db.models.DateField.auto_now`."
 msgstr ""
-"**Предварительная обработка данных.** Каждое поле объекта выполняет "
-"изменения значения поля при необходимости."
-
-# bedb769fff8148bc9f47e76ac72d11c2
-#: ../../ref/models/instances.txt:425
-msgid ""
-"Most fields do *no* pre-processing — the field data is kept as-is. Pre-"
-"processing is only used on fields that have special behavior.  For example, "
-"if your model has a :class:`~django.db.models.DateField` with "
-"``auto_now=True``, the pre-save phase will alter the data in the object to "
-"ensure that the date field contains the current date stamp. (Our "
-"documentation doesn't yet include a list of all the fields with this "
-"\"special behavior.\")"
-msgstr ""
-"Большинство полей *не* выполняют предварительную обработку данных — значение "
-"полей сохраняется как оно есть. Она выполняется для полей с особым "
-"поведением. Например, если ваша модель содержит поле :class:`~django.db."
-"models.DateField` с ``auto_now=True``, на этапе предварительной обработки "
-"значение поля будет установлено в текущую дату. (Наша документация пока не "
-"содержит список полей с \"особым поведением\".)"
 
 # a69652b8dc60447a952cccd013446ab8
-#: ../../ref/models/instances.txt:433
+#: ../../ref/models/instances.txt:427
+#, fuzzy
 msgid ""
-"**Prepare the data for the database.** Each field is asked to provide its "
-"current value in a data type that can be written to the database."
+"**Prepare the data for the database.** Each field's :meth:`~django.db.models."
+"Field.get_db_prep_save` method is asked to provide its current value in a "
+"data type that can be written to the database."
 msgstr ""
 "**Подготовка данных для базы данных.** Каждое поле преобразует текущее "
 "значение к типу данных, которой может быть сохранен в базу данных."
 
 # e82d742cedf142fc98ede65b66888951
-#: ../../ref/models/instances.txt:436
+#: ../../ref/models/instances.txt:431
+#, fuzzy
 msgid ""
-"Most fields require *no* data preparation. Simple data types, such as "
+"Most fields don't require data preparation. Simple data types, such as "
 "integers and strings, are 'ready to write' as a Python object. However, more "
 "complex data types often require some modification."
 msgstr ""
@@ -685,7 +671,7 @@ msgstr ""
 "большинство сложных типов данных требуют некоторой модификации."
 
 # e03d498e9b2240698a9d9927cea8db6b
-#: ../../ref/models/instances.txt:440
+#: ../../ref/models/instances.txt:435
 msgid ""
 "For example, :class:`~django.db.models.DateField` fields use a Python "
 "``datetime`` object to store data. Databases don't store ``datetime`` "
@@ -699,33 +685,35 @@ msgstr ""
 "данных."
 
 # 91daa17ee949449ab037d99f75483d64
-#: ../../ref/models/instances.txt:445
+#: ../../ref/models/instances.txt:440
+#, fuzzy
 msgid ""
-"**Insert the data into the database.** The pre-processed, prepared data is "
-"then composed into an SQL statement for insertion into the database."
+"**Insert the data into the database.** The preprocessed, prepared data is "
+"composed into an SQL statement for insertion into the database."
 msgstr ""
 "**Сохранение данных в базе данных.** Предварительно обработанные, "
 "подготовленные данные формируются в SQL запрос, который выполняется в базе "
 "данных."
 
 # 91052ed0d4524864805f7340fb7cc2f3
-#: ../../ref/models/instances.txt:449
+#: ../../ref/models/instances.txt:443
+#, fuzzy
 msgid ""
-"**Emit a post-save signal.** The signal :attr:`django.db.models.signals."
-"post_save` is sent, allowing any functions listening for that signal to take "
-"some customized action."
+"**Emit a post-save signal.** The :data:`~django.db.models.signals.post_save` "
+"signal is sent, allowing any functions listening for that signal to do "
+"something."
 msgstr ""
 "**Посылается сигнал post-save.** Посылается сигнал :attr:`django.db.models."
 "signals.post_save`, позволяя функциям, обрабатывающим этот сигнал, выполнить "
 "какие-либо действия."
 
 # 445b4fbfdf014f23bc065356b5f68677
-#: ../../ref/models/instances.txt:455
+#: ../../ref/models/instances.txt:448
 msgid "How Django knows to UPDATE vs. INSERT"
 msgstr "Как Django определят использовать UPDATE или INSERT"
 
 # a692e205b6a04318ac7a2d019f0eacbb
-#: ../../ref/models/instances.txt:457
+#: ../../ref/models/instances.txt:450
 msgid ""
 "You may have noticed Django database objects use the same ``save()`` method "
 "for creating and changing objects. Django abstracts the need to use "
@@ -738,7 +726,7 @@ msgstr ""
 "Django следует такому алгоритму:"
 
 # b3dcce1ebf954ca482fd930b73e57efa
-#: ../../ref/models/instances.txt:462
+#: ../../ref/models/instances.txt:455
 msgid ""
 "If the object's primary key attribute is set to a value that evaluates to "
 "``True`` (i.e., a value other than ``None`` or the empty string), Django "
@@ -749,7 +737,7 @@ msgstr ""
 "запрос."
 
 # a13f1673a6524d59a3f2dd04dc251464
-#: ../../ref/models/instances.txt:465
+#: ../../ref/models/instances.txt:458
 msgid ""
 "If the object's primary key attribute is *not* set or if the ``UPDATE`` "
 "didn't update anything, Django executes an ``INSERT``."
@@ -758,7 +746,7 @@ msgstr ""
 "выполнит ``INSERT``."
 
 # 34aa17e5fafd43b08b28323d32cdadef
-#: ../../ref/models/instances.txt:468
+#: ../../ref/models/instances.txt:461
 msgid ""
 "The one gotcha here is that you should be careful not to specify a primary-"
 "key value explicitly when saving new objects, if you cannot guarantee the "
@@ -772,7 +760,7 @@ msgstr ""
 "auto-primary-key values` (FIXME) и :ref:`ref-models-force-insert`."
 
 # 71bee65874244f709b1210097335bc17
-#: ../../ref/models/instances.txt:473
+#: ../../ref/models/instances.txt:466
 msgid ""
 "In Django 1.5 and earlier, Django did a ``SELECT`` when the primary key "
 "attribute was set. If the ``SELECT`` found a row, then Django did an "
@@ -794,12 +782,12 @@ msgstr ""
 "``True`` в :attr:`~django.db.models.Options.select_on_save`."
 
 # d180ef568b2b4c21a0763872d5b1b3f8
-#: ../../ref/models/instances.txt:486
+#: ../../ref/models/instances.txt:479
 msgid "Forcing an INSERT or UPDATE"
 msgstr "Принудительное выполнение INSERT или UPDATE"
 
 # 46e1acd5799248f49c7010a3adb1174a
-#: ../../ref/models/instances.txt:488
+#: ../../ref/models/instances.txt:481
 msgid ""
 "In some rare circumstances, it's necessary to be able to force the :meth:"
 "`~Model.save()` method to perform an SQL ``INSERT`` and not fall back to "
@@ -817,7 +805,7 @@ msgstr ""
 "аргумента вместе: вы не можете добавлять *и* обновлять одновременно!"
 
 # 7aa800ee3a5d43b2a798e4d6993f27f8
-#: ../../ref/models/instances.txt:496
+#: ../../ref/models/instances.txt:489
 msgid ""
 "It should be very rare that you'll need to use these parameters. Django will "
 "almost always do the right thing and trying to override that will lead to "
@@ -830,7 +818,7 @@ msgstr ""
 "пользователей."
 
 # 0cd8870db8004752b273f5fcb9f3c9dc
-#: ../../ref/models/instances.txt:501
+#: ../../ref/models/instances.txt:494
 msgid ""
 "Using ``update_fields`` will force an update similarly to ``force_update``."
 msgstr ""
@@ -838,12 +826,12 @@ msgstr ""
 "вызове ``force_update``."
 
 # 3e9e7e8e699741929140673d8bdd9a74
-#: ../../ref/models/instances.txt:506
+#: ../../ref/models/instances.txt:499
 msgid "Updating attributes based on existing fields"
 msgstr "Обновление значений полей"
 
 # 5280780451ad4fb195240aac2eacc58b
-#: ../../ref/models/instances.txt:508
+#: ../../ref/models/instances.txt:501
 msgid ""
 "Sometimes you'll need to perform a simple arithmetic task on a field, such "
 "as incrementing or decrementing the current value. The obvious way to "
@@ -854,7 +842,7 @@ msgstr ""
 "сделать это::"
 
 # e928f345411d488ab159890fccc309c2
-#: ../../ref/models/instances.txt:516
+#: ../../ref/models/instances.txt:509
 msgid ""
 "If the old ``number_sold`` value retrieved from the database was 10, then "
 "the value of 11 will be written back to the database."
@@ -863,7 +851,7 @@ msgstr ""
 "базу данных будет записано значение 11."
 
 # d4ecdc8b5c9d4726bce0631972668fa7
-#: ../../ref/models/instances.txt:519
+#: ../../ref/models/instances.txt:512
 msgid ""
 "The process can be made robust, :ref:`avoiding a race condition <avoiding-"
 "race-conditions-using-f>`, as well as slightly faster by expressing the "
@@ -880,7 +868,7 @@ msgstr ""
 "будет выглядеть таким образом::"
 
 # 243276e7f53b4e898cafe9c475d44fa8
-#: ../../ref/models/instances.txt:532
+#: ../../ref/models/instances.txt:525
 msgid ""
 "For more details, see the documentation on :class:`F expressions <django.db."
 "models.F>` and their :ref:`use in update queries <topics-db-queries-update>`."
@@ -889,12 +877,12 @@ msgstr ""
 "его :ref:`использование в запросах обновления <topics-db-queries-update>`."
 
 # cf9cce4cc6d648e397d828700475686a
-#: ../../ref/models/instances.txt:537
+#: ../../ref/models/instances.txt:530
 msgid "Specifying which fields to save"
 msgstr "Указываем какие поля сохранять"
 
 # d44d33036cd24ff7a4e8f6a13cc28a44
-#: ../../ref/models/instances.txt:539
+#: ../../ref/models/instances.txt:532
 msgid ""
 "If ``save()`` is passed a list of field names in keyword argument "
 "``update_fields``, only the fields named in that list will be updated. This "
@@ -908,7 +896,7 @@ msgstr ""
 "небольшой прирост в производительности. Например::"
 
 # 1a08e6b87af34a76ad19581af20ed6bc
-#: ../../ref/models/instances.txt:548
+#: ../../ref/models/instances.txt:541
 msgid ""
 "The ``update_fields`` argument can be any iterable containing strings. An "
 "empty ``update_fields`` iterable will skip the save. A value of None will "
@@ -918,12 +906,12 @@ msgstr ""
 "``update_fields`` пропустит сохранение. None сохранит все поля."
 
 # 543907df97154c85a0766942aee3fddb
-#: ../../ref/models/instances.txt:552
+#: ../../ref/models/instances.txt:545
 msgid "Specifying ``update_fields`` will force an update."
 msgstr "Указав ``update_fields`` вы инициируете редактирование записи."
 
 # 2aeecc4ffc9b43f5868ae4fd5ae12425
-#: ../../ref/models/instances.txt:554
+#: ../../ref/models/instances.txt:547
 msgid ""
 "When saving a model fetched through deferred model loading (:meth:`~django."
 "db.models.query.QuerySet.only()` or :meth:`~django.db.models.query.QuerySet."
@@ -939,12 +927,12 @@ msgstr ""
 "изменено, оно будет добавлено в список для обновления."
 
 # 5710063c94b64f6a9867bbff8de57716
-#: ../../ref/models/instances.txt:562
+#: ../../ref/models/instances.txt:555
 msgid "Deleting objects"
 msgstr "Удаление объектов"
 
 # e7946ed560a34e83b2c99a904e4407cf
-#: ../../ref/models/instances.txt:566
+#: ../../ref/models/instances.txt:559
 msgid ""
 "Issues an SQL ``DELETE`` for the object. This only deletes the object in the "
 "database; the Python instance will still exist and will still have data in "
@@ -957,7 +945,7 @@ msgstr ""
 "количество удаленных объектов для каждой модели."
 
 # 76bbf5d60a17460c98f0e01eaa8ecc3a
-#: ../../ref/models/instances.txt:571
+#: ../../ref/models/instances.txt:564
 msgid ""
 "For more details, including how to delete objects in bulk, see :ref:`topics-"
 "db-queries-delete`."
@@ -966,7 +954,7 @@ msgstr ""
 "db-queries-delete`."
 
 # 15b756b0ac7d48188d9957ab58daff95
-#: ../../ref/models/instances.txt:574
+#: ../../ref/models/instances.txt:567
 msgid ""
 "If you want customized deletion behavior, you can override the ``delete()`` "
 "method. See :ref:`overriding-model-methods` for more details."
@@ -974,7 +962,7 @@ msgstr ""
 "Если вам нужно изменить процесс удаления, переопределите метод ``delete()``. "
 "Подробности в :ref:`overriding-model-methods`."
 
-#: ../../ref/models/instances.txt:577
+#: ../../ref/models/instances.txt:570
 msgid ""
 "Sometimes with :ref:`multi-table inheritance <multi-table-inheritance>` you "
 "may want to delete only a child model's data. Specifying "
@@ -985,20 +973,12 @@ msgstr ""
 "Передав аргумент ``keep_parents=True``, вы сохраните данные родительской "
 "модели."
 
-#: ../../ref/models/instances.txt:583
-msgid "The ``keep_parents`` parameter was added."
-msgstr "Был добавлен аргумент ``keep_parents``."
-
-#: ../../ref/models/instances.txt:587
-msgid "The return value describing the number of objects deleted was added."
-msgstr "Теперь при удалении возвращается количество удаленных объектов."
-
 # 5710063c94b64f6a9867bbff8de57716
-#: ../../ref/models/instances.txt:590
+#: ../../ref/models/instances.txt:575
 msgid "Pickling objects"
 msgstr "Сериализация объектов"
 
-#: ../../ref/models/instances.txt:592
+#: ../../ref/models/instances.txt:577
 msgid ""
 "When you :mod:`pickle` a model, its current state is pickled. When you "
 "unpickle it, it'll contain the model instance at the moment it was pickled, "
@@ -1008,12 +988,12 @@ msgstr ""
 "состояние. При распаковке объекта он содержит объект модели в состоянии на "
 "момент упаковки, а не текущее состояние в базе данных."
 
-#: ../../ref/models/instances.txt:596
+#: ../../ref/models/instances.txt:581
 msgid "You can't share pickles between versions"
 msgstr ""
 "Вы не можете использовать объекты, упакованные на разных версиях Django"
 
-#: ../../ref/models/instances.txt:598
+#: ../../ref/models/instances.txt:583
 msgid ""
 "Pickles of models are only valid for the version of Django that was used to "
 "generate them. If you generate a pickle using Django version N, there is no "
@@ -1025,7 +1005,7 @@ msgstr ""
 "вы сомжете распаковать её на Django версии N+1. Упаковка моделей не должна "
 "использоваться для долговременного архивирования объектов."
 
-#: ../../ref/models/instances.txt:604
+#: ../../ref/models/instances.txt:589
 msgid ""
 "Since pickle compatibility errors can be difficult to diagnose, such as "
 "silently corrupted objects, a ``RuntimeWarning`` is raised when you try to "
@@ -1038,23 +1018,23 @@ msgstr ""
 "от той, которая использовалась при упаковке."
 
 # 722e6dd3564f4c2a821c76ed276b03c9
-#: ../../ref/models/instances.txt:612
+#: ../../ref/models/instances.txt:597
 msgid "Other model instance methods"
 msgstr "Остальные методы модели"
 
 # b485a9afc82343eeab9befa8696e54ac
-#: ../../ref/models/instances.txt:614
+#: ../../ref/models/instances.txt:599
 msgid "A few object methods have special purposes."
 msgstr "Несколько методов имеют специальное назначение."
 
 # 811e6bcf2367418bb7cdc15a31029b32
-#: ../../ref/models/instances.txt:617
+#: ../../ref/models/instances.txt:602
 #, fuzzy
 msgid "``__str__()``"
 msgstr "``__str__``"
 
 # 322fead3b40a4c5780afc817e7714563
-#: ../../ref/models/instances.txt:621
+#: ../../ref/models/instances.txt:606
 msgid ""
 "The ``__str__()`` method is called whenever you call ``str()`` on an object. "
 "Django uses ``str(obj)`` in a number of places. Most notably, to display an "
@@ -1071,14 +1051,14 @@ msgstr ""
 
 # 5b4e92636d0f4db499d2704f36b4edfb
 # f0f49d96bd0242a4bb39fa7a3a784269
-#: ../../ref/models/instances.txt:627 ../../ref/models/instances.txt:653
-#: ../../ref/models/instances.txt:693 ../../ref/models/instances.txt:702
-#: ../../ref/models/instances.txt:773
+#: ../../ref/models/instances.txt:612 ../../ref/models/instances.txt:639
+#: ../../ref/models/instances.txt:687 ../../ref/models/instances.txt:696
+#: ../../ref/models/instances.txt:767
 msgid "For example::"
 msgstr "Например::"
 
 # 7c4746597e1a4bf5bb9efe94d1b82ec0
-#: ../../ref/models/instances.txt:640
+#: ../../ref/models/instances.txt:625
 #, fuzzy
 msgid ""
 "If you'd like compatibility with Python 2, you can decorate your model class "
@@ -1090,18 +1070,21 @@ msgstr ""
 "python_2_unicode_compatible`."
 
 # 811e6bcf2367418bb7cdc15a31029b32
-#: ../../ref/models/instances.txt:644
+#: ../../ref/models/instances.txt:629
 #, fuzzy
 msgid "``__eq__()``"
 msgstr "``__eq__``"
 
 # 7432bc1b5e2b44afbd28a4849049e0c9
-#: ../../ref/models/instances.txt:648
+#: ../../ref/models/instances.txt:633
+#, fuzzy
 msgid ""
 "The equality method is defined such that instances with the same primary key "
-"value and the same concrete class are considered equal. For proxy models, "
-"concrete class is defined as the model's first non-proxy parent; for all "
-"other models it is simply the model's class."
+"value and the same concrete class are considered equal, except that "
+"instances with a primary key value of ``None`` aren't equal to anything "
+"except themselves. For proxy models, concrete class is defined as the "
+"model's first non-proxy parent; for all other models it's simply the model's "
+"class."
 msgstr ""
 "Метод проверки равенства по умолчанию работает следующим образом: если два "
 "объекта содержат одинаковый первичный ключ и являются экземплярами одно "
@@ -1110,13 +1093,13 @@ msgstr ""
 "просто класс модели."
 
 # 811e6bcf2367418bb7cdc15a31029b32
-#: ../../ref/models/instances.txt:673
+#: ../../ref/models/instances.txt:667
 #, fuzzy
 msgid "``__hash__()``"
 msgstr "``__hash__``"
 
 # a0325aa2b4d24f9faef17863e297b50e
-#: ../../ref/models/instances.txt:677
+#: ../../ref/models/instances.txt:671
 #, fuzzy
 msgid ""
 "The ``__hash__()`` method is based on the instance's primary key value. It "
@@ -1133,13 +1116,13 @@ msgstr ""
 "reference/datamodel.html#object.__hash__>`_)."
 
 # 7be347663638442f8bf2f6a99674af1d
-#: ../../ref/models/instances.txt:685
+#: ../../ref/models/instances.txt:679
 #, fuzzy
 msgid "``get_absolute_url()``"
 msgstr "``get_absolute_url``"
 
 # 170be423e7b9487797847057de6377f5
-#: ../../ref/models/instances.txt:689
+#: ../../ref/models/instances.txt:683
 msgid ""
 "Define a ``get_absolute_url()`` method to tell Django how to calculate the "
 "canonical URL for an object. To callers, this method should appear to return "
@@ -1150,7 +1133,7 @@ msgstr ""
 "использована в HTTP запросе."
 
 # c2e13c9d8417413bac11402b7b71ad6d
-#: ../../ref/models/instances.txt:698
+#: ../../ref/models/instances.txt:692
 #, fuzzy
 msgid ""
 "While this code is correct and simple, it may not be the most portable way "
@@ -1162,7 +1145,7 @@ msgstr ""
 "urlresolvers.reverse`.)"
 
 # f01a31faf0bc4c679cb0db2cfa8b3b01
-#: ../../ref/models/instances.txt:708
+#: ../../ref/models/instances.txt:702
 msgid ""
 "One place Django uses ``get_absolute_url()`` is in the admin app. If an "
 "object defines this method, the object-editing page will have a \"View on "
@@ -1175,7 +1158,7 @@ msgstr ""
 "объекта, ссылку на которую возвращает ``get_absolute_url()``."
 
 # f16957c12a9b4c5184b86620d3f85233
-#: ../../ref/models/instances.txt:713
+#: ../../ref/models/instances.txt:707
 msgid ""
 "Similarly, a couple of other bits of Django, such as the :doc:`syndication "
 "feed framework </ref/contrib/syndication>`, use ``get_absolute_url()`` when "
@@ -1187,7 +1170,7 @@ msgstr ""
 "объект модели представляет какой-то уникальный URL, вам стоит определить "
 "метод ``get_absolute_url()``."
 
-#: ../../ref/models/instances.txt:720
+#: ../../ref/models/instances.txt:714
 msgid ""
 "You should avoid building the URL from unvalidated user input, in order to "
 "reduce possibilities of link or redirect poisoning::"
@@ -1195,7 +1178,7 @@ msgstr ""
 "При создания URL не используйте непроверенные данные от пользователя, чтобы "
 "избежать подделки ссылок или перенаправлений::"
 
-#: ../../ref/models/instances.txt:726
+#: ../../ref/models/instances.txt:720
 msgid ""
 "If ``self.name`` is ``'/example.com'`` this returns ``'//example.com/'`` "
 "which, in turn, is a valid schema relative URL but not the expected ``'/"
@@ -1206,7 +1189,7 @@ msgstr ""
 "ожидаемого ``'/%2Fexample.com/'``."
 
 # c79820e1a3f049c6b2afbf034475175e
-#: ../../ref/models/instances.txt:731
+#: ../../ref/models/instances.txt:725
 msgid ""
 "It's good practice to use ``get_absolute_url()`` in templates, instead of "
 "hard-coding your objects' URLs. For example, this template code is bad:"
@@ -1215,12 +1198,12 @@ msgstr ""
 "того, чтобы \"хардкодить\" URL-ы. Например, это плохой подход:"
 
 # 366627a9ab644c97b9436cbfe11008c1
-#: ../../ref/models/instances.txt:739
+#: ../../ref/models/instances.txt:733
 msgid "This template code is much better:"
 msgstr "Этот шаблон значительно лучше:"
 
 # f6ba7b82b1be4413bd17195594598517
-#: ../../ref/models/instances.txt:745
+#: ../../ref/models/instances.txt:739
 msgid ""
 "The logic here is that if you change the URL structure of your objects, even "
 "for something simple such as correcting a spelling error, you don't want to "
@@ -1234,7 +1217,7 @@ msgstr ""
 "``get_absolute_url()``, и пусть остальной код использует его."
 
 # 2b5c045aaa9a42faa0fac63212011858
-#: ../../ref/models/instances.txt:751
+#: ../../ref/models/instances.txt:745
 msgid ""
 "The string you return from ``get_absolute_url()`` **must** contain only "
 "ASCII characters (required by the URI specification, :rfc:`2396`) and be URL-"
@@ -1245,7 +1228,7 @@ msgstr ""
 "закодированной для URL, если необходимо."
 
 # a2803a2645ed46faa1d84776eab4976a
-#: ../../ref/models/instances.txt:755
+#: ../../ref/models/instances.txt:749
 msgid ""
 "Code and templates calling ``get_absolute_url()`` should be able to use the "
 "result directly without any further processing. You may wish to use the "
@@ -1258,12 +1241,12 @@ msgstr ""
 "которая содержит не ASCII символы."
 
 # 453c15c6a8844c309a23b08f28369113
-#: ../../ref/models/instances.txt:762
+#: ../../ref/models/instances.txt:756
 msgid "Extra instance methods"
 msgstr "Дополнительные методы модели"
 
 # cf5de768199043bc8999fe4610b43407
-#: ../../ref/models/instances.txt:764
+#: ../../ref/models/instances.txt:758
 msgid ""
 "In addition to :meth:`~Model.save()`, :meth:`~Model.delete()`, a model "
 "object might have some of the following methods:"
@@ -1272,7 +1255,7 @@ msgstr ""
 "объект модели может содержать некоторые из этих методов:"
 
 # e0af5f91ae4a45bfa89adb4e84adaa04
-#: ../../ref/models/instances.txt:769
+#: ../../ref/models/instances.txt:763
 msgid ""
 "For every field that has :attr:`~django.db.models.Field.choices` set, the "
 "object will have a ``get_FOO_display()`` method, where ``FOO`` is the name "
@@ -1283,7 +1266,7 @@ msgstr ""
 "метод возвращает удобное для восприятия название для значения поля."
 
 # 29b4c3a7c4604d31883039917f636f41
-#: ../../ref/models/instances.txt:798
+#: ../../ref/models/instances.txt:792
 msgid ""
 "For every :class:`~django.db.models.DateField` and :class:`~django.db.models."
 "DateTimeField` that does not have :attr:`null=True <django.db.models.Field."
@@ -1302,7 +1285,7 @@ msgstr ""
 "DoesNotExist`, если объект не существует."
 
 # 23fa6b7de97c48abac35b6b507368d0b
-#: ../../ref/models/instances.txt:805
+#: ../../ref/models/instances.txt:799
 msgid ""
 "Both of these methods will perform their queries using the default manager "
 "for the model. If you need to emulate filtering used by a custom manager, or "
@@ -1317,7 +1300,7 @@ msgstr ""
 "`операторов фильтрации <field-lookups>`."
 
 # ee2b2e31cf7b488799a7efffc60e78a9
-#: ../../ref/models/instances.txt:811
+#: ../../ref/models/instances.txt:805
 msgid ""
 "Note that in the case of identical date values, these methods will use the "
 "primary key as a tie-breaker. This guarantees that no records are skipped or "
@@ -1329,15 +1312,15 @@ msgstr ""
 "означает, что вы не можете использовать эти методы для не сохраненных "
 "объектов."
 
-#: ../../ref/models/instances.txt:816
+#: ../../ref/models/instances.txt:810
 msgid "Other attributes"
 msgstr "Другие атрибуты"
 
-#: ../../ref/models/instances.txt:819
+#: ../../ref/models/instances.txt:813
 msgid "``DoesNotExist``"
 msgstr "``DoesNotExist``"
 
-#: ../../ref/models/instances.txt:823
+#: ../../ref/models/instances.txt:817
 msgid ""
 "This exception is raised by the ORM in a couple places, for example by :meth:"
 "`QuerySet.get() <django.db.models.query.QuerySet.get>` when an object is not "
@@ -1347,7 +1330,7 @@ msgstr ""
 "`QuerySet.get() <django.db.models.query.QuerySet.get>`, если объект не "
 "найден."
 
-#: ../../ref/models/instances.txt:827
+#: ../../ref/models/instances.txt:821
 msgid ""
 "Django provides a ``DoesNotExist`` exception as an attribute of each model "
 "class to identify the class of object that could not be found and to allow "
@@ -1358,6 +1341,47 @@ msgstr ""
 "чтобы можно было обработать ошибку для каждой конкретной модели, используя "
 "``try/except``. Это исключение наследуется от :exc:`django.core.exceptions."
 "ObjectDoesNotExist`."
+
+# 49a649847dc940979b384aa452c71120
+#~ msgid ""
+#~ "**Emit a pre-save signal.** The :doc:`signal </ref/signals>` :attr:"
+#~ "`django.db.models.signals.pre_save` is sent, allowing any functions "
+#~ "listening for that signal to take some customized action."
+#~ msgstr ""
+#~ "**Посылается сигнал pre-save.** Посылается сигнал :attr:`django.db.models."
+#~ "signals.pre_save`, позволяя функциям, обрабатывающим этот сигнал, "
+#~ "выполнить какие-либо действия."
+
+# 40caa366c585447dafced6ad65484e31
+#~ msgid ""
+#~ "**Pre-process the data.** Each field on the object is asked to perform "
+#~ "any automated data modification that the field may need to perform."
+#~ msgstr ""
+#~ "**Предварительная обработка данных.** Каждое поле объекта выполняет "
+#~ "изменения значения поля при необходимости."
+
+# bedb769fff8148bc9f47e76ac72d11c2
+#~ msgid ""
+#~ "Most fields do *no* pre-processing — the field data is kept as-is. Pre-"
+#~ "processing is only used on fields that have special behavior.  For "
+#~ "example, if your model has a :class:`~django.db.models.DateField` with "
+#~ "``auto_now=True``, the pre-save phase will alter the data in the object "
+#~ "to ensure that the date field contains the current date stamp. (Our "
+#~ "documentation doesn't yet include a list of all the fields with this "
+#~ "\"special behavior.\")"
+#~ msgstr ""
+#~ "Большинство полей *не* выполняют предварительную обработку данных — "
+#~ "значение полей сохраняется как оно есть. Она выполняется для полей с "
+#~ "особым поведением. Например, если ваша модель содержит поле :class:"
+#~ "`~django.db.models.DateField` с ``auto_now=True``, на этапе "
+#~ "предварительной обработки значение поля будет установлено в текущую дату. "
+#~ "(Наша документация пока не содержит список полей с \"особым поведением\".)"
+
+#~ msgid "The ``keep_parents`` parameter was added."
+#~ msgstr "Был добавлен аргумент ``keep_parents``."
+
+#~ msgid "The return value describing the number of objects deleted was added."
+#~ msgstr "Теперь при удалении возвращается количество удаленных объектов."
 
 # 77ddec81cdd4478dac1e8dcf53721767
 #~ msgid "``__unicode__``"

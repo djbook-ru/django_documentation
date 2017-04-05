@@ -43,11 +43,13 @@ If ``True``, Django will store empty values as ``NULL`` in the database. Default
 is ``False``.
 
 Avoid using :attr:`~Field.null` on string-based fields such as
-:class:`CharField` and :class:`TextField` because empty string values will
-always be stored as empty strings, not as ``NULL``. If a string-based field has
+:class:`CharField` and :class:`TextField`. If a string-based field has
 ``null=True``, that means it has two possible values for "no data": ``NULL``,
 and the empty string. In most cases, it's redundant to have two possible values
-for "no data;" the Django convention is to use the empty string, not ``NULL``.
+for "no data;" the Django convention is to use the empty string, not
+``NULL``. One exception is when a :class:`CharField` has both ``unique=True``
+and ``blank=True`` set. In this situation, ``null=True`` is required to avoid
+unique constraint violations when saving multiple objects with blank values.
 
 For both string-based and non-string-based fields, you will also need to
 set ``blank=True`` if you wish to permit empty values in forms, as the
@@ -304,11 +306,15 @@ you try to save a model with a duplicate value in a :attr:`~Field.unique`
 field, a :exc:`django.db.IntegrityError` will be raised by the model's
 :meth:`~django.db.models.Model.save` method.
 
-This option is valid on all field types except :class:`ManyToManyField`,
-:class:`OneToOneField`, and :class:`FileField`.
+This option is valid on all field types except :class:`ManyToManyField` and
+:class:`OneToOneField`.
 
 Note that when ``unique`` is ``True``, you don't need to specify
 :attr:`~Field.db_index`, because ``unique`` implies the creation of an index.
+
+.. versionchanged:: 1.11
+
+    In older versions, ``unique=True`` can't be used on :class:`FileField`.
 
 ``unique_for_date``
 -------------------
@@ -350,7 +356,7 @@ respect to the month.
 Like :attr:`~Field.unique_for_date` and :attr:`~Field.unique_for_month`.
 
 ``verbose_name``
--------------------
+----------------
 
 .. attribute:: Field.verbose_name
 
@@ -359,7 +365,7 @@ will automatically create it using the field's attribute name, converting
 underscores to spaces. See :ref:`Verbose field names <verbose-field-names>`.
 
 ``validators``
--------------------
+--------------
 
 .. attribute:: Field.validators
 
@@ -411,7 +417,7 @@ guaranteed to fit numbers from ``-9223372036854775808`` to
 :class:`~django.forms.TextInput`.
 
 ``BinaryField``
--------------------
+---------------
 
 .. class:: BinaryField(**options)
 
@@ -466,13 +472,6 @@ The default form widget for this field is a :class:`~django.forms.TextInput`.
     database backends, you should be aware that there are restrictions on
     ``max_length`` for some backends. Refer to the :doc:`database backend
     notes </ref/databases>` for details.
-
-.. admonition:: MySQL users
-
-    If you are using this field with MySQLdb 1.2.2 and the ``utf8_bin``
-    collation (which is *not* the default), there are some issues to be aware
-    of. Refer to the :ref:`MySQL database notes <mysql-collation>` for
-    details.
 
 ``CommaSeparatedIntegerField``
 ------------------------------
@@ -626,8 +625,8 @@ uses :class:`~django.core.validators.EmailValidator` to validate the input.
 A file-upload field.
 
 .. note::
-    The ``primary_key`` and ``unique`` arguments are not supported, and will
-    raise a ``TypeError`` if used.
+    The ``primary_key`` argument isn't supported and will raise a an error if
+    used.
 
 Has two optional arguments:
 
@@ -1066,8 +1065,6 @@ of some other value.  You can do this automatically in the admin using
 
 .. attribute:: SlugField.allow_unicode
 
-    .. versionadded:: 1.9
-
     If ``True``, the field accepts Unicode letters in addition to ASCII
     letters. Defaults to ``False``.
 
@@ -1092,13 +1089,6 @@ If you specify a ``max_length`` attribute, it will be reflected in the
 :class:`~django.forms.Textarea` widget of the auto-generated form field.
 However it is not enforced at the model or database level. Use a
 :class:`CharField` for that.
-
-.. admonition:: MySQL users
-
-    If you are using this field with MySQLdb 1.2.1p2 and the ``utf8_bin``
-    collation (which is *not* the default), there are some issues to be aware
-    of. Refer to the :ref:`MySQL database notes <mysql-collation>` for
-    details.
 
 ``TimeField``
 -------------
@@ -1166,12 +1156,6 @@ Django also defines a set of fields that represent relations.
 
 A many-to-one relationship. Requires a positional argument: the class to which
 the model is related.
-
-.. versionchanged:: 1.9
-
-    ``on_delete`` can now be used as the second positional argument (previously
-    it was typically only passed as a keyword argument). It will be a required
-    argument in Django 2.0.
 
 .. _recursive-relationships:
 
@@ -1426,7 +1410,8 @@ The possible values for :attr:`~ForeignKey.on_delete` are found in
 .. attribute:: ForeignKey.to_field
 
     The field on the related object that the relation is to. By default, Django
-    uses the primary key of the related object.
+    uses the primary key of the related object. If you reference a different
+    field, that field must have ``unique=True``.
 
 .. attribute:: ForeignKey.db_constraint
 
@@ -1673,12 +1658,6 @@ relationship at the database level.
 A one-to-one relationship. Conceptually, this is similar to a
 :class:`ForeignKey` with :attr:`unique=True <Field.unique>`, but the
 "reverse" side of the relation will directly return a single object.
-
-.. versionchanged:: 1.9
-
-    ``on_delete`` can now be used as the second positional argument (previously
-    it was typically only passed as a keyword argument). It will be a required
-    argument in Django 2.0.
 
 This is most useful as the primary key of a model which "extends"
 another model in some way; :ref:`multi-table-inheritance` is
@@ -2014,6 +1993,5 @@ have boolean values (rather than ``None``) if the field is a relation type
 .. attribute:: Field.related_model
 
     Points to the model the field relates to. For example, ``Author`` in
-    ``ForeignKey(Author, on_delete=models.CASCADE)``. If a field has a generic
-    relation (such as a ``GenericForeignKey`` or a ``GenericRelation``) then
-    ``related_model`` will be ``None``.
+    ``ForeignKey(Author, on_delete=models.CASCADE)``. The ``related_model`` for
+    a ``GenericForeignKey`` is always ``None``.

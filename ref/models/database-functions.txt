@@ -76,11 +76,11 @@ Usage examples::
     A Python value passed to ``Coalesce`` on MySQL may be converted to an
     incorrect type unless explicitly cast to the correct database type:
 
-    >>> from django.db.models.expressions import RawSQL
+    >>> from django.db.models import DateTimeField
+    >>> from django.db.models.functions import Cast, Coalesce
     >>> from django.utils import timezone
     >>> now = timezone.now()
-    >>> now_sql = RawSQL("cast(%s as datetime)", (now,))
-    >>> Coalesce('updated', now_sql)
+    >>> Coalesce('updated', Cast(now, DateTimeField()))
 
 ``Concat``
 ==========
@@ -113,8 +113,6 @@ Usage example::
 ============
 
 .. class:: Greatest(*expressions, **extra)
-
-.. versionadded:: 1.9
 
 Accepts a list of at least two field names or expressions and returns the
 greatest value. Each argument must be of a similar type, so mixing text and
@@ -157,8 +155,6 @@ and ``comment.modified``.
 =========
 
 .. class:: Least(*expressions, **extra)
-
-.. versionadded:: 1.9
 
 Accepts a list of at least two field names or expressions and returns the
 least value. Each argument must be of a similar type, so mixing text and numbers
@@ -204,10 +200,6 @@ It can also be registered as a transform. For example::
     >>> # Get authors whose name is longer than 7 characters
     >>> authors = Author.objects.filter(name__length__gt=7)
 
-.. versionchanged:: 1.9
-
-    The ability to register the function as a transform was added.
-
 ``Lower``
 =========
 
@@ -226,16 +218,10 @@ Usage example::
     >>> print(author.name_lower)
     margaret smith
 
-.. versionchanged:: 1.9
-
-    The ability to register the function as a transform was added.
-
 ``Now``
 =======
 
 .. class:: Now()
-
-.. versionadded:: 1.9
 
 Returns the database server's current date and time when the query is executed,
 typically using the SQL ``CURRENT_TIMESTAMP``.
@@ -290,10 +276,6 @@ Usage example::
     >>> print(author.name_upper)
     MARGARET SMITH
 
-.. versionchanged:: 1.9
-
-    The ability to register the function as a transform was added.
-
 Date Functions
 ==============
 
@@ -306,8 +288,10 @@ We'll be using the following model in examples of each function::
     class Experiment(models.Model):
         start_datetime = models.DateTimeField()
         start_date = models.DateField(null=True, blank=True)
+        start_time = models.TimeField(null=True, blank=True)
         end_datetime = models.DateTimeField(null=True, blank=True)
         end_date = models.DateField(null=True, blank=True)
+        end_time = models.TimeField(null=True, blank=True)
 
 ``Extract``
 -----------
@@ -329,6 +313,7 @@ Given the datetime ``2015-06-15 23:30:01.000321+00:00``, the built-in
 * "year": 2015
 * "month": 6
 * "day": 15
+* "week": 25
 * "week_day": 2
 * "hour": 23
 * "minute": 30
@@ -355,6 +340,14 @@ returned when this timezone is active will be the same as above except for:
         >>> dt = datetime(2015, 6, 15)
         >>> (dt.isoweekday() % 7) + 1
         2
+
+.. admonition:: ``week`` values
+
+    The ``week`` ``lookup_type`` is calculated based on `ISO-8601
+    <https://en.wikipedia.org/wiki/ISO-8601>`_, i.e.,
+    a week starts on a Monday. The first week is the one with the majority
+    of the days, i.e., a week that starts on or before Thursday. The value
+    returned is in the range 1 to 52 or 53.
 
 Each ``lookup_name`` above has a corresponding ``Extract`` subclass (listed
 below) that should typically be used instead of the more verbose equivalent,
@@ -397,6 +390,12 @@ Usage example::
 .. class:: ExtractWeekDay(expression, tzinfo=None, **extra)
 
     .. attribute:: lookup_name = 'week_day'
+
+.. class:: ExtractWeek(expression, tzinfo=None, **extra)
+
+    .. versionadded:: 1.11
+
+    .. attribute:: lookup_name = 'week'
 
 These are logically equivalent to ``Extract('date_field', lookup_name)``. Each
 class is also a ``Transform`` registered on ``DateField`` and ``DateTimeField``
@@ -518,13 +517,14 @@ but not the exact second, then ``Trunc`` (and its subclasses) can be useful to
 filter or aggregate your data. For example, you can use ``Trunc`` to calculate
 the number of sales per day.
 
-``Trunc`` takes a single ``expression``, representing a ``DateField`` or
-``DateTimeField``, a ``kind`` representing a date part, and an ``output_field``
-that's either ``DateTimeField()`` or ``DateField()``. It returns a datetime or
-date, depending on ``output_field``, with fields up to ``kind`` set to their
-minimum value. If ``output_field`` is omitted, it will default to the
-``output_field`` of ``expression``. A ``tzinfo`` subclass, usually provided by
-``pytz``, can be passed to truncate a value in a specific timezone.
+``Trunc`` takes a single ``expression``, representing a ``DateField``,
+``TimeField``, or ``DateTimeField``, a ``kind`` representing a date or time
+part, and an ``output_field`` that's either ``DateTimeField()``,
+``TimeField()``, or ``DateField()``. It returns a datetime, date, or time
+depending on ``output_field``, with fields up to ``kind`` set to their minimum
+value. If ``output_field`` is omitted, it will default to the ``output_field``
+of ``expression``. A ``tzinfo`` subclass, usually provided by ``pytz``, can be
+passed to truncate a value in a specific timezone.
 
 Given the datetime ``2015-06-15 14:30:50.000321+00:00``, the built-in ``kind``\s
 return:
@@ -634,6 +634,61 @@ that deal with date-parts can be used with ``DateField``::
     2016-01-01 00:00:00+11:00 1
     2014-06-01 00:00:00+10:00 1
 
+``TimeField`` truncation
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 1.11
+
+.. class:: TruncHour(expression, output_field=None, tzinfo=None, **extra)
+
+    .. attribute:: kind = 'hour'
+
+.. class:: TruncMinute(expression, output_field=None, tzinfo=None, **extra)
+
+    .. attribute:: kind = 'minute'
+
+.. class:: TruncSecond(expression, output_field=None, tzinfo=None, **extra)
+
+    .. attribute:: kind = 'second'
+
+These are logically equivalent to ``Trunc('time_field', kind)``. They truncate
+all parts of the time up to ``kind`` which allows grouping or filtering times
+with less precision. ``expression`` can have an ``output_field`` of either
+``TimeField`` or ``DateTimeField``.
+
+Since ``TimeField``\s don't have a date component, only ``Trunc`` subclasses
+that deal with time-parts can be used with ``TimeField``::
+
+    >>> from datetime import datetime
+    >>> from django.db.models import Count, TimeField
+    >>> from django.db.models.functions import TruncHour
+    >>> from django.utils import timezone
+    >>> start1 = datetime(2014, 6, 15, 14, 30, 50, 321, tzinfo=timezone.utc)
+    >>> start2 = datetime(2014, 6, 15, 14, 40, 2, 123, tzinfo=timezone.utc)
+    >>> start3 = datetime(2015, 12, 31, 17, 5, 27, 999, tzinfo=timezone.utc)
+    >>> Experiment.objects.create(start_datetime=start1, start_time=start1.time())
+    >>> Experiment.objects.create(start_datetime=start2, start_time=start2.time())
+    >>> Experiment.objects.create(start_datetime=start3, start_time=start3.time())
+    >>> experiments_per_hour = Experiment.objects.annotate(
+    ...    hour=TruncHour('start_datetime', output_field=TimeField()),
+    ... ).values('hour').annotate(experiments=Count('id'))
+    >>> for exp in experiments_per_hour:
+    ...     print(exp['hour'], exp['experiments'])
+    ...
+    14:00:00 2
+    17:00:00 1
+
+    >>> import pytz
+    >>> melb = pytz.timezone('Australia/Melbourne')
+    >>> experiments_per_hour = Experiment.objects.annotate(
+    ...    hour=TruncHour('start_datetime', tzinfo=melb),
+    ... ).values('hour').annotate(experiments=Count('id'))
+    >>> for exp in experiments_per_hour:
+    ...     print(exp['hour'], exp['experiments'])
+    ...
+    2014-06-16 00:00:00+10:00 2
+    2016-01-01 04:00:00+11:00 1
+
 ``DateTimeField`` truncation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -645,6 +700,17 @@ that deal with date-parts can be used with ``DateField``::
 ``TruncDate`` casts ``expression`` to a date rather than using the built-in SQL
 truncate function. It's also registered as a transform on  ``DateTimeField`` as
 ``__date``.
+
+.. class:: TruncTime(expression, **extra)
+
+.. versionadded:: 1.11
+
+    .. attribute:: lookup_name = 'time'
+    .. attribute:: output_field = TimeField()
+
+``TruncTime`` casts ``expression`` to a time rather than using the built-in SQL
+truncate function. It's also registered as a transform on ``DateTimeField`` as
+``__time``.
 
 .. class:: TruncDay(expression, output_field=None, tzinfo=None, **extra)
 

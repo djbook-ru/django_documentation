@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-08 11:07+0200\n"
+"POT-Creation-Date: 2017-04-05 11:28+0300\n"
 "PO-Revision-Date: 2016-03-17 18:31+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -79,7 +79,7 @@ msgstr ""
 "``Allow from all`` и добавьте выше ``Order deny,allow``."
 
 # d865e1b416404657aba06cc0ccfb3b6e
-#: ../../howto/deployment/wsgi/modwsgi.txt:45
+#: ../../howto/deployment/wsgi/modwsgi.txt:46
 msgid ""
 "The first bit in the ``WSGIScriptAlias`` line is the base URL path you want "
 "to serve your application at (``/`` indicates the root url), and the second "
@@ -95,8 +95,15 @@ msgstr ""
 "обрабатывать любой запрос из директории, указанной как базовая с помощью "
 "WSGI-приложения, хранящегося в ней."
 
+#: ../../howto/deployment/wsgi/modwsgi.txt:53
+msgid ""
+"If you install your project's Python dependencies inside a `virtualenv`_, "
+"add the path to the virtualenv using ``WSGIPythonHome``. See the `mod_wsgi "
+"virtualenv guide`_ for more details."
+msgstr ""
+
 # 67c45d70148c48129e68fa4b28a72100
-#: ../../howto/deployment/wsgi/modwsgi.txt:52
+#: ../../howto/deployment/wsgi/modwsgi.txt:57
 msgid ""
 "The ``WSGIPythonPath`` line ensures that your project package is available "
 "for import on the Python path; in other words, that ``import mysite`` works."
@@ -105,7 +112,7 @@ msgstr ""
 "говоря, что команда ``import mysite`` сработает."
 
 # 42d51bc9ab65460c80803ec674802df6
-#: ../../howto/deployment/wsgi/modwsgi.txt:55
+#: ../../howto/deployment/wsgi/modwsgi.txt:60
 msgid ""
 "The ``<Directory>`` piece just ensures that Apache can access your :file:"
 "`wsgi.py` file."
@@ -114,7 +121,7 @@ msgstr ""
 "`wsgi.py`."
 
 # f21fbac8bca74db589950f760f5776a7
-#: ../../howto/deployment/wsgi/modwsgi.txt:58
+#: ../../howto/deployment/wsgi/modwsgi.txt:63
 msgid ""
 "Next we'll need to ensure this :file:`wsgi.py` with a WSGI application "
 "object exists. As of Django version 1.4, :djadmin:`startproject` will have "
@@ -129,7 +136,7 @@ msgstr ""
 "файла и то, какие настройки вы можете добавить."
 
 # ce6f442bec8849d094d881b3e990ca34
-#: ../../howto/deployment/wsgi/modwsgi.txt:66
+#: ../../howto/deployment/wsgi/modwsgi.txt:74
 msgid ""
 "If multiple Django sites are run in a single mod_wsgi process, all of them "
 "will use the settings of whichever one happens to run first. This can be "
@@ -139,11 +146,11 @@ msgstr ""
 "будут использовать настройки сайта, который первый загрузился. Это можно "
 "исправить, поменяв::"
 
-#: ../../howto/deployment/wsgi/modwsgi.txt:72
+#: ../../howto/deployment/wsgi/modwsgi.txt:80
 msgid "in ``wsgi.py``, to::"
 msgstr "в ``wsgi.py`` на::"
 
-#: ../../howto/deployment/wsgi/modwsgi.txt:76
+#: ../../howto/deployment/wsgi/modwsgi.txt:84
 msgid ""
 "or by :ref:`using mod_wsgi daemon mode<daemon-mode>` and ensuring that each "
 "site runs in its own daemon process."
@@ -151,11 +158,11 @@ msgstr ""
 "или :ref:`используя mod_wsgi daemon mode<daemon-mode>` при котором каждый "
 "сайт запущен в отдельном фоновом процессе."
 
-#: ../../howto/deployment/wsgi/modwsgi.txt:79
+#: ../../howto/deployment/wsgi/modwsgi.txt:87
 msgid "Fixing ``UnicodeEncodeError`` for file uploads"
 msgstr "Исправляем ``UnicodeEncodeError`` при загрузке файлов"
 
-#: ../../howto/deployment/wsgi/modwsgi.txt:81
+#: ../../howto/deployment/wsgi/modwsgi.txt:89
 msgid ""
 "If you get a ``UnicodeEncodeError`` when uploading files with file names "
 "that contain non-ASCII characters, make sure Apache is configured to accept "
@@ -165,59 +172,25 @@ msgstr ""
 "которых содержат не ASCII символы, убедитесь, что Apache настроен для "
 "загрузки таких файлов::"
 
-#: ../../howto/deployment/wsgi/modwsgi.txt:88
+#: ../../howto/deployment/wsgi/modwsgi.txt:96
 msgid ""
 "A common location to put this configuration is ``/etc/apache2/envvars``."
 msgstr "Настройки обычно находятся в ``/etc/apache2/envvars``."
 
-#: ../../howto/deployment/wsgi/modwsgi.txt:90
+#: ../../howto/deployment/wsgi/modwsgi.txt:98
 msgid ""
 "See the :ref:`unicode-files` section of the Unicode reference guide for "
 "details."
 msgstr "Подробности смотрите в разделе :ref:`unicode-files`."
 
-# 76ed30d6ece94aecb6ba32b64b3976e4
-#: ../../howto/deployment/wsgi/modwsgi.txt:94
-#, fuzzy
-msgid "Using a ``virtualenv``"
-msgstr "Использование virtualenv"
-
-# ae59a117f09d4a2d9309a828f99dd06f
-#: ../../howto/deployment/wsgi/modwsgi.txt:96
-msgid ""
-"If you install your project's Python dependencies inside a `virtualenv`_, "
-"you'll need to add the path to this virtualenv's ``site-packages`` directory "
-"to your Python path as well. To do this, add an additional path to your "
-"``WSGIPythonPath`` directive, with multiple paths separated by a colon (``:"
-"``) if using a UNIX-like system, or a semicolon (``;``) if using Windows. If "
-"any part of a directory path contains a space character, the complete "
-"argument string to ``WSGIPythonPath`` must be quoted:"
-msgstr ""
-"Если вы установили зависимости проекта с помощью `virtualenv <https://"
-"virtualenv.pypa.io/en/latest/>`_, вам следует добавить в пути Python путь к "
-"директории ``site-packages``, находящейся в вашем виртуальном окружении. Для "
-"этого добавьте дополнительный путь к ``WSGIPythonPath``, разделив его "
-"двоеточием, если вы используете UNIX-системы, или точкой с запятой, если вы "
-"используете Windows. Если путь содержит пробелы, вся строка для "
-"``WSGIPythonPath`` должна быть экранирована:"
-
-# 5a3def3d738d4169b654d2ec78f99d87
-#: ../../howto/deployment/wsgi/modwsgi.txt:108
-msgid ""
-"Make sure you give the correct path to your virtualenv, and replace "
-"``python3.X`` with the correct Python version (e.g. ``python3.4``)."
-msgstr ""
-"Убедитесь в том, что путь к виртуальному окружению указан верно и замените "
-"``python3.X`` на используемую вами версию Python (например, ``python3.4``). "
-
 # 91c61077e72744ada9d373deca273473
-#: ../../howto/deployment/wsgi/modwsgi.txt:116
+#: ../../howto/deployment/wsgi/modwsgi.txt:104
 #, fuzzy
 msgid "Using ``mod_wsgi`` daemon mode"
 msgstr "Использование ``mod_wsgi`` в режиме демона"
 
 # 6ce752b518dc4f239d406d084a722f26
-#: ../../howto/deployment/wsgi/modwsgi.txt:118
+#: ../../howto/deployment/wsgi/modwsgi.txt:106
 msgid ""
 "\"Daemon mode\" is the recommended mode for running mod_wsgi (on non-Windows "
 "platforms). To create the required daemon process group and delegate the "
@@ -235,7 +208,7 @@ msgstr ""
 "вместо этого укажите опцию ``python-path`` , чтобы использовать возможности "
 "``WSGIDaemonProcess``, к примеру:: "
 
-#: ../../howto/deployment/wsgi/modwsgi.txt:131
+#: ../../howto/deployment/wsgi/modwsgi.txt:119
 msgid ""
 "If you want to serve your project in a subdirectory (``https://example.com/"
 "mysite`` in this example), you can add ``WSGIScriptAlias`` to the "
@@ -245,7 +218,7 @@ msgstr ""
 "этом примере), вы можете указать в настройках ``WSGIScriptAlias``:"
 
 # f73775a4cca84772a5512cb68bea496a
-#: ../../howto/deployment/wsgi/modwsgi.txt:139
+#: ../../howto/deployment/wsgi/modwsgi.txt:127
 msgid ""
 "See the official mod_wsgi documentation for `details on setting up daemon "
 "mode`_."
@@ -255,12 +228,12 @@ msgstr ""
 "QuickConfigurationGuide#Delegation_To_Daemon_Process>`_."
 
 # ad62ef849a2e41ae9329c6cdd6a2e0fa
-#: ../../howto/deployment/wsgi/modwsgi.txt:147
+#: ../../howto/deployment/wsgi/modwsgi.txt:135
 msgid "Serving files"
 msgstr "Обслуживание файлов"
 
 # 08841bd561a84c429896b8a551f784b1
-#: ../../howto/deployment/wsgi/modwsgi.txt:149
+#: ../../howto/deployment/wsgi/modwsgi.txt:137
 msgid ""
 "Django doesn't serve files itself; it leaves that job to whichever Web "
 "server you choose."
@@ -269,7 +242,7 @@ msgstr ""
 "любому выбранному вами веб-серверу."
 
 # 8682455694be4e68b52692574fc8e00d
-#: ../../howto/deployment/wsgi/modwsgi.txt:152
+#: ../../howto/deployment/wsgi/modwsgi.txt:140
 msgid ""
 "We recommend using a separate Web server -- i.e., one that's not also "
 "running Django -- for serving media. Here are some good choices:"
@@ -279,17 +252,17 @@ msgstr ""
 "неплохих вариантов::"
 
 # 6ef36152306548e8999e32c60e577daa
-#: ../../howto/deployment/wsgi/modwsgi.txt:155
+#: ../../howto/deployment/wsgi/modwsgi.txt:143
 msgid "Nginx_"
 msgstr "`Nginx <http://wiki.nginx.org/Main>`_"
 
 # f8314908f5d5447ea46b86052262c74b
-#: ../../howto/deployment/wsgi/modwsgi.txt:156
+#: ../../howto/deployment/wsgi/modwsgi.txt:144
 msgid "A stripped-down version of Apache_"
 msgstr "Неполная версия `Apache <http://httpd.apache.org/>`_"
 
 # 9ea8a236b83b43729fbd2bb429767a46
-#: ../../howto/deployment/wsgi/modwsgi.txt:158
+#: ../../howto/deployment/wsgi/modwsgi.txt:146
 msgid ""
 "If, however, you have no option but to serve media files on the same Apache "
 "``VirtualHost`` as Django, you can set up Apache to serve some URLs as "
@@ -301,7 +274,7 @@ msgstr ""
 "используя интерфейс mod_wsgi."
 
 # 12edb3d249bd4676bad42435c0f63cfc
-#: ../../howto/deployment/wsgi/modwsgi.txt:162
+#: ../../howto/deployment/wsgi/modwsgi.txt:150
 #, fuzzy
 msgid ""
 "This example sets up Django at the site root, but serves ``robots.txt``, "
@@ -314,7 +287,7 @@ msgstr ""
 "адреса будут обработаны при помощи mod_wsgi:"
 
 # 2a7dffc626974530826dec6c8c256dcd
-#: ../../howto/deployment/wsgi/modwsgi.txt:190
+#: ../../howto/deployment/wsgi/modwsgi.txt:178
 msgid ""
 "If you are using a version of Apache older than 2.4, replace ``Require all "
 "granted`` with ``Allow from all`` and also add the line ``Order deny,allow`` "
@@ -324,12 +297,12 @@ msgstr ""
 "на ``Allow from all`` и добавьте выше ``Order deny,allow``."
 
 # 74b3ab9338e14eb9a647453dd00e7cb1
-#: ../../howto/deployment/wsgi/modwsgi.txt:205
+#: ../../howto/deployment/wsgi/modwsgi.txt:193
 msgid "Serving the admin files"
 msgstr "Обслуживание административных файлов"
 
 # 8f16574475304b9fbbd82e08ab5b5366
-#: ../../howto/deployment/wsgi/modwsgi.txt:207
+#: ../../howto/deployment/wsgi/modwsgi.txt:195
 msgid ""
 "When :mod:`django.contrib.staticfiles` is in :setting:`INSTALLED_APPS`, the "
 "Django development server automatically serves the static files of the admin "
@@ -345,7 +318,7 @@ msgstr ""
 "использовании его для обслуживания административных файлов."
 
 # 589a36c876eb43d78d9b72560a7cdbb7
-#: ../../howto/deployment/wsgi/modwsgi.txt:213
+#: ../../howto/deployment/wsgi/modwsgi.txt:201
 msgid ""
 "The admin files live in (:file:`django/contrib/admin/static/admin`) of the "
 "Django distribution."
@@ -354,7 +327,7 @@ msgstr ""
 "admin`) в директории, где установлен Django."
 
 # eeba7d55ef9947fb8020d32e7a1560d4
-#: ../../howto/deployment/wsgi/modwsgi.txt:216
+#: ../../howto/deployment/wsgi/modwsgi.txt:204
 msgid ""
 "We **strongly** recommend using :mod:`django.contrib.staticfiles` to handle "
 "the admin files (along with a Web server as outlined in the previous "
@@ -371,7 +344,7 @@ msgstr ""
 "`STATIC_URL`), но есть и несколько иных подходов:"
 
 # 6d74e8c41d3c444286e2c93a519a6c74
-#: ../../howto/deployment/wsgi/modwsgi.txt:223
+#: ../../howto/deployment/wsgi/modwsgi.txt:211
 msgid ""
 "Create a symbolic link to the admin static files from within your document "
 "root (this may require ``+FollowSymLinks`` in your Apache configuration)."
@@ -381,7 +354,7 @@ msgstr ""
 "+FollowSymLinks`` в конфигурации Apache)."
 
 # bd57e6bd97c947469f6efe3eedb790e6
-#: ../../howto/deployment/wsgi/modwsgi.txt:227
+#: ../../howto/deployment/wsgi/modwsgi.txt:215
 msgid ""
 "Use an ``Alias`` directive, as demonstrated above, to alias the appropriate "
 "URL (probably :setting:`STATIC_URL` + ``admin/``) to the actual location of "
@@ -392,19 +365,19 @@ msgstr ""
 "`STATIC_URL` + ``admin/``), указывающего на фактическое расположение файлов."
 
 # ca128b77a768430b80e5ed4ac6a409a1
-#: ../../howto/deployment/wsgi/modwsgi.txt:231
+#: ../../howto/deployment/wsgi/modwsgi.txt:219
 msgid ""
 "Copy the admin static files so that they live within your Apache document "
 "root."
 msgstr "Копирование директории с административной статикой в корень Apache."
 
 # 677497efbd24415d8adeb4c45e07bffa
-#: ../../howto/deployment/wsgi/modwsgi.txt:235
+#: ../../howto/deployment/wsgi/modwsgi.txt:223
 msgid "Authenticating against Django's user database from Apache"
 msgstr "Идентификация пользовательской базы данных с Apache"
 
 # dd9d5b736ce04e3a9a3a79035414fa58
-#: ../../howto/deployment/wsgi/modwsgi.txt:237
+#: ../../howto/deployment/wsgi/modwsgi.txt:225
 msgid ""
 "Django provides a handler to allow Apache to authenticate users directly "
 "against Django's authentication backends. See the :doc:`mod_wsgi "
@@ -413,6 +386,39 @@ msgstr ""
 "Django предоставляет возможность идентификации пользователей средствами "
 "Apache см. :doc:`mod_wsgi authentication documentation </howto/deployment/"
 "wsgi/apache-auth>`."
+
+# 76ed30d6ece94aecb6ba32b64b3976e4
+#, fuzzy
+#~ msgid "Using a ``virtualenv``"
+#~ msgstr "Использование virtualenv"
+
+# ae59a117f09d4a2d9309a828f99dd06f
+#~ msgid ""
+#~ "If you install your project's Python dependencies inside a `virtualenv`_, "
+#~ "you'll need to add the path to this virtualenv's ``site-packages`` "
+#~ "directory to your Python path as well. To do this, add an additional path "
+#~ "to your ``WSGIPythonPath`` directive, with multiple paths separated by a "
+#~ "colon (``:``) if using a UNIX-like system, or a semicolon (``;``) if "
+#~ "using Windows. If any part of a directory path contains a space "
+#~ "character, the complete argument string to ``WSGIPythonPath`` must be "
+#~ "quoted:"
+#~ msgstr ""
+#~ "Если вы установили зависимости проекта с помощью `virtualenv <https://"
+#~ "virtualenv.pypa.io/en/latest/>`_, вам следует добавить в пути Python путь "
+#~ "к директории ``site-packages``, находящейся в вашем виртуальном "
+#~ "окружении. Для этого добавьте дополнительный путь к ``WSGIPythonPath``, "
+#~ "разделив его двоеточием, если вы используете UNIX-системы, или точкой с "
+#~ "запятой, если вы используете Windows. Если путь содержит пробелы, вся "
+#~ "строка для ``WSGIPythonPath`` должна быть экранирована:"
+
+# 5a3def3d738d4169b654d2ec78f99d87
+#~ msgid ""
+#~ "Make sure you give the correct path to your virtualenv, and replace "
+#~ "``python3.X`` with the correct Python version (e.g. ``python3.4``)."
+#~ msgstr ""
+#~ "Убедитесь в том, что путь к виртуальному окружению указан верно и "
+#~ "замените ``python3.X`` на используемую вами версию Python (например, "
+#~ "``python3.4``). "
 
 # 7bfdd77d667f4c1082144bba7bfd59c9
 #~ msgid "If you get a UnicodeEncodeError"

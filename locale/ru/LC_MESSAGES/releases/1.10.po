@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-08 11:07+0200\n"
+"POT-Creation-Date: 2017-04-05 11:28+0300\n"
 "PO-Revision-Date: 2016-12-08 11:07+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -244,7 +244,7 @@ msgid ""
 msgstr ""
 
 #: ../../releases/1.10.txt:144 ../../releases/1.10.txt:734
-#: ../../releases/1.10.txt:946
+#: ../../releases/1.10.txt:963
 msgid ":mod:`django.contrib.gis`"
 msgstr ""
 
@@ -1128,7 +1128,7 @@ msgid ""
 "settings."
 msgstr ""
 
-#: ../../releases/1.10.txt:764 ../../releases/1.10.txt:1125
+#: ../../releases/1.10.txt:764 ../../releases/1.10.txt:1142
 msgid "Miscellaneous"
 msgstr ""
 
@@ -1287,10 +1287,13 @@ msgid ""
 "Required form fields now have the ``required`` HTML attribute. Set the :attr:"
 "`Form.use_required_attribute <django.forms.Form.use_required_attribute>` "
 "attribute to ``False`` to disable it. You could also add the ``novalidate`` "
-"attribute to ``<form>`` if you don't want browser validation."
+"attribute to ``<form>`` if you don't want browser validation. To disable the "
+"``required`` attribute on custom widgets, override the :meth:`Widget."
+"use_required_attribute() <django.forms.Widget.use_required_attribute>` "
+"method."
 msgstr ""
 
-#: ../../releases/1.10.txt:863
+#: ../../releases/1.10.txt:866
 msgid ""
 "The WSGI handler no longer removes content of responses from ``HEAD`` "
 "requests or responses with a ``status_code`` of 100-199, 204, or 304. Most "
@@ -1298,19 +1301,19 @@ msgid ""
 "Django test client continue to have these \"response fixes\" applied."
 msgstr ""
 
-#: ../../releases/1.10.txt:868
+#: ../../releases/1.10.txt:871
 msgid ""
 "``Model.__init__()`` now receives ``django.db.models.DEFERRED`` as the value "
 "of deferred fields."
 msgstr ""
 
-#: ../../releases/1.10.txt:871
+#: ../../releases/1.10.txt:874
 msgid ""
 "The ``Model._deferred`` attribute is removed as dynamic model classes when "
 "using ``QuerySet.defer()`` and ``only()`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:874
+#: ../../releases/1.10.txt:877
 msgid ""
 ":meth:`Storage.save() <django.core.files.storage.Storage.save>` no longer "
 "replaces ``'\\'`` with ``'/'``. This behavior is moved to :class:`~django."
@@ -1320,7 +1323,7 @@ msgid ""
 "storage's ``save()`` method."
 msgstr ""
 
-#: ../../releases/1.10.txt:881
+#: ../../releases/1.10.txt:884
 msgid ""
 "Private :class:`~django.db.models.FileField` methods "
 "``get_directory_name()`` and ``get_filename()`` are no longer called (and "
@@ -1331,80 +1334,99 @@ msgid ""
 "possible to use :attr:`~django.db.models.FileField.upload_to` also."
 msgstr ""
 
-#: ../../releases/1.10.txt:889
+#: ../../releases/1.10.txt:892
 msgid ""
 "The subject of mail sent by ``AdminEmailHandler`` is no longer truncated at "
 "989 characters. If you were counting on a limited length, truncate the "
 "subject yourself."
 msgstr ""
 
-#: ../../releases/1.10.txt:893
+#: ../../releases/1.10.txt:896
 msgid ""
 "Private expressions ``django.db.models.expressions.Date`` and ``DateTime`` "
 "are removed. The new :class:`~django.db.models.functions.datetime.Trunc` "
 "expressions provide the same functionality."
 msgstr ""
 
-#: ../../releases/1.10.txt:897
+#: ../../releases/1.10.txt:900
 msgid ""
 "The ``_base_manager`` and ``_default_manager`` attributes are removed from "
 "model instances. They remain accessible on the model class."
 msgstr ""
 
-#: ../../releases/1.10.txt:900
+#: ../../releases/1.10.txt:903
 msgid ""
 "Accessing a deleted field on a model instance, e.g. after ``del obj.field``, "
 "reloads the field's value instead of raising ``AttributeError``."
 msgstr ""
 
-#: ../../releases/1.10.txt:903
+#: ../../releases/1.10.txt:906
 msgid ""
 "If you subclass ``AbstractBaseUser`` and override ``clean()``, be sure it "
 "calls ``super()``. :meth:`.AbstractBaseUser.normalize_username` is called in "
 "a new :meth:`.AbstractBaseUser.clean` method."
 msgstr ""
 
-#: ../../releases/1.10.txt:907
+#: ../../releases/1.10.txt:910
 msgid ""
 "Private API ``django.forms.models.model_to_dict()`` returns a queryset "
 "rather than a list of primary keys for ``ManyToManyField``\\s ."
 msgstr ""
 
 #: ../../releases/1.10.txt:913
+msgid ""
+"If ``django.contrib.staticfiles`` is installed, the :ttag:`static`  template "
+"tag uses the ``staticfiles`` storage to construct the URL rather than simply "
+"joining the value with ``STATIC_ROOT``. The new approach encodes the URL, "
+"which could be backwards-incompatible in cases such as including a fragment "
+"in a path, e.g. ``{% static 'img.svg#fragment' %}``, since the ``#`` is "
+"encoded as ``%23``. To adapt, move the fragment outside the template tag: "
+"``{% static 'img.svg' %}#fragment``."
+msgstr ""
+
+#: ../../releases/1.10.txt:922
+msgid ""
+"When :setting:`USE_L10N` is ``True``, localization is now applied for the :"
+"tfilter:`date` and :tfilter:`time` filters when no format string is "
+"specified. The ``DATE_FORMAT`` and ``TIME_FORMAT`` specifiers from the "
+"active locale are used instead of the settings of the same name."
+msgstr ""
+
+#: ../../releases/1.10.txt:930
 msgid "Features deprecated in 1.10"
 msgstr ""
 
-#: ../../releases/1.10.txt:916
+#: ../../releases/1.10.txt:933
 msgid "Direct assignment to a reverse foreign key or many-to-many relation"
 msgstr ""
 
-#: ../../releases/1.10.txt:918
+#: ../../releases/1.10.txt:935
 msgid "Instead of assigning related objects using direct assignment::"
 msgstr ""
 
-#: ../../releases/1.10.txt:923
+#: ../../releases/1.10.txt:940
 msgid ""
 "Use the :meth:`~django.db.models.fields.related.RelatedManager.set` method "
 "added in Django 1.9::"
 msgstr ""
 
-#: ../../releases/1.10.txt:928
+#: ../../releases/1.10.txt:945
 msgid ""
 "This prevents confusion about an assignment resulting in an implicit save."
 msgstr ""
 
-#: ../../releases/1.10.txt:931
+#: ../../releases/1.10.txt:948
 msgid "Non-timezone-aware :class:`~django.core.files.storage.Storage` API"
 msgstr ""
 
-#: ../../releases/1.10.txt:933
+#: ../../releases/1.10.txt:950
 msgid ""
 "The old, non-timezone-aware methods ``accessed_time()``, ``created_time()``, "
 "and ``modified_time()`` are deprecated in favor of the new ``get_*_time()`` "
 "methods."
 msgstr ""
 
-#: ../../releases/1.10.txt:937
+#: ../../releases/1.10.txt:954
 msgid ""
 "Third-party storage backends should implement the new methods and mark the "
 "old ones as deprecated. Until then, the new ``get_*_time()`` methods on the "
@@ -1413,57 +1435,57 @@ msgid ""
 "do so."
 msgstr ""
 
-#: ../../releases/1.10.txt:942
+#: ../../releases/1.10.txt:959
 msgid ""
 "Third-party storage backends may retain the old methods as long as they wish "
 "to support earlier versions of Django."
 msgstr ""
 
-#: ../../releases/1.10.txt:948
+#: ../../releases/1.10.txt:965
 msgid ""
 "The ``get_srid()`` and ``set_srid()`` methods of :class:`~django.contrib.gis."
 "geos.GEOSGeometry` are deprecated in favor of the :attr:`~django.contrib.gis."
 "geos.GEOSGeometry.srid` property."
 msgstr ""
 
-#: ../../releases/1.10.txt:952
+#: ../../releases/1.10.txt:969
 msgid ""
 "The ``get_x()``, ``set_x()``, ``get_y()``, ``set_y()``, ``get_z()``, and "
 "``set_z()`` methods of :class:`~django.contrib.gis.geos.Point` are "
 "deprecated in favor of the ``x``, ``y``, and ``z`` properties."
 msgstr ""
 
-#: ../../releases/1.10.txt:956
+#: ../../releases/1.10.txt:973
 msgid ""
 "The ``get_coords()`` and ``set_coords()`` methods of :class:`~django.contrib."
 "gis.geos.Point` are deprecated in favor of the ``tuple`` property."
 msgstr ""
 
-#: ../../releases/1.10.txt:960
+#: ../../releases/1.10.txt:977
 msgid ""
 "The ``cascaded_union`` property of :class:`~django.contrib.gis.geos."
 "MultiPolygon` is deprecated in favor of the :attr:`~django.contrib.gis.geos."
 "GEOSGeometry.unary_union` property."
 msgstr ""
 
-#: ../../releases/1.10.txt:964
+#: ../../releases/1.10.txt:981
 msgid ""
 "The ``django.contrib.gis.utils.precision_wkt()`` function is deprecated in "
 "favor of :class:`~django.contrib.gis.geos.WKTWriter`."
 msgstr ""
 
-#: ../../releases/1.10.txt:968
+#: ../../releases/1.10.txt:985
 msgid "``CommaSeparatedIntegerField`` model field"
 msgstr ""
 
-#: ../../releases/1.10.txt:970
+#: ../../releases/1.10.txt:987
 msgid ""
 "``CommaSeparatedIntegerField`` is deprecated in favor of :class:`~django.db."
 "models.CharField` with the :func:`~django.core.validators."
 "validate_comma_separated_integer_list` validator::"
 msgstr ""
 
-#: ../../releases/1.10.txt:981
+#: ../../releases/1.10.txt:998
 msgid ""
 "If you're using Oracle, ``CharField`` uses a different database field  type "
 "(``NVARCHAR2``) than ``CommaSeparatedIntegerField`` (``VARCHAR2``). "
@@ -1475,16 +1497,16 @@ msgid ""
 "using ``distinct()``) you'll need to change them (to defer the field)."
 msgstr ""
 
-#: ../../releases/1.10.txt:991
+#: ../../releases/1.10.txt:1008
 msgid ""
 "Using a model name as a query lookup when ``default_related_name`` is set"
 msgstr ""
 
-#: ../../releases/1.10.txt:993
+#: ../../releases/1.10.txt:1010
 msgid "Assume the following models::"
 msgstr ""
 
-#: ../../releases/1.10.txt:1006
+#: ../../releases/1.10.txt:1023
 msgid ""
 "In older versions, :attr:`~django.db.models.Options.default_related_name` "
 "couldn't be used as a query lookup. This is fixed and support for the old "
@@ -1492,26 +1514,26 @@ msgid ""
 "set in model ``Bar``, instead of using the model name ``bar`` as the lookup::"
 msgstr ""
 
-#: ../../releases/1.10.txt:1014
+#: ../../releases/1.10.txt:1031
 msgid "use the default_related_name ``bars``::"
 msgstr ""
 
-#: ../../releases/1.10.txt:1021
+#: ../../releases/1.10.txt:1038
 msgid "``__search`` query lookup"
 msgstr ""
 
-#: ../../releases/1.10.txt:1023
+#: ../../releases/1.10.txt:1040
 msgid ""
 "The ``search`` lookup, which supports MySQL only and is extremely limited in "
 "features, is deprecated. Replace it with a custom lookup::"
 msgstr ""
 
-#: ../../releases/1.10.txt:1043
+#: ../../releases/1.10.txt:1060
 msgid ""
 "Using ``User.is_authenticated()`` and ``User.is_anonymous()`` as methods"
 msgstr ""
 
-#: ../../releases/1.10.txt:1045
+#: ../../releases/1.10.txt:1062
 msgid ""
 "The ``is_authenticated()`` and ``is_anonymous()`` methods of :class:`~django."
 "contrib.auth.models.AbstractBaseUser` and :class:`~django.contrib.auth."
@@ -1519,30 +1541,30 @@ msgid ""
 "methods until Django 2.0, but all usage in Django now uses attribute access."
 msgstr ""
 
-#: ../../releases/1.10.txt:1051
+#: ../../releases/1.10.txt:1068
 msgid ""
 "For example, if you use :class:`~django.contrib.auth.middleware."
 "AuthenticationMiddleware` and want to know whether the user is currently "
 "logged-in you would use::"
 msgstr ""
 
-#: ../../releases/1.10.txt:1060
+#: ../../releases/1.10.txt:1077
 msgid "instead of ``request.user.is_authenticated()``."
 msgstr ""
 
-#: ../../releases/1.10.txt:1062
+#: ../../releases/1.10.txt:1079
 msgid ""
 "This change avoids accidental information leakage if you forget to call the "
 "method, e.g.::"
 msgstr ""
 
-#: ../../releases/1.10.txt:1068
+#: ../../releases/1.10.txt:1085
 msgid ""
 "If you override these methods in a custom user model, you must change them "
 "to properties or attributes."
 msgstr ""
 
-#: ../../releases/1.10.txt:1071
+#: ../../releases/1.10.txt:1088
 msgid ""
 "Django uses a ``CallableBool`` object to allow these attributes to work as "
 "both a property and a method. Thus, until the deprecation period ends, you "
@@ -1550,38 +1572,38 @@ msgid ""
 "following won't work::"
 msgstr ""
 
-#: ../../releases/1.10.txt:1080
+#: ../../releases/1.10.txt:1097
 msgid ""
 "Custom manager classes available through ``prefetch_related`` must define a "
 "``_apply_rel_filters()`` method"
 msgstr ""
 
-#: ../../releases/1.10.txt:1082
+#: ../../releases/1.10.txt:1099
 msgid ""
 "If you defined a custom manager class available through :meth:`~django.db."
 "models.query.QuerySet.prefetch_related` you must make sure it defines a "
 "``_apply_rel_filters()`` method."
 msgstr ""
 
-#: ../../releases/1.10.txt:1086
+#: ../../releases/1.10.txt:1103
 msgid ""
 "This method must accept a :class:`~django.db.models.query.QuerySet` instance "
 "as its single argument and return a filtered version of the queryset for the "
 "model instance the manager is bound to."
 msgstr ""
 
-#: ../../releases/1.10.txt:1091
+#: ../../releases/1.10.txt:1108
 msgid "The \"escape\" half of ``django.utils.safestring``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1093
+#: ../../releases/1.10.txt:1110
 msgid ""
 "The ``mark_for_escaping()`` function and the classes it uses: "
 "``EscapeData``, ``EscapeBytes``, ``EscapeText``, ``EscapeString``, and "
 "``EscapeUnicode`` are deprecated."
 msgstr ""
 
-#: ../../releases/1.10.txt:1097
+#: ../../releases/1.10.txt:1114
 msgid ""
 "As a result, the \"lazy\" behavior of the ``escape`` filter (where it would "
 "always be applied as the last filter no matter where in the filter chain it "
@@ -1589,18 +1611,18 @@ msgid ""
 "`~django.utils.html.conditional_escape` in Django 2.0."
 msgstr ""
 
-#: ../../releases/1.10.txt:1103
+#: ../../releases/1.10.txt:1120
 msgid "``Manager.use_for_related_fields`` and inheritance changes"
 msgstr ""
 
-#: ../../releases/1.10.txt:1105
+#: ../../releases/1.10.txt:1122
 msgid ""
 "``Manager.use_for_related_fields`` is deprecated in favor of setting :attr:"
 "`Meta.base_manager_name <django.db.models.Options.base_manager_name>` on the "
 "model."
 msgstr ""
 
-#: ../../releases/1.10.txt:1109
+#: ../../releases/1.10.txt:1126
 msgid ""
 "Model ``Manager`` inheritance will follow MRO inheritance rules in Django "
 "2.0, changing the current behavior where managers defined on non-abstract "
@@ -1612,7 +1634,7 @@ msgid ""
 "to the new inheritance behavior."
 msgstr ""
 
-#: ../../releases/1.10.txt:1118
+#: ../../releases/1.10.txt:1135
 msgid ""
 "During the deprecation period, ``use_for_related_fields`` will be honored "
 "and raise a warning, even if a ``base_manager_name`` is set. This allows "
@@ -1621,70 +1643,70 @@ msgid ""
 "``silence_use_for_related_fields_deprecation=True`` on the manager."
 msgstr ""
 
-#: ../../releases/1.10.txt:1127
+#: ../../releases/1.10.txt:1144
 msgid ""
 "The ``makemigrations --exit`` option is deprecated in favor of the :option:"
 "`makemigrations --check` option."
 msgstr ""
 
-#: ../../releases/1.10.txt:1130
+#: ../../releases/1.10.txt:1147
 msgid ""
 "``django.utils.functional.allow_lazy()`` is deprecated in favor of the new :"
 "func:`~django.utils.functional.keep_lazy` function which can be used with a "
 "more natural decorator syntax."
 msgstr ""
 
-#: ../../releases/1.10.txt:1134
+#: ../../releases/1.10.txt:1151
 msgid ""
 "The ``shell --plain`` option is deprecated in favor of ``-i python`` or ``--"
 "interface python``."
 msgstr ""
 
-#: ../../releases/1.10.txt:1137
+#: ../../releases/1.10.txt:1154
 msgid ""
 "Importing from the ``django.core.urlresolvers`` module is deprecated in "
 "favor of its new location, :mod:`django.urls`."
 msgstr ""
 
-#: ../../releases/1.10.txt:1140
+#: ../../releases/1.10.txt:1157
 msgid ""
 "The template ``Context.has_key()`` method is deprecated in favor of ``in``."
 msgstr ""
 
-#: ../../releases/1.10.txt:1142
+#: ../../releases/1.10.txt:1159
 msgid ""
 "The private attribute ``virtual_fields`` of ``Model._meta`` is deprecated in "
 "favor of ``private_fields``."
 msgstr ""
 
-#: ../../releases/1.10.txt:1145
+#: ../../releases/1.10.txt:1162
 msgid ""
 "The private keyword arguments ``virtual_only`` in ``Field."
 "contribute_to_class()`` and ``virtual`` in ``Model._meta.add_field()`` are "
 "deprecated in favor of ``private_only`` and ``private``, respectively."
 msgstr ""
 
-#: ../../releases/1.10.txt:1150
+#: ../../releases/1.10.txt:1167
 msgid ""
 "The ``javascript_catalog()`` and ``json_catalog()`` views are deprecated in "
 "favor of class-based views :class:`~django.views.i18n.JavaScriptCatalog` "
 "and :class:`~django.views.i18n.JSONCatalog`."
 msgstr ""
 
-#: ../../releases/1.10.txt:1154
+#: ../../releases/1.10.txt:1171
 msgid ""
 "In multi-table inheritance, implicit promotion of a ``OneToOneField`` to a "
 "``parent_link`` is deprecated. Add ``parent_link=True`` to such fields."
 msgstr ""
 
-#: ../../releases/1.10.txt:1157
+#: ../../releases/1.10.txt:1174
 msgid ""
 "The private API ``Widget._format_value()`` is made public and renamed to :"
 "meth:`~django.forms.Widget.format_value`. The old name will work through a "
 "deprecation period."
 msgstr ""
 
-#: ../../releases/1.10.txt:1161
+#: ../../releases/1.10.txt:1178
 msgid ""
 "Private ``FileField`` methods ``get_directory_name()`` and "
 "``get_filename()`` are deprecated in favor of performing this work in :meth:"
@@ -1692,242 +1714,242 @@ msgid ""
 "generate_filename>`)."
 msgstr ""
 
-#: ../../releases/1.10.txt:1166
+#: ../../releases/1.10.txt:1183
 msgid ""
 "Old-style middleware that uses  ``settings.MIDDLEWARE_CLASSES`` are "
 "deprecated. :ref:`Adapt old, custom middleware <upgrading-middleware>` and "
 "use the new :setting:`MIDDLEWARE` setting."
 msgstr ""
 
-#: ../../releases/1.10.txt:1173
+#: ../../releases/1.10.txt:1190
 msgid "Features removed in 1.10"
 msgstr ""
 
-#: ../../releases/1.10.txt:1175
+#: ../../releases/1.10.txt:1192
 msgid ""
 "These features have reached the end of their deprecation cycle and are "
 "removed in Django 1.10. See :ref:`deprecated-features-1.8` for details, "
 "including how to remove usage of these features."
 msgstr ""
 
-#: ../../releases/1.10.txt:1179
+#: ../../releases/1.10.txt:1196
 msgid ""
 "Support for calling a ``SQLCompiler`` directly as an alias for calling its "
 "``quote_name_unless_alias`` method is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1182
+#: ../../releases/1.10.txt:1199
 msgid ""
 "The ``cycle`` and ``firstof`` template tags are removed from the ``future`` "
 "template tag library."
 msgstr ""
 
-#: ../../releases/1.10.txt:1185
+#: ../../releases/1.10.txt:1202
 msgid "``django.conf.urls.patterns()`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1187
+#: ../../releases/1.10.txt:1204
 msgid ""
 "Support for the ``prefix`` argument to ``django.conf.urls.i18n."
 "i18n_patterns()`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1190
+#: ../../releases/1.10.txt:1207
 msgid "``SimpleTestCase.urls`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1192
+#: ../../releases/1.10.txt:1209
 msgid ""
 "Using an incorrect count of unpacked values in the ``for`` template tag "
 "raises an exception rather than failing silently."
 msgstr ""
 
-#: ../../releases/1.10.txt:1195
+#: ../../releases/1.10.txt:1212
 msgid ""
 "The ability to :func:`~django.urls.reverse` URLs using a dotted Python path "
 "is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1198
+#: ../../releases/1.10.txt:1215
 msgid ""
 "The ability to use a dotted Python path for the ``LOGIN_URL`` and "
 "``LOGIN_REDIRECT_URL`` settings is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1201
+#: ../../releases/1.10.txt:1218
 msgid "Support for ``optparse`` is dropped for custom management commands."
 msgstr ""
 
-#: ../../releases/1.10.txt:1203
+#: ../../releases/1.10.txt:1220
 msgid "The class ``django.core.management.NoArgsCommand`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1205
+#: ../../releases/1.10.txt:1222
 msgid "``django.core.context_processors`` module is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1207
+#: ../../releases/1.10.txt:1224
 msgid "``django.db.models.sql.aggregates`` module is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1209
+#: ../../releases/1.10.txt:1226
 msgid "``django.contrib.gis.db.models.sql.aggregates`` module is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1211
+#: ../../releases/1.10.txt:1228
 msgid ""
 "The following methods and properties of ``django.db.sql.query.Query`` are "
 "removed:"
 msgstr ""
 
-#: ../../releases/1.10.txt:1214
+#: ../../releases/1.10.txt:1231
 msgid "Properties: ``aggregates`` and ``aggregate_select``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1215
+#: ../../releases/1.10.txt:1232
 msgid ""
 "Methods: ``add_aggregate``, ``set_aggregate_mask``, and "
 "``append_aggregate_mask``."
 msgstr ""
 
-#: ../../releases/1.10.txt:1218
+#: ../../releases/1.10.txt:1235
 msgid "``django.template.resolve_variable`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1220
+#: ../../releases/1.10.txt:1237
 msgid ""
 "The following private APIs are removed from :class:`django.db.models.options."
 "Options` (``Model._meta``):"
 msgstr ""
 
-#: ../../releases/1.10.txt:1223
+#: ../../releases/1.10.txt:1240
 msgid "``get_field_by_name()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1224
+#: ../../releases/1.10.txt:1241
 msgid "``get_all_field_names()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1225
+#: ../../releases/1.10.txt:1242
 msgid "``get_fields_with_model()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1226
+#: ../../releases/1.10.txt:1243
 msgid "``get_concrete_fields_with_model()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1227
+#: ../../releases/1.10.txt:1244
 msgid "``get_m2m_with_model()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1228
+#: ../../releases/1.10.txt:1245
 msgid "``get_all_related_objects()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1229
+#: ../../releases/1.10.txt:1246
 msgid "``get_all_related_objects_with_model()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1230
+#: ../../releases/1.10.txt:1247
 msgid "``get_all_related_many_to_many_objects()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1231
+#: ../../releases/1.10.txt:1248
 msgid "``get_all_related_m2m_objects_with_model()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1233
+#: ../../releases/1.10.txt:1250
 msgid ""
 "The ``error_message`` argument of ``django.forms.RegexField`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1235
+#: ../../releases/1.10.txt:1252
 msgid "The ``unordered_list`` filter no longer supports old style lists."
 msgstr ""
 
-#: ../../releases/1.10.txt:1237
+#: ../../releases/1.10.txt:1254
 msgid "Support for string ``view`` arguments to ``url()`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1239
+#: ../../releases/1.10.txt:1256
 msgid ""
 "The backward compatible shim  to rename ``django.forms.Form._has_changed()`` "
 "to ``has_changed()`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1242
+#: ../../releases/1.10.txt:1259
 msgid "The ``removetags`` template filter is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1244
+#: ../../releases/1.10.txt:1261
 msgid ""
 "The ``remove_tags()`` and ``strip_entities()`` functions in ``django.utils."
 "html`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1247
+#: ../../releases/1.10.txt:1264
 msgid ""
 "The ``is_admin_site`` argument to ``django.contrib.auth.views."
 "password_reset()`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1250
+#: ../../releases/1.10.txt:1267
 msgid "``django.db.models.field.subclassing.SubfieldBase`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1252
+#: ../../releases/1.10.txt:1269
 msgid "``django.utils.checksums`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1254
+#: ../../releases/1.10.txt:1271
 msgid ""
 "The ``original_content_type_id`` attribute on ``django.contrib.admin.helpers."
 "InlineAdminForm`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1257
+#: ../../releases/1.10.txt:1274
 msgid ""
 "The backwards compatibility shim to allow ``FormMixin.get_form()`` to be "
 "defined with no default value for its ``form_class`` argument is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1260
+#: ../../releases/1.10.txt:1277
 msgid ""
 "The following settings are removed, and :doc:`you must upgrade </ref/"
 "templates/upgrading>` to the :setting:`TEMPLATES` setting:"
 msgstr ""
 
-#: ../../releases/1.10.txt:1263
+#: ../../releases/1.10.txt:1280
 msgid "``ALLOWED_INCLUDE_ROOTS``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1264
+#: ../../releases/1.10.txt:1281
 msgid "``TEMPLATE_CONTEXT_PROCESSORS``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1265
+#: ../../releases/1.10.txt:1282
 msgid "``TEMPLATE_DEBUG``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1266
+#: ../../releases/1.10.txt:1283
 msgid "``TEMPLATE_DIRS``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1267
+#: ../../releases/1.10.txt:1284
 msgid "``TEMPLATE_LOADERS``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1268
+#: ../../releases/1.10.txt:1285
 msgid "``TEMPLATE_STRING_IF_INVALID``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1270
+#: ../../releases/1.10.txt:1287
 msgid ""
 "The backwards compatibility alias ``django.template.loader.BaseLoader`` is "
 "removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1273
+#: ../../releases/1.10.txt:1290
 msgid ""
 "Django template objects returned by :func:`~django.template.loader."
 "get_template` and :func:`~django.template.loader.select_template` no longer "
@@ -1935,7 +1957,7 @@ msgid ""
 "backends.base.Template.render()` method."
 msgstr ""
 
-#: ../../releases/1.10.txt:1279
+#: ../../releases/1.10.txt:1296
 msgid ""
 ":doc:`Template response APIs </ref/template-response>` enforce the use of :"
 "class:`dict` and backend-dependent template objects instead of :class:"
@@ -1943,56 +1965,56 @@ msgid ""
 "respectively."
 msgstr ""
 
-#: ../../releases/1.10.txt:1284
+#: ../../releases/1.10.txt:1301
 msgid ""
 "The ``current_app`` parameter for the following function and classes is "
 "removed:"
 msgstr ""
 
-#: ../../releases/1.10.txt:1287 ../../releases/1.10.txt:1295
-#: ../../releases/1.10.txt:1303
+#: ../../releases/1.10.txt:1304 ../../releases/1.10.txt:1312
+#: ../../releases/1.10.txt:1320
 msgid "``django.shortcuts.render()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1288
+#: ../../releases/1.10.txt:1305
 msgid "``django.template.Context()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1289
+#: ../../releases/1.10.txt:1306
 msgid "``django.template.RequestContext()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1290
+#: ../../releases/1.10.txt:1307
 msgid "``django.template.response.TemplateResponse()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1292
+#: ../../releases/1.10.txt:1309
 msgid ""
 "The ``dictionary`` and ``context_instance`` parameters for the following "
 "functions are removed:"
 msgstr ""
 
-#: ../../releases/1.10.txt:1296 ../../releases/1.10.txt:1304
+#: ../../releases/1.10.txt:1313 ../../releases/1.10.txt:1321
 msgid "``django.shortcuts.render_to_response()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1297
+#: ../../releases/1.10.txt:1314
 msgid "``django.template.loader.render_to_string()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1299
+#: ../../releases/1.10.txt:1316
 msgid "The ``dirs`` parameter for the following functions is removed:"
 msgstr ""
 
-#: ../../releases/1.10.txt:1301
+#: ../../releases/1.10.txt:1318
 msgid "``django.template.loader.get_template()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1302
+#: ../../releases/1.10.txt:1319
 msgid "``django.template.loader.select_template()``"
 msgstr ""
 
-#: ../../releases/1.10.txt:1306
+#: ../../releases/1.10.txt:1323
 msgid ""
 "Session verification is enabled regardless of whether or not ``'django."
 "contrib.auth.middleware.SessionAuthenticationMiddleware'`` is in "
@@ -2001,60 +2023,60 @@ msgid ""
 "stub until Django 2.0 as a courtesy for users who don't read this note."
 msgstr ""
 
-#: ../../releases/1.10.txt:1312
+#: ../../releases/1.10.txt:1329
 msgid "Private attribute ``django.db.models.Field.related`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1314
+#: ../../releases/1.10.txt:1331
 msgid "The ``--list`` option of the ``migrate`` management command is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1316
+#: ../../releases/1.10.txt:1333
 msgid "The ``ssi`` template tag is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1318
+#: ../../releases/1.10.txt:1335
 msgid ""
 "Support for the ``=`` comparison operator in the ``if`` template tag is "
 "removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1321
+#: ../../releases/1.10.txt:1338
 msgid ""
 "The backwards compatibility shims to allow ``Storage.get_available_name()`` "
 "and ``Storage.save()`` to be defined without a ``max_length`` argument are "
 "removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1325
+#: ../../releases/1.10.txt:1342
 msgid ""
 "Support for the legacy ``%(<foo>)s`` syntax in ``ModelFormMixin."
 "success_url`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1328
+#: ../../releases/1.10.txt:1345
 msgid ""
 "``GeoQuerySet`` aggregate methods ``collect()``, ``extent()``, "
 "``extent3d()``, ``make_line()``, and ``unionagg()`` are removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1331
+#: ../../releases/1.10.txt:1348
 msgid ""
 "The ability to specify ``ContentType.name`` when creating a content type "
 "instance is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1334
+#: ../../releases/1.10.txt:1351
 msgid "Support for the old signature of ``allow_migrate`` is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1336
+#: ../../releases/1.10.txt:1353
 msgid ""
 "Support for the syntax of ``{% cycle %}`` that uses comma-separated "
 "arguments is removed."
 msgstr ""
 
-#: ../../releases/1.10.txt:1339
+#: ../../releases/1.10.txt:1356
 msgid ""
 "The warning that :class:`~django.core.signing.Signer` issued when given an "
 "invalid separator is now a ``ValueError``."

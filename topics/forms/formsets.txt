@@ -80,6 +80,11 @@ There are now a total of three forms showing above. One for the initial data
 that was passed in and two extra forms. Also note that we are passing in a
 list of dictionaries as the initial data.
 
+If you use an ``initial`` for displaying a formset, you should pass the same
+``initial`` when processing that formset's submission so that the formset can
+detect which forms were changed by the user. For example, you might have
+something like: ``ArticleFormSet(request.POST, initial=[...])``.
+
 .. seealso::
 
     :ref:`Creating formsets from models with model formsets <model-formsets>`.
@@ -572,11 +577,6 @@ argument - the index of the form in the formset. The index is ``None`` for the
     ...         kwargs = super(BaseArticleFormSet, self).get_form_kwargs(index)
     ...         kwargs['custom_kwarg'] = index
     ...         return kwargs
-
-
-.. versionadded:: 1.9
-
-    The ``form_kwargs`` argument was added.
 
 Using a formset in views and templates
 ======================================

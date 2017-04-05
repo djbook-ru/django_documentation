@@ -92,6 +92,15 @@ then ``clean()`` will return a *normalized* empty value rather than raising
 For other ``Field`` classes, it might be ``None``. (This varies from field to
 field.)
 
+Widgets of required form fields have the ``required`` HTML attribute. Set the
+:attr:`Form.use_required_attribute` attribute to ``False`` to disable it. The
+``required`` attribute isn't included on forms of formsets because the browser
+validation may not be correct when adding and deleting formsets.
+
+.. versionadded:: 1.10
+
+    Support for the ``required`` HTML attribute was added.
+
 ``label``
 ---------
 
@@ -305,8 +314,6 @@ more information.
 
 .. attribute:: Field.disabled
 
-.. versionadded:: 1.9
-
 The ``disabled`` boolean argument, when set to ``True``, disables a form field
 using the ``disabled`` HTML attribute so that it won't be editable by users.
 Even if a user tampers with the field's value submitted to the server, it will
@@ -363,7 +370,7 @@ For each field, we describe the default widget used if you don't specify
 .. class:: CharField(**kwargs)
 
     * Default widget: :class:`TextInput`
-    * Empty value: ``''`` (an empty string)
+    * Empty value: Whatever you've given as :attr:`empty_value`.
     * Normalizes to: A Unicode object.
     * Validates ``max_length`` or ``min_length``, if they are provided.
       Otherwise, all inputs are valid.
@@ -379,10 +386,14 @@ For each field, we describe the default widget used if you don't specify
 
     .. attribute:: strip
 
-       .. versionadded:: 1.9
-
        If ``True`` (default), the value will be stripped of leading and
        trailing whitespace.
+
+    .. attribute:: empty_value
+
+       .. versionadded:: 1.11
+
+       The value to use to represent "empty". Defaults to an empty string.
 
 ``ChoiceField``
 ---------------
@@ -835,8 +846,6 @@ For each field, we describe the default widget used if you don't specify
 
     .. attribute:: strip
 
-        .. versionadded:: 1.9
-
         Defaults to ``False``. If enabled, stripping will be applied before the
         regex validation.
 
@@ -858,8 +867,6 @@ For each field, we describe the default widget used if you don't specify
    Takes an optional parameter:
 
    .. attribute:: allow_unicode
-
-       .. versionadded:: 1.9
 
        A boolean instructing the field to accept Unicode letters in addition
        to ASCII letters. Defaults to ``False``.
@@ -1116,9 +1123,9 @@ method::
 
     .. attribute:: queryset
 
-        A ``QuerySet`` of model objects from which the choices for the
-        field will be derived, and which will be used to validate the
-        user's selection.
+        A ``QuerySet`` of model objects from which the choices for the field
+        are derived and which is used to validate the user's selection. It's
+        evaluated when the form is rendered.
 
     ``ModelChoiceField`` also takes two optional arguments:
 

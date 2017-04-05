@@ -418,17 +418,34 @@ Working with lazy translation objects
 -------------------------------------
 
 The result of a ``ugettext_lazy()`` call can be used wherever you would use a
-unicode string (an object with type ``unicode``) in Python. If you try to use
-it where a bytestring (a ``str`` object) is expected, things will not work as
-expected, since a ``ugettext_lazy()`` object doesn't know how to convert
-itself to a bytestring. You can't use a unicode string inside a bytestring,
-either, so this is consistent with normal Python behavior. For example::
+unicode string (a :class:`str` object) in other Django code, but it may not
+work with arbitrary Python code. For example, the following won't work because
+the `requests <https://pypi.python.org/pypi/requests/>`_ library doesn't handle
+``ugettext_lazy`` objects::
 
-    # This is fine: putting a unicode proxy into a unicode string.
+    body = ugettext_lazy("I \u2764 Django")  # (unicode :heart:)
+    requests.post('https://example.com/send', data={'body': body})
+
+You can avoid such problems by casting ``ugettext_lazy()`` objects to text
+strings before passing them to non-Django code::
+
+    requests.post('https://example.com/send', data={'body': str(body)})
+
+Use ``unicode`` in place of ``str`` on Python 2, or :data:`six.text_type` to
+support Python 2 and 3.
+
+If you try to use a ``ugettext_lazy()`` result where a bytestring (a
+:class:`bytes` object) is expected, things won't work as expected since a
+``ugettext_lazy()`` object doesn't know how to convert itself to a bytestring.
+You can't use a unicode string inside a bytestring, either, so this is
+consistent with normal Python behavior. For example, putting a unicode proxy
+into a unicode string is fine::
+
     "Hello %s" % ugettext_lazy("people")
 
-    # This will not work, since you cannot insert a unicode object
-    # into a bytestring (nor can you insert our unicode proxy there)
+But you can't insert a unicode object into a bytestring and nor can you insert
+a unicode proxy there::
+
     b"Hello %s" % ugettext_lazy("people")
 
 If you ever see output that looks like ``"hello
@@ -489,21 +506,22 @@ directly with the ``number`` argument::
                 raise forms.ValidationError(self.error_message % number)
 
 
-Joining strings: ``string_concat()``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Formatting strings: ``format_lazy()``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Standard Python string joins (``''.join([...])``) will not work on lists
-containing lazy translation objects. Instead, you can use
-:func:`django.utils.translation.string_concat()`, which creates a lazy object
-that concatenates its contents *and* converts them to strings only when the
-result is included in a string. For example::
+Python's :meth:`str.format()` method will not work when either the
+``format_string`` or any of the arguments to :meth:`str.format()`
+contains lazy translation objects. Instead, you can use
+:func:`django.utils.text.format_lazy()`, which creates a lazy object
+that runs the ``str.format()`` method only when the result is included
+in a string. For example::
 
-    from django.utils.translation import string_concat
+    from django.utils.text import format_lazy
     from django.utils.translation import ugettext_lazy
     ...
     name = ugettext_lazy('John Lennon')
     instrument = ugettext_lazy('guitar')
-    result = string_concat(name, ': ', instrument)
+    result = format_lazy('{name}: {instrument}', name=name, instrument=instrument)
 
 In this case, the lazy translations in ``result`` will only be converted to
 strings when ``result`` itself is used in a string (usually at template
@@ -548,10 +566,6 @@ attribute is True only for bi-directional languages.
 
 The source of the language information is the ``django.conf.locale`` module.
 Similar access to this information is available for template code. See below.
-
-.. versionchanged:: 1.9
-
-    The ``'name_translated'`` attribute was added.
 
 .. _specifying-translation-strings-in-template-code:
 
@@ -717,10 +731,6 @@ use the following syntax::
 In practice you'll use this to get a string you can use in multiple places in a
 template or so you can use the output as an argument for other template tags or
 filters.
-
-.. versionchanged:: 1.9
-
-    The ``asvar`` syntax was added.
 
 ``{% blocktrans %}`` also supports :ref:`contextual
 markers<contextual-markers>` using the ``context`` keyword:
@@ -908,10 +918,6 @@ You can then access the information::
     Bi-directional: {{ lang.bidi }}
     Name in the active language: {{ lang.name_translated }}
 
-.. versionadded:: 1.9
-
-   The ``name_translated`` attribute was added.
-
 .. templatetag:: get_language_info_list
 
 ``get_language_info_list``
@@ -951,12 +957,6 @@ There are also simple filters available for convenience:
 * ``{{ LANGUAGE_CODE|language_name_local }}`` ("Deutsch")
 * ``{{ LANGUAGE_CODE|language_bidi }}`` (False)
 * ``{{ LANGUAGE_CODE|language_name_translated }}`` ("německy", when active language is Czech)
-
-.. versionadded:: 1.9
-
-   The ``language_name_translated`` filter was added.
-
-.. _Django templates: ../templates_python/
 
 Internationalization: in JavaScript code
 ========================================
@@ -1027,6 +1027,18 @@ The ``JavaScriptCatalog`` view
                 JavaScriptCatalog.as_view(packages=['your.app.label']),
                 name='javascript-catalog'),
         ]
+
+    If your root URLconf uses :func:`~django.conf.urls.i18n.i18n_patterns`,
+    ``JavaScriptCatalog`` must also be wrapped by ``i18n_patterns()`` for the
+    catalog to be correctly generated.
+
+    **Example with** ``i18n_patterns()``::
+
+        from django.conf.urls.i18n import i18n_patterns
+
+        urlpatterns = i18n_patterns(
+            url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+        )
 
 The precedence of translations is such that the packages appearing later in the
 ``packages`` argument have higher precedence than the ones appearing at the
@@ -1111,11 +1123,6 @@ your sites::
 If you use more than one ``javascript_catalog`` on a site and some of them
 define the same strings, the strings in the catalog that was loaded last take
 precedence.
-
-.. versionchanged:: 1.9
-
-    Before Django 1.9, the catalogs completely overwrote each other and you
-    could only use one at a time.
 
 The JavaScript translations found in the paths listed in the
 :setting:`LOCALE_PATHS` setting are also always included. To keep consistency
@@ -1322,8 +1329,6 @@ The ``JSONCatalog`` view
 The ``json_catalog`` view
 -------------------------
 
-.. versionadded:: 1.9
-
 .. function:: json_catalog(request, domain='djangojs', packages=None)
 
 .. deprecated:: 1.10
@@ -1396,8 +1401,8 @@ URL::
     ]
 
 Client-side caching will save bandwidth and make your site load faster. If
-you're using ETags (:setting:`USE_ETAGS = True <USE_ETAGS>`), you're already
-covered. Otherwise, you can apply :ref:`conditional decorators
+you're using ETags (:class:`~django.middleware.http.ConditionalGetMiddleware`),
+you're already covered. Otherwise, you can apply :ref:`conditional decorators
 <conditional-decorators>`. In the following example, the cache is invalidated
 whenever you restart your application server::
 
@@ -1528,6 +1533,7 @@ will be::
     Ensure that you don't have non-prefixed URL patterns that might collide
     with an automatically-added language prefix.
 
+.. _translating-urlpatterns:
 
 Translating URL patterns
 ------------------------
@@ -1787,11 +1793,6 @@ which you ran :djadmin:`django-admin makemessages <makemessages>`, run
 
 That's it. Your translations are ready for use.
 
-.. versionchanged:: 1.9
-
-    ``compilemessages`` now matches the operation of :djadmin:`makemessages`,
-    scanning the project tree for ``.po`` files to compile.
-
 .. admonition:: Working on Windows?
 
    If you're using Windows and need to install the GNU gettext utilities so
@@ -1803,6 +1804,31 @@ That's it. Your translations are ready for use.
    Django only supports ``.po`` files encoded in UTF-8 and without any BOM
    (Byte Order Mark) so if your text editor adds such marks to the beginning of
    files by default then you will need to reconfigure it.
+
+Troubleshooting: ``ugettext()`` incorrectly detects ``python-format`` in strings with percent signs
+---------------------------------------------------------------------------------------------------
+
+In some cases, such as strings with a percent sign followed by a space and a
+:ref:`string conversion type <old-string-formatting>` (e.g.
+``_("10% interest")``), :func:`~django.utils.translation.ugettext` incorrectly
+flags strings with ``python-format``.
+
+If you try to compile message files with incorrectly flagged strings, you'll
+get an error message like ``number of format specifications in 'msgid' and
+'msgstr' does not match`` or ``'msgstr' is not a valid Python format string,
+unlike 'msgid'``.
+
+To workaround this, you can escape percent signs by adding a second percent
+sign::
+
+    from django.utils.translation import ugettext as _
+    output = _("10%% interest)
+
+Or you can use ``no-python-format`` so that all percent signs are treated as
+literals::
+
+    # xgettext:no-python-format
+    output = _("10% interest)
 
 .. _creating-message-files-from-js-code:
 
@@ -1939,7 +1965,7 @@ Here's example HTML template code:
             {% get_available_languages as LANGUAGES %}
             {% get_language_info_list for LANGUAGES as languages %}
             {% for language in languages %}
-                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
                     {{ language.name_local }} ({{ language.code }})
                 </option>
             {% endfor %}

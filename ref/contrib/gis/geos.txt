@@ -160,15 +160,23 @@ Geometries support set-like operators::
     The :class:`~GEOSGeometry` equality operator uses
     :meth:`~GEOSGeometry.equals_exact`, not :meth:`~GEOSGeometry.equals`, i.e.
     it requires the compared geometries to have the same coordinates in the
-    same positions::
+    same positions with the same SRIDs::
 
         >>> from django.contrib.gis.geos import LineString
         >>> ls1 = LineString((0, 0), (1, 1))
         >>> ls2 = LineString((1, 1), (0, 0))
+        >>> ls3 = LineString((1, 1), (0, 0), srid=4326)
         >>> ls1.equals(ls2)
         True
         >>> ls1 == ls2
         False
+        >>> ls3 == ls2  # different SRIDs
+        False
+
+    .. versionchanged:: 1.11
+
+        Older versions didn't check the ``srid`` when comparing
+        ``GEOSGeometry`` objects using the equality operator.
 
 Geometry Objects
 ================
@@ -195,8 +203,14 @@ Format                   Input Type
 WKT / EWKT               ``str`` or ``unicode``
 HEX / HEXEWKB            ``str`` or ``unicode``
 WKB / EWKB               ``buffer``
-GeoJSON (requires GDAL)  ``str`` or ``unicode``
+GeoJSON                  ``str`` or ``unicode``
 =======================  ======================
+
+.. classmethod:: GEOSGeometry.from_gml(gml_string)
+
+    .. versionadded:: 1.11
+
+    Constructs a :class:`GEOSGeometry` from the given GML string.
 
 Properties
 ~~~~~~~~~~
@@ -344,10 +358,6 @@ another object.
 
     Returns an :class:`~django.contrib.gis.gdal.OGRGeometry` object
     corresponding to the GEOS geometry.
-
-    .. note::
-
-        Requires GDAL.
 
 .. _wkb:
 
@@ -618,10 +628,6 @@ Other Properties & Methods
     Returns a :class:`~django.contrib.gis.gdal.SpatialReference` object
     corresponding to the SRID of the geometry or ``None``.
 
-    .. note::
-
-        Requires GDAL.
-
 .. method:: GEOSGeometry.transform(ct, clone=False)
 
     Transforms the geometry according to the given coordinate transformation
@@ -635,16 +641,27 @@ Other Properties & Methods
 
     .. note::
 
-        Requires GDAL. Raises :class:`~django.contrib.gis.geos.GEOSException` if
-        GDAL is not available or if the geometry's SRID is ``None`` or less than
-        0. It doesn't impose any constraints on the geometry's SRID if called
-        with a :class:`~django.contrib.gis.gdal.CoordTransform` object.
+        Raises :class:`~django.contrib.gis.geos.GEOSException` if GDAL is not
+        available or if the geometry's SRID is ``None`` or less than 0. It
+        doesn't impose any constraints on the geometry's SRID if called with a
+        :class:`~django.contrib.gis.gdal.CoordTransform` object.
 
         .. versionchanged:: 1.10
 
             In previous versions, it required the geometry's SRID to be a
             positive integer even if it was called with a
             :class:`~django.contrib.gis.gdal.CoordTransform` object.
+
+.. method:: GEOSGeometry.normalize()
+
+    Converts this geometry to canonical form::
+
+        >>> g = MultiPoint(Point(0, 0), Point(2, 2), Point(1, 1))
+        >>> print(g)
+        MULTIPOINT (0 0, 2 2, 1 1)
+        >>> g.normalize()
+        >>> print(g)
+        MULTIPOINT (2 2, 1 1, 0 0)
 
 ``Point``
 ---------
@@ -1124,7 +1141,7 @@ include the SRID value (in other words, EWKB).
         'POINT (1.4 1.7)'
 
 .. rubric:: Footnotes
-.. [#fnogc] *See* `PostGIS EWKB, EWKT and Canonical Forms <http://postgis.net/docs/using_postgis_dbmanagement.html#EWKB_EWKT>`_, PostGIS documentation at Ch. 4.1.2.
+.. [#fnogc] *See* `PostGIS EWKB, EWKT and Canonical Forms <https://postgis.net/docs/using_postgis_dbmanagement.html#EWKB_EWKT>`_, PostGIS documentation at Ch. 4.1.2.
 .. [#fncascadedunion] For more information, read Paul Ramsey's blog post about `(Much) Faster Unions in PostGIS 1.4 <http://blog.cleverelephant.ca/2009/01/must-faster-unions-in-postgis-14.html>`_ and Martin Davis' blog post on `Fast polygon merging in JTS using Cascaded Union <http://lin-ear-th-inking.blogspot.com/2007/11/fast-polygon-merging-in-jts-using.html>`_.
 
 Settings

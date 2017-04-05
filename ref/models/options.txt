@@ -29,8 +29,6 @@ Available ``Meta`` options
 
         app_label = 'myapp'
 
-    .. versionadded:: 1.9
-
     If you want to represent a model with the format ``app_label.object_name``
     or ``app_label.model_name`` you can use ``model._meta.label``
     or ``model._meta.label_lower`` respectively.
@@ -332,7 +330,7 @@ Django quotes column and table names behind the scenes.
     human_readable_permission_name)``.
 
 ``default_permissions``
-------------------------------
+-----------------------
 
 .. attribute:: Options.default_permissions
 
@@ -355,8 +353,6 @@ Django quotes column and table names behind the scenes.
 
 .. attribute:: Options.required_db_features
 
-    .. versionadded:: 1.9
-
     List of database features that the current connection should have so that
     the model is considered during the migration phase. For example, if you set
     this list to ``['gis_enabled']``, the model will only be synchronized on
@@ -368,8 +364,6 @@ Django quotes column and table names behind the scenes.
 ----------------------
 
 .. attribute:: Options.required_db_vendor
-
-    .. versionadded:: 1.9
 
     Name of a supported database vendor that this model is specific to. Current
     built-in vendor names are: ``sqlite``, ``postgresql``, ``mysql``,
@@ -395,6 +389,28 @@ Django quotes column and table names behind the scenes.
 
     See :meth:`django.db.models.Model.save()` for more about the old and
     new saving algorithm.
+
+``indexes``
+-----------
+
+.. attribute:: Options.indexes
+
+    .. versionadded:: 1.11
+
+    A list of :doc:`indexes </ref/models/indexes>` that you want to define on
+    the model::
+
+        from django.db import models
+
+        class Customer(models.Model):
+            first_name = models.CharField(max_length=100)
+            last_name = models.CharField(max_length=100)
+
+            class Meta:
+                indexes = [
+                    models.Index(fields=['last_name', 'first_name']),
+                    models.Index(fields=['first_name'], name='first_name_idx'),
+                ]
 
 ``unique_together``
 -------------------
@@ -474,8 +490,6 @@ Read-only ``Meta`` attributes
 
 .. attribute:: Options.label
 
-    .. versionadded:: 1.9
-
     Representation of the object, returns ``app_label.object_name``, e.g.
     ``'polls.Question'``.
 
@@ -483,8 +497,6 @@ Read-only ``Meta`` attributes
 ---------------
 
 .. attribute:: Options.label_lower
-
-    .. versionadded:: 1.9
 
     Representation of the model, returns ``app_label.model_name``, e.g.
     ``'polls.question'``.

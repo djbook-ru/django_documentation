@@ -66,7 +66,9 @@ Model field                         Form field
 
 :class:`CharField`                  :class:`~django.forms.CharField` with
                                     ``max_length`` set to the model field's
-                                    ``max_length``
+                                    ``max_length`` and
+                                    :attr:`~django.forms.CharField.empty_value`
+                                    set to ``None`` if ``null=True``.
 
 :class:`CommaSeparatedIntegerField` :class:`~django.forms.CharField`
 
@@ -335,12 +337,14 @@ doesn't validate -- i.e., if ``form.errors`` evaluates to ``True``.
 If an optional field doesn't appear in the form's data, the resulting model
 instance uses the model field :attr:`~django.db.models.Field.default`, if
 there is one, for that field. This behavior doesn't apply to fields that use
-:class:`~django.forms.CheckboxInput` and
-:class:`~django.forms.CheckboxSelectMultiple` (or any custom widget whose
+:class:`~django.forms.CheckboxInput`,
+:class:`~django.forms.CheckboxSelectMultiple`, or
+:class:`~django.forms.SelectMultiple` (or any custom widget whose
 :meth:`~django.forms.Widget.value_omitted_from_data` method always returns
-``False``) since an unchecked checkbox doesn't appear in the data of an HTML
-form submission. Use a custom form field or widget if you're designing an API
-and want the default fallback for a :class:`~django.db.models.BooleanField`.
+``False``) since an unchecked checkbox and unselected ``<select multiple>``
+don't appear in the data of an HTML form submission. Use a custom form field or
+widget if you're designing an API and want the default fallback behavior for a
+field that uses one of these widgets.
 
 .. versionchanged:: 1.10.1
 
@@ -584,10 +588,6 @@ the field declaratively and setting its ``validators`` parameter::
             model = Article
             fields = ['pub_date', 'headline', 'content', 'reporter', 'slug']
 
-.. versionadded:: 1.9
-
-    The ``Meta.field_classes`` attribute was added.
-
 .. note::
 
     When you explicitly instantiate a form field like this, it is important to
@@ -780,7 +780,7 @@ with the ``Author`` model. It works just like a regular formset::
     <input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_FORMS" /><input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS" /><input type="hidden" name="form-MAX_NUM_FORMS" id="id_form-MAX_NUM_FORMS" />
     <tr><th><label for="id_form-0-name">Name:</label></th><td><input id="id_form-0-name" type="text" name="form-0-name" maxlength="100" /></td></tr>
     <tr><th><label for="id_form-0-title">Title:</label></th><td><select name="form-0-title" id="id_form-0-title">
-    <option value="" selected="selected">---------</option>
+    <option value="" selected>---------</option>
     <option value="MR">Mr.</option>
     <option value="MRS">Mrs.</option>
     <option value="MS">Ms.</option>
