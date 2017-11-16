@@ -1,8 +1,9 @@
 import logging
 import os
-from math import ceil
 from cliff.command import Command as BaseCommand
+from functools import cmp_to_key
 from jinja2 import Environment, FileSystemLoader
+from math import ceil
 from polib import pofile
 
 import conf
@@ -57,7 +58,7 @@ class Command(BaseCommand):
                     total += msg_total
                     translated += msg_translated
 
-                    statistic.append((unicode(name), translated_perc, untranslated_perc, fuzzy_perc, need_fix_count))
+                    statistic.append((name, translated_perc, untranslated_perc, fuzzy_perc, need_fix_count))
 
         def sort_statistic(item1, item2):
             if item1[4] == 0:
@@ -66,7 +67,7 @@ class Command(BaseCommand):
                 return -1
             return item1[4] - item2[4]
 
-        statistic.sort(cmp=sort_statistic)
+        statistic.sort(key=cmp_to_key(sort_statistic))
 
         self.save_to_file({
             'statistic': statistic,
@@ -83,4 +84,4 @@ class Command(BaseCommand):
         template_name = 'statistic.html'
         template = env.get_template(template_name)
         with open(os.path.join(self.app.doc_path, '_build', 'html', template_name), 'w') as output:
-            output.write(template.render(**context).encode('utf8'))
+            output.write(template.render(**context))
