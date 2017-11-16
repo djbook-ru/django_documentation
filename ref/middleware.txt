@@ -97,8 +97,6 @@ Exception middleware
 
 .. class:: ExceptionMiddleware
 
-.. versionadded:: 1.10
-
 Catches exceptions raised during the request/response cycle and returns the
 appropriate response.
 
@@ -160,12 +158,6 @@ If the response has an ``ETag`` header, the ETag is made weak to comply with
 
 You can apply GZip compression to individual views using the
 :func:`~django.views.decorators.gzip.gzip_page()` decorator.
-
-.. versionchanged:: 1.10
-
-    In older versions, Django's CSRF protection mechanism was vulnerable to
-    BREACH attacks when compression was used. This is no longer the case, but
-    you should still take care not to compromise your own secrets this way.
 
 Conditional GET middleware
 --------------------------
@@ -295,7 +287,7 @@ If you wish to submit your site to the `browser preload list`_, set the
     you may need to set the :setting:`SECURE_PROXY_SSL_HEADER` setting.
 
 .. _"Strict-Transport-Security" header: https://en.wikipedia.org/wiki/Strict_Transport_Security
-.. _browser preload list: https://hstspreload.appspot.com/
+.. _browser preload list: https://hstspreload.org/
 
 .. _x-content-type-options:
 
@@ -311,12 +303,9 @@ If your site serves user-uploaded files, a malicious user could upload a
 specially-crafted file that would be interpreted as HTML or JavaScript by
 the browser when you expected it to be something harmless.
 
-To learn more about this header and how the browser treats it, you can
-read about it on the `IE Security Blog`_.
-
 To prevent the browser from guessing the content type and force it to
 always use the type provided in the ``Content-Type`` header, you can pass
-the ``X-Content-Type-Options: nosniff`` header.  ``SecurityMiddleware`` will
+the `X-Content-Type-Options: nosniff`__ header.  ``SecurityMiddleware`` will
 do this for all responses if the :setting:`SECURE_CONTENT_TYPE_NOSNIFF` setting
 is ``True``.
 
@@ -328,7 +317,7 @@ you are using Django to do something like require authorization in order to
 download files and you cannot set the header using your Web server, this
 setting will be useful.
 
-.. _IE Security Blog: http://blogs.msdn.com/b/ie/archive/2008/09/02/ie8-security-part-vi-beta-2-update.aspx
+__ https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
 
 .. _x-xss-protection:
 
@@ -355,7 +344,7 @@ header. ``SecurityMiddleware`` will do this for all responses if the
     sanitizing <cross-site-scripting>` all input to prevent XSS attacks.
 
 .. _XSS attack: https://en.wikipedia.org/wiki/Cross-site_scripting
-.. _X-XSS-Protection header: http://blogs.msdn.com/b/ie/archive/2008/07/02/ie8-security-part-iv-the-xss-filter.aspx
+.. _X-XSS-Protection header: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
 
 .. _ssl-redirect:
 
@@ -499,7 +488,9 @@ Here are some hints about the ordering of various Django middleware classes:
 
 #. :class:`~django.middleware.common.CommonMiddleware`
 
-   Before any middleware that may change the response (it calculates ``ETags``).
+   Before any middleware that may change the response (it sets the ``ETag`` and
+   ``Content-Length`` headers). A middleware that appears before
+   ``CommonMiddleware`` and changes the response must reset the headers.
 
    After ``GZipMiddleware`` so it won't calculate an ``ETag`` header on gzipped
    contents.

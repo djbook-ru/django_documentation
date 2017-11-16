@@ -145,8 +145,8 @@ Setting the token on the AJAX request
 
 Finally, you'll have to actually set the header on your AJAX request, while
 protecting the CSRF token from being sent to other domains using
-`settings.crossDomain <https://api.jquery.com/jQuery.ajax>`_ in jQuery 1.5.1 and
-newer:
+`settings.crossDomain <https://api.jquery.com/jQuery.ajax/>`_ in jQuery 1.5.1
+and newer:
 
 .. code-block:: javascript
 
@@ -315,12 +315,19 @@ the HOST header <host-headers-virtual-hosting>` and that there aren't any
 (because XSS vulnerabilities already let an attacker do anything a CSRF
 vulnerability allows and much worse).
 
-.. versionchanged:: 1.10
+.. admonition:: Removing the ``Referer`` header
 
-   Added salting to the token and started changing it with each request
-   to protect against `BREACH`_ attacks.
+    To avoid disclosing the referrer URL to third-party sites, you might want
+    to `disable the referer`_ on your site's ``<a>`` tags. For example, you
+    might use the ``<meta name="referrer" content="no-referrer">`` tag or
+    include the ``Referrer-Policy: no-referrer`` header. Due to the CSRF
+    protection's strict referer checking on HTTPS requests, those techniques
+    cause a CSRF failure on requests with 'unsafe' methods. Instead, use
+    alternatives like ``<a rel="noreferrer" ...>"`` for links to third-party
+    sites.
 
 .. _BREACH: http://breachattack.com/
+.. _disable the referer: https://www.w3.org/TR/referrer-policy/#referrer-policy-delivery
 
 Caching
 =======

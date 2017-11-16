@@ -215,8 +215,9 @@ This tag can be used in two ways:
 
 See :ref:`template-inheritance` for more information.
 
-A string argument may be a relative path starting with ``./`` or ``../``. For
-example, assume the following directory structure::
+Normally the template name is relative to the template loader's root directory.
+A string argument may also be a relative path starting with ``./`` or ``../``.
+For example, assume the following directory structure::
 
     dir1/
         template.html
@@ -230,10 +231,6 @@ In ``template.html``, the following paths would be valid::
     {% extends "./base2.html" %}
     {% extends "../base1.html" %}
     {% extends "./my/base3.html" %}
-
-.. versionadded:: 1.10
-
-   The ability to use relative paths was added.
 
 .. templatetag:: filter
 
@@ -538,8 +535,6 @@ Not contained within. This is the negation of the ``in`` operator.
 ``is`` operator
 ^^^^^^^^^^^^^^^
 
-.. versionadded:: 1.10
-
 Object identity. Tests if two values are the same object. Example::
 
     {% if somevar is True %}
@@ -552,8 +547,6 @@ Object identity. Tests if two values are the same object. Example::
 
 ``is not`` operator
 ^^^^^^^^^^^^^^^^^^^
-
-.. versionadded:: 1.10
 
 Negated object identity. Tests if two values are not the same object. This is
 the negation of the ``is`` operator. Example::
@@ -682,12 +675,9 @@ This example includes the contents of the template ``"foo/bar.html"``::
 
     {% include "foo/bar.html" %}
 
-A string argument may be a relative path starting with ``./`` or ``../`` as
-described in the :ttag:`extends` tag.
-
-.. versionadded:: 1.10
-
-   The ability to use a relative path was added.
+Normally the template name is relative to the template loader's root directory.
+A string argument may also be a relative path starting with ``./`` or ``../``
+as described in the :ttag:`extends` tag.
 
 This example includes the contents of the template whose name is contained in
 the variable ``template_name``::
@@ -1125,11 +1115,11 @@ hard-code URLs in your templates::
 
     {% url 'some-url-name' v1 v2 %}
 
-The first argument is a :func:`~django.conf.urls.url` ``name``. It can be a
-quoted literal or any other context variable. Additional arguments are optional
-and should be space-separated values that will be used as arguments in the URL.
-The example above shows passing positional arguments. Alternatively you may
-use keyword syntax::
+The first argument is a :ref:`URL pattern name <naming-url-patterns>`. It can
+be a quoted literal or any other context variable. Additional arguments are
+optional and should be space-separated values that will be used as arguments in
+the URL. The example above shows passing positional arguments. Alternatively
+you may use keyword syntax::
 
     {% url 'some-url-name' arg1=v1 arg2=v2 %}
 
@@ -1142,14 +1132,14 @@ takes a client ID (here, ``client()`` is a method inside the views file
 
 .. code-block:: python
 
-    ('^client/([0-9]+)/$', app_views.client, name='app-views-client')
+    path('client/<int:id>/', app_views.client, name='app-views-client')
 
 If this app's URLconf is included into the project's URLconf under a path
 such as this:
 
 .. code-block:: python
 
-    ('^clients/', include('project_name.app_name.urls'))
+    path('clients/', include('project_name.app_name.urls'))
 
 ...then, in a template, you can create a link to this view like this::
 
@@ -1189,8 +1179,8 @@ by the context as to the current application.
 
 .. warning::
 
-    Don't forget to put quotes around the :func:`~django.conf.urls.url`
-    ``name``, otherwise the value will be interpreted as a context variable!
+    Don't forget to put quotes around the URL pattern ``name``, otherwise the
+    value will be interpreted as a context variable!
 
 .. templatetag:: verbatim
 
@@ -1478,11 +1468,6 @@ used. Assuming the same settings as the previous example::
 outputs ``9 de Enero de 2008`` (the ``DATE_FORMAT`` format specifier for the
 ``es`` locale is ``r'j \d\e F \d\e Y'``.
 
-.. versionchanged:: 1.10
-
-    In older versions, the :setting:`DATE_FORMAT` setting (without
-    localization) is always used when a format string isn't given.
-
 You can combine ``date`` with the :tfilter:`time` filter to render a full
 representation of a ``datetime`` value. E.g.::
 
@@ -1603,10 +1588,6 @@ produce empty output::
 
     {{ values|dictsort:"0" }}
 
-.. versionchanged:: 1.10
-
-    The ability to order a list of lists was added.
-
 .. templatefilter:: dictsortreversed
 
 ``dictsortreversed``
@@ -1642,11 +1623,6 @@ Escapes a string's HTML. Specifically, it makes these replacements:
 * ``"`` (double quote) is converted to ``&quot;``
 * ``&`` is converted to ``&amp;``
 
-The escaping is only applied when the string is output, so it does not matter
-where in a chained sequence of filters you put ``escape``: it will always be
-applied as though it were the last filter. If you want escaping to be applied
-immediately, use the :tfilter:`force_escape` filter.
-
 Applying ``escape`` to a variable that would normally have auto-escaping
 applied to the result will only result in one round of escaping being done. So
 it is safe to use this function even in auto-escaping environments. If you want
@@ -1657,12 +1633,6 @@ For example, you can apply ``escape`` to fields when :ttag:`autoescape` is off::
     {% autoescape off %}
         {{ title|escape }}
     {% endautoescape %}
-
-.. deprecated:: 1.10
-
-    The "lazy" behavior of the ``escape`` filter is deprecated. It will change
-    to immediately apply :func:`~django.utils.html.conditional_escape` in
-    Django 2.0.
 
 .. templatefilter:: escapejs
 
@@ -1967,8 +1937,7 @@ If ``value`` is ``Totally LOVING this Album!``, the output will be
 -------------
 
 Returns the value turned into a list. For a string, it's a list of characters.
-For an integer, the argument is cast into an unicode string before creating a
-list.
+For an integer, the argument is cast to a string before creating a list.
 
 For example::
 
@@ -2188,8 +2157,8 @@ for example, ``"de"``, then for::
 
     {{ value|time:"TIME_FORMAT" }}
 
-the output will be the string ``"01:23:00"`` (The ``"TIME_FORMAT"`` format
-specifier for the ``de`` locale as shipped with Django is ``"H:i:s"``).
+the output will be the string ``"01:23"`` (The ``"TIME_FORMAT"`` format
+specifier for the ``de`` locale as shipped with Django is ``"H:i"``).
 
 The ``time`` filter will only accept parameters in the format string that
 relate to the time of day, not the date (for obvious reasons). If you need to
@@ -2210,11 +2179,6 @@ used::
 is the same as::
 
     {{ value|time:"TIME_FORMAT" }}
-
-.. versionchanged:: 1.10
-
-    In older versions, the :setting:`TIME_FORMAT` setting (without
-    localization) is always used when a format string isn't given.
 
 .. templatefilter:: timesince
 
@@ -2608,12 +2572,6 @@ slightly different call::
 
     See :class:`~django.template.backends.jinja2.Jinja2` for information on
     using the ``static`` tag with Jinja2.
-
-.. versionchanged:: 1.10
-
-    In older versions, you had to use ``{% load static from staticfiles %}`` in
-    your template to serve files from the storage defined in
-    :setting:`STATICFILES_STORAGE`. This is no longer required.
 
 .. templatetag:: get_static_prefix
 

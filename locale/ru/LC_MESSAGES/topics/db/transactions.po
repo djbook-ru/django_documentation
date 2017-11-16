@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 11:28+0300\n"
+"POT-Creation-Date: 2017-11-16 11:56+0200\n"
 "PO-Revision-Date: 2017-04-05 18:34+0300\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -334,8 +334,27 @@ msgstr ""
 "Если вы перехватите исключение, вызванное чистым SQL запросом, поведение "
 "Django будет зависеть от вашей базы данных."
 
-# 34c80850557e4a72b47a2fd2e58b89a2
 #: ../../topics/db/transactions.txt:179
+msgid ""
+"You may need to manually revert model state when rolling back a transaction."
+msgstr ""
+
+#: ../../topics/db/transactions.txt:181
+msgid ""
+"The values of a model's fields won't be reverted when a transaction rollback "
+"happens. This could lead to an inconsistent model state unless you manually "
+"restore the original field values."
+msgstr ""
+
+#: ../../topics/db/transactions.txt:185
+msgid ""
+"For example, given ``MyModel`` with an ``active`` field, this snippet "
+"ensures that the ``if obj.active`` check at the end uses the correct value "
+"if updating ``active`` to ``True`` fails in the transaction::"
+msgstr ""
+
+# 34c80850557e4a72b47a2fd2e58b89a2
+#: ../../topics/db/transactions.txt:202
 msgid ""
 "In order to guarantee atomicity, ``atomic`` disables some APIs. Attempting "
 "to commit, roll back, or change the autocommit state of the database "
@@ -347,7 +366,7 @@ msgstr ""
 "вызвано исключение."
 
 # b5761afe39df4f1880ca5a1d2fd66c1b
-#: ../../topics/db/transactions.txt:183
+#: ../../topics/db/transactions.txt:206
 msgid ""
 "``atomic`` takes a ``using`` argument which should be the name of a "
 "database. If this argument isn't provided, Django uses the ``\"default\"`` "
@@ -358,33 +377,33 @@ msgstr ""
 "идут относительно стандартной (``\"default\"``) базы данных."
 
 # 9ec15ad440d54d4eb2d525aa91049116
-#: ../../topics/db/transactions.txt:187
+#: ../../topics/db/transactions.txt:210
 msgid "Under the hood, Django's transaction management code:"
 msgstr "Код обработки транзакций в Django выполняет следующие действия:"
 
 # 36c95550f7b84067b5ba8acc881a65a6
-#: ../../topics/db/transactions.txt:189
+#: ../../topics/db/transactions.txt:212
 msgid "opens a transaction when entering the outermost ``atomic`` block;"
 msgstr "создает транзакцию при входе в блок ``atomic``;"
 
 # d8b28e3bfe7e4ec1944fdb1662a53ade
-#: ../../topics/db/transactions.txt:190
+#: ../../topics/db/transactions.txt:213
 msgid "creates a savepoint when entering an inner ``atomic`` block;"
 msgstr "создает точку сохранения при входе во вложенный блок ``atomic``;"
 
 # 7e16b87795e2433492c839f4370fd865
-#: ../../topics/db/transactions.txt:191
+#: ../../topics/db/transactions.txt:214
 msgid "releases or rolls back to the savepoint when exiting an inner block;"
 msgstr ""
 "сохраняет или отменяет точку сохранения при выходе из вложенного блока;"
 
 # 4652ccb9b60f42fdb5f0dc790c3e278a
-#: ../../topics/db/transactions.txt:192
+#: ../../topics/db/transactions.txt:215
 msgid "commits or rolls back the transaction when exiting the outermost block."
 msgstr "фиксирует или отменяет транзакцию при выходе из последнего блока."
 
 # 9c9408dc4d65480bbc2d3980e19b4480
-#: ../../topics/db/transactions.txt:194
+#: ../../topics/db/transactions.txt:217
 msgid ""
 "You can disable the creation of savepoints for inner blocks by setting the "
 "``savepoint`` argument to ``False``. If an exception occurs, Django will "
@@ -403,7 +422,7 @@ msgstr ""
 "было описано выше."
 
 # 2229167d23bc4066b6adbd298c2cf76b
-#: ../../topics/db/transactions.txt:202
+#: ../../topics/db/transactions.txt:225
 msgid ""
 "You may use ``atomic`` when autocommit is turned off. It will only use "
 "savepoints, even for the outermost block."
@@ -412,12 +431,12 @@ msgstr ""
 "использует только точки сохранения, даже для самого внешнего блока."
 
 # 445150fe52704409a295ee1103f29015
-#: ../../topics/db/transactions.txt:205
+#: ../../topics/db/transactions.txt:228
 msgid "Performance considerations"
 msgstr "Заметка о производительности"
 
 # 278985c207e04d3ea7402fe952b10ff6
-#: ../../topics/db/transactions.txt:207
+#: ../../topics/db/transactions.txt:230
 msgid ""
 "Open transactions have a performance cost for your database server. To "
 "minimize this overhead, keep your transactions as short as possible. This is "
@@ -431,17 +450,17 @@ msgstr ""
 
 # 4891d04f6280425da08d5bc397e2d6eb
 # 3a3c9b3f22c843289ae8b7bca0a0ee99
-#: ../../topics/db/transactions.txt:213 ../../topics/db/transactions.txt:410
+#: ../../topics/db/transactions.txt:236 ../../topics/db/transactions.txt:433
 msgid "Autocommit"
 msgstr "Autocommit"
 
 # 40a191800eb04cfd8ae4eb35f729f373
-#: ../../topics/db/transactions.txt:218
+#: ../../topics/db/transactions.txt:241
 msgid "Why Django uses autocommit"
 msgstr "Почему Django использует автоматическую фиксацию"
 
 # b4958f77d5bc4cdaa5b63ceae1c86264
-#: ../../topics/db/transactions.txt:220
+#: ../../topics/db/transactions.txt:243
 msgid ""
 "In the SQL standards, each SQL query starts a transaction, unless one is "
 "already active. Such transactions must then be explicitly committed or "
@@ -451,7 +470,7 @@ msgstr ""
 "создана. Эти транзакции должны быть явно зафиксированы или отменены."
 
 # 5c6e4d330a8344d88deb613c8ec8dac7
-#: ../../topics/db/transactions.txt:224
+#: ../../topics/db/transactions.txt:247
 msgid ""
 "This isn't always convenient for application developers. To alleviate this "
 "problem, most databases provide an autocommit mode. When autocommit is "
@@ -468,7 +487,7 @@ msgstr ""
 "запросы был успешно выполнен."
 
 # 58cb5ef7fcc44f1a92e8c6834032c1e1
-#: ../../topics/db/transactions.txt:231
+#: ../../topics/db/transactions.txt:254
 msgid ""
 ":pep:`249`, the Python Database API Specification v2.0, requires autocommit "
 "to be initially turned off. Django overrides this default and turns "
@@ -479,7 +498,7 @@ msgstr ""
 "поведение и \"autocommit\" по умолчанию включен."
 
 # dddcb751cf644452995d5a5369060c71
-#: ../../topics/db/transactions.txt:235
+#: ../../topics/db/transactions.txt:258
 msgid ""
 "To avoid this, you can :ref:`deactivate the transaction management "
 "<deactivate-transaction-management>`, but it isn't recommended."
@@ -488,12 +507,12 @@ msgstr ""
 "management>`, но мы не рекомендует этого делать."
 
 # 9803f47b47444902b7c3ea61078bbab1
-#: ../../topics/db/transactions.txt:241
+#: ../../topics/db/transactions.txt:264
 msgid "Deactivating transaction management"
 msgstr "Отключение управления транзакциями"
 
 # ab0786299a89455b9d81102408b38f84
-#: ../../topics/db/transactions.txt:243
+#: ../../topics/db/transactions.txt:266
 msgid ""
 "You can totally disable Django's transaction management for a given database "
 "by setting :setting:`AUTOCOMMIT <DATABASE-AUTOCOMMIT>` to ``False`` in its "
@@ -508,7 +527,7 @@ msgstr ""
 "которая используется для работы с базой данных."
 
 # 18f4e6db2b754734bfe405f55fa03941
-#: ../../topics/db/transactions.txt:249
+#: ../../topics/db/transactions.txt:272
 msgid ""
 "This requires you to commit explicitly every transaction, even those started "
 "by Django or by third-party libraries. Thus, this is best used in situations "
@@ -520,11 +539,11 @@ msgstr ""
 "если вы хотите использовать свой промежуточный слой(middleware) для "
 "управления транзакциями, или сделать что-то очень необычное."
 
-#: ../../topics/db/transactions.txt:255
+#: ../../topics/db/transactions.txt:278
 msgid "Performing actions after commit"
 msgstr "Выполнение операция после коммита"
 
-#: ../../topics/db/transactions.txt:257
+#: ../../topics/db/transactions.txt:280
 msgid ""
 "Sometimes you need to perform an action related to the current database "
 "transaction, but only if the transaction successfully commits. Examples "
@@ -535,7 +554,7 @@ msgstr ""
 "транзакцией в базе данных, но только при успешном коммите транзакции. Это "
 "может быть задача `Celery`_, отправка электронного письма, или сброс кэша."
 
-#: ../../topics/db/transactions.txt:263
+#: ../../topics/db/transactions.txt:286
 msgid ""
 "Django provides the :func:`on_commit` function to register callback "
 "functions that should be executed after a transaction is successfully "
@@ -544,16 +563,16 @@ msgstr ""
 "Django предоставляет функцию :func:`on_commit`, которая позволяет добавить "
 "обработчик, вызываемый после успешного коммита транзакции:"
 
-#: ../../topics/db/transactions.txt:268
+#: ../../topics/db/transactions.txt:291
 msgid "Pass any function (that takes no arguments) to :func:`on_commit`::"
 msgstr ""
 "Передайте функцию (которая не требует аргументов) в :func:`on_commit`::"
 
-#: ../../topics/db/transactions.txt:277
+#: ../../topics/db/transactions.txt:300
 msgid "You can also wrap your function in a lambda::"
 msgstr "Можно также использовать lambda::"
 
-#: ../../topics/db/transactions.txt:281
+#: ../../topics/db/transactions.txt:304
 msgid ""
 "The function you pass in will be called immediately after a hypothetical "
 "database write made where ``on_commit()`` is called would be successfully "
@@ -562,7 +581,7 @@ msgstr ""
 "Обработчик будет выполнен сразу после гипотетической записи в базу данных, "
 "которая означает успешное завершение транзакции."
 
-#: ../../topics/db/transactions.txt:285
+#: ../../topics/db/transactions.txt:308
 msgid ""
 "If you call ``on_commit()`` while there isn't an active transaction, the "
 "callback will be executed immediately."
@@ -570,7 +589,7 @@ msgstr ""
 "Если вызывать ``on_commit()`` пока транзакция активна, обработчик сразу "
 "выполнится."
 
-#: ../../topics/db/transactions.txt:288
+#: ../../topics/db/transactions.txt:311
 msgid ""
 "If that hypothetical database write is instead rolled back (typically when "
 "an unhandled exception is raised in an :func:`atomic` block), your function "
@@ -580,11 +599,11 @@ msgstr ""
 "func:`atomic`), обработчик никогда не выполнится и будет проигнорирован."
 
 # e5353a7c8bb648d6971c583a6fcb7b0a
-#: ../../topics/db/transactions.txt:293 ../../topics/db/transactions.txt:463
+#: ../../topics/db/transactions.txt:316 ../../topics/db/transactions.txt:486
 msgid "Savepoints"
 msgstr "Точки сохранения"
 
-#: ../../topics/db/transactions.txt:295
+#: ../../topics/db/transactions.txt:318
 msgid ""
 "Savepoints (i.e. nested :func:`atomic` blocks) are handled correctly. That "
 "is, an :func:`on_commit` callable registered after a savepoint (in a nested :"
@@ -598,7 +617,7 @@ msgstr ""
 "коммита внешней транзакции, и не будет выполнен при откате до этой точки "
 "сохранения, или другой точки сохранения в текущей транзакции::"
 
-#: ../../topics/db/transactions.txt:309
+#: ../../topics/db/transactions.txt:332
 msgid ""
 "On the other hand, when a savepoint is rolled back (due to an exception "
 "being raised), the inner callable will not be called::"
@@ -606,11 +625,11 @@ msgstr ""
 "Другими словами, при выполнении отката точки сохранения (из-за исключения), "
 "внутренний обработчик не будет вызван::"
 
-#: ../../topics/db/transactions.txt:325
+#: ../../topics/db/transactions.txt:348
 msgid "Order of execution"
 msgstr "Порядок выполнения"
 
-#: ../../topics/db/transactions.txt:327
+#: ../../topics/db/transactions.txt:350
 msgid ""
 "On-commit functions for a given transaction are executed in the order they "
 "were registered."
@@ -618,11 +637,11 @@ msgstr ""
 "Обработчики коммита транзакции выполняются в порядке, в котором они были "
 "зарегистрированы."
 
-#: ../../topics/db/transactions.txt:331
+#: ../../topics/db/transactions.txt:354
 msgid "Exception handling"
 msgstr "Обработка исключений"
 
-#: ../../topics/db/transactions.txt:333
+#: ../../topics/db/transactions.txt:356
 msgid ""
 "If one on-commit function within a given transaction raises an uncaught "
 "exception, no later registered functions in that same transaction will run. "
@@ -633,11 +652,11 @@ msgstr ""
 "обработчики не будут вызваны. Такое поведение аналогично, если бы вы "
 "последовательно выполняли функции без :func:`on_commit`."
 
-#: ../../topics/db/transactions.txt:339
+#: ../../topics/db/transactions.txt:362
 msgid "Timing of execution"
 msgstr "Время выполнения обработчиков"
 
-#: ../../topics/db/transactions.txt:341
+#: ../../topics/db/transactions.txt:364
 msgid ""
 "Your callbacks are executed *after* a successful commit, so a failure in a "
 "callback will not cause the transaction to roll back. They are executed "
@@ -661,7 +680,7 @@ msgstr ""
 "org/psycopg/docs/usage.html#tpc>_ и `спецификацией Python DB-API <https://"
 "www.python.org/dev/peps/pep-0249/#optional-two-phase-commit-extensions>`_."
 
-#: ../../topics/db/transactions.txt:352
+#: ../../topics/db/transactions.txt:375
 msgid ""
 "Callbacks are not run until autocommit is restored on the connection "
 "following the commit (because otherwise any queries done in a callback would "
@@ -672,7 +691,7 @@ msgstr ""
 "любой запрос в обработчике неявно создаст транзакцию и заблокирует переход "
 "подключения в \"autocommit\" режим)."
 
-#: ../../topics/db/transactions.txt:357
+#: ../../topics/db/transactions.txt:380
 msgid ""
 "When in autocommit mode and outside of an :func:`atomic` block, the function "
 "will run immediately, not on commit."
@@ -680,7 +699,7 @@ msgstr ""
 "Если назначить обработчик в \"autocommit\" режиме вне блока :func:`atomic`, "
 "он будет выполнен моментально, а не после коммита."
 
-#: ../../topics/db/transactions.txt:360
+#: ../../topics/db/transactions.txt:383
 msgid ""
 "On-commit functions only work with :ref:`autocommit mode <managing-"
 "autocommit>` and the :func:`atomic` (or :setting:`ATOMIC_REQUESTS <DATABASE-"
@@ -694,11 +713,11 @@ msgstr ""
 "`on_commit` при отключенном \"autocommit\" и вне блока ``atomic`` приведет к "
 "ошибке."
 
-#: ../../topics/db/transactions.txt:371
+#: ../../topics/db/transactions.txt:394
 msgid "Use in tests"
 msgstr "Использование в тестах"
 
-#: ../../topics/db/transactions.txt:373
+#: ../../topics/db/transactions.txt:396
 msgid ""
 "Django's :class:`~django.test.TestCase` class wraps each test in a "
 "transaction and rolls back that transaction after each test, in order to "
@@ -714,11 +733,11 @@ msgstr ""
 "вам нужно протестировать выполнение обработчика :func:`on_commit`, "
 "используйте :class:`~django.test.TransactionTestCase`."
 
-#: ../../topics/db/transactions.txt:381
+#: ../../topics/db/transactions.txt:404
 msgid "Why no rollback hook?"
 msgstr "Почему нет обработчика отмены транзакции?"
 
-#: ../../topics/db/transactions.txt:383
+#: ../../topics/db/transactions.txt:406
 msgid ""
 "A rollback hook is harder to implement robustly than a commit hook, since a "
 "variety of things can cause an implicit rollback."
@@ -726,7 +745,7 @@ msgstr ""
 "Обработчик отмены транзакции реализовать на много сложнее т.к. причин отката "
 "на много больше."
 
-#: ../../topics/db/transactions.txt:386
+#: ../../topics/db/transactions.txt:409
 msgid ""
 "For instance, if your database connection is dropped because your process "
 "was killed without a chance to shut down gracefully, your rollback hook will "
@@ -736,12 +755,13 @@ msgstr ""
 "остановки процесса, ваш обработчик отмены транзакции никогда не сможет "
 "выполниться."
 
-#: ../../topics/db/transactions.txt:390
+#: ../../topics/db/transactions.txt:413
+#, fuzzy
 msgid ""
 "The solution is simple: instead of doing something during the atomic block "
 "(transaction) and then undoing it if the transaction fails, use :func:"
 "`on_commit` to delay doing it in the first place until after the transaction "
-"succeeds. It’s a lot easier to undo something you never did in the first "
+"succeeds. It's a lot easier to undo something you never did in the first "
 "place!"
 msgstr ""
 "Решение простое: вместо того, чтобы выполнить что-то в блоке ``atomic`` и "
@@ -750,12 +770,12 @@ msgstr ""
 "много проще отметить то, что никогда не выполнялось!"
 
 # 94cc977612ae4fe9ad1ed461447a0238
-#: ../../topics/db/transactions.txt:397
+#: ../../topics/db/transactions.txt:420
 msgid "Low-level APIs"
 msgstr "Низкоуровневый API"
 
 # dd135cd5afb14d80b463c31d2e33daa0
-#: ../../topics/db/transactions.txt:401
+#: ../../topics/db/transactions.txt:424
 msgid ""
 "Always prefer :func:`atomic` if possible at all. It accounts for the "
 "idiosyncrasies of each database and prevents invalid operations."
@@ -765,7 +785,7 @@ msgstr ""
 "операций."
 
 # 09c8ec95affb488eaa07626c4c2e9385
-#: ../../topics/db/transactions.txt:404
+#: ../../topics/db/transactions.txt:427
 msgid ""
 "The low level APIs are only useful if you're implementing your own "
 "transaction management."
@@ -774,7 +794,7 @@ msgstr ""
 "транзакциями."
 
 # 3725507756be4f7393dadcaa8fefa300
-#: ../../topics/db/transactions.txt:412
+#: ../../topics/db/transactions.txt:435
 msgid ""
 "Django provides a straightforward API in the :mod:`django.db.transaction` "
 "module to manage the autocommit state of each database connection."
@@ -783,7 +803,7 @@ msgstr ""
 "управления \"autocommit\" для каждого подключения к базе данных."
 
 # b5761afe39df4f1880ca5a1d2fd66c1b
-#: ../../topics/db/transactions.txt:419 ../../topics/db/transactions.txt:454
+#: ../../topics/db/transactions.txt:442 ../../topics/db/transactions.txt:477
 msgid ""
 "These functions take a ``using`` argument which should be the name of a "
 "database. If it isn't provided, Django uses the ``\"default\"`` database."
@@ -793,7 +813,7 @@ msgstr ""
 "стандартной (``\"default\"``) базы данных."
 
 # f266e0322dac4cc08f31ac892f7986c6
-#: ../../topics/db/transactions.txt:422
+#: ../../topics/db/transactions.txt:445
 msgid ""
 "Autocommit is initially turned on. If you turn it off, it's your "
 "responsibility to restore it."
@@ -802,7 +822,7 @@ msgstr ""
 "ответственности и его включение."
 
 # b038616bc55a47b08a19d323d3dd965d
-#: ../../topics/db/transactions.txt:425
+#: ../../topics/db/transactions.txt:448
 msgid ""
 "Once you turn autocommit off, you get the default behavior of your database "
 "adapter, and Django won't help you. Although that behavior is specified in :"
@@ -816,7 +836,7 @@ msgstr ""
 "используемой библиотеки."
 
 # 3b4b0bc8d4e44319ab38784e2ce03adf
-#: ../../topics/db/transactions.txt:430
+#: ../../topics/db/transactions.txt:453
 msgid ""
 "You must ensure that no transaction is active, usually by issuing a :func:"
 "`commit` or a :func:`rollback`, before turning autocommit back on."
@@ -825,7 +845,7 @@ msgstr ""
 "активна, обычно выполнив :func:`commit` или :func:`rollback`."
 
 # 60e04e3b15fc491da1a0fe99ee18d362
-#: ../../topics/db/transactions.txt:433
+#: ../../topics/db/transactions.txt:456
 msgid ""
 "Django will refuse to turn autocommit off when an :func:`atomic` block is "
 "active, because that would break atomicity."
@@ -834,12 +854,12 @@ msgstr ""
 "`atomic`, т.к. это нарушит атомарность."
 
 # 1cd9d1e6b3e74602a5909fa7b987370b
-#: ../../topics/db/transactions.txt:437
+#: ../../topics/db/transactions.txt:460
 msgid "Transactions"
 msgstr "Транзакции"
 
 # a24aef0470f7452fb23ea496b44436e9
-#: ../../topics/db/transactions.txt:439
+#: ../../topics/db/transactions.txt:462
 msgid ""
 "A transaction is an atomic set of database queries. Even if your program "
 "crashes, the database guarantees that either all the changes will be "
@@ -850,7 +870,7 @@ msgstr ""
 "все изменения, или ни одно из них."
 
 # fe0f0c01f57e4707879e9157890075fd
-#: ../../topics/db/transactions.txt:443
+#: ../../topics/db/transactions.txt:466
 msgid ""
 "Django doesn't provide an API to start a transaction. The expected way to "
 "start a transaction is to disable autocommit with :func:`set_autocommit`."
@@ -859,7 +879,7 @@ msgstr ""
 "транзакцию, отключите \"autocommit\" с помощью :func:`set_autocommit`."
 
 # 5d887f79d8714e008e44b8b9d3401dad
-#: ../../topics/db/transactions.txt:446
+#: ../../topics/db/transactions.txt:469
 msgid ""
 "Once you're in a transaction, you can choose either to apply the changes "
 "you've performed until this point with :func:`commit`, or to cancel them "
@@ -871,7 +891,7 @@ msgstr ""
 "`rollback`. Эти функции находятся в модуле :mod:`django.db.transaction`."
 
 # eb8a266b3d2e46aca5bd1ddac0005c63
-#: ../../topics/db/transactions.txt:457
+#: ../../topics/db/transactions.txt:480
 msgid ""
 "Django will refuse to commit or to rollback when an :func:`atomic` block is "
 "active, because that would break atomicity."
@@ -880,7 +900,7 @@ msgstr ""
 "`atomic` активен, т.к. это нарушит атомарность."
 
 # 5596f0f12f7743cbb13950c891733165
-#: ../../topics/db/transactions.txt:465
+#: ../../topics/db/transactions.txt:488
 msgid ""
 "A savepoint is a marker within a transaction that enables you to roll back "
 "part of a transaction, rather than the full transaction. Savepoints are "
@@ -896,7 +916,7 @@ msgstr ""
 "создания точек сохранения, но они ничего не делают."
 
 # c9eac2da1e1d465b91038a8bd092777e
-#: ../../topics/db/transactions.txt:471
+#: ../../topics/db/transactions.txt:494
 msgid ""
 "Savepoints aren't especially useful if you are using autocommit, the default "
 "behavior of Django. However, once you open a transaction with :func:"
@@ -914,7 +934,7 @@ msgstr ""
 "который делается с помощью ``transaction.rollback()``."
 
 # 36b62d4e16be4ac39ed5bf03766d0700
-#: ../../topics/db/transactions.txt:478
+#: ../../topics/db/transactions.txt:501
 msgid ""
 "When the :func:`atomic` decorator is nested, it creates a savepoint to allow "
 "partial commit or rollback. You're strongly encouraged to use :func:`atomic` "
@@ -927,7 +947,7 @@ msgstr ""
 "они в любом случае входят в публичный API и мы не собираемся удалять их."
 
 # b5761afe39df4f1880ca5a1d2fd66c1b
-#: ../../topics/db/transactions.txt:483
+#: ../../topics/db/transactions.txt:506
 msgid ""
 "Each of these functions takes a ``using`` argument which should be the name "
 "of a database for which the behavior applies.  If no ``using`` argument is "
@@ -938,14 +958,14 @@ msgstr ""
 "все действия идут относительно стандартной (``\"default\"``) базы данных."
 
 # b6ba6236c63c4374a8a9c9a71fa4578a
-#: ../../topics/db/transactions.txt:487
+#: ../../topics/db/transactions.txt:510
 msgid ""
 "Savepoints are controlled by three functions in :mod:`django.db.transaction`:"
 msgstr ""
 "Точки сохранения управляются тремя функциями из :mod:`django.db.transaction`:"
 
 # 9bcb1bc5d14549e2a097ee02ccabb141
-#: ../../topics/db/transactions.txt:491
+#: ../../topics/db/transactions.txt:514
 msgid ""
 "Creates a new savepoint. This marks a point in the transaction that is known "
 "to be in a \"good\" state. Returns the savepoint ID (``sid``)."
@@ -954,7 +974,7 @@ msgstr ""
 "\"хорошее\" состояние. Возвращает ID (``sid``) точки сохранения."
 
 # 08d265cb723b4015ad586c4143251921
-#: ../../topics/db/transactions.txt:496
+#: ../../topics/db/transactions.txt:519
 msgid ""
 "Releases savepoint ``sid``. The changes performed since the savepoint was "
 "created become part of the transaction."
@@ -963,12 +983,12 @@ msgstr ""
 "до этой точки сохранения, будут добавлены в текущую транзакцию."
 
 # 2240b980574b4bf588bca9f3d8ddc57b
-#: ../../topics/db/transactions.txt:501
+#: ../../topics/db/transactions.txt:524
 msgid "Rolls back the transaction to savepoint ``sid``."
 msgstr "Откатывает транзакцию до точки сохранения с указанным ``sid``."
 
 # 6f7e2dc306e64760b04c5576ff56809e
-#: ../../topics/db/transactions.txt:503
+#: ../../topics/db/transactions.txt:526
 msgid ""
 "These functions do nothing if savepoints aren't supported or if the database "
 "is in autocommit mode."
@@ -977,22 +997,22 @@ msgstr ""
 "данных, или если база данных в режиме \"autocommit\"."
 
 # e15f2b7fe0d04a56b669216a3035bdd0
-#: ../../topics/db/transactions.txt:506
+#: ../../topics/db/transactions.txt:529
 msgid "In addition, there's a utility function:"
 msgstr "Также Django предоставляет несколько дополнительных функций:"
 
 # 0728600917754ae0933e12f91588bfb8
-#: ../../topics/db/transactions.txt:510
+#: ../../topics/db/transactions.txt:533
 msgid "Resets the counter used to generate unique savepoint IDs."
 msgstr "Сбрасывает счетчик генератора ID точек сохранения."
 
 # ed997682e0fa4bc9a900c6edb5ab64d0
-#: ../../topics/db/transactions.txt:512
+#: ../../topics/db/transactions.txt:535
 msgid "The following example demonstrates the use of savepoints::"
 msgstr "Следующие примеры демонстрируют использование промежуточных точек::"
 
 # b227ea8ab4c94f54a73f7782487754d0
-#: ../../topics/db/transactions.txt:535
+#: ../../topics/db/transactions.txt:558
 msgid ""
 "Savepoints may be used to recover from a database error by performing a "
 "partial rollback. If you're doing this inside an :func:`atomic` block, the "
@@ -1007,7 +1027,7 @@ msgstr ""
 "контролировать поведение точек сохранения с помощью следующих функций."
 
 # 96958a14f5944e0bb607aa86a0c6a453
-#: ../../topics/db/transactions.txt:545
+#: ../../topics/db/transactions.txt:568
 msgid ""
 "Setting the rollback flag to ``True`` forces a rollback when exiting the "
 "innermost atomic block. This may be useful to trigger a rollback without "
@@ -1018,7 +1038,7 @@ msgstr ""
 "отмены изменений без вызова исключений."
 
 # 5c78043a8d524ebbbe6ab6646047a51e
-#: ../../topics/db/transactions.txt:549
+#: ../../topics/db/transactions.txt:572
 msgid ""
 "Setting it to ``False`` prevents such a rollback. Before doing that, make "
 "sure you've rolled back the transaction to a known-good savepoint within the "
@@ -1031,17 +1051,17 @@ msgstr ""
 "повредить данные."
 
 # 71a016207ea1446690fa3ab4d4af070a
-#: ../../topics/db/transactions.txt:555
+#: ../../topics/db/transactions.txt:578
 msgid "Database-specific notes"
 msgstr "Заметки о различных базах данных"
 
 # e5353a7c8bb648d6971c583a6fcb7b0a
-#: ../../topics/db/transactions.txt:560
+#: ../../topics/db/transactions.txt:583
 msgid "Savepoints in SQLite"
 msgstr "Точки сохранения в SQLite"
 
 # 4a4430cdda004033a2f64efc201bc9a7
-#: ../../topics/db/transactions.txt:562
+#: ../../topics/db/transactions.txt:585
 msgid ""
 "While SQLite ≥ 3.6.8 supports savepoints, a flaw in the design of the :mod:"
 "`sqlite3` module makes them hardly usable."
@@ -1050,7 +1070,7 @@ msgstr ""
 "работы :mod:`sqlite3` их сложно использовать."
 
 # 25fbcb5c4f5844459321375f0f09ae6e
-#: ../../topics/db/transactions.txt:565
+#: ../../topics/db/transactions.txt:588
 msgid ""
 "When autocommit is enabled, savepoints don't make sense. When it's "
 "disabled, :mod:`sqlite3` commits implicitly before savepoint statements. (In "
@@ -1064,7 +1084,7 @@ msgstr ""
 "Этот баг приводит к следующим особенностям:"
 
 # fe884406c15f4e69810a94616b7dc27a
-#: ../../topics/db/transactions.txt:570
+#: ../../topics/db/transactions.txt:593
 msgid ""
 "The low level APIs for savepoints are only usable inside a transaction ie. "
 "inside an :func:`atomic` block."
@@ -1073,17 +1093,17 @@ msgstr ""
 "транзакции, то есть в блоке :func:`atomic`."
 
 # 10b6615e29574834b4c20cdd683ff422
-#: ../../topics/db/transactions.txt:572
+#: ../../topics/db/transactions.txt:595
 msgid "It's impossible to use :func:`atomic` when autocommit is turned off."
 msgstr "Невозможно использовать :func:`atomic` при выключенном \"autocommit\"."
 
 # 1cd9d1e6b3e74602a5909fa7b987370b
-#: ../../topics/db/transactions.txt:575
+#: ../../topics/db/transactions.txt:598
 msgid "Transactions in MySQL"
 msgstr "Транзакции в MySQL"
 
 # 51bd28f8f81e43c7b112007f204d5076
-#: ../../topics/db/transactions.txt:577
+#: ../../topics/db/transactions.txt:600
 msgid ""
 "If you're using MySQL, your tables may or may not support transactions; it "
 "depends on your MySQL version and the table types you're using. (By \"table "
@@ -1099,7 +1119,7 @@ msgstr ""
 "html>`_."
 
 # 86c00e13de144dfb86bc00ae45ac780e
-#: ../../topics/db/transactions.txt:583
+#: ../../topics/db/transactions.txt:606
 msgid ""
 "If your MySQL setup does *not* support transactions, then Django will always "
 "function in autocommit mode: statements will be executed and committed as "
@@ -1112,12 +1132,12 @@ msgstr ""
 "транзакции, Django будет обрабатывать транзакции как описано выше."
 
 # 1235948529204a689b68d888fbd47cfa
-#: ../../topics/db/transactions.txt:591
+#: ../../topics/db/transactions.txt:614
 msgid "Handling exceptions within PostgreSQL transactions"
 msgstr "Обработка исключений в транзакциях PostgreSQL"
 
 # 075b91c9f5714d708805d4d752be141f
-#: ../../topics/db/transactions.txt:595
+#: ../../topics/db/transactions.txt:618
 msgid ""
 "This section is relevant only if you're implementing your own transaction "
 "management. This problem cannot occur in Django's default mode and :func:"
@@ -1128,7 +1148,7 @@ msgstr ""
 "использовании :func:`atomic`."
 
 # 0d63e1677b8f4b1791dc358247514adb
-#: ../../topics/db/transactions.txt:599
+#: ../../topics/db/transactions.txt:622
 msgid ""
 "Inside a transaction, when a call to a PostgreSQL cursor raises an exception "
 "(typically ``IntegrityError``), all subsequent SQL in the same transaction "
@@ -1148,22 +1168,22 @@ msgstr ""
 "force_update или вызов собственного SQL."
 
 # 41c03d7594854df4bb16214fa841e61c
-#: ../../topics/db/transactions.txt:607
+#: ../../topics/db/transactions.txt:630
 msgid "There are several ways to recover from this sort of error."
 msgstr "Существует несколько способов избежать таких ошибок."
 
 # 84f83f8b04894213abd824dbfe043ab5
-#: ../../topics/db/transactions.txt:610
+#: ../../topics/db/transactions.txt:633
 msgid "Transaction rollback"
 msgstr "Откат транзакции"
 
 # 43a06ad2083a4674b0c28d089fbe1270
-#: ../../topics/db/transactions.txt:612
+#: ../../topics/db/transactions.txt:635
 msgid "The first option is to roll back the entire transaction. For example::"
 msgstr "Первый способ -- выполнить отмену всей транзакции. Например::"
 
 # 5bbb7fec588b4173ba34cd29b42f567e
-#: ../../topics/db/transactions.txt:621
+#: ../../topics/db/transactions.txt:644
 msgid ""
 "Calling ``transaction.rollback()`` rolls back the entire transaction. Any "
 "uncommitted database operations will be lost. In this example, the changes "
@@ -1176,12 +1196,12 @@ msgstr ""
 "что эта операция прошла без ошибок."
 
 # a0f73197843a4f25b5c3ce9c5babb344
-#: ../../topics/db/transactions.txt:627
+#: ../../topics/db/transactions.txt:650
 msgid "Savepoint rollback"
 msgstr "Откат до точки сохранения"
 
 # ea79025d957e4bd7981e474804dc2228
-#: ../../topics/db/transactions.txt:629
+#: ../../topics/db/transactions.txt:652
 msgid ""
 "You can use :ref:`savepoints <topics-db-transactions-savepoints>` to control "
 "the extent of a rollback. Before performing a database operation that could "
@@ -1197,7 +1217,7 @@ msgstr ""
 "действием, не оказывая влияние на всю транзакцию в целом. Например::"
 
 # 44fee65141514961b0deaad96a63b382
-#: ../../topics/db/transactions.txt:644
+#: ../../topics/db/transactions.txt:667
 msgid ""
 "In this example, ``a.save()`` will not be undone in the case where ``b."
 "save()`` raises an exception."

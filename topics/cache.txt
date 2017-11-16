@@ -238,7 +238,7 @@ operations to ``cache_replica``, and all write operations to
 ``cache_primary``. The cache table will only be synchronized onto
 ``cache_primary``::
 
-    class CacheRouter(object):
+    class CacheRouter:
         """A router to control all database cache operations"""
 
         def db_for_read(self, model, **hints):
@@ -591,7 +591,7 @@ multiple URLs point at the same view, each URL will be cached separately.
 Continuing the ``my_view`` example, if your URLconf looks like this::
 
     urlpatterns = [
-        url(r'^foo/([0-9]{1,2})/$', my_view),
+        path('foo/<int:code>/', my_view),
     ]
 
 then requests to ``/foo/1/`` and ``/foo/23/`` will be cached separately, as
@@ -637,7 +637,7 @@ Doing so is easy: simply wrap the view function with ``cache_page`` when you
 refer to it in the URLconf. Here's the old URLconf from earlier::
 
     urlpatterns = [
-        url(r'^foo/([0-9]{1,2})/$', my_view),
+        path('foo/<int:code>/', my_view),
     ]
 
 Here's the same thing, with ``my_view`` wrapped in ``cache_page``::
@@ -645,7 +645,7 @@ Here's the same thing, with ``my_view`` wrapped in ``cache_page``::
     from django.views.decorators.cache import cache_page
 
     urlpatterns = [
-        url(r'^foo/([0-9]{1,2})/$', cache_page(60 * 15)(my_view)),
+        path('foo/<int:code>/', cache_page(60 * 15)(my_view)),
     ]
 
 .. templatetag:: cache
@@ -659,8 +659,9 @@ the ``cache`` template tag. To give your template access to this tag, put
 
 The ``{% cache %}`` template tag caches the contents of the block for a given
 amount of time. It takes at least two arguments: the cache timeout, in seconds,
-and the name to give the cache fragment. The name will be taken as is, do not
-use a variable. For example:
+and the name to give the cache fragment. The fragment is cached forever if
+timeout is ``None``. The name will be taken as is, do not use a variable. For
+example:
 
 .. code-block:: html+django
 
@@ -669,11 +670,16 @@ use a variable. For example:
         .. sidebar ..
     {% endcache %}
 
+.. versionchanged:: 2.0
+
+    Older versions don't allow a ``None`` timeout.
+
 Sometimes you might want to cache multiple copies of a fragment depending on
 some dynamic data that appears inside the fragment. For example, you might want a
 separate cached copy of the sidebar used in the previous example for every user
-of your site. Do this by passing additional arguments to the ``{% cache %}``
-template tag to uniquely identify the cache fragment:
+of your site. Do this by passing one or more additional arguments, which may be
+variables with or without filters, to the ``{% cache %}`` template tag to
+uniquely identify the cache fragment:
 
 .. code-block:: html+django
 
@@ -681,9 +687,6 @@ template tag to uniquely identify the cache fragment:
     {% cache 500 sidebar request.user.username %}
         .. sidebar for logged in user ..
     {% endcache %}
-
-It's perfectly fine to specify more than one argument to identify the fragment.
-Simply pass as many arguments to ``{% cache %}`` as you need.
 
 If :setting:`USE_I18N` is set to ``True`` the per-site middleware cache will
 :ref:`respect the active language<i18n-cache-key>`. For the ``cache`` template
@@ -805,8 +808,7 @@ The basic interface is ``set(key, value, timeout)`` and ``get(key)``::
     >>> cache.get('my_key')
     'hello, world!'
 
-``key`` should be a ``str`` (or ``unicode`` on Python 2), and ``value`` can be
-any picklable Python object.
+``key`` should be a ``str``, and ``value`` can be any picklable Python object.
 
 The ``timeout`` argument is optional and defaults to the ``timeout`` argument
 of the appropriate backend in the :setting:`CACHES` setting (explained above).
@@ -877,6 +879,13 @@ of key-value pairs::
 
 Like ``cache.set()``, ``set_many()`` takes an optional ``timeout`` parameter.
 
+On supported backends (memcached), ``set_many()`` returns a list of keys that
+failed to be inserted.
+
+.. versionchanged:: 2.0
+
+    The return value containing list of failing keys was added.
+
 You can delete keys explicitly with ``delete()``. This is an easy way of
 clearing the cache for a particular object::
 
@@ -895,7 +904,7 @@ from the cache, not just the keys set by your application. ::
 
 You can also increment or decrement a key that already exists using the
 ``incr()`` or ``decr()`` methods, respectively. By default, the existing cache
-value will incremented or decremented by 1. Other increment/decrement values
+value will be incremented or decremented by 1. Other increment/decrement values
 can be specified by providing an argument to the increment/decrement call. A
 ValueError will be raised if you attempt to increment or decrement a
 nonexistent cache key.::

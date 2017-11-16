@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 11:28+0300\n"
+"POT-Creation-Date: 2017-11-16 11:56+0200\n"
 "PO-Revision-Date: 2015-03-19 15:06+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,7 +32,7 @@ msgid ""
 msgstr ""
 
 #: ../../ref/models/database-functions.txt:14
-#: ../../ref/models/database-functions.txt:286
+#: ../../ref/models/database-functions.txt:157
 msgid "We'll be using the following model in examples of each function::"
 msgstr ""
 
@@ -43,34 +43,39 @@ msgid ""
 "the ``Coalesce`` example below."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:27
+#: ../../ref/models/database-functions.txt:29
+msgid "Comparison and conversion functions"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:32
 msgid "``Cast``"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:33
+#: ../../ref/models/database-functions.txt:36
 msgid ""
 "Forces the result type of ``expression`` to be the one from ``output_field``."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:35
-#: ../../ref/models/database-functions.txt:100
-#: ../../ref/models/database-functions.txt:121
-#: ../../ref/models/database-functions.txt:184
-#: ../../ref/models/database-functions.txt:213
-#: ../../ref/models/database-functions.txt:229
-#: ../../ref/models/database-functions.txt:251
-#: ../../ref/models/database-functions.txt:271
-#: ../../ref/models/database-functions.txt:356
-#: ../../ref/models/database-functions.txt:562
-#: ../../ref/models/database-functions.txt:736
+#: ../../ref/models/database-functions.txt:38
+#: ../../ref/models/database-functions.txt:97
+#: ../../ref/models/database-functions.txt:232
+#: ../../ref/models/database-functions.txt:404
+#: ../../ref/models/database-functions.txt:473
+#: ../../ref/models/database-functions.txt:598
+#: ../../ref/models/database-functions.txt:700
+#: ../../ref/models/database-functions.txt:723
+#: ../../ref/models/database-functions.txt:752
+#: ../../ref/models/database-functions.txt:771
+#: ../../ref/models/database-functions.txt:803
+#: ../../ref/models/database-functions.txt:823
 msgid "Usage example::"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:45
+#: ../../ref/models/database-functions.txt:48
 msgid "``Coalesce``"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:49
+#: ../../ref/models/database-functions.txt:52
 msgid ""
 "Accepts a list of at least two field names or expressions and returns the "
 "first non-null value (note that an empty string is not considered a null "
@@ -78,248 +83,162 @@ msgid ""
 "will result in a database error."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:54
+#: ../../ref/models/database-functions.txt:57
 msgid "Usage examples::"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:76
+#: ../../ref/models/database-functions.txt:79
 msgid ""
 "A Python value passed to ``Coalesce`` on MySQL may be converted to an "
 "incorrect type unless explicitly cast to the correct database type:"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:86
-msgid "``Concat``"
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:90
-msgid ""
-"Accepts a list of at least two text fields or expressions and returns the "
-"concatenated text. Each argument must be of a text or char type. If you want "
-"to concatenate a ``TextField()`` with a ``CharField()``, then be sure to "
-"tell Django that the ``output_field`` should be a ``TextField()``. This is "
-"also required when concatenating a ``Value`` as in the example below."
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:96
-msgid ""
-"This function will never have a null result. On backends where a null "
-"argument results in the entire expression being null, Django will ensure "
-"that each null part is converted to an empty string first."
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:113
+#: ../../ref/models/database-functions.txt:89
 msgid "``Greatest``"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:117
+#: ../../ref/models/database-functions.txt:93
 msgid ""
 "Accepts a list of at least two field names or expressions and returns the "
 "greatest value. Each argument must be of a similar type, so mixing text and "
 "numbers will result in a database error."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:138
+#: ../../ref/models/database-functions.txt:114
 msgid ""
 "``annotated_comment.last_updated`` will be the most recent of ``blog."
 "modified`` and ``comment.modified``."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:143
+#: ../../ref/models/database-functions.txt:119
 msgid ""
 "The behavior of ``Greatest`` when one or more expression may be ``null`` "
 "varies between databases:"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:146
+#: ../../ref/models/database-functions.txt:122
 msgid ""
 "PostgreSQL: ``Greatest`` will return the largest non-null expression, or "
 "``null`` if all expressions are ``null``."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:148
+#: ../../ref/models/database-functions.txt:124
 msgid ""
 "SQLite, Oracle, and MySQL: If any expression is ``null``, ``Greatest`` will "
 "return ``null``."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:151
+#: ../../ref/models/database-functions.txt:127
 msgid ""
 "The PostgreSQL behavior can be emulated using ``Coalesce`` if you know a "
 "sensible minimum value to provide as a default."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:155
+#: ../../ref/models/database-functions.txt:131
 msgid "``Least``"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:159
+#: ../../ref/models/database-functions.txt:135
 msgid ""
 "Accepts a list of at least two field names or expressions and returns the "
 "least value. Each argument must be of a similar type, so mixing text and "
 "numbers will result in a database error."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:165
+#: ../../ref/models/database-functions.txt:141
 msgid ""
 "The behavior of ``Least`` when one or more expression may be ``null`` varies "
 "between databases:"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:168
+#: ../../ref/models/database-functions.txt:144
 msgid ""
 "PostgreSQL: ``Least`` will return the smallest non-null expression, or "
 "``null`` if all expressions are ``null``."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:170
+#: ../../ref/models/database-functions.txt:146
 msgid ""
 "SQLite, Oracle, and MySQL: If any expression is ``null``, ``Least`` will "
 "return ``null``."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:173
+#: ../../ref/models/database-functions.txt:149
 msgid ""
 "The PostgreSQL behavior can be emulated using ``Coalesce`` if you know a "
 "sensible maximum value to provide as a default."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:177
-msgid "``Length``"
+#: ../../ref/models/database-functions.txt:155
+msgid "Date functions"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:181
-msgid ""
-"Accepts a single text field or expression and returns the number of "
-"characters the value has. If the expression is null, then the length will "
-"also be null."
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:195
-msgid "It can also be registered as a transform. For example::"
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:204
-msgid "``Lower``"
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:208
-msgid ""
-"Accepts a single text field or expression and returns the lowercase "
-"representation."
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:211
-#: ../../ref/models/database-functions.txt:269
-msgid ""
-"It can also be registered as a transform as described in :class:`Length`."
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:222
-msgid "``Now``"
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:226
-msgid ""
-"Returns the database server's current date and time when the query is "
-"executed, typically using the SQL ``CURRENT_TIMESTAMP``."
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:235
-msgid "PostgreSQL considerations"
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:237
-msgid ""
-"On PostgreSQL, the SQL ``CURRENT_TIMESTAMP`` returns the time that the "
-"current transaction started. Therefore for cross-database compatibility, "
-"``Now()`` uses ``STATEMENT_TIMESTAMP`` instead. If you need the transaction "
-"timestamp, use :class:`django.contrib.postgres.functions.TransactionNow`."
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:243
-msgid "``Substr``"
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:247
-msgid ""
-"Returns a substring of length ``length`` from the field or expression "
-"starting at position ``pos``. The position is 1-indexed, so the position "
-"must be greater than 0. If ``length`` is ``None``, then the rest of the "
-"string will be returned."
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:262
-msgid "``Upper``"
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:266
-msgid ""
-"Accepts a single text field or expression and returns the uppercase "
-"representation."
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:280
-msgid "Date Functions"
-msgstr ""
-
-#: ../../ref/models/database-functions.txt:297
+#: ../../ref/models/database-functions.txt:168
 msgid "``Extract``"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:301
+#: ../../ref/models/database-functions.txt:172
 msgid "Extracts a component of a date as a number."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:303
+#: ../../ref/models/database-functions.txt:174
 msgid ""
-"Takes an ``expression`` representing a ``DateField`` or ``DateTimeField`` "
-"and a ``lookup_name``, and returns the part of the date referenced by "
-"``lookup_name`` as an ``IntegerField``. Django usually uses the databases' "
-"extract function, so you may use any ``lookup_name`` that your database "
-"supports. A ``tzinfo`` subclass, usually provided by ``pytz``, can be passed "
-"to extract a value in a specific timezone."
+"Takes an ``expression`` representing a ``DateField``, ``DateTimeField``, "
+"``TimeField``, or ``DurationField`` and a ``lookup_name``, and returns the "
+"part of the date referenced by ``lookup_name`` as an ``IntegerField``. "
+"Django usually uses the databases' extract function, so you may use any "
+"``lookup_name`` that your database supports. A ``tzinfo`` subclass, usually "
+"provided by ``pytz``, can be passed to extract a value in a specific "
+"timezone."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:310
+#: ../../ref/models/database-functions.txt:183
+msgid "Support for ``DurationField`` was added."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:185
 msgid ""
 "Given the datetime ``2015-06-15 23:30:01.000321+00:00``, the built-in "
 "``lookup_name``\\s return:"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:313
+#: ../../ref/models/database-functions.txt:188
 msgid "\"year\": 2015"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:314
+#: ../../ref/models/database-functions.txt:189
+msgid "\"quarter\": 2"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:190
 msgid "\"month\": 6"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:315
+#: ../../ref/models/database-functions.txt:191
 msgid "\"day\": 15"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:316
+#: ../../ref/models/database-functions.txt:192
 msgid "\"week\": 25"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:317
+#: ../../ref/models/database-functions.txt:193
 msgid "\"week_day\": 2"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:318
+#: ../../ref/models/database-functions.txt:194
 msgid "\"hour\": 23"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:319
+#: ../../ref/models/database-functions.txt:195
 msgid "\"minute\": 30"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:320
+#: ../../ref/models/database-functions.txt:196
 msgid "\"second\": 1"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:322
+#: ../../ref/models/database-functions.txt:198
 msgid ""
 "If a different timezone like ``Australia/Melbourne`` is active in Django, "
 "then the datetime is converted to the timezone before the value is "
@@ -328,38 +247,38 @@ msgid ""
 "above except for:"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:327
+#: ../../ref/models/database-functions.txt:203
 msgid "\"day\": 16"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:328
+#: ../../ref/models/database-functions.txt:204
 msgid "\"week_day\": 3"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:329
+#: ../../ref/models/database-functions.txt:205
 msgid "\"hour\": 9"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:331
+#: ../../ref/models/database-functions.txt:207
 msgid "``week_day`` values"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:333
+#: ../../ref/models/database-functions.txt:209
 msgid ""
 "The ``week_day`` ``lookup_type`` is calculated differently from most "
 "databases and from Python's standard functions. This function will return "
 "``1`` for Sunday, ``2`` for Monday, through ``7`` for Saturday."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:337
+#: ../../ref/models/database-functions.txt:213
 msgid "The equivalent calculation in Python is::"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:344
+#: ../../ref/models/database-functions.txt:220
 msgid "``week`` values"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:346
+#: ../../ref/models/database-functions.txt:222
 msgid ""
 "The ``week`` ``lookup_type`` is calculated based on `ISO-8601 <https://en."
 "wikipedia.org/wiki/ISO-8601>`_, i.e., a week starts on a Monday. The first "
@@ -367,7 +286,7 @@ msgid ""
 "or before Thursday. The value returned is in the range 1 to 52 or 53."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:352
+#: ../../ref/models/database-functions.txt:228
 msgid ""
 "Each ``lookup_name`` above has a corresponding ``Extract`` subclass (listed "
 "below) that should typically be used instead of the more verbose equivalent, "
@@ -375,45 +294,45 @@ msgid ""
 "lookup_name='year')``."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:376
+#: ../../ref/models/database-functions.txt:252
 msgid "``DateField`` extracts"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:400
+#: ../../ref/models/database-functions.txt:282
 msgid ""
 "These are logically equivalent to ``Extract('date_field', lookup_name)``. "
 "Each class is also a ``Transform`` registered on ``DateField`` and "
 "``DateTimeField`` as ``__(lookup_name)``, e.g. ``__year``."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:404
+#: ../../ref/models/database-functions.txt:286
 msgid ""
 "Since ``DateField``\\s don't have a time component, only ``Extract`` "
 "subclasses that deal with date-parts can be used with ``DateField``::"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:428
+#: ../../ref/models/database-functions.txt:313
 msgid "``DateTimeField`` extracts"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:430
+#: ../../ref/models/database-functions.txt:315
 msgid ""
 "In addition to the following, all extracts for ``DateField`` listed above "
 "may also be used on ``DateTimeField``\\s ."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:445
+#: ../../ref/models/database-functions.txt:330
 msgid ""
 "These are logically equivalent to ``Extract('datetime_field', "
 "lookup_name)``. Each class is also a ``Transform`` registered on "
 "``DateTimeField`` as ``__(lookup_name)``, e.g. ``__minute``."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:449
+#: ../../ref/models/database-functions.txt:334
 msgid "``DateTimeField`` examples::"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:475
+#: ../../ref/models/database-functions.txt:364
 msgid ""
 "When :setting:`USE_TZ` is ``True`` then datetimes are stored in the database "
 "in UTC. If a different timezone is active in Django, the datetime is "
@@ -422,21 +341,43 @@ msgid ""
 "weekday, and hour values that are returned::"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:493
+#: ../../ref/models/database-functions.txt:382
 msgid ""
 "Explicitly passing the timezone to the ``Extract`` function behaves in the "
 "same way, and takes priority over an active timezone::"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:509
+#: ../../ref/models/database-functions.txt:397
+msgid "``Now``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:401
+msgid ""
+"Returns the database server's current date and time when the query is "
+"executed, typically using the SQL ``CURRENT_TIMESTAMP``."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:410
+msgid "PostgreSQL considerations"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:412
+msgid ""
+"On PostgreSQL, the SQL ``CURRENT_TIMESTAMP`` returns the time that the "
+"current transaction started. Therefore for cross-database compatibility, "
+"``Now()`` uses ``STATEMENT_TIMESTAMP`` instead. If you need the transaction "
+"timestamp, use :class:`django.contrib.postgres.functions.TransactionNow`."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:418
 msgid "``Trunc``"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:513
+#: ../../ref/models/database-functions.txt:422
 msgid "Truncates a date up to a significant component."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:515
+#: ../../ref/models/database-functions.txt:424
 msgid ""
 "When you only care if something happened in a particular year, hour, or day, "
 "but not the exact second, then ``Trunc`` (and its subclasses) can be useful "
@@ -444,7 +385,7 @@ msgid ""
 "calculate the number of sales per day."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:520
+#: ../../ref/models/database-functions.txt:429
 msgid ""
 "``Trunc`` takes a single ``expression``, representing a ``DateField``, "
 "``TimeField``, or ``DateTimeField``, a ``kind`` representing a date or time "
@@ -456,37 +397,41 @@ msgid ""
 "by ``pytz``, can be passed to truncate a value in a specific timezone."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:529
+#: ../../ref/models/database-functions.txt:438
 msgid ""
 "Given the datetime ``2015-06-15 14:30:50.000321+00:00``, the built-in "
 "``kind``\\s return:"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:532
+#: ../../ref/models/database-functions.txt:441
 msgid "\"year\": 2015-01-01 00:00:00+00:00"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:533
+#: ../../ref/models/database-functions.txt:442
+msgid "\"quarter\": 2015-04-01 00:00:00+00:00"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:443
 msgid "\"month\": 2015-06-01 00:00:00+00:00"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:534
+#: ../../ref/models/database-functions.txt:444
 msgid "\"day\": 2015-06-15 00:00:00+00:00"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:535
+#: ../../ref/models/database-functions.txt:445
 msgid "\"hour\": 2015-06-15 14:00:00+00:00"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:536
+#: ../../ref/models/database-functions.txt:446
 msgid "\"minute\": 2015-06-15 14:30:00+00:00"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:537
+#: ../../ref/models/database-functions.txt:447
 msgid "\"second\": 2015-06-15 14:30:50+00:00"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:539
+#: ../../ref/models/database-functions.txt:449
 msgid ""
 "If a different timezone like ``Australia/Melbourne`` is active in Django, "
 "then the datetime is converted to the new timezone before the value is "
@@ -494,55 +439,59 @@ msgid ""
 "+10:00. The values returned when this timezone is active will be:"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:544
+#: ../../ref/models/database-functions.txt:454
 msgid "\"year\": 2015-01-01 00:00:00+11:00"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:545
+#: ../../ref/models/database-functions.txt:455
+msgid "\"quarter\": 2015-04-01 00:00:00+10:00"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:456
 msgid "\"month\": 2015-06-01 00:00:00+10:00"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:546
+#: ../../ref/models/database-functions.txt:457
 msgid "\"day\": 2015-06-16 00:00:00+10:00"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:547
+#: ../../ref/models/database-functions.txt:458
 msgid "\"hour\": 2015-06-16 00:00:00+10:00"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:548
+#: ../../ref/models/database-functions.txt:459
 msgid "\"minute\": 2015-06-16 00:30:00+10:00"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:549
+#: ../../ref/models/database-functions.txt:460
 msgid "\"second\": 2015-06-16 00:30:50+10:00"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:551
+#: ../../ref/models/database-functions.txt:462
 msgid ""
 "The year has an offset of +11:00 because the result transitioned into "
 "daylight saving time."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:554
+#: ../../ref/models/database-functions.txt:465
 msgid ""
 "Each ``kind`` above has a corresponding ``Trunc`` subclass (listed below) "
 "that should typically be used instead of the more verbose equivalent, e.g. "
 "use ``TruncYear(...)`` rather than ``Trunc(..., kind='year')``."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:558
+#: ../../ref/models/database-functions.txt:469
 msgid ""
 "The subclasses are all defined as transforms, but they aren't registered "
 "with any fields, because the obvious lookup names are already reserved by "
 "the ``Extract`` subclasses."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:588
+#: ../../ref/models/database-functions.txt:499
 msgid "``DateField`` truncation"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:598
+#: ../../ref/models/database-functions.txt:515
 msgid ""
 "These are logically equivalent to ``Trunc('date_field', kind)``. They "
 "truncate all parts of the date up to ``kind`` which allows grouping or "
@@ -550,17 +499,43 @@ msgid ""
 "``output_field`` of either ``DateField`` or ``DateTimeField``."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:603
+#: ../../ref/models/database-functions.txt:520
 msgid ""
 "Since ``DateField``\\s don't have a time component, only ``Trunc`` "
 "subclasses that deal with date-parts can be used with ``DateField``::"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:638
+#: ../../ref/models/database-functions.txt:555
+msgid "``DateTimeField`` truncation"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:562
+msgid ""
+"``TruncDate`` casts ``expression`` to a date rather than using the built-in "
+"SQL truncate function. It's also registered as a transform on  "
+"``DateTimeField`` as ``__date``."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:573
+msgid ""
+"``TruncTime`` casts ``expression`` to a time rather than using the built-in "
+"SQL truncate function. It's also registered as a transform on "
+"``DateTimeField`` as ``__time``."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:593
+msgid ""
+"These are logically equivalent to ``Trunc('datetime_field', kind)``. They "
+"truncate all parts of the date up to ``kind`` and allow grouping or "
+"filtering datetimes with less precision. ``expression`` must have an "
+"``output_field`` of ``DateTimeField``."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:625
 msgid "``TimeField`` truncation"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:654
+#: ../../ref/models/database-functions.txt:641
 msgid ""
 "These are logically equivalent to ``Trunc('time_field', kind)``. They "
 "truncate all parts of the time up to ``kind`` which allows grouping or "
@@ -568,34 +543,358 @@ msgid ""
 "``output_field`` of either ``TimeField`` or ``DateTimeField``."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:659
+#: ../../ref/models/database-functions.txt:646
 msgid ""
 "Since ``TimeField``\\s don't have a date component, only ``Trunc`` "
 "subclasses that deal with time-parts can be used with ``TimeField``::"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:693
-msgid "``DateTimeField`` truncation"
+#: ../../ref/models/database-functions.txt:682
+msgid "Text functions"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:700
-msgid ""
-"``TruncDate`` casts ``expression`` to a date rather than using the built-in "
-"SQL truncate function. It's also registered as a transform on  "
-"``DateTimeField`` as ``__date``."
+#: ../../ref/models/database-functions.txt:685
+msgid "``Concat``"
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:711
+#: ../../ref/models/database-functions.txt:689
 msgid ""
-"``TruncTime`` casts ``expression`` to a time rather than using the built-in "
-"SQL truncate function. It's also registered as a transform on "
-"``DateTimeField`` as ``__time``."
+"Accepts a list of at least two text fields or expressions and returns the "
+"concatenated text. Each argument must be of a text or char type. If you want "
+"to concatenate a ``TextField()`` with a ``CharField()``, then be sure to "
+"tell Django that the ``output_field`` should be a ``TextField()``. "
+"Specifying an ``output_field`` is also required when concatenating a "
+"``Value`` as in the example below."
 msgstr ""
 
-#: ../../ref/models/database-functions.txt:731
+#: ../../ref/models/database-functions.txt:696
 msgid ""
-"These are logically equivalent to ``Trunc('datetime_field', kind)``. They "
-"truncate all parts of the date up to ``kind`` and allow grouping or "
-"filtering datetimes with less precision. ``expression`` must have an "
-"``output_field`` of ``DateTimeField``."
+"This function will never have a null result. On backends where a null "
+"argument results in the entire expression being null, Django will ensure "
+"that each null part is converted to an empty string first."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:716
+msgid "``Length``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:720
+msgid ""
+"Accepts a single text field or expression and returns the number of "
+"characters the value has. If the expression is null, then the length will "
+"also be null."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:734
+msgid "It can also be registered as a transform. For example::"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:743
+msgid "``Lower``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:747
+msgid ""
+"Accepts a single text field or expression and returns the lowercase "
+"representation."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:750
+#: ../../ref/models/database-functions.txt:821
+msgid ""
+"It can also be registered as a transform as described in :class:`Length`."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:761
+msgid "``StrIndex``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:767
+msgid ""
+"Returns a positive integer corresponding to the 1-indexed position of the "
+"first occurrence of ``substring`` inside ``string``, or 0 if ``substring`` "
+"is not found."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:789
+msgid ""
+"In MySQL, a database table's :ref:`collation<mysql-collation>` determines "
+"whether string comparisons (such as the ``expression`` and ``substring`` of "
+"this function) are case-sensitive. Comparisons are case-insensitive by "
+"default."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:795
+msgid "``Substr``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:799
+msgid ""
+"Returns a substring of length ``length`` from the field or expression "
+"starting at position ``pos``. The position is 1-indexed, so the position "
+"must be greater than 0. If ``length`` is ``None``, then the rest of the "
+"string will be returned."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:814
+msgid "``Upper``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:818
+msgid ""
+"Accepts a single text field or expression and returns the uppercase "
+"representation."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:834
+msgid "Window functions"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:838
+msgid ""
+"There are a number of functions to use in a :class:`~django.db.models."
+"expressions.Window` expression for computing the rank of elements or the :"
+"class:`Ntile` of some rows."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:843
+msgid "``CumeDist``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:847
+msgid ""
+"Calculates the cumulative distribution of a value within a window or "
+"partition. The cumulative distribution is defined as the number of rows "
+"preceding or peered with the current row divided by the total number of rows "
+"in the frame."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:852
+msgid "``DenseRank``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:856
+msgid "Equivalent to :class:`Rank` but does not have gaps."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:859
+msgid "``FirstValue``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:863
+msgid ""
+"Returns the value evaluated at the row that's the first row of the window "
+"frame, or ``None`` if no such value exists."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:867
+msgid "``Lag``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:871
+msgid ""
+"Calculates the value offset by ``offset``, and if no row exists there, "
+"returns ``default``."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:874
+#: ../../ref/models/database-functions.txt:893
+msgid ""
+"``default`` must have the same type as the ``expression``, however, this is "
+"only validated by the database and not in Python."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:878
+msgid "``LastValue``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:882
+msgid ""
+"Comparable to :class:`FirstValue`, it calculates the last value in a given "
+"frame clause."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:886
+msgid "``Lead``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:890
+msgid ""
+"Calculates the leading value in a given :ref:`frame <window-frames>`. Both "
+"``offset`` and ``default`` are evaluated with respect to the current row."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:897
+msgid "``NthValue``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:901
+msgid ""
+"Computes the row relative to the offset ``nth`` (must be a positive value) "
+"within the window. Returns ``None`` if no row exists."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:904
+msgid ""
+"Some databases may handle a nonexistent nth-value differently. For example, "
+"Oracle returns an empty string rather than ``None`` for character-based "
+"expressions. Django doesn't do any conversions in these cases."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:909
+msgid "``Ntile``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:913
+msgid ""
+"Calculates a partition for each of the rows in the frame clause, "
+"distributing numbers as evenly as possible between 1 and ``num_buckets``. If "
+"the rows don't divide evenly into a number of buckets, one or more buckets "
+"will be represented more frequently."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:919
+msgid "``PercentRank``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:923
+msgid ""
+"Computes the percentile rank of the rows in the frame clause. This "
+"computation is equivalent to evaluating::"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:928
+msgid ""
+"The following table explains the calculation for the percentile rank of a "
+"row:"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:931
+msgid "Row #"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:931
+msgid "Value"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:931
+msgid "Rank"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:931
+msgid "Calculation"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:931
+msgid "Percent Rank"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:933
+msgid "1"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:933
+msgid "15"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:933
+msgid "(1-1)/(7-1)"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:933
+msgid "0.0000"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:934
+#: ../../ref/models/database-functions.txt:935
+#: ../../ref/models/database-functions.txt:936
+msgid "2"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:934
+#: ../../ref/models/database-functions.txt:935
+#: ../../ref/models/database-functions.txt:936
+msgid "20"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:934
+#: ../../ref/models/database-functions.txt:935
+#: ../../ref/models/database-functions.txt:936
+msgid "(2-1)/(7-1)"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:934
+#: ../../ref/models/database-functions.txt:935
+#: ../../ref/models/database-functions.txt:936
+msgid "0.1666"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:935
+msgid "3"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:936
+msgid "4"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:937
+#: ../../ref/models/database-functions.txt:938
+msgid "5"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:937
+#: ../../ref/models/database-functions.txt:938
+msgid "30"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:937
+#: ../../ref/models/database-functions.txt:938
+msgid "(5-1)/(7-1)"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:937
+#: ../../ref/models/database-functions.txt:938
+msgid "0.6666"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:938
+msgid "6"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:939
+msgid "7"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:939
+msgid "40"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:939
+msgid "(7-1)/(7-1)"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:939
+msgid "1.0000"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:943
+msgid "``Rank``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:947
+msgid ""
+"Comparable to ``RowNumber``, this function ranks rows in the window. The "
+"computed rank contains gaps. Use :class:`DenseRank` to compute rank without "
+"gaps."
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:952
+msgid "``RowNumber``"
+msgstr ""
+
+#: ../../ref/models/database-functions.txt:956
+msgid ""
+"Computes the row number according to the ordering of either the frame clause "
+"or the ordering of the whole query if there is no partitioning of the :ref:"
+"`window frame <window-frames>`."
 msgstr ""

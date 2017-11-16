@@ -2,7 +2,7 @@
 Django 1.11 release notes
 =========================
 
-*April 4, 2016*
+*April 4, 2017*
 
 Welcome to Django 1.11!
 
@@ -27,7 +27,7 @@ release to support Python 3.6. We **highly recommend** and only officially
 support the latest release of each series.
 
 The Django 1.11.x series is the last to support Python 2. The next major
-release, Django 2.0, will only support Python 3.5+.
+release, Django 2.0, will only support Python 3.4+.
 
 Deprecating warnings are no longer loud by default
 ==================================================
@@ -223,9 +223,9 @@ Minor features
 * The new :class:`~django.contrib.postgres.aggregates.JSONBAgg` allows
   aggregating values as a JSON array.
 
-* :class:`~django.contrib.postgres.fields.HStoreField` and
-  :class:`~django.contrib.postgres.forms.HStoreField` allow storing null
-  values.
+* The :class:`~django.contrib.postgres.fields.HStoreField` (model field) and
+  :class:`~django.contrib.postgres.forms.HStoreField` (form field) allow
+  storing null values.
 
 Cache
 ~~~~~
@@ -327,18 +327,19 @@ Models
 
 * :class:`~django.db.models.ImageField` now has a default
   :data:`~django.core.validators.validate_image_file_extension` validator.
+  (This validator moved to the form field in :doc:`Django 1.11.2 <1.11.2>`.)
 
 * Added support for time truncation to
-  :class:`~django.db.models.functions.datetime.Trunc` functions.
+  :class:`~django.db.models.functions.Trunc` functions.
 
-* Added the :class:`~django.db.models.functions.datetime.ExtractWeek` function
-  to extract the week from :class:`~django.db.models.DateField` and
+* Added the :class:`~django.db.models.functions.ExtractWeek` function to
+  extract the week from :class:`~django.db.models.DateField` and
   :class:`~django.db.models.DateTimeField` and exposed it through the
   :lookup:`week` lookup.
 
-* Added the :class:`~django.db.models.functions.datetime.TruncTime` function
-  to truncate :class:`~django.db.models.DateTimeField` to its time component
-  and exposed it through the :lookup:`time` lookup.
+* Added the :class:`~django.db.models.functions.TruncTime` function to truncate
+  :class:`~django.db.models.DateTimeField` to its time component and exposed it
+  through the :lookup:`time` lookup.
 
 * Added support for expressions in :meth:`.QuerySet.values` and
   :meth:`~.QuerySet.values_list`.
@@ -464,6 +465,13 @@ Backwards incompatible changes in 1.11
 
 * Support for GDAL 1.7 and 1.8 is dropped.
 
+* The widgets in ``contrib.gis.forms.widgets`` and the admin's
+  ``OpenLayersWidget`` use the :doc:`form rendering API </ref/forms/renderers>`
+  rather than ``loader.render_to_string()``. If you're using a custom widget
+  template, you'll need to be sure your form renderer can locate it. For
+  example, you could use the :class:`~django.forms.renderers.TemplatesSetting`
+  renderer.
+
 :mod:`django.contrib.staticfiles`
 ---------------------------------
 
@@ -481,6 +489,9 @@ Backwards incompatible changes in 1.11
 
 Database backend API
 --------------------
+
+This section describes changes that may be needed in third-party database
+backends.
 
 * The ``DatabaseOperations.time_trunc_sql()`` method is added to support
   ``TimeField`` truncation. It accepts a ``lookup_type`` and ``field_name``
@@ -526,6 +537,8 @@ to support it.
 Also, the minimum supported version of psycopg2 is increased from 2.4.5 to
 2.5.4.
 
+.. _liveservertestcase-port-zero-change:
+
 ``LiveServerTestCase`` binds to port zero
 -----------------------------------------
 
@@ -534,6 +547,9 @@ Rather than taking a port range and iterating to find a free port,
 to assign a free port. The ``DJANGO_LIVE_TEST_SERVER_ADDRESS`` environment
 variable is no longer used, and as it's also no longer used, the
 ``manage.py test --liveserver`` option is removed.
+
+If you need to bind ``LiveServerTestCase`` to a specific port, use the ``port``
+attribute added in Django 1.11.2.
 
 Protection against insecure redirects in :mod:`django.contrib.auth` and ``i18n`` views
 --------------------------------------------------------------------------------------
@@ -593,6 +609,8 @@ Some undocumented classes in ``django.forms.widgets`` are removed:
   ``CheckboxFieldRenderer``
 * ``ChoiceInput``, ``RadioChoiceInput``, ``CheckboxChoiceInput``
 
+The undocumented ``Select.render_option()`` method is removed.
+
 The ``Widget.format_output()`` method is removed. Use a custom widget template
 instead.
 
@@ -601,14 +619,15 @@ Some widget values, such as ``<select>`` options, are now localized if
 widget templates that uses the :ttag:`localize` template tag to turn off
 localization.
 
-``django.Template.render()`` prohibits non-dict context
--------------------------------------------------------
+``django.template.backends.django.Template.render()`` prohibits non-dict context
+--------------------------------------------------------------------------------
 
-For compatibility with multiple template engines, ``django.Template.render()``
-must receive a dictionary of context rather than ``Context`` or
-``RequestContext``. If you were passing either of the two classes, pass a
-dictionary instead -- doing so is backwards-compatible with older versions of
-Django.
+For compatibility with multiple template engines,
+``django.template.backends.django.Template.render()`` (returned from high-level
+template loader APIs such as ``loader.get_template()``) must receive a
+dictionary of context rather than ``Context`` or ``RequestContext``. If you
+were passing either of the two classes, pass a dictionary instead -- doing so
+is backwards-compatible with older versions of Django.
 
 Model state changes in migration operations
 -------------------------------------------
@@ -711,6 +730,12 @@ Miscellaneous
   ``Content-Length`` header as this is now done by
   :class:`~django.middleware.common.CommonMiddleware`.
 
+  If you have a middleware that modifies a response's content and appears
+  before ``CommonMiddleware`` in the ``MIDDLEWARE`` or ``MIDDLEWARE_CLASSES``
+  settings, you must reorder your middleware so that responses aren't modified
+  after ``Content-Length`` is set, or have the response modifying middleware
+  reset the ``Content-Length`` header.
+
 * :meth:`~django.apps.AppConfig.get_model` and
   :meth:`~django.apps.AppConfig.get_models` now raise
   :exc:`~django.core.exceptions.AppRegistryNotReady` if they're called before
@@ -730,6 +755,15 @@ Miscellaneous
 * Support for ``cx_Oracle`` < 5.2 is removed.
 
 * Support for IPython < 1.0 is removed from the ``shell`` command.
+
+* The signature of private API ``Widget.build_attrs()`` changed from
+  ``extra_attrs=None, **kwargs`` to ``base_attrs, extra_attrs=None``.
+
+* File-like objects (e.g., :class:`~io.StringIO` and :class:`~io.BytesIO`)
+  uploaded to an :class:`~django.db.models.ImageField` using the test client
+  now require a ``name`` attribute with a value that passes the
+  :data:`~django.core.validators.validate_image_file_extension` validator.
+  See the note in :meth:`.Client.post`.
 
 .. _deprecated-features-1.11:
 

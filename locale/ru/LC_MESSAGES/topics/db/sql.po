@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-08 11:07+0200\n"
+"POT-Creation-Date: 2017-11-16 11:56+0200\n"
 "PO-Revision-Date: 2015-12-10 00:45+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -371,27 +371,36 @@ msgstr ""
 
 # 67537d8af9fc4a5f9622c0c9feac352a
 #: ../../topics/db/sql.txt:213
-msgid "**Do not use string formatting on raw queries!**"
+#, fuzzy
+msgid ""
+"**Do not use string formatting on raw queries or quote placeholders in your "
+"SQL strings!**"
 msgstr "**Не используйте форматирование строк в запросе!**"
 
 # 37bebbcd691648e88c9fd4d3011db9b4
-#: ../../topics/db/sql.txt:215
+#: ../../topics/db/sql.txt:216
 msgid "It's tempting to write the above query as::"
 msgstr "Очень заманчиво написать запрос следующим образом::"
 
-# 6d6024d7dcb946c7a1603872d7b95bb8
-#: ../../topics/db/sql.txt:220
-msgid "**Don't.**"
-msgstr "**Не делайте этого.**"
+#: ../../topics/db/sql.txt:221
+msgid ""
+"You might also think you should write your query like this (with quotes "
+"around ``%s``)::"
+msgstr ""
+
+#: ../../topics/db/sql.txt:226
+msgid "**Don't make either of these mistakes.**"
+msgstr ""
 
 # d26883ab7d38404fa63ca94186c35d92
-#: ../../topics/db/sql.txt:222
+#: ../../topics/db/sql.txt:228
+#, fuzzy
 msgid ""
-"Using the ``params`` argument completely protects you from `SQL injection "
-"attacks`__, a common exploit where attackers inject arbitrary SQL into your "
-"database. If you use string interpolation, sooner or later you'll fall "
-"victim to SQL injection. As long as you remember to always use the "
-"``params`` argument you'll be protected."
+"As discussed in :ref:`sql-injection-protection`, using the ``params`` "
+"argument and leaving the placeholders unquoted protects you from `SQL "
+"injection attacks`__, a common exploit where attackers inject arbitrary SQL "
+"into your database. If you use string interpolation or quote the "
+"placeholder, you're at risk for SQL injection."
 msgstr ""
 "Используя ``params`` вы полностью защищены от `Атак с внедрением SQL-кода "
 "<http://ru.wikipedia.org/wiki/%D0%92%D0%BD%D0%B5%D0%B4%D1%80%D0%B5%D0%BD"
@@ -400,12 +409,12 @@ msgstr ""
 "Используя аргумент ``params`` вы обезопасите себя от этого."
 
 # a3f6386003184a438fa817a3ee5f75b3
-#: ../../topics/db/sql.txt:233
+#: ../../topics/db/sql.txt:239
 msgid "Executing custom SQL directly"
 msgstr "Непосредственное выполнение SQL запроса"
 
 # dc53b738ed8f41a58586887c0ec4ef9e
-#: ../../topics/db/sql.txt:235
+#: ../../topics/db/sql.txt:241
 msgid ""
 "Sometimes even :meth:`Manager.raw` isn't quite enough: you might need to "
 "perform queries that don't map cleanly to models, or directly execute "
@@ -416,7 +425,7 @@ msgstr ""
 "запросы ``UPDATE``, ``INSERT`` или ``DELETE``."
 
 # 57f671e0b9a543ae864b97ee2e406eda
-#: ../../topics/db/sql.txt:239
+#: ../../topics/db/sql.txt:245
 msgid ""
 "In these cases, you can always access the database directly, routing around "
 "the model layer entirely."
@@ -425,7 +434,7 @@ msgstr ""
 "моделей."
 
 # ee0f2a5bf7524a5fb495608716c544ee
-#: ../../topics/db/sql.txt:242
+#: ../../topics/db/sql.txt:248
 msgid ""
 "The object ``django.db.connection`` represents the default database "
 "connection. To use the database connection, call ``connection.cursor()`` to "
@@ -440,12 +449,18 @@ msgstr ""
 "или ``cursor.fetchall()`` для получения результата. "
 
 # 0149a687358840a9baa97cbc048b51bd
-#: ../../topics/db/sql.txt:248
+#: ../../topics/db/sql.txt:254
 msgid "For example::"
 msgstr "Например::"
 
+#: ../../topics/db/sql.txt:266
+msgid ""
+"To protect against SQL injection, you must not include quotes around the ``"
+"%s`` placeholders in the SQL string."
+msgstr ""
+
 # 197a362594b04e75b6786b7e9865383d
-#: ../../topics/db/sql.txt:260
+#: ../../topics/db/sql.txt:269
 msgid ""
 "Note that if you want to include literal percent signs in the query, you "
 "have to double them in the case you are passing parameters::"
@@ -453,7 +468,7 @@ msgstr ""
 "Если необходимо вставить символ процента, необходимо его продублировать::"
 
 # 4871c2ebadcc4dbca7f725dd583f8320
-#: ../../topics/db/sql.txt:266
+#: ../../topics/db/sql.txt:275
 msgid ""
 "If you are using :doc:`more than one database </topics/db/multi-db>`, you "
 "can use ``django.db.connections`` to obtain the connection (and cursor) for "
@@ -466,7 +481,7 @@ msgstr ""
 "позволяющий получить подключение по псевдониму базы данных::"
 
 # 5f519b956e5447219236bf3db748bf72
-#: ../../topics/db/sql.txt:276
+#: ../../topics/db/sql.txt:285
 msgid ""
 "By default, the Python DB API will return results without their field names, "
 "which means you end up with a ``list`` of values, rather than a ``dict``. At "
@@ -477,7 +492,7 @@ msgstr ""
 "получите список значений, а не словарь. За счет небольшой потери "
 "производительности вы можете получить словарь следующим образом::"
 
-#: ../../topics/db/sql.txt:289
+#: ../../topics/db/sql.txt:298
 msgid ""
 "Another option is to use :func:`collections.namedtuple` from the Python "
 "standard library. A ``namedtuple`` is a tuple-like object that has fields "
@@ -492,17 +507,17 @@ msgstr ""
 "через название поля или индекс::"
 
 # 0485eb426ffe48e59250e1f3304c3bcf
-#: ../../topics/db/sql.txt:302
+#: ../../topics/db/sql.txt:311
 msgid "Here is an example of the difference between the three::"
 msgstr "Пример, показывающий разницу между тремя методами::"
 
 # be44bce06957408b9cef2609c74b5e57
-#: ../../topics/db/sql.txt:322
+#: ../../topics/db/sql.txt:331
 msgid "Connections and cursors"
 msgstr "Подключения и указатель"
 
 # 15cedf8ada6b4e28ae13085fe7c48ed7
-#: ../../topics/db/sql.txt:324
+#: ../../topics/db/sql.txt:333
 msgid ""
 "``connection`` and ``cursor`` mostly implement the standard Python DB-API "
 "described in :pep:`249` — except when it comes to :doc:`transaction handling "
@@ -513,7 +528,7 @@ msgstr ""
 "transactions>`."
 
 # f48db64db511477a812e99e1e1d7cbb2
-#: ../../topics/db/sql.txt:328
+#: ../../topics/db/sql.txt:337
 msgid ""
 "If you're not familiar with the Python DB-API, note that the SQL statement "
 "in ``cursor.execute()`` uses placeholders, ``\"%s\"``, rather than adding "
@@ -528,7 +543,7 @@ msgstr ""
 "экранирует параметры."
 
 # f134b90e2f484d9d9ce6a08fc865f49d
-#: ../../topics/db/sql.txt:333
+#: ../../topics/db/sql.txt:342
 msgid ""
 "Also note that Django expects the ``\"%s\"`` placeholder, *not* the ``\"?"
 "\"`` placeholder, which is used by the SQLite Python bindings. This is for "
@@ -539,14 +554,42 @@ msgstr ""
 "последовательности и удобства."
 
 # 710f20cf02fa42c3a83e1772aaf6b439
-#: ../../topics/db/sql.txt:337
+#: ../../topics/db/sql.txt:346
 msgid "Using a cursor as a context manager::"
 msgstr "Использование курсора как контекстный менеджер::"
 
 # ce9b35f1daee48988c4b22285e92f725
-#: ../../topics/db/sql.txt:342
+#: ../../topics/db/sql.txt:351
 msgid "is equivalent to::"
 msgstr "эквивалентно::"
+
+#: ../../topics/db/sql.txt:360
+msgid "Calling stored procedures"
+msgstr ""
+
+#: ../../topics/db/sql.txt:364
+msgid ""
+"Calls a database stored procedure with the given name. A sequence "
+"(``params``) or dictionary (``kparams``) of input parameters may be "
+"provided. Most databases don't support ``kparams``. Of Django's built-in "
+"backends, only Oracle supports it."
+msgstr ""
+
+#: ../../topics/db/sql.txt:369
+msgid "For example, given this stored procedure in an Oracle database:"
+msgstr ""
+
+#: ../../topics/db/sql.txt:382
+msgid "This will call it::"
+msgstr ""
+
+#: ../../topics/db/sql.txt:389
+msgid "The ``kparams`` argument was added."
+msgstr ""
+
+# 6d6024d7dcb946c7a1603872d7b95bb8
+#~ msgid "**Don't.**"
+#~ msgstr "**Не делайте этого.**"
 
 # 7265e03edbb243d992b7e7998f54646c
 #~ msgid ""

@@ -7,6 +7,18 @@ module.
 
 .. currentmodule:: django.contrib.postgres.fields
 
+Indexing these fields
+=====================
+
+:class:`~django.db.models.Index` and :attr:`.Field.db_index` both create a
+B-tree index, which isn't particularly helpful when querying complex data types.
+Indexes such as :class:`~django.contrib.postgres.indexes.GinIndex` and
+:class:`~django.contrib.postgres.indexes.GistIndex` are better suited, though
+the index choice is dependent on the queries that you're using. Generally, GiST
+may be a good choice for the :ref:`range fields <range-fields>` and
+:class:`HStoreField`, and GIN may be helpful for :class:`ArrayField` and
+:class:`JSONField`.
+
 ``ArrayField``
 ==============
 
@@ -104,7 +116,7 @@ We will use the following example model::
         name = models.CharField(max_length=200)
         tags = ArrayField(models.CharField(max_length=200), blank=True)
 
-        def __str__(self):  # __unicode__ on Python 2
+        def __str__(self):
             return self.name
 
 .. fieldlookup:: arrayfield.contains
@@ -185,11 +197,10 @@ available for :class:`~django.db.models.IntegerField`. For example::
 Index transforms
 ~~~~~~~~~~~~~~~~
 
-This class of transforms allows you to index into the array in queries. Any
-non-negative integer can be used. There are no errors if it exceeds the
-:attr:`size <ArrayField.size>` of the array. The lookups available after the
-transform are those from the :attr:`base_field <ArrayField.base_field>`. For
-example::
+Index transforms index into the array. Any non-negative integer can be used.
+There are no errors if it exceeds the :attr:`size <ArrayField.size>` of the
+array. The lookups available after the transform are those from the
+:attr:`base_field <ArrayField.base_field>`. For example::
 
     >>> Post.objects.create(name='First post', tags=['thoughts', 'django'])
     >>> Post.objects.create(name='Second post', tags=['thoughts'])
@@ -214,9 +225,9 @@ example::
 Slice transforms
 ~~~~~~~~~~~~~~~~
 
-This class of transforms allow you to take a slice of the array. Any two
-non-negative integers can be used, separated by a single underscore. The
-lookups available after the transform do not change. For example::
+Slice transforms take a slice of the array. Any two non-negative integers can
+be used, separated by a single underscore. The lookups available after the
+transform do not change. For example::
 
     >>> Post.objects.create(name='First post', tags=['thoughts', 'django'])
     >>> Post.objects.create(name='Second post', tags=['thoughts'])
@@ -241,14 +252,6 @@ lookups available after the transform do not change. For example::
     down to the final underlying data, but most other slices behave strangely
     at the database level and cannot be supported in a logical, consistent
     fashion by Django.
-
-Indexing ``ArrayField``
------------------------
-
-At present using :attr:`~django.db.models.Field.db_index` will create a
-``btree`` index. This does not offer particularly significant help to querying.
-A more useful index is a ``GIN`` index, which you should create using a
-:class:`~django.db.migrations.operations.RunSQL` operation.
 
 ``CIText`` fields
 =================
@@ -278,7 +281,7 @@ A more useful index is a ``GIN`` index, which you should create using a
     similar to PostgreSQL's ``text`` type.
 
     .. _citext: https://www.postgresql.org/docs/current/static/citext.html
-    .. _the performance considerations: https://www.postgresql.org/docs/current/static/citext.html#AEN169274
+    .. _the performance considerations: https://www.postgresql.org/docs/current/static/citext.html#AEN178177
 
 ``HStoreField``
 ===============
@@ -323,7 +326,7 @@ We will use the following example model::
         name = models.CharField(max_length=200)
         data = HStoreField()
 
-        def __str__(self):  # __unicode__ on Python 2
+        def __str__(self):
             return self.name
 
 .. fieldlookup:: hstorefield.key
@@ -531,7 +534,7 @@ We will use the following example model::
         name = models.CharField(max_length=200)
         data = JSONField()
 
-        def __str__(self):  # __unicode__ on Python 2
+        def __str__(self):
             return self.name
 
 .. fieldlookup:: jsonfield.key
@@ -559,7 +562,7 @@ name::
 Multiple keys can be chained together to form a path lookup::
 
     >>> Dog.objects.filter(data__owner__name='Bob')
-    <QuerySet [<QuerySet <Dog: Rufus>]>
+    <QuerySet [<Dog: Rufus>]>
 
 If the key is an integer, it will be interpreted as an index lookup in an
 array::
@@ -658,7 +661,7 @@ excluded; that is, ``[)``.
 .. class:: DateTimeRangeField(**options)
 
     Stores a range of timestamps. Based on a
-    :class:`~django.db.models.DateTimeField`. Represented by a ``tztsrange`` in
+    :class:`~django.db.models.DateTimeField`. Represented by a ``tstzrange`` in
     the database and a :class:`~psycopg2:psycopg2.extras.DateTimeTZRange` in
     Python.
 
@@ -690,7 +693,7 @@ model::
         ages = IntegerRangeField()
         start = models.DateTimeField()
 
-        def __str__(self):  # __unicode__ on Python 2
+        def __str__(self):
             return self.name
 
 We will also use the following example objects::

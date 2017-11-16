@@ -189,6 +189,68 @@ cursor query is controlled with the `cursor_tuple_fraction`_ option.
 
 .. _cursor_tuple_fraction: https://www.postgresql.org/docs/current/static/runtime-config-query.html#GUC-CURSOR-TUPLE-FRACTION
 
+.. _transaction-pooling-server-side-cursors:
+
+Transaction pooling and server-side cursors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 1.11.1
+
+Using a connection pooler in transaction pooling mode (e.g. `pgBouncer`_)
+requires disabling server-side cursors for that connection.
+
+Server-side cursors are local to a connection and remain open at the end of a
+transaction when :setting:`AUTOCOMMIT <DATABASE-AUTOCOMMIT>` is ``True``. A
+subsequent transaction may attempt to fetch more results from a server-side
+cursor. In transaction pooling mode, there's no guarantee that subsequent
+transactions will use the same connection. If a different connection is used,
+an error is raised when the transaction references the server-side cursor,
+because server-side cursors are only accessible in the connection in which they
+were created.
+
+One solution is to disable server-side cursors for a connection in
+:setting:`DATABASES` by setting :setting:`DISABLE_SERVER_SIDE_CURSORS
+<DATABASE-DISABLE_SERVER_SIDE_CURSORS>` to ``True``.
+
+To benefit from server-side cursors in transaction pooling mode, you could set
+up :doc:`another connection to the database </topics/db/multi-db>` in order to
+perform queries that use server-side cursors. This connection needs to either
+be directly to the database or to a connection pooler in session pooling mode.
+
+Another option is to wrap each ``QuerySet`` using server-side cursors in an
+:func:`~django.db.transaction.atomic` block, because it disables ``autocommit``
+for the duration of the transaction. This way, the server-side cursor will only
+live for the duration of the transaction.
+
+.. _pgBouncer: https://pgbouncer.github.io/
+
+.. _manually-specified-autoincrement-pk:
+
+Manually-specifying values of auto-incrementing primary keys
+------------------------------------------------------------
+
+Django uses PostgreSQL's `SERIAL data type`_ to store auto-incrementing primary
+keys. A ``SERIAL`` column is populated with values from a `sequence`_ that
+keeps track of the next available value. Manually assigning a value to an
+auto-incrementing field doesn't update the field's sequence, which might later
+cause a conflict. For example::
+
+    >>> from django.contrib.auth.models import User
+    >>> User.objects.create(username='alice', pk=1)
+    <User: alice>
+    >>> # The sequence hasn't been updated; its next value is 1.
+    >>> User.objects.create(username='bob')
+    ...
+    IntegrityError: duplicate key value violates unique constraint
+    "auth_user_pkey" DETAIL:  Key (id)=(1) already exists.
+
+If you need to specify such values, reset the sequence afterwards to avoid
+reusing a value that's already in the table. The :djadmin:`sqlsequencereset`
+management command generates the SQL statements to do that.
+
+.. _SERIAL data type: https://www.postgresql.org/docs/current/static/datatype-numeric.html#DATATYPE-SERIAL
+.. _sequence: https://www.postgresql.org/docs/current/static/sql-createsequence.html
+
 Test database templates
 -----------------------
 
@@ -273,54 +335,29 @@ running ``migrate``::
 MySQL DB API Drivers
 --------------------
 
-The Python Database API is described in :pep:`249`. MySQL has three prominent
-drivers that implement this API:
+MySQL has a couple drivers that implement the Python Database API described in
+:pep:`249`:
 
-- `MySQLdb`_ is a native driver that has been developed and supported for over
-  a decade by Andy Dustman.
-- `mysqlclient`_ is a fork of ``MySQLdb`` which notably supports Python 3 and
-  can be used as a drop-in replacement for MySQLdb. At the time of this writing,
-  this is **the recommended choice** for using MySQL with Django.
+- `mysqlclient`_ is a native driver. It's **the recommended choice**.
 - `MySQL Connector/Python`_ is a pure Python driver from Oracle that does not
   require the MySQL client library or any Python modules outside the standard
   library.
 
-.. _MySQLdb: https://pypi.python.org/pypi/MySQL-python/1.2.4
 .. _mysqlclient: https://pypi.python.org/pypi/mysqlclient
 .. _MySQL Connector/Python: https://dev.mysql.com/downloads/connector/python
 
-All these drivers are thread-safe and provide connection pooling. ``MySQLdb``
-is the only one not supporting Python 3 currently.
+These drivers are thread-safe and provide connection pooling.
 
 In addition to a DB API driver, Django needs an adapter to access the database
-drivers from its ORM. Django provides an adapter for MySQLdb/mysqlclient while
-MySQL Connector/Python includes `its own`_.
+drivers from its ORM. Django provides an adapter for mysqlclient while MySQL
+Connector/Python includes `its own`_.
 
 .. _its own: https://dev.mysql.com/doc/connector-python/en/connector-python-django-backend.html
-
-MySQLdb
-~~~~~~~
-
-Django requires MySQLdb version 1.2.3 or later.
-
-At the time of writing, the latest release of MySQLdb (1.2.5) doesn't support
-Python 3. In order to use MySQLdb under Python 3, you'll have to install
-``mysqlclient`` instead.
-
-.. note::
-    There are known issues with the way MySQLdb converts date strings into
-    datetime objects. Specifically, date strings with value ``0000-00-00`` are
-    valid for MySQL but will be converted into ``None`` by MySQLdb.
-
-    This means you should be careful while using :djadmin:`loaddata` and
-    :djadmin:`dumpdata` with rows that may have ``0000-00-00`` values, as they
-    will be converted to ``None``.
 
 mysqlclient
 ~~~~~~~~~~~
 
-Django requires `mysqlclient`_ 1.3.3 or later. mysqlclient should mostly behave
-the same as MySQLdb.
+Django requires `mysqlclient`_ 1.3.3 or later.
 
 MySQL Connector/Python
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -433,7 +470,7 @@ Several other `MySQLdb connection options`_ may be useful, such as ``ssl``,
 ``init_command``, and ``sql_mode``.
 
 .. _MySQL option file: https://dev.mysql.com/doc/refman/en/option-files.html
-.. _MySQLdb connection options: https://mysqlclient.readthedocs.io/en/latest/user_guide.html#functions-and-attributes
+.. _MySQLdb connection options: https://mysqlclient.readthedocs.io/user_guide.html#functions-and-attributes
 
 .. _mysql-sql-mode:
 
@@ -474,8 +511,14 @@ this entry are the four standard isolation levels:
 * ``'serializable'``
 
 or ``None`` to use the server's configured isolation level. However, Django
-works best with read committed rather than MySQL's default, repeatable read.
-Data loss is possible with repeatable read.
+works best with and defaults to read committed rather than MySQL's default,
+repeatable read. Data loss is possible with repeatable read.
+
+.. versionchanged:: 2.0
+
+    In older versions, the MySQL database backend defaults to using the
+    database's isolation level (which defaults to repeatable read) rather
+    than read committed.
 
 .. _transaction isolation level: https://dev.mysql.com/doc/refman/en/innodb-transaction-isolation-levels.html
 
@@ -545,8 +588,7 @@ Character fields
 Any fields that are stored with ``VARCHAR`` column types have their
 ``max_length`` restricted to 255 characters if you are using ``unique=True``
 for the field. This affects :class:`~django.db.models.CharField`,
-:class:`~django.db.models.SlugField` and
-:class:`~django.db.models.CommaSeparatedIntegerField`.
+:class:`~django.db.models.SlugField`.
 
 ``TextField`` limitations
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -563,11 +605,7 @@ Fractional seconds support for Time and DateTime fields
 
 MySQL 5.6.4 and later can store fractional seconds, provided that the
 column definition includes a fractional indication (e.g. ``DATETIME(6)``).
-Earlier versions do not support them at all. In addition, versions of MySQLdb
-older than 1.2.5 have `a bug`_ that also prevents the use of fractional seconds
-with MySQL.
-
-.. _a bug: https://github.com/farcepest/MySQLdb1/issues/24
+Earlier versions do not support them at all.
 
 Django will not upgrade existing columns to include fractional seconds if the
 database server supports it. If you want to enable them on an existing database,
@@ -591,9 +629,10 @@ both MySQL and Django will attempt to convert the values from UTC to local time.
 Row locking with ``QuerySet.select_for_update()``
 -------------------------------------------------
 
-MySQL does not support the ``NOWAIT`` and ``SKIP LOCKED`` options to the
-``SELECT ... FOR UPDATE`` statement. If ``select_for_update()`` is used with
-``nowait=True`` or ``skip_locked=True`` then a ``DatabaseError`` will be raised.
+MySQL does not support the ``NOWAIT``, ``SKIP LOCKED``, and ``OF`` options to
+the ``SELECT ... FOR UPDATE`` statement. If ``select_for_update()`` is used
+with ``nowait=True``, ``skip_locked=True``, or ``of`` then a
+:exc:`~django.db.NotSupportedError` is raised.
 
 Automatic typecasting can cause unexpected results
 --------------------------------------------------
@@ -651,35 +690,6 @@ substring filtering.
 
 .. _documented at sqlite.org: https://www.sqlite.org/faq.html#q18
 
-Old SQLite and ``CASE`` expressions
------------------------------------
-
-SQLite 3.6.23.1 and older contains a bug when `handling query parameters`_ in
-a ``CASE`` expression that contains an ``ELSE`` and arithmetic.
-
-SQLite 3.6.23.1 was released in March 2010, and most current binary
-distributions for different platforms include a newer version of SQLite, with
-the notable exception of the Python 2.7 installers for Windows.
-
-As of this writing, the latest release for Windows - Python 2.7.10 - includes
-SQLite 3.6.21. You can install ``pysqlite2`` or replace ``sqlite3.dll`` (by
-default installed in ``C:\Python27\DLLs``) with a newer version from
-https://www.sqlite.org/ to remedy this issue.
-
-.. _handling query parameters: https://code.djangoproject.com/ticket/24148
-
-.. _using-newer-versions-of-pysqlite:
-
-Using newer versions of the SQLite DB-API 2.0 driver
-----------------------------------------------------
-
-Django will use a ``pysqlite2`` module in preference to ``sqlite3`` as shipped
-with the Python standard library if it finds one is available.
-
-This provides the ability to upgrade both the DB-API 2.0 interface or SQLite 3
-itself to versions newer than the ones included with your particular Python
-binary distribution, if needed.
-
 "Database is locked" errors
 ---------------------------
 
@@ -735,11 +745,11 @@ rather than a list. SQLite does not support this.
 Oracle notes
 ============
 
-Django supports `Oracle Database Server`_ versions 11.2 and higher. Version
+Django supports `Oracle Database Server`_ versions 12.1 and higher. Version
 5.2 or higher of the `cx_Oracle`_ Python driver is required.
 
-.. _`Oracle Database Server`: http://www.oracle.com/
-.. _`cx_Oracle`: http://cx-oracle.sourceforge.net/
+.. _`Oracle Database Server`: https://www.oracle.com/
+.. _`cx_Oracle`: https://oracle.github.io/python-cx_Oracle/
 
 In order for the ``python manage.py migrate`` command to work, your Oracle
 database user must have privileges to run the following commands:

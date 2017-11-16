@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 11:28+0300\n"
+"POT-Creation-Date: 2017-11-16 11:56+0200\n"
 "PO-Revision-Date: 2015-03-19 15:06+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -29,10 +29,26 @@ msgid ""
 msgstr ""
 
 #: ../../ref/contrib/postgres/fields.txt:11
+msgid "Indexing these fields"
+msgstr ""
+
+#: ../../ref/contrib/postgres/fields.txt:13
+msgid ""
+":class:`~django.db.models.Index` and :attr:`.Field.db_index` both create a B-"
+"tree index, which isn't particularly helpful when querying complex data "
+"types. Indexes such as :class:`~django.contrib.postgres.indexes.GinIndex` "
+"and :class:`~django.contrib.postgres.indexes.GistIndex` are better suited, "
+"though the index choice is dependent on the queries that you're using. "
+"Generally, GiST may be a good choice for the :ref:`range fields <range-"
+"fields>` and :class:`HStoreField`, and GIN may be helpful for :class:"
+"`ArrayField` and :class:`JSONField`."
+msgstr ""
+
+#: ../../ref/contrib/postgres/fields.txt:23
 msgid "``ArrayField``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:15
+#: ../../ref/contrib/postgres/fields.txt:27
 msgid ""
 "A field for storing lists of data. Most field types can be used, you simply "
 "pass another field instance as the :attr:`base_field <ArrayField."
@@ -40,7 +56,7 @@ msgid ""
 "``ArrayField`` can be nested to store multi-dimensional arrays."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:21
+#: ../../ref/contrib/postgres/fields.txt:33
 msgid ""
 "If you give the field a :attr:`~django.db.models.Field.default`, ensure it's "
 "a callable such as ``list`` (for an empty default) or a callable that "
@@ -49,11 +65,11 @@ msgid ""
 "``ArrayField``."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:29
+#: ../../ref/contrib/postgres/fields.txt:41
 msgid "This is a required argument."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:31
+#: ../../ref/contrib/postgres/fields.txt:43
 msgid ""
 "Specifies the underlying data type and behavior for the array. It should be "
 "an instance of a subclass of :class:`~django.db.models.Field`. For example, "
@@ -64,142 +80,141 @@ msgid ""
 "ManyToManyField`)."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:41
+#: ../../ref/contrib/postgres/fields.txt:53
 msgid ""
 "It is possible to nest array fields - you can specify an instance of "
 "``ArrayField`` as the ``base_field``. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:56
+#: ../../ref/contrib/postgres/fields.txt:68
 msgid ""
 "Transformation of values between the database and the model, validation of "
 "data and configuration, and serialization are all delegated to the "
 "underlying base field."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:62
+#: ../../ref/contrib/postgres/fields.txt:74
 msgid "This is an optional argument."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:64
+#: ../../ref/contrib/postgres/fields.txt:76
 msgid ""
 "If passed, the array will have a maximum size as specified. This will be "
 "passed to the database, although PostgreSQL at present does not enforce the "
 "restriction."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:70
+#: ../../ref/contrib/postgres/fields.txt:82
 msgid ""
 "When nesting ``ArrayField``, whether you use the `size` parameter or not, "
 "PostgreSQL requires that the arrays are rectangular::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:91
+#: ../../ref/contrib/postgres/fields.txt:103
 msgid ""
 "If irregular shapes are required, then the underlying field should be made "
 "nullable and the values padded with ``None``."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:95
+#: ../../ref/contrib/postgres/fields.txt:107
 msgid "Querying ``ArrayField``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:97
+#: ../../ref/contrib/postgres/fields.txt:109
 msgid ""
 "There are a number of custom lookups and transforms for :class:`ArrayField`. "
 "We will use the following example model::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:113
-#: ../../ref/contrib/postgres/fields.txt:360
-#: ../../ref/contrib/postgres/fields.txt:718
+#: ../../ref/contrib/postgres/fields.txt:125
+#: ../../ref/contrib/postgres/fields.txt:363
+#: ../../ref/contrib/postgres/fields.txt:721
 msgid "``contains``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:115
+#: ../../ref/contrib/postgres/fields.txt:127
 msgid ""
 "The :lookup:`contains` lookup is overridden on :class:`ArrayField`. The "
 "returned objects will be those where the values passed are a subset of the "
 "data. It uses the SQL operator ``@>``. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:135
-#: ../../ref/contrib/postgres/fields.txt:380
-#: ../../ref/contrib/postgres/fields.txt:726
+#: ../../ref/contrib/postgres/fields.txt:147
+#: ../../ref/contrib/postgres/fields.txt:383
+#: ../../ref/contrib/postgres/fields.txt:729
 msgid "``contained_by``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:137
+#: ../../ref/contrib/postgres/fields.txt:149
 msgid ""
 "This is the inverse of the :lookup:`contains <arrayfield.contains>` lookup - "
 "the objects returned will be those where the data is a subset of the values "
 "passed. It uses the SQL operator ``<@``. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:154
-#: ../../ref/contrib/postgres/fields.txt:747
+#: ../../ref/contrib/postgres/fields.txt:166
+#: ../../ref/contrib/postgres/fields.txt:750
 msgid "``overlap``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:156
+#: ../../ref/contrib/postgres/fields.txt:168
 msgid ""
 "Returns objects where the data shares any results with the values passed. "
 "Uses the SQL operator ``&&``. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:172
+#: ../../ref/contrib/postgres/fields.txt:184
 msgid "``len``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:174
+#: ../../ref/contrib/postgres/fields.txt:186
 msgid ""
 "Returns the length of the array. The lookups available afterwards are those "
 "available for :class:`~django.db.models.IntegerField`. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:186
+#: ../../ref/contrib/postgres/fields.txt:198
 msgid "Index transforms"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:188
+#: ../../ref/contrib/postgres/fields.txt:200
 msgid ""
-"This class of transforms allows you to index into the array in queries. Any "
-"non-negative integer can be used. There are no errors if it exceeds the :"
-"attr:`size <ArrayField.size>` of the array. The lookups available after the "
-"transform are those from the :attr:`base_field <ArrayField.base_field>`. For "
-"example::"
+"Index transforms index into the array. Any non-negative integer can be used. "
+"There are no errors if it exceeds the :attr:`size <ArrayField.size>` of the "
+"array. The lookups available after the transform are those from the :attr:"
+"`base_field <ArrayField.base_field>`. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:208
+#: ../../ref/contrib/postgres/fields.txt:219
 msgid ""
 "PostgreSQL uses 1-based indexing for array fields when writing raw SQL. "
 "However these indexes and those used in :lookup:`slices <arrayfield.slice>` "
 "use 0-based indexing to be consistent with Python."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:215
+#: ../../ref/contrib/postgres/fields.txt:226
 msgid "Slice transforms"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:217
+#: ../../ref/contrib/postgres/fields.txt:228
 msgid ""
-"This class of transforms allow you to take a slice of the array. Any two non-"
-"negative integers can be used, separated by a single underscore. The lookups "
-"available after the transform do not change. For example::"
+"Slice transforms take a slice of the array. Any two non-negative integers "
+"can be used, separated by a single underscore. The lookups available after "
+"the transform do not change. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:233
+#: ../../ref/contrib/postgres/fields.txt:244
 msgid ""
 "PostgreSQL uses 1-based indexing for array fields when writing raw SQL. "
 "However these slices and those used in :lookup:`indexes <arrayfield.index>` "
 "use 0-based indexing to be consistent with Python."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:237
+#: ../../ref/contrib/postgres/fields.txt:248
 msgid "Multidimensional arrays with indexes and slices"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:239
+#: ../../ref/contrib/postgres/fields.txt:250
 msgid ""
 "PostgreSQL has some rather esoteric behavior when using indexes and slices "
 "on multidimensional arrays. It will always work to use indexes to reach down "
@@ -208,130 +223,118 @@ msgid ""
 "Django."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:246
-msgid "Indexing ``ArrayField``"
-msgstr ""
-
-#: ../../ref/contrib/postgres/fields.txt:248
-msgid ""
-"At present using :attr:`~django.db.models.Field.db_index` will create a "
-"``btree`` index. This does not offer particularly significant help to "
-"querying. A more useful index is a ``GIN`` index, which you should create "
-"using a :class:`~django.db.migrations.operations.RunSQL` operation."
-msgstr ""
-
-#: ../../ref/contrib/postgres/fields.txt:254
+#: ../../ref/contrib/postgres/fields.txt:257
 msgid "``CIText`` fields"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:260
+#: ../../ref/contrib/postgres/fields.txt:263
 msgid ""
 "A mixin to create case-insensitive text fields backed by the citext_ type. "
 "Read about `the performance considerations`_ prior to using it."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:263
+#: ../../ref/contrib/postgres/fields.txt:266
 msgid ""
 "To use ``citext``, use the :class:`.CITextExtension` operation to :ref:"
 "`setup the citext extension <create-postgresql-extensions>` in PostgreSQL "
 "before the first ``CreateModel`` migration operation."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:267
+#: ../../ref/contrib/postgres/fields.txt:270
 msgid "Several fields that use the mixin are provided:"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:273
+#: ../../ref/contrib/postgres/fields.txt:276
 msgid ""
 "These fields subclass :class:`~django.db.models.CharField`, :class:`~django."
 "db.models.EmailField`, and :class:`~django.db.models.TextField`, "
 "respectively."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:277
+#: ../../ref/contrib/postgres/fields.txt:280
 msgid ""
 "``max_length`` won't be enforced in the database since ``citext`` behaves "
 "similar to PostgreSQL's ``text`` type."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:284
+#: ../../ref/contrib/postgres/fields.txt:287
 msgid "``HStoreField``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:288
+#: ../../ref/contrib/postgres/fields.txt:291
 msgid ""
 "A field for storing key-value pairs. The Python data type used is a "
 "``dict``. Keys must be strings, and values may be either strings or nulls "
 "(``None`` in Python)."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:292
+#: ../../ref/contrib/postgres/fields.txt:295
 msgid "To use this field, you'll need to:"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:294
+#: ../../ref/contrib/postgres/fields.txt:297
 msgid "Add ``'django.contrib.postgres'`` in your :setting:`INSTALLED_APPS`."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:295
+#: ../../ref/contrib/postgres/fields.txt:298
 msgid ""
 ":ref:`Setup the hstore extension <create-postgresql-extensions>` in "
 "PostgreSQL."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:298
+#: ../../ref/contrib/postgres/fields.txt:301
 msgid ""
 "You'll see an error like ``can't adapt type 'dict'`` if you skip the first "
 "step, or ``type \"hstore\" does not exist`` if you skip the second."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:303
+#: ../../ref/contrib/postgres/fields.txt:306
 msgid ""
 "Added the ability to store nulls. Previously, they were cast to strings."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:307
+#: ../../ref/contrib/postgres/fields.txt:310
 msgid ""
 "On occasions it may be useful to require or restrict the keys which are "
 "valid for a given field. This can be done using the :class:`~django.contrib."
 "postgres.validators.KeysValidator`."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:312
+#: ../../ref/contrib/postgres/fields.txt:315
 msgid "Querying ``HStoreField``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:314
+#: ../../ref/contrib/postgres/fields.txt:317
 msgid ""
 "In addition to the ability to query by key, there are a number of custom "
 "lookups available for ``HStoreField``."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:317
-#: ../../ref/contrib/postgres/fields.txt:525
+#: ../../ref/contrib/postgres/fields.txt:320
+#: ../../ref/contrib/postgres/fields.txt:528
 msgid "We will use the following example model::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:332
+#: ../../ref/contrib/postgres/fields.txt:335
 msgid "Key lookups"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:334
+#: ../../ref/contrib/postgres/fields.txt:337
 msgid ""
 "To query based on a given key, you simply use that key as the lookup name::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:342
+#: ../../ref/contrib/postgres/fields.txt:345
 msgid "You can chain other lookups after key lookups::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:347
+#: ../../ref/contrib/postgres/fields.txt:350
 msgid ""
 "If the key you wish to query by clashes with the name of another lookup, you "
 "need to use the :lookup:`hstorefield.contains` lookup instead."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:352
+#: ../../ref/contrib/postgres/fields.txt:355
 msgid ""
 "Since any string could be a key in a hstore value, any lookup other than "
 "those listed below will be interpreted as a key lookup. No errors are "
@@ -339,7 +342,7 @@ msgid ""
 "work as you intend."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:362
+#: ../../ref/contrib/postgres/fields.txt:365
 msgid ""
 "The :lookup:`contains` lookup is overridden on :class:`~django.contrib."
 "postgres.fields.HStoreField`. The returned objects are those where the given "
@@ -347,7 +350,7 @@ msgid ""
 "operator ``@>``. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:382
+#: ../../ref/contrib/postgres/fields.txt:385
 msgid ""
 "This is the inverse of the :lookup:`contains <hstorefield.contains>` lookup "
 "- the objects returned will be those where the key-value pairs on the object "
@@ -355,41 +358,41 @@ msgid ""
 "For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:400
+#: ../../ref/contrib/postgres/fields.txt:403
 msgid "``has_key``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:402
+#: ../../ref/contrib/postgres/fields.txt:405
 msgid ""
 "Returns objects where the given key is in the data. Uses the SQL operator ``?"
 "``. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:414
+#: ../../ref/contrib/postgres/fields.txt:417
 msgid "``has_any_keys``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:416
+#: ../../ref/contrib/postgres/fields.txt:419
 msgid ""
 "Returns objects where any of the given keys are in the data. Uses the SQL "
 "operator ``?|``. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:429
+#: ../../ref/contrib/postgres/fields.txt:432
 msgid "``has_keys``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:431
+#: ../../ref/contrib/postgres/fields.txt:434
 msgid ""
 "Returns objects where all of the given keys are in the data. Uses the SQL "
 "operator ``?&``. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:443
+#: ../../ref/contrib/postgres/fields.txt:446
 msgid "``keys``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:445
+#: ../../ref/contrib/postgres/fields.txt:448
 msgid ""
 "Returns objects where the array of keys is the given value. Note that the "
 "order is not guaranteed to be reliable, so this transform is mainly useful "
@@ -397,11 +400,11 @@ msgid ""
 "fields.ArrayField`. Uses the SQL function ``akeys()``. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:460
+#: ../../ref/contrib/postgres/fields.txt:463
 msgid "``values``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:462
+#: ../../ref/contrib/postgres/fields.txt:465
 msgid ""
 "Returns objects where the array of values is the given value. Note that the "
 "order is not guaranteed to be reliable, so this transform is mainly useful "
@@ -409,18 +412,18 @@ msgid ""
 "fields.ArrayField`. Uses the SQL function ``avalues()``. For example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:475
+#: ../../ref/contrib/postgres/fields.txt:478
 msgid "``JSONField``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:479
+#: ../../ref/contrib/postgres/fields.txt:482
 msgid ""
 "A field for storing JSON encoded data. In Python the data is represented in "
 "its Python native format: dictionaries, lists, strings, numbers, booleans "
 "and ``None``."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:487
+#: ../../ref/contrib/postgres/fields.txt:490
 msgid ""
 "An optional JSON-encoding class to serialize data types not supported by the "
 "standard JSON serializer (``datetime``, ``uuid``, etc.). For example, you "
@@ -428,7 +431,7 @@ msgid ""
 "or any other :py:class:`json.JSONEncoder` subclass."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:493
+#: ../../ref/contrib/postgres/fields.txt:496
 msgid ""
 "When the value is retrieved from the database, it will be in the format "
 "chosen by the custom encoder (most often a string), so you'll need to take "
@@ -441,7 +444,7 @@ msgid ""
 "in the same format chosen for ``datetime``\\s."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:504
+#: ../../ref/contrib/postgres/fields.txt:507
 msgid ""
 "If you give the field a :attr:`~django.db.models.Field.default`, ensure it's "
 "a callable such as ``dict`` (for an empty default) or a callable that "
@@ -450,7 +453,7 @@ msgid ""
 "``JSONField``."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:512
+#: ../../ref/contrib/postgres/fields.txt:515
 msgid ""
 "PostgreSQL has two native JSON based data types: ``json`` and ``jsonb``. The "
 "main difference between them is how they are stored and how they can be "
@@ -461,47 +464,47 @@ msgid ""
 "writing to the ``jsonb`` field. ``JSONField`` uses ``jsonb``."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:520
+#: ../../ref/contrib/postgres/fields.txt:523
 msgid "**As a result, this field requires PostgreSQL ≥ 9.4**."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:523
+#: ../../ref/contrib/postgres/fields.txt:526
 msgid "Querying ``JSONField``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:540
+#: ../../ref/contrib/postgres/fields.txt:543
 msgid "Key, index, and path lookups"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:542
+#: ../../ref/contrib/postgres/fields.txt:545
 msgid ""
 "To query based on a given dictionary key, simply use that key as the lookup "
 "name::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:559
+#: ../../ref/contrib/postgres/fields.txt:562
 msgid "Multiple keys can be chained together to form a path lookup::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:564
+#: ../../ref/contrib/postgres/fields.txt:567
 msgid ""
 "If the key is an integer, it will be interpreted as an index lookup in an "
 "array::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:570
+#: ../../ref/contrib/postgres/fields.txt:573
 msgid ""
 "If the key you wish to query by clashes with the name of another lookup, use "
 "the :lookup:`jsonfield.contains` lookup instead."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:573
+#: ../../ref/contrib/postgres/fields.txt:576
 msgid ""
 "If only one key or index is used, the SQL operator ``->`` is used. If "
 "multiple operators are used then the ``#>`` operator is used."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:578
+#: ../../ref/contrib/postgres/fields.txt:581
 msgid ""
 "Since any string could be a key in a JSON object, any lookup other than "
 "those listed below will be interpreted as a key lookup. No errors are "
@@ -509,46 +512,46 @@ msgid ""
 "work as you intend."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:584
+#: ../../ref/contrib/postgres/fields.txt:587
 msgid "Containment and key operations"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:592
+#: ../../ref/contrib/postgres/fields.txt:595
 msgid ""
 ":class:`~django.contrib.postgres.fields.JSONField` shares lookups relating "
 "to containment and keys with :class:`~django.contrib.postgres.fields."
 "HStoreField`."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:595
+#: ../../ref/contrib/postgres/fields.txt:598
 msgid ""
 ":lookup:`contains <hstorefield.contains>` (accepts any JSON rather than just "
 "a dictionary of strings)"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:597
+#: ../../ref/contrib/postgres/fields.txt:600
 msgid ""
 ":lookup:`contained_by <hstorefield.contained_by>` (accepts any JSON rather "
 "than just a dictionary of strings)"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:599
+#: ../../ref/contrib/postgres/fields.txt:602
 msgid ":lookup:`has_key <hstorefield.has_key>`"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:600
+#: ../../ref/contrib/postgres/fields.txt:603
 msgid ":lookup:`has_any_keys <hstorefield.has_any_keys>`"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:601
+#: ../../ref/contrib/postgres/fields.txt:604
 msgid ":lookup:`has_keys <hstorefield.has_keys>`"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:606
+#: ../../ref/contrib/postgres/fields.txt:609
 msgid "Range Fields"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:608
+#: ../../ref/contrib/postgres/fields.txt:611
 msgid ""
 "There are five range field types, corresponding to the built-in range types "
 "in PostgreSQL. These fields are used to store a range of values; for example "
@@ -556,7 +559,7 @@ msgid ""
 "is suitable for."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:613
+#: ../../ref/contrib/postgres/fields.txt:616
 msgid ""
 "All of the range fields translate to :ref:`psycopg2 Range objects <psycopg2:"
 "adapt-range>` in python, but also accept tuples as input if no bounds "
@@ -564,101 +567,101 @@ msgid ""
 "excluded; that is, ``[)``."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:619
+#: ../../ref/contrib/postgres/fields.txt:622
 msgid "``IntegerRangeField``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:623
+#: ../../ref/contrib/postgres/fields.txt:626
 msgid ""
 "Stores a range of integers. Based on an :class:`~django.db.models."
 "IntegerField`. Represented by an ``int4range`` in the database and a :class:"
 "`~psycopg2:psycopg2.extras.NumericRange` in Python."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:628
-#: ../../ref/contrib/postgres/fields.txt:642
-#: ../../ref/contrib/postgres/fields.txt:674
+#: ../../ref/contrib/postgres/fields.txt:631
+#: ../../ref/contrib/postgres/fields.txt:645
+#: ../../ref/contrib/postgres/fields.txt:677
 msgid ""
 "Regardless of the bounds specified when saving the data, PostgreSQL always "
 "returns a range in a canonical form that includes the lower bound and "
 "excludes the upper bound; that is ``[)``."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:633
+#: ../../ref/contrib/postgres/fields.txt:636
 msgid "``BigIntegerRangeField``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:637
+#: ../../ref/contrib/postgres/fields.txt:640
 msgid ""
 "Stores a range of large integers. Based on a :class:`~django.db.models."
 "BigIntegerField`. Represented by an ``int8range`` in the database and a :"
 "class:`~psycopg2:psycopg2.extras.NumericRange` in Python."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:647
+#: ../../ref/contrib/postgres/fields.txt:650
 msgid "``FloatRangeField``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:651
+#: ../../ref/contrib/postgres/fields.txt:654
 msgid ""
 "Stores a range of floating point values. Based on a :class:`~django.db."
 "models.FloatField`. Represented by a ``numrange`` in the database and a :"
 "class:`~psycopg2:psycopg2.extras.NumericRange` in Python."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:656
+#: ../../ref/contrib/postgres/fields.txt:659
 msgid "``DateTimeRangeField``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:660
+#: ../../ref/contrib/postgres/fields.txt:663
 msgid ""
 "Stores a range of timestamps. Based on a :class:`~django.db.models."
-"DateTimeField`. Represented by a ``tztsrange`` in the database and a :class:"
+"DateTimeField`. Represented by a ``tstzrange`` in the database and a :class:"
 "`~psycopg2:psycopg2.extras.DateTimeTZRange` in Python."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:666
+#: ../../ref/contrib/postgres/fields.txt:669
 msgid "``DateRangeField``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:670
+#: ../../ref/contrib/postgres/fields.txt:673
 msgid ""
 "Stores a range of dates. Based on a :class:`~django.db.models.DateField`. "
 "Represented by a ``daterange`` in the database and a :class:`~psycopg2:"
 "psycopg2.extras.DateRange` in Python."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:679
+#: ../../ref/contrib/postgres/fields.txt:682
 msgid "Querying Range Fields"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:681
+#: ../../ref/contrib/postgres/fields.txt:684
 msgid ""
 "There are a number of custom lookups and transforms for range fields. They "
 "are available on all the above fields, but we will use the following example "
 "model::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:696
+#: ../../ref/contrib/postgres/fields.txt:699
 msgid "We will also use the following example objects::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:704
+#: ../../ref/contrib/postgres/fields.txt:707
 msgid "and ``NumericRange``:"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:709
+#: ../../ref/contrib/postgres/fields.txt:712
 msgid "Containment functions"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:711
+#: ../../ref/contrib/postgres/fields.txt:714
 msgid ""
 "As with other PostgreSQL fields, there are three standard containment "
 "operators: ``contains``, ``contained_by`` and ``overlap``, using the SQL "
 "operators ``@>``, ``<@``, and ``&&`` respectively."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:731
+#: ../../ref/contrib/postgres/fields.txt:734
 msgid ""
 "The ``contained_by`` lookup is also available on the non-range field types: :"
 "class:`~django.db.models.IntegerField`, :class:`~django.db.models."
@@ -667,11 +670,11 @@ msgid ""
 "example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:753
+#: ../../ref/contrib/postgres/fields.txt:756
 msgid "Comparison functions"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:755
+#: ../../ref/contrib/postgres/fields.txt:758
 msgid ""
 "Range fields support the standard lookups: :lookup:`lt`, :lookup:`gt`, :"
 "lookup:`lte` and :lookup:`gte`. These are not particularly helpful - they "
@@ -680,103 +683,103 @@ msgid ""
 "use the specific range comparison operators."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:764
+#: ../../ref/contrib/postgres/fields.txt:767
 msgid "``fully_lt``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:766
+#: ../../ref/contrib/postgres/fields.txt:769
 msgid ""
 "The returned ranges are strictly less than the passed range. In other words, "
 "all the points in the returned range are less than all those in the passed "
 "range."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:776
+#: ../../ref/contrib/postgres/fields.txt:779
 msgid "``fully_gt``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:778
+#: ../../ref/contrib/postgres/fields.txt:781
 msgid ""
 "The returned ranges are strictly greater than the passed range. In other "
 "words, the all the points in the returned range are greater than all those "
 "in the passed range."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:788
+#: ../../ref/contrib/postgres/fields.txt:791
 msgid "``not_lt``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:790
+#: ../../ref/contrib/postgres/fields.txt:793
 msgid ""
 "The returned ranges do not contain any points less than the passed range, "
 "that is the lower bound of the returned range is at least the lower bound of "
 "the passed range."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:800
+#: ../../ref/contrib/postgres/fields.txt:803
 msgid "``not_gt``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:802
+#: ../../ref/contrib/postgres/fields.txt:805
 msgid ""
 "The returned ranges do not contain any points greater than the passed range, "
 "that is the upper bound of the returned range is at most the upper bound of "
 "the passed range."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:812
+#: ../../ref/contrib/postgres/fields.txt:815
 msgid "``adjacent_to``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:814
+#: ../../ref/contrib/postgres/fields.txt:817
 msgid "The returned ranges share a bound with the passed range."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:820
+#: ../../ref/contrib/postgres/fields.txt:823
 msgid "Querying using the bounds"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:822
+#: ../../ref/contrib/postgres/fields.txt:825
 msgid ""
 "There are three transforms available for use in queries. You can extract the "
 "lower or upper bound, or query based on emptiness."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:828
+#: ../../ref/contrib/postgres/fields.txt:831
 msgid "``startswith``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:830
+#: ../../ref/contrib/postgres/fields.txt:833
 msgid ""
 "Returned objects have the given lower bound. Can be chained to valid lookups "
 "for the base field."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:839
+#: ../../ref/contrib/postgres/fields.txt:842
 msgid "``endswith``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:841
+#: ../../ref/contrib/postgres/fields.txt:844
 msgid ""
 "Returned objects have the given upper bound. Can be chained to valid lookups "
 "for the base field."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:850
+#: ../../ref/contrib/postgres/fields.txt:853
 msgid "``isempty``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:852
+#: ../../ref/contrib/postgres/fields.txt:855
 msgid ""
 "Returned objects are empty ranges. Can be chained to valid lookups for a :"
 "class:`~django.db.models.BooleanField`."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:859
+#: ../../ref/contrib/postgres/fields.txt:862
 msgid "Defining your own range types"
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:861
+#: ../../ref/contrib/postgres/fields.txt:864
 msgid ""
 "PostgreSQL allows the definition of custom range types. Django's model and "
 "form field implementations use base classes below, and psycopg2 provides a :"
@@ -784,29 +787,29 @@ msgid ""
 "types."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:868
+#: ../../ref/contrib/postgres/fields.txt:871
 msgid "Base class for model range fields."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:872
+#: ../../ref/contrib/postgres/fields.txt:875
 msgid "The model field class to use."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:876
-#: ../../ref/contrib/postgres/fields.txt:893
+#: ../../ref/contrib/postgres/fields.txt:879
+#: ../../ref/contrib/postgres/fields.txt:896
 msgid "The psycopg2 range type to use."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:880
+#: ../../ref/contrib/postgres/fields.txt:883
 msgid ""
 "The form field class to use. Should be a subclass of :class:`django.contrib."
 "postgres.forms.BaseRangeField`."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:885
+#: ../../ref/contrib/postgres/fields.txt:888
 msgid "Base class for form range fields."
 msgstr ""
 
-#: ../../ref/contrib/postgres/fields.txt:889
+#: ../../ref/contrib/postgres/fields.txt:892
 msgid "The form field to use."
 msgstr ""

@@ -315,10 +315,6 @@ applications. This generic name was kept for backwards-compatibility.
 
       Only set it to ``False`` if you're rendering non-HTML templates!
 
-  .. versionadded:: 1.10
-
-      The ``autoescape`` option was added.
-
 * ``'context_processors'``: a list of dotted Python paths to callables that
   are used to populate the context when a template is rendered with a request.
   These callables take a request object as their argument and return a
@@ -459,8 +455,6 @@ environment.
 
 For example, you can create ``myproject/jinja2.py`` with this content::
 
-    from __future__ import absolute_import  # Python 2 only
-
     from django.contrib.staticfiles.storage import staticfiles_storage
     from django.urls import reverse
 
@@ -518,7 +512,7 @@ fictional ``foobar`` template library::
         def __init__(self, params):
             params = params.copy()
             options = params.pop('OPTIONS').copy()
-            super(FooBar, self).__init__(params)
+            super().__init__(params)
 
             self.engine = foobar.Engine(**options)
 
@@ -537,7 +531,7 @@ fictional ``foobar`` template library::
                 raise TemplateSyntaxError(exc.args)
 
 
-    class Template(object):
+    class Template:
 
         def __init__(self, template):
             self.template = template
@@ -837,4 +831,4 @@ Implementing a custom context processor is as simple as defining a function.
 
 .. _Jinja2: http://jinja.pocoo.org/
 .. _DEP 182: https://github.com/django/deps/blob/master/final/0182-multiple-template-engines.rst
-.. _Django Debug Toolbar: https://github.com/django-debug-toolbar/django-debug-toolbar
+.. _Django Debug Toolbar: https://github.com/jazzband/django-debug-toolbar

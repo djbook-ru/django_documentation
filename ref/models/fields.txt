@@ -254,6 +254,9 @@ Error message keys include ``null``, ``blank``, ``invalid``, ``invalid_choice``,
 ``unique``, and ``unique_for_date``. Additional error message keys are
 specified for each field in the `Field types`_ section below.
 
+These error messages often don't propagate to forms. See
+:ref:`considerations-regarding-model-errormessages`.
+
 ``help_text``
 -------------
 
@@ -401,8 +404,6 @@ otherwise. See :ref:`automatic-primary-key-fields`.
 
 .. class:: BigAutoField(**options)
 
-.. versionadded:: 1.10
-
 A 64-bit integer, much like an :class:`AutoField` except that it is
 guaranteed to fit numbers from ``1`` to ``9223372036854775807``.
 
@@ -472,21 +473,6 @@ The default form widget for this field is a :class:`~django.forms.TextInput`.
     database backends, you should be aware that there are restrictions on
     ``max_length`` for some backends. Refer to the :doc:`database backend
     notes </ref/databases>` for details.
-
-``CommaSeparatedIntegerField``
-------------------------------
-
-.. class:: CommaSeparatedIntegerField(max_length=None, **options)
-
-.. deprecated:: 1.9
-
-    This field is deprecated in favor of :class:`~django.db.models.CharField`
-    with ``validators=[``\ :func:`validate_comma_separated_integer_list
-    <django.core.validators.validate_comma_separated_integer_list>`\ ``]``.
-
-A field of integers separated by commas. As in :class:`CharField`, the
-:attr:`~CharField.max_length` argument is required and the note about database
-portability mentioned there should be heeded.
 
 ``DateField``
 -------------
@@ -774,10 +760,9 @@ the result of the :attr:`Storage.open()<django.core.files.storage.Storage.open>`
 method, which may be a :class:`~django.core.files.File` object, or it may be a
 custom storage's implementation of the :class:`~django.core.files.File` API.
 
-In addition to the API inherited from
-:class:`~django.core.files.File` such as :meth:`~django.core.files.File.read`
-and :meth:`~django.core.files.File.write`, :class:`FieldFile` includes several
-methods that can be used to interact with the underlying file:
+In addition to the API inherited from :class:`~django.core.files.File` such as
+``read()`` and ``write()``, :class:`FieldFile` includes several methods that
+can be used to interact with the underlying file:
 
 .. warning::
 
@@ -1152,10 +1137,10 @@ Django also defines a set of fields that represent relations.
 ``ForeignKey``
 --------------
 
-.. class:: ForeignKey(othermodel, on_delete, **options)
+.. class:: ForeignKey(to, on_delete, **options)
 
-A many-to-one relationship. Requires a positional argument: the class to which
-the model is related.
+A many-to-one relationship. Requires two positional arguments: the class to
+which the model is related and the :attr:`~ForeignKey.on_delete` option.
 
 .. _recursive-relationships:
 
@@ -1221,8 +1206,8 @@ need to use::
             on_delete=models.CASCADE,
         )
 
-This sort of reference can be useful when resolving circular import
-dependencies between two applications.
+This sort of reference, called a lazy relationship, can be useful when
+resolving circular import dependencies between two applications.
 
 A database index is automatically created on the ``ForeignKey``. You can
 disable this by setting :attr:`~Field.db_index` to ``False``.  You may want to
@@ -1262,11 +1247,6 @@ relation works.
             blank=True,
             null=True,
         )
-
-    .. deprecated:: 1.9
-
-        :attr:`~ForeignKey.on_delete` will become a required argument in Django
-        2.0. In older versions it defaults to ``CASCADE``.
 
 The possible values for :attr:`~ForeignKey.on_delete` are found in
 :mod:`django.db.models`:
@@ -1450,7 +1430,7 @@ The possible values for :attr:`~ForeignKey.on_delete` are found in
 ``ManyToManyField``
 -------------------
 
-.. class:: ManyToManyField(othermodel, **options)
+.. class:: ManyToManyField(to, **options)
 
 A many-to-many relationship. Requires a positional argument: the class to
 which the model is related, which works exactly the same as it does for
@@ -1653,7 +1633,7 @@ relationship at the database level.
 ``OneToOneField``
 -----------------
 
-.. class:: OneToOneField(othermodel, on_delete, parent_link=False, **options)
+.. class:: OneToOneField(to, on_delete, parent_link=False, **options)
 
 A one-to-one relationship. Conceptually, this is similar to a
 :class:`ForeignKey` with :attr:`unique=True <Field.unique>`, but the
@@ -1783,8 +1763,6 @@ Field API reference
 
     .. method:: rel_db_type(connection)
 
-        .. versionadded:: 1.10
-
         Returns the database column data type for fields such as ``ForeignKey``
         and ``OneToOneField`` that point to the :class:`Field`, taking
         into account the ``connection``.
@@ -1819,7 +1797,7 @@ Field API reference
 
     When loading data, :meth:`from_db_value` is used:
 
-    .. method:: from_db_value(value, expression, connection, context)
+    .. method:: from_db_value(value, expression, connection)
 
         Converts a value as returned by the database to a Python object. It is
         the reverse of :meth:`get_prep_value`.

@@ -9,9 +9,9 @@ Settings
 .. warning::
 
     Be careful when you override settings, especially when the default value
-    is a non-empty list or dictionary, such as :setting:`MIDDLEWARE_CLASSES`
-    and :setting:`STATICFILES_FINDERS`. Make sure you keep the components
-    required by the features of Django you wish to use.
+    is a non-empty list or dictionary, such as :setting:`STATICFILES_FINDERS`.
+    Make sure you keep the components required by the features of Django you
+    wish to use.
 
 Core Settings
 =============
@@ -317,7 +317,7 @@ Default: ``None``
 The domain to be used when setting the CSRF cookie.  This can be useful for
 easily allowing cross-subdomain requests to be excluded from the normal cross
 site request forgery protection.  It should be set to a string such as
-``".example.com"`` to allow a POST request from a form on one subdomain to be
+``"example.com"`` to allow a POST request from a form on one subdomain to be
 accepted by a view served from another subdomain.
 
 Please note that the presence of this setting does not imply that Django's CSRF
@@ -422,11 +422,6 @@ an :class:`~django.http.HttpResponseForbidden`.
 ``django.views.csrf.csrf_failure()`` accepts an additional ``template_name``
 parameter that defaults to ``'403_csrf.html'``. If a template with that name
 exists, it will be used to render the page.
-
-.. versionchanged:: 1.10
-
-   The ``template_name`` parameter and the behavior of searching for a template
-   called ``403_csrf.html`` were added to ``csrf_failure()``.
 
 .. setting:: CSRF_HEADER_NAME
 
@@ -630,8 +625,9 @@ default port. Not used with SQLite.
 Default: ``None``
 
 A string representing the time zone for datetimes stored in this database
-(assuming that it doesn't support time zones) or ``None``. The same values are
-accepted as in the general :setting:`TIME_ZONE` setting.
+(assuming that it doesn't support time zones) or ``None``. This inner option of
+the :setting:`DATABASES` setting accepts the same values as the general
+:setting:`TIME_ZONE` setting.
 
 This allows interacting with third-party databases that store datetimes in
 local time rather than UTC. To avoid issues around DST changes, you shouldn't
@@ -645,6 +641,21 @@ When :setting:`USE_TZ` is ``True`` and the database supports time zones (e.g.
 PostgreSQL), it is an error to set this option.
 
 When :setting:`USE_TZ` is ``False``, it is an error to set this option.
+
+.. setting:: DATABASE-DISABLE_SERVER_SIDE_CURSORS
+
+``DISABLE_SERVER_SIDE_CURSORS``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 1.11.1
+
+Default: ``False``
+
+Set this to ``True`` if you want to disable the use of server-side cursors with
+:meth:`.QuerySet.iterator`. :ref:`transaction-pooling-server-side-cursors`
+describes the use case.
+
+This is a PostgreSQL-specific setting.
 
 .. setting:: USER
 
@@ -901,12 +912,62 @@ This is an Oracle-specific setting.
 
 The maximum size that the DATAFILE_TMP is allowed to grow to.
 
+.. setting:: DATAFILE_SIZE
+
+``DATAFILE_SIZE``
+^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.0
+
+Default: ``'50M'``
+
+This is an Oracle-specific setting.
+
+The initial size of the DATAFILE.
+
+.. setting:: DATAFILE_TMP_SIZE
+
+``DATAFILE_TMP_SIZE``
+^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.0
+
+Default: ``'50M'``
+
+This is an Oracle-specific setting.
+
+The initial size of the DATAFILE_TMP.
+
+.. setting:: DATAFILE_EXTSIZE
+
+``DATAFILE_EXTSIZE``
+^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.0
+
+Default: ``'25M'``
+
+This is an Oracle-specific setting.
+
+The amount by which the DATAFILE is extended when more space is required.
+
+.. setting:: DATAFILE_TMP_EXTSIZE
+
+``DATAFILE_TMP_EXTSIZE``
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 2.0
+
+Default: ``'25M'``
+
+This is an Oracle-specific setting.
+
+The amount by which the DATAFILE_TMP is extended when more space is required.
+
 .. setting:: DATA_UPLOAD_MAX_MEMORY_SIZE
 
 DATA_UPLOAD_MAX_MEMORY_SIZE
 ---------------------------
-
-.. versionadded:: 1.10
 
 Default: ``2621440`` (i.e. 2.5 MB).
 
@@ -929,8 +990,6 @@ See also :setting:`FILE_UPLOAD_MAX_MEMORY_SIZE`.
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS
 -----------------------------
-
-.. versionadded:: 1.10
 
 Default: ``1000``
 
@@ -1153,6 +1212,11 @@ Default: ``'text/html'``
 Default content type to use for all ``HttpResponse`` objects, if a MIME type
 isn't manually specified. Used with :setting:`DEFAULT_CHARSET` to construct
 the ``Content-Type`` header.
+
+.. deprecated:: 2.0
+
+    This setting is deprecated because it doesn't interact well with
+    third-party apps and is obsolete since HTML5 has mostly superseded XHTML.
 
 .. setting:: DEFAULT_EXCEPTION_REPORTER_FILTER
 
@@ -1518,10 +1582,6 @@ of the preferred value or not supplied at all. It is also used by
 request/response cycle (e.g. in management commands and standalone scripts) to
 generate correct URLs when ``SCRIPT_NAME`` is not ``/``.
 
-.. versionchanged:: 1.10
-
-    The setting's use in :func:`django.setup()` was added.
-
 .. setting:: FORM_RENDERER
 
 ``FORM_RENDERER``
@@ -1696,8 +1756,8 @@ The age of the language cookie, in seconds.
 Default: ``None``
 
 The domain to use for the language cookie. Set this to a string such as
-``".example.com"`` (note the leading dot!) for cross-domain cookies, or use
-``None`` for a standard domain cookie.
+``"example.com"`` for cross-domain cookies, or use ``None`` for a standard
+domain cookie.
 
 Be cautious when updating this setting on a production site. If you update
 this setting to enable cross-domain cookies on a site that previously used
@@ -1766,11 +1826,11 @@ to restrict language selection to a subset of the Django-provided languages.
 
 If you define a custom :setting:`LANGUAGES` setting, you can mark the
 language names as translation strings using the
-:func:`~django.utils.translation.ugettext_lazy` function.
+:func:`~django.utils.translation.gettext_lazy` function.
 
 Here's a sample settings file::
 
-    from django.utils.translation import ugettext_lazy as _
+    from django.utils.translation import gettext_lazy as _
 
     LANGUAGES = [
         ('de', _('German')),
@@ -1825,7 +1885,7 @@ __ https://github.com/django/django/blob/master/django/utils/log.py
 Default: ``'logging.config.dictConfig'``
 
 A path to a callable that will be used to configure logging in the
-Django project. Points at a instance of Python's :ref:`dictConfig
+Django project. Points at an instance of Python's :ref:`dictConfig
 <logging-config-dictschema>` configuration method by default.
 
 If you set :setting:`LOGGING_CONFIG` to ``None``, the logging
@@ -1899,35 +1959,9 @@ Example: ``"http://media.example.com/"``
 ``MIDDLEWARE``
 --------------
 
-.. versionadded:: 1.10
-
-Default:: ``None``
+Default: ``None``
 
 A list of middleware to use. See :doc:`/topics/http/middleware`.
-
-.. setting:: MIDDLEWARE_CLASSES
-
-``MIDDLEWARE_CLASSES``
-----------------------
-
-.. deprecated:: 1.10
-
-    Old-style middleware that uses  ``settings.MIDDLEWARE_CLASSES`` are
-    deprecated. :ref:`Adapt old, custom middleware <upgrading-middleware>` and
-    use the :setting:`MIDDLEWARE` setting.
-
-Default::
-
-    [
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-    ]
-
-A list of middleware classes to use. This was the default setting used in
-Django 1.9 and earlier. Django 1.10 introduced a new style of middleware. If
-you have an older project using this setting you should :ref:`update any
-middleware you've written yourself <upgrading-middleware>` to the new style
-and then use the :setting:`MIDDLEWARE` setting.
 
 .. setting:: MIGRATION_MODULES
 
@@ -2141,11 +2175,6 @@ If ``True``, the :class:`~django.middleware.security.SecurityMiddleware` adds
 the ``preload`` directive to the :ref:`http-strict-transport-security`
 header. It has no effect unless :setting:`SECURE_HSTS_SECONDS` is set to a
 non-zero value.
-
-.. warning::
-    Setting this incorrectly can irreversibly (for at least several months,
-    depending on browser releases) break your site. Read the
-    :ref:`http-strict-transport-security` documentation first.
 
 .. setting:: SECURE_HSTS_SECONDS
 
@@ -2804,8 +2833,6 @@ the URL in two places (``settings`` and URLconf).
 ``LOGOUT_REDIRECT_URL``
 -----------------------
 
-.. versionadded:: 1.10
-
 Default: ``None``
 
 The URL where requests are redirected after a user logs out using
@@ -2845,22 +2872,6 @@ Default::
         'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
         'django.contrib.auth.hashers.BCryptPasswordHasher',
     ]
-
-.. versionchanged:: 1.10
-
-    The following hashers were removed from the defaults::
-
-        'django.contrib.auth.hashers.SHA1PasswordHasher'
-        'django.contrib.auth.hashers.MD5PasswordHasher'
-        'django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher'
-        'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher'
-        'django.contrib.auth.hashers.CryptPasswordHasher'
-
-    Consider using a :ref:`wrapped password hasher <wrapping-password-hashers>`
-    to strengthen the hashes in your database. If that's not feasible, add this
-    setting to your project and add back any hashers that you need.
-
-    Also, the ``Argon2PasswordHasher`` was added.
 
 .. setting:: AUTH_PASSWORD_VALIDATORS
 
@@ -2991,8 +3002,8 @@ The age of session cookies, in seconds.
 Default: ``None``
 
 The domain to use for session cookies. Set this to a string such as
-``".example.com"`` (note the leading dot!) for cross-domain cookies, or use
-``None`` for a standard domain cookie.
+``"example.com"`` for cross-domain cookies, or use ``None`` for a standard
+domain cookie.
 
 Be cautious when updating this setting on a production site. If you update
 this setting to enable cross-domain cookies on a site that previously used
@@ -3416,7 +3427,6 @@ HTTP
 * :setting:`FORCE_SCRIPT_NAME`
 * :setting:`INTERNAL_IPS`
 * :setting:`MIDDLEWARE`
-* :setting:`MIDDLEWARE_CLASSES`
 * Security
 
   * :setting:`SECURE_BROWSER_XSS_FILTER`

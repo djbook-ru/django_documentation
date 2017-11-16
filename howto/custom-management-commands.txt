@@ -26,10 +26,6 @@ directory whose name doesn't begin with an underscore. For example::
         tests.py
         views.py
 
-On Python 2, be sure to include ``__init__.py`` files in both the
-``management`` and ``management/commands`` directories as done above or your
-command will not be detected.
-
 In this example, the ``closepoll`` command will be made available to any project
 that includes the ``polls`` application in :setting:`INSTALLED_APPS`.
 
@@ -110,7 +106,6 @@ options can be added in the :meth:`~BaseCommand.add_arguments` method like this:
                 '--delete',
                 action='store_true',
                 dest='delete',
-                default=False,
                 help='Delete poll instead of closing it',
             )
 
@@ -186,6 +181,24 @@ Testing
 Information on how to test custom management commands can be found in the
 :ref:`testing docs <topics-testing-management-commands>`.
 
+Overriding commands
+===================
+
+Django registers the built-in commands and then searches for commands in
+:setting:`INSTALLED_APPS` in reverse. During the search, if a command name
+duplicates an already registered command, the newly discovered command
+overrides the first.
+
+In other words, to override a command, the new command must have the same name
+and its app must be before the overridden command's app in
+:setting:`INSTALLED_APPS`.
+
+Management commands from third-party apps that have been unintentionally
+overridden can be made available under a new name by creating a new command in
+one of your project's apps (ordered before the third-party app in
+:setting:`INSTALLED_APPS`) which imports the ``Command`` of the overridden
+command.
+
 Command objects
 ===============
 
@@ -226,8 +239,6 @@ All attributes can be set in your derived class and can be used in
     ``COMMIT;``. Default value is ``False``.
 
 .. attribute:: BaseCommand.requires_migrations_checks
-
-    .. versionadded:: 1.10
 
     A boolean; if ``True``, the command prints a warning if the set of
     migrations on disk don't match the migrations in the database. A warning
@@ -280,7 +291,7 @@ the :meth:`~BaseCommand.handle` method must be implemented.
 
         class Command(BaseCommand):
             def __init__(self, *args, **kwargs):
-                super(Command, self).__init__(*args, **kwargs)
+                super().__init__(*args, **kwargs)
                 # ...
 
 .. method:: BaseCommand.add_arguments(parser)
@@ -311,7 +322,7 @@ the :meth:`~BaseCommand.handle` method must be implemented.
 
     The actual logic of the command. Subclasses must implement this method.
 
-    It may return a Unicode string which will be printed to ``stdout`` (wrapped
+    It may return a string which will be printed to ``stdout`` (wrapped
     by ``BEGIN;`` and ``COMMIT;`` if :attr:`output_transaction` is ``True``).
 
 .. method:: BaseCommand.check(app_configs=None, tags=None, display_num_errors=False)

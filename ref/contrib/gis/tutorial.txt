@@ -216,7 +216,7 @@ model to represent this data::
         mpoly = models.MultiPolygonField()
 
         # Returns the string representation of the model.
-        def __str__(self):              # __unicode__ on Python 2
+        def __str__(self):
             return self.name
 
 Note that the ``models`` module is imported from ``django.contrib.gis.db``.
@@ -610,6 +610,8 @@ of a queryset::
 The ``contains`` and ``intersects`` lookups are just a subset of the
 available queries -- the :doc:`db-api` documentation has more.
 
+.. _automatic-spatial-transformations:
+
 Automatic Spatial Transformations
 ---------------------------------
 When doing spatial queries, GeoDjango automatically transforms
@@ -643,23 +645,29 @@ of abstraction::
 
 __ http://spatialreference.org/ref/epsg/32140/
 
+.. _gis-raw-sql:
+
 .. admonition:: Raw queries
 
-    When using :doc:`raw queries </topics/db/sql>`, you should generally wrap
-    your geometry fields with the ``asText()`` SQL function (or ``ST_AsText``
-    for PostGIS) so that the field value will be recognized by GEOS::
+    When using :doc:`raw queries </topics/db/sql>`, you must wrap your geometry
+    fields so that the field value can be recognized by GEOS::
 
-        City.objects.raw('SELECT id, name, asText(point) from myapp_city')
+        from django.db import connection
+        # or if you're querying a non-default database:
+        from django.db import connections
+        connection = connections['your_gis_db_alias']
 
-    This is not absolutely required by PostGIS, but generally you should only
-    use raw queries when you know exactly what you are doing.
+        City.objects.raw('SELECT id, name, %s as point from myapp_city' % (connection.ops.select % 'point'))
+
+    You should only use raw queries when you know exactly what you're doing.
 
 Lazy Geometries
 ---------------
 GeoDjango loads geometries in a standardized textual representation.  When the
-geometry field is first accessed, GeoDjango creates a `GEOS geometry object
-<ref-geos>`, exposing powerful functionality, such as serialization properties
-for popular geospatial formats::
+geometry field is first accessed, GeoDjango creates a
+:class:`~django.contrib.gis.geos.GEOSGeometry` object, exposing powerful
+functionality, such as serialization properties for popular geospatial
+formats::
 
     >>> sm = WorldBorder.objects.get(name='San Marino')
     >>> sm.mpoly
@@ -713,11 +721,11 @@ Let's dive right in.  Create a file called ``admin.py`` inside the
 
 Next, edit your ``urls.py`` in the ``geodjango`` application folder as follows::
 
-    from django.conf.urls import url, include
     from django.contrib.gis import admin
+    from django.urls import path, include
 
     urlpatterns = [
-        url(r'^admin/', admin.site.urls),
+        path('admin/', admin.site.urls),
     ]
 
 Create an admin user:

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 11:28+0300\n"
+"POT-Creation-Date: 2017-11-16 11:56+0200\n"
 "PO-Revision-Date: 2015-11-17 10:48+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -612,7 +612,7 @@ msgstr ""
 
 #: ../../releases/1.9.txt:387
 msgid ""
-"The :func:`django.views.i18n.javascript_catalog` view now works correctly if "
+"The ``django.views.i18n.javascript_catalog()`` view now works correctly if "
 "used multiple times with different configurations on the same page."
 msgstr ""
 
@@ -631,7 +631,7 @@ msgstr ""
 
 #: ../../releases/1.9.txt:397
 msgid ""
-"Added the :func:`django.views.i18n.json_catalog` view to help build a custom "
+"Added the ``django.views.i18n.json_catalog()`` view to help build a custom "
 "client-side i18n library upon Django translations. It returns a JSON object "
 "containing a translations catalog, formatting settings, and a plural rule."
 msgstr ""
@@ -1084,8 +1084,8 @@ msgstr ""
 msgid ""
 "The application namespace can now be set using an ``app_name`` attribute on "
 "the included module or object. It can also be set by passing a 2-tuple of "
-"(<list of patterns>, <application namespace>) as the first argument to :func:"
-"`~django.conf.urls.include`."
+"(<list of patterns>, <application namespace>) as the first argument to "
+"``include()``."
 msgstr ""
 
 #: ../../releases/1.9.txt:662
@@ -1501,25 +1501,24 @@ msgid ""
 "In general, template tags do not autoescape their contents, and this "
 "behavior is :ref:`documented <tags-auto-escaping>`. For tags like :class:"
 "`~django.template.Library.inclusion_tag`, this is not a problem because the "
-"included template will perform autoescaping. For :class:`~django.template."
-"Library.assignment_tag`, the output will be escaped when it is used as a "
-"variable in the template."
+"included template will perform autoescaping. For ``assignment_tag()``, the "
+"output will be escaped when it is used as a variable in the template."
 msgstr ""
 
-#: ../../releases/1.9.txt:945
+#: ../../releases/1.9.txt:944
 msgid ""
 "For the intended use cases of :class:`~django.template.Library.simple_tag`, "
 "however, it is very easy to end up with incorrect HTML and possibly an XSS "
 "exploit. For example::"
 msgstr ""
 
-#: ../../releases/1.9.txt:953
+#: ../../releases/1.9.txt:952
 msgid ""
 "In older versions of Django, this will be an XSS issue because ``user."
 "first_name`` is not escaped."
 msgstr ""
 
-#: ../../releases/1.9.txt:956
+#: ../../releases/1.9.txt:955
 msgid ""
 "In Django 1.9, this is fixed: if the template context has "
 "``autoescape=True`` set (the default), then ``simple_tag`` will wrap the "
@@ -1527,100 +1526,100 @@ msgid ""
 "conditional_escape`."
 msgstr ""
 
-#: ../../releases/1.9.txt:960
+#: ../../releases/1.9.txt:959
 msgid ""
 "To fix your ``simple_tag``\\s, it is best to apply the following practices:"
 msgstr ""
 
-#: ../../releases/1.9.txt:962
+#: ../../releases/1.9.txt:961
 msgid ""
 "Any code that generates HTML should use either the template system or :func:"
 "`~django.utils.html.format_html`."
 msgstr ""
 
-#: ../../releases/1.9.txt:965
+#: ../../releases/1.9.txt:964
 msgid ""
 "If the output of a ``simple_tag`` needs escaping, use :func:`~django.utils."
 "html.escape` or :func:`~django.utils.html.conditional_escape`."
 msgstr ""
 
-#: ../../releases/1.9.txt:969
+#: ../../releases/1.9.txt:968
 msgid ""
 "If you are absolutely certain that you are outputting HTML from a trusted "
 "source (e.g. a CMS field that stores HTML entered by admins), you can mark "
 "it as such using :func:`~django.utils.safestring.mark_safe`."
 msgstr ""
 
-#: ../../releases/1.9.txt:973
+#: ../../releases/1.9.txt:972
 msgid ""
 "Tags that follow these rules will be correct and safe whether they are run "
 "on Django 1.9+ or earlier."
 msgstr ""
 
-#: ../../releases/1.9.txt:977
+#: ../../releases/1.9.txt:976
 msgid "``Paginator.page_range``"
 msgstr ""
 
-#: ../../releases/1.9.txt:979
+#: ../../releases/1.9.txt:978
 msgid ""
 ":attr:`Paginator.page_range <django.core.paginator.Paginator.page_range>` is "
 "now an iterator instead of a list."
 msgstr ""
 
-#: ../../releases/1.9.txt:982
+#: ../../releases/1.9.txt:981
 msgid ""
 "In versions of Django previous to 1.8, ``Paginator.page_range`` returned a "
 "``list`` in Python 2 and a ``range`` in Python 3. Django 1.8 consistently "
 "returned a list, but an iterator is more efficient."
 msgstr ""
 
-#: ../../releases/1.9.txt:986
+#: ../../releases/1.9.txt:985
 msgid ""
 "Existing code that depends on ``list`` specific features, such as indexing, "
 "can be ported by converting the iterator into a ``list`` using ``list()``."
 msgstr ""
 
-#: ../../releases/1.9.txt:990
+#: ../../releases/1.9.txt:989
 msgid "Implicit ``QuerySet`` ``__in`` lookup removed"
 msgstr ""
 
-#: ../../releases/1.9.txt:992
+#: ../../releases/1.9.txt:991
 msgid "In earlier versions, queries such as::"
 msgstr ""
 
-#: ../../releases/1.9.txt:996
+#: ../../releases/1.9.txt:995
 msgid "would implicitly convert to::"
 msgstr ""
 
-#: ../../releases/1.9.txt:1000
+#: ../../releases/1.9.txt:999
 msgid "resulting in SQL like ``\"related_id IN (SELECT id FROM ...)\"``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1002
+#: ../../releases/1.9.txt:1001
 msgid ""
 "This implicit ``__in`` no longer happens so the \"IN\" SQL is now \"=\", and "
 "if the subquery returns multiple results, at least some databases will throw "
 "an error."
 msgstr ""
 
-#: ../../releases/1.9.txt:1008
+#: ../../releases/1.9.txt:1007
 msgid "``contrib.admin`` browser support"
 msgstr ""
 
-#: ../../releases/1.9.txt:1010
+#: ../../releases/1.9.txt:1009
 msgid ""
 "The admin no longer supports Internet Explorer 8 and below, as these "
 "browsers have reached end-of-life."
 msgstr ""
 
-#: ../../releases/1.9.txt:1013
+#: ../../releases/1.9.txt:1012
 msgid ""
 "CSS and images to support Internet Explorer 6 and 7 have been removed. PNG "
 "and GIF icons have been replaced with SVG icons, which are not supported by "
 "Internet Explorer 8 and earlier."
 msgstr ""
 
-#: ../../releases/1.9.txt:1017
+#: ../../releases/1.9.txt:1016
 msgid ""
 "The jQuery library embedded in the admin has been upgraded from version "
 "1.11.2 to 2.1.4. jQuery 2.x has the same API as jQuery 1.x, but does not "
@@ -1630,15 +1629,15 @@ msgid ""
 "by creating a Django application with this structure::"
 msgstr ""
 
-#: ../../releases/1.9.txt:1031
+#: ../../releases/1.9.txt:1030
 msgid "``SyntaxError`` when installing Django setuptools 5.5.x"
 msgstr ""
 
-#: ../../releases/1.9.txt:1033
+#: ../../releases/1.9.txt:1032
 msgid "When installing Django 1.9 or 1.9.1 with setuptools 5.5.x, you'll see::"
 msgstr ""
 
-#: ../../releases/1.9.txt:1047
+#: ../../releases/1.9.txt:1046
 msgid ""
 "It's safe to ignore these errors (Django will still install just fine), but "
 "you can avoid them by upgrading setuptools to a more recent version. If "
@@ -1647,35 +1646,35 @@ msgid ""
 "as described in the :doc:`/releases/1.9.2`."
 msgstr ""
 
-#: ../../releases/1.9.txt:1054 ../../releases/1.9.txt:1341
+#: ../../releases/1.9.txt:1053 ../../releases/1.9.txt:1340
 msgid "Miscellaneous"
 msgstr ""
 
-#: ../../releases/1.9.txt:1056
+#: ../../releases/1.9.txt:1055
 msgid ""
 "The jQuery static files in ``contrib.admin`` have been moved into a ``vendor/"
 "jquery`` subdirectory."
 msgstr ""
 
-#: ../../releases/1.9.txt:1059
+#: ../../releases/1.9.txt:1058
 msgid ""
 "The text displayed for null columns in the admin changelist ``list_display`` "
 "cells has changed from ``(None)`` (or its translated equivalent) to ``-`` (a "
 "dash)."
 msgstr ""
 
-#: ../../releases/1.9.txt:1063
+#: ../../releases/1.9.txt:1062
 msgid ""
 "``django.http.responses.REASON_PHRASES`` and ``django.core.handlers.wsgi."
 "STATUS_CODE_TEXT`` have been removed. Use Python's stdlib instead: :data:"
 "`http.client.responses` for Python 3 and `httplib.responses`_ for Python 2."
 msgstr ""
 
-#: ../../releases/1.9.txt:1070
+#: ../../releases/1.9.txt:1069
 msgid "``ValuesQuerySet`` and ``ValuesListQuerySet`` have been removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1072
+#: ../../releases/1.9.txt:1071
 msgid ""
 "The ``admin/base.html`` template no longer sets ``window."
 "__admin_media_prefix__`` or ``window.__admin_utc_offset__``. Image "
@@ -1684,13 +1683,13 @@ msgid ""
 "a data attribute of the ``<body>`` tag."
 msgstr ""
 
-#: ../../releases/1.9.txt:1078
+#: ../../releases/1.9.txt:1077
 msgid ""
 "``CommaSeparatedIntegerField`` validation has been refined to forbid values "
 "like ``','``, ``',1'``, and ``'1,,2'``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1081
+#: ../../releases/1.9.txt:1080
 msgid ""
 "Form initialization was moved from the :meth:`ProcessFormView.get() <django."
 "views.generic.edit.ProcessFormView.get>` method to the new :meth:`FormMixin."
@@ -1699,17 +1698,17 @@ msgid ""
 "``get_context_data()`` method without calling ``super()``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1088
+#: ../../releases/1.9.txt:1087
 msgid "Support for PostGIS 1.5 has been dropped."
 msgstr ""
 
-#: ../../releases/1.9.txt:1090
+#: ../../releases/1.9.txt:1089
 msgid ""
 "The ``django.contrib.sites.models.Site.domain`` field was changed to be :"
 "attr:`~django.db.models.Field.unique`."
 msgstr ""
 
-#: ../../releases/1.9.txt:1093
+#: ../../releases/1.9.txt:1092
 msgid ""
 "In order to enforce test isolation, database queries are not allowed by "
 "default in :class:`~django.test.SimpleTestCase` tests anymore. You can "
@@ -1717,25 +1716,25 @@ msgid ""
 "allow_database_queries` class attribute to ``True`` on your test class."
 msgstr ""
 
-#: ../../releases/1.9.txt:1099
+#: ../../releases/1.9.txt:1098
 msgid ""
 "``ResolverMatch.app_name`` was changed to contain the full namespace path in "
 "the case of nested namespaces. For consistency with ``ResolverMatch."
 "namespace``, the empty value is now an empty string instead of ``None``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1104
+#: ../../releases/1.9.txt:1103
 msgid "For security hardening, session keys must be at least 8 characters."
 msgstr ""
 
-#: ../../releases/1.9.txt:1106
+#: ../../releases/1.9.txt:1105
 msgid ""
 "Private function ``django.utils.functional.total_ordering()`` has been "
 "removed. It contained a workaround for a ``functools.total_ordering()`` bug "
 "in Python versions older than 2.7.3."
 msgstr ""
 
-#: ../../releases/1.9.txt:1110
+#: ../../releases/1.9.txt:1109
 msgid ""
 "XML serialization (either through :djadmin:`dumpdata` or the syndication "
 "framework) used to output any characters it received. Now if the content to "
@@ -1743,14 +1742,14 @@ msgid ""
 "standard, the serialization will fail with a :exc:`ValueError`."
 msgstr ""
 
-#: ../../releases/1.9.txt:1115
+#: ../../releases/1.9.txt:1114
 msgid ""
 ":class:`~django.forms.CharField` now strips input of leading and trailing "
 "whitespace by default. This can be disabled by setting the new :attr:"
 "`~django.forms.CharField.strip` argument to ``False``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1119
+#: ../../releases/1.9.txt:1118
 msgid ""
 "Template text that is translated and uses two or more consecutive percent "
 "signs, e.g. ``\"%%\"``, may have a new `msgid` after ``makemessages`` is run "
@@ -1758,7 +1757,7 @@ msgid ""
 "be marked ``\"#, python-format\"``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1124
+#: ../../releases/1.9.txt:1123
 msgid ""
 "If neither :attr:`request.current_app <django.http.HttpRequest.current_app>` "
 "nor :class:`Context.current_app <django.template.Context>` are set, the :"
@@ -1767,14 +1766,14 @@ msgid ""
 "hint."
 msgstr ""
 
-#: ../../releases/1.9.txt:1130
+#: ../../releases/1.9.txt:1129
 msgid ""
 "The :setting:`SILENCED_SYSTEM_CHECKS` setting now silences messages of all "
 "levels. Previously, messages of ``ERROR`` level or higher were printed to "
 "the console."
 msgstr ""
 
-#: ../../releases/1.9.txt:1134
+#: ../../releases/1.9.txt:1133
 msgid ""
 "The ``FlatPage.enable_comments`` field is removed from the ``FlatPageAdmin`` "
 "as it's unused by the application. If your project or a third-party app "
@@ -1782,7 +1781,7 @@ msgid ""
 "it back."
 msgstr ""
 
-#: ../../releases/1.9.txt:1138
+#: ../../releases/1.9.txt:1137
 msgid ""
 "The return value of :meth:`~django.test.runner.DiscoverRunner."
 "setup_databases` and the first argument of :meth:`~django.test.runner."
@@ -1790,50 +1789,50 @@ msgid ""
 "mirrors)`` tuples. Now they're just the first item, ``old_names``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1144
+#: ../../releases/1.9.txt:1143
 msgid ""
 "By default :class:`~django.test.LiveServerTestCase` attempts to find an "
 "available port in the 8081-8179 range instead of just trying port 8081."
 msgstr ""
 
-#: ../../releases/1.9.txt:1147
+#: ../../releases/1.9.txt:1146
 msgid ""
 "The system checks for :class:`~django.contrib.admin.ModelAdmin` now check "
 "instances rather than classes."
 msgstr ""
 
-#: ../../releases/1.9.txt:1150
+#: ../../releases/1.9.txt:1149
 msgid ""
 "The private API to apply mixed migration plans has been dropped for "
 "performance reasons. Mixed plans consist of a list of migrations where some "
 "are being applied and others are being unapplied."
 msgstr ""
 
-#: ../../releases/1.9.txt:1154
+#: ../../releases/1.9.txt:1153
 msgid ""
 "The related model object descriptor classes in ``django.db.models.fields."
 "related`` (private API) are moved from the ``related`` module to "
 "``related_descriptors`` and renamed as follows:"
 msgstr ""
 
-#: ../../releases/1.9.txt:1158
+#: ../../releases/1.9.txt:1157
 msgid ""
 "``ReverseSingleRelatedObjectDescriptor`` is ``ForwardManyToOneDescriptor``"
 msgstr ""
 
-#: ../../releases/1.9.txt:1159
+#: ../../releases/1.9.txt:1158
 msgid "``SingleRelatedObjectDescriptor`` is ``ReverseOneToOneDescriptor``"
 msgstr ""
 
-#: ../../releases/1.9.txt:1160
+#: ../../releases/1.9.txt:1159
 msgid "``ForeignRelatedObjectsDescriptor`` is ``ReverseManyToOneDescriptor``"
 msgstr ""
 
-#: ../../releases/1.9.txt:1161
+#: ../../releases/1.9.txt:1160
 msgid "``ManyRelatedObjectsDescriptor`` is ``ManyToManyDescriptor``"
 msgstr ""
 
-#: ../../releases/1.9.txt:1163
+#: ../../releases/1.9.txt:1162
 msgid ""
 "If you implement a custom :data:`~django.conf.urls.handler404` view, it must "
 "return a response with an HTTP 404 status code. Use :class:`~django.http."
@@ -1842,15 +1841,15 @@ msgid ""
 "``DEBUG=False``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1172
+#: ../../releases/1.9.txt:1171
 msgid "Features deprecated in 1.9"
 msgstr ""
 
-#: ../../releases/1.9.txt:1175
+#: ../../releases/1.9.txt:1174
 msgid "``assignment_tag()``"
 msgstr ""
 
-#: ../../releases/1.9.txt:1177
+#: ../../releases/1.9.txt:1176
 msgid ""
 "Django 1.4 added the ``assignment_tag`` helper to ease the creation of "
 "template tags that store results in a template variable. The :meth:`~django."
@@ -1859,34 +1858,34 @@ msgid ""
 "updated to use ``simple_tag``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1184
+#: ../../releases/1.9.txt:1183
 msgid "``{% cycle %}`` syntax with comma-separated arguments"
 msgstr ""
 
-#: ../../releases/1.9.txt:1186
+#: ../../releases/1.9.txt:1185
 msgid ""
 "The :ttag:`cycle` tag supports an inferior old syntax from previous Django "
 "versions:"
 msgstr ""
 
-#: ../../releases/1.9.txt:1193
+#: ../../releases/1.9.txt:1192
 msgid ""
 "Its parsing caused bugs with the current syntax, so support for the old "
 "syntax will be removed in Django 1.10 following an accelerated deprecation."
 msgstr ""
 
-#: ../../releases/1.9.txt:1197
+#: ../../releases/1.9.txt:1196
 msgid "``ForeignKey`` and ``OneToOneField`` ``on_delete`` argument"
 msgstr ""
 
-#: ../../releases/1.9.txt:1199
+#: ../../releases/1.9.txt:1198
 msgid ""
 "In order to increase awareness about cascading model deletion, the "
 "``on_delete`` argument of ``ForeignKey`` and ``OneToOneField`` will be "
 "required in Django 2.0."
 msgstr ""
 
-#: ../../releases/1.9.txt:1203
+#: ../../releases/1.9.txt:1202
 msgid ""
 "Update models and existing migrations to explicitly set the argument. Since "
 "the default is ``models.CASCADE``, add ``on_delete=models.CASCADE`` to all "
@@ -1895,11 +1894,11 @@ msgid ""
 "about compatibility with older versions of Django."
 msgstr ""
 
-#: ../../releases/1.9.txt:1210
+#: ../../releases/1.9.txt:1209
 msgid "``Field.rel`` changes"
 msgstr ""
 
-#: ../../releases/1.9.txt:1212
+#: ../../releases/1.9.txt:1211
 msgid ""
 "``Field.rel`` and its methods and attributes have changed to match the "
 "related fields API. The ``Field.rel`` attribute is renamed to "
@@ -1907,16 +1906,16 @@ msgid ""
 "or renamed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1216
+#: ../../releases/1.9.txt:1215
 msgid ""
 "The aim of these changes is to provide a documented API for relation fields."
 msgstr ""
 
-#: ../../releases/1.9.txt:1219
+#: ../../releases/1.9.txt:1218
 msgid "``GeoManager`` and ``GeoQuerySet`` custom methods"
 msgstr ""
 
-#: ../../releases/1.9.txt:1221
+#: ../../releases/1.9.txt:1220
 msgid ""
 "All custom ``GeoQuerySet`` methods (``area()``, ``distance()``, "
 "``gml()``, ...) have been replaced by equivalent geographic expressions in "
@@ -1926,11 +1925,11 @@ msgid ""
 "``objects = GeoManager()`` lines from your models."
 msgstr ""
 
-#: ../../releases/1.9.txt:1229
+#: ../../releases/1.9.txt:1228
 msgid "Template loader APIs have changed"
 msgstr ""
 
-#: ../../releases/1.9.txt:1231
+#: ../../releases/1.9.txt:1230
 msgid ""
 "Django template loaders have been updated to allow recursive template "
 "extending. This change necessitated a new template loader API. The old "
@@ -1939,23 +1938,22 @@ msgid ""
 "loader documentation <custom-template-loaders>`."
 msgstr ""
 
-#: ../../releases/1.9.txt:1238
-msgid ""
-"Passing a 3-tuple or an ``app_name`` to :func:`~django.conf.urls.include()`"
+#: ../../releases/1.9.txt:1237
+msgid "Passing a 3-tuple or an ``app_name`` to ``include()``"
 msgstr ""
 
-#: ../../releases/1.9.txt:1240
+#: ../../releases/1.9.txt:1239
 msgid ""
 "The instance namespace part of passing a tuple as an argument to "
 "``include()`` has been replaced by passing the ``namespace`` argument to "
 "``include()``. For example::"
 msgstr ""
 
-#: ../../releases/1.9.txt:1252
+#: ../../releases/1.9.txt:1251
 msgid "becomes::"
 msgstr ""
 
-#: ../../releases/1.9.txt:1262
+#: ../../releases/1.9.txt:1261
 msgid ""
 "The ``app_name`` argument to ``include()`` has been replaced by passing a 2-"
 "tuple (as above), or passing an object or module with an ``app_name`` "
@@ -1965,22 +1963,22 @@ msgid ""
 "from:"
 msgstr ""
 
-#: ../../releases/1.9.txt:1276
+#: ../../releases/1.9.txt:1275
 msgid "to:"
 msgstr ""
 
-#: ../../releases/1.9.txt:1292
+#: ../../releases/1.9.txt:1291
 msgid ""
 "This change also means that the old way of including an ``AdminSite`` "
 "instance is deprecated. Instead, pass ``admin.site.urls`` directly to :func:"
 "`~django.conf.urls.url()`:"
 msgstr ""
 
-#: ../../releases/1.9.txt:1307
+#: ../../releases/1.9.txt:1306
 msgid "URL application namespace required if setting an instance namespace"
 msgstr ""
 
-#: ../../releases/1.9.txt:1309
+#: ../../releases/1.9.txt:1308
 msgid ""
 "In the past, an instance namespace without an application namespace would "
 "serve the same purpose as the application namespace, but it was impossible "
@@ -1989,59 +1987,59 @@ msgid ""
 "URLconf sets an application namespace."
 msgstr ""
 
-#: ../../releases/1.9.txt:1316
+#: ../../releases/1.9.txt:1315
 msgid "``current_app`` parameter to ``contrib.auth`` views"
 msgstr ""
 
-#: ../../releases/1.9.txt:1318
+#: ../../releases/1.9.txt:1317
 msgid ""
 "All views in ``django.contrib.auth.views`` have the following structure::"
 msgstr ""
 
-#: ../../releases/1.9.txt:1329
+#: ../../releases/1.9.txt:1328
 msgid ""
 "As of Django 1.8, ``current_app`` is set on the ``request`` object. For "
 "consistency, these views will require the caller to set ``current_app`` on "
 "the ``request`` instead of passing it in a separate argument."
 msgstr ""
 
-#: ../../releases/1.9.txt:1334
+#: ../../releases/1.9.txt:1333
 msgid "``django.contrib.gis.geoip``"
 msgstr ""
 
-#: ../../releases/1.9.txt:1336
+#: ../../releases/1.9.txt:1335
 msgid ""
 "The :mod:`django.contrib.gis.geoip2` module supersedes ``django.contrib.gis."
 "geoip``. The new module provides a similar API except that it doesn't "
 "provide the legacy GeoIP-Python API compatibility methods."
 msgstr ""
 
-#: ../../releases/1.9.txt:1343
+#: ../../releases/1.9.txt:1342
 msgid ""
 "The ``weak`` argument to ``django.dispatch.signals.Signal.disconnect()`` has "
 "been deprecated as it has no effect."
 msgstr ""
 
-#: ../../releases/1.9.txt:1346
+#: ../../releases/1.9.txt:1345
 msgid ""
 "The ``check_aggregate_support()`` method of ``django.db.backends.base."
 "BaseDatabaseOperations`` has been deprecated and will be removed in Django "
 "2.0. The more general ``check_expression_support()`` should be used instead."
 msgstr ""
 
-#: ../../releases/1.9.txt:1351
+#: ../../releases/1.9.txt:1350
 msgid ""
 "``django.forms.extras`` is deprecated. You can find :class:`~django.forms."
 "SelectDateWidget` in ``django.forms.widgets`` (or simply ``django.forms``) "
 "instead."
 msgstr ""
 
-#: ../../releases/1.9.txt:1355
+#: ../../releases/1.9.txt:1354
 msgid ""
 "Private API ``django.db.models.fields.add_lazy_relation()`` is deprecated."
 msgstr ""
 
-#: ../../releases/1.9.txt:1357
+#: ../../releases/1.9.txt:1356
 msgid ""
 "The ``django.contrib.auth.tests.utils.skipIfCustomUser()`` decorator is "
 "deprecated. With the test discovery changes in Django 1.6, the tests for "
@@ -2050,46 +2048,46 @@ msgid ""
 "decorate tests in ``django.contrib.auth``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1363
+#: ../../releases/1.9.txt:1362
 msgid ""
 "If you customized some :ref:`error handlers <error-views>`, the view "
 "signatures with only one request parameter are deprecated. The views should "
 "now also accept a second ``exception`` positional parameter."
 msgstr ""
 
-#: ../../releases/1.9.txt:1367
+#: ../../releases/1.9.txt:1366
 msgid ""
 "The ``django.utils.feedgenerator.Atom1Feed.mime_type`` and ``django.utils."
 "feedgenerator.RssFeed.mime_type`` attributes are deprecated in favor of "
 "``content_type``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1371
+#: ../../releases/1.9.txt:1370
 msgid ""
 ":class:`~django.core.signing.Signer` now issues a warning if an invalid "
 "separator is used. This will become an exception in Django 1.10."
 msgstr ""
 
-#: ../../releases/1.9.txt:1374
+#: ../../releases/1.9.txt:1373
 msgid ""
 "``django.db.models.Field._get_val_from_obj()`` is deprecated in favor of "
 "``Field.value_from_object()``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1377
+#: ../../releases/1.9.txt:1376
 msgid ""
 "``django.template.loaders.eggs.Loader`` is deprecated as distributing "
 "applications as eggs is not recommended."
 msgstr ""
 
-#: ../../releases/1.9.txt:1380
+#: ../../releases/1.9.txt:1379
 msgid ""
 "The ``callable_obj`` keyword argument to ``SimpleTestCase."
 "assertRaisesMessage()`` is deprecated. Pass the callable as a positional "
 "argument instead."
 msgstr ""
 
-#: ../../releases/1.9.txt:1384
+#: ../../releases/1.9.txt:1383
 msgid ""
 "The ``allow_tags`` attribute on methods of ``ModelAdmin`` has been "
 "deprecated. Use :func:`~django.utils.html.format_html`, :func:`~django.utils."
@@ -2097,81 +2095,81 @@ msgid ""
 "constructing the method's return value instead."
 msgstr ""
 
-#: ../../releases/1.9.txt:1390
+#: ../../releases/1.9.txt:1389
 msgid ""
 "The ``enclosure`` keyword argument to ``SyndicationFeed.add_item()`` is "
 "deprecated. Use the new ``enclosures`` argument which accepts a list of "
 "``Enclosure`` objects instead of a single one."
 msgstr ""
 
-#: ../../releases/1.9.txt:1394
+#: ../../releases/1.9.txt:1393
 msgid ""
 "The ``django.template.loader.LoaderOrigin`` and ``django.template.base."
 "StringOrigin`` aliases for ``django.template.base.Origin`` are deprecated."
 msgstr ""
 
-#: ../../releases/1.9.txt:1401
+#: ../../releases/1.9.txt:1400
 msgid "Features removed in 1.9"
 msgstr ""
 
-#: ../../releases/1.9.txt:1403
+#: ../../releases/1.9.txt:1402
 msgid ""
 "These features have reached the end of their deprecation cycle and are "
 "removed in Django 1.9. See :ref:`deprecated-features-1.7` for details, "
 "including how to remove usage of these features."
 msgstr ""
 
-#: ../../releases/1.9.txt:1407
+#: ../../releases/1.9.txt:1406
 msgid "``django.utils.dictconfig`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1409
+#: ../../releases/1.9.txt:1408
 msgid "``django.utils.importlib`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1411
+#: ../../releases/1.9.txt:1410
 msgid "``django.utils.tzinfo`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1413
+#: ../../releases/1.9.txt:1412
 msgid "``django.utils.unittest`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1415
+#: ../../releases/1.9.txt:1414
 msgid "The ``syncdb`` command is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1417
+#: ../../releases/1.9.txt:1416
 msgid ""
 "``django.db.models.signals.pre_syncdb`` and ``django.db.models.signals."
 "post_syncdb`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1420
+#: ../../releases/1.9.txt:1419
 msgid "Support for ``allow_syncdb`` on database routers is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1422
+#: ../../releases/1.9.txt:1421
 msgid ""
 "Automatic syncing of apps without migrations is removed. Migrations are "
 "compulsory for all apps unless you pass the :option:`migrate --run-syncdb` "
 "option."
 msgstr ""
 
-#: ../../releases/1.9.txt:1426
+#: ../../releases/1.9.txt:1425
 msgid ""
 "The SQL management commands for apps without migrations, ``sql``, "
 "``sqlall``, ``sqlclear``, ``sqldropindexes``, and ``sqlindexes``, are "
 "removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1429
+#: ../../releases/1.9.txt:1428
 msgid ""
 "Support for automatic loading of ``initial_data`` fixtures and initial SQL "
 "data is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1432
+#: ../../releases/1.9.txt:1431
 msgid ""
 "All models need to be defined inside an installed application or declare an "
 "explicit :attr:`~django.db.models.Options.app_label`. Furthermore, it isn't "
@@ -2179,183 +2177,183 @@ msgid ""
 "it isn't possible to import models inside the root package of an application."
 msgstr ""
 
-#: ../../releases/1.9.txt:1437
+#: ../../releases/1.9.txt:1436
 msgid ""
 "The model and form ``IPAddressField`` is removed. A stub field remains for "
 "compatibility with historical migrations."
 msgstr ""
 
-#: ../../releases/1.9.txt:1440
+#: ../../releases/1.9.txt:1439
 msgid "``AppCommand.handle_app()`` is no longer supported."
 msgstr ""
 
-#: ../../releases/1.9.txt:1442
+#: ../../releases/1.9.txt:1441
 msgid ""
 "``RequestSite`` and ``get_current_site()`` are no longer importable from "
 "``django.contrib.sites.models``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1445
+#: ../../releases/1.9.txt:1444
 msgid "FastCGI support via the ``runfcgi`` management command is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1447
+#: ../../releases/1.9.txt:1446
 msgid "``django.utils.datastructures.SortedDict`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1449
+#: ../../releases/1.9.txt:1448
 msgid "``ModelAdmin.declared_fieldsets`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1451
+#: ../../releases/1.9.txt:1450
 msgid "The ``util`` modules that provided backwards compatibility are removed:"
 msgstr ""
 
-#: ../../releases/1.9.txt:1453
+#: ../../releases/1.9.txt:1452
 msgid "``django.contrib.admin.util``"
 msgstr ""
 
-#: ../../releases/1.9.txt:1454
+#: ../../releases/1.9.txt:1453
 msgid "``django.contrib.gis.db.backends.util``"
 msgstr ""
 
-#: ../../releases/1.9.txt:1455
+#: ../../releases/1.9.txt:1454
 msgid "``django.db.backends.util``"
 msgstr ""
 
-#: ../../releases/1.9.txt:1456
+#: ../../releases/1.9.txt:1455
 msgid "``django.forms.util``"
 msgstr ""
 
-#: ../../releases/1.9.txt:1458
+#: ../../releases/1.9.txt:1457
 msgid "``ModelAdmin.get_formsets`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1460
+#: ../../releases/1.9.txt:1459
 msgid ""
 "The backward compatible shims introduced to rename the ``BaseMemcachedCache."
 "_get_memcache_timeout()`` method to ``get_backend_timeout()`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1464
+#: ../../releases/1.9.txt:1463
 msgid ""
 "The ``--natural`` and ``-n`` options for :djadmin:`dumpdata` are removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1466
+#: ../../releases/1.9.txt:1465
 msgid ""
 "The ``use_natural_keys`` argument for ``serializers.serialize()`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1468
+#: ../../releases/1.9.txt:1467
 msgid "Private API ``django.forms.forms.get_declared_fields()`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1470
+#: ../../releases/1.9.txt:1469
 msgid ""
 "The ability to use a ``SplitDateTimeWidget`` with ``DateTimeField`` is "
 "removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1473
+#: ../../releases/1.9.txt:1472
 msgid "The ``WSGIRequest.REQUEST`` property is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1475
+#: ../../releases/1.9.txt:1474
 msgid "The class ``django.utils.datastructures.MergeDict`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1477
+#: ../../releases/1.9.txt:1476
 msgid "The ``zh-cn`` and ``zh-tw`` language codes are removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1479
+#: ../../releases/1.9.txt:1478
 msgid "The internal ``django.utils.functional.memoize()`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1481
+#: ../../releases/1.9.txt:1480
 msgid "``django.core.cache.get_cache`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1483
+#: ../../releases/1.9.txt:1482
 msgid "``django.db.models.loading`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1485
+#: ../../releases/1.9.txt:1484
 msgid "Passing callable arguments to querysets is no longer possible."
 msgstr ""
 
-#: ../../releases/1.9.txt:1487
+#: ../../releases/1.9.txt:1486
 msgid ""
 "``BaseCommand.requires_model_validation`` is removed in favor of "
 "``requires_system_checks``. Admin validators is replaced by admin checks."
 msgstr ""
 
-#: ../../releases/1.9.txt:1490
+#: ../../releases/1.9.txt:1489
 msgid ""
 "The ``ModelAdmin.validator_class`` and ``default_validator_class`` "
 "attributes are removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1493
+#: ../../releases/1.9.txt:1492
 msgid "``ModelAdmin.validate()`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1495
+#: ../../releases/1.9.txt:1494
 msgid ""
 "``django.db.backends.DatabaseValidation.validate_field`` is removed in favor "
 "of the ``check_field`` method."
 msgstr ""
 
-#: ../../releases/1.9.txt:1498
+#: ../../releases/1.9.txt:1497
 msgid "The ``validate`` management command is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1500
+#: ../../releases/1.9.txt:1499
 msgid ""
 "``django.utils.module_loading.import_by_path`` is removed in favor of "
 "``django.utils.module_loading.import_string``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1503
+#: ../../releases/1.9.txt:1502
 msgid ""
 "``ssi`` and ``url`` template tags are removed from the ``future`` template "
 "tag library."
 msgstr ""
 
-#: ../../releases/1.9.txt:1506
+#: ../../releases/1.9.txt:1505
 msgid "``django.utils.text.javascript_quote()`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1508
+#: ../../releases/1.9.txt:1507
 msgid ""
 "Database test settings as independent entries in the database settings, "
 "prefixed by ``TEST_``, are no longer supported."
 msgstr ""
 
-#: ../../releases/1.9.txt:1511
+#: ../../releases/1.9.txt:1510
 msgid ""
 "The `cache_choices` option to :class:`~django.forms.ModelChoiceField` and :"
 "class:`~django.forms.ModelMultipleChoiceField` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1514
+#: ../../releases/1.9.txt:1513
 msgid ""
 "The default value of the :attr:`RedirectView.permanent <django.views.generic."
 "base.RedirectView.permanent>` attribute has changed from ``True`` to "
 "``False``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1518
+#: ../../releases/1.9.txt:1517
 msgid ""
 "``django.contrib.sitemaps.FlatPageSitemap`` is removed in favor of ``django."
 "contrib.flatpages.sitemaps.FlatPageSitemap``."
 msgstr ""
 
-#: ../../releases/1.9.txt:1521
+#: ../../releases/1.9.txt:1520
 msgid "Private API ``django.test.utils.TestTemplateLoader`` is removed."
 msgstr ""
 
-#: ../../releases/1.9.txt:1523
+#: ../../releases/1.9.txt:1522
 msgid "The ``django.contrib.contenttypes.generic`` module is removed."
 msgstr ""

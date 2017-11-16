@@ -138,8 +138,6 @@ make it part of your integration test suite.
 
 .. django-admin-option:: --fail-level {CRITICAL,ERROR,WARNING,INFO,DEBUG}
 
-.. versionadded:: 1.10
-
 Specifies the message level that will cause the command to exit with a non-zero
 status. Default is ``ERROR``.
 
@@ -241,6 +239,16 @@ are prefixed by ``"###"``.
 
 The settings module to compare the current settings against. Leave empty to
 compare against Django's default settings.
+
+.. django-admin-option:: --output {hash,unified}
+
+.. versionadded:: 2.0
+
+Specifies the output format. Available values are ``hash`` and ``unified``.
+``hash`` is the default mode that displays the output that's described above.
+``unified`` displays the output similar to ``diff -u``. Default settings are
+prefixed with a minus sign, followed by the changed setting prefixed with a
+plus sign.
 
 ``dumpdata``
 ------------
@@ -358,7 +366,9 @@ output:
 * If ``inspectdb`` cannot map a column's type to a model field type, it'll
   use ``TextField`` and will insert the Python comment
   ``'This field type is a guess.'`` next to the field in the generated
-  model.
+  model. The recognized fields may depend on apps listed in
+  :setting:`INSTALLED_APPS`. For example, :mod:`django.contrib.postgres` adds
+  recognition for several PostgreSQL-specific field types.
 
 * If the database column name is a Python reserved word (such as
   ``'pass'``, ``'class'`` or ``'for'``), ``inspectdb`` will append
@@ -393,11 +403,6 @@ table's lifecycle, you'll need to change the
 :attr:`~django.db.models.Options.managed` option to ``True`` (or simply remove
 it because ``True`` is its default value).
 
-.. versionadded:: 1.10
-
-    Support for the ``table`` argument(s) to choose what tables should be
-    inspected was added.
-
 .. django-admin-option:: --database DATABASE
 
 Specifies the database to introspect. Defaults to ``default``.
@@ -422,6 +427,14 @@ originally generated.
 .. django-admin-option:: --app APP_LABEL
 
 Specifies a single app to look for fixtures in rather than looking in all apps.
+
+.. django-admin-option:: --format FORMAT
+
+.. versionadded:: 2.0
+
+Specifies the :ref:`serialization format <serialization-formats>` (e.g.,
+``json`` or ``xml``) for fixtures :ref:`read from stdin
+<loading-fixtures-stdin>`.
 
 .. django-admin-option:: --exclude EXCLUDE, -e EXCLUDE
 
@@ -559,6 +572,27 @@ defined, name the fixture ``mydata.master.json`` or
 ``mydata.master.json.gz`` and the fixture will only be loaded when you
 specify you want to load data into the ``master`` database.
 
+.. _loading-fixtures-stdin:
+
+Loading fixtures from ``stdin``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0
+
+You can use a dash as the fixture name to load input from ``sys.stdin``. For
+example::
+
+    django-admin loaddata --format=json -
+
+When reading from ``stdin``, the :option:`--format <loaddata --format>` option
+is required to specify the :ref:`serialization format <serialization-formats>`
+of the input (e.g., ``json`` or ``xml``).
+
+Loading from ``stdin`` is useful with standard input and output redirections.
+For example::
+
+    django-admin dumpdata --format=json --database=test app_label.ModelName | django-admin loaddata --format=json --database=prod -
+
 ``makemessages``
 ----------------
 
@@ -654,6 +688,20 @@ Suppresses writing '``#: filename:line``’ comment lines in language files.
 Using this option makes it harder for technically skilled translators to
 understand each message's context.
 
+.. django-admin-option:: --add-location [{full,file,never}]
+
+.. versionadded:: 2.0
+
+Controls ``#: filename:line`` comment lines in language files. If the option
+is:
+
+* ``full`` (the default if not given): the lines include both file name and
+  line number.
+* ``file``: the line number is omitted.
+* ``never``: the lines are suppressed (same as :option:`--no-location`).
+
+Requires ``gettext`` 0.19 or newer.
+
 .. django-admin-option:: --keep-pot
 
 Prevents deleting the temporary ``.pot`` files generated before creating the
@@ -707,18 +755,10 @@ Enables fixing of migration conflicts.
 
 Allows naming the generated migration(s) instead of using a generated name.
 
-.. django-admin-option:: --exit, -e
-
-.. deprecated:: 1.10
-
-   Use the ``--check`` option instead.
-
 Makes ``makemigrations`` exit with error code 1 when no migrations are created
 (or would have been created, if combined with ``--dry-run``).
 
 .. django-admin-option:: --check
-
-.. versionadded:: 1.10
 
 Makes ``makemigrations`` exit with a non-zero status when model changes without
 migrations are detected.
@@ -838,16 +878,8 @@ If the :doc:`staticfiles</ref/contrib/staticfiles>` contrib app is enabled
 (default in new projects) the :djadmin:`runserver` command will be overridden
 with its own :ref:`runserver<staticfiles-runserver>` command.
 
-If :djadmin:`migrate` was not previously executed, the table that stores the
-history of migrations is created at first run of ``runserver``.
-
 Logging of each request and response of the server is sent to the
 :ref:`django-server-logger` logger.
-
-.. versionchanged:: 1.10
-
-    In older versions, log messages were written to ``sys.stderr`` instead of
-    being handled through Python logging.
 
 .. django-admin-option:: --noreload
 
@@ -960,13 +992,8 @@ Python interpreter, use ``python`` as the interface name, like so::
 
     django-admin shell -i python
 
-.. deprecated:: 1.10
-
-   In older versions, use the ``--plain`` option instead of ``-i python``. This
-   is deprecated and will be removed in Django 2.0.
-
 .. _IPython: https://ipython.org/
-.. _bpython: http://bpython-interpreter.org/
+.. _bpython: https://bpython-interpreter.org/
 
 .. django-admin-option:: --nostartup
 
@@ -975,8 +1002,6 @@ default, the script pointed to by the :envvar:`PYTHONSTARTUP` environment
 variable or the ``~/.pythonrc.py`` script is read.
 
 .. django-admin-option:: --command COMMAND, -c COMMAND
-
-.. versionadded:: 1.10
 
 Lets you pass a command as a string to execute it as Django, like so::
 
@@ -1108,6 +1133,13 @@ behavior, as optimization is meant to be safe.
 .. django-admin-option:: --noinput, --no-input
 
 Suppresses all user prompts.
+
+.. django-admin-option:: --squashed-name SQUASHED_NAME
+
+.. versionadded:: 2.0
+
+Sets the name of the squashed migration. When omitted, the name is based on the
+first and last migration, with ``_squashed_`` in between.
 
 ``startapp``
 ------------
@@ -1348,14 +1380,10 @@ don't.
 
 .. option:: --tag TAGS
 
-.. versionadded:: 1.10
-
 Runs only tests :ref:`marked with the specified tags <topics-tagging-tests>`.
 May be specified multiple times and combined with :option:`test --exclude-tag`.
 
 .. option:: --exclude-tag EXCLUDE_TAGS
-
-.. versionadded:: 1.10
 
 Excludes tests :ref:`marked with the specified tags <topics-tagging-tests>`.
 May be specified multiple times and combined with :option:`test --tag`.
@@ -1591,7 +1619,7 @@ Example usage::
 
     django-admin migrate --pythonpath='/home/djangoprojects/myproject'
 
-.. _import search path: http://www.diveintopython.net/getting_to_know_python/everything_is_an_object.html
+.. _import search path: http://www.diveintopython3.net/your-first-python-program.html#importsearchpath
 
 .. django-admin-option:: --settings SETTINGS
 
@@ -1778,7 +1806,7 @@ To call a management command from code use ``call_command``.
 ``*args``
   a list of arguments accepted by the command. Arguments are passed to the
   argument parser, so you can use the same style as you would on the command
-  line. For example, ``call_command('flush', 'verbosity=0')``.
+  line. For example, ``call_command('flush', '--verbosity=0')``.
 
 ``**options``
   named options accepted on the command-line. Options are passed to the command
@@ -1823,12 +1851,6 @@ Command options which take multiple options are passed a list::
 
 The return value of the ``call_command()`` function is the same as the return
 value of the ``handle()`` method of the command.
-
-.. versionchanged:: 1.10
-
-    ``call_command()`` now returns the value received from the
-    ``command.handle()`` method. It now also accepts a command object as the
-    first argument.
 
 Output redirection
 ==================

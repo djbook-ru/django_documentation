@@ -23,18 +23,18 @@ models, which comprise a Weblog application:
         name = models.CharField(max_length=100)
         tagline = models.TextField()
 
-        def __str__(self):              # __unicode__ on Python 2
+        def __str__(self):
             return self.name
 
     class Author(models.Model):
         name = models.CharField(max_length=200)
         email = models.EmailField()
 
-        def __str__(self):              # __unicode__ on Python 2
+        def __str__(self):
             return self.name
 
     class Entry(models.Model):
-        blog = models.ForeignKey(Blog)
+        blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
         headline = models.CharField(max_length=255)
         body_text = models.TextField()
         pub_date = models.DateField()
@@ -44,7 +44,7 @@ models, which comprise a Weblog application:
         n_pingbacks = models.IntegerField()
         rating = models.IntegerField()
 
-        def __str__(self):              # __unicode__ on Python 2
+        def __str__(self):
             return self.headline
 
 Creating objects
@@ -101,7 +101,7 @@ the field in question. This example updates the ``blog`` attribute of an
 ``Entry`` instance ``entry``, assuming appropriate instances of ``Entry`` and
 ``Blog`` are already saved to the database (so we can retrieve them below)::
 
-    >>> from blog.models import Entry
+    >>> from blog.models import Blog, Entry
     >>> entry = Entry.objects.get(pk=1)
     >>> cheese_blog = Blog.objects.get(name="Cheddar Talk")
     >>> entry.blog = cheese_blog
@@ -228,7 +228,7 @@ refinements together. For example::
     ... ).exclude(
     ...     pub_date__gte=datetime.date.today()
     ... ).filter(
-    ...     pub_date__gte=datetime(2005, 1, 30)
+    ...     pub_date__gte=datetime.date(2005, 1, 30)
     ... )
 
 This takes the initial :class:`~django.db.models.query.QuerySet` of all entries
@@ -360,6 +360,9 @@ example, this would actually execute the query in order to return a list of
 every *second* object of the first 10::
 
     >>> Entry.objects.all()[:10:2]
+
+Further filtering or ordering of a sliced queryset is prohibited due to the
+ambiguous nature of how that might work.
 
 To retrieve a *single* object rather than a list
 (e.g. ``SELECT foo FROM bar LIMIT 1``), use a simple index instead of a
@@ -1088,7 +1091,7 @@ For example, a ``Blog`` object ``b`` has access to a list of all related
 All examples in this section use the sample ``Blog``, ``Author`` and ``Entry``
 models defined at the top of this page.
 
-.. _descriptors: http://users.rcn.com/python/download/Descriptor.htm
+.. _descriptors: https://docs.python.org/3/howto/descriptor.html
 
 One-to-many relationships
 -------------------------

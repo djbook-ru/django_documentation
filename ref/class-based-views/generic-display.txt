@@ -48,18 +48,18 @@ many projects they are typically the most commonly used views.
             model = Article
 
             def get_context_data(self, **kwargs):
-                context = super(ArticleDetailView, self).get_context_data(**kwargs)
+                context = super().get_context_data(**kwargs)
                 context['now'] = timezone.now()
                 return context
 
     **Example myapp/urls.py**::
 
-        from django.conf.urls import url
+        from django.urls import path
 
         from article.views import ArticleDetailView
 
         urlpatterns = [
-            url(r'^(?P<slug>[-\w]+)/$', ArticleDetailView.as_view(), name='article-detail'),
+            path('<slug:slug>/', ArticleDetailView.as_view(), name='article-detail'),
         ]
 
     **Example myapp/article_detail.html**:
@@ -117,18 +117,18 @@ many projects they are typically the most commonly used views.
             model = Article
 
             def get_context_data(self, **kwargs):
-                context = super(ArticleListView, self).get_context_data(**kwargs)
+                context = super().get_context_data(**kwargs)
                 context['now'] = timezone.now()
                 return context
 
     **Example myapp/urls.py**::
 
-        from django.conf.urls import url
+        from django.urls import path
 
         from article.views import ArticleListView
 
         urlpatterns = [
-            url(r'^$', ArticleListView.as_view(), name='article-list'),
+            path('', ArticleListView.as_view(), name='article-list'),
         ]
 
     **Example myapp/article_list.html**:

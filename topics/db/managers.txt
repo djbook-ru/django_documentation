@@ -121,7 +121,7 @@ all objects, and one that returns only the books by Roald Dahl::
     # First, define the Manager subclass.
     class DahlBookManager(models.Manager):
         def get_queryset(self):
-            return super(DahlBookManager, self).get_queryset().filter(author='Roald Dahl')
+            return super().get_queryset().filter(author='Roald Dahl')
 
     # Then hook it into the Book model explicitly.
     class Book(models.Model):
@@ -152,11 +152,11 @@ For example::
 
     class AuthorManager(models.Manager):
         def get_queryset(self):
-            return super(AuthorManager, self).get_queryset().filter(role='A')
+            return super().get_queryset().filter(role='A')
 
     class EditorManager(models.Manager):
         def get_queryset(self):
-            return super(EditorManager, self).get_queryset().filter(role='E')
+            return super().get_queryset().filter(role='E')
 
     class Person(models.Model):
         first_name = models.CharField(max_length=50)
@@ -366,15 +366,6 @@ Here's how Django handles custom managers and :ref:`model inheritance
    :attr:`Meta.default_manager_name
    <django.db.models.Options.default_manager_name>`, or the first manager
    declared on the model, or the default manager of the first parent model.
-
-.. versionchanged:: 1.10
-
-    Some inheritance behaviors described above don't apply unless you set
-    ``manager_inheritance_from_future = True`` on the model's ``Meta`` class.
-    In older versions and if you don't set that attribute, manager inheritance
-    varies depending on the type of model inheritance (:ref:`abstract-base-classes`,
-    :ref:`multi-table-inheritance`, or :ref:`proxy-models`), especially
-    with regards to electing the default manager.
 
 These rules provide the necessary flexibility if you want to install a
 collection of custom managers on a group of models, via an abstract base

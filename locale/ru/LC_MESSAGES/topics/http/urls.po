@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 11:28+0300\n"
+"POT-Creation-Date: 2017-11-16 11:56+0200\n"
 "PO-Revision-Date: 2016-03-23 12:50+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -62,11 +62,11 @@ msgstr "Обзор"
 
 # 94510b9fca3b475b8bb54eee7b08717d
 #: ../../topics/http/urls.txt:20
+#, fuzzy
 msgid ""
 "To design URLs for an app, you create a Python module informally called a "
 "**URLconf** (URL configuration). This module is pure Python code and is a "
-"simple mapping between URL patterns (simple regular expressions) to Python "
-"functions (your views)."
+"mapping between URL path expressions to Python functions (your views)."
 msgstr ""
 "Для определения URL-ов приложения, создайте модуль Python, неофициально "
 "названный **URLconf** (конфигурация URL-ов). Этот модуль содержит код "
@@ -74,7 +74,7 @@ msgstr ""
 "функции Python (ваши представления)."
 
 # 2ca36790b64b4d27a3fbcfbc53abf138
-#: ../../topics/http/urls.txt:25
+#: ../../topics/http/urls.txt:24
 msgid ""
 "This mapping can be as short or as long as needed. It can reference other "
 "mappings. And, because it's pure Python code, it can be constructed "
@@ -85,7 +85,7 @@ msgstr ""
 "Python, может создаваться динамически."
 
 # c32609686aae48369aa7ed77876086ca
-#: ../../topics/http/urls.txt:29
+#: ../../topics/http/urls.txt:28
 msgid ""
 "Django also provides a way to translate URLs according to the active "
 "language. See the :ref:`internationalization documentation <url-"
@@ -96,12 +96,12 @@ msgstr ""
 "internationalization>` для подробностей."
 
 # 824220d3e1ac4e3d82fcfde6df717952
-#: ../../topics/http/urls.txt:36
+#: ../../topics/http/urls.txt:35
 msgid "How Django processes a request"
 msgstr "Как Django обрабатывает запрос"
 
 # 489d8bd0d15844c49998431831e97e90
-#: ../../topics/http/urls.txt:38
+#: ../../topics/http/urls.txt:37
 msgid ""
 "When a user requests a page from your Django-powered site, this is the "
 "algorithm the system follows to determine which Python code to execute:"
@@ -110,7 +110,7 @@ msgstr ""
 "определения какой код выполнить:"
 
 # 8ced9086b21a4f25864ed385571abe9c
-#: ../../topics/http/urls.txt:41
+#: ../../topics/http/urls.txt:40
 #, fuzzy
 msgid ""
 "Django determines the root URLconf module to use. Ordinarily, this is the "
@@ -126,16 +126,18 @@ msgstr ""
 "будет использоваться вместо :setting:`ROOT_URLCONF`."
 
 # 048d4ea680974eb0a9ccc9e7b1791e26
-#: ../../topics/http/urls.txt:47
+#: ../../topics/http/urls.txt:46
+#, fuzzy
 msgid ""
 "Django loads that Python module and looks for the variable ``urlpatterns``. "
-"This should be a Python list of :func:`django.conf.urls.url` instances."
+"This should be a Python list of :func:`django.urls.path` and/or :func:"
+"`django.urls.re_path` instances."
 msgstr ""
 "Django загружает модуль конфигурации URL и ищет переменную ``urlpatterns``. "
 "Это должен быть список экземпляров :func:`django.conf.urls.url`."
 
 # ad17d75eba8f4abeb8d931e0dcf08f86
-#: ../../topics/http/urls.txt:51
+#: ../../topics/http/urls.txt:50
 msgid ""
 "Django runs through each URL pattern, in order, and stops at the first one "
 "that matches the requested URL."
@@ -144,11 +146,13 @@ msgstr ""
 "совпадении с запрошенным URL-ом."
 
 # 504bddbb80be449a86e67df32d2510a3
-#: ../../topics/http/urls.txt:54
+#: ../../topics/http/urls.txt:53
+#, fuzzy
 msgid ""
-"Once one of the regexes matches, Django imports and calls the given view, "
-"which is a simple Python function (or a :doc:`class-based view </topics/"
-"class-based-views/index>`). The view gets passed the following arguments:"
+"Once one of the URL patterns matches, Django imports and calls the given "
+"view, which is a simple Python function (or a :doc:`class-based view </"
+"topics/class-based-views/index>`). The view gets passed the following "
+"arguments:"
 msgstr ""
 "Если одно из регулярных выражений соответствует URL-у, Django импортирует и "
 "вызывает соответствующее представление, которое является просто функцией "
@@ -156,25 +160,27 @@ msgstr ""
 "При вызове передаются следующие аргументы:"
 
 # 54a2f9104bb24fb38e211eada7f4eb76
-#: ../../topics/http/urls.txt:59
+#: ../../topics/http/urls.txt:58
 msgid "An instance of :class:`~django.http.HttpRequest`."
 msgstr "Объект :class:`~django.http.HttpRequest`."
 
 # fe77584f486449a0a506dc25dc24e89b
-#: ../../topics/http/urls.txt:60
+#: ../../topics/http/urls.txt:59
+#, fuzzy
 msgid ""
-"If the matched regular expression returned no named groups, then the matches "
-"from the regular expression are provided as positional arguments."
+"If the matched URL pattern returned no named groups, then the matches from "
+"the regular expression are provided as positional arguments."
 msgstr ""
 "Если в результате применения регулярного выражения получили именованные "
 "совпадения, они будут переданы как позиционные аргументы."
 
 # 871461a69b0844d2866f7a8cdb631ae8
-#: ../../topics/http/urls.txt:62
+#: ../../topics/http/urls.txt:61
+#, fuzzy
 msgid ""
-"The keyword arguments are made up of any named groups matched by the regular "
+"The keyword arguments are made up of any named parts matched by the path "
 "expression, overridden by any arguments specified in the optional ``kwargs`` "
-"argument to :func:`django.conf.urls.url`."
+"argument to :func:`django.urls.path` or :func:`django.urls.re_path`."
 msgstr ""
 "Именованные аргументы создаются из именованных совпадений. Они могут быть "
 "перезаписаны значениями из аргумента ``kwargs``, переданного в :func:`django."
@@ -182,9 +188,10 @@ msgstr ""
 
 # 49c3d738987d4b73b155913fefcacd4e
 #: ../../topics/http/urls.txt:66
+#, fuzzy
 msgid ""
-"If no regex matches, or if an exception is raised during any point in this "
-"process, Django invokes an appropriate error-handling view. See `Error "
+"If no URL pattern matches, or if an exception is raised during any point in "
+"this process, Django invokes an appropriate error-handling view. See `Error "
 "handling`_ below."
 msgstr ""
 "Если ни одно регулярное выражение не соответствует, или возникла ошибка на "
@@ -192,7 +199,7 @@ msgstr ""
 "`Error handling`_ ниже."
 
 # adf7e75d4544433d812cbce0425fd3c9
-#: ../../topics/http/urls.txt:71 ../../topics/http/urls.txt:712
+#: ../../topics/http/urls.txt:71 ../../topics/http/urls.txt:755
 msgid "Example"
 msgstr "Например"
 
@@ -208,32 +215,28 @@ msgstr "Заметим:"
 
 # 306dd9b944c04e6292ea7bb6ef4931ca
 #: ../../topics/http/urls.txt:88
-msgid "To capture a value from the URL, just put parenthesis around it."
+#, fuzzy
+msgid "To capture a value from the URL, use angle brackets."
 msgstr ""
 "Для получения совпадающего значения из URL, просто добавьте скобки вокруг "
 "него."
 
-# 99f6e002f1b8417d82f05dffb1ba7db7
 #: ../../topics/http/urls.txt:90
 msgid ""
+"Captured values can optionally include a converter type. For example, use "
+"``<int:name>`` to capture an integer parameter. If a converter isn't "
+"included, any string, excluding a ``/`` character, is matched."
+msgstr ""
+
+# 99f6e002f1b8417d82f05dffb1ba7db7
+#: ../../topics/http/urls.txt:94
+#, fuzzy
+msgid ""
 "There's no need to add a leading slash, because every URL has that. For "
-"example, it's ``^articles``, not ``^/articles``."
+"example, it's ``articles``, not ``/articles``."
 msgstr ""
 "Не нужно добавлять косую черту в начале, потому что каждый URL содержит его. "
 "Например, используйте ``^articles``, вместо ``^/articles``."
-
-# 07d2957e806b48c1a1795e26d375d8ba
-#: ../../topics/http/urls.txt:93
-msgid ""
-"The ``'r'`` in front of each regular expression string is optional but "
-"recommended. It tells Python that a string is \"raw\" -- that nothing in the "
-"string should be escaped. See `Dive Into Python's explanation`_."
-msgstr ""
-"Символ ``'r'`` перед каждым регулярным выражением не обязателен, но "
-"рекомендуется. Он указывает Python что строка \"сырая(raw)\" и ничего в "
-"строке не должно быть экранировано. Смотрите `Dive Into Python's explanation "
-"<http://www.diveintopython.net/regular_expressions/street_addresses.html#re."
-"matching.2.3>`_."
 
 # 5570142fb42b42858f44f59c68288e6f
 #: ../../topics/http/urls.txt:97
@@ -242,25 +245,17 @@ msgstr "Примеры запросов:"
 
 # 9de013fa45cf458abb78de966637712e
 #: ../../topics/http/urls.txt:99
+#, fuzzy
 msgid ""
 "A request to ``/articles/2005/03/`` would match the third entry in the list. "
-"Django would call the function ``views.month_archive(request, '2005', "
-"'03')``."
+"Django would call the function ``views.month_archive(request, year=2005, "
+"month=3)``."
 msgstr ""
 "Запрос к``/articles/2005/03/`` будет обработан третьим элементом списка. "
 "Django вызовет функцию ``views.month_archive(request, '2005', '03')``."
 
-# 4129a80f378a4b1c940e46888cdeda2a
-#: ../../topics/http/urls.txt:103
-msgid ""
-"``/articles/2005/3/`` would not match any URL patterns, because the third "
-"entry in the list requires two digits for the month."
-msgstr ""
-"``/articles/2005/3/`` не соответствует ни одному URL-шаблону, потому что "
-"третья запись требует две цифры в номере месяца."
-
 # 0ddbce6f554b4546934dd09211163e45
-#: ../../topics/http/urls.txt:106
+#: ../../topics/http/urls.txt:103
 msgid ""
 "``/articles/2003/`` would match the first pattern in the list, not the "
 "second one, because the patterns are tested in order, and the first one is "
@@ -274,7 +269,7 @@ msgstr ""
 "данном примере Django вызовет функцию ``views.special_case_2003(request)``."
 
 # 14d3603798ba4393a3420959eb39ffb6
-#: ../../topics/http/urls.txt:112
+#: ../../topics/http/urls.txt:109
 msgid ""
 "``/articles/2003`` would not match any of these patterns, because each "
 "pattern requires that the URL end with a slash."
@@ -283,38 +278,113 @@ msgstr ""
 "что каждое ожидает, что URL оканчивается на косую черту."
 
 # bc2dd4603a304148814f4cc059c38519
-#: ../../topics/http/urls.txt:115
+#: ../../topics/http/urls.txt:112
+#, fuzzy
 msgid ""
-"``/articles/2003/03/03/`` would match the final pattern. Django would call "
-"the function ``views.article_detail(request, '2003', '03', '03')``."
+"``/articles/2003/03/building-a-django-site/`` would match the final pattern. "
+"Django would call the function ``views.article_detail(request, year=2003, "
+"month=3, slug=\"building-a-django-site\")``."
 msgstr ""
 "``/articles/2003/03/03/`` соответствует последнему выражению. Django вызовет "
 "функцию ``views.article_detail(request, '2003', '03', '03')``."
 
-# e1197d6592724a6c92ce4a74aa6b6153
-#: ../../topics/http/urls.txt:121
-msgid "Named groups"
-msgstr "Именованные группы"
-
-# c7bc17c011da45cea8f9f6bf1107461d
-#: ../../topics/http/urls.txt:123
-msgid ""
-"The above example used simple, *non-named* regular-expression groups (via "
-"parenthesis) to capture bits of the URL and pass them as *positional* "
-"arguments to a view. In more advanced usage, it's possible to use *named* "
-"regular-expression groups to capture URL bits and pass them as *keyword* "
-"arguments to a view."
+#: ../../topics/http/urls.txt:117
+msgid "Path converters"
 msgstr ""
-"Пример выше использует простые, *не именованные* группы совпадений в "
-"регулярных выражениях (то, что в скобках), чтобы получить значения из URL и "
-"передать в представление как *позиционные* аргументы. Но вы можете "
-"использовать *имена* для групп и значения будут передаваться как "
-"*именованные* аргументы."
+
+#: ../../topics/http/urls.txt:119
+msgid "The following path converters are available by default:"
+msgstr ""
+
+#: ../../topics/http/urls.txt:121
+msgid ""
+"``str`` - Matches any non-empty string, excluding the path separator, "
+"``'/'``. This is the default if a converter isn't included in the expression."
+msgstr ""
+
+#: ../../topics/http/urls.txt:124
+msgid "``int`` - Matches zero or any positive integer. Returns an `int`."
+msgstr ""
+
+#: ../../topics/http/urls.txt:126
+msgid ""
+"``slug`` - Matches any slug string consisting of ASCII letters or numbers, "
+"plus the hyphen and underscore characters. For example, ``building-your-1st-"
+"django-site``."
+msgstr ""
+
+#: ../../topics/http/urls.txt:130
+msgid ""
+"``uuid`` - Matches a formatted UUID. For example, ``075194d3-6885-417e-"
+"a8a8-6c931e272f00``. Returns a :class:`~uuid.UUID` instance."
+msgstr ""
+
+#: ../../topics/http/urls.txt:134
+msgid ""
+"``path`` - Matches any non-empty string, including the path separator, "
+"``'/'``. This allows you to match against a complete URL path rather than "
+"just a segment of a URL path as with ``str``."
+msgstr ""
+
+#: ../../topics/http/urls.txt:141
+msgid "Registering custom path converters"
+msgstr ""
+
+#: ../../topics/http/urls.txt:143
+msgid ""
+"For more complex matching requirements, you can define your own path "
+"converters."
+msgstr ""
+
+#: ../../topics/http/urls.txt:145
+msgid "A converter is a class that includes the following:"
+msgstr ""
+
+#: ../../topics/http/urls.txt:147
+msgid "A ``regex`` class attribute, as a string."
+msgstr ""
+
+#: ../../topics/http/urls.txt:149
+msgid ""
+"A ``to_python(self, value)`` method, which handles converting the matched "
+"string into the type that should be passed to the view function. It should "
+"raise ``ValueError`` if it can't convert the given value."
+msgstr ""
+
+#: ../../topics/http/urls.txt:153
+msgid ""
+"A ``to_url(self, value)`` method, which handles converting the Python type "
+"into a string to be used in the URL."
+msgstr ""
+
+# 0546db3de0ad4f2787bdd62427825eff
+#: ../../topics/http/urls.txt:156 ../../topics/http/urls.txt:465
+#: ../../topics/http/urls.txt:865
+msgid "For example::"
+msgstr "Например::"
+
+#: ../../topics/http/urls.txt:167
+msgid ""
+"Register custom converter classes in your URLconf using :func:`~django.urls."
+"register_converter`::"
+msgstr ""
+
+#: ../../topics/http/urls.txt:183
+msgid "Using regular expressions"
+msgstr ""
+
+#: ../../topics/http/urls.txt:185
+msgid ""
+"If the paths and converters syntax isn't sufficient for defining your URL "
+"patterns, you can also use regular expressions. To do so, use :func:`~django."
+"urls.re_path` instead of :func:`~django.urls.path`."
+msgstr ""
 
 # ada1f57789b24c208dddb5045df3aa82
-#: ../../topics/http/urls.txt:129
+#: ../../topics/http/urls.txt:189
+#, fuzzy
 msgid ""
-"In Python regular expressions, the syntax for named regular-expression "
+"In Python regular expressions, the syntax for named regular expression "
 "groups is ``(?P<name>pattern)``, where ``name`` is the name of the group and "
 "``pattern`` is some pattern to match."
 msgstr ""
@@ -323,405 +393,75 @@ msgstr ""
 "группы, а ``pattern`` -- шаблон."
 
 # f2beb7363a8d43da8d4fc1d6b0ba2e2b
-#: ../../topics/http/urls.txt:133
-msgid "Here's the above example URLconf, rewritten to use named groups::"
+#: ../../topics/http/urls.txt:193
+#, fuzzy
+msgid ""
+"Here's the example URLconf from earlier, rewritten using regular "
+"expressions::"
 msgstr ""
 "Вот пример конфигурации URL, переписанный с использованием именованных "
 "групп::"
 
-# 71c17e897e514ec5847da40f9f798ebb
-#: ../../topics/http/urls.txt:146
+#: ../../topics/http/urls.txt:206
 msgid ""
-"This accomplishes exactly the same thing as the previous example, with one "
-"subtle difference: The captured values are passed to view functions as "
-"keyword arguments rather than positional arguments. For example:"
+"This accomplishes roughly the same thing as the previous example, except:"
 msgstr ""
-"Он выполняет то же самое, что и предыдущий пример, с одним небольшим "
-"отличием: полученные значения передаются в представление как именованные "
-"аргументы, а не позиционные. Например:"
 
-# 96355635375e4354873544e2fc43cb39
-#: ../../topics/http/urls.txt:150
+#: ../../topics/http/urls.txt:208
 msgid ""
-"A request to ``/articles/2005/03/`` would call the function ``views."
-"month_archive(request, year='2005', month='03')``, instead of ``views."
-"month_archive(request, '2005', '03')``."
+"The exact URLs that will match are slightly more constrained. For example, "
+"the year 10000 will no longer match since the year integers are constrained "
+"to be exactly four digits long."
 msgstr ""
-"Запрос к ``/articles/2005/03/`` вызовет функцию ``views."
-"month_archive(request, year='2005', month='03')``, вместо ``views."
-"month_archive(request, '2005', '03')``."
-
-# 153391f6b3f141d18687cfa27e85c213
-#: ../../topics/http/urls.txt:154
-msgid ""
-"A request to ``/articles/2003/03/03/`` would call the function ``views."
-"article_detail(request, year='2003', month='03', day='03')``."
-msgstr ""
-"Запрос к ``/articles/2003/03/03/`` вызовет ``views.article_detail(request, "
-"year='2003', month='03', day='03')``."
-
-# 0e081d65d6e349748164e3f0ea5a040c
-#: ../../topics/http/urls.txt:157
-msgid ""
-"In practice, this means your URLconfs are slightly more explicit and less "
-"prone to argument-order bugs -- and you can reorder the arguments in your "
-"views' function definitions. Of course, these benefits come at the cost of "
-"brevity; some developers find the named-group syntax ugly and too verbose."
-msgstr ""
-"На практике это означает, что ваша конфигурация URL более понятна и меньше "
-"зависит от ошибки в порядке аргументов, также вы можете изменять порядок "
-"аргументов в представлении. Конечно, эти преимущества достигаются за счет "
-"краткости, некоторые разработчики считают именованные группы уродливыми и "
-"слишком многословными."
-
-# a914fa737fae4e1483c011878abb3516
-#: ../../topics/http/urls.txt:163
-msgid "The matching/grouping algorithm"
-msgstr "Алгоритм соответствия/группировки"
-
-# 8a614b967feb45f79582619b2d1c423c
-#: ../../topics/http/urls.txt:165
-msgid ""
-"Here's the algorithm the URLconf parser follows, with respect to named "
-"groups vs. non-named groups in a regular expression:"
-msgstr ""
-"Вот алгоритм, которому следует синтаксический анализатор конфигурации URL, "
-"для определения использовать значения именованных или не именованных "
-"совпадений:"
-
-# 2a0423ff6c60439099242dd7bc298952
-#: ../../topics/http/urls.txt:168
-msgid ""
-"If there are any named arguments, it will use those, ignoring non-named "
-"arguments."
-msgstr ""
-"Если существует именованный аргумент, он будет использован вместо "
-"позиционного аргумента."
-
-# 2a0423ff6c60439099242dd7bc298952
-#: ../../topics/http/urls.txt:171
-msgid ""
-"Otherwise, it will pass all non-named arguments as positional arguments."
-msgstr ""
-"Иначе все неименованные параметры будут переданы как позиционные аргументы."
-
-# 0dd49926e3444fe9adc9ae06cd74e8a9
-#: ../../topics/http/urls.txt:173
-msgid ""
-"In both cases, any extra keyword arguments that have been given as per "
-"`Passing extra options to view functions`_ (below) will also be passed to "
-"the view."
-msgstr ""
-"В любом случае дополнительные именованные аргументы будут переданы как "
-"именованные. Смотрите `Passing extra options to view functions`_ ниже."
-
-# b871768b0b674192abdff8df2fd80354
-#: ../../topics/http/urls.txt:177
-msgid "What the URLconf searches against"
-msgstr "Что использует URLconf при поиске нужного шаблона URL"
-
-# a106db71a6b54a7e98a06bdae72e30be
-#: ../../topics/http/urls.txt:179
-msgid ""
-"The URLconf searches against the requested URL, as a normal Python string. "
-"This does not include GET or POST parameters, or the domain name."
-msgstr ""
-"URLconf использует запрашиваемый URL как обычную строку Python. Он не "
-"учитывает параметры GET, POST и имя домена."
-
-# 127285e2224b41b3b21c38b8e80eb71f
-#: ../../topics/http/urls.txt:182
-msgid ""
-"For example, in a request to ``https://www.example.com/myapp/``, the URLconf "
-"will look for ``myapp/``."
-msgstr ""
-"Например, при запросе к ``https://www.example.com/myapp/``, URLconf возьмет "
-"``myapp/``."
-
-# 64a2c332cc0447838ffe0149bc36d178
-#: ../../topics/http/urls.txt:185
-msgid ""
-"In a request to ``https://www.example.com/myapp/?page=3``, the URLconf will "
-"look for ``myapp/``."
-msgstr "При запросе к ``https://www.example.com/myapp/?page=3`` -- ``myapp/``."
-
-# c2ae9a9690634379bad9ca6456a1867d
-#: ../../topics/http/urls.txt:188
-msgid ""
-"The URLconf doesn't look at the request method. In other words, all request "
-"methods -- ``POST``, ``GET``, ``HEAD``, etc. -- will be routed to the same "
-"function for the same URL."
-msgstr ""
-"URLconf не учитывает тип запроса. Другими словами, все типы запросов -- "
-"``POST``, ``GET``, ``HEAD``, и др. -- будут обработаны одним представлением "
-"при одинаковом URL."
-
-# 92e201aaed794bb1a91e2a1968a52f2d
-#: ../../topics/http/urls.txt:193
-msgid "Captured arguments are always strings"
-msgstr "Найденные аргументы -- всегда строки"
 
 # 1dca15e4d9c54a28a2a544cd56669c02
-#: ../../topics/http/urls.txt:195
+#: ../../topics/http/urls.txt:212
+#, fuzzy
 msgid ""
-"Each captured argument is sent to the view as a plain Python string, "
-"regardless of what sort of match the regular expression makes. For example, "
-"in this URLconf line::"
+"Each captured argument is sent to the view as a string, regardless of what "
+"sort of match the regular expression makes."
 msgstr ""
 "Каждый найденный аргумент передается в представление как строка, независимо "
 "от того, какое \"совпадение\" определено в регулярном выражении. Например, "
 "URLconf содержит такую строку::"
 
-# 35e185e6d15c44558b68af0ca7670ccd
-#: ../../topics/http/urls.txt:202
-#, fuzzy
-msgid "...the year argument passed to views.year_archive() will be a string,"
-msgstr "...аргумент ``year`` для ``views.year_archive()`` будет строкой,"
-
-# 35e185e6d15c44558b68af0ca7670ccd
-#: ../../topics/http/urls.txt:202
+#: ../../topics/http/urls.txt:215
 msgid ""
-"not an integer, even though the ``[0-9]{4}`` will only match integer strings."
-msgstr "не числом, несмотря на то, что ``[0-9]{4}`` отлавливает только числа."
-
-# d89d48cd2b5f4a258e0e97cbf59bd159
-#: ../../topics/http/urls.txt:205
-msgid "Specifying defaults for view arguments"
-msgstr "Значения по умолчанию для аргументов представления"
-
-# 65b67011e98a4fa78dcf095d1a8994d7
-#: ../../topics/http/urls.txt:207
-msgid ""
-"A convenient trick is to specify default parameters for your views' "
-"arguments. Here's an example URLconf and view::"
+"When switching from using :func:`~django.urls.path` to :func:`~django.urls."
+"re_path` or vice versa, it's particularly important to be aware that the "
+"type of the view arguments may change, and so you may need to adapt your "
+"views."
 msgstr ""
-"Принято указывать значения по-умолчанию для аргументов представления. Пример "
-"URLconf и представления::"
 
-# 5e1ede5dd84045ab96ba9cb286a46030
-#: ../../topics/http/urls.txt:225
-msgid ""
-"In the above example, both URL patterns point to the same view -- ``views."
-"page`` -- but the first pattern doesn't capture anything from the URL. If "
-"the first pattern matches, the ``page()`` function will use its default "
-"argument for ``num``, ``\"1\"``. If the second pattern matches, ``page()`` "
-"will use whatever ``num`` value was captured by the regex."
+#: ../../topics/http/urls.txt:221
+msgid "Using unnamed regular expression groups"
 msgstr ""
-"В примере выше, оба URL-шаблона указывают на одно представление -- ``views."
-"page`` -- но первый шаблон не принимает аргументы в URL. Если первый шаблон "
-"будет выбран, функция ``page()`` будет использовать значение по-умолчанию "
-"аргумента ``num`` равное ``\"1\"``. Если будет выбран другой шаблон, "
-"``page()`` будет использовать значение ``num`` из URL, которое найдет "
-"регулярное выражение."
 
-# 858c260216d04239ae52bacc18b66925
-#: ../../topics/http/urls.txt:232
-msgid "Performance"
-msgstr "Производительность"
-
-# 1eb58843b8454ee6b0288af55205990e
-#: ../../topics/http/urls.txt:234
+#: ../../topics/http/urls.txt:223
 msgid ""
-"Each regular expression in a ``urlpatterns`` is compiled the first time it's "
-"accessed. This makes the system blazingly fast."
+"As well as the named group syntax, e.g. ``(?P<year>[0-9]{4})``, you can also "
+"use the shorter unnamed group, e.g. ``([0-9]{4})``."
 msgstr ""
-"Каждое регулярное выражение в ``urlpatterns`` будет скомпилировано при "
-"первом использовании. Это делает систему невероятно быстрой."
 
-# 261666c18648414caed8c8256b30dbf3
-#: ../../topics/http/urls.txt:238
-#, fuzzy
-msgid "Syntax of the ``urlpatterns`` variable"
-msgstr "Синтаксис переменной urlpatterns"
-
-#: ../../topics/http/urls.txt:240
+#: ../../topics/http/urls.txt:226
 msgid ""
-"``urlpatterns`` should be a Python list of :func:`~django.conf.urls.url` "
-"instances."
+"This usage isn't particularly recommended as it makes it easier to "
+"accidentally introduce errors between the intended meaning of a match and "
+"the arguments of the view."
 msgstr ""
-"``urlpatterns`` должен быть списком экземпляров :func:`~django.conf.urls."
-"url`."
 
-# aa77f0e182df4239a1eae76d7f84e3c1
-#: ../../topics/http/urls.txt:244
-msgid "Error handling"
-msgstr "Обработчики ошибок"
-
-# 6d972bd8b1be4c8e8620aa141356a654
-#: ../../topics/http/urls.txt:246
+#: ../../topics/http/urls.txt:230
 msgid ""
-"When Django can't find a regex matching the requested URL, or when an "
-"exception is raised, Django will invoke an error-handling view."
+"In either case, using only one style within a given regex is recommended. "
+"When both styles are mixed, any unnamed groups are ignored and only named "
+"groups are passed to the view function."
 msgstr ""
-"Если Django не может найти подходящий шаблон URL, или было вызвано "
-"исключение в процессе обработки запроса, Django вызовет соответствующее "
-"представление обрабатывающее ошибку."
 
-# 0376bbf36b9b4253b9787bcb99d43212
-#: ../../topics/http/urls.txt:249
-msgid ""
-"The views to use for these cases are specified by four variables. Their "
-"default values should suffice for most projects, but further customization "
-"is possible by overriding their default values."
-msgstr ""
-"Эти представления определены в четырёх переменных. Их значения по-умолчанию "
-"должны подойти для большинства проектов, но вы можете их поменять при "
-"необходимости."
-
-# c75a6dcf875d47e993eaa2455616abd7
-#: ../../topics/http/urls.txt:253
-msgid ""
-"See the documentation on :ref:`customizing error views <customizing-error-"
-"views>` for the full details."
-msgstr ""
-"Подробности в разделе о :ref:`переопределении обработчика ошибок "
-"<customizing-error-views>`."
-
-# 5a1dec528982496a9ee9bfa57b78838c
-#: ../../topics/http/urls.txt:256
-msgid ""
-"Such values can be set in your root URLconf. Setting these variables in any "
-"other URLconf will have no effect."
-msgstr "Эти значения должны быть определены в главном URLconf."
-
-# 169ad2c1bed14d46b0f2f9665d7aa163
-#: ../../topics/http/urls.txt:259
-msgid ""
-"Values must be callables, or strings representing the full Python import "
-"path to the view that should be called to handle the error condition at hand."
-msgstr ""
-"Значение это функции, или полный путь для импорта, которая будет вызвана, "
-"если не был найден подходящий URL-шаблон."
-
-# 40b56a6070ec4f548c0a0b30579777cd
-#: ../../topics/http/urls.txt:262
-msgid "The variables are:"
-msgstr "Есть следующие переменные:"
-
-# 6851937bb16d449d84e15fb631ece159
-#: ../../topics/http/urls.txt:264
-msgid "``handler400`` -- See :data:`django.conf.urls.handler400`."
-msgstr "``handler400`` -- Смотрите :data:`django.conf.urls.handler400`."
-
-# de8ed53bc3164b73a0df7b7f7f794659
-#: ../../topics/http/urls.txt:265
-msgid "``handler403`` -- See :data:`django.conf.urls.handler403`."
-msgstr "``handler403`` -- Смотрите :data:`django.conf.urls.handler403`."
-
-# 6851937bb16d449d84e15fb631ece159
-#: ../../topics/http/urls.txt:266
-msgid "``handler404`` -- See :data:`django.conf.urls.handler404`."
-msgstr "``handler404`` -- Смотрите :data:`django.conf.urls.handler404`."
-
-# d77483eafd9040798e41560f624a2fd0
-#: ../../topics/http/urls.txt:267
-msgid "``handler500`` -- See :data:`django.conf.urls.handler500`."
-msgstr "``handler500`` -- Смотрите :data:`django.conf.urls.handler500`."
-
-# 6e8f5a3d7e53427a877351a6cf8687f1
-#: ../../topics/http/urls.txt:272
-msgid "Including other URLconfs"
-msgstr "Комбинирование URLconfs"
-
-# ce543103041c48d1b01e8aad527d3d4e
-#: ../../topics/http/urls.txt:274
-msgid ""
-"At any point, your ``urlpatterns`` can \"include\" other URLconf modules. "
-"This essentially \"roots\" a set of URLs below other ones."
-msgstr ""
-"В любой момент, ваш ``urlpatterns`` может \"включать\" другие модули URLconf."
-
-# d7f670c2106f42caada9e2db2c9d9c89
-#: ../../topics/http/urls.txt:277
-msgid ""
-"For example, here's an excerpt of the URLconf for the `Django website`_ "
-"itself. It includes a number of other URLconfs::"
-msgstr ""
-"Вот пример URLconf для `сайта Django <https://www.djangoproject.com/>`_. Он "
-"включает множество других конфигураций URL::"
-
-# 8b43692a7bed41fea08ee8547b80e70e
-#: ../../topics/http/urls.txt:289
-msgid ""
-"Note that the regular expressions in this example don't have a ``$`` (end-of-"
-"string match character) but do include a trailing slash. Whenever Django "
-"encounters ``include()`` (:func:`django.conf.urls.include()`), it chops off "
-"whatever part of the URL matched up to that point and sends the remaining "
-"string to the included URLconf for further processing."
-msgstr ""
-"Заметим, что регулярные выражения не содержат ``$`` (определитель конца "
-"строки), но содержит косую черту в конце. Каждый раз, когда Django встречает "
-"``include()`` (:func:`django.conf.urls.include()`), из URL обрезается уже "
-"совпавшая часть, остальное передается во включенный URLconf для дальнейшей "
-"обработки."
-
-# 0a937c37f833455ba63d013112a12b86
-#: ../../topics/http/urls.txt:295
-msgid ""
-"Another possibility is to include additional URL patterns by using a list "
-"of :func:`~django.conf.urls.url` instances. For example, consider this "
-"URLconf::"
-msgstr ""
-"Другой возможностью будет добавление дополнительных URL-шаблонов с помощью "
-"списка экземпляров :func:`~django.conf.urls.url`. Например, рассмотрим такую "
-"схему::"
-
-# 25d93fa4e1ab4f4889ab72ac6b6b551d
-#: ../../topics/http/urls.txt:315
-msgid ""
-"In this example, the ``/credit/reports/`` URL will be handled by the "
-"``credit_views.report()`` Django view."
-msgstr ""
-"В этом примере URL ``/credit/reports/`` обработан представлением "
-"``credit_views.report()``."
-
-# 3fc7cda1ab4c4c92bd3299c582947cce
-#: ../../topics/http/urls.txt:318
-msgid ""
-"This can be used to remove redundancy from URLconfs where a single pattern "
-"prefix is used repeatedly. For example, consider this URLconf::"
-msgstr ""
-"Такой подход может применяться для уменьшения дублирования кода в настройках "
-"URL, когда используется один и тот же шаблонный префикс. Например, возьмём "
-"такую конфигурацию URL::"
-
-# 8338d9014df64ab9988060cab919eafb
-#: ../../topics/http/urls.txt:331
-msgid ""
-"We can improve this by stating the common path prefix only once and grouping "
-"the suffixes that differ::"
-msgstr ""
-"Мы можем сделать её проще, указав общий префикс только один раз и "
-"сгруппировав различающиеся суффиксы::"
-
-# 92e201aaed794bb1a91e2a1968a52f2d
-#: ../../topics/http/urls.txt:349
-msgid "Captured parameters"
-msgstr "Нахождение аргументов в URL"
-
-# 6753ae947d4147b2a115a676350526cf
-#: ../../topics/http/urls.txt:351
-msgid ""
-"An included URLconf receives any captured parameters from parent URLconfs, "
-"so the following example is valid::"
-msgstr ""
-"Включенный URLconf получает все аргументы найденные родительским URLconfs, "
-"поэтому этот пример работает::"
-
-# a5b43b2d81b24fe4b3a5900323f27757
-#: ../../topics/http/urls.txt:370
-msgid ""
-"In the above example, the captured ``\"username\"`` variable is passed to "
-"the included URLconf, as expected."
-msgstr ""
-"В примере выше, найденный аргумент ``\"username\"`` передается во включенный "
-"URLconf, как и ожидалось."
-
-#: ../../topics/http/urls.txt:374
+#: ../../topics/http/urls.txt:235
 msgid "Nested arguments"
 msgstr "Вложенные аргументы"
 
-#: ../../topics/http/urls.txt:376
+#: ../../topics/http/urls.txt:237
 msgid ""
 "Regular expressions allow nested arguments, and Django will resolve them and "
 "pass them to the view. When reversing, Django will try to fill in all outer "
@@ -734,7 +474,7 @@ msgstr ""
 "Возьмем следующие шаблоны URL-ов, которые принимает необязательный номер "
 "страницы::"
 
-#: ../../topics/http/urls.txt:388
+#: ../../topics/http/urls.txt:249
 msgid ""
 "Both patterns use nested arguments and will resolve: for example, ``blog/"
 "page-2/`` will result in a match to ``blog_articles`` with two positional "
@@ -749,7 +489,7 @@ msgstr ""
 "``page_number`` со значеним 2. Внешний аргумент в этом случае не "
 "захватываемый из-за ``(?:...)``."
 
-#: ../../topics/http/urls.txt:395
+#: ../../topics/http/urls.txt:256
 msgid ""
 "The ``blog_articles`` view needs the outermost captured argument to be "
 "reversed, ``page-2/`` or no arguments in this case, while ``comments`` can "
@@ -760,7 +500,7 @@ msgstr ""
 "В то время как для ``comments`` необходимо передать значение ``page_number`` "
 "или не одного аргумента."
 
-#: ../../topics/http/urls.txt:399
+#: ../../topics/http/urls.txt:260
 msgid ""
 "Nested captured arguments create a strong coupling between the view "
 "arguments and the URL as illustrated by ``blog_articles``: the view receives "
@@ -775,7 +515,7 @@ msgstr ""
 "самом деле необходимо представлению. Эта связанность особенно заметна при "
 "создании URL-а т.к. необходимо передать часть URL-а вместо номера страницы."
 
-#: ../../topics/http/urls.txt:405
+#: ../../topics/http/urls.txt:266
 msgid ""
 "As a rule of thumb, only capture the values the view needs to work with and "
 "use non-capturing arguments when the regular expression needs an argument "
@@ -784,13 +524,289 @@ msgstr ""
 "Как правило, URL-шаблон должен захватывать только необходимые для "
 "представления аргументы."
 
+# b871768b0b674192abdff8df2fd80354
+#: ../../topics/http/urls.txt:271
+msgid "What the URLconf searches against"
+msgstr "Что использует URLconf при поиске нужного шаблона URL"
+
+# a106db71a6b54a7e98a06bdae72e30be
+#: ../../topics/http/urls.txt:273
+msgid ""
+"The URLconf searches against the requested URL, as a normal Python string. "
+"This does not include GET or POST parameters, or the domain name."
+msgstr ""
+"URLconf использует запрашиваемый URL как обычную строку Python. Он не "
+"учитывает параметры GET, POST и имя домена."
+
+# 127285e2224b41b3b21c38b8e80eb71f
+#: ../../topics/http/urls.txt:276
+msgid ""
+"For example, in a request to ``https://www.example.com/myapp/``, the URLconf "
+"will look for ``myapp/``."
+msgstr ""
+"Например, при запросе к ``https://www.example.com/myapp/``, URLconf возьмет "
+"``myapp/``."
+
+# 64a2c332cc0447838ffe0149bc36d178
+#: ../../topics/http/urls.txt:279
+msgid ""
+"In a request to ``https://www.example.com/myapp/?page=3``, the URLconf will "
+"look for ``myapp/``."
+msgstr "При запросе к ``https://www.example.com/myapp/?page=3`` -- ``myapp/``."
+
+# c2ae9a9690634379bad9ca6456a1867d
+#: ../../topics/http/urls.txt:282
+msgid ""
+"The URLconf doesn't look at the request method. In other words, all request "
+"methods -- ``POST``, ``GET``, ``HEAD``, etc. -- will be routed to the same "
+"function for the same URL."
+msgstr ""
+"URLconf не учитывает тип запроса. Другими словами, все типы запросов -- "
+"``POST``, ``GET``, ``HEAD``, и др. -- будут обработаны одним представлением "
+"при одинаковом URL."
+
+# d89d48cd2b5f4a258e0e97cbf59bd159
+#: ../../topics/http/urls.txt:287
+msgid "Specifying defaults for view arguments"
+msgstr "Значения по умолчанию для аргументов представления"
+
+# 65b67011e98a4fa78dcf095d1a8994d7
+#: ../../topics/http/urls.txt:289
+msgid ""
+"A convenient trick is to specify default parameters for your views' "
+"arguments. Here's an example URLconf and view::"
+msgstr ""
+"Принято указывать значения по-умолчанию для аргументов представления. Пример "
+"URLconf и представления::"
+
+# 5e1ede5dd84045ab96ba9cb286a46030
+#: ../../topics/http/urls.txt:307
+#, fuzzy
+msgid ""
+"In the above example, both URL patterns point to the same view -- ``views."
+"page`` -- but the first pattern doesn't capture anything from the URL. If "
+"the first pattern matches, the ``page()`` function will use its default "
+"argument for ``num``, ``1``. If the second pattern matches, ``page()`` will "
+"use whatever ``num`` value was captured."
+msgstr ""
+"В примере выше, оба URL-шаблона указывают на одно представление -- ``views."
+"page`` -- но первый шаблон не принимает аргументы в URL. Если первый шаблон "
+"будет выбран, функция ``page()`` будет использовать значение по-умолчанию "
+"аргумента ``num`` равное ``\"1\"``. Если будет выбран другой шаблон, "
+"``page()`` будет использовать значение ``num`` из URL, которое найдет "
+"регулярное выражение."
+
+# 858c260216d04239ae52bacc18b66925
+#: ../../topics/http/urls.txt:314
+msgid "Performance"
+msgstr "Производительность"
+
+# 1eb58843b8454ee6b0288af55205990e
+#: ../../topics/http/urls.txt:316
+msgid ""
+"Each regular expression in a ``urlpatterns`` is compiled the first time it's "
+"accessed. This makes the system blazingly fast."
+msgstr ""
+"Каждое регулярное выражение в ``urlpatterns`` будет скомпилировано при "
+"первом использовании. Это делает систему невероятно быстрой."
+
+# 261666c18648414caed8c8256b30dbf3
+#: ../../topics/http/urls.txt:320
+#, fuzzy
+msgid "Syntax of the ``urlpatterns`` variable"
+msgstr "Синтаксис переменной urlpatterns"
+
+#: ../../topics/http/urls.txt:322
+#, fuzzy
+msgid ""
+"``urlpatterns`` should be a Python list of :func:`~django.urls.path` and/or :"
+"func:`~django.urls.re_path` instances."
+msgstr ""
+"``urlpatterns`` должен быть списком экземпляров :func:`~django.conf.urls."
+"url`."
+
+# aa77f0e182df4239a1eae76d7f84e3c1
+#: ../../topics/http/urls.txt:326
+msgid "Error handling"
+msgstr "Обработчики ошибок"
+
+# 6d972bd8b1be4c8e8620aa141356a654
+#: ../../topics/http/urls.txt:328
+#, fuzzy
+msgid ""
+"When Django can't find a match for the requested URL, or when an exception "
+"is raised, Django invokes an error-handling view."
+msgstr ""
+"Если Django не может найти подходящий шаблон URL, или было вызвано "
+"исключение в процессе обработки запроса, Django вызовет соответствующее "
+"представление обрабатывающее ошибку."
+
+# 0376bbf36b9b4253b9787bcb99d43212
+#: ../../topics/http/urls.txt:331
+msgid ""
+"The views to use for these cases are specified by four variables. Their "
+"default values should suffice for most projects, but further customization "
+"is possible by overriding their default values."
+msgstr ""
+"Эти представления определены в четырёх переменных. Их значения по-умолчанию "
+"должны подойти для большинства проектов, но вы можете их поменять при "
+"необходимости."
+
+# c75a6dcf875d47e993eaa2455616abd7
+#: ../../topics/http/urls.txt:335
+msgid ""
+"See the documentation on :ref:`customizing error views <customizing-error-"
+"views>` for the full details."
+msgstr ""
+"Подробности в разделе о :ref:`переопределении обработчика ошибок "
+"<customizing-error-views>`."
+
+# 5a1dec528982496a9ee9bfa57b78838c
+#: ../../topics/http/urls.txt:338
+msgid ""
+"Such values can be set in your root URLconf. Setting these variables in any "
+"other URLconf will have no effect."
+msgstr "Эти значения должны быть определены в главном URLconf."
+
+# 169ad2c1bed14d46b0f2f9665d7aa163
+#: ../../topics/http/urls.txt:341
+msgid ""
+"Values must be callables, or strings representing the full Python import "
+"path to the view that should be called to handle the error condition at hand."
+msgstr ""
+"Значение это функции, или полный путь для импорта, которая будет вызвана, "
+"если не был найден подходящий URL-шаблон."
+
+# 40b56a6070ec4f548c0a0b30579777cd
+#: ../../topics/http/urls.txt:344
+msgid "The variables are:"
+msgstr "Есть следующие переменные:"
+
+# 6851937bb16d449d84e15fb631ece159
+#: ../../topics/http/urls.txt:346
+msgid "``handler400`` -- See :data:`django.conf.urls.handler400`."
+msgstr "``handler400`` -- Смотрите :data:`django.conf.urls.handler400`."
+
+# de8ed53bc3164b73a0df7b7f7f794659
+#: ../../topics/http/urls.txt:347
+msgid "``handler403`` -- See :data:`django.conf.urls.handler403`."
+msgstr "``handler403`` -- Смотрите :data:`django.conf.urls.handler403`."
+
+# 6851937bb16d449d84e15fb631ece159
+#: ../../topics/http/urls.txt:348
+msgid "``handler404`` -- See :data:`django.conf.urls.handler404`."
+msgstr "``handler404`` -- Смотрите :data:`django.conf.urls.handler404`."
+
+# d77483eafd9040798e41560f624a2fd0
+#: ../../topics/http/urls.txt:349
+msgid "``handler500`` -- See :data:`django.conf.urls.handler500`."
+msgstr "``handler500`` -- Смотрите :data:`django.conf.urls.handler500`."
+
+# 6e8f5a3d7e53427a877351a6cf8687f1
+#: ../../topics/http/urls.txt:354
+msgid "Including other URLconfs"
+msgstr "Комбинирование URLconfs"
+
+# ce543103041c48d1b01e8aad527d3d4e
+#: ../../topics/http/urls.txt:356
+msgid ""
+"At any point, your ``urlpatterns`` can \"include\" other URLconf modules. "
+"This essentially \"roots\" a set of URLs below other ones."
+msgstr ""
+"В любой момент, ваш ``urlpatterns`` может \"включать\" другие модули URLconf."
+
+# d7f670c2106f42caada9e2db2c9d9c89
+#: ../../topics/http/urls.txt:359
+msgid ""
+"For example, here's an excerpt of the URLconf for the `Django website`_ "
+"itself. It includes a number of other URLconfs::"
+msgstr ""
+"Вот пример URLconf для `сайта Django <https://www.djangoproject.com/>`_. Он "
+"включает множество других конфигураций URL::"
+
+# 8b43692a7bed41fea08ee8547b80e70e
+#: ../../topics/http/urls.txt:371
+#, fuzzy
+msgid ""
+"Whenever Django encounters :func:`~django.urls.include()`, it chops off "
+"whatever part of the URL matched up to that point and sends the remaining "
+"string to the included URLconf for further processing."
+msgstr ""
+"Заметим, что регулярные выражения не содержат ``$`` (определитель конца "
+"строки), но содержит косую черту в конце. Каждый раз, когда Django встречает "
+"``include()`` (:func:`django.conf.urls.include()`), из URL обрезается уже "
+"совпавшая часть, остальное передается во включенный URLconf для дальнейшей "
+"обработки."
+
+# 0a937c37f833455ba63d013112a12b86
+#: ../../topics/http/urls.txt:375
+#, fuzzy
+msgid ""
+"Another possibility is to include additional URL patterns by using a list "
+"of :func:`~django.urls.path` instances. For example, consider this URLconf::"
+msgstr ""
+"Другой возможностью будет добавление дополнительных URL-шаблонов с помощью "
+"списка экземпляров :func:`~django.conf.urls.url`. Например, рассмотрим такую "
+"схему::"
+
+# 25d93fa4e1ab4f4889ab72ac6b6b551d
+#: ../../topics/http/urls.txt:395
+msgid ""
+"In this example, the ``/credit/reports/`` URL will be handled by the "
+"``credit_views.report()`` Django view."
+msgstr ""
+"В этом примере URL ``/credit/reports/`` обработан представлением "
+"``credit_views.report()``."
+
+# 3fc7cda1ab4c4c92bd3299c582947cce
+#: ../../topics/http/urls.txt:398
+msgid ""
+"This can be used to remove redundancy from URLconfs where a single pattern "
+"prefix is used repeatedly. For example, consider this URLconf::"
+msgstr ""
+"Такой подход может применяться для уменьшения дублирования кода в настройках "
+"URL, когда используется один и тот же шаблонный префикс. Например, возьмём "
+"такую конфигурацию URL::"
+
+# 8338d9014df64ab9988060cab919eafb
+#: ../../topics/http/urls.txt:411
+msgid ""
+"We can improve this by stating the common path prefix only once and grouping "
+"the suffixes that differ::"
+msgstr ""
+"Мы можем сделать её проще, указав общий префикс только один раз и "
+"сгруппировав различающиеся суффиксы::"
+
+# 92e201aaed794bb1a91e2a1968a52f2d
+#: ../../topics/http/urls.txt:429
+msgid "Captured parameters"
+msgstr "Нахождение аргументов в URL"
+
+# 6753ae947d4147b2a115a676350526cf
+#: ../../topics/http/urls.txt:431
+msgid ""
+"An included URLconf receives any captured parameters from parent URLconfs, "
+"so the following example is valid::"
+msgstr ""
+"Включенный URLconf получает все аргументы найденные родительским URLconfs, "
+"поэтому этот пример работает::"
+
+# a5b43b2d81b24fe4b3a5900323f27757
+#: ../../topics/http/urls.txt:450
+msgid ""
+"In the above example, the captured ``\"username\"`` variable is passed to "
+"the included URLconf, as expected."
+msgstr ""
+"В примере выше, найденный аргумент ``\"username\"`` передается во включенный "
+"URLconf, как и ожидалось."
+
 # b2b2736313c548cd8c7d76ea42dcc30a
-#: ../../topics/http/urls.txt:412
+#: ../../topics/http/urls.txt:456
 msgid "Passing extra options to view functions"
 msgstr "Передача дополнительных аргументов в представление"
 
 # 78cf611a86654220aa9b88c39b766c33
-#: ../../topics/http/urls.txt:414
+#: ../../topics/http/urls.txt:458
 msgid ""
 "URLconfs have a hook that lets you pass extra arguments to your view "
 "functions, as a Python dictionary."
@@ -799,32 +815,29 @@ msgstr ""
 "функции представления, используя словарь Python."
 
 # 47f8727f4995461ba83343ba2192c658
-#: ../../topics/http/urls.txt:417
+#: ../../topics/http/urls.txt:461
+#, fuzzy
 msgid ""
-"The :func:`django.conf.urls.url` function can take an optional third "
-"argument which should be a dictionary of extra keyword arguments to pass to "
-"the view function."
+"The :func:`~django.urls.path` function can take an optional third argument "
+"which should be a dictionary of extra keyword arguments to pass to the view "
+"function."
 msgstr ""
 "Функция :func:`django.conf.urls.url` может принимать третий необязательный "
 "элемент. Этот элемент является словарем, который определяет дополнительные "
 "именованные аргументы для функции представления."
 
-# 0546db3de0ad4f2787bdd62427825eff
-#: ../../topics/http/urls.txt:421 ../../topics/http/urls.txt:821
-msgid "For example::"
-msgstr "Например::"
-
 # c8a9acd499bf42b1821971de37c0eb5b
-#: ../../topics/http/urls.txt:430
+#: ../../topics/http/urls.txt:474
+#, fuzzy
 msgid ""
 "In this example, for a request to ``/blog/2005/``, Django will call ``views."
-"year_archive(request, year='2005', foo='bar')``."
+"year_archive(request, year=2005, foo='bar')``."
 msgstr ""
 "Например, при запросе к ``/blog/2005/``, Django вызовет ``views."
 "year_archive(request, year='2005', foo='bar')``."
 
 # 72964d0c5c084ef3b82843fe8ed45eed
-#: ../../topics/http/urls.txt:433
+#: ../../topics/http/urls.txt:477
 msgid ""
 "This technique is used in the :doc:`syndication framework </ref/contrib/"
 "syndication>` to pass metadata and options to views."
@@ -834,12 +847,12 @@ msgstr ""
 "представление."
 
 # dbd71437189e4eb596c49b2b93054807
-#: ../../topics/http/urls.txt:437
+#: ../../topics/http/urls.txt:481
 msgid "Dealing with conflicts"
 msgstr "Конфликты переменных"
 
 # f90d4341a12d4766a0a1fed2b2ecc43c
-#: ../../topics/http/urls.txt:439
+#: ../../topics/http/urls.txt:483
 msgid ""
 "It's possible to have a URL pattern which captures named keyword arguments, "
 "and also passes arguments with the same names in its dictionary of extra "
@@ -852,38 +865,38 @@ msgstr ""
 "значения из URL."
 
 # b10f757cff594fc2bf5fa49c7225bf55
-#: ../../topics/http/urls.txt:445
+#: ../../topics/http/urls.txt:489
 msgid "Passing extra options to ``include()``"
 msgstr "Передача дополнительных аргументов в ``include()``"
 
 # 3f4d4226ad30422ab0ecfd6d14f16390
-#: ../../topics/http/urls.txt:447
+#: ../../topics/http/urls.txt:491
+#, fuzzy
 msgid ""
-"Similarly, you can pass extra options to :func:`~django.conf.urls.include`. "
-"When you pass extra options to ``include()``, *each* line in the included "
-"URLconf will be passed the extra options."
+"Similarly, you can pass extra options to :func:`~django.urls.include` and "
+"each line in the included URLconf will be passed the extra options."
 msgstr ""
 "Аналогично вы можете передать дополнительные аргументы в :func:`~django.conf."
 "urls.include`. При этом, *каждый* URL-шаблон включенного URLconf будет "
 "дополнен этими дополнительными аргументами."
 
 # 42098b4ed83547cfa4cdbb3ca842ad39
-#: ../../topics/http/urls.txt:451
+#: ../../topics/http/urls.txt:494
 msgid "For example, these two URLconf sets are functionally identical:"
 msgstr "Например, эти два URLconf работают идентично:"
 
 # b24a132a808043508c3ea87b077bbf68
-#: ../../topics/http/urls.txt:453
+#: ../../topics/http/urls.txt:496
 msgid "Set one::"
 msgstr "Первый::"
 
 # adf681d691c346e494bcf1b04755cab8
-#: ../../topics/http/urls.txt:471
+#: ../../topics/http/urls.txt:514
 msgid "Set two::"
 msgstr "Второй::"
 
 # 88f079c65c4d446eb77b1d41db891999
-#: ../../topics/http/urls.txt:489
+#: ../../topics/http/urls.txt:532
 msgid ""
 "Note that extra options will *always* be passed to *every* line in the "
 "included URLconf, regardless of whether the line's view actually accepts "
@@ -897,12 +910,12 @@ msgstr ""
 "представление принимает передаваемые аргументы."
 
 # 6337fe6f80bc4bb99ab8e72ce69a6e48
-#: ../../topics/http/urls.txt:495
+#: ../../topics/http/urls.txt:538
 msgid "Reverse resolution of URLs"
 msgstr "Поиск URL-а по URL-шаблону"
 
 # 36a6256db198410a8c93dc157892ffcc
-#: ../../topics/http/urls.txt:497
+#: ../../topics/http/urls.txt:540
 msgid ""
 "A common need when working on a Django project is the possibility to obtain "
 "URLs in their final forms either for embedding in generated content (views "
@@ -913,7 +926,7 @@ msgstr ""
 "пользователю или для редиректа."
 
 # defbbce6d1614d29afd87740463fd791
-#: ../../topics/http/urls.txt:502
+#: ../../topics/http/urls.txt:545
 msgid ""
 "It is strongly desirable to avoid hard-coding these URLs (a laborious, non-"
 "scalable and error-prone strategy). Equally dangerous is devising ad-hoc "
@@ -926,7 +939,7 @@ msgstr ""
 "которые не следуют задокументированному дизайну URLconf."
 
 # a59e634e0e8f48369bc87d809fef1721
-#: ../../topics/http/urls.txt:507
+#: ../../topics/http/urls.txt:550
 msgid ""
 "In other words, what's needed is a DRY mechanism. Among other advantages it "
 "would allow evolution of the URL design without having to go over all the "
@@ -937,7 +950,7 @@ msgstr ""
 "всему проекту."
 
 # 494fd1ff32d04500a45c972b4ae43c8e
-#: ../../topics/http/urls.txt:511
+#: ../../topics/http/urls.txt:554
 msgid ""
 "The primary piece of information we have available to get a URL is an "
 "identification (e.g. the name) of the view in charge of handling it. Other "
@@ -949,7 +962,7 @@ msgstr ""
 "шаблона, и позиционные и именованные аргументы."
 
 # c11fb61d089d482bb37c8af6e59b3c03
-#: ../../topics/http/urls.txt:516
+#: ../../topics/http/urls.txt:559
 msgid ""
 "Django provides a solution such that the URL mapper is the only repository "
 "of the URL design. You feed it with your URLconf and then it can be used in "
@@ -959,7 +972,7 @@ msgstr ""
 "Ему передается URLconf, и теперь его можно использовать в два направления:"
 
 # 0c26a4dea83b4010b06c2543cebd805d
-#: ../../topics/http/urls.txt:520
+#: ../../topics/http/urls.txt:563
 msgid ""
 "Starting with a URL requested by the user/browser, it calls the right Django "
 "view providing any arguments it might need with their values as extracted "
@@ -969,7 +982,7 @@ msgstr ""
 "все необходимые аргументы полученные из URL-а."
 
 # e33db5084a0b41a49c16712e2a6591cc
-#: ../../topics/http/urls.txt:524
+#: ../../topics/http/urls.txt:567
 msgid ""
 "Starting with the identification of the corresponding Django view plus the "
 "values of arguments that would be passed to it, obtain the associated URL."
@@ -978,7 +991,7 @@ msgstr ""
 "URL."
 
 # 245e16b169a74dc9b15d43a15d033150
-#: ../../topics/http/urls.txt:527
+#: ../../topics/http/urls.txt:570
 msgid ""
 "The first one is the usage we've been discussing in the previous sections. "
 "The second one is what is known as *reverse resolution of URLs*, *reverse "
@@ -988,7 +1001,7 @@ msgstr ""
 "называется *URL reversing*, в общем получение URL-а по его названию."
 
 # 990f40827e7d46d2b4261a822be79b14
-#: ../../topics/http/urls.txt:531
+#: ../../topics/http/urls.txt:574
 msgid ""
 "Django provides tools for performing URL reversing that match the different "
 "layers where URLs are needed:"
@@ -997,12 +1010,12 @@ msgstr ""
 "компонентах фреймворка:"
 
 # 38a637c8a05e468eb0e487219a91c429
-#: ../../topics/http/urls.txt:534
+#: ../../topics/http/urls.txt:577
 msgid "In templates: Using the :ttag:`url` template tag."
 msgstr "В шаблонах: Использование шаблонного тега :ttag:`url`."
 
 # a207ad47ec2a4a0f8f222ba97b6c5c76
-#: ../../topics/http/urls.txt:536
+#: ../../topics/http/urls.txt:579
 #, fuzzy
 msgid "In Python code: Using the :func:`~django.urls.reverse` function."
 msgstr ""
@@ -1010,7 +1023,7 @@ msgstr ""
 "reverse`."
 
 # f9ea1b69b77d4633bf6e99746f92bac0
-#: ../../topics/http/urls.txt:538
+#: ../../topics/http/urls.txt:581
 msgid ""
 "In higher level code related to handling of URLs of Django model instances: "
 "The :meth:`~django.db.models.Model.get_absolute_url` method."
@@ -1019,36 +1032,37 @@ msgstr ""
 "db.models.Model.get_absolute_url`."
 
 # adf7e75d4544433d812cbce0425fd3c9
-#: ../../topics/http/urls.txt:542
+#: ../../topics/http/urls.txt:585
 msgid "Examples"
 msgstr "Примеры"
 
 # d3d3d263a578458ebddeb5bcb00d6d13
-#: ../../topics/http/urls.txt:544
+#: ../../topics/http/urls.txt:587
 msgid "Consider again this URLconf entry::"
 msgstr "Рассмотрим следующий URLconf::"
 
 # af6e1ada257047abaa2f78bb09d12be4
-#: ../../topics/http/urls.txt:556
+#: ../../topics/http/urls.txt:599
+#, fuzzy
 msgid ""
 "According to this design, the URL for the archive corresponding to year "
-"*nnnn* is ``/articles/nnnn/``."
+"*nnnn* is ``/articles/<nnnn>/``."
 msgstr ""
 "В соответствии с ним архиву *nnnn* года соответствует URL ``/articles/nnnn/"
 "``."
 
 # 422ceb5ee1a94f8981685c128d49e26d
-#: ../../topics/http/urls.txt:559
+#: ../../topics/http/urls.txt:602
 msgid "You can obtain these in template code by using:"
 msgstr "Вы можете получить его в шаблоне следующим образом:"
 
 # c6fc742900214a89af6271e8f727ccc9
-#: ../../topics/http/urls.txt:571
+#: ../../topics/http/urls.txt:614
 msgid "Or in Python code::"
 msgstr "В Python коде::"
 
 # ac994ad368e44fba9fbfa34fd0668632
-#: ../../topics/http/urls.txt:582
+#: ../../topics/http/urls.txt:625
 msgid ""
 "If, for some reason, it was decided that the URLs where content for yearly "
 "article archives are published at should be changed then you would only need "
@@ -1058,7 +1072,7 @@ msgstr ""
 "изменить запись в вашем  URLconf."
 
 # 7ce3047c7f5c46bdaa190ccbf9549864
-#: ../../topics/http/urls.txt:586
+#: ../../topics/http/urls.txt:629
 msgid ""
 "In some scenarios where views are of a generic nature, a many-to-one "
 "relationship might exist between URLs and views. For these cases the view "
@@ -1071,12 +1085,12 @@ msgstr ""
 "конкретный URL. Как решить эту проблему читайте в следующем разделе."
 
 # 34cf6780279c4de9ad2c06814f1efd12
-#: ../../topics/http/urls.txt:594
+#: ../../topics/http/urls.txt:637
 msgid "Naming URL patterns"
 msgstr "Именованные URL-шаблоны"
 
 # 60bac55c29c34734a8b5dd6241af5f3f
-#: ../../topics/http/urls.txt:596
+#: ../../topics/http/urls.txt:639
 msgid ""
 "In order to perform URL reversing, you'll need to use **named URL patterns** "
 "as done in the examples above. The string used for the URL name can contain "
@@ -1088,7 +1102,7 @@ msgstr ""
 "Вы не ограничены только теми именами, что позволяет Python."
 
 # 14723fa60d674503b153eb1ca381d3af
-#: ../../topics/http/urls.txt:600
+#: ../../topics/http/urls.txt:643
 #, fuzzy
 msgid ""
 "When naming URL patterns, choose names that are unlikely to clash with other "
@@ -1102,7 +1116,7 @@ msgstr ""
 "аналогичное, нет гарантии что в шаблон будет вставлен правильный URL."
 
 # 309eff09cb8247ceb2af18bcec659976
-#: ../../topics/http/urls.txt:606
+#: ../../topics/http/urls.txt:649
 #, fuzzy
 msgid ""
 "Putting a prefix on your URL names, perhaps derived from the application "
@@ -1113,7 +1127,7 @@ msgstr ""
 "названия приложения, уменьшит шанс конфликта. Мы советуем использовать "
 "``myapp-comment`` вместо ``comment``."
 
-#: ../../topics/http/urls.txt:610
+#: ../../topics/http/urls.txt:653
 msgid ""
 "You can deliberately choose the *same URL name* as another application if "
 "you want to override a view. For example, a common use case is to override "
@@ -1125,7 +1139,7 @@ msgid ""
 "(if that's included at all)."
 msgstr ""
 
-#: ../../topics/http/urls.txt:619
+#: ../../topics/http/urls.txt:662
 msgid ""
 "You may also use the same name for multiple URL patterns if they differ in "
 "their arguments. In addition to the URL name, :func:`~django.urls.reverse()` "
@@ -1133,17 +1147,17 @@ msgid ""
 msgstr ""
 
 # 92f63802982e425a83b2ea2cf0e45444
-#: ../../topics/http/urls.txt:626
+#: ../../topics/http/urls.txt:669
 msgid "URL namespaces"
 msgstr "Пространства имен в конфигурации URL-ов"
 
 # 4a3f3844f9d54525b4d0210821220045
-#: ../../topics/http/urls.txt:629
+#: ../../topics/http/urls.txt:672
 msgid "Introduction"
 msgstr "Описание"
 
 # 0b22b5412b0144199f8f1b52a3c5fd77
-#: ../../topics/http/urls.txt:631
+#: ../../topics/http/urls.txt:674
 msgid ""
 "URL namespaces allow you to uniquely reverse :ref:`named URL patterns "
 "<naming-url-patterns>` even if different applications use the same URL "
@@ -1160,7 +1174,7 @@ msgstr ""
 "несколько экземпляров одного приложения подключены в конфигурацию URL-ов."
 
 # f45c9433068a418cabc807b77ba949c6
-#: ../../topics/http/urls.txt:639
+#: ../../topics/http/urls.txt:682
 #, fuzzy
 msgid ""
 "Django applications that make proper use of URL namespacing can be deployed "
@@ -1181,18 +1195,18 @@ msgstr ""
 "интерфейсов (для авторов и издателей)."
 
 # 8564d4d0edcc4355b741c81fbfee8b44
-#: ../../topics/http/urls.txt:647
+#: ../../topics/http/urls.txt:690
 msgid "A URL namespace comes in two parts, both of which are strings:"
 msgstr ""
 "Пространство имен состоит из двух частей, каждая из которых это строка:"
 
 # 47cabbd5e4094a26beac814978deef10
-#: ../../topics/http/urls.txt:650
+#: ../../topics/http/urls.txt:693
 msgid "application namespace"
 msgstr "application namespace"
 
 # 04864b70a0ad4532a65d972beaabcee9
-#: ../../topics/http/urls.txt:652
+#: ../../topics/http/urls.txt:695
 msgid ""
 "This describes the name of the application that is being deployed. Every "
 "instance of a single application will have the same application namespace. "
@@ -1204,12 +1218,12 @@ msgstr ""
 "администратора Django -- ``admin``."
 
 # 92f63802982e425a83b2ea2cf0e45444
-#: ../../topics/http/urls.txt:656
+#: ../../topics/http/urls.txt:699
 msgid "instance namespace"
 msgstr "instance namespace"
 
 # 343b9502cdac4e0f971dec04a743cd9a
-#: ../../topics/http/urls.txt:658
+#: ../../topics/http/urls.txt:701
 msgid ""
 "This identifies a specific instance of an application. Instance namespaces "
 "should be unique across your entire project. However, an instance namespace "
@@ -1223,7 +1237,7 @@ msgstr ""
 "пространство имен приложения администратора Django -- ``admin``."
 
 # 14ef8de1e76a40ddbaa40fc9cbc9d4f1
-#: ../../topics/http/urls.txt:664
+#: ../../topics/http/urls.txt:707
 msgid ""
 "Namespaced URLs are specified using the ``':'`` operator. For example, the "
 "main index page of the admin application is referenced using ``'admin:"
@@ -1236,7 +1250,7 @@ msgstr ""
 "``'index'``."
 
 # dd0beb185dda4037a57e82d5dc638d0d
-#: ../../topics/http/urls.txt:668
+#: ../../topics/http/urls.txt:711
 msgid ""
 "Namespaces can also be nested. The named URL ``'sports:polls:index'`` would "
 "look for a pattern named ``'index'`` in the namespace ``'polls'`` that is "
@@ -1248,12 +1262,12 @@ msgstr ""
 "пространстве имен - ``'sports'``."
 
 # 9be6dca660e946dc96bef98ac8b5713d
-#: ../../topics/http/urls.txt:675
+#: ../../topics/http/urls.txt:718
 msgid "Reversing namespaced URLs"
 msgstr "Поиск URL-а по шаблону с пространством имен"
 
 # 83542e06d4c0423ab8f1bd4a83ef08eb
-#: ../../topics/http/urls.txt:677
+#: ../../topics/http/urls.txt:720
 msgid ""
 "When given a namespaced URL (e.g. ``'polls:index'``) to resolve, Django "
 "splits the fully qualified name into parts and then tries the following "
@@ -1264,7 +1278,7 @@ msgstr ""
 "алгоритму:"
 
 # 8961ae51f16347ff8b70c775b996abb6
-#: ../../topics/http/urls.txt:680
+#: ../../topics/http/urls.txt:723
 msgid ""
 "First, Django looks for a matching :term:`application namespace` (in this "
 "example, ``'polls'``). This will yield a list of instances of that "
@@ -1274,7 +1288,7 @@ msgstr ""
 "(например, ``polls``).  Django получает список экземпляров приложения."
 
 # 998245c1af554383854ef043ca51ae28
-#: ../../topics/http/urls.txt:684
+#: ../../topics/http/urls.txt:727
 #, fuzzy
 msgid ""
 "If there is a current application defined, Django finds and returns the URL "
@@ -1286,7 +1300,7 @@ msgstr ""
 "аргумента ``current_app`` функции :func:`~django.core.urlresolvers."
 "reverse()`."
 
-#: ../../topics/http/urls.txt:689
+#: ../../topics/http/urls.txt:732
 msgid ""
 "The :ttag:`url` template tag uses the namespace of the currently resolved "
 "view as the current application in a :class:`~django.template."
@@ -1300,7 +1314,7 @@ msgstr ""
 "http.HttpRequest.current_app>`."
 
 # 6c884ad3de5542f8a98cf56e9687b0d7
-#: ../../topics/http/urls.txt:695
+#: ../../topics/http/urls.txt:738
 msgid ""
 "If there is no current application. Django looks for a default application "
 "instance. The default application instance is the instance that has an :term:"
@@ -1313,7 +1327,7 @@ msgstr ""
 "примере это экземпляр ``polls`` с названием ``polls``)."
 
 # 86ca11bff43f4a3daabeabc0a7c7e2e5
-#: ../../topics/http/urls.txt:700
+#: ../../topics/http/urls.txt:743
 msgid ""
 "If there is no default application instance, Django will pick the last "
 "deployed instance of the application, whatever its instance name may be."
@@ -1322,7 +1336,7 @@ msgstr ""
 "установленный экземпляр приложения, не обращая внимание на его название."
 
 # 2fbf1280565149daa69184349b4daa83
-#: ../../topics/http/urls.txt:703
+#: ../../topics/http/urls.txt:746
 msgid ""
 "If the provided namespace doesn't match an :term:`application namespace` in "
 "step 1, Django will attempt a direct lookup of the namespace as an :term:"
@@ -1333,7 +1347,7 @@ msgstr ""
 "используя пространство имен как название экземпляра."
 
 # 91c5534255134861a26e4fa234a8ef6b
-#: ../../topics/http/urls.txt:707
+#: ../../topics/http/urls.txt:750
 msgid ""
 "If there are nested namespaces, these steps are repeated for each part of "
 "the namespace until only the view name is unresolved. The view name will "
@@ -1345,7 +1359,7 @@ msgstr ""
 "найденном через пространство имен."
 
 # d2932e82a8ff4612bf131f254d4e1662
-#: ../../topics/http/urls.txt:714
+#: ../../topics/http/urls.txt:757
 msgid ""
 "To show this resolution strategy in action, consider an example of two "
 "instances of the ``polls`` application from the tutorial: one called "
@@ -1359,7 +1373,7 @@ msgstr ""
 "при создании страниц."
 
 # 5f0ee97ba11b438596687a6513dc280e
-#: ../../topics/http/urls.txt:744
+#: ../../topics/http/urls.txt:787
 msgid "Using this setup, the following lookups are possible:"
 msgstr ""
 "Для таких настроек URL-ов возможны следующие варианты поиска URL-а по "
@@ -1367,7 +1381,7 @@ msgstr ""
 
 # c4f1a0672065409a8b32ff890d82afec
 # 28c4f462d1ee427c8f23024192015366
-#: ../../topics/http/urls.txt:746
+#: ../../topics/http/urls.txt:789
 msgid ""
 "If one of the instances is current - say, if we were rendering the detail "
 "page in the instance ``'author-polls'`` - ``'polls:index'`` will resolve to "
@@ -1380,17 +1394,17 @@ msgstr ""
 "получим ``\"/author-polls/\"`` для двух, приведенных ниже, примеров."
 
 # a3667553394f4c88b35dfd277c668847
-#: ../../topics/http/urls.txt:751
+#: ../../topics/http/urls.txt:794
 msgid "In the method of a class-based view::"
 msgstr "В методе представления::"
 
 # e1e69aa698fc491981575eb878d3e980
-#: ../../topics/http/urls.txt:755
+#: ../../topics/http/urls.txt:798
 msgid "and in the template:"
 msgstr "и в шаблоне:"
 
 # cccee5e92f1c426db57088f0800e0336
-#: ../../topics/http/urls.txt:761
+#: ../../topics/http/urls.txt:804
 msgid ""
 "If there is no current instance - say, if we were rendering a page somewhere "
 "else on the site - ``'polls:index'`` will resolve to the last registered "
@@ -1407,7 +1421,7 @@ msgstr ""
 "``'publisher-polls'`` т.к. он последний в ``urlpatterns``."
 
 # 4ad351cd6e984156a65909f3aedcb529
-#: ../../topics/http/urls.txt:768
+#: ../../topics/http/urls.txt:811
 msgid ""
 "``'author-polls:index'`` will always resolve to the index page of the "
 "instance ``'author-polls'`` (and likewise for ``'publisher-polls'``) ."
@@ -1417,7 +1431,7 @@ msgstr ""
 "polls'``)."
 
 # 025895eadcfa4c719caf3b5e507080be
-#: ../../topics/http/urls.txt:771
+#: ../../topics/http/urls.txt:814
 msgid ""
 "If there were also a default instance - i.e., an instance named ``'polls'`` "
 "- the only change from above would be in the case where there is no current "
@@ -1432,22 +1446,23 @@ msgstr ""
 "приложения по умолчанию, а не для последнего в ``urlpatterns``."
 
 # 01957d91166c45828a3d39607c2e00f7
-#: ../../topics/http/urls.txt:780
+#: ../../topics/http/urls.txt:823
 msgid "URL namespaces and included URLconfs"
 msgstr "Пространства имен в URL -ах и include"
 
 # 3e8eeb7bb3e4413faf2861a3bc111d25
-#: ../../topics/http/urls.txt:782
+#: ../../topics/http/urls.txt:825
 msgid ""
 "Application namespaces of included URLconfs can be specified in two ways."
 msgstr "Название приложения в URLconfs можно определить двумя путями."
 
-#: ../../topics/http/urls.txt:784
+#: ../../topics/http/urls.txt:827
+#, fuzzy
 msgid ""
 "Firstly, you can set an ``app_name`` attribute in the included URLconf "
 "module, at the same level as the ``urlpatterns`` attribute. You have to pass "
 "the actual module, or a string reference to the module, to :func:`~django."
-"conf.urls.include`, not the list of ``urlpatterns`` itself."
+"urls.include`, not the list of ``urlpatterns`` itself."
 msgstr ""
 "Первый -- вы можете указать атрибут ``app_name`` в модуле URLconf "
 "приложения, на том же уровне, что и атрибут ``urlpatterns``. При этом вам "
@@ -1455,7 +1470,7 @@ msgstr ""
 "`~django.conf.urls.include`, а не список  ``urlpatterns``."
 
 # 1f9f3e7cb8a8476a876fb9f9957d0813
-#: ../../topics/http/urls.txt:812
+#: ../../topics/http/urls.txt:855
 msgid ""
 "The URLs defined in ``polls.urls`` will have an application namespace "
 "``polls``."
@@ -1463,12 +1478,14 @@ msgstr ""
 "URL-ы, определенные в ``polls.urls``, содержат название приложения ``polls``."
 
 # 939460af658044779d58aa573dc8705b
-#: ../../topics/http/urls.txt:814
+#: ../../topics/http/urls.txt:857
+#, fuzzy
 msgid ""
 "Secondly, you can include an object that contains embedded namespace data. "
-"If you ``include()`` a list of :func:`~django.conf.urls.url` instances, the "
-"URLs contained in that object will be added to the global namespace. "
-"However, you can also ``include()`` a 2-tuple containing::"
+"If you ``include()`` a list of :func:`~django.urls.path` or :func:`~django."
+"urls.re_path` instances, the URLs contained in that object will be added to "
+"the global namespace. However, you can also ``include()`` a 2-tuple "
+"containing::"
 msgstr ""
 "Второй, вы можете добавить объект, который содержит все необходимые данные. "
 "Если добавить через ``include()`` список :func:`~django.conf.urls.url`, они "
@@ -1476,23 +1493,158 @@ msgstr ""
 "можно передать 2-элементный кортеж, который содержит::"
 
 # 1f9f3e7cb8a8476a876fb9f9957d0813
-#: ../../topics/http/urls.txt:836
+#: ../../topics/http/urls.txt:880
 msgid ""
 "This will include the nominated URL patterns into the given application "
 "namespace."
 msgstr ""
 "Этот код добавляет URL-шаблоны, используя указанное название приложения."
 
-#: ../../topics/http/urls.txt:839
+#: ../../topics/http/urls.txt:883
+#, fuzzy
 msgid ""
 "The instance namespace can be specified using the ``namespace`` argument to :"
-"func:`~django.conf.urls.include`. If the instance namespace is not "
-"specified, it will default to the included URLconf's application namespace. "
-"This means it will also be the default instance for that namespace."
+"func:`~django.urls.include`. If the instance namespace is not specified, it "
+"will default to the included URLconf's application namespace. This means it "
+"will also be the default instance for that namespace."
 msgstr ""
 "Имя конкретного экземпляра приложения можно указать с помощью аргумента "
 "``namespace`` для :func:`~django.conf.urls.include`. Если он не указан, "
 "будет использовать название приложения."
+
+# 07d2957e806b48c1a1795e26d375d8ba
+#~ msgid ""
+#~ "The ``'r'`` in front of each regular expression string is optional but "
+#~ "recommended. It tells Python that a string is \"raw\" -- that nothing in "
+#~ "the string should be escaped. See `Dive Into Python's explanation`_."
+#~ msgstr ""
+#~ "Символ ``'r'`` перед каждым регулярным выражением не обязателен, но "
+#~ "рекомендуется. Он указывает Python что строка \"сырая(raw)\" и ничего в "
+#~ "строке не должно быть экранировано. Смотрите `Dive Into Python's "
+#~ "explanation <http://www.diveintopython.net/regular_expressions/"
+#~ "street_addresses.html#re.matching.2.3>`_."
+
+# 4129a80f378a4b1c940e46888cdeda2a
+#~ msgid ""
+#~ "``/articles/2005/3/`` would not match any URL patterns, because the third "
+#~ "entry in the list requires two digits for the month."
+#~ msgstr ""
+#~ "``/articles/2005/3/`` не соответствует ни одному URL-шаблону, потому что "
+#~ "третья запись требует две цифры в номере месяца."
+
+# e1197d6592724a6c92ce4a74aa6b6153
+#~ msgid "Named groups"
+#~ msgstr "Именованные группы"
+
+# c7bc17c011da45cea8f9f6bf1107461d
+#~ msgid ""
+#~ "The above example used simple, *non-named* regular-expression groups (via "
+#~ "parenthesis) to capture bits of the URL and pass them as *positional* "
+#~ "arguments to a view. In more advanced usage, it's possible to use *named* "
+#~ "regular-expression groups to capture URL bits and pass them as *keyword* "
+#~ "arguments to a view."
+#~ msgstr ""
+#~ "Пример выше использует простые, *не именованные* группы совпадений в "
+#~ "регулярных выражениях (то, что в скобках), чтобы получить значения из URL "
+#~ "и передать в представление как *позиционные* аргументы. Но вы можете "
+#~ "использовать *имена* для групп и значения будут передаваться как "
+#~ "*именованные* аргументы."
+
+# 71c17e897e514ec5847da40f9f798ebb
+#~ msgid ""
+#~ "This accomplishes exactly the same thing as the previous example, with "
+#~ "one subtle difference: The captured values are passed to view functions "
+#~ "as keyword arguments rather than positional arguments. For example:"
+#~ msgstr ""
+#~ "Он выполняет то же самое, что и предыдущий пример, с одним небольшим "
+#~ "отличием: полученные значения передаются в представление как именованные "
+#~ "аргументы, а не позиционные. Например:"
+
+# 96355635375e4354873544e2fc43cb39
+#~ msgid ""
+#~ "A request to ``/articles/2005/03/`` would call the function ``views."
+#~ "month_archive(request, year='2005', month='03')``, instead of ``views."
+#~ "month_archive(request, '2005', '03')``."
+#~ msgstr ""
+#~ "Запрос к ``/articles/2005/03/`` вызовет функцию ``views."
+#~ "month_archive(request, year='2005', month='03')``, вместо ``views."
+#~ "month_archive(request, '2005', '03')``."
+
+# 153391f6b3f141d18687cfa27e85c213
+#~ msgid ""
+#~ "A request to ``/articles/2003/03/03/`` would call the function ``views."
+#~ "article_detail(request, year='2003', month='03', day='03')``."
+#~ msgstr ""
+#~ "Запрос к ``/articles/2003/03/03/`` вызовет ``views."
+#~ "article_detail(request, year='2003', month='03', day='03')``."
+
+# 0e081d65d6e349748164e3f0ea5a040c
+#~ msgid ""
+#~ "In practice, this means your URLconfs are slightly more explicit and less "
+#~ "prone to argument-order bugs -- and you can reorder the arguments in your "
+#~ "views' function definitions. Of course, these benefits come at the cost "
+#~ "of brevity; some developers find the named-group syntax ugly and too "
+#~ "verbose."
+#~ msgstr ""
+#~ "На практике это означает, что ваша конфигурация URL более понятна и "
+#~ "меньше зависит от ошибки в порядке аргументов, также вы можете изменять "
+#~ "порядок аргументов в представлении. Конечно, эти преимущества достигаются "
+#~ "за счет краткости, некоторые разработчики считают именованные группы "
+#~ "уродливыми и слишком многословными."
+
+# a914fa737fae4e1483c011878abb3516
+#~ msgid "The matching/grouping algorithm"
+#~ msgstr "Алгоритм соответствия/группировки"
+
+# 8a614b967feb45f79582619b2d1c423c
+#~ msgid ""
+#~ "Here's the algorithm the URLconf parser follows, with respect to named "
+#~ "groups vs. non-named groups in a regular expression:"
+#~ msgstr ""
+#~ "Вот алгоритм, которому следует синтаксический анализатор конфигурации "
+#~ "URL, для определения использовать значения именованных или не именованных "
+#~ "совпадений:"
+
+# 2a0423ff6c60439099242dd7bc298952
+#~ msgid ""
+#~ "If there are any named arguments, it will use those, ignoring non-named "
+#~ "arguments."
+#~ msgstr ""
+#~ "Если существует именованный аргумент, он будет использован вместо "
+#~ "позиционного аргумента."
+
+# 2a0423ff6c60439099242dd7bc298952
+#~ msgid ""
+#~ "Otherwise, it will pass all non-named arguments as positional arguments."
+#~ msgstr ""
+#~ "Иначе все неименованные параметры будут переданы как позиционные "
+#~ "аргументы."
+
+# 0dd49926e3444fe9adc9ae06cd74e8a9
+#~ msgid ""
+#~ "In both cases, any extra keyword arguments that have been given as per "
+#~ "`Passing extra options to view functions`_ (below) will also be passed to "
+#~ "the view."
+#~ msgstr ""
+#~ "В любом случае дополнительные именованные аргументы будут переданы как "
+#~ "именованные. Смотрите `Passing extra options to view functions`_ ниже."
+
+# 92e201aaed794bb1a91e2a1968a52f2d
+#~ msgid "Captured arguments are always strings"
+#~ msgstr "Найденные аргументы -- всегда строки"
+
+# 35e185e6d15c44558b68af0ca7670ccd
+#, fuzzy
+#~ msgid ""
+#~ "...the year argument passed to views.year_archive() will be a string,"
+#~ msgstr "...аргумент ``year`` для ``views.year_archive()`` будет строкой,"
+
+# 35e185e6d15c44558b68af0ca7670ccd
+#~ msgid ""
+#~ "not an integer, even though the ``[0-9]{4}`` will only match integer "
+#~ "strings."
+#~ msgstr ""
+#~ "не числом, несмотря на то, что ``[0-9]{4}`` отлавливает только числа."
 
 #~ msgid ""
 #~ "Previously, the :ttag:`url` template tag did not use the namespace of the "

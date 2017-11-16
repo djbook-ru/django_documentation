@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 11:28+0300\n"
+"POT-Creation-Date: 2017-11-16 11:56+0200\n"
 "PO-Revision-Date: 2012-02-15 15:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1136,18 +1136,41 @@ msgstr ""
 #: ../../ref/contrib/gis/gdal.txt:1107
 msgid ""
 "The constructor for ``GDALRaster`` accepts two parameters. The first "
-"parameter defines the raster source, it is either a path to a file or "
-"spatial data with values defining the properties of a new raster (such as "
-"size and name). If the input is a file path, the second parameter specifies "
-"if the raster should be opened with write access. If the input is raw data, "
-"the parameters ``width``, ``height``, and ``srid`` are required. The "
-"following example shows how rasters can be created from different input "
-"sources (using the sample data from the GeoDjango tests, see also the :ref:"
-"`gdal_sample_data` section). For a detailed description of how to create "
-"rasters using dictionary input, see the :ref:`gdal-raster-ds-input` section."
+"parameter defines the raster source, and the second parameter defines if a "
+"raster should be opened in write mode. For newly-created rasters, the second "
+"parameter is ignored and the new raster is always created in write mode."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1149
+#: ../../ref/contrib/gis/gdal.txt:1112
+msgid ""
+"The first parameter can take three forms: a string representing a file path, "
+"a dictionary with values defining a new raster, or a bytes object "
+"representing a raster file."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1116
+msgid ""
+"If the input is a file path, the raster is opened from there. If the input "
+"is raw data in a dictionary, the parameters ``width``, ``height``, and "
+"``srid`` are required. If the input is a bytes object, it will be opened "
+"using a GDAL virtual filesystem."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1121
+msgid ""
+"For a detailed description of how to create rasters using dictionary input, "
+"see :ref:`gdal-raster-ds-input`. For a detailed description of how to create "
+"rasters in the virtual filesystem, see :ref:`gdal-raster-vsimem`."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1125
+msgid ""
+"The following example shows how rasters can be created from different input "
+"sources (using the sample data from the GeoDjango tests; see also the :ref:"
+"`gdal_sample_data` section)."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1167
 msgid ""
 "Added the ability to pass the ``size``, ``shape``, and ``offset`` parameters "
 "when creating :class:`GDALRaster` objects. The parameters can be passed "
@@ -1156,13 +1179,20 @@ msgid ""
 "data()<django.contrib.gis.gdal.GDALBand.data>` method."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1158
+#: ../../ref/contrib/gis/gdal.txt:1176
+msgid ""
+"Added the ability to read and write rasters in GDAL's memory-based virtual "
+"filesystem. ``GDALRaster`` objects can now be converted to and from binary "
+"data in-memory."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1182
 msgid ""
 "The name of the source which is equivalent to the input file path or the "
 "name provided upon instantiation."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1166
+#: ../../ref/contrib/gis/gdal.txt:1190
 msgid ""
 "The name of the GDAL driver used to handle the input file. For ``GDALRaster``"
 "\\s created from a file, the driver type is detected automatically. The "
@@ -1172,23 +1202,23 @@ msgid ""
 "Formats`__ list."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1174
+#: ../../ref/contrib/gis/gdal.txt:1198
 msgid "An in-memory raster is created through the following example:"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1179
+#: ../../ref/contrib/gis/gdal.txt:1203
 msgid "A file based GeoTiff raster is created through the following example:"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1192
+#: ../../ref/contrib/gis/gdal.txt:1216
 msgid "The width of the source in pixels (X-axis)."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1199
+#: ../../ref/contrib/gis/gdal.txt:1223
 msgid "The height of the source in pixels (Y-axis)."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1206
+#: ../../ref/contrib/gis/gdal.txt:1230
 msgid ""
 "The spatial reference system of the raster, as a :class:`SpatialReference` "
 "instance. The SRS can be changed by setting it to an other :class:"
@@ -1196,66 +1226,66 @@ msgid ""
 "`SpatialReference` constructor."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1222
+#: ../../ref/contrib/gis/gdal.txt:1244
 msgid ""
 "The Spatial Reference System Identifier (SRID) of the raster. This property "
 "is a shortcut to getting or setting the SRID through the :attr:`srs` "
 "attribute."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1237
+#: ../../ref/contrib/gis/gdal.txt:1259
 msgid ""
 "The affine transformation matrix used to georeference the source, as a tuple "
 "of six coefficients which map pixel/line coordinates into georeferenced "
 "space using the following relationship::"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1244
+#: ../../ref/contrib/gis/gdal.txt:1266
 msgid ""
 "The same values can be retrieved by accessing the :attr:`origin` (indices 0 "
 "and 3), :attr:`scale` (indices 1 and 5) and :attr:`skew` (indices 2 and 4) "
 "properties."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1248
+#: ../../ref/contrib/gis/gdal.txt:1270
 msgid "The default is ``[0.0, 1.0, 0.0, 0.0, 0.0, -1.0]``."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1256
+#: ../../ref/contrib/gis/gdal.txt:1278
 msgid ""
 "Coordinates of the top left origin of the raster in the spatial reference "
 "system of the source, as a point object with ``x`` and ``y`` members."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1269
+#: ../../ref/contrib/gis/gdal.txt:1291
 msgid ""
 "Pixel width and height used for georeferencing the raster, as a as a point "
 "object with ``x`` and ``y``  members. See :attr:`geotransform` for more "
 "information."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1282
+#: ../../ref/contrib/gis/gdal.txt:1304
 msgid ""
 "Skew coefficients used to georeference the raster, as a point object with "
 "``x`` and ``y``  members. In case of north up images, these coefficients are "
 "both ``0``."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1295
+#: ../../ref/contrib/gis/gdal.txt:1317
 msgid ""
 "Extent (boundary values) of the raster source, as a 4-tuple ``(xmin, ymin, "
 "xmax, ymax)`` in the spatial reference system of the source."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1308
+#: ../../ref/contrib/gis/gdal.txt:1330
 msgid "List of all bands of the source, as :class:`GDALBand` instances."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1319
+#: ../../ref/contrib/gis/gdal.txt:1341
 msgid "Returns a warped version of this raster."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1321
+#: ../../ref/contrib/gis/gdal.txt:1343
 msgid ""
 "The warping parameters can be specified through the ``ds_input`` argument. "
 "The use of ``ds_input`` is analogous to the corresponding argument of the "
@@ -1264,7 +1294,7 @@ msgid ""
 "scale, skew, datatype, driver, and name (filename)."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1328
+#: ../../ref/contrib/gis/gdal.txt:1350
 msgid ""
 "By default, the warp functions keeps most parameters equal to the values of "
 "the original source raster, so only parameters that should be changed need "
@@ -1272,7 +1302,7 @@ msgid ""
 "rasters the warp function will create a new raster on disk."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1334
+#: ../../ref/contrib/gis/gdal.txt:1356
 msgid ""
 "The only parameter that is set differently from the source raster is the "
 "name. The default value of the the raster name is the name of the source "
@@ -1280,7 +1310,7 @@ msgid ""
 "rasters it is recommended to provide the file path of the target raster."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1339
+#: ../../ref/contrib/gis/gdal.txt:1361
 msgid ""
 "The resampling algorithm used for warping can be specified with the "
 "``resampling`` argument. The default is ``NearestNeighbor``, and the other "
@@ -1288,30 +1318,30 @@ msgid ""
 "``Average``, and ``Mode``."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1344
+#: ../../ref/contrib/gis/gdal.txt:1366
 msgid ""
 "The ``max_error`` argument can be used to specify the maximum error measured "
 "in input pixels that is allowed in approximating the transformation. The "
 "default is 0.0 for exact calculations."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1348
+#: ../../ref/contrib/gis/gdal.txt:1370
 msgid ""
 "For users familiar with ``GDAL``, this function has a similar functionality "
 "to the ``gdalwarp`` command-line utility."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1351
+#: ../../ref/contrib/gis/gdal.txt:1373
 msgid ""
 "For example, the warp function can be used for aggregating a raster to the "
 "double of its original pixel scale:"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1368
+#: ../../ref/contrib/gis/gdal.txt:1390
 msgid "Returns a transformed version of this raster with the specified SRID."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1370
+#: ../../ref/contrib/gis/gdal.txt:1392
 msgid ""
 "This function transforms the current raster into a new spatial reference "
 "system that can be specified with an ``srid``. It calculates the bounds and "
@@ -1319,7 +1349,7 @@ msgid ""
 "the raster using the :attr:`~GDALRaster.warp` function."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1375
+#: ../../ref/contrib/gis/gdal.txt:1397
 msgid ""
 "By default, the driver of the source raster is used and the name of the "
 "raster is the original name appended with ``'_copy' + source_driver_name``. "
@@ -1327,7 +1357,7 @@ msgid ""
 "arguments."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1380
+#: ../../ref/contrib/gis/gdal.txt:1402
 msgid ""
 "The default resampling algorithm is ``NearestNeighbour`` but can be changed "
 "using the ``resampling`` argument. The default maximum allowed error for "
@@ -1336,55 +1366,91 @@ msgid ""
 "arguments."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1397
+#: ../../ref/contrib/gis/gdal.txt:1422
+msgid ""
+"Returns a string with a summary of the raster. This is equivalent to the "
+"`gdalinfo`__ command line utility."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1431
+msgid ""
+"The metadata of this raster, represented as a nested dictionary. The first-"
+"level key is the metadata domain. The second-level contains the metadata "
+"item names and values from each domain."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1435
+msgid ""
+"To set or update a metadata item, pass the corresponding metadata item to "
+"the method using the nested structure described above. Only keys that are in "
+"the specified dictionary are updated; the rest of the metadata remains "
+"unchanged."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1440
+msgid "To remove a metadata item, use ``None`` as the metadata value."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1456
+msgid ""
+"A ``bytes`` representation of this raster. Returns ``None`` for rasters that "
+"are not stored in GDAL's virtual filesystem."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1463
+msgid ""
+"A boolean indicating if this raster is stored in GDAL's virtual filesystem."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1467
 msgid "``GDALBand``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1401
+#: ../../ref/contrib/gis/gdal.txt:1471
 msgid ""
 "``GDALBand`` instances are not created explicitly, but rather obtained from "
 "a :class:`GDALRaster` object, through its :attr:`~GDALRaster.bands` "
 "attribute. The GDALBands contain the actual pixel values of the raster."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1407
+#: ../../ref/contrib/gis/gdal.txt:1477
 msgid "The name or description of the band, if any."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1411
+#: ../../ref/contrib/gis/gdal.txt:1481
 msgid "The width of the band in pixels (X-axis)."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1415
+#: ../../ref/contrib/gis/gdal.txt:1485
 msgid "The height of the band in pixels (Y-axis)."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1419
+#: ../../ref/contrib/gis/gdal.txt:1489
 msgid ""
 "The total number of pixels in this band. Is equal to ``width * height``."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1425
+#: ../../ref/contrib/gis/gdal.txt:1493
 msgid ""
 "Compute statistics on the pixel values of this band. The return value is a "
 "tuple with the following structure: ``(minimum, maximum, mean, standard "
 "deviation)``."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1429
+#: ../../ref/contrib/gis/gdal.txt:1497
 msgid ""
 "If the ``approximate`` argument is set to ``True``, the statistics may be "
 "computed based on overviews or a subset of image tiles."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1432
+#: ../../ref/contrib/gis/gdal.txt:1500
 msgid ""
 "If the ``refresh`` argument is set to ``True``, the statistics will be "
 "computed from the data directly, and the cache will be updated with the "
 "result."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1436
+#: ../../ref/contrib/gis/gdal.txt:1504
 msgid ""
 "If a persistent cache value is found, that value is returned. For raster "
 "formats using Persistent Auxiliary Metadata (PAM) services, the statistics "
@@ -1395,57 +1461,51 @@ msgid ""
 "them in the cache."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1444
+#: ../../ref/contrib/gis/gdal.txt:1512
 msgid ""
 "For empty bands (where all pixel values are \"no data\"), all statistics are "
 "returned as ``None``."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1447
+#: ../../ref/contrib/gis/gdal.txt:1515
 msgid ""
 "The statistics can also be retrieved directly by accessing the :attr:`min`, :"
 "attr:`max`, :attr:`mean`, and :attr:`std` properties."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1452
+#: ../../ref/contrib/gis/gdal.txt:1520
 msgid "The minimum pixel value of the band (excluding the \"no data\" value)."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1456
+#: ../../ref/contrib/gis/gdal.txt:1524
 msgid "The maximum pixel value of the band (excluding the \"no data\" value)."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1462
+#: ../../ref/contrib/gis/gdal.txt:1528
 msgid ""
 "The mean of all pixel values of the band (excluding the \"no data\" value)."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1469
+#: ../../ref/contrib/gis/gdal.txt:1533
 msgid ""
 "The standard deviation of all pixel values of the band (excluding the \"no "
 "data\" value)."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1474
+#: ../../ref/contrib/gis/gdal.txt:1538
 msgid ""
 "The \"no data\" value for a band is generally a special marker value used to "
 "mark pixels that are not valid data. Such pixels should generally not be "
 "displayed, nor contribute to analysis operations."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1478
+#: ../../ref/contrib/gis/gdal.txt:1542
 msgid ""
 "To delete an existing \"no data\" value, set this property to ``None`` "
 "(requires GDAL ≥ 2.1)."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1483
-msgid ""
-"The \"no data\" value can now be deleted by setting the ``nodata_value`` "
-"attribute to ``None``."
-msgstr ""
-
-#: ../../ref/contrib/gis/gdal.txt:1488
+#: ../../ref/contrib/gis/gdal.txt:1547
 msgid ""
 "The data type contained in the band, as an integer constant between 0 "
 "(Unknown) and 11. If ``as_string`` is ``True``, the data type is returned as "
@@ -1455,20 +1515,34 @@ msgid ""
 "``GDT_CFloat32``, and ``GDT_CFloat64``."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1497
+#: ../../ref/contrib/gis/gdal.txt:1558
+msgid ""
+"The color interpretation for the band, as an integer between 0and 16. If "
+"``as_string`` is ``True``, the data type is returned as a string with the "
+"following possible values: ``GCI_Undefined``, ``GCI_GrayIndex``, "
+"``GCI_PaletteIndex``, ``GCI_RedBand``, ``GCI_GreenBand``, ``GCI_BlueBand``, "
+"``GCI_AlphaBand``, ``GCI_HueBand``, ``GCI_SaturationBand``, "
+"``GCI_LightnessBand``, ``GCI_CyanBand``, ``GCI_MagentaBand``, "
+"``GCI_YellowBand``, ``GCI_BlackBand``, ``GCI_YCbCr_YBand``, "
+"``GCI_YCbCr_CbBand``, and ``GCI_YCbCr_CrBand``. ``GCI_YCbCr_CrBand`` also "
+"represents ``GCI_Max`` because both correspond to the integer 16, but only "
+"``GCI_YCbCr_CrBand`` is returned as a string."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1572
 msgid ""
 "The accessor to the pixel values of the ``GDALBand``. Returns the complete "
 "data array if no parameters are provided. A subset of the pixel array can be "
 "requested by specifying an offset and block size as tuples."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1501
+#: ../../ref/contrib/gis/gdal.txt:1576
 msgid ""
 "If NumPy is available, the data is returned as NumPy array. For performance "
 "reasons, it is highly recommended to use NumPy."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1504
+#: ../../ref/contrib/gis/gdal.txt:1579
 msgid ""
 "Data is written to the ``GDALBand`` if the ``data`` parameter is provided. "
 "The input can be of one of the following types - packed string, buffer, "
@@ -1478,7 +1552,7 @@ msgid ""
 "``size`` parameters are provided."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1511
+#: ../../ref/contrib/gis/gdal.txt:1586
 msgid ""
 "If the number of items in the input is different from the target pixel "
 "block, the ``shape`` parameter must be specified. The shape is a tuple that "
@@ -1487,27 +1561,27 @@ msgid ""
 "to fill an entire band with a single value, for instance."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1518
+#: ../../ref/contrib/gis/gdal.txt:1593
 msgid "For example:"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1557
+#: ../../ref/contrib/gis/gdal.txt:1634
 msgid ""
-"The ``shape`` parameter and the ability to replicate data input when setting "
-"``GDALBand`` data was added."
+"The metadata of this band. The functionality is identical to :attr:"
+"`GDALRaster.metadata`."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1563
+#: ../../ref/contrib/gis/gdal.txt:1640
 msgid "Creating rasters from data"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1565
+#: ../../ref/contrib/gis/gdal.txt:1642
 msgid ""
 "This section describes how to create rasters from scratch using the "
 "``ds_input`` parameter."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1568
+#: ../../ref/contrib/gis/gdal.txt:1645
 msgid ""
 "A new raster is created when a ``dict`` is passed to the :class:`GDALRaster` "
 "constructor. The dictionary contains defining parameters of the new raster, "
@@ -1517,7 +1591,7 @@ msgid ""
 "on the driver specified."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1575
+#: ../../ref/contrib/gis/gdal.txt:1652
 msgid ""
 "There's no standard for describing raster data in a dictionary or JSON "
 "flavor. The definition of the dictionary input to the :class:`GDALRaster` "
@@ -1525,18 +1599,18 @@ msgid ""
 "format, but the ``geojson`` standard is currently limited to vector formats."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1580
+#: ../../ref/contrib/gis/gdal.txt:1657
 msgid ""
 "Examples of using the different keys when creating rasters can be found in "
 "the documentation of the corresponding attributes and methods of the :class:"
 "`GDALRaster` and :class:`GDALBand` classes."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1587
+#: ../../ref/contrib/gis/gdal.txt:1664
 msgid "The ``ds_input`` dictionary"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1589
+#: ../../ref/contrib/gis/gdal.txt:1666
 msgid ""
 "Only a few keys are required in the ``ds_input`` dictionary to create a "
 "raster: ``width``, ``height``, and ``srid``. All other parameters have "
@@ -1546,233 +1620,243 @@ msgid ""
 "those properties; the others are described below."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1596
+#: ../../ref/contrib/gis/gdal.txt:1673
 msgid ""
 "The following table describes all keys that can be set in the ``ds_input`` "
 "dictionary."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1600 ../../ref/contrib/gis/gdal.txt:1666
+#: ../../ref/contrib/gis/gdal.txt:1677 ../../ref/contrib/gis/gdal.txt:1781
 msgid "Key"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1600 ../../ref/contrib/gis/gdal.txt:1666
+#: ../../ref/contrib/gis/gdal.txt:1677 ../../ref/contrib/gis/gdal.txt:1781
 msgid "Default"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1600 ../../ref/contrib/gis/gdal.txt:1666
+#: ../../ref/contrib/gis/gdal.txt:1677 ../../ref/contrib/gis/gdal.txt:1781
 msgid "Usage"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1602
+#: ../../ref/contrib/gis/gdal.txt:1679
 msgid "``srid``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1602 ../../ref/contrib/gis/gdal.txt:1603
-#: ../../ref/contrib/gis/gdal.txt:1604
+#: ../../ref/contrib/gis/gdal.txt:1679 ../../ref/contrib/gis/gdal.txt:1680
+#: ../../ref/contrib/gis/gdal.txt:1681
 msgid "required"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1602
+#: ../../ref/contrib/gis/gdal.txt:1679
 msgid "Mapped to the :attr:`~GDALRaster.srid` attribute"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1603
+#: ../../ref/contrib/gis/gdal.txt:1680
 msgid "``width``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1603 ../../ref/contrib/gis/gdal.txt:1609
+#: ../../ref/contrib/gis/gdal.txt:1680 ../../ref/contrib/gis/gdal.txt:1686
 msgid "Mapped to the :attr:`~GDALRaster.width` attribute"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1604
+#: ../../ref/contrib/gis/gdal.txt:1681
 msgid "``height``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1604
+#: ../../ref/contrib/gis/gdal.txt:1681
 msgid "Mapped to the :attr:`~GDALRaster.height` attribute"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1605
+#: ../../ref/contrib/gis/gdal.txt:1682
 msgid "``driver``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1605
+#: ../../ref/contrib/gis/gdal.txt:1682
 msgid "``MEM``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1605
+#: ../../ref/contrib/gis/gdal.txt:1682
 msgid "Mapped to the :attr:`~GDALRaster.driver` attribute"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1606
+#: ../../ref/contrib/gis/gdal.txt:1683
 msgid "``name``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1606
+#: ../../ref/contrib/gis/gdal.txt:1683
 msgid "``''``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1606 ../../ref/contrib/gis/gdal.txt:1610
-#: ../../ref/contrib/gis/gdal.txt:1611 ../../ref/contrib/gis/gdal.txt:1612
+#: ../../ref/contrib/gis/gdal.txt:1683 ../../ref/contrib/gis/gdal.txt:1687
+#: ../../ref/contrib/gis/gdal.txt:1688 ../../ref/contrib/gis/gdal.txt:1689
+#: ../../ref/contrib/gis/gdal.txt:1690
 msgid "See below"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1607
+#: ../../ref/contrib/gis/gdal.txt:1684
 msgid "``origin``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1607 ../../ref/contrib/gis/gdal.txt:1608
-#: ../../ref/contrib/gis/gdal.txt:1609 ../../ref/contrib/gis/gdal.txt:1611
+#: ../../ref/contrib/gis/gdal.txt:1684 ../../ref/contrib/gis/gdal.txt:1685
+#: ../../ref/contrib/gis/gdal.txt:1686 ../../ref/contrib/gis/gdal.txt:1688
 msgid "``0``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1607
+#: ../../ref/contrib/gis/gdal.txt:1684
 msgid "Mapped to the :attr:`~GDALRaster.origin` attribute"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1608
+#: ../../ref/contrib/gis/gdal.txt:1685
 msgid "``scale``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1608
+#: ../../ref/contrib/gis/gdal.txt:1685
 msgid "Mapped to the :attr:`~GDALRaster.scale` attribute"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1609
+#: ../../ref/contrib/gis/gdal.txt:1686
 msgid "``skew``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1610
+#: ../../ref/contrib/gis/gdal.txt:1687
 msgid "``bands``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1610
+#: ../../ref/contrib/gis/gdal.txt:1687
 msgid "``[]``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1611
+#: ../../ref/contrib/gis/gdal.txt:1688
 msgid "``nr_of_bands``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1612
+#: ../../ref/contrib/gis/gdal.txt:1689
 msgid "``datatype``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1612
+#: ../../ref/contrib/gis/gdal.txt:1689
 msgid "``6``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1617
-msgid ""
-"String representing the name of the raster. When creating a file-based "
-"raster, this parameter must be the file path for the new raster."
+#: ../../ref/contrib/gis/gdal.txt:1690
+msgid "``papsz_options``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1622
+#: ../../ref/contrib/gis/gdal.txt:1690
+msgid "``{}``"
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1695
+msgid ""
+"String representing the name of the raster. When creating a file-based "
+"raster, this parameter must be the file path for the new raster. If the name "
+"starts with ``/vsimem/``, the raster is created in GDAL's virtual filesystem."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1702
 msgid ""
 "Integer representing the data type for all the bands. Defaults to ``6`` "
 "(Float32). All bands of a new raster are required to have the same datatype. "
 "The value mapping is:"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1627
+#: ../../ref/contrib/gis/gdal.txt:1707
 msgid "Value"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1627
+#: ../../ref/contrib/gis/gdal.txt:1707
 msgid "GDAL Pixel Type"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1627
+#: ../../ref/contrib/gis/gdal.txt:1707
 msgid "Description"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1629
+#: ../../ref/contrib/gis/gdal.txt:1709
 msgid "1"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1629
+#: ../../ref/contrib/gis/gdal.txt:1709
 msgid "GDT_Byte"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1629
+#: ../../ref/contrib/gis/gdal.txt:1709
 msgid "Eight bit unsigned integer"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1630
+#: ../../ref/contrib/gis/gdal.txt:1710
 msgid "2"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1630
+#: ../../ref/contrib/gis/gdal.txt:1710
 msgid "GDT_UInt16"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1630
+#: ../../ref/contrib/gis/gdal.txt:1710
 msgid "Sixteen bit unsigned integer"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1631
+#: ../../ref/contrib/gis/gdal.txt:1711
 msgid "3"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1631
+#: ../../ref/contrib/gis/gdal.txt:1711
 msgid "GDT_Int16"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1631
+#: ../../ref/contrib/gis/gdal.txt:1711
 msgid "Sixteen bit signed integer"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1632
+#: ../../ref/contrib/gis/gdal.txt:1712
 msgid "4"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1632
+#: ../../ref/contrib/gis/gdal.txt:1712
 msgid "GDT_UInt32"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1632
+#: ../../ref/contrib/gis/gdal.txt:1712
 msgid "Thirty-two bit unsigned integer"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1633
+#: ../../ref/contrib/gis/gdal.txt:1713
 msgid "5"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1633
+#: ../../ref/contrib/gis/gdal.txt:1713
 msgid "GDT_Int32"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1633
+#: ../../ref/contrib/gis/gdal.txt:1713
 msgid "Thirty-two bit signed integer"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1634
+#: ../../ref/contrib/gis/gdal.txt:1714
 msgid "6"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1634
+#: ../../ref/contrib/gis/gdal.txt:1714
 msgid "GDT_Float32"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1634
+#: ../../ref/contrib/gis/gdal.txt:1714
 msgid "Thirty-two bit floating point"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1635
+#: ../../ref/contrib/gis/gdal.txt:1715
 msgid "7"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1635
+#: ../../ref/contrib/gis/gdal.txt:1715
 msgid "GDT_Float64"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1635
+#: ../../ref/contrib/gis/gdal.txt:1715
 msgid "Sixty-four bit floating point"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1640
+#: ../../ref/contrib/gis/gdal.txt:1720
 msgid ""
 "Integer representing the number of bands of the raster. A raster can be "
 "created without passing band data upon creation. If the number of bands "
@@ -1780,7 +1864,7 @@ msgid ""
 "``bands`` input. The number of bands can't be changed after creation."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1647
+#: ../../ref/contrib/gis/gdal.txt:1727
 msgid ""
 "A list of ``band_input`` dictionaries with band input data. The resulting "
 "band indices are the same as in the list provided. The definition of the "
@@ -1789,11 +1873,36 @@ msgid ""
 "\" value is set to ``None``."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1654
+#: ../../ref/contrib/gis/gdal.txt:1737
+msgid ""
+"A dictionary with raster creation options. The key-value pairs of the input "
+"dictionary are passed to the driver on creation of the raster."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1740
+msgid ""
+"The available options are driver-specific and are described in the "
+"documentation of each driver."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1743
+msgid ""
+"The values in the dictionary are not case-sensitive and are automatically "
+"converted to the correct string format upon creation."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1746
+msgid ""
+"The following example uses some of the options available for the `GTiff "
+"driver`__. The result is a compressed signed byte raster with an internal "
+"tiling scheme. The internal tiles have a block size of 23 by 23::"
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1769
 msgid "The ``band_input`` dictionary"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1656
+#: ../../ref/contrib/gis/gdal.txt:1771
 msgid ""
 "The ``bands`` key in the ``ds_input`` dictionary is a list of ``band_input`` "
 "dictionaries. Each ``band_input`` dictionary can contain pixel values and "
@@ -1806,68 +1915,127 @@ msgid ""
 "keys that can be used."
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1668
+#: ../../ref/contrib/gis/gdal.txt:1783
 msgid "``nodata_value``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1668
+#: ../../ref/contrib/gis/gdal.txt:1783
 msgid "``None``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1668
+#: ../../ref/contrib/gis/gdal.txt:1783
 msgid "Mapped to the :attr:`~GDALBand.nodata_value` attribute"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1669
+#: ../../ref/contrib/gis/gdal.txt:1784
 msgid "``data``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1669
+#: ../../ref/contrib/gis/gdal.txt:1784
 msgid "Same as ``nodata_value`` or ``0``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1669 ../../ref/contrib/gis/gdal.txt:1670
-#: ../../ref/contrib/gis/gdal.txt:1671 ../../ref/contrib/gis/gdal.txt:1672
+#: ../../ref/contrib/gis/gdal.txt:1784 ../../ref/contrib/gis/gdal.txt:1785
+#: ../../ref/contrib/gis/gdal.txt:1786 ../../ref/contrib/gis/gdal.txt:1787
 msgid "Passed to the :meth:`~GDALBand.data` method"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1670
+#: ../../ref/contrib/gis/gdal.txt:1785
 msgid "``size``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1670
+#: ../../ref/contrib/gis/gdal.txt:1785
 msgid "``(with, height)`` of raster"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1671
+#: ../../ref/contrib/gis/gdal.txt:1786
 msgid "``shape``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1671
+#: ../../ref/contrib/gis/gdal.txt:1786
 msgid "Same as size"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1672
+#: ../../ref/contrib/gis/gdal.txt:1787
 msgid "``offset``"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1672
+#: ../../ref/contrib/gis/gdal.txt:1787
 msgid "``(0, 0)``"
 msgstr ""
 
+#: ../../ref/contrib/gis/gdal.txt:1793
+msgid "Using GDAL's Virtual Filesystem"
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1795
+msgid ""
+"GDAL has an internal memory-based filesystem, which allows treating blocks "
+"of memory as files. It can be used to read and write :class:`GDALRaster` "
+"objects to and from binary file buffers."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1799
+msgid ""
+"This is useful in web contexts where rasters might be obtained as a buffer "
+"from a remote storage or returned from a view without being written to disk."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1802
+msgid ""
+":class:`GDALRaster` objects are created in the virtual filesystem when a "
+"``bytes`` object is provided as input, or when the file path starts with ``/"
+"vsimem/``."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1806
+msgid ""
+"Input provided as ``bytes`` has to be a full binary representation of a "
+"file. For instance::"
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1819
+msgid ""
+"To create a new virtual file-based raster from scratch, use the ``ds_input`` "
+"dictionary representation and provide a ``name`` argument that starts with "
+"``/vsimem/`` (for detail of the dictionary representation, see :ref:`gdal-"
+"raster-ds-input`). For virtual file-based rasters, the :attr:`~GDALRaster."
+"vsi_buffer` attribute returns the ``bytes`` representation of the raster."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1826
+msgid ""
+"Here's how to create a raster and return it as a file in an :class:`~django."
+"http.HttpResponse`::"
+msgstr ""
+
 # f9b2d2e922b046768d0759269ea82ea3
-#: ../../ref/contrib/gis/gdal.txt:1676
+#: ../../ref/contrib/gis/gdal.txt:1841
 msgid "Settings"
 msgstr ""
 
-#: ../../ref/contrib/gis/gdal.txt:1681
+#: ../../ref/contrib/gis/gdal.txt:1846
 msgid "``GDAL_LIBRARY_PATH``"
 msgstr ""
 
 # d4949a07d0414098bc0adf2f15b94852
-#: ../../ref/contrib/gis/gdal.txt:1683
+#: ../../ref/contrib/gis/gdal.txt:1848
 msgid ""
 "A string specifying the location of the GDAL library.  Typically, this "
 "setting is only used if the GDAL library is in a non-standard location (e."
 "g., ``/home/john/lib/libgdal.so``)."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1853
+msgid "Exceptions"
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1857
+msgid "The base GDAL exception, indicating a GDAL-related error."
+msgstr ""
+
+#: ../../ref/contrib/gis/gdal.txt:1861
+msgid ""
+"An exception raised when an error occurs when constructing or using a "
+"spatial reference system object."
 msgstr ""
