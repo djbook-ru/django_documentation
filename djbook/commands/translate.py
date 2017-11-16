@@ -38,7 +38,7 @@ class Command(BaseCommand):
 
             en_msg = Msg(entry.msgid)
             entry.msgstr = en_msg.translate()
-            entry.flags.append(u'fuzzy')
+            entry.flags.append('fuzzy')
 
             #print '================================================='
             #print entry.msgid
@@ -49,9 +49,9 @@ class Command(BaseCommand):
 
 
 class Msg(object):
-    markup_pattern = re.compile(ur'(``.+?``|\:[^:]+?\:`.+?`)')
-    revert_pattern = re.compile(ur'\<\<\< (\d+?) \>\>\>')
-    whitespace_pattern = re.compile(ur' (\:\:)')
+    markup_pattern = re.compile(r'(``.+?``|\:[^:]+?\:`.+?`)')
+    revert_pattern = re.compile(r'\<\<\< (\d+?) \>\>\>')
+    whitespace_pattern = re.compile(r' (\:\:)')
     gs = goslate.Goslate()
 
     def __init__(self, msg):
@@ -73,7 +73,7 @@ class Msg(object):
     def _replace_before(self, matchobj):
         index = len(self._keywords)
         self._keywords.append(matchobj.group(0))
-        return u'<<< %s >>>' % index
+        return '<<< %s >>>' % index
 
     def _replace_after(self, matchobj):
         return self._keywords.pop(0)

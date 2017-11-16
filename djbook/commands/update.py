@@ -1,11 +1,11 @@
-import cStringIO
 import logging
 import os
 import tarfile
 import tempfile
-import urllib2
 import filecmp
 import shutil
+from io import StringIO
+from urllib.request import urlopen
 
 from cliff.command import Command as BaseCommand
 
@@ -92,8 +92,8 @@ class Command(GithubCommandMixin, BaseCommand):
         shutil.copyfile(src_path, dest_path)
 
     def load_file(self, url):
-        output = cStringIO.StringIO()
-        url_obj = urllib2.urlopen(url)
+        output = StringIO()
+        url_obj = urlopen(url)
         meta = url_obj.info()
         file_size = int(meta.getheaders("Content-Length")[0])
         self.app.stdout.write("Downloading: {0} Bytes: {1}\n".format(url, file_size))

@@ -14,6 +14,7 @@ class CommandManager(object):
     def __init__(self, package):
         self.commands = {}
         self._load_commands(package)
+        self.namespace = 'djbook.commands'
 
     def _load_commands(self, package):
         for importer, modname, ispkg in pkgutil.iter_modules(package.__path__):
@@ -62,10 +63,11 @@ class TranslatorApp(App):
     log = logging.getLogger(__name__)
 
     def __init__(self):
-        super(TranslatorApp, self).__init__(
+        super().__init__(
             description='translator tools',
             version='0.1',
             command_manager=CommandManager(commands),
+            deferred_help=True,
         )
         self.doc_path = os.path.dirname(os.path.abspath(__file__))
         self.locale_path = os.path.join(self.doc_path, 'locale', 'ru', 'LC_MESSAGES')

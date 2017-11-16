@@ -22,7 +22,7 @@ class Command(GithubCommandMixin, BaseCommand):
                 'contributors': repo.get_contributors()
             })
         except GithubException as e:
-            print e
+            print(e)
 
     def save_to_file(self, context):
         env = Environment(loader=FileSystemLoader(self.app.templates_path))
