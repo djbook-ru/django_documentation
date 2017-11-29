@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012.
-# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015, 2016.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-16 11:56+0200\n"
-"PO-Revision-Date: 2016-01-31 13:28+0200\n"
+"PO-Revision-Date: 2017-11-29 11:34+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -161,24 +161,21 @@ msgstr ""
 
 # 257292ad961b4ad39e1b520c951174d6
 #: ../../intro/tutorial03.txt:55
-#, fuzzy
 msgid ""
 "To get from a URL to a view, Django uses what are known as 'URLconfs'. A "
 "URLconf maps URL patterns to views."
 msgstr ""
 "Чтобы из URL-а получить представление, Django используется так называемый "
-"'URLconf'. URLconf определяет соответствие URL-шаблонов(являются регулярными "
-"выражениями) и представлений."
+"'URLconf'. URLconf определяет соответствие URL-шаблонов и представлений."
 
 # cb030e7a1ec242d98eda404f0934af41
 #: ../../intro/tutorial03.txt:58
-#, fuzzy
 msgid ""
 "This tutorial provides basic instruction in the use of URLconfs, and you can "
 "refer to :doc:`/topics/http/urls` for more information."
 msgstr ""
 "В этом разделе мы опишем основы использования настроек URL-ов, больше "
-"информации вы можете найти в разделе :mod:`django.core.urlresolvers`."
+"информации вы можете найти в разделе :doc:`/topics/http/urls`."
 
 # eb368fb3ef5c474396ff837e4967f966
 #: ../../intro/tutorial03.txt:62
@@ -196,13 +193,12 @@ msgstr ""
 
 # 12b60b6f3c8e44f6824cdc342ef35f28
 #: ../../intro/tutorial03.txt:80
-#, fuzzy
 msgid ""
 "Wire these new views into the ``polls.urls`` module by adding the following :"
 "func:`~django.urls.path` calls:"
 msgstr ""
 "Привяжем наше представление новостей в модуле ``polls.urls`` добавив вызов :"
-"func:`~django.conf.urls.url`:"
+"func:`~django.urls.path`:"
 
 # 32d56cc326c84abf9d6ea38b3d5b1fda
 #: ../../intro/tutorial03.txt:101
@@ -219,7 +215,6 @@ msgstr ""
 
 # f4c6fcd56a2d4d8d86cad8b74de45552
 #: ../../intro/tutorial03.txt:106
-#, fuzzy
 msgid ""
 "When somebody requests a page from your website -- say, \"/polls/34/\", "
 "Django will load the ``mysite.urls`` Python module because it's pointed to "
@@ -232,16 +227,14 @@ msgid ""
 msgstr ""
 "При запросе страницы -- например, \"/polls/34/\", Django загружает модуль "
 "``mysite.urls`` т.к. он указан в :setting:`ROOT_URLCONF`. Находит переменную "
-"``urlpatterns`` и перебирает все регулярные выражения по порядку. :func:"
-"`~django.conf.urls.include` просто ссылается на другой URLconf. Заметим, что "
-"регулярное выражение для :func:`~django.conf.urls.include` не содержит ``$`` "
-"(признак конца строки) но содержит завершающий слэш. Когда Django встречает :"
-"func:`~django.conf.urls.include`, он отрезает распознанную часть URL, все "
-"что осталось передает в указанный URLconf для дальнейшей обработки."
+"``urlpatterns`` и перебирает все параметры переменных по порядку. Когда "
+"находит ``'polls/'``, отрезает найденный текст (``\"polls/\"``) и отправляет "
+"оставшийся -- ``\"34/\"`` -- в URLconf из 'polls.urls' для последующей "
+"обработки. Там находит соответствие с ``'<int:question_id>/'``, в результате "
+"чего вызывается представление ``detail()``::"
 
 # e68fe2de50e143c087374c25c7fbc798
 #: ../../intro/tutorial03.txt:117
-#, fuzzy
 msgid ""
 "The ``question_id=34`` part comes from ``<int:question_id>``. Using angle "
 "brackets \"captures\" part of the URL and sends it as a keyword argument to "
@@ -250,22 +243,19 @@ msgid ""
 "a converter that determines what patterns should match this part of the URL "
 "path."
 msgstr ""
-"Аргумент ``question_id='34'`` получен из ``(?P<question_id>[0-9]+)``. "
-"Использование скобок вокруг \"captures\" позволяет передать значения "
-"распознанные регулярным выражением в представление, ``?P<question_id>`` "
-"определяет название переменной при передаче и регулярное выражение "
-"``[0-9]+``, которое распознает цифры."
+"Аргумент ``question_id='34'`` получен из ``<int:question_id>`. Использование "
+"скобок позволяет распознать часть URL и передать в представление. ``:"
+"question_id>`` определяет название переменной при передаче, ``<int:`` "
+"определяет какой шаблон должен использоваться при распознавании части URL."
 
 # 7ff0aac158694f4d92c28727242b5ec4
 #: ../../intro/tutorial03.txt:123
-#, fuzzy
 msgid ""
 "There's no need to add URL cruft such as ``.html`` -- unless you want to, in "
 "which case you can do something like this::"
 msgstr ""
-"Так как URL-шаблоны -- это регулярные выражения, вы можете распознать какой "
-"угодно URL. И нет необходимости добавлять в URL всякий хлам, вроде ``."
-"html``, пока это вам не понадобится. В таком случае добавьте что-то вроде::"
+"Нет необходимости добавлять в URL всякий хлам, вроде ``.html``, пока это вам "
+"не понадобится. В таком случае добавьте что-то вроде::"
 
 # 13bbfbd28c63492caeb5f275f5977700
 #: ../../intro/tutorial03.txt:128
@@ -455,7 +445,6 @@ msgstr ""
 
 # 0981bf469c3f4bffb0cc3b59c0be8399
 #: ../../intro/tutorial03.txt:260
-#, fuzzy
 msgid ""
 "Note that once we've done this in all these views, we no longer need to "
 "import :mod:`~django.template.loader` and :class:`~django.http.HttpResponse` "
@@ -463,10 +452,9 @@ msgid ""
 "``detail``, ``results``, and ``vote``)."
 msgstr ""
 "Так как мы используем такой подход во всех наших представлениях, нет "
-"необходимости импортировать :mod:`~django.template.loader`, :class:`~django."
-"template.RequestContext` и :class:`~django.http.HttpResponse` (:class:"
-"`~django.http.HttpResponse` еще нужен, если остались старые ``detail``, "
-"``results`` и ``vote``)."
+"необходимости импортировать :mod:`~django.template.loader` и :class:`~django."
+"http.HttpResponse` (:class:`~django.http.HttpResponse` еще нужен, если "
+"остались старые ``detail``, ``results`` и ``vote``)."
 
 # 72318c4437f243c691dd0066338b16bc
 #: ../../intro/tutorial03.txt:265
@@ -664,7 +652,6 @@ msgstr ""
 
 # aa1b07befe2949ee8fd03600a6d68077
 #: ../../intro/tutorial03.txt:387
-#, fuzzy
 msgid ""
 "The problem with this hardcoded, tightly-coupled approach is that it becomes "
 "challenging to change URLs on projects with a lot of templates. However, "
@@ -675,8 +662,8 @@ msgid ""
 msgstr ""
 "Проблема в том, что нам будет очень сложно поменять URL-ы в проекте с "
 "большим количеством шаблонов. Однако, так как мы указали названия при "
-"вызове :func:`~django.conf.urls.url` в модуле ``polls.urls``, мы можем "
-"ссылаться на шаблоны URL-ов используя шаблонный тег ``{% url %}``:"
+"вызове :func:`~django.urls.path` в модуле ``polls.urls``, мы можем ссылаться "
+"на шаблоны URL-ов используя шаблонный тег ``{% url %}``:"
 
 # d9798f7887a34d8985c9830456a2357d
 #: ../../intro/tutorial03.txt:397

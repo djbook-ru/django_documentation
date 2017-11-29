@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012, 2013.
-# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015, 2016.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-16 11:56+0200\n"
-"PO-Revision-Date: 2016-03-17 14:09+0200\n"
+"PO-Revision-Date: 2017-11-29 11:07+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -162,7 +162,6 @@ msgstr ""
 
 # 3edd9a105bab4bdebbf29a13dfc118b6
 #: ../../topics/security.txt:68
-#, fuzzy
 msgid ""
 ":ref:`CSRF protection works <how-csrf-works>` by checking for a secret in "
 "each POST request. This ensures that a malicious user cannot simply \"replay"
@@ -174,8 +173,8 @@ msgstr ""
 "временем в каждом POST запросе. Она не позволяет злоумышленнику просто "
 "сформировать POST запрос формы к вашему сайту и создать возможность другому "
 "авторизованному пользователю нечаянно отправить эту форму. Злоумышленнику "
-"потребуется знать содержимое метки, которое зависит от пользователя "
-"(используются куки)."
+"потребуется знать содержимое секретной метки, которое зависит от "
+"пользователя (используются куки)."
 
 # e4b30cff46e8405c9b72472c5a7b4c0e
 #: ../../topics/security.txt:74
@@ -227,10 +226,13 @@ msgid ""
 "provided and therefore unsafe, they are escaped by the underlying database "
 "driver."
 msgstr ""
+"Забросы через Django ORM защищены от SQL-инъекции т.к. они формируются с "
+"использованием параметров запроса. SQL код запроса отделен от параметров "
+"запроса. Т.к. параметры запроса могут поступать от пользователя и быть не "
+"безопасными, они экранируют на уровне драйвера базы данных."
 
 # 2dd6df27ec224b1ca473109377fd4978
 #: ../../topics/security.txt:98
-#, fuzzy
 msgid ""
 "Django also gives developers power to write :ref:`raw queries <executing-raw-"
 "queries>` or execute :ref:`custom sql <executing-custom-sql>`. These "
@@ -239,9 +241,7 @@ msgid ""
 "should exercise caution when using :meth:`~django.db.models.query.QuerySet."
 "extra` and :class:`~django.db.models.expressions.RawSQL`."
 msgstr ""
-"При использовании Django ORM созданный SQL запрос будет правильно "
-"экранирован соответствующим драйвером базы данных. Однако, Django "
-"предоставляет разработчикам возможность писать :ref:`запросы напрямую "
+"Django предоставляет разработчикам возможность писать :ref:`запросы напрямую "
 "<executing-raw-queries>` или выполнять :ref:`собственные запросы <executing-"
 "custom-sql>`. Эти возможности следует использовать умеренно и всегда "
 "обращать пристальное внимание на экранирование всех параметров, которые "
@@ -301,7 +301,6 @@ msgstr "SSL/HTTPS"
 
 # 3c89d32871294676a6d1c654d1620afc
 #: ../../topics/security.txt:128
-#, fuzzy
 msgid ""
 "It is always better for security to deploy your site behind HTTPS. Without "
 "this, it is possible for malicious network users to sniff authentication "
@@ -309,11 +308,11 @@ msgid ""
 "and in some cases -- **active** network attackers -- to alter data that is "
 "sent in either direction."
 msgstr ""
-"Применение этой защиты хорошо отражается на безопасности, хотя и не всегда "
-"уместно с практической точки зрения. При отсутствии HTTPS злоумышленник "
-"имеет возможность перехватывать аутентификационные данные или любую другую "
-"информацию, передаваемую между клиентом и сервером. А в случае **активной** "
-"атаки — может даже изменять данные, передаваемые в любом направлении."
+"Лучше предоставлять доступ к вашему сайту только через HTTPS. При отсутствии "
+"HTTPS злоумышленник имеет возможность перехватывать аутентификационные "
+"данные или любую другую информацию, передаваемую между клиентом и сервером. "
+"А в случае **активной** атаки — может даже изменять данные, передаваемые в "
+"любом направлении."
 
 # 29f6d898a5d64b9295cf2e8237d3416a
 #: ../../topics/security.txt:134
@@ -391,7 +390,6 @@ msgstr "Использование :ref:`http-strict-transport-security` (HSTS)"
 
 # d1787643929144a8873c7933f777087a
 #: ../../topics/security.txt:162
-#, fuzzy
 msgid ""
 "HSTS is an HTTP header that informs a browser that all future connections to "
 "a particular site should always use HTTPS. Combined with redirecting "
@@ -405,8 +403,9 @@ msgstr ""
 "следующие соединения к конкретному сайту всегда должны использовать HTTPS. "
 "Дополняя это перенаправлением HTTP запросов на HTTPS, мы получаем "
 "дополнительную защиту от использования SSL. HSTS может быть настроен с "
-"помощью настроек :setting:`SECURE_HSTS_SECONDS` и :setting:"
-"`SECURE_HSTS_INCLUDE_SUBDOMAINS`, или на web-сервере."
+"помощью настроек :setting:`SECURE_HSTS_SECONDS`, :setting:"
+"`SECURE_HSTS_INCLUDE_SUBDOMAINS` и :setting:`SECURE_HSTS_PRELOAD`, или на "
+"web-сервере."
 
 # 18e68e9c25e64111a99118d65cb1b2e3
 #: ../../topics/security.txt:173
@@ -483,14 +482,13 @@ msgstr ""
 
 # e29bd8a87c184967bf95e925fe38dee8
 #: ../../topics/security.txt:203
-#, fuzzy
 msgid ""
 "Additionally, Django requires you to explicitly enable support for the ``X-"
 "Forwarded-Host`` header (via the :setting:`USE_X_FORWARDED_HOST` setting) if "
 "your configuration requires it."
 msgstr ""
-"Дополнительно, начиная с 1.3.1, Django требует явную активацию поддержки "
-"заголовка ``X-Forwarded-Host`` (через параметр конфигурации :setting:"
+"Дополнительно Django требует явную активацию поддержки заголовка ``X-"
+"Forwarded-Host`` (через параметр конфигурации :setting:"
 "`USE_X_FORWARDED_HOST`), если ваша конфигурация в нём нуждается."
 
 # 18d4c9d3d5f944508764dd903491df7b
@@ -683,6 +681,10 @@ msgid ""
 "While Django has tools to address some of the issues, other issues must be "
 "accounted for in the design of your project."
 msgstr ""
+"Обратите внимание на список `Топ 10 уязвимостей <https://www.owasp.org/index."
+"php/Top_10_2013-Top_10>`_ на сайте Open Web Application Security Project "
+"(OWASP). Хотя Django содержит инструменты для защиты от некоторых из них, "
+"остальные должны быть учтены в архитектуре вашего проекта."
 
 #~ msgid "Markup library"
 #~ msgstr "Библиотека Markup"
