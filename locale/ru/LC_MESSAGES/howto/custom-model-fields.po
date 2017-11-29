@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated <>, 2012, 2013.
-# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015, 2016.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-16 11:56+0200\n"
-"PO-Revision-Date: 2016-03-17 13:41+0200\n"
+"PO-Revision-Date: 2017-11-29 16:05+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -655,9 +655,8 @@ msgstr ""
 
 # 1399371549a64822a0c17804b5b6a1e7
 #: ../../howto/custom-model-fields.txt:315
-#, fuzzy
 msgid "Changing a custom field's base class"
-msgstr "Создание подкласса поля"
+msgstr "Изменение базового класса собственного поля"
 
 #: ../../howto/custom-model-fields.txt:317
 msgid ""
@@ -665,18 +664,23 @@ msgid ""
 "detect the change and make a migration for it. For example, if you start "
 "with::"
 msgstr ""
+"Вы не можете изменить базовый класс собственного поля т.к. Django не сможет "
+"определить эти изменения и не создаст миграцию. Например, у вас было поле::"
 
 #: ../../howto/custom-model-fields.txt:323
 msgid ""
 "and then decide that you want to use ``TextField`` instead, you can't change "
 "the subclass like this::"
 msgstr ""
+"затем вы решили использовать ``TextField``, вы не можете просто изменить "
+"класс::"
 
 #: ../../howto/custom-model-fields.txt:329
 msgid ""
 "Instead, you must create a new custom field class and update your models to "
 "reference it::"
 msgstr ""
+"Вам следует создать новый класс поля и использовать его в вашей модели::"
 
 #: ../../howto/custom-model-fields.txt:338
 msgid ""
@@ -684,6 +688,9 @@ msgid ""
 "you must retain the original ``CustomCharField`` class as long as you have "
 "migrations that reference it."
 msgstr ""
+"Как уже упоминалось об :ref:`удалении полей <migrations-removing-model-"
+"fields>`, вы должны хранить начальный класс ``CustomCharField`` пока проект "
+"содержит миграции, которые ссылаются на этот класс."
 
 # a6d906ba2d50431ead5827cabd984ce1
 #: ../../howto/custom-model-fields.txt:343
@@ -792,7 +799,6 @@ msgstr "Например::"
 
 # 68182603cd4b47659e5b92c2e3cd09be
 #: ../../howto/custom-model-fields.txt:405
-#, fuzzy
 msgid ""
 "The :meth:`~Field.db_type` and :meth:`~Field.rel_db_type` methods are called "
 "by Django when the framework constructs the ``CREATE TABLE`` statements for "
@@ -804,14 +810,14 @@ msgid ""
 "slightly complex code, such as the ``connection.settings_dict`` check in the "
 "above example."
 msgstr ""
-"Метод :meth:`~Field.db_type` используется Django при создании ``CREATE "
-"TABLE`` запросов -- когда вы создаете таблицы в базе данных для приложения. "
-"Также при создании условий в ``WHERE``, которые используют поле -- это когда "
-"вы используете методы QuerySet для получения данных, такие как ``get()``, "
-"``filter()`` или ``exclude()``, и используете ваше поле в качестве "
-"аргумента. Больше нигде этот метод не используется, вы можете использовать "
-"достаточно сложный код, как проверка ``connection.settings_dict`` в примере "
-"выше."
+"Методы :meth:`~Field.db_type` и :meth:`~Field.rel_db_type` используются "
+"Django при создании ``CREATE TABLE`` запросов -- когда вы создаете таблицы в "
+"базе данных для приложения. Также при создании условий в ``WHERE``, которые "
+"используют поле -- это когда вы используете методы QuerySet для получения "
+"данных, такие как ``get()``, ``filter()`` или ``exclude()``, и используете "
+"ваше поле в качестве аргумента. Больше нигде этот метод не используется, вы "
+"можете использовать достаточно сложный код, как проверка ``connection."
+"settings_dict`` в примере выше."
 
 # e51328f1b23c4a03b2f85ab47aa36c6e
 #: ../../howto/custom-model-fields.txt:414
@@ -859,6 +865,11 @@ msgid ""
 "``UnsignedAutoField``, you also need the foreign keys that point to that "
 "field to use the same data type::"
 msgstr ""
+"Метод :meth:`~Field.rel_db_type` вызывается полями ``ForeignKey`` и "
+"``OneToOneField``, которые указывают на другие поля, чтобы узнать тип поля в "
+"базе данных. Например, у вас есть поле ``UnsignedAutoField``, и вам "
+"необходимо, чтобы поле, которое ссылаются на ваше поле, использовали такой "
+"же тип поля::"
 
 # 392329bf4bf647d1a5766d2bb15082ae
 #: ../../howto/custom-model-fields.txt:470
@@ -1211,7 +1222,6 @@ msgstr ""
 
 # 5a6eb4ff2b524ae9b60578f7c033bfcf
 #: ../../howto/custom-model-fields.txt:707
-#, fuzzy
 msgid ""
 "Put a ``__str__()`` method on the class you're wrapping up as a field. There "
 "are a lot of places where the default behavior of the field code is to call "
@@ -1220,12 +1230,11 @@ msgid ""
 "method automatically converts to the string form of your Python object, you "
 "can save yourself a lot of work."
 msgstr ""
-"Добавьте метод ``__str__()`` (``__unicode__()`` в Python 2) в класс, который "
-"вы используете для значений вашего поля. Во многих случаях используется "
-"функция :func:`~django.utils.encoding.force_text` при обработке значений. (В "
-"нашем примере, ``value`` будет объект ``Hand``, не ``HandField``). Если "
-"метод ``__str__()``(``__unicode__`` для Python 2) преобразует объект Python "
-"в строку, это сохранит вам много времени."
+"Добавьте метод ``__str__()`` в класс, который вы используете для значений "
+"вашего поля. Во многих случаях используется функция ``str()`` при обработке "
+"значений. (В нашем примере, ``value`` будет объект ``Hand``, не "
+"``HandField``). Если метод ``__str__()`` преобразует объект Python в строку, "
+"это сохранит вам много времени."
 
 # 2cd137f2faa6491ab1134fc3a8cc1016
 #: ../../howto/custom-model-fields.txt:715
