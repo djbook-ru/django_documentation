@@ -1,14 +1,14 @@
 # Russian translations for Django package.
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
-# Automatically generated <>, 2012, 2013, 2014, 2015.
+# Automatically generated <>, 2012, 2013, 2014, 2015, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-16 11:56+0200\n"
-"PO-Revision-Date: 2015-11-17 12:39+0200\n"
+"PO-Revision-Date: 2017-11-30 13:01+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -83,7 +83,6 @@ msgstr ""
 
 # 68d2b5bc84c841ceb7579353316b58cc
 #: ../../topics/db/multi-db.txt:44
-#, fuzzy
 msgid ""
 "If the concept of a ``default`` database doesn't make sense in the context "
 "of your project, you need to be careful to always specify the database that "
@@ -103,8 +102,8 @@ msgstr ""
 "использовать. Вы должны настроить :setting:`DATABASE_ROUTERS` для всех "
 "моделей ваших приложений, включая те, которые расположены в сторонних "
 "приложениях, чтобы ни один запрос не был отправлен в стандартную базу. "
-"Следующий пример ``settings.py`` определяет две дополнительных базы данных, "
-"оставляя запись ``default`` пустой::"
+"Следующий пример ``settings.py`` определяет две базы данных, оставляя запись "
+"``default`` пустой::"
 
 # cb3c2ab4bdfb4d6e8298766cab1a1dfe
 #: ../../topics/db/multi-db.txt:70
@@ -124,7 +123,6 @@ msgstr "Синхронизация ваших баз данных"
 
 # 95e12d2636b948f9b6b81858c8bf3cc9
 #: ../../topics/db/multi-db.txt:77
-#, fuzzy
 msgid ""
 "The :djadmin:`migrate` management command operates on one database at a "
 "time. By default, it operates on the ``default`` database, but by providing "
@@ -134,10 +132,10 @@ msgid ""
 msgstr ""
 "Команда :djadmin:`migrate` работает единовременно только с одной базой "
 "данных. По умолчанию, она работает с базой данных ``default``, но добавив "
-"аргумент :djadminopt:`--database`, вы можете указать команде, что надо "
-"работать с другой базой данных. Таким образом, для того, чтобы "
-"синхронизировать все модели со всеми базами данных в нашем примере, вам "
-"потребуется вызвать::"
+"аргумент :option:`--database <migrate --database>`, вы можете указать "
+"команде, что надо работать с другой базой данных. Таким образом, для того, "
+"чтобы синхронизировать все модели со всеми базами данных в нашем примере, "
+"вам потребуется вызвать::"
 
 # 5011b97dd9e04ced98c10edc1cac8c98
 #: ../../topics/db/multi-db.txt:86
@@ -158,6 +156,9 @@ msgid ""
 "`migrate`. Omitting the database name would raise an error. For the second "
 "example::"
 msgstr ""
+"Если вы оставили ``default`` базу данных пустой, как в примере выше, вам "
+"следует указывать название базы данных при каждом запуске :djadmin:"
+"`migrate`, иначе будет вызвано исключение. Для второго примера::"
 
 # 7b239145c2134716baa306929f3728dd
 #: ../../topics/db/multi-db.txt:99
@@ -166,16 +167,14 @@ msgstr "Использование других команд"
 
 # 129b927ced0b4213a495b5c27e38f26d
 #: ../../topics/db/multi-db.txt:101
-#, fuzzy
 msgid ""
 "Most other ``django-admin`` commands that interact with the database operate "
 "in the same way as :djadmin:`migrate` -- they only ever operate on one "
 "database at a time, using ``--database`` to control the database used."
 msgstr ""
 "Остальные команды ``django-admin``, работающие с базой данных, аналогичны :"
-"djadmin:`migrate` -- т.е., только с одной базой данных за раз. Добавляйте :"
-"djadminopt:`--database`, чтобы указать, какую базу данных следует "
-"использовать."
+"djadmin:`migrate` -- т.е., только с одной базой данных за раз. Добавляйте "
+"``--database``, чтобы указать, какую базу данных следует использовать."
 
 #: ../../topics/db/multi-db.txt:105
 msgid ""
@@ -186,6 +185,12 @@ msgid ""
 "database, but it consults the :meth:`allow_migrate` method of :ref:`routers "
 "<topics-db-multi-db-routing>` if any are installed."
 msgstr ""
+"Исключением является команда :djadmin:`makemigrations`. Она проверяет "
+"историю миграций в базах данных, чтобы найти проблему в существующих файлах "
+"миграций (что может быть вызвано их редактированием), перед тем, как создать "
+"новые миграции. По умолчанию проверяется только ``default`` база данных, но "
+"она учитывает метод :meth:`allow_migrate` :ref:`роутеров <topics-db-multi-db-"
+"routing>`, если они используются на проекте."
 
 # 8a3dbcfac1b043e58999147cf37a3fb4
 #: ../../topics/db/multi-db.txt:115
@@ -359,6 +364,13 @@ msgid ""
 "missing tables. When :djadmin:`makemigrations` verifies the migration "
 "history, it skips databases where no app is allowed to migrate."
 msgstr ""
+":djadmin:`makemigrations` всегда создает миграции при изменении модели, но "
+"если ``allow_migrate()`` вернул ``False``, все операции миграции для "
+"``model_name`` будут пропущены при выполнении :djadmin:`migrate` для ``db``. "
+"Изменяя ``allow_migrate()`` для модели, которая уже содержит миграции, может "
+"привести к сломанным внешним ключам, дополнительным таблицам, или "
+"пропущенным таблицам. Когда :djadmin:`makemigrations` историю миграций, она "
+"пропускает базы данных, для которых нет приложений с возможностью миграций."
 
 # d18b25a565c74c41a577b5b80fc36ea4
 #: ../../topics/db/multi-db.txt:201
@@ -534,7 +546,6 @@ msgstr ""
 
 # 46b30ee88d794f4ca99f6510bae0527f
 #: ../../topics/db/multi-db.txt:378
-#, fuzzy
 msgid ""
 "The order in which routers are processed is significant. Routers will be "
 "queried in the order they are listed in the :setting:`DATABASE_ROUTERS` "
@@ -550,10 +561,10 @@ msgstr ""
 "порядке, в котором они перечислены в параметре конфигурации :setting:"
 "`DATABASE_ROUTERS`. В этом примере ``AuthRouter`` применяется до "
 "``PrimaryReplicaRouter`` и в результате, решение по модели в ``auth`` "
-"принимается до всех остальных решений. Если же поменять порядок роутеров, то "
-"``PrimaryReplicaRouter.allow_migrate()`` будет применено первым. Сущность "
-"\"принимаем всё\" реализации этого роутера приведёт к тому, что все модели "
-"будут доступны во всех базах данных."
+"принимается до всех остальных решений. Если же поменять порядок роутеров в :"
+"setting:`DATABASE_ROUTERS`, то ``PrimaryReplicaRouter.allow_migrate()`` "
+"будет применено первым. Сущность \"принимаем всё\" реализации этого роутера "
+"приведёт к тому, что все модели будут доступны во всех базах данных."
 
 # 97c12a233dfa428cbcf86ebc9111ee40
 #: ../../topics/db/multi-db.txt:389
@@ -570,6 +581,13 @@ msgid ""
 "migrate. See :ref:`contrib_app_multiple_databases` for information about "
 "contrib apps that must be together in one database."
 msgstr ""
+"Этот пример определяет роутер для работы с ``auth`` приложением и другие "
+"роутеры для работы с другими приложениями. Если не указывать ``default`` "
+"базу данных и не добавлять роутер, который обрабатывает все приложения, "
+"необходимо указать все приложения из :setting:`INSTALLED_APPS` в ваших "
+"роутерах чтобы выполнить миграции. Смотрите :ref:"
+"`contrib_app_multiple_databases`, чтобы узнать какие приложения должны "
+"находиться в одной базе данных."
 
 # 05c0f317efbd4d28962e6b3ce4ceb203
 #: ../../topics/db/multi-db.txt:423
@@ -885,11 +903,12 @@ msgstr ""
 
 # 9aeac70f95884fc6826146203dcfab6f
 #: ../../topics/db/multi-db.txt:613
-#, fuzzy
 msgid ""
 ":class:`~django.contrib.admin.InlineModelAdmin` objects can be handled in a "
 "similar fashion. They require three customized methods::"
-msgstr "Инлайны могут обрабатываться аналогично. Они требуют три метода::"
+msgstr ""
+":class:`~django.contrib.admin.InlineModelAdmin` обекты могут обрабатываться "
+"аналогично. Они требуют три метода::"
 
 # 584e76d919ff44f3bcd6c59cf1a570af
 #: ../../topics/db/multi-db.txt:633
@@ -902,7 +921,6 @@ msgstr ""
 
 # 5bbfe64b0f8043f7856ff283cc18b59a
 #: ../../topics/db/multi-db.txt:651
-#, fuzzy
 msgid ""
 "This example sets up two admin sites. On the first site, the ``Author`` and "
 "``Publisher`` objects are exposed; ``Publisher`` objects have a tabular "
@@ -1034,7 +1052,6 @@ msgstr ""
 
 # 6fc01e00859c44bc8e41e48ad90ff12b
 #: ../../topics/db/multi-db.txt:712
-#, fuzzy
 msgid ""
 "``admin`` depends on ``auth``, so its models must be in the same database as "
 "``auth``."

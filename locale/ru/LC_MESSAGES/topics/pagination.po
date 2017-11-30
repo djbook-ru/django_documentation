@@ -2,14 +2,14 @@
 # Copyright (C) Django Software Foundation and contributors
 # This file is distributed under the same license as the Django package.
 # Automatically generated, 2012.
-# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015.
+# Dmitriy Kostochko <alerion.um@gmail.com>, 2013, 2014, 2015, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-16 11:56+0200\n"
-"PO-Revision-Date: 2015-11-17 15:24+0200\n"
+"PO-Revision-Date: 2017-11-30 12:21+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ru\n"
@@ -120,9 +120,8 @@ msgstr "Обязательные аргументы"
 
 # 8b99cf1b8597432c9120338b3d03454e
 #: ../../topics/pagination.txt:148
-#, fuzzy
 msgid "object_list"
-msgstr "``object_list``"
+msgstr "object_list"
 
 #: ../../topics/pagination.txt:137
 msgid ""
@@ -132,10 +131,16 @@ msgid ""
 "clause or with a default :attr:`~django.db.models.Options.ordering` on the "
 "model."
 msgstr ""
+"Список, кортеж, ``QuerySet`` или другие интериремые объекты с методами "
+"``count()`` или ``__len__()``. Для постоянного постраничного вывода "
+"``QuerySet`` должен быть отсортирован, например, с помощью метода :meth:"
+"`~django.db.models.query.QuerySet.order_by` или атрибутом модели :attr:"
+"`~django.db.models.Options.ordering`."
 
 #: ../../topics/pagination.txt:143
 msgid "Performance issues paginating large ``QuerySet``\\s"
 msgstr ""
+"Проблемы с производительностью при постраничном выводе больших ``QuerySet``"
 
 #: ../../topics/pagination.txt:145
 msgid ""
@@ -144,12 +149,15 @@ msgid ""
 "``LIMIT``/``OFFSET`` query needs to count the number of ``OFFSET`` records "
 "which takes longer as the page number gets higher."
 msgstr ""
+"Если вы используете ``QuerySet`` с большим количеством объектов, запрос "
+"страницы с большим номер может быть очень медленным на некоторых базах "
+"данных, т.к. ``LIMIT``/``OFFSET`` запроса должен учитывать записи до "
+"``OFFSET``, что занимает больше времени, когда номер страницы увеличивается."
 
 # 5043fdd7e76f46238059ad3fa234a4ec
 #: ../../topics/pagination.txt:152
-#, fuzzy
 msgid "per_page"
-msgstr "``per_page``"
+msgstr "per_page"
 
 # 6b36cc3071194b3891077db2dac112c0
 #: ../../topics/pagination.txt:151
@@ -167,13 +175,11 @@ msgstr "Необязательные аргументы"
 
 # 7a2025423a4e4ea7859dbdf0a07fc694
 #: ../../topics/pagination.txt:165
-#, fuzzy
 msgid "orphans"
-msgstr "``orphans``"
+msgstr "orphans"
 
 # 87bac5dbdbfc4924b740a6a1cab23ca1
 #: ../../topics/pagination.txt:158
-#, fuzzy
 msgid ""
 "Use this when you don't want to have a last page with very few items. If the "
 "last page would normally have a number of items less than or equal to "
@@ -184,19 +190,18 @@ msgid ""
 "with 13 items. ``orphans`` defaults to zero, which means pages are never "
 "combined and the last page may have one item."
 msgstr ""
-"Минимальное количество элементов на последней странице, по умолчанию, ноль. "
 "Используйте, когда нежелательно отображать последнюю страницу почти пустой. "
 "Если последняя страница будет содержать количество элементов меньше или "
 "равно ``orphans``, то эти элементы будут добавлены к предыдущей странице "
 "(которая станет последней). Например, для 23 элементов, ``per_page=10``и "
 "``orphans=3``, будет выдано две страницы; первая страница будет содержать 10 "
-"элементов, а вторая (и последняя) — 13."
+"элементов, а вторая (и последняя) — 13. ``orphans`` по умолчанию равен нулю "
+"и последняя страница может содержать один элемент."
 
 # fa0c7015ed134d9fa694e3cc04d4a28e
 #: ../../topics/pagination.txt:169
-#, fuzzy
 msgid "allow_empty_first_page"
-msgstr "``allow_empty_first_page``"
+msgstr "allow_empty_first_page"
 
 # f6f58341c3c8453fae095c4d931f0460
 #: ../../topics/pagination.txt:168
@@ -215,20 +220,21 @@ msgstr "Методы"
 
 # ebcbe5a760eb457581ab3d510209b374
 #: ../../topics/pagination.txt:178
-#, fuzzy
 msgid ""
 "Returns a :class:`Page` object with the given 1-based index, while also "
 "handling out of range and invalid page numbers."
 msgstr ""
 "Возвращает объект :class:`Page` по переданному индексу (начинается с "
-"единицы). Вызывает исключение :exc:`InvalidPage`, если указанная страница не "
-"существует."
+"единицы). Проверяет правильный ли номер страницы."
 
 #: ../../topics/pagination.txt:181
 msgid ""
 "If the page isn't a number, it returns the first page. If the page number is "
 "negative or greater than the number of pages, it returns the last page."
 msgstr ""
+"Если номер страницы не число, возвращает первую страницу. Если номер "
+"страницы отрицательный или больше, чем количество страниц, возвращает "
+"последнюю страницу."
 
 #: ../../topics/pagination.txt:184
 msgid ""
@@ -236,6 +242,8 @@ msgid ""
 "``Paginator(..., allow_empty_first_page=False)`` and the ``object_list`` is "
 "empty."
 msgstr ""
+"Вызывает исключение (:exc:`EmptyPage`) только если вы указали "
+"``Paginator(..., allow_empty_first_page=False)`` и ``object_list`` пустой."
 
 # ebcbe5a760eb457581ab3d510209b374
 #: ../../topics/pagination.txt:190
