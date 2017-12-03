@@ -12,7 +12,6 @@ from sphinx.builders.html import StandaloneHTMLBuilder
 from sphinx.domains.std import Cmdoption
 from sphinx.util.console import bold
 from sphinx.util.nodes import set_source_info
-from sphinx.locale import l_
 
 try:
     from sphinx.writers.html import SmartyPantsHTMLTranslator as HTMLTranslator
@@ -266,8 +265,8 @@ class DjangoHTMLTranslator(HTMLTranslator):
     # that work.
     #
     version_text = {
-        'versionchanged': l_('Changed in Django %s'),
-        'versionadded': l_('New in Django %s'),
+        'versionchanged': 'Changed in Django %s',
+        'versionadded': 'New in Django %s',
     }
 
     def visit_versionmodified(self, node):

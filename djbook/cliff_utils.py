@@ -19,7 +19,7 @@ class GithubCommandMixin(object):
 
             if not github_username or not github_password:
                 print('We need authenticate your in Github for Search API.')
-                github_username = raw_input('Github username: ')
+                github_username = input('Github username: ')
                 github_password = getpass.getpass('Github password: ')
 
                 with open(GithubCommandMixin.PASS_CHACHE_FILE, 'w') as f:

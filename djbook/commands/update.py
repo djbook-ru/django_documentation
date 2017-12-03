@@ -4,7 +4,7 @@ import tarfile
 import tempfile
 import filecmp
 import shutil
-from io import StringIO
+from io import BytesIO
 from urllib.request import urlopen
 
 from cliff.command import Command as BaseCommand
@@ -92,10 +92,10 @@ class Command(GithubCommandMixin, BaseCommand):
         shutil.copyfile(src_path, dest_path)
 
     def load_file(self, url):
-        output = StringIO()
+        output = BytesIO()
         url_obj = urlopen(url)
         meta = url_obj.info()
-        file_size = int(meta.getheaders("Content-Length")[0])
+        file_size = int(meta['Content-Length'])
         self.app.stdout.write("Downloading: {0} Bytes: {1}\n".format(url, file_size))
 
         file_size_dl = 0
@@ -111,7 +111,7 @@ class Command(GithubCommandMixin, BaseCommand):
             percent = float(file_size_dl) / file_size
             status = r"{0}  [{1:.2%}]".format(file_size_dl, percent)
             status = status + chr(8)*(len(status)+1)
-            self.app.stdout.write(status)
+            self.app.stdout.write(str(status))
 
         output.seek(0)
         return output
