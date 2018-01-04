@@ -21,12 +21,12 @@ msgstr ""
 # e3f9612cfea54fcea4bf3b168a1d5793
 #: ../../topics/testing/advanced.txt:3
 msgid "Advanced testing topics"
-msgstr ""
+msgstr "Тестирование для продвинутых"
 
 # 2ab9958d09ff49d9a01f53f296434cb9
 #: ../../topics/testing/advanced.txt:6
 msgid "The request factory"
-msgstr ""
+msgstr "Фабрика запросов"
 
 # 56e0338a4d234707a239fcf7fad6b71f
 #: ../../topics/testing/advanced.txt:12
@@ -38,6 +38,12 @@ msgid ""
 "as you would test any other function -- as a black box, with exactly known "
 "inputs, testing for specific outputs."
 msgstr ""
+":class:`~django.test.RequestFactory` имеет похожее API как в тестовом клиенте. Однако, вместо того, "
+"чтобы имитировать поведение браузера, RequestFactory предоставляет возможность "
+"генерировать объект запроса, который может быть использован в качестве первого "
+"аргумента в любом представлении. Это означает, что вы можете тестировать "
+"функцию представления таким же образом, как если бы вы тестировали любую другую "
+"функцию -- как чёрный ящик, точно зная входные данные и просто проверяя выходные данные."
 
 # 6caa6a6a6fea4ba6ad95fab90e8b3e3b
 #: ../../topics/testing/advanced.txt:19
@@ -45,6 +51,8 @@ msgid ""
 "The API for the :class:`~django.test.RequestFactory` is a slightly "
 "restricted subset of the test client API:"
 msgstr ""
+":class:`~django.test.RequestFactory` API является слегка "
+"ограниченным подмножеством API тестового клиента:"
 
 #: ../../topics/testing/advanced.txt:22
 msgid ""
@@ -52,6 +60,9 @@ msgid ""
 "post()`, :meth:`~Client.put()`, :meth:`~Client.delete()`, :meth:`~Client."
 "head()`, :meth:`~Client.options()`, and :meth:`~Client.trace()`."
 msgstr ""
+"Оно имеет доступ только к таким HTTP методам, как :meth:`~Client.get()`, "
+":meth:`~Client.post()`, :meth:`~Client.put()`, :meth:`~Client.delete()`, "
+":meth:`~Client.head()`, :meth:`~Client.options()`, и :meth:`~Client.trace()`."
 
 # 394a627f0d15409ab7bbbca3fda15fef
 #: ../../topics/testing/advanced.txt:27
@@ -60,6 +71,9 @@ msgid ""
 "this is just a factory for producing requests, it's up to you to handle the "
 "response."
 msgstr ""
+"Эти методы принимают такие же аргументы *за исключением* аргумента ``follow``. "
+"Поскольку это просто фабрика для подготовки запросов, то вы должны сами "
+"обрабатывать ответ."
 
 # 485a181c898b4a29a4207b0a17511288
 #: ../../topics/testing/advanced.txt:31
@@ -67,26 +81,31 @@ msgid ""
 "It does not support middleware. Session and authentication attributes must "
 "be supplied by the test itself if required for the view to function properly."
 msgstr ""
+"Не поддерживается промежуточный слой. Сессии и атрибуты аутентификации "
+"должны поставляться самими тестами, если они необходимы для корректной "
+"отработки функции представления."
 
 # 17a0aa53376240459afbd5fb23f0abf7
 #: ../../topics/testing/advanced.txt:36
 msgid "Example"
-msgstr ""
+msgstr "Пример"
 
 # fd52a3c3ff0346f49fe74f57fa73a02c
 #: ../../topics/testing/advanced.txt:38
 msgid "The following is a simple unit test using the request factory::"
-msgstr ""
+msgstr "Приведённый ниже тест использует фабричный запрос::"
 
 #: ../../topics/testing/advanced.txt:73
 msgid "Tests and multiple host names"
-msgstr ""
+msgstr "Тесты и несколько хостовых имён"
 
 #: ../../topics/testing/advanced.txt:75
 msgid ""
 "The :setting:`ALLOWED_HOSTS` setting is validated when running tests. This "
 "allows the test client to differentiate between internal and external URLs."
 msgstr ""
+":setting:`ALLOWED_HOSTS` валидируется во время выполнения тестов. Это "
+"позволяет тестовому клиенту различать внутренние и внешние URL-адреса."
 
 #: ../../topics/testing/advanced.txt:78
 msgid ""
@@ -94,6 +113,9 @@ msgid ""
 "on the request's host and use custom host names in tests must include those "
 "hosts in :setting:`ALLOWED_HOSTS`."
 msgstr ""
+"Проекты, поддерживающие работу с несколькими доменами или иным образом "
+"изменяющие бизнес-логику на основе запросов хоста и использующие "
+"пользовательские имена хостов в тестах, должны включать эти хосты в ALLOWED_HOSTS."
 
 #: ../../topics/testing/advanced.txt:82
 msgid ""
@@ -101,12 +123,15 @@ msgid ""
 "file. For example, the test suite for docs.djangoproject.com includes the "
 "following::"
 msgstr ""
+"Первый и самый простой способ сделать это - добавить хосты в ваш файл "
+"настроек. Например, набор тестов для docs.djangoproject.com включает в "
+"себя следующее::"
 
 #: ../../topics/testing/advanced.txt:93
 msgid ""
 "and the settings file includes a list of the domains supported by the "
 "project::"
-msgstr ""
+msgstr "и файл настроек содержит список доменов, поддерживаемых проектом::"
 
 #: ../../topics/testing/advanced.txt:101
 msgid ""
@@ -118,6 +143,12 @@ msgid ""
 "For example, you could write a test for the domain ``http://otherserver/`` "
 "as follows::"
 msgstr ""
+"Другой вариант - добавить требуемые хосты в :setting:`ALLOWED_HOSTS`, используя "
+":meth:`~django.test.override_settings()` или :attr:`~django.test.SimpleTestCase.modify_settings()`. "
+"Этот вариант может быть предпочтительнее в автономных приложениях, которые не могут "
+"работать со своим собственным файлом настроек или для проектов, где список доменов не "
+"является статическим. Например, вы можете написать тест для домена ``http://otherserver/`` "
+"следующим образом::"
 
 #: ../../topics/testing/advanced.txt:116
 msgid ""
@@ -125,21 +156,26 @@ msgid ""
 "running tests prevents the test client from raising a helpful error message "
 "if you follow a redirect to an external URL."
 msgstr ""
+"Отключение проверки :setting:`ALLOWED_HOSTS` (``ALLOWED_HOSTS = ['*']``) при запуске тестов "
+"не позволяет тестовому клиенту выбросить полезное сообщение об ошибке, если вы "
+"выполните перенаправление на внешний URL."
 
 #: ../../topics/testing/advanced.txt:122
 msgid ""
 "Older versions didn't validate ``ALLOWED_HOSTS`` while testing so these "
 "techniques weren't necessary."
 msgstr ""
+"Старые версии не проверяют ``ALLOWED_HOSTS`` во время "
+"тестирования, поэтому данная техника необязательна."
 
 # 6d8ca4678e2143a69131a818d8a80229
 #: ../../topics/testing/advanced.txt:128
 msgid "Tests and multiple databases"
-msgstr ""
+msgstr "Тестирование нескольких баз данных"
 
 #: ../../topics/testing/advanced.txt:133
 msgid "Testing primary/replica configurations"
-msgstr ""
+msgstr "Тестирование primary/replica конфигурации"
 
 #: ../../topics/testing/advanced.txt:135
 msgid ""
@@ -149,6 +185,12 @@ msgid ""
 "created, there won't be any replication, and as a result, data created on "
 "the primary won't be seen on the replica."
 msgstr ""
+"Если вы тестируете конфигурацию нескольких баз данных с репликацией вида "
+"primary/replica (упоминается также как master/slave некоторыми СУБД), "
+"то такая стратегия создания тестовых баз данных приведёт к проблемам. "
+"Когда тестовая база данных будет создана, не будет произведено никаких "
+"репликаций, следовательно, данные, созданные в главной базе данных, "
+"не будут видны на репликационных."
 
 # 4798cd6aed4748088cdbfb9eb288a6fa
 #: ../../topics/testing/advanced.txt:142
@@ -157,6 +199,9 @@ msgid ""
 "*test mirror*. Consider the following (simplified) example database "
 "configuration::"
 msgstr ""
+"Чтобы разрешить данную проблему, Django позволяет вам определить такую "
+"базу данных в качестве *тестового зеркала*. Рассмотрим следующий (упрощённый) "
+"пример конфигурации баз данных::"
 
 #: ../../topics/testing/advanced.txt:164
 msgid ""
@@ -166,6 +211,11 @@ msgid ""
 "database administrator as a read replica of ``dbprimary``, so in normal "
 "activity, any write to ``default`` will appear on ``replica``."
 msgstr ""
+"Исходя из данной конфигурации, мы имеем два сервера с базой данных: "
+"``dbprimary``, отнесённой к ключевому слову ``default``, и ``dbreplica`` "
+"под ключевым словом ``replica``. Как вы можете ожидать, ``dbreplica`` "
+"сконфигурирована администратором как копия ``dbprimary``, следовательно, "
+"любая запись в ``default`` также появится и в ``replica``."
 
 #: ../../topics/testing/advanced.txt:170
 msgid ""
@@ -175,6 +225,11 @@ msgid ""
 "test setting), indicating that under testing, ``replica`` should be treated "
 "as a mirror of ``default``."
 msgstr ""
+"Если Django создаст две независимые тестовые базы данных, то это сломает "
+"любой тест, который полагается на репликацию. Однако, база данных ``replica`` "
+"была настроена как тестовое зеркало (используя ключ :setting:`MIRROR <TEST_MIRROR>` "
+"в тестовых настройках), указывающее при тестировании, что ``replica`` должна считаться "
+"зеркалом базы данных ``default``."
 
 #: ../../topics/testing/advanced.txt:176
 msgid ""
@@ -184,11 +239,15 @@ msgid ""
 "``replica`` -- but because they are actually the same database, not because "
 "there is data replication between the two databases."
 msgstr ""
+"Когда тестовое окружение настроено, тестовая версия ``replica`` *не* будет "
+"создана. Вместо этого соединение к ``replica`` будет перенаправлено к ``default``. "
+"В результате, запись в ``default`` появится и в ``replica``, потому что это "
+"одна и та же база данных, но не из-за репликации данных между ними."
 
 # d6638d4079824e868ec40c98f4391284
 #: ../../topics/testing/advanced.txt:186
 msgid "Controlling creation order for test databases"
-msgstr ""
+msgstr "Контроллирование порядка создания для тестовых баз данных"
 
 # 101f81907ad14f16b0b726cf503e5fe1
 #: ../../topics/testing/advanced.txt:188
@@ -198,6 +257,9 @@ msgid ""
 "However, no guarantees are made on the creation order of any other databases "
 "in your test setup."
 msgstr ""
+"По умолчанию, Django будет предполагать, что все зависят от ``default`` "
+"базы данных и всегда будет её создавать первой. Однако, нет никаких гарантий "
+"по части порядка других баз данных в вашем файле настроек."
 
 #: ../../topics/testing/advanced.txt:193
 msgid ""
@@ -206,6 +268,9 @@ msgid ""
 "<TEST_DEPENDENCIES>` test setting. Consider the following (simplified) "
 "example database configuration::"
 msgstr ""
+"Если ваша настройка требует особого порядка создания баз, то вы можете "
+"указать зависимости, используя :setting:`DEPENDENCIES<TEST_DEPENDENCIES>`. "
+"Рассмотрим следующий пример конфигурации::"
 
 #: ../../topics/testing/advanced.txt:231
 msgid ""
@@ -214,6 +279,11 @@ msgid ""
 "``clubs`` alias will be created next (although the order of creation of this "
 "pair is not guaranteed), then ``hearts``, and finally ``spades``."
 msgstr ""
+"Исходя из приведённой выше конфигурации, база данных ``diamonds`` будет "
+"создана первой т. к. это единственная база данных без зависимостей. "
+"Следующими будут созданы ``default`` и ``clubs`` (несмотря на то, что "
+"определённый порядок данной пары не гарантируется), потом ``hearts`` "
+"и наконец ``spades``."
 
 #: ../../topics/testing/advanced.txt:236
 msgid ""
@@ -221,11 +291,14 @@ msgid ""
 "<TEST_DEPENDENCIES>` definition, an :exc:`~django.core.exceptions."
 "ImproperlyConfigured` exception will be raised."
 msgstr ""
+"Если в :setting:`DEPENDENCIES<TEST_DEPENDENCIES>` будут "
+"присутствовать цикличные зависимости, то будет выброшено "
+"исключение :exc:`~django.core.exceptions.ImproperlyConfigured`."
 
 # e2c9850a202742eeb6bbd4bb93538483
 #: ../../topics/testing/advanced.txt:241
 msgid "Advanced features of ``TransactionTestCase``"
-msgstr ""
+msgstr "Дополнительные возможности ``TransactionTestCase``"
 
 # 4e30b78c6c5841ac88938e2c0a817062
 #: ../../topics/testing/advanced.txt:247
@@ -234,6 +307,9 @@ msgid ""
 "deprecation period in the future, for instance to accommodate changes in "
 "application loading."
 msgstr ""
+"Этот атрибут является приватным API. Он может быть изменён или удалён "
+"без предупреждения в будущих версиях, например, при внесении изменений "
+"в загрузку приложения."
 
 # a5bd23649dd841758549b474b1951d0b
 #: ../../topics/testing/advanced.txt:251
@@ -241,6 +317,8 @@ msgid ""
 "It's used to optimize Django's own test suite, which contains hundreds of "
 "models but no relations between models in different applications."
 msgstr ""
+"Это используется для оптимизации тестирования Django, которое содержит "
+"сотни моделей, но без связей между ними в разных приложениях."
 
 # 3663ff8afde141bfb1c7375e2125fa43
 #: ../../topics/testing/advanced.txt:254
@@ -251,6 +329,11 @@ msgid ""
 "re-creates one content type and three permissions for each model. This "
 "operation gets expensive proportionally to the number of models."
 msgstr ""
+"По умолчанию, значение ``available_apps`` установлено как ``None``. После каждого "
+"теста, Django вызывает :djadmin:`flush` для перезапуска состояния базы данных. Это "
+"очищает все таблицы и вызывает сигнал :data:`~django.db.models.signals.post_migrate`, "
+"который пересоздаёт один тип контента и три разрешения для каждой модели. Сложность "
+"и время исполнения такой операции пропорционально количеству моделей."
 
 # e6f23b56ec5a4158a3e92b48e6be5325
 #: ../../topics/testing/advanced.txt:260
@@ -259,6 +342,9 @@ msgid ""
 "behave as if only the models from these applications were available. The "
 "behavior of ``TransactionTestCase`` changes as follows:"
 msgstr ""
+"Добавление в ``available_apps`` списка приложений указывает Django работать "
+"таким образом, словно доступны только модели из указанных приложений. "
+"Поведение ``TransactionTestCase`` будет изменено:"
 
 # 91450a02250d404daeb147de82213567
 #: ../../topics/testing/advanced.txt:264
@@ -267,6 +353,9 @@ msgid ""
 "create the content types and permissions for each model in available apps, "
 "in case they're missing."
 msgstr ""
+":data:`~django.db.models.signals.post_migrate` не будет вызван перед каждым "
+"тестом для создания типов контента и разрешений для каждой модели в "
+"доступных приложениях, если они пропущены. "
 
 # ff15403aa1194b7294a125f5de580405
 #: ../../topics/testing/advanced.txt:267
@@ -277,6 +366,12 @@ msgid ""
 "signals.post_migrate` isn't fired; it will be fired by the next "
 "``TransactionTestCase``, after the correct set of applications is selected."
 msgstr ""
+"После каждого теста, Django очищает только модели, которые присутствуют "
+"в указанных приложениях. Однако, на уровне базы данных, очистка может "
+"дойти до недоступных приложений. Более того, "
+":data:`~django.db.models.signals.post_migrate` в таком случае не будет "
+"вызван: оно будет вызвано следующим TransactionTestCase, после выбора "
+"корректного набора приложений."
 
 # 32f153bda6114105af81b251d455b8d2
 #: ../../topics/testing/advanced.txt:274
@@ -286,6 +381,11 @@ msgid ""
 "unrelated tests to fail. Be careful with tests that use sessions; the "
 "default session engine stores them in the database."
 msgstr ""
+"Поскольку база данных очищена не до конца, если тест будет создавать "
+"объект модели, не включенной в ``available_apps``, то они не будут "
+"учитываться, что может спровоцировать утечку и провалить не относящиеся "
+"к этому случаю тесты. Будьте осторожны с тестами, которые используют "
+"сессии: основной движок сессий хранит их в базе данных."
 
 # b2eca0077ea3468b96b02c6b52583ece
 #: ../../topics/testing/advanced.txt:279
@@ -298,11 +398,18 @@ msgid ""
 "either all ``TransactionTestCase`` in a given test suite declare "
 "``available_apps``, or none of them."
 msgstr ""
+"Поскольку :data:`~django.db.models.signals.post_migrate` не вызывается после "
+"очищения базы данных, то её состояние после ``TansactionTestCase`` не является "
+"таким же, как после ``TestCase``: оно пропускает строки, созданные слушателями "
+":data:`~django.db.models.signals.post_migrate`. Следуя :ref:`порядку "
+"в котором тесты были выполнены <order-of-tests>`, это не проблема, при условии "
+"что все ``TransactionTestCase`` в тесте содержат указанный ``available_apps``, "
+"или ни один из них."
 
 # c8785538f5c649109fa75fb23b061f4d
 #: ../../topics/testing/advanced.txt:287
 msgid "``available_apps`` is mandatory in Django's own test suite."
-msgstr ""
+msgstr "Атрибут ``available_apps`` является обязательным при тестировании самого Django."
 
 # 06aa9006d3b94bbb8f8da968f364a9e0
 #: ../../topics/testing/advanced.txt:291
@@ -310,6 +417,8 @@ msgid ""
 "Setting ``reset_sequences = True`` on a ``TransactionTestCase`` will make "
 "sure sequences are always reset before the test run::"
 msgstr ""
+"Установка атрибута ``reset_sequences = True`` в ``TransactionTestCase`` "
+"заставит всегда перезапускать порядковый номер первичного ключа перед запуском тестов::"
 
 # facf43b67e21443fb9c7bed11cc01e31
 #: ../../topics/testing/advanced.txt:302
@@ -317,16 +426,24 @@ msgid ""
 "Unless you are explicitly testing primary keys sequence numbers, it is "
 "recommended that you do not hard code primary key values in tests."
 msgstr ""
+"Если вы явно не проверяете порядковые номера первичных ключей, "
+"рекомендуется, чтобы вы не указывали напрямую значения первичного "
+"ключа в тестах."
 
 #: ../../topics/testing/advanced.txt:305
 msgid ""
 "Using ``reset_sequences = True`` will slow down the test, since the primary "
 "key reset is a relatively expensive database operation."
 msgstr ""
+"Использование ``reset_sequences = True`` замедлит выполнение тестов т. к. сама по "
+"себе операция сброса порядкового номера первичного ключа достаточно "
+"сложна для СУБД."
 
 #: ../../topics/testing/advanced.txt:311
 msgid "Using the Django test runner to test reusable applications"
 msgstr ""
+"Использование стандартного исполнителя тестов Django для "
+"тестирования повторно применяемых приложений"
 
 #: ../../topics/testing/advanced.txt:313
 msgid ""
@@ -334,22 +451,29 @@ msgid ""
 "may want to use the Django test runner to run your own test suite and thus "
 "benefit from the Django testing infrastructure."
 msgstr ""
+"Если вы пишите :doc:`повторно применяемое приложение </intro/reusable-apps>`, "
+"то вам может пригодится использование стандартного исполнителя тестов Django "
+"для запуска ваших тестов и, следовательно, выгоду от тестовой инфраструктуры Django."
 
 #: ../../topics/testing/advanced.txt:317
 msgid ""
 "A common practice is a *tests* directory next to the application code, with "
 "the following structure::"
 msgstr ""
+"Общей практикой является каталог *тестов* рядом с кодом "
+"приложения со следующей структурой:"
 
 #: ../../topics/testing/advanced.txt:331
 msgid "Let's take a look inside a couple of those files:"
-msgstr ""
+msgstr "Давайте взглянем на содержание нескольких файлов:"
 
 #: ../../topics/testing/advanced.txt:353
 msgid ""
 "This is the script that you invoke to run the test suite. It sets up the "
 "Django environment, creates the test database and runs the tests."
 msgstr ""
+"Это скрипт, который вы вызываете для запуска тестов. Он настраивает "
+"окружение Django, создаёт тестовую базу данных и запускает тесты."
 
 #: ../../topics/testing/advanced.txt:356
 msgid ""
@@ -358,18 +482,25 @@ msgid ""
 "options for controlling verbosity, passing in specific test labels to run, "
 "etc."
 msgstr ""
+"Этот пример содержит абсолютный минимум необходимый для запуска исполнителя "
+"тестов Django. Вы можете захотеть добавить опции командной строки для передачи "
+"специальных тестовых меток и для других случаев."
 
 #: ../../topics/testing/advanced.txt:369
 msgid ""
 "This file contains the :doc:`Django settings </topics/settings>` required to "
 "run your app's tests."
 msgstr ""
+"Данный файл содержит :doc:`настройки Django </topics/settings>`, необходимые "
+"для запуска тестов вашего приложения."
 
 #: ../../topics/testing/advanced.txt:372
 msgid ""
 "Again, this is a minimal example; your tests may require additional settings "
 "to run."
 msgstr ""
+"Повторимся снова, это минимальный пример; ваши тесты могут нуждаться "
+"в дополнительных настройках."
 
 #: ../../topics/testing/advanced.txt:375
 msgid ""
@@ -377,11 +508,14 @@ msgid ""
 "running your tests, you can define test-only models in its ``models.py`` "
 "file."
 msgstr ""
+"Поскольку пакет *tests* включен в :setting:`INSTALLED_APPS` во время работы "
+"ваших тестов, вы можете определить модели только для тестов в "
+"``models.py`` файле."
 
 # 1da6ec861dc243399ed539c674c2d0ee
 #: ../../topics/testing/advanced.txt:383
 msgid "Using different testing frameworks"
-msgstr ""
+msgstr "Использование других тестовых фреймворков"
 
 # bfdb8538d9c34ec5bb8f936a10edc1b0
 #: ../../topics/testing/advanced.txt:385
@@ -391,6 +525,10 @@ msgid ""
 "provide a way to invoke tests constructed for an alternative framework as if "
 "they were normal Django tests."
 msgstr ""
+"Очевидно, что :mod:`unittest` не единственный существующий тестовый фреймворк. "
+"Пока Django не предоставляет поддержку альтернативных фреймворков, оно "
+"предоставляет способ вызвать тесты, сделанные под алтернативные фреймворки "
+"так, как будто бы это обычные тесты для Django."
 
 # 5be94f80059d42ebbf4cb34a5e98abca
 #: ../../topics/testing/advanced.txt:390
@@ -400,11 +538,15 @@ msgid ""
 "`TEST_RUNNER` points to ``'django.test.runner.DiscoverRunner'``. This class "
 "defines the default Django testing behavior. This behavior involves:"
 msgstr ""
+"Когда вы запускаете ``./manage.py test``, Django проверяет :setting:`TEST_RUNNER` "
+"значение для определения дальнейших действий. По умолчанию, :setting:`TEST_RUNNER` "
+"указывает на ``'django.test.runner.DiscoverRunner'``. Этот класс "
+"определяет основное тестовое поведение. Оно включает в себя:"
 
 # 95962869b2164509a3e741cea8812c2b
 #: ../../topics/testing/advanced.txt:395
 msgid "Performing global pre-test setup."
-msgstr ""
+msgstr "Выполнение глобальной настройки перед тестированием. "
 
 # 9bec446fa4854745bd528d3f48696d05
 #: ../../topics/testing/advanced.txt:397
@@ -412,11 +554,13 @@ msgid ""
 "Looking for tests in any file below the current directory whose name matches "
 "the pattern ``test*.py``."
 msgstr ""
+"Поиск тестов в любом файле ниже текущей директории, которое совпадает "
+"по паттерну ``test*.py``."
 
 # 50c25f76ff384c7e9df67e2687df6b34
 #: ../../topics/testing/advanced.txt:400
 msgid "Creating the test databases."
-msgstr ""
+msgstr "Создание тестовых баз данных."
 
 # 27f88f5bab5a4dea8509949a5b44090d
 #: ../../topics/testing/advanced.txt:402
@@ -424,29 +568,31 @@ msgid ""
 "Running ``migrate`` to install models and initial data into the test "
 "databases."
 msgstr ""
+"Запуск ``миграции`` для установки моделей и первоначальных данных "
+"в базы данных."
 
 #: ../../topics/testing/advanced.txt:405
 msgid "Running the :doc:`system checks </topics/checks>`."
-msgstr ""
+msgstr "Запуск :doc:`системных проверок</topics/checks>`."
 
 # 54cf4dc6126d430f96e302d82bee643a
 #: ../../topics/testing/advanced.txt:407
 msgid "Running the tests that were found."
-msgstr ""
+msgstr "Запуск найденных тестов."
 
 # 44a4d66d9ddf4c7296872c916da70416
 #: ../../topics/testing/advanced.txt:409
 msgid "Destroying the test databases."
-msgstr ""
+msgstr "Уничтожение тестовых баз данных."
 
 # bf748052f92e426aa26ae1fc2767c82b
 #: ../../topics/testing/advanced.txt:411
 msgid "Performing global post-test teardown."
-msgstr ""
+msgstr "Выполнение глобального завершения тестов."
 
 #: ../../topics/testing/advanced.txt:415
 msgid "Running the system checks was added."
-msgstr ""
+msgstr "Был добавлен запуск системных проверок."
 
 # c3cbfcb8811743758fe662627a2da782
 #: ../../topics/testing/advanced.txt:417
@@ -457,11 +603,17 @@ msgid ""
 "executed from Python code, or to modify the Django test execution process to "
 "satisfy whatever testing requirements you may have."
 msgstr ""
+"Если вы определите ваш собственный класс исполнителя тестов и укажете "
+"в :setting:`TEST_RUNNER` на этот класс, Django запустит ваш исполнитель "
+"тестов всякий раз, как вы запускаете ``./manage.py test``. Таким "
+"образом, возможно использование любого фреймворка который может быть "
+"запущен из кода Python, или модифицировать процесс исполнения тестов Django "
+"для достижения каких-либо требований, которые могут у вас возникнуть."
 
 # 837000f3879b4e768931a28604226240
 #: ../../topics/testing/advanced.txt:426
 msgid "Defining a test runner"
-msgstr ""
+msgstr "Определение исполнителя тестов"
 
 # 3cc676787d5a4be3befdbd908576d418
 #: ../../topics/testing/advanced.txt:430
@@ -472,12 +624,19 @@ msgid ""
 "selection of other methods that are used to by ``run_tests()`` to set up, "
 "execute and tear down the test suite."
 msgstr ""
+"Исполнитель тестов — это класс, определяющий метод ``run_tests()``. Django "
+"поставляется вместе с классом ``DiscoverRunner``, который определяет "
+"изначальное тестовое поведение Django. Этот класс определяет входную точку "
+"``run_tests()``, а также набор других методов, которые используются "
+"``run_tests()`` для настройки, выполнения и завершения теста."
 
 # 09b3e6d993df4054879e44917cc38684
 #: ../../topics/testing/advanced.txt:438
 msgid ""
 "``DiscoverRunner`` will search for tests in any file matching ``pattern``."
 msgstr ""
+"``DiscoverRunner`` будет искать тесты в файлах по указанному паттерну "
+"в атрибуте ``pattern``."
 
 # dd1da6deebdc47aa882bf68c3f2d84d4
 #: ../../topics/testing/advanced.txt:440
@@ -487,6 +646,11 @@ msgid ""
 "not necessary to specify this option. If specified, it should generally be "
 "the directory containing your ``manage.py`` file."
 msgstr ""
+"``top_level`` может быть использовано для указания директории высшего уровня, "
+"где могут храниться модули Python. Обычно Django может определить это "
+"автоматически, следовательно необходимости в этой опции обычно нет. Если же "
+"данный атрибут указан, то должна быть указана директория, содержащая "
+"файл ``manage.py``."
 
 # 1fb65d5d04894f7190a09e920b71a5fe
 #: ../../topics/testing/advanced.txt:445
@@ -495,6 +659,9 @@ msgid ""
 "that will be printed to the console; ``0`` is no output, ``1`` is normal "
 "output, and ``2`` is verbose output."
 msgstr ""
+"``verbosity`` определяет количество нотификаций и отладочной информации, "
+"которая будет выведена в терминал; ``0`` — нет вывода, ``1`` — обычный "
+"вывод, и ``2`` — подробный вывод."
 
 # 19e3c450816b4e70a8c49de15cfafc1f
 #: ../../topics/testing/advanced.txt:449
@@ -505,6 +672,12 @@ msgid ""
 "If ``interactive`` is ``False``, the test suite must be able to run without "
 "any manual intervention."
 msgstr ""
+"Если в ``interactive`` указано ``True``, то тест имеет разрешение на "
+"запрос у пользователя запрашивать дополнительную информацию во время "
+"выполнения. В качестве примера можно привести запрос на разрешение "
+"удаления существующей тестовой базы данных. Если в ``interactive`` "
+"указано ``False``, то соответственно тесты будут запущены без "
+"возможности ввода во время выполнения."
 
 # aab2a32c725a4a1fb19e90119b1b4f9c
 #: ../../topics/testing/advanced.txt:455
@@ -512,6 +685,8 @@ msgid ""
 "If ``failfast`` is ``True``, the test suite will stop running after the "
 "first test failure is detected."
 msgstr ""
+"Если в ``failfast`` указано ``True``, тесты перестанут выполняться после "
+"первого же провала."
 
 #: ../../topics/testing/advanced.txt:458
 msgid ""
@@ -519,6 +694,9 @@ msgid ""
 "create one if necessary. If ``False``, a new database will be created, "
 "prompting the user to remove the existing one, if present."
 msgstr ""
+"Если в ``keepdb`` указано ``True``, то тесты будут использовать существующую базу "
+"данных, иначе будет создана новая. Если ``False``, то будет создана новая база "
+"данных с запросом на удаление существующей, если такая будет."
 
 #: ../../topics/testing/advanced.txt:462
 msgid ""
@@ -527,12 +705,18 @@ msgid ""
 "have side effects. :ref:`Grouping by test class <order-of-tests>` is "
 "preserved when using this option."
 msgstr ""
+"Если в ``reverse`` указано ``True``, тесты будут выполняться в обратном порядке. "
+"Это может быть полезно для отладки недостаточно хорошо изолированных тестов, "
+"имеющих побочные эффекты. :ref:`Группировка по тестовым классам <order-of-tests>` сохраняется при "
+"использовании данного атрибута."
 
 #: ../../topics/testing/advanced.txt:467
 msgid ""
 "``debug_mode`` specifies what the :setting:`DEBUG` setting should be set to "
 "prior to running tests."
 msgstr ""
+"``debug_mode`` указывает какая :setting:`DEBUG` настройка должна быть в большем "
+"приоритете во время запуска тестов."
 
 #: ../../topics/testing/advanced.txt:470
 msgid ""
@@ -541,6 +725,10 @@ msgid ""
 "the traceback. If ``verbosity`` is ``2``, then queries in all tests are "
 "output."
 msgstr ""
+"Если в ``debug_sql`` указано ``True``, провалившиеся тестовые случаи выведут "
+"SQL запросы, залоггированные с помощью :ref:`django.db.backends logger <django-db-logger>` "
+"вместе с трейсбэком. Если в ``verbosity`` указано ``2``, тогда запросы будут выведены при "
+"выполнении всех тестов."
 
 # ede46913b58143758f9475346ada9530
 #: ../../topics/testing/advanced.txt:475
@@ -550,6 +738,10 @@ msgid ""
 "expansion. If you subclass ``DiscoverRunner`` or write your own test runner, "
 "ensure it accepts ``**kwargs``."
 msgstr ""
+"Время от времени, Django может расширять возможности тестового исполнителя "
+"добавляя новые аргументы. Объявление ``**kwargs`` разрешает данное расширение. "
+"Если вы наследуетесь от ``DiscoverRunner`` или вы написали свой собственный "
+"исполнитель тестов, убедитесь, что оно принимает ``**kwargs``."
 
 #: ../../topics/testing/advanced.txt:480
 msgid ""
@@ -558,15 +750,19 @@ msgid ""
 "arguments by calling ``parser.add_argument()`` inside the method, so that "
 "the :djadmin:`test` command will be able to use those arguments."
 msgstr ""
+"Ваш тестовый исполнитель может также определять дополнительные параметры "
+"командной строки. Создайте или переопределите метод класса ``add_arguments(cls, parser)`` "
+"и добавьте свои аргументы, вызвав ``parser.add_argument()`` внутри метода, "
+"таким образом команда :djadmin:`test` будет способна принимать ваши аргументы."
 
 #: ../../topics/testing/advanced.txt:487
 msgid "The ``debug_mode`` keyword argument was added."
-msgstr ""
+msgstr "Был добавлен аргумент ``debug_mode``"
 
 # b8a642df06234a28a52b91faad96996c
 #: ../../topics/testing/advanced.txt:490
 msgid "Attributes"
-msgstr ""
+msgstr "Атрибуты"
 
 # 8f0948e8c709472d83a2639e386f3d69
 #: ../../topics/testing/advanced.txt:494
@@ -575,6 +771,9 @@ msgid ""
 "TestSuite``. This can be overridden if you wish to implement different logic "
 "for collecting tests."
 msgstr ""
+"Класс, используемый для построения набора тестов. По умолчанию это установлено "
+"на ``unittest.TestSuite``. Это может быть изменено, если вам нужно реализовать "
+"иную логику для собирания тестов."
 
 # cb547b3556cf490c916a877cb0c8ac9f
 #: ../../topics/testing/advanced.txt:500
@@ -586,6 +785,12 @@ msgid ""
 "broader set of responsibilities. You can override this attribute to modify "
 "the way tests are run and reported."
 msgstr ""
+"Это класс низкоуровневого тестового исполнителя, который используется для "
+"выполнения отдельных тестов и форматирования результатов. По умолчанию "
+"указан ``unittest.TextTestRunner``. Несмотря на неудачное сходство в "
+"соглашениях об именах, это не тот же тип класса, что и ``DiscoverRunner``, "
+"который охватывает более широкий круг обязанностей. Вы можете перезаписать "
+"данный атрибут для изменения способа запуска и формирования отчёта тестов."
 
 # b4c238c7e72c45279dfb16a00a744543
 #: ../../topics/testing/advanced.txt:509
@@ -595,16 +800,21 @@ msgid ""
 "default it is set to ``unittest.defaultTestLoader``. You can override this "
 "attribute if your tests are going to be loaded in unusual ways."
 msgstr ""
+"Это класс, который загружает тесты, будь то из TestCases или модулей "
+"или иным образом, и связывает их с наборами тестов для исполнителя "
+"для дальнейшего выполнения. По умолчанию указан ``unittest.defaultTestLoader``. "
+"Вы можете переопределить этот атрибут, если ваши тесты должны быть "
+"загружены каким-либо необычным образом."
 
 # 7e013f17d22b42bf914cb11be7331001
 #: ../../topics/testing/advanced.txt:515
 msgid "Methods"
-msgstr ""
+msgstr "Методы"
 
 # 58bb6f675d294b50a1f35122d60bb709
 #: ../../topics/testing/advanced.txt:519
 msgid "Run the test suite."
-msgstr ""
+msgstr "Запуск набора тестов."
 
 # dbbebbab1d024625a6d6be1d248518d8
 #: ../../topics/testing/advanced.txt:521
@@ -613,6 +823,9 @@ msgid ""
 "several formats (see :meth:`DiscoverRunner.build_suite` for a list of "
 "supported formats)."
 msgstr ""
+"``test_labels`` позволяет указать, какие тесты следует запускать и "
+"поддерживает несколько форматов (см. :meth:`DiscoverRunner.build_suite` "
+"для списка поддерживаемых форматов)."
 
 # 6d44ee50fb104fb387e4ef49b99821e3
 # 0000ada82f1f4923a4f92946f8549c9c
@@ -622,11 +835,15 @@ msgid ""
 "suite that is executed by the test runner. These extra tests are run in "
 "addition to those discovered in the modules listed in ``test_labels``."
 msgstr ""
+"extra_tests - это список дополнительных экземпляров ``TestCase`` для "
+"добавления в набор, который выполняется тестовым исполнителем. Эти "
+"дополнительные тесты будут запущены дополнительно к обнаруженным в списке"
+"модулей в ``test_labels``."
 
 # 1c86556aa5f0401b9a63cd9a8a7a970b
 #: ../../topics/testing/advanced.txt:529
 msgid "This method should return the number of tests that failed."
-msgstr ""
+msgstr "Этот метод должен вернуть количество тестов, завершившихся неудачно."
 
 #: ../../topics/testing/advanced.txt:533
 msgid ""
@@ -634,6 +851,9 @@ msgid ""
 "`test` management command. See :py:meth:`argparse.ArgumentParser."
 "add_argument()` for details about adding arguments to a parser."
 msgstr ""
+"Переопределите этот метод класса, чтобы добавить пользовательские аргументы, "
+"принимаемые командой :djadmin:`test`. См. :py:meth:`argparse.ArgumentParser.add_argument()` "
+"для получения дополнительной информации о добавлении аргументов в парсер."
 
 #: ../../topics/testing/advanced.txt:540
 msgid ""
@@ -641,11 +861,13 @@ msgid ""
 "setup_test_environment` and setting :setting:`DEBUG` to ``self.debug_mode`` "
 "(defaults to ``False``)."
 msgstr ""
+"Устанавливает тестовую среду, вызывая :func:`~django.test.utils.setup_test_environment` "
+"и устанавливая :setting:`DEBUG` в ``self.debug_mode`` (по умолчанию в ``False``)."
 
 # fdefadebcc404564a58127d166c59194
 #: ../../topics/testing/advanced.txt:546
 msgid "Constructs a test suite that matches the test labels provided."
-msgstr ""
+msgstr "Создает тестовый набор, соответствующий указанным тестовым меткам."
 
 # 460bfd1f749a4caa80453d7c41653473
 #: ../../topics/testing/advanced.txt:548
@@ -653,6 +875,8 @@ msgid ""
 "``test_labels`` is a list of strings describing the tests to be run. A test "
 "label can take one of four forms:"
 msgstr ""
+"``test_labels`` - это список строк, описывающих тесты, которые нужно запустить. "
+"Тестовая метка может принимать одну из четырех форм:"
 
 # e3c3702e761d4ee197fca3a632dc20a7
 #: ../../topics/testing/advanced.txt:551
@@ -660,12 +884,15 @@ msgid ""
 "``path.to.test_module.TestCase.test_method`` -- Run a single test method in "
 "a test case."
 msgstr ""
+"``path.to.test_module.TestCase.test_method`` -- Выполнить один тестовый метод "
+"в тесте."
 
 # 32aba3a9010e4d7682dca8fd26693c1b
 #: ../../topics/testing/advanced.txt:553
 msgid ""
 "``path.to.test_module.TestCase`` -- Run all the test methods in a test case."
 msgstr ""
+"``path.to.test_module.TestCase`` -- Выполнить все тестовые методы в тесте. "
 
 # 1f1e039592e94b1f8dea54d47371082f
 #: ../../topics/testing/advanced.txt:555
@@ -673,6 +900,8 @@ msgid ""
 "``path.to.module`` -- Search for and run all tests in the named Python "
 "package or module."
 msgstr ""
+"``path.to.module`` -- Найти и запустить все тесты в названном пакете "
+"Python или модуле."
 
 # 1caab19158004d679becc39c7d7a1204
 #: ../../topics/testing/advanced.txt:557
@@ -680,6 +909,8 @@ msgid ""
 "``path/to/directory`` -- Search for and run all tests below the named "
 "directory."
 msgstr ""
+"``path/to/directory`` -- Найти и запустить все тесты ниже указанного "
+"каталога."
 
 # 64805d3f12f540cda5c5722665feefdc
 #: ../../topics/testing/advanced.txt:560
@@ -688,64 +919,74 @@ msgid ""
 "tests in all files below the current directory whose names match its "
 "``pattern`` (see above)."
 msgstr ""
+"Если значение ``test_labels`` имеет значение ``None``, тестовый исполнитель будет "
+"искать тесты во всех файлах ниже текущей директории, имена которых соответствуют "
+"его ``паттерну`` (см. выше)."
 
 # acc5a757c9ba451395ca2a9fdf4054a7
 #: ../../topics/testing/advanced.txt:568
 msgid "Returns a ``TestSuite`` instance ready to be run."
-msgstr ""
+msgstr "Возвращает экземпляр ``TestSuite``, готовый к запуску."
 
 #: ../../topics/testing/advanced.txt:572
 msgid ""
 "Creates the test databases by calling :func:`~django.test.utils."
 "setup_databases`."
 msgstr ""
+"Создаёт тестовую базу данных, вызывая :func:`~django.test.utils."
+"setup_databases`."
 
 #: ../../topics/testing/advanced.txt:579
 msgid "Runs the :doc:`system checks </topics/checks>`."
-msgstr ""
+msgstr "Запускает :doc:`системные проверки </topics/checks>`."
 
 # 8c02111cc3c04c04964267b88add0939
 #: ../../topics/testing/advanced.txt:583
 msgid "Runs the test suite."
-msgstr ""
+msgstr "Запуск тестового набора."
 
 # a2a24e91bc384b96b2a3b2874131d771
 #: ../../topics/testing/advanced.txt:585
 msgid "Returns the result produced by the running the test suite."
-msgstr ""
+msgstr "Возвращает результат, полученный при запуске набора тестов."
 
 #: ../../topics/testing/advanced.txt:591
 msgid ""
 "Returns the keyword arguments to instantiate the ``DiscoverRunner."
 "test_runner`` with."
 msgstr ""
+"Возвращает аргументы ключевого слова для создания экземпляра "
+"``DiscoverRunner.test_runner``."
 
 #: ../../topics/testing/advanced.txt:596
 msgid ""
 "Destroys the test databases, restoring pre-test conditions by calling :func:"
 "`~django.test.utils.teardown_databases`."
 msgstr ""
+"Уничтожает тестовую базу данных, восстанавливает окружение, вызывая :func:"
+"`~django.test.utils.teardown_databases`."
 
 # 5d253ba81e904648aaa46dde38f27493
 #: ../../topics/testing/advanced.txt:601
 msgid "Restores the pre-test environment."
-msgstr ""
+msgstr "Восстанавливает окружение перед запуском тестирования."
 
 # d8f6a6aaca49485e818098b7cdd012bb
 #: ../../topics/testing/advanced.txt:605
 msgid ""
 "Computes and returns a return code based on a test suite, and the result "
 "from that test suite."
-msgstr ""
+msgstr "Вычисляет и возвращает код возврата на основе набора тестов и "
+"результат этого набора тестов."
 
 # 8b84d4bc171c47689cdb95065bc99ec0
 #: ../../topics/testing/advanced.txt:610
 msgid "Testing utilities"
-msgstr ""
+msgstr "Тестовые утилиты"
 
 #: ../../topics/testing/advanced.txt:613
 msgid "``django.test.utils``"
-msgstr ""
+msgstr "``django.test.utils``"
 
 # c20f62cf13364d4bbad4671d9c2704dc
 #: ../../topics/testing/advanced.txt:618
@@ -753,33 +994,43 @@ msgid ""
 "To assist in the creation of your own test runner, Django provides a number "
 "of utility methods in the ``django.test.utils`` module."
 msgstr ""
+"Для помощи в создании ващего собственного исполнителя тестов, Django "
+"предоставляет ряд полезных методов в модуле ``django.test.utils``."
 
 #: ../../topics/testing/advanced.txt:623
 msgid ""
 "Performs global pre-test setup, such as installing instrumentation for the "
 "template rendering system and setting up the dummy email outbox."
 msgstr ""
+"Выполняет глобальную настройку перед исполнением тестов, например, "
+"установку инструмента системы рендеринга шаблонов и настройку фиктивной "
+"электронной почты."
 
 #: ../../topics/testing/advanced.txt:626
 msgid ""
 "If ``debug`` isn't ``None``, the :setting:`DEBUG` setting is updated to its "
 "value."
 msgstr ""
+"Если ``debug`` не будет равен ``None``, то настройки :setting:`DEBUG` будут приведены "
+"к данному значению."
 
 #: ../../topics/testing/advanced.txt:631
 msgid "The ``debug`` argument was added."
-msgstr ""
+msgstr "Был добавлен аргумент ``debug``."
 
 #: ../../topics/testing/advanced.txt:635
 msgid ""
 "Performs global post-test teardown, such as removing instrumentation from "
 "the template system and restoring normal email services."
 msgstr ""
+"Выполняет глобальную настройку после исполнения тестов, например, удаление "
+"магических хуков в системе шаблонов и приведение настроек "
+"электронной почты в нормальный вид."
 
 # a8227b580a864c3ba410a599896575a8
 #: ../../topics/testing/advanced.txt:642
 msgid "Creates the test databases."
-msgstr ""
+msgstr "Создаёт тестовые базы данных"
 
 #: ../../topics/testing/advanced.txt:644
 msgid ""
@@ -787,11 +1038,14 @@ msgid ""
 "that have been made. This data will be provided to the :func:"
 "`teardown_databases` function at the conclusion of testing."
 msgstr ""
+"Возвращает структуру данных, которая обеспечивает достаточную детализацию "
+"для отмены внесенных изменений. Эти данные будут предоставлены функции "
+":func:`teardown_databases` в конце тестирования."
 
 # cf8f173b8790446187ffbfa19e4bfcea
 #: ../../topics/testing/advanced.txt:652
 msgid "Destroys the test databases, restoring pre-test conditions."
-msgstr ""
+msgstr "Уничтожает тестовые базы данных, восстанавливая условия перед тестами."
 
 #: ../../topics/testing/advanced.txt:654
 msgid ""
@@ -799,10 +1053,13 @@ msgid ""
 "configuration that need to be reversed. It's the return value of the :meth:"
 "`setup_databases` method."
 msgstr ""
+"old_config - это структура данных, определяющая изменения в конфигурации базы "
+"данных, которые необходимо изменить. Это возвращаемое значение метода "
+":meth:`setup_databases`."
 
 #: ../../topics/testing/advanced.txt:659
 msgid "``django.db.connection.creation``"
-msgstr ""
+msgstr "``django.db.connection.creation``"
 
 # 593578b5654242a3bb34827cd194b1e1
 #: ../../topics/testing/advanced.txt:663
@@ -810,16 +1067,19 @@ msgid ""
 "The creation module of the database backend also provides some utilities "
 "that can be useful during testing."
 msgstr ""
+"Модуль создания бэкенда базы данных также предоставляет утилиты, "
+"которые могут быть полезны при тестировании."
 
 # f4a36bfb80e8415fb38e72b28d2a820e
 #: ../../topics/testing/advanced.txt:668
 msgid "Creates a new test database and runs ``migrate`` against it."
 msgstr ""
+"Создаёт новую тестовую базу данных и запускает ``миграцию`` для неё."
 
 # 921d97db317447c3a09cd73f2e42c6f7
 #: ../../topics/testing/advanced.txt:670
 msgid "``verbosity`` has the same behavior as in ``run_tests()``."
-msgstr ""
+msgstr "``verbosity`` имеет такое же поведение, как и в ``run_tests()``."
 
 # 25dc7a795b6e4c1db381c6de5f61db80
 #: ../../topics/testing/advanced.txt:672
@@ -827,6 +1087,8 @@ msgid ""
 "``autoclobber`` describes the behavior that will occur if a database with "
 "the same name as the test database is discovered:"
 msgstr ""
+"``autoclobber`` описывает поведение в случе, если будет обнаружена "
+"база данных с таким же названием:"
 
 # d99c30ade6b14c71ace4ae31f02d7be2
 #: ../../topics/testing/advanced.txt:675
@@ -835,6 +1097,9 @@ msgid ""
 "destroying the existing database. ``sys.exit`` is called if the user does "
 "not approve."
 msgstr ""
+"Если ``autoclobber`` установлен как ``False``, то пользователя попросят "
+"подтвердить уничтожение существующей базы данных. ``sys.exit`` будет "
+"вызван, если пользователь не подтвердит."
 
 # 2e54ea4ecdfc4664b7819d24407a698d
 #: ../../topics/testing/advanced.txt:679
@@ -842,6 +1107,8 @@ msgid ""
 "If autoclobber is ``True``, the database will be destroyed without "
 "consulting the user."
 msgstr ""
+"Если autoclobber установлен как ``True``, то база данных будет "
+"уничтожена без подтверждения пользователя. "
 
 #: ../../topics/testing/advanced.txt:682
 msgid ""
@@ -851,6 +1118,11 @@ msgid ""
 "speed up creation time if you don't have any test classes with :ref:"
 "`serialized_rollback=True <test-case-serialized-rollback>`."
 msgstr ""
+"``serialize`` определяет нужно ли Django сериализовать базу данных прямо "
+"в памяти в JSON строку перед запуском тестов (используется для восстановления "
+"состояния между тестами если у вас нет транзакций). Вы можете установить этому "
+"атрибуту значение ``False`` для ускорения времени создания, если у вас нет "
+"каких-либо тестовых классов с установленным значением :ref:`serialized_rollback=True <test-case-serialized-rollback>`."
 
 #: ../../topics/testing/advanced.txt:688
 msgid ""
@@ -858,6 +1130,9 @@ msgid ""
 "setting:`SERIALIZE <TEST_SERIALIZE>` entry in the :setting:`TEST <DATABASE-"
 "TEST>` dictionary."
 msgstr ""
+"Если вы используете тестовый исполнитель, предоставленный по умолчанию, то "
+"вы можете контроллировать это используя :setting:`SERIALIZE <TEST_SERIALIZE>` "
+"в словаре :setting:`TEST <DATABASE-TEST>`."
 
 #: ../../topics/testing/advanced.txt:692
 msgid ""
@@ -866,11 +1141,16 @@ msgid ""
 "created if not present. If ``False``, a new database will be created, "
 "prompting the user to remove the existing one, if present."
 msgstr ""
+"``keepdb`` определяет, должен ли запущенный тест использовать существующую "
+"базу данных или создать новую. Если указано ``True``, тогда существующая "
+"база данных будет использована, или создана новая если текущей нет. "
+"Если же указано ``False``, то будет создана новая база данных с запросом "
+"подтверждения на удаление, если такая база будет уже присутствовать."
 
 # b15b97455c2d471aa352680b17e68227
 #: ../../topics/testing/advanced.txt:698
 msgid "Returns the name of the test database that it created."
-msgstr ""
+msgstr "Возвращает название тестовой базы данных, которое оно создало."
 
 # 2ac630952c974e3db5e6789e1ce0c168
 #: ../../topics/testing/advanced.txt:700
@@ -878,6 +1158,8 @@ msgid ""
 "``create_test_db()`` has the side effect of modifying the value of :setting:"
 "`NAME` in :setting:`DATABASES` to match the name of the test database."
 msgstr ""
+"``create_test_db()`` имеет побочный эффект изменения значения :setting:`NAME` "
+"в :setting:`DATABASES` для соответствия имени тестовой базы данных."
 
 # 18805b6da752427999445d59af13a626
 #: ../../topics/testing/advanced.txt:706
@@ -885,6 +1167,8 @@ msgid ""
 "Destroys the database whose name is the value of :setting:`NAME` in :setting:"
 "`DATABASES`, and sets :setting:`NAME` to the value of ``old_database_name``."
 msgstr ""
+"Уничтожает базу данных по имени в :setting:`NAME` в :setting:`DATABASES`, и "
+"устанавливает значение :setting:`NAME` по аргументу ``old_database_name``."
 
 # 8d7d02e3cfec429882ca613ce0b1bacc
 #: ../../topics/testing/advanced.txt:710
@@ -892,16 +1176,19 @@ msgid ""
 "The ``verbosity`` argument has the same behavior as for :class:`~django.test."
 "runner.DiscoverRunner`."
 msgstr ""
+"Аргумент ``verbosity`` имеет похожее поведение, как у :class:`~django.test.runner.DiscoverRunner`."
 
 #: ../../topics/testing/advanced.txt:713
 msgid ""
 "If the ``keepdb`` argument is ``True``, then the connection to the database "
 "will be closed, but the database will not be destroyed."
 msgstr ""
+"Если аргумент ``keepdb`` установлен в значение ``True``, тогда соединение с базой "
+"данных будет закрыто, но база данных не будет уничтожена."
 
 #: ../../topics/testing/advanced.txt:719
 msgid "Integration with ``coverage.py``"
-msgstr ""
+msgstr "Интеграция с ``coverage.py``"
 
 # cf5d075211714b3c8d25cf8a00c4b15e
 #: ../../topics/testing/advanced.txt:721
@@ -911,6 +1198,10 @@ msgid ""
 "important part of testing applications, so it's strongly recommended to "
 "check the coverage of your tests."
 msgstr ""
+"Покрытие кода показывает сколько написанного кода было протестировано. "
+"Оно показывает какие части вашего кода были исполнены тестами, а какие "
+"пропущены. Это важная часть тестирования приложений, поэтому сильно "
+"рекомендуется проверять время от времени покрытие вашего кода."
 
 # d4f3c27f2b3744028d49869efaafe4da
 #: ../../topics/testing/advanced.txt:726
@@ -919,6 +1210,10 @@ msgid ""
 "code coverage of Python programs. First, `install coverage.py`_. Next, run "
 "the following from your project folder containing ``manage.py``::"
 msgstr ""
+"В Django может быть с лёгкостью интегрирован `coverage.py`_, инструмент, "
+"способный измерить покрытие тестами программ, написанных на Python. "
+"В первую очередь, `установите coverage.py <https://pypi.python.org/pypi/coverage>`_. Далее, выполните приведённую "
+"ниже команду из директории вашего проекта, содержащую ``manage.py``::"
 
 # 874e59fd52df436b93439d83d90bba95
 #: ../../topics/testing/advanced.txt:732
@@ -926,6 +1221,9 @@ msgid ""
 "This runs your tests and collects coverage data of the executed files in "
 "your project. You can see a report of this data by typing following command::"
 msgstr ""
+"Эта команда запустит ваши тесты и соберёт информацию по покрытию запущенных "
+"файлов в вашем проекте. Вы можете просмотреть отчёт по собранной информации "
+"введя следующую команду::"
 
 # 5c05074376404364965ae9b7b005f893
 #: ../../topics/testing/advanced.txt:737
@@ -933,6 +1231,9 @@ msgid ""
 "Note that some Django code was executed while running tests, but it is not "
 "listed here because of the ``source`` flag passed to the previous command."
 msgstr ""
+"Стоит отметить, что также был запущен некоторый код Django при выполнении "
+"тестов, но оно не будет учитываться благодаря указанному в команде выше "
+"флагу ``source``."
 
 # 1153b524671f4f77813d51f31f371aa1
 #: ../../topics/testing/advanced.txt:740
@@ -940,3 +1241,5 @@ msgid ""
 "For more options like annotated HTML listings detailing missed lines, see "
 "the `coverage.py`_ docs."
 msgstr ""
+"Для больших возможностей вроде просмотра отчёта в HTML формате, "
+"обратитесь к официальной `coverage.py`_ документации."
