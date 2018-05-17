@@ -138,6 +138,13 @@ instead of positional interpolation (e.g., ``%s`` or ``%d``) whenever you
 have more than a single parameter. If you used positional interpolation,
 translations wouldn't be able to reorder placeholder text.
 
+Since string extraction is done by the ``xgettext`` command, only syntaxes
+supported by ``gettext`` are supported by Django. Python f-strings_ and
+`JavaScript template strings`_ are not yet supported by ``xgettext``.
+
+.. _f-strings: https://docs.python.org/3/reference/lexical_analysis.html#f-strings
+.. _JavaScript template strings: https://savannah.gnu.org/bugs/?50920
+
 .. _translator-comments:
 
 Comments for translators
@@ -421,7 +428,7 @@ Working with lazy translation objects
 The result of a ``gettext_lazy()`` call can be used wherever you would use a
 string (a :class:`str` object) in other Django code, but it may not work with
 arbitrary Python code. For example, the following won't work because the
-`requests <https://pypi.python.org/pypi/requests/>`_ library doesn't handle
+`requests <https://pypi.org/project/requests/>`_ library doesn't handle
 ``gettext_lazy`` objects::
 
     body = gettext_lazy("I \u2764 Django")  # (unicode :heart:)
@@ -1652,13 +1659,13 @@ To workaround this, you can escape percent signs by adding a second percent
 sign::
 
     from django.utils.translation import gettext as _
-    output = _("10%% interest)
+    output = _("10%% interest")
 
 Or you can use ``no-python-format`` so that all percent signs are treated as
 literals::
 
     # xgettext:no-python-format
-    output = _("10% interest)
+    output = _("10% interest")
 
 .. _creating-message-files-from-js-code:
 
@@ -1686,7 +1693,7 @@ This is only needed for people who either want to extract message IDs or compile
 message files (``.po``). Translation work itself just involves editing existing
 files of this type, but if you want to create your own message files, or want to
 test or compile a changed message file, download `a precompiled binary
-installer <http://mlocati.github.io/gettext-iconv-windows/>`_.
+installer <https://mlocati.github.io/articles/gettext-iconv-windows.html>`_.
 
 You may also use ``gettext`` binaries you have obtained elsewhere, so long as
 the ``xgettext --version`` command works properly. Do not attempt to use Django
@@ -2072,6 +2079,10 @@ translations for the same literal:
     following a similar but not identical algorithm. See
     :class:`.JavaScriptCatalog` for more details.
 
+    You can also put :ref:`custom format files <custom-format-files>` in the
+    :setting:`LOCALE_PATHS` directories if you also set
+    :setting:`FORMAT_MODULE_PATH`.
+
 In all cases the name of the directory containing the translation is expected to
 be named using :term:`locale name` notation. E.g. ``de``, ``pt_BR``, ``es_AR``,
 etc.
@@ -2111,5 +2122,5 @@ aware of certain limitations:
 * When an English variant is activated and English strings are missing, the
   fallback language will not be the :setting:`LANGUAGE_CODE` of the project,
   but the original strings. For example, an English user visiting a site with
-  Spanish as the default language and original strings written in Russian will
-  fallback to Russian, not to Spanish.
+  :setting:`LANGUAGE_CODE` set to Spanish and original strings written in
+  Russian will see Russian text rather than Spanish.

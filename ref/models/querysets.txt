@@ -540,10 +540,10 @@ within the same ``values()`` clause. If you need to group by another value,
 add it to an earlier ``values()`` clause instead. For example::
 
     >>> from django.db.models import Count
-    >>> Blog.objects.values('author', entries=Count('entry'))
-    <QuerySet [{'author': 1, 'entries': 20}, {'author': 1, 'entries': 13}]>
-    >>> Blog.objects.values('author').annotate(entries=Count('entry'))
-    <QuerySet [{'author': 1, 'entries': 33}]>
+    >>> Blog.objects.values('entry__authors', entries=Count('entry'))
+    <QuerySet [{'entry__authors': 1, 'entries': 20}, {'entry__authors': 1, 'entries': 13}]>
+    >>> Blog.objects.values('entry__authors').annotate(entries=Count('entry'))
+    <QuerySet [{'entry__authors': 1, 'entries': 33}]>
 
 A few subtleties that are worth mentioning:
 
@@ -941,11 +941,13 @@ following models::
 ... then a call to ``Book.objects.select_related('author__hometown').get(id=4)``
 will cache the related ``Person`` *and* the related ``City``::
 
+    # Hits the database with joins to the author and hometown tables.
     b = Book.objects.select_related('author__hometown').get(id=4)
     p = b.author         # Doesn't hit the database.
     c = p.hometown       # Doesn't hit the database.
 
-    b = Book.objects.get(id=4) # No select_related() in this example.
+    # Without select_related()...
+    b = Book.objects.get(id=4)  # Hits the database.
     p = b.author         # Hits the database.
     c = p.hometown       # Hits the database.
 
@@ -1972,6 +1974,10 @@ As described above in :meth:`get_or_create`, this method is prone to a
 race-condition which can result in multiple rows being inserted simultaneously
 if uniqueness is not enforced at the database level.
 
+Like :meth:`get_or_create` and :meth:`create`, if you're using manually
+specified primary keys and an object needs to be created but the key already
+exists in the database, an :exc:`~django.db.IntegrityError` is raised.
+
 .. versionchanged:: 1.11
 
     Added support for callable values in ``defaults``.
@@ -1999,6 +2005,21 @@ This has a number of caveats though:
   does not retrieve and set the primary key attribute, as ``save()`` does,
   unless the database backend supports it (currently PostgreSQL).
 * It does not work with many-to-many relationships.
+* It casts ``objs`` to a list, which fully evaluates ``objs`` if it's a
+  generator. The cast allows inspecting all objects so that any objects with a
+  manually set primary key can be inserted first. If you want to insert objects
+  in batches without evaluating the entire generator at once, you can use this
+  technique as long as the objects don't have any manually set primary keys::
+
+    from itertools import islice
+
+    batch_size = 100
+    objs = (Entry(headline='Test %s' % i) for i in range(1000))
+    while True:
+        batch = list(islice(objs, batch_size))
+        if not batch:
+            break
+        Entry.objects.bulk_create(batch, batch_size)
 
 The ``batch_size`` parameter controls how many objects are created in a single
 query. The default is to create all objects in one batch, except for SQLite
@@ -2863,7 +2884,7 @@ in the database <database-time-zone-definitions>`.
 
 For date and datetime fields, return the week number (1-52 or 53) according
 to `ISO-8601 <https://en.wikipedia.org/wiki/ISO-8601>`_, i.e., weeks start
-on a Monday and the first week starts on or before Thursday.
+on a Monday and the first week contains the year's first Thursday.
 
 Example::
 
@@ -2938,7 +2959,7 @@ lookups. Takes a :class:`datetime.time` value.
 Example::
 
     Entry.objects.filter(pub_date__time=datetime.time(14, 30))
-    Entry.objects.filter(pub_date__time__between=(datetime.time(8), datetime.time(17)))
+    Entry.objects.filter(pub_date__time__range=(datetime.time(8), datetime.time(17)))
 
 (No equivalent SQL code fragment is included for this lookup because
 implementation of the relevant query varies among different database engines.)
