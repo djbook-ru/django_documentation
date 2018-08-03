@@ -37,7 +37,7 @@ just as well.
 Usage
 =====
 
-.. code-block:: console
+.. console::
 
     $ django-admin <command> [options]
     $ manage.py <command> [options]
@@ -235,8 +235,6 @@ are prefixed by ``"###"``.
 
 .. django-admin-option:: --default MODULE
 
-.. versionadded:: 1.11
-
 The settings module to compare the current settings against. Leave empty to
 compare against Django's default settings.
 
@@ -352,8 +350,11 @@ Specifies the database to flush. Defaults to ``default``.
 
 Introspects the database tables in the database pointed-to by the
 :setting:`NAME` setting and outputs a Django model module (a ``models.py``
-file) to standard output. You may choose what tables to inspect by passing
-their names as arguments.
+file) to standard output.
+
+You may choose what tables or views to inspect by passing their names as
+arguments. If no arguments are provided, models are created for views only if
+the :option:`--include-views` option is used.
 
 Use this if you have a legacy database with which you'd like to use Django.
 The script will inspect the database and create a model for each table within
@@ -407,6 +408,12 @@ it because ``True`` is its default value).
 
 Specifies the database to introspect. Defaults to ``default``.
 
+.. django-admin-option:: --include-views
+
+.. versionadded:: 2.1
+
+If this option is provided, models are also created for database views.
+
 ``loaddata``
 ------------
 
@@ -437,8 +444,6 @@ Specifies the :ref:`serialization format <serialization-formats>` (e.g.,
 <loading-fixtures-stdin>`.
 
 .. django-admin-option:: --exclude EXCLUDE, -e EXCLUDE
-
-.. versionadded:: 1.11
 
 Excludes loading the fixtures from the given applications and/or models (in the
 form of ``app_label`` or ``app_label.ModelName``). Use the option multiple
@@ -1016,10 +1021,6 @@ You can also pass code in on standard input to execute it. For example:
 On Windows, the REPL is output due to implementation limits of
 :func:`select.select` on that platform.
 
-.. versionchanged:: 1.11
-
-    In older versions, the REPL is also output on UNIX systems.
-
 ``showmigrations``
 ------------------
 
@@ -1046,10 +1047,6 @@ of 2 and above, all dependencies of a migration will also be shown.
 
 ``app_label``\s arguments limit the output, however, dependencies of provided
 apps may also be included.
-
-.. versionchanged:: 1.11
-
-    In older versions, ``showmigrations --plan`` ignores app labels.
 
 .. django-admin-option:: --database DATABASE
 
@@ -1324,8 +1321,6 @@ class <order-of-tests>` is preserved when using this option.
 
 .. django-admin-option:: --debug-mode
 
-.. versionadded:: 1.11
-
 Sets the :setting:`DEBUG` setting to ``True`` prior to running tests. This may
 help troubleshoot test failures.
 
@@ -1527,8 +1522,6 @@ instance.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. django-admin:: remove_stale_contenttypes
-
-.. versionadded:: 1.11
 
 This command is only available if Django's :doc:`contenttypes app
 </ref/contrib/contenttypes>` (:mod:`django.contrib.contenttypes`) is installed.

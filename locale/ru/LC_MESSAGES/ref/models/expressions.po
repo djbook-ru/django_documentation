@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-17 17:48+0300\n"
+"POT-Creation-Date: 2018-08-03 16:48+0300\n"
 "PO-Revision-Date: 2015-03-19 15:06+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -37,31 +37,35 @@ msgstr ""
 
 #: ../../ref/models/expressions.txt:16
 msgid ""
-"Django supports addition, subtraction, multiplication, division, modulo "
-"arithmetic, and the power operator on query expressions, using Python "
+"Django supports negation, addition, subtraction, multiplication, division, "
+"modulo arithmetic, and the power operator on query expressions, using Python "
 "constants, variables, and even other expressions."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:21
+#: ../../ref/models/expressions.txt:22
+msgid "Support for negation was added."
+msgstr ""
+
+#: ../../ref/models/expressions.txt:25
 msgid "Some examples"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:69
+#: ../../ref/models/expressions.txt:77
 msgid "Built-in Expressions"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:73
+#: ../../ref/models/expressions.txt:81
 msgid ""
 "These expressions are defined in ``django.db.models.expressions`` and "
 "``django.db.models.aggregates``, but for convenience they're available and "
 "usually imported from :mod:`django.db.models`."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:78
+#: ../../ref/models/expressions.txt:86
 msgid "``F()`` expressions"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:82
+#: ../../ref/models/expressions.txt:90
 msgid ""
 "An ``F()`` object represents the value of a model field or annotated column. "
 "It makes it possible to refer to model field values and perform  database "
@@ -69,19 +73,19 @@ msgid ""
 "database into Python memory."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:87
+#: ../../ref/models/expressions.txt:95
 msgid ""
 "Instead, Django uses the ``F()`` object to generate an SQL expression that "
 "describes the required operation at the database level."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:90
+#: ../../ref/models/expressions.txt:98
 msgid ""
 "This is easiest to understand through an example. Normally, one might do "
 "something like this::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:98
+#: ../../ref/models/expressions.txt:106
 msgid ""
 "Here, we have pulled the value of ``reporter.stories_filed`` from the "
 "database into memory and manipulated it using familiar Python operators, and "
@@ -89,14 +93,14 @@ msgid ""
 "done::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:108
+#: ../../ref/models/expressions.txt:116
 msgid ""
 "Although ``reporter.stories_filed = F('stories_filed') + 1`` looks like a "
 "normal Python assignment of value to an instance attribute, in fact it's an "
 "SQL construct describing an operation on the database."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:112
+#: ../../ref/models/expressions.txt:120
 msgid ""
 "When Django encounters an instance of ``F()``, it overrides the standard "
 "Python operators to create an encapsulated SQL expression; in this case, one "
@@ -104,7 +108,7 @@ msgid ""
 "``reporter.stories_filed``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:117
+#: ../../ref/models/expressions.txt:125
 msgid ""
 "Whatever value is or was on ``reporter.stories_filed``, Python never gets to "
 "know about it - it is dealt with entirely by the database. All Python does, "
@@ -112,11 +116,11 @@ msgid ""
 "field and describe the operation."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:122
+#: ../../ref/models/expressions.txt:130
 msgid "To access the new value saved this way, the object must be reloaded::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:128
+#: ../../ref/models/expressions.txt:136
 msgid ""
 "As well as being used in operations on single instances as above, ``F()`` "
 "can be used on ``QuerySets`` of object instances, with ``update()``. This "
@@ -124,7 +128,7 @@ msgid ""
 "`~Model.save()` - to just one::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:136
+#: ../../ref/models/expressions.txt:144
 msgid ""
 "We can also use :meth:`~django.db.models.query.QuerySet.update()` to "
 "increment the field value on multiple objects - which could be very much "
@@ -133,29 +137,29 @@ msgid ""
 "the database::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:143
+#: ../../ref/models/expressions.txt:151
 msgid "``F()`` therefore can offer performance advantages by:"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:145
+#: ../../ref/models/expressions.txt:153
 msgid "getting the database, rather than Python, to do work"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:146
+#: ../../ref/models/expressions.txt:154
 msgid "reducing the number of queries some operations require"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:151
+#: ../../ref/models/expressions.txt:159
 msgid "Avoiding race conditions using ``F()``"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:153
+#: ../../ref/models/expressions.txt:161
 msgid ""
 "Another useful benefit of ``F()`` is that having the database - rather than "
 "Python - update a field's value avoids a *race condition*."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:156
+#: ../../ref/models/expressions.txt:164
 msgid ""
 "If two Python threads execute the code in the first example above, one "
 "thread could retrieve, increment, and save a field's value after the other "
@@ -164,7 +168,7 @@ msgid ""
 "simply be lost."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:161
+#: ../../ref/models/expressions.txt:169
 msgid ""
 "If the database is responsible for updating the field, the process is more "
 "robust: it will only ever update the field based on the value of the field "
@@ -172,50 +176,50 @@ msgid ""
 "rather than based on its value when the instance was retrieved."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:167
+#: ../../ref/models/expressions.txt:175
 msgid "``F()`` assignments persist after ``Model.save()``"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:169
+#: ../../ref/models/expressions.txt:177
 msgid ""
 "``F()`` objects assigned to model fields persist after saving the model "
 "instance and will be applied on each :meth:`~Model.save()`. For example::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:179
+#: ../../ref/models/expressions.txt:187
 msgid ""
 "``stories_filed`` will be updated twice in this case. If it's initially "
 "``1``, the final value will be ``3``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:183
+#: ../../ref/models/expressions.txt:191
 msgid "Using ``F()`` in filters"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:185
+#: ../../ref/models/expressions.txt:193
 msgid ""
 "``F()`` is also very useful in ``QuerySet`` filters, where they make it "
 "possible to filter a set of objects against criteria based on their field "
 "values, rather than on Python values."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:189
+#: ../../ref/models/expressions.txt:197
 msgid ""
 "This is documented in :ref:`using F() expressions in queries <using-f-"
 "expressions-in-filters>`."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:195
+#: ../../ref/models/expressions.txt:203
 msgid "Using ``F()`` with annotations"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:197
+#: ../../ref/models/expressions.txt:205
 msgid ""
 "``F()`` can be used to create dynamic fields on your models by combining "
 "different fields with arithmetic::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:203
+#: ../../ref/models/expressions.txt:211
 msgid ""
 "If the fields that you're combining are of different types you'll need to "
 "tell Django what kind of field will be returned. Since ``F()`` does not "
@@ -223,74 +227,74 @@ msgid ""
 "class:`ExpressionWrapper`::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:214
+#: ../../ref/models/expressions.txt:222
 msgid ""
 "When referencing relational fields such as ``ForeignKey``, ``F()`` returns "
 "the primary key value rather than a model instance::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:226
+#: ../../ref/models/expressions.txt:234
 msgid "Using ``F()`` to sort null values"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:228
+#: ../../ref/models/expressions.txt:236
 msgid ""
 "Use ``F()`` and the ``nulls_first`` or ``nulls_last`` keyword argument to :"
 "meth:`.Expression.asc` or :meth:`~.Expression.desc` to control the ordering "
 "of a field's null values. By default, the ordering depends on your database."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:232
+#: ../../ref/models/expressions.txt:240
 msgid ""
 "For example, to sort companies that haven't been contacted "
 "(``last_contacted`` is null) after companies that have been contacted::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:241
+#: ../../ref/models/expressions.txt:249
 msgid "``Func()`` expressions"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:243
+#: ../../ref/models/expressions.txt:251
 msgid ""
 "``Func()`` expressions are the base type of all expressions that involve "
 "database functions like ``COALESCE`` and ``LOWER``, or aggregates like "
 "``SUM``. They can be used directly::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:251
+#: ../../ref/models/expressions.txt:259
 msgid "or they can be used to build a library of database functions::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:258
+#: ../../ref/models/expressions.txt:266
 msgid ""
 "But both cases will result in a queryset where each model is annotated with "
 "an extra attribute ``field_lower`` produced, roughly, from the following "
 "SQL::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:265
+#: ../../ref/models/expressions.txt:273
 msgid ""
 "See :doc:`database-functions` for a list of built-in database functions."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:267
+#: ../../ref/models/expressions.txt:275
 msgid "The ``Func`` API is as follows:"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:273
+#: ../../ref/models/expressions.txt:281
 msgid ""
 "A class attribute describing the function that will be generated. "
 "Specifically, the ``function`` will be interpolated as the ``function`` "
 "placeholder within :attr:`template`. Defaults to ``None``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:279
+#: ../../ref/models/expressions.txt:287
 msgid ""
 "A class attribute, as a format string, that describes the SQL that is "
 "generated for this function. Defaults to ``'%(function)s(%(expressions)s)'``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:283
+#: ../../ref/models/expressions.txt:291
 msgid ""
 "If you're constructing SQL like ``strftime('%W', 'date')`` and need a "
 "literal ``%`` character in the query, quadruple it (``%%%%``) in the "
@@ -299,31 +303,31 @@ msgid ""
 "with the query parameters in the database cursor."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:291
+#: ../../ref/models/expressions.txt:299
 msgid ""
 "A class attribute that denotes the character used to join the list of "
 "``expressions`` together. Defaults to ``', '``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:296
+#: ../../ref/models/expressions.txt:304
 msgid ""
 "A class attribute that denotes the number of arguments the function accepts. "
 "If this attribute is set and the function is called with a different number "
 "of expressions, ``TypeError`` will be raised. Defaults to ``None``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:303
+#: ../../ref/models/expressions.txt:311
 msgid "Generates the SQL for the database function."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:305
+#: ../../ref/models/expressions.txt:313
 msgid ""
 "The ``as_vendor()`` methods should use the ``function``, ``template``, "
 "``arg_joiner``, and any other ``**extra_context`` parameters to customize "
 "the SQL as needed. For example:"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:324
+#: ../../ref/models/expressions.txt:332
 msgid ""
 "To avoid a SQL injection vulnerability, ``extra_context`` :ref:`must not "
 "contain untrusted user input <avoiding-sql-injection-in-query-expressions>` "
@@ -331,7 +335,7 @@ msgid ""
 "query parameters, where the database driver would escape them."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:329
+#: ../../ref/models/expressions.txt:337
 msgid ""
 "The ``*expressions`` argument is a list of positional expressions that the "
 "function will be applied to. The expressions will be converted to strings, "
@@ -339,14 +343,14 @@ msgid ""
 "``template`` as the ``expressions`` placeholder."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:334
+#: ../../ref/models/expressions.txt:342
 msgid ""
 "Positional arguments can be expressions or Python values. Strings are "
 "assumed to be column references and will be wrapped in ``F()`` expressions "
 "while other values will be wrapped in ``Value()`` expressions."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:338
+#: ../../ref/models/expressions.txt:346
 msgid ""
 "The ``**extra`` kwargs are ``key=value`` pairs that can be interpolated into "
 "the ``template`` attribute. To avoid a SQL injection vulnerability, "
@@ -356,18 +360,18 @@ msgid ""
 "would escape them."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:345
+#: ../../ref/models/expressions.txt:353
 msgid ""
 "The ``function``, ``template``, and ``arg_joiner`` keywords can be used to "
 "replace the attributes of the same name without having to define your own "
 "class. ``output_field`` can be used to define the expected return type."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:350
+#: ../../ref/models/expressions.txt:358
 msgid "``Aggregate()`` expressions"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:352
+#: ../../ref/models/expressions.txt:360
 msgid ""
 "An aggregate expression is a special case of a :ref:`Func() expression <func-"
 "expressions>` that informs the query that a ``GROUP BY`` clause is required. "
@@ -375,44 +379,44 @@ msgid ""
 "``Sum()`` and ``Count()``, inherit from ``Aggregate()``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:357
+#: ../../ref/models/expressions.txt:365
 msgid ""
 "Since ``Aggregate``\\s are expressions and wrap expressions, you can "
 "represent some complex computations::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:365
+#: ../../ref/models/expressions.txt:373
 msgid "The ``Aggregate`` API is as follows:"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:371
+#: ../../ref/models/expressions.txt:379
 msgid ""
 "A class attribute, as a format string, that describes the SQL that is "
 "generated for this aggregate. Defaults to "
 "``'%(function)s( %(expressions)s )'``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:377
+#: ../../ref/models/expressions.txt:385
 msgid ""
 "A class attribute describing the aggregate function that will be generated. "
 "Specifically, the ``function`` will be interpolated as the ``function`` "
 "placeholder within :attr:`template`. Defaults to ``None``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:385
+#: ../../ref/models/expressions.txt:393
 msgid ""
 "Defaults to ``True`` since most aggregate functions can be used as the "
 "source expression in :class:`~django.db.models.expressions.Window`."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:388
+#: ../../ref/models/expressions.txt:396
 msgid ""
 "The ``expression`` argument can be the name of a field on the model, or "
 "another expression. It will be converted to a string and used as the "
 "``expressions`` placeholder within the ``template``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:392
+#: ../../ref/models/expressions.txt:400
 msgid ""
 "The ``output_field`` argument requires a model field instance, like "
 "``IntegerField()`` or ``BooleanField()``, into which Django will load the "
@@ -422,7 +426,7 @@ msgid ""
 "the expression's output value."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:399
+#: ../../ref/models/expressions.txt:407
 msgid ""
 "Note that ``output_field`` is only required when Django is unable to "
 "determine what field type the result should be. Complex expressions that mix "
@@ -431,39 +435,39 @@ msgid ""
 "``output_field=FloatField()`` defined."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:405
+#: ../../ref/models/expressions.txt:413
 msgid ""
 "The ``filter`` argument takes a :class:`Q object <django.db.models.Q>` "
 "that's used to filter the rows that are aggregated. See :ref:`conditional-"
 "aggregation` and :ref:`filtering-on-annotations` for example usage."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:409
+#: ../../ref/models/expressions.txt:417
 msgid ""
 "The ``**extra`` kwargs are ``key=value`` pairs that can be interpolated into "
 "the ``template`` attribute."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:414
+#: ../../ref/models/expressions.txt:422
 msgid "The ``filter`` argument was added."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:417
+#: ../../ref/models/expressions.txt:425
 msgid "Creating your own Aggregate Functions"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:419
+#: ../../ref/models/expressions.txt:427
 msgid ""
 "Creating your own aggregate is extremely easy. At a minimum, you need to "
 "define ``function``, but you can also completely customize the SQL that is "
 "generated. Here's a brief example::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:440
+#: ../../ref/models/expressions.txt:448
 msgid "``Value()`` expressions"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:445
+#: ../../ref/models/expressions.txt:453
 msgid ""
 "A ``Value()`` object represents the smallest possible component of an "
 "expression: a simple value. When you need to represent the value of an "
@@ -471,7 +475,7 @@ msgid ""
 "within a ``Value()``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:450
+#: ../../ref/models/expressions.txt:458
 msgid ""
 "You will rarely need to use ``Value()`` directly. When you write the "
 "expression ``F('field') + 1``, Django implicitly wraps the ``1`` in a "
@@ -481,14 +485,14 @@ msgid ""
 "field, like ``Lower('name')``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:457
+#: ../../ref/models/expressions.txt:465
 msgid ""
 "The ``value`` argument describes the value to be included in the expression, "
 "such as ``1``, ``True``, or ``None``. Django knows how to convert these "
 "Python values into their corresponding database type."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:461
+#: ../../ref/models/expressions.txt:469
 msgid ""
 "The ``output_field`` argument should be a model field instance, like "
 "``IntegerField()`` or ``BooleanField()``, into which Django will load the "
@@ -498,11 +502,11 @@ msgid ""
 "the expression's output value."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:469
+#: ../../ref/models/expressions.txt:477
 msgid "``ExpressionWrapper()`` expressions"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:473
+#: ../../ref/models/expressions.txt:481
 msgid ""
 "``ExpressionWrapper`` simply surrounds another expression and provides "
 "access to properties, such as ``output_field``, that may not be available on "
@@ -511,49 +515,49 @@ msgid ""
 "with-annotations`."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:480
+#: ../../ref/models/expressions.txt:488
 msgid "Conditional expressions"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:482
+#: ../../ref/models/expressions.txt:490
 msgid ""
 "Conditional expressions allow you to use :keyword:`if` ... :keyword:"
 "`elif` ... :keyword:`else` logic in queries. Django natively supports SQL "
 "``CASE`` expressions. For more details see :doc:`conditional-expressions`."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:487
+#: ../../ref/models/expressions.txt:495
 msgid "``Subquery()`` expressions"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:493
+#: ../../ref/models/expressions.txt:499
 msgid ""
 "You can add an explicit subquery to a ``QuerySet`` using the ``Subquery`` "
 "expression."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:496
+#: ../../ref/models/expressions.txt:502
 msgid ""
 "For example, to annotate each post with the email address of the author of "
 "the newest comment on that post::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:503 ../../ref/models/expressions.txt:596
+#: ../../ref/models/expressions.txt:509 ../../ref/models/expressions.txt:598
 msgid "On PostgreSQL, the SQL looks like:"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:516
+#: ../../ref/models/expressions.txt:522
 msgid ""
 "The examples in this section are designed to show how to force Django to "
 "execute a subquery. In some cases it may be possible to write an equivalent "
 "queryset that performs the same task more clearly or efficiently."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:522
+#: ../../ref/models/expressions.txt:528
 msgid "Referencing columns from the outer queryset"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:528
+#: ../../ref/models/expressions.txt:532
 msgid ""
 "Use ``OuterRef`` when a queryset in a ``Subquery`` needs to refer to a field "
 "from the outer query. It acts like an :class:`F` expression except that the "
@@ -561,7 +565,7 @@ msgid ""
 "queryset is resolved."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:533
+#: ../../ref/models/expressions.txt:537
 msgid ""
 "Instances of ``OuterRef`` may be used in conjunction with nested instances "
 "of ``Subquery`` to refer to a containing queryset that isn't the immediate "
@@ -569,64 +573,64 @@ msgid ""
 "``Subquery`` instances to resolve correctly::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:541
+#: ../../ref/models/expressions.txt:545
 msgid "Limiting a subquery to a single column"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:543
+#: ../../ref/models/expressions.txt:547
 msgid ""
 "There are times when a single column must be returned from a ``Subquery``, "
 "for instance, to use a ``Subquery`` as the target of an ``__in`` lookup. To "
 "return all comments for posts published within the last day::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:553
+#: ../../ref/models/expressions.txt:557
 msgid ""
 "In this case, the subquery must use :meth:`~.QuerySet.values` to return only "
 "a single column: the primary key of the post."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:557
+#: ../../ref/models/expressions.txt:561
 msgid "Limiting the subquery to a single row"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:559
+#: ../../ref/models/expressions.txt:563
 msgid ""
 "To prevent a subquery from returning multiple rows, a slice (``[:1]``) of "
 "the queryset is used::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:565
+#: ../../ref/models/expressions.txt:569
 msgid ""
 "In this case, the subquery must only return a single column *and* a single "
 "row: the email address of the most recently created comment."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:568
+#: ../../ref/models/expressions.txt:572
 msgid ""
 "(Using :meth:`~.QuerySet.get` instead of a slice would fail because the "
 "``OuterRef`` cannot be resolved until the queryset is used within a "
 "``Subquery``.)"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:573
+#: ../../ref/models/expressions.txt:577
 msgid "``Exists()`` subqueries"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:579
+#: ../../ref/models/expressions.txt:581
 msgid ""
 "``Exists`` is a ``Subquery`` subclass that uses an SQL ``EXISTS`` statement. "
 "In many cases it will perform better than a subquery since the database is "
 "able to stop evaluation of the subquery when a first matching row is found."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:583
+#: ../../ref/models/expressions.txt:585
 msgid ""
 "For example, to annotate each post with whether or not it has a comment from "
 "within the last day::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:609
+#: ../../ref/models/expressions.txt:611
 msgid ""
 "It's unnecessary to force ``Exists`` to refer to a single column, since the "
 "columns are discarded and a boolean result is returned. Similarly, since "
@@ -634,44 +638,44 @@ msgid ""
 "degrade performance, it's automatically removed."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:614
+#: ../../ref/models/expressions.txt:616
 msgid "You can query using ``NOT EXISTS`` with ``~Exists()``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:617
+#: ../../ref/models/expressions.txt:619
 msgid "Filtering on a ``Subquery`` expression"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:619
+#: ../../ref/models/expressions.txt:621
 msgid ""
 "It's not possible to filter directly using ``Subquery`` and ``Exists``, e."
 "g.::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:626
+#: ../../ref/models/expressions.txt:628
 msgid ""
 "You must filter on a subquery expression by first annotating the queryset "
 "and then filtering based on that annotation::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:634
+#: ../../ref/models/expressions.txt:636
 msgid "Using aggregates within a ``Subquery`` expression"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:636
+#: ../../ref/models/expressions.txt:638
 msgid ""
 "Aggregates may be used within a ``Subquery``, but they require a specific "
 "combination of :meth:`~.QuerySet.filter`, :meth:`~.QuerySet.values`, and :"
 "meth:`~.QuerySet.annotate` to get the subquery grouping correct."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:640
+#: ../../ref/models/expressions.txt:642
 msgid ""
 "Assuming both models have a ``length`` field, to find posts where the post "
 "length is greater than the total length of all combined comments::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:648
+#: ../../ref/models/expressions.txt:650
 msgid ""
 "The initial ``filter(...)`` limits the subquery to the relevant parameters. "
 "``order_by()`` removes the default :attr:`~django.db.models.Options."
@@ -682,31 +686,31 @@ msgid ""
 "``values('total')`` is required."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:655
+#: ../../ref/models/expressions.txt:657
 msgid ""
 "This is the only way to perform an aggregation within a ``Subquery``, as "
 "using :meth:`~.QuerySet.aggregate` attempts to evaluate the queryset (and if "
 "there is an ``OuterRef``, this will not be possible to resolve)."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:660
+#: ../../ref/models/expressions.txt:662
 msgid "Raw SQL expressions"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:666
+#: ../../ref/models/expressions.txt:668
 msgid ""
 "Sometimes database expressions can't easily express a complex ``WHERE`` "
 "clause. In these edge cases, use the ``RawSQL`` expression. For example::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:672
+#: ../../ref/models/expressions.txt:674
 msgid ""
 "These extra lookups may not be portable to different database engines "
 "(because you're explicitly writing SQL code) and violate the DRY principle, "
 "so you should avoid them if possible."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:678
+#: ../../ref/models/expressions.txt:680
 msgid ""
 "To protect against `SQL injection attacks <https://en.wikipedia.org/wiki/"
 "SQL_injection>`_, you must escape any parameters that the user can control "
@@ -714,23 +718,23 @@ msgid ""
 "acknowledge that you're not interpolating your SQL with user-provided data."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:684
+#: ../../ref/models/expressions.txt:686
 msgid ""
 "You also must not quote placeholders in the SQL string. This example is "
 "vulnerable to SQL injection because of the quotes around ``%s``::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:689
+#: ../../ref/models/expressions.txt:691
 msgid ""
 "You can read more about how Django's :ref:`SQL injection protection <sql-"
 "injection-protection>` works."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:693
+#: ../../ref/models/expressions.txt:695
 msgid "Window functions"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:697
+#: ../../ref/models/expressions.txt:699
 msgid ""
 "Window functions provide a way to apply functions on partitions. Unlike a "
 "normal aggregation function which computes a final result for each set "
@@ -738,7 +742,7 @@ msgid ""
 "frames>` and partitions, and compute the result for each row."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:702
+#: ../../ref/models/expressions.txt:704
 msgid ""
 "You can specify multiple windows in the same query which in Django ORM would "
 "be equivalent to including multiple expressions in a :doc:`QuerySet."
@@ -746,43 +750,43 @@ msgid ""
 "windows, instead they are part of the selected columns."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:711
+#: ../../ref/models/expressions.txt:713
 msgid ""
 "Defaults to ``False``. The SQL standard disallows referencing window "
 "functions in the ``WHERE`` clause and Django raises an exception when "
 "constructing a ``QuerySet`` that would do that."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:717
+#: ../../ref/models/expressions.txt:719
 msgid ""
 "Defaults to ``%(expression)s OVER (%(window)s)'``. If only the "
 "``expression`` argument is provided, the window clause will be blank."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:720
+#: ../../ref/models/expressions.txt:722
 msgid "The ``Window`` class is the main expression for an ``OVER`` clause."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:722
+#: ../../ref/models/expressions.txt:724
 msgid ""
 "The ``expression`` argument is either a :ref:`window function <window-"
 "functions>`, an :ref:`aggregate function <aggregation-functions>`, or an "
 "expression that's compatible in a window clause."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:726
+#: ../../ref/models/expressions.txt:728
 msgid ""
 "The ``partition_by`` argument is a list of expressions (column names should "
 "be wrapped in an ``F``-object) that control the partitioning of the rows. "
 "Partitioning narrows which rows are used to compute the result set."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:730
+#: ../../ref/models/expressions.txt:732
 msgid ""
 "The ``output_field`` is specified either as an argument or by the expression."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:732
+#: ../../ref/models/expressions.txt:734
 msgid ""
 "The ``order_by`` argument accepts a sequence of expressions on which you can "
 "call :meth:`~django.db.models.Expression.asc` and :meth:`~django.db.models."
@@ -792,25 +796,25 @@ msgid ""
 "and second row."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:739
+#: ../../ref/models/expressions.txt:741
 msgid ""
 "The ``frame`` parameter specifies which other rows that should be used in "
 "the computation. See :ref:`window-frames` for details."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:742
+#: ../../ref/models/expressions.txt:744
 msgid ""
 "For example, to annotate each movie with the average rating for the movies "
 "by the same studio in the same genre and release year::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:755
+#: ../../ref/models/expressions.txt:757
 msgid ""
 "This makes it easy to check if a movie is rated better or worse than its "
 "peers."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:757
+#: ../../ref/models/expressions.txt:759
 msgid ""
 "You may want to apply multiple expressions over the same window, i.e., the "
 "same partition and frame. For example, you could modify the previous example "
@@ -820,7 +824,7 @@ msgid ""
 "into a dictionary to reduce repetition::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:782
+#: ../../ref/models/expressions.txt:784
 msgid ""
 "Among Django's built-in database backends, MySQL 8.0.2+, PostgreSQL, and "
 "Oracle support window expressions. Support for different window expression "
@@ -830,36 +834,36 @@ msgid ""
 "database as needed."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:792
+#: ../../ref/models/expressions.txt:794
 msgid "Frames"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:794
+#: ../../ref/models/expressions.txt:796
 msgid ""
 "For a window frame, you can choose either a range-based sequence of rows or "
 "an ordinary sequence of rows."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:801
+#: ../../ref/models/expressions.txt:803
 msgid "This attribute is set to ``'RANGE'``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:803
+#: ../../ref/models/expressions.txt:805
 msgid ""
 "PostgreSQL has limited support for ``ValueRange`` and only supports use of "
 "the standard start and end points, such as ``CURRENT ROW`` and ``UNBOUNDED "
 "FOLLOWING``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:811
+#: ../../ref/models/expressions.txt:813
 msgid "This attribute is set to ``'ROWS'``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:813
+#: ../../ref/models/expressions.txt:815
 msgid "Both classes return SQL with the template::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:817
+#: ../../ref/models/expressions.txt:819
 msgid ""
 "Frames narrow the rows that are used for computing the result. They shift "
 "from some start point to some specified end point. Frames can be used with "
@@ -869,7 +873,7 @@ msgid ""
 "present."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:823
+#: ../../ref/models/expressions.txt:825
 msgid ""
 "The default starting point for a frame is ``UNBOUNDED PRECEDING`` which is "
 "the first row of the partition. The end point is always explicitly included "
@@ -878,7 +882,7 @@ msgid ""
 "the set."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:828
+#: ../../ref/models/expressions.txt:830
 msgid ""
 "The accepted values for the ``start`` and ``end`` arguments are ``None``, an "
 "integer, or zero. A negative integer for ``start`` results in ``N "
@@ -887,7 +891,7 @@ msgid ""
 "are accepted for ``end``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:833
+#: ../../ref/models/expressions.txt:835
 msgid ""
 "There's a difference in what ``CURRENT ROW`` includes. When specified in "
 "``ROWS`` mode, the frame starts or ends with the current row. When specified "
@@ -898,7 +902,7 @@ msgid ""
 "may be expressed with::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:842
+#: ../../ref/models/expressions.txt:844
 msgid ""
 "If a movie's \"peers\" are described as movies released by the same studio "
 "in the same genre in the same year, this ``RowRange`` example annotates each "
@@ -906,7 +910,7 @@ msgid ""
 "peers::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:857
+#: ../../ref/models/expressions.txt:859
 msgid ""
 "If the database supports it, you can specify the start and end points based "
 "on values of an expression in the partition. If the ``released`` field of "
@@ -916,11 +920,11 @@ msgid ""
 "the each movie."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:876
+#: ../../ref/models/expressions.txt:878
 msgid "Technical Information"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:878
+#: ../../ref/models/expressions.txt:880
 msgid ""
 "Below you'll find technical implementation details that may be useful to "
 "library authors. The technical API and examples below will help with "
@@ -928,11 +932,11 @@ msgid ""
 "functionality that Django provides."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:884
+#: ../../ref/models/expressions.txt:886
 msgid "Expression API"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:886
+#: ../../ref/models/expressions.txt:888
 msgid ""
 "Query expressions implement the :ref:`query expression API <query-"
 "expression>`, but also expose a number of extra methods and attributes "
@@ -940,38 +944,38 @@ msgid ""
 "relevant subclass."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:891
+#: ../../ref/models/expressions.txt:893
 msgid ""
 "When a query expression wraps another expression, it is responsible for "
 "calling the appropriate methods on the wrapped expression."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:898
+#: ../../ref/models/expressions.txt:900
 msgid ""
 "Tells Django that this expression contains an aggregate and that a ``GROUP "
 "BY`` clause needs to be added to the query."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:905
+#: ../../ref/models/expressions.txt:907
 msgid ""
 "Tells Django that this expression contains a :class:`~django.db.models."
 "expressions.Window` expression. It's used, for example, to disallow window "
-"function expressions in queries that modify data. Defaults to ``True``."
+"function expressions in queries that modify data."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:914
+#: ../../ref/models/expressions.txt:916
 msgid ""
 "Tells Django that this expression can be referenced in :meth:`.QuerySet."
 "filter`. Defaults to ``True``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:921
+#: ../../ref/models/expressions.txt:923
 msgid ""
 "Tells Django that this expression can be used as the source expression in :"
 "class:`~django.db.models.expressions.Window`. Defaults to ``False``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:927
+#: ../../ref/models/expressions.txt:929
 msgid ""
 "Provides the chance to do any pre-processing or validation of the expression "
 "before it's added to the query. ``resolve_expression()`` must also be called "
@@ -979,37 +983,37 @@ msgid ""
 "any necessary transformations."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:932
+#: ../../ref/models/expressions.txt:934
 msgid "``query`` is the backend query implementation."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:934
+#: ../../ref/models/expressions.txt:936
 msgid ""
 "``allow_joins`` is a boolean that allows or denies the use of joins in the "
 "query."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:937
+#: ../../ref/models/expressions.txt:939
 msgid "``reuse`` is a set of reusable joins for multi-join scenarios."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:939
+#: ../../ref/models/expressions.txt:941
 msgid ""
 "``summarize`` is a boolean that, when ``True``, signals that the query being "
 "computed is a terminal aggregate query."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:944
+#: ../../ref/models/expressions.txt:946
 msgid "Returns an ordered list of inner expressions. For example::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:951
+#: ../../ref/models/expressions.txt:953
 msgid ""
 "Takes a list of expressions and stores them such that "
 "``get_source_expressions()`` can return them."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:956
+#: ../../ref/models/expressions.txt:958
 msgid ""
 "Returns a clone (copy) of ``self``, with any column aliases relabeled. "
 "Column aliases are renamed when subqueries are created. "
@@ -1017,50 +1021,42 @@ msgid ""
 "assigned to the clone."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:961
+#: ../../ref/models/expressions.txt:963
 msgid "``change_map`` is a dictionary mapping old aliases to new aliases."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:963
+#: ../../ref/models/expressions.txt:965
 msgid "Example::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:972
+#: ../../ref/models/expressions.txt:974
 msgid ""
 "A hook allowing the expression to coerce ``value`` into a more appropriate "
 "type."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:977
+#: ../../ref/models/expressions.txt:979
 msgid ""
 "Responsible for returning the list of columns references by this expression. "
 "``get_group_by_cols()`` should be called on any nested expressions. ``F()`` "
 "objects, in particular, hold a reference to a column."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:984
+#: ../../ref/models/expressions.txt:986
 msgid "Returns the expression ready to be sorted in ascending order."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:986 ../../ref/models/expressions.txt:997
+#: ../../ref/models/expressions.txt:988 ../../ref/models/expressions.txt:995
 msgid ""
 "``nulls_first`` and ``nulls_last`` define how null values are sorted. See :"
 "ref:`using-f-to-sort-null-values` for example usage."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:991
-msgid "The ``nulls_last`` and ``nulls_first`` parameters were added."
-msgstr ""
-
-#: ../../ref/models/expressions.txt:995
+#: ../../ref/models/expressions.txt:993
 msgid "Returns the expression ready to be sorted in descending order."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1002
-msgid "The ``nulls_first`` and ``nulls_last`` parameters were added."
-msgstr ""
-
-#: ../../ref/models/expressions.txt:1006
+#: ../../ref/models/expressions.txt:1000
 msgid ""
 "Returns ``self`` with any modifications required to reverse the sort order "
 "within an ``order_by`` call. As an example, an expression implementing "
@@ -1070,11 +1066,11 @@ msgid ""
 "QuerySet.reverse()` is called on a queryset."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1015
+#: ../../ref/models/expressions.txt:1009
 msgid "Writing your own Query Expressions"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1017
+#: ../../ref/models/expressions.txt:1011
 msgid ""
 "You can write your own query expression classes that use, and can integrate "
 "with, other query expressions. Let's step through an example by writing an "
@@ -1082,19 +1078,19 @@ msgid ""
 "ref:`Func() expressions <func-expressions>`."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1022
+#: ../../ref/models/expressions.txt:1016
 msgid ""
 "The ``COALESCE`` SQL function is defined as taking a list of columns or "
 "values. It will return the first column or value that isn't ``NULL``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1025
+#: ../../ref/models/expressions.txt:1019
 msgid ""
 "We'll start by defining the template to be used for SQL generation and an "
 "``__init__()`` method to set some attributes::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1043
+#: ../../ref/models/expressions.txt:1037
 msgid ""
 "We do some basic validation on the parameters, including requiring at least "
 "2 columns or values, and ensuring they are expressions. We are requiring "
@@ -1102,18 +1098,18 @@ msgid ""
 "assign the eventual result to."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1048
+#: ../../ref/models/expressions.txt:1042
 msgid ""
 "Now we implement the pre-processing and validation. Since we do not have any "
 "of our own validation at this point, we just delegate to the nested "
 "expressions::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1059
+#: ../../ref/models/expressions.txt:1053
 msgid "Next, we write the method responsible for generating the SQL::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1078
+#: ../../ref/models/expressions.txt:1072
 msgid ""
 "``as_sql()`` methods can support custom keyword arguments, allowing "
 "``as_vendorname()`` methods to override data used to generate the SQL "
@@ -1124,35 +1120,35 @@ msgid ""
 "your ``as_sql()`` method."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1086
+#: ../../ref/models/expressions.txt:1080
 msgid ""
 "We generate the SQL for each of the ``expressions`` by using the ``compiler."
 "compile()`` method, and join the result together with commas. Then the "
 "template is filled out with our data and the SQL and parameters are returned."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1091
+#: ../../ref/models/expressions.txt:1085
 msgid ""
 "We've also defined a custom implementation that is specific to the Oracle "
 "backend. The ``as_oracle()`` function will be called instead of ``as_sql()`` "
 "if the Oracle backend is in use."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1095
+#: ../../ref/models/expressions.txt:1089
 msgid ""
 "Finally, we implement the rest of the methods that allow our query "
 "expression to play nice with other query expressions::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1104
+#: ../../ref/models/expressions.txt:1098
 msgid "Let's see how it works::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1125
+#: ../../ref/models/expressions.txt:1119
 msgid "Avoiding SQL injection"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1127
+#: ../../ref/models/expressions.txt:1121
 msgid ""
 "Since a ``Func``'s keyword arguments for ``__init__()``  (``**extra``) and "
 "``as_sql()`` (``**extra_context``) are interpolated into the SQL string "
@@ -1160,13 +1156,13 @@ msgid ""
 "escape them), they must not contain untrusted user input."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1132
+#: ../../ref/models/expressions.txt:1126
 msgid ""
 "For example, if ``substring`` is user-provided, this function is vulnerable "
 "to SQL injection::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1145
+#: ../../ref/models/expressions.txt:1139
 msgid ""
 "This function generates a SQL string without any parameters. Since "
 "``substring`` is passed to ``super().__init__()`` as a keyword argument, "
@@ -1174,28 +1170,28 @@ msgid ""
 "database."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1149
+#: ../../ref/models/expressions.txt:1143
 msgid "Here's a corrected rewrite::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1158
+#: ../../ref/models/expressions.txt:1152
 msgid ""
 "With ``substring`` instead passed as a positional argument, it'll be passed "
 "as a parameter in the database query."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1162
+#: ../../ref/models/expressions.txt:1156
 msgid "Adding support in third-party database backends"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1164
+#: ../../ref/models/expressions.txt:1158
 msgid ""
 "If you're using a database backend that uses a different SQL syntax for a "
 "certain function, you can add support for it by monkey patching a new method "
 "onto the function's class."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1168
+#: ../../ref/models/expressions.txt:1162
 msgid ""
 "Let's say we're writing a backend for Microsoft's SQL Server which uses the "
 "SQL ``LEN`` instead of ``LENGTH`` for the :class:`~functions.Length` "
@@ -1203,26 +1199,26 @@ msgid ""
 "``Length`` class::"
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1180
+#: ../../ref/models/expressions.txt:1174
 msgid ""
 "You can also customize the SQL using the ``template`` parameter of "
 "``as_sql()``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1182
+#: ../../ref/models/expressions.txt:1176
 msgid ""
 "We use ``as_sqlserver()`` because ``django.db.connection.vendor`` returns "
 "``sqlserver`` for the backend."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1185
+#: ../../ref/models/expressions.txt:1179
 msgid ""
 "Third-party backends can register their functions in the top level "
 "``__init__.py`` file of the backend package or in a top level ``expressions."
 "py`` file (or package) that is imported from the top level ``__init__.py``."
 msgstr ""
 
-#: ../../ref/models/expressions.txt:1189
+#: ../../ref/models/expressions.txt:1183
 msgid ""
 "For user projects wishing to patch the backend that they're using, this code "
 "should live in an :meth:`AppConfig.ready()<django.apps.AppConfig.ready>` "

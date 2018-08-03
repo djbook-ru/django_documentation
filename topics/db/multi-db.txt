@@ -7,6 +7,11 @@ multiple databases. Most of the rest of Django's documentation assumes
 you are interacting with a single database. If you want to interact
 with multiple databases, you'll need to take some additional steps.
 
+.. seealso::
+
+    See :ref:`testing-multi-db` for information about testing with multiple
+    databases.
+
 Defining your databases
 =======================
 
@@ -667,7 +672,8 @@ object that allows you to retrieve a specific connection using its
 alias::
 
     from django.db import connections
-    cursor = connections['my_db_alias'].cursor()
+    with connections['my_db_alias'].cursor() as cursor:
+        ...
 
 Limitations of multiple databases
 =================================

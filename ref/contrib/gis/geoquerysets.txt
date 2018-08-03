@@ -269,6 +269,21 @@ SpatiaLite  ``Disjoint(poly, geom)``
 *Availability*: `PostGIS <https://postgis.net/docs/ST_Equals.html>`__,
 Oracle, MySQL, SpatiaLite, PGRaster (Conversion)
 
+Tests if the geometry field is spatially equal to the lookup geometry.
+
+Example::
+
+    Zipcode.objects.filter(poly__equals=geom)
+
+==========  =================================================
+Backend     SQL Equivalent
+==========  =================================================
+PostGIS     ``ST_Equals(poly, geom)``
+Oracle      ``SDO_EQUAL(poly, geom)``
+MySQL       ``MBREquals(poly, geom)``
+SpatiaLite  ``Equals(poly, geom)``
+==========  =================================================
+
 .. fieldlookup:: exact
 .. fieldlookup:: same_as
 
@@ -277,6 +292,23 @@ Oracle, MySQL, SpatiaLite, PGRaster (Conversion)
 
 *Availability*: `PostGIS <https://postgis.net/docs/ST_Geometry_Same.html>`__,
 Oracle, MySQL, SpatiaLite, PGRaster (Bilateral)
+
+Tests if the geometry field is "equal" to the lookup geometry. On Oracle and
+SpatiaLite it tests spatial equality, while on MySQL and PostGIS it tests
+equality of bounding boxes.
+
+Example::
+
+    Zipcode.objects.filter(poly=geom)
+
+==========  =================================================
+Backend     SQL Equivalent
+==========  =================================================
+PostGIS     ``poly ~= geom``
+Oracle      ``SDO_EQUAL(poly, geom)``
+MySQL       ``MBREquals(poly, geom)``
+SpatiaLite  ``Equals(poly, geom)``
+==========  =================================================
 
 .. fieldlookup:: intersects
 
@@ -321,10 +353,6 @@ Backend                     SQL Equivalent
 MySQL, PostGIS, SpatiaLite  ``ST_IsValid(poly)``
 Oracle                      ``SDO_GEOM.VALIDATE_GEOMETRY_WITH_CONTEXT(poly, 0.05) = 'TRUE'``
 ==========================  ================================================================
-
-.. versionchanged:: 1.11
-
-    Oracle and SpatiaLite support was added.
 
 .. versionchanged:: 2.0
 
@@ -635,10 +663,6 @@ simpler `ST_Distance <https://postgis.net/docs/ST_Distance.html>`__ function is
 used with projected coordinate systems. Rasters are converted to geometries for
 spheroid based lookups.
 
-.. versionadded:: 1.11
-
-    Support for the ``'spheroid'`` option on SQLite was added.
-
 .. versionadded:: 2.0
 
     MySQL support was added.
@@ -745,10 +769,6 @@ PostGIS     ``ST_DWithin(poly, geom, 5)``
 Oracle      ``SDO_WITHIN_DISTANCE(poly, geom, 5)``
 SpatiaLite  ``PtDistWithin(poly, geom, 5)``
 ==========  ======================================
-
-.. versionchanged:: 1.11
-
-    SpatiaLite support was added.
 
 Aggregate Functions
 -------------------
