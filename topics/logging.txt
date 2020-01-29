@@ -299,10 +299,12 @@ Finally, here's an example of a fairly complex logging setup::
         'disable_existing_loggers': False,
         'formatters': {
             'verbose': {
-                'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+                'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+                'style': '{',
             },
             'simple': {
-                'format': '%(levelname)s %(message)s'
+                'format': '{levelname} {message}',
+                'style': '{',
             },
         },
         'filters': {
@@ -466,7 +468,8 @@ posted using this name but instead using one of the loggers below.
 
 Log messages related to the handling of requests. 5XX responses are
 raised as ``ERROR`` messages; 4XX responses are raised as ``WARNING``
-messages.
+messages. Requests that are logged to the ``django.security`` logger aren't
+logged to ``django.request``.
 
 Messages to this logger have the following extra context:
 
@@ -500,11 +503,6 @@ Messages to this logger have the following extra context:
 Log messages related to the rendering of templates.
 
 * Missing context variables are logged as ``DEBUG`` messages.
-
-* Uncaught exceptions raised during the rendering of an
-  :ttag:`{% include %} <include>` are logged as ``WARNING`` messages when
-  debug mode is off (helpful since ``{% include %}`` silences the exception and
-  returns an empty string in that case).
 
 .. _django-db-logger:
 
@@ -651,7 +649,7 @@ Python logging module.
         subclass the :class:`~django.utils.log.AdminEmailHandler` class and
         override this method.
 
-.. _Sentry: https://pypi.python.org/pypi/sentry
+.. _Sentry: https://pypi.org/project/sentry/
 
 Filters
 -------

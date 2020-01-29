@@ -68,7 +68,7 @@ to handle high loads at LiveJournal.com and subsequently open-sourced by
 Danga Interactive. It is used by sites such as Facebook and Wikipedia to
 reduce database access and dramatically increase site performance.
 
-__ http://memcached.org/
+__ https://memcached.org/
 
 Memcached runs as a daemon and is allotted a specified amount of RAM. All it
 does is provide a fast interface for adding, retrieving and deleting data in
@@ -79,8 +79,8 @@ After installing Memcached itself, you'll need to install a Memcached
 binding. There are several Python Memcached bindings available; the
 two most common are `python-memcached`_ and `pylibmc`_.
 
-.. _`python-memcached`: https://pypi.python.org/pypi/python-memcached
-.. _`pylibmc`: https://pypi.python.org/pypi/pylibmc
+.. _`python-memcached`: https://pypi.org/project/python-memcached/
+.. _`pylibmc`: https://pypi.org/project/pylibmc/
 
 To use Memcached with Django:
 
@@ -167,11 +167,6 @@ Without a doubt, *none* of the Django caching backends should be used for
 permanent storage -- they're all intended to be solutions for caching, not
 storage -- but we point this out here because memory-based caching is
 particularly temporary.
-
-.. versionchanged:: 1.11
-
-    The :setting:`LOCATION <CACHES-LOCATION>` setting now supports defining
-    multiple servers as a comma-delimited string.
 
 .. _database-caching:
 
@@ -327,10 +322,16 @@ memory stores. If you only have one ``locmem`` cache, you can omit the
 memory cache, you will need to assign a name to at least one of them in
 order to keep them separate.
 
+The cache uses a least-recently-used (LRU) culling strategy.
+
 Note that each process will have its own private cache instance, which means no
 cross-process caching is possible. This obviously also means the local memory
 cache isn't particularly memory-efficient, so it's probably not a good choice
 for production environments. It's nice for development.
+
+.. versionchanged:: 2.1
+
+    Older versions use a pseudo-random culling strategy rather than LRU.
 
 Dummy caching (for development)
 -------------------------------
@@ -479,14 +480,6 @@ the binary protocol, SASL authentication, and the ``ketama`` behavior mode::
         }
     }
 
-.. versionchanged:: 1.11
-
-    Memcached backends can now be configured using ``OPTIONS``.
-
-    In older versions, you could pass ``pylibmc`` behavior settings directly
-    inside ``OPTIONS``. This is deprecated in favor of setting them under a
-    ``behaviors`` key within ``OPTIONS`` instead.
-
 .. _the-per-site-cache:
 
 The per-site cache
@@ -535,10 +528,6 @@ Additionally, ``UpdateCacheMiddleware`` automatically sets a few headers in each
 
 * Sets the ``Cache-Control`` header to give a max age for the page --
   again, from the :setting:`CACHE_MIDDLEWARE_SECONDS` setting.
-
-.. versionchanged:: 1.11
-
-    In older versions, the ``Last-Modified`` header was also set.
 
 See :doc:`/topics/http/middleware` for more on middleware.
 
@@ -745,6 +734,7 @@ a cached item, for example:
     >>> key = make_template_fragment_key('sidebar', [username])
     >>> cache.delete(key) # invalidates cached template fragment
 
+.. _low-level-cache-api:
 
 The low-level cache API
 =======================
@@ -901,6 +891,22 @@ Finally, if you want to delete all the keys in the cache, use
 from the cache, not just the keys set by your application. ::
 
     >>> cache.clear()
+
+``cache.touch()`` sets a new expiration for a key. For example, to update a key
+to expire 10 seconds from now::
+
+    >>> cache.touch('a', 10)
+    True
+
+Like other methods, the ``timeout`` argument is optional and defaults to the
+``TIMEOUT`` option of the appropriate backend in the :setting:`CACHES` setting.
+
+``touch()`` returns ``True`` if the key was successfully touched, ``False``
+otherwise.
+
+.. versionchanged:: 2.1
+
+    The ``cache.touch()`` method was added.
 
 You can also increment or decrement a key that already exists using the
 ``incr()`` or ``decr()`` methods, respectively. By default, the existing cache
@@ -1265,7 +1271,7 @@ Here are some more examples:
 The full list of known directives can be found in the `IANA registry`_
 (note that not all of them apply to responses).
 
-.. _IANA registry: http://www.iana.org/assignments/http-cache-directives/http-cache-directives.xhtml
+.. _IANA registry: https://www.iana.org/assignments/http-cache-directives/http-cache-directives.xhtml
 
 If you want to use headers to disable caching altogether,
 :func:`~django.views.decorators.cache.never_cache` is a view decorator that

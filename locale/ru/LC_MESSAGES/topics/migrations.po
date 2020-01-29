@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-03 16:54+0200\n"
+"POT-Creation-Date: 2018-08-03 16:48+0300\n"
 "PO-Revision-Date: 2016-03-17 14:49+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -746,12 +746,13 @@ msgstr "\"Исторические\" модели"
 
 # 2ea6bb146c5845cd88c541474c9fa1fb
 #: ../../topics/migrations.txt:352
+#, fuzzy
 msgid ""
 "When you run migrations, Django is working from historical versions of your "
 "models stored in the migration files. If you write Python code using the :"
 "class:`~django.db.migrations.operations.RunPython` operation, or if you have "
-"``allow_migrate`` methods on your database routers, you will be exposed to "
-"these versions of your models."
+"``allow_migrate`` methods on your database routers, you **need to use** "
+"these historical model versions rather than importing them directly."
 msgstr ""
 "При выполнении миграций Django использует сгенерированные версии ваших "
 "моделей, которые хранятся в файлах миграций. Если вы пишете Python код для "
@@ -759,8 +760,23 @@ msgstr ""
 "operations.RunPython`, или добавляете метод ``allow_migrate`` в ваш роутер "
 "базы данных, Django предоставит вам эти модели для использования."
 
+#: ../../topics/migrations.txt:360
+msgid ""
+"If you import models directly rather than using the historical models, your "
+"migrations *may work initially* but will fail in the future when you try to "
+"re-run old migrations (commonly, when you set up a new installation and run "
+"through all the migrations to set up the database)."
+msgstr ""
+
+#: ../../topics/migrations.txt:365
+msgid ""
+"This means that historical model problems may not be immediately obvious. If "
+"you run into this kind of failure, it's OK to edit the migration to use the "
+"historical models rather than direct imports and commit those changes."
+msgstr ""
+
 # b23e65a8ba3d450da348b6f11d11dd42
-#: ../../topics/migrations.txt:358
+#: ../../topics/migrations.txt:369
 msgid ""
 "Because it's impossible to serialize arbitrary Python code, these historical "
 "models will not have any custom methods that you have defined. They will, "
@@ -776,7 +792,7 @@ msgstr ""
 "в приложении)."
 
 # bf580196957d4288b45074ec834e67a4
-#: ../../topics/migrations.txt:366
+#: ../../topics/migrations.txt:377
 msgid ""
 "This means that you will NOT have custom ``save()`` methods called on "
 "objects when you access them in migrations, and you will NOT have any custom "
@@ -787,7 +803,7 @@ msgstr ""
 "модели. Вы должны учитывать это при создании Python кода миграций!"
 
 # f1d29382bef94e928c47fb3d66c9fc1e
-#: ../../topics/migrations.txt:370
+#: ../../topics/migrations.txt:381
 msgid ""
 "References to functions in field options such as ``upload_to`` and "
 "``limit_choices_to`` and model manager declarations with managers having "
@@ -805,7 +821,7 @@ msgstr ""
 "fields>` также должы быть доступны т.к. они явно импортируются в миграциях."
 
 # cb56ad648d0f46ef9c2f673870718af0
-#: ../../topics/migrations.txt:377
+#: ../../topics/migrations.txt:388
 msgid ""
 "In addition, the base classes of the model are just stored as pointers, so "
 "you must always keep base classes around for as long as there is a migration "
@@ -820,18 +836,18 @@ msgstr ""
 "необходим доступ в миграциях к собственным методам и менеджерам, вы можете "
 "вынести их в родительский класс."
 
-#: ../../topics/migrations.txt:383
+#: ../../topics/migrations.txt:394
 msgid ""
 "To remove old references, you can :ref:`squash migrations <migration-"
 "squashing>` or, if there aren't many references, copy them into the "
 "migration files."
 msgstr ""
 
-#: ../../topics/migrations.txt:389
+#: ../../topics/migrations.txt:400
 msgid "Considerations when removing model fields"
 msgstr "Советы по удалению полей модели"
 
-#: ../../topics/migrations.txt:391
+#: ../../topics/migrations.txt:402
 msgid ""
 "Similar to the \"references to historical functions\" considerations "
 "described in the previous section, removing custom model fields from your "
@@ -842,7 +858,7 @@ msgstr ""
 "проекта или используемых приложений может привести к проблемам с миграциями, "
 "если существуют миграции, которые ссылаются на эти поля."
 
-#: ../../topics/migrations.txt:395
+#: ../../topics/migrations.txt:406
 msgid ""
 "To help with this situation, Django provides some model field attributes to "
 "assist with model field deprecation using the :doc:`system checks framework "
@@ -852,13 +868,13 @@ msgstr ""
 "которые могут указать на устаревшие поля при :doc:`проверке проекта </topics/"
 "checks>`."
 
-#: ../../topics/migrations.txt:399
+#: ../../topics/migrations.txt:410
 msgid ""
 "Add the ``system_check_deprecated_details`` attribute to your model field "
 "similar to the following::"
 msgstr "Добавьте атрибут ``system_check_deprecated_details`` к полю модели::"
 
-#: ../../topics/migrations.txt:412
+#: ../../topics/migrations.txt:423
 msgid ""
 "After a deprecation period of your choosing (two or three feature releases "
 "for fields in Django itself), change the ``system_check_deprecated_details`` "
@@ -870,7 +886,7 @@ msgstr ""
 "``system_check_deprecated_details`` на ``system_check_removed_details`` со "
 "следующим значением::"
 
-#: ../../topics/migrations.txt:427
+#: ../../topics/migrations.txt:438
 msgid ""
 "You should keep the field's methods that are required for it to operate in "
 "database migrations such as ``__init__()``, ``deconstruct()``, and "
@@ -885,12 +901,12 @@ msgstr ""
 "удалить эти поля."
 
 # 78cc6c6026894dd2a2a1825b20160148
-#: ../../topics/migrations.txt:436
+#: ../../topics/migrations.txt:447
 msgid "Data Migrations"
 msgstr "Миграция данных"
 
 # caca08d3c0924c9d869ea3e08a3a426b
-#: ../../topics/migrations.txt:438
+#: ../../topics/migrations.txt:449
 msgid ""
 "As well as changing the database schema, you can also use migrations to "
 "change the data in the database itself, in conjunction with the schema if "
@@ -901,7 +917,7 @@ msgstr ""
 "чтобы мигрировать данные на новую структуру таблицы."
 
 # 86ebda27190b4a50b41994a3bf942453
-#: ../../topics/migrations.txt:441
+#: ../../topics/migrations.txt:452
 msgid ""
 "Migrations that alter data are usually called \"data migrations\"; they're "
 "best written as separate migrations, sitting alongside your schema "
@@ -911,7 +927,7 @@ msgstr ""
 "лучше выносить в отдельную миграцию."
 
 # a964547006c94a2da3e5083deb24c044
-#: ../../topics/migrations.txt:444
+#: ../../topics/migrations.txt:455
 msgid ""
 "Django can't automatically generate data migrations for you, as it does with "
 "schema migrations, but it's not very hard to write them. Migration files in "
@@ -926,7 +942,7 @@ msgstr ""
 "`~django.db.migrations.operations.RunPython`."
 
 # ba967cea60ea4690b64191434c501eaf
-#: ../../topics/migrations.txt:450
+#: ../../topics/migrations.txt:461
 msgid ""
 "To start, make an empty migration file you can work from (Django will put "
 "the file in the right place, suggest a name, and add dependencies for you)::"
@@ -935,12 +951,12 @@ msgstr ""
 "его в правильно место, создаст название и добавит необходимые зависимости)::"
 
 # 7ac15aee7d1147b08226919cbd2e083f
-#: ../../topics/migrations.txt:455
+#: ../../topics/migrations.txt:466
 msgid "Then, open up the file; it should look something like this::"
 msgstr "Теперь откройте файл, он будет выглядеть следующим образом::"
 
 # 35cbbf276d474a86a0498482574aa6a3
-#: ../../topics/migrations.txt:469
+#: ../../topics/migrations.txt:480
 msgid ""
 "Now, all you need to do is create a new function and have :class:`~django.db."
 "migrations.operations.RunPython` use it. :class:`~django.db.migrations."
@@ -962,7 +978,7 @@ msgstr ""
 "может сбить с толку автоматическое определение изменений структуры моделей!)"
 
 # d5ddfd6ed08e4171a9d56e53e6e4c5af
-#: ../../topics/migrations.txt:479
+#: ../../topics/migrations.txt:490
 msgid ""
 "Let's write a simple migration that populates our new ``name`` field with "
 "the combined values of ``first_name`` and ``last_name`` (we've come to our "
@@ -974,7 +990,7 @@ msgstr ""
 "использовать текущую версию модели и в цикле изменим все объекты::"
 
 # 47d1000613f6492f84b5b2943397671b
-#: ../../topics/migrations.txt:504
+#: ../../topics/migrations.txt:515
 msgid ""
 "Once that's done, we can just run ``python manage.py migrate`` as normal and "
 "the data migration will run in place alongside other migrations."
@@ -983,7 +999,7 @@ msgstr ""
 "применена вместе с остальными миграциями."
 
 # 59ba1eb9a4674d268180de43e7448bec
-#: ../../topics/migrations.txt:507
+#: ../../topics/migrations.txt:518
 msgid ""
 "You can pass a second callable to :class:`~django.db.migrations.operations."
 "RunPython` to run whatever logic you want executed when migrating backwards. "
@@ -994,11 +1010,11 @@ msgstr ""
 "отмене миграции. Если такая функция не указана, то при попытке отменить "
 "миграцию будет вызвано исключение."
 
-#: ../../topics/migrations.txt:513
+#: ../../topics/migrations.txt:524
 msgid "Accessing models from other apps"
 msgstr "Доступ к моделям в других приложениях"
 
-#: ../../topics/migrations.txt:515
+#: ../../topics/migrations.txt:526
 msgid ""
 "When writing a ``RunPython`` function that uses models from apps other than "
 "the one in which the migration is located, the migration's ``dependencies`` "
@@ -1013,7 +1029,7 @@ msgstr ""
 "``LookupError: No installed app with label 'myappname'`` в функции "
 "``RunPython`` при использовании ``apps.get_model()``."
 
-#: ../../topics/migrations.txt:522
+#: ../../topics/migrations.txt:533
 msgid ""
 "In the following example, we have a migration in ``app1`` which needs to use "
 "models in ``app2``. We aren't concerned with the details of ``move_m1`` "
@@ -1026,12 +1042,12 @@ msgstr ""
 "Для этого мы добавили в зависимости последнюю миграцию ``app2``::"
 
 # 78cc6c6026894dd2a2a1825b20160148
-#: ../../topics/migrations.txt:540
+#: ../../topics/migrations.txt:551
 msgid "More advanced migrations"
 msgstr "Миграции для продвинутых"
 
 # 243e42c894724ebc90d42ee79ec26b26
-#: ../../topics/migrations.txt:542
+#: ../../topics/migrations.txt:553
 msgid ""
 "If you're interested in the more advanced migration operations, or want to "
 "be able to write your own, see the :doc:`migration operations reference </"
@@ -1044,12 +1060,12 @@ msgstr ""
 "writing-migrations>`."
 
 # b05c63762b6144fbb47e2c647d51a802
-#: ../../topics/migrations.txt:550
+#: ../../topics/migrations.txt:561
 msgid "Squashing migrations"
 msgstr "Объединение миграций"
 
 # cfb42be39fa345f89d66b0390bfe1925
-#: ../../topics/migrations.txt:552
+#: ../../topics/migrations.txt:563
 msgid ""
 "You are encouraged to make migrations freely and not worry about how many "
 "you have; the migration code is optimized to deal with hundreds at a time "
@@ -1063,7 +1079,7 @@ msgstr ""
 "можете объединить их."
 
 # d57634a0412740bb8edf86915f98f1e0
-#: ../../topics/migrations.txt:557
+#: ../../topics/migrations.txt:568
 msgid ""
 "Squashing is the act of reducing an existing set of many migrations down to "
 "one (or sometimes a few) migrations which still represent the same changes."
@@ -1072,7 +1088,7 @@ msgstr ""
 "нескольких), которая будет выполнять аналогичные изменения структуры."
 
 # aeffdbc435b244b1b46c8924ed9a3654
-#: ../../topics/migrations.txt:560
+#: ../../topics/migrations.txt:571
 msgid ""
 "Django does this by taking all of your existing migrations, extracting their "
 "``Operation``\\s and putting them all in sequence, and then running an "
@@ -1091,7 +1107,7 @@ msgstr ""
 "CreateModel`."
 
 # 84f7908d57ba42109a3ddd1f6de8cc35
-#: ../../topics/migrations.txt:568
+#: ../../topics/migrations.txt:579
 #, fuzzy
 msgid ""
 "Once the operation sequence has been reduced as much as possible - the "
@@ -1108,7 +1124,7 @@ msgstr ""
 "новые миграции."
 
 # e066934d762f4f90ac2019c019074338
-#: ../../topics/migrations.txt:575
+#: ../../topics/migrations.txt:586
 msgid ""
 "These files are marked to say they replace the previously-squashed "
 "migrations, so they can coexist with the old migration files, and Django "
@@ -1128,7 +1144,7 @@ msgstr ""
 "использоваться новые миграции, старые миграции будут пропущены."
 
 # a01fb381ce1e4fdeb85506cf995740a5
-#: ../../topics/migrations.txt:582
+#: ../../topics/migrations.txt:593
 msgid ""
 "This enables you to squash and not mess up systems currently in production "
 "that aren't fully up-to-date yet. The recommended process is to squash, "
@@ -1146,7 +1162,7 @@ msgstr ""
 "последней релизной версии."
 
 # 3451808250c94876afff0bbdd45f13b6
-#: ../../topics/migrations.txt:589
+#: ../../topics/migrations.txt:600
 msgid ""
 "The command that backs all this is :djadmin:`squashmigrations` - just pass "
 "it the app label and migration name you want to squash up to, and it'll get "
@@ -1156,14 +1172,14 @@ msgstr ""
 "Просто передайте ей название приложения и название миграции, до который вы "
 "хотите выполнить объединение::"
 
-#: ../../topics/migrations.txt:608
+#: ../../topics/migrations.txt:619
 msgid ""
 "Use the :option:`squashmigrations --squashed-name` option if you want to set "
 "the name of the squashed migration rather than use an autogenerated one."
 msgstr ""
 
 # 46598c23bf684d70a430c487472d4800
-#: ../../topics/migrations.txt:611
+#: ../../topics/migrations.txt:622
 msgid ""
 "Note that model interdependencies in Django can get very complex, and "
 "squashing may result in migrations that do not run; either mis-optimized (in "
@@ -1179,14 +1195,15 @@ msgstr ""
 "самостоятельно исправить проблему)."
 
 # 5066f1f881df4e05b94b3e15db7b33f1
-#: ../../topics/migrations.txt:616
+#: ../../topics/migrations.txt:627
+#, fuzzy
 msgid ""
 "To manually resolve a ``CircularDependencyError``, break out one of the "
 "ForeignKeys in the circular dependency loop into a separate migration, and "
-"move the dependency on the other app with it. If you're unsure, see how "
-"makemigrations deals with the problem when asked to create brand new "
-"migrations from your models. In a future release of Django, squashmigrations "
-"will be updated to attempt to resolve these errors itself."
+"move the dependency on the other app with it. If you're unsure, see how :"
+"djadmin:`makemigrations` deals with the problem when asked to create brand "
+"new migrations from your models. In a future release of Django, :djadmin:"
+"`squashmigrations` will be updated to attempt to resolve these errors itself."
 msgstr ""
 "Чтобы устранить исключение ``CircularDependencyError``, вынесите один из "
 "``ForeignKey``, который привел к циклической зависимости, в отдельную "
@@ -1197,7 +1214,7 @@ msgstr ""
 "``squashmigrations``, чтобы такие проблемы решались автоматически."
 
 # bf4541873091465f9b37a58cfe2ce083
-#: ../../topics/migrations.txt:623
+#: ../../topics/migrations.txt:635
 msgid ""
 "Once you've squashed your migration, you should then commit it alongside the "
 "migrations it replaces and distribute this change to all running instances "
@@ -1208,7 +1225,7 @@ msgstr ""
 "этого обновите все установленные версии проекта."
 
 # aa8e15497a994beca02cf01681f4da83
-#: ../../topics/migrations.txt:628
+#: ../../topics/migrations.txt:640
 #, fuzzy
 msgid ""
 "You must then transition the squashed migration to a normal migration by:"
@@ -1217,19 +1234,19 @@ msgstr ""
 "миграцию:"
 
 # b37376d7fb7447d799c3f7f9ee09bf17
-#: ../../topics/migrations.txt:630
+#: ../../topics/migrations.txt:642
 #, fuzzy
 msgid "Deleting all the migration files it replaces."
 msgstr "Удалите все миграции, которые она заменяет"
 
-#: ../../topics/migrations.txt:631
+#: ../../topics/migrations.txt:643
 msgid ""
 "Updating all migrations that depend on the deleted migrations to depend on "
 "the squashed migration instead."
 msgstr ""
 
 # f44825f894a04615ae01b6556783d2a1
-#: ../../topics/migrations.txt:633
+#: ../../topics/migrations.txt:645
 #, fuzzy
 msgid ""
 "Removing the ``replaces`` attribute in the ``Migration`` class of the "
@@ -1240,7 +1257,7 @@ msgstr ""
 "(он указывает Django, что это объединенная миграция)"
 
 # 83726789d7a8414da267edcbc8ede394
-#: ../../topics/migrations.txt:637
+#: ../../topics/migrations.txt:649
 msgid ""
 "Once you've squashed a migration, you should not then re-squash that "
 "squashed migration until you have fully transitioned it to a normal "
@@ -1250,12 +1267,12 @@ msgstr ""
 "объединении, пока она не будет преобразована в обычную миграцию."
 
 # 8158664a9a024e989692d2fea012dbe4
-#: ../../topics/migrations.txt:644
+#: ../../topics/migrations.txt:656
 msgid "Serializing values"
 msgstr "Сериализация значений"
 
 # 3835dae0ccbd4a0290e45bf8b2e28c36
-#: ../../topics/migrations.txt:646
+#: ../../topics/migrations.txt:658
 msgid ""
 "Migrations are just Python files containing the old definitions of your "
 "models - thus, to write them, Django must take the current state of your "
@@ -1266,7 +1283,7 @@ msgstr ""
 "состояние ваших моделей и сериализовать его в файле."
 
 # 4e3f435fa57444b89db594c7775fe810
-#: ../../topics/migrations.txt:650
+#: ../../topics/migrations.txt:662
 msgid ""
 "While Django can serialize most things, there are some things that we just "
 "can't serialize out into a valid Python representation - there's no Python "
@@ -1280,12 +1297,12 @@ msgstr ""
 "для импорта)."
 
 # 24a0141f270c435cb51d7200f3235c4e
-#: ../../topics/migrations.txt:655
+#: ../../topics/migrations.txt:667
 msgid "Django can serialize the following:"
 msgstr "Django позволяет сериализовать следующее:"
 
 # 3c023ba5c7bb4f328ba2a69bb452d4b9
-#: ../../topics/migrations.txt:657
+#: ../../topics/migrations.txt:669
 #, fuzzy
 msgid "``int``, ``float``, ``bool``, ``str``, ``bytes``, ``None``"
 msgstr ""
@@ -1293,12 +1310,12 @@ msgstr ""
 "``None``"
 
 # 8ac31979a06049e6b613c6934ef117d5
-#: ../../topics/migrations.txt:658
+#: ../../topics/migrations.txt:670
 msgid "``list``, ``set``, ``tuple``, ``dict``"
 msgstr "``list``, ``set``, ``tuple``, ``dict``"
 
 # c5c2b1bb8f8046d89d64035c31fbe595
-#: ../../topics/migrations.txt:659
+#: ../../topics/migrations.txt:671
 msgid ""
 "``datetime.date``, ``datetime.time``, and ``datetime.datetime`` instances "
 "(include those that are timezone-aware)"
@@ -1307,41 +1324,42 @@ msgstr ""
 "(включая те, у которых указан часовой пояс)"
 
 # dccd4f32c500499495cb2d0b1695c0a6
-#: ../../topics/migrations.txt:661
+#: ../../topics/migrations.txt:673
 msgid "``decimal.Decimal`` instances"
 msgstr "Объекты ``decimal.Decimal``"
 
 # dccd4f32c500499495cb2d0b1695c0a6
-#: ../../topics/migrations.txt:662
+#: ../../topics/migrations.txt:674
 #, fuzzy
 msgid "``enum.Enum`` instances"
 msgstr "Объекты ``decimal.Decimal``"
 
 # dccd4f32c500499495cb2d0b1695c0a6
-#: ../../topics/migrations.txt:663
+#: ../../topics/migrations.txt:675
 #, fuzzy
 msgid "``uuid.UUID`` instances"
 msgstr "Объекты ``decimal.Decimal``"
 
-#: ../../topics/migrations.txt:664
+#: ../../topics/migrations.txt:676
+#, fuzzy
 msgid ""
-"``functools.partial`` instances which have serializable ``func``, ``args``, "
-"and ``keywords`` values."
+":func:`functools.partial` and :class:`functools.partialmethod` instances "
+"which have serializable ``func``, ``args``, and ``keywords`` values."
 msgstr ""
 "Объекты ``functools.partial``, которые содержат сериализируемые значения "
 "``func``, ``args`` и ``keywords``."
 
-#: ../../topics/migrations.txt:666
+#: ../../topics/migrations.txt:678
 msgid "``LazyObject`` instances which wrap a serializable value."
 msgstr "Объекты ``LazyObject``, которые содержат сериализируемое значение."
 
 # 3c7e2115eade4fdb8ff6d89fce83e488
-#: ../../topics/migrations.txt:667
+#: ../../topics/migrations.txt:679
 msgid "Any Django field"
 msgstr "Любое поле Django"
 
 # 2ccc05225783451e82a337bc5807e94c
-#: ../../topics/migrations.txt:668
+#: ../../topics/migrations.txt:680
 msgid ""
 "Any function or method reference (e.g. ``datetime.datetime.today``) (must be "
 "in module's top-level scope)"
@@ -1350,17 +1368,17 @@ msgstr ""
 "(должны быть доступны на уровне модуля)"
 
 # fb8f447a22184d50a0c6a13137869e0c
-#: ../../topics/migrations.txt:669
+#: ../../topics/migrations.txt:681
 #, fuzzy
 msgid "Unbound methods used from within the class body"
 msgstr "Непривязанные методы в теле класса (смотрите ниже)"
 
-#: ../../topics/migrations.txt:670
+#: ../../topics/migrations.txt:682
 msgid "Any class reference (must be in module's top-level scope)"
 msgstr "Ссылка на класс (должны быть доступны на уровне модуля)"
 
 # 3690be5782854dcd89e24d2ecba67e13
-#: ../../topics/migrations.txt:671
+#: ../../topics/migrations.txt:683
 msgid ""
 "Anything with a custom ``deconstruct()`` method (:ref:`see below <custom-"
 "deconstruct-method>`)"
@@ -1368,40 +1386,40 @@ msgstr ""
 "Любой объект с методом ``deconstruct()`` (:ref:`смотрите ниже <custom-"
 "deconstruct-method>`)"
 
-#: ../../topics/migrations.txt:675
+#: ../../topics/migrations.txt:687
 #, fuzzy
-msgid "Serialization support for ``uuid.UUID`` was added."
+msgid "Serialization support for :class:`functools.partialmethod` was added."
 msgstr ""
 "Была добавлена возможность сериализации объектов ``functools.partial`` и "
 "``LazyObject``."
 
 # b65f12427a76490c92420917724eee76
-#: ../../topics/migrations.txt:677
+#: ../../topics/migrations.txt:689
 msgid "Django cannot serialize:"
 msgstr "Django не может сериализовать:"
 
-#: ../../topics/migrations.txt:679
+#: ../../topics/migrations.txt:691
 msgid "Nested classes"
 msgstr "Вложенные классы"
 
 # 13268fe8db994ec9b7c900f028469b2f
-#: ../../topics/migrations.txt:680
+#: ../../topics/migrations.txt:692
 msgid "Arbitrary class instances (e.g. ``MyClass(4.3, 5.7)``)"
 msgstr "Экземпляры произвольного класса (например ``MyClass(4.3, 5.7)``)"
 
 # 52ca0452e3b04e1aabbad36d63fa5563
-#: ../../topics/migrations.txt:681
+#: ../../topics/migrations.txt:693
 msgid "Lambdas"
 msgstr "Лямбда-функции"
 
 # 2fa61872887743bc9e75f74209baa682
-#: ../../topics/migrations.txt:686
+#: ../../topics/migrations.txt:698
 #, fuzzy
 msgid "Adding a ``deconstruct()`` method"
 msgstr "Метод deconstruct()"
 
 # 117714d32b1948669f2087b00f43647b
-#: ../../topics/migrations.txt:688
+#: ../../topics/migrations.txt:700
 msgid ""
 "You can let Django serialize your own custom class instances by giving the "
 "class a ``deconstruct()`` method. It takes no arguments, and should return a "
@@ -1412,7 +1430,7 @@ msgstr ""
 "из трех элементов ``(path, args, kwargs)``:"
 
 # 89f6e73cf8a34929a83c105d8d335c17
-#: ../../topics/migrations.txt:692
+#: ../../topics/migrations.txt:704
 msgid ""
 "``path`` should be the Python path to the class, with the class name "
 "included as the last part (for example, ``myapp.custom_things.MyClass``). If "
@@ -1424,7 +1442,7 @@ msgstr ""
 "напрямую из модуля, его нельзя сериализировать."
 
 # 01cf3c978b104f3b85885d5b9ecebf5d
-#: ../../topics/migrations.txt:696
+#: ../../topics/migrations.txt:708
 msgid ""
 "``args`` should be a list of positional arguments to pass to your class' "
 "``__init__`` method. Everything in this list should itself be serializable."
@@ -1433,7 +1451,7 @@ msgstr ""
 "метод ``__init__``. Аргументы также должны быть сериализируемыми."
 
 # 25d989e3b97545d9a8a97300e228dabe
-#: ../../topics/migrations.txt:699
+#: ../../topics/migrations.txt:711
 msgid ""
 "``kwargs`` should be a dict of keyword arguments to pass to your class' "
 "``__init__`` method. Every value should itself be serializable."
@@ -1442,7 +1460,7 @@ msgstr ""
 "метод ``__init__``. Аргументы также должны быть сериализируемыми."
 
 # f00919bbd84045d783b7c4fdf0fb1c34
-#: ../../topics/migrations.txt:704
+#: ../../topics/migrations.txt:716
 msgid ""
 "This return value is different from the ``deconstruct()`` method :ref:`for "
 "custom fields <custom-field-deconstruct-method>` which returns a tuple of "
@@ -1453,7 +1471,7 @@ msgstr ""
 "элементов."
 
 # 9b59414e533a418fbe719f49f202c836
-#: ../../topics/migrations.txt:708
+#: ../../topics/migrations.txt:720
 msgid ""
 "Django will write out the value as an instantiation of your class with the "
 "given arguments, similar to the way it writes out references to Django "
@@ -1463,7 +1481,7 @@ msgstr ""
 "заданными аргументами, аналогично тому, как это делается для встроенных "
 "полей."
 
-#: ../../topics/migrations.txt:711
+#: ../../topics/migrations.txt:723
 msgid ""
 "To prevent a new migration from being created each time :djadmin:"
 "`makemigrations` is run, you should also add a ``__eq__()`` method to the "
@@ -1476,7 +1494,7 @@ msgstr ""
 "моделей."
 
 # 9025384595b24055a0a4eeb44186c79e
-#: ../../topics/migrations.txt:716
+#: ../../topics/migrations.txt:728
 msgid ""
 "As long as all of the arguments to your class' constructor are themselves "
 "serializable, you can use the ``@deconstructible`` class decorator from "
@@ -1487,7 +1505,7 @@ msgstr ""
 "из ``django.utils.deconstruct``, чтобы добавить метод ``deconstruct()``::"
 
 # 9f6ea85914344b83b692ecbb472af7b3
-#: ../../topics/migrations.txt:733
+#: ../../topics/migrations.txt:745
 msgid ""
 "The decorator adds logic to capture and preserve the arguments on their way "
 "into your constructor, and then returns those arguments exactly when "
@@ -1496,11 +1514,11 @@ msgstr ""
 "Декоратор сохраняет все аргументы, передаваемые в конструктор, и возвращает "
 "их при вызове ``deconstruct()``."
 
-#: ../../topics/migrations.txt:738
+#: ../../topics/migrations.txt:750
 msgid "Supporting multiple Django versions"
 msgstr "Поддержка нескольких версий Django"
 
-#: ../../topics/migrations.txt:740
+#: ../../topics/migrations.txt:752
 msgid ""
 "If you are the maintainer of a third-party app with models, you may need to "
 "ship migrations that support multiple Django versions. In this case, you "
@@ -1512,7 +1530,7 @@ msgstr ""
 "этом случае вы должны всегда выполнять :djadmin:`makemigrations` **для самый "
 "старой версии Django, которую вы поддерживаете**."
 
-#: ../../topics/migrations.txt:745
+#: ../../topics/migrations.txt:757
 msgid ""
 "The migrations system will maintain backwards-compatibility according to the "
 "same policy as the rest of Django, so migration files generated on Django X."
@@ -1527,12 +1545,12 @@ msgstr ""
 "добавляться новые возможности и новые миграции не будут работать на старой "
 "версии Django."
 
-#: ../../topics/migrations.txt:755
+#: ../../topics/migrations.txt:767
 #, fuzzy
 msgid ":doc:`The Migrations Operations Reference </ref/migration-operations>`"
 msgstr ":doc:`Описание операций миграции </ref/migration-operations>`"
 
-#: ../../topics/migrations.txt:754
+#: ../../topics/migrations.txt:766
 msgid ""
 "Covers the schema operations API, special operations, and writing your own "
 "operations."
@@ -1540,17 +1558,23 @@ msgstr ""
 "Описывает API операций для изменений структуры базы данных, специальные "
 "операции, и создания своих операций."
 
-#: ../../topics/migrations.txt:758
+#: ../../topics/migrations.txt:770
 #, fuzzy
 msgid ":doc:`The Writing Migrations \"how-to\" </howto/writing-migrations>`"
 msgstr ":doc:`\"how-to\" о создании миграций </howto/writing-migrations>`"
 
-#: ../../topics/migrations.txt:758
+#: ../../topics/migrations.txt:770
 msgid ""
 "Explains how to structure and write database migrations for different "
 "scenarios you might encounter."
 msgstr ""
 "Описывает как самостоятельно создать миграции для решения различных ситуаций."
+
+#, fuzzy
+#~ msgid "Serialization support for ``uuid.UUID`` was added."
+#~ msgstr ""
+#~ "Была добавлена возможность сериализации объектов ``functools.partial`` и "
+#~ "``LazyObject``."
 
 #, fuzzy
 #~ msgid "Serialization support for ``enum.Enum`` was added."
@@ -1622,13 +1646,6 @@ msgstr ""
 #~ "Python 2, при следующем запуске :djadmin:`makemigrations` на Python 3 "
 #~ "будет создана большая миграция с преобразованием всех байтовых строк в "
 #~ "текстовые. Это нормально и необходимо выполнить всего лишь раз."
-
-#~ msgid ""
-#~ "Serialization support for ``functools.partial`` and ``LazyObject`` "
-#~ "instances was added."
-#~ msgstr ""
-#~ "Была добавлена возможность сериализации объектов ``functools.partial`` и "
-#~ "``LazyObject``."
 
 #~ msgid ""
 #~ "The ``--fake-initial`` flag to :djadmin:`migrate` was added. Previously, "
