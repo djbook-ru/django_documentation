@@ -154,7 +154,8 @@ to, or in lieu of custom ``field.clean()`` methods.
     an error code of ``'invalid'`` if it doesn't.
 
     Loopback addresses and reserved IP spaces are considered valid. Literal
-    IPv6 addresses (:rfc:`2732`) and unicode domains are both supported.
+    IPv6 addresses (:rfc:`3986#section-3.2.2`) and unicode domains are both
+    supported.
 
     In addition to the optional arguments of its parent :class:`RegexValidator`
     class, ``URLValidator`` accepts an extra optional attribute:
@@ -233,34 +234,54 @@ to, or in lieu of custom ``field.clean()`` methods.
 ``MaxValueValidator``
 ---------------------
 
-.. class:: MaxValueValidator(max_value, message=None)
+.. class:: MaxValueValidator(limit_value, message=None)
 
     Raises a :exc:`~django.core.exceptions.ValidationError` with a code of
-    ``'max_value'`` if ``value`` is greater than ``max_value``.
+    ``'max_value'`` if ``value`` is greater than ``limit_value``, which may be
+    a callable.
+
+    .. versionchanged:: 2.2
+
+        ``limit_value`` can now be a callable.
 
 ``MinValueValidator``
 ---------------------
 
-.. class:: MinValueValidator(min_value, message=None)
+.. class:: MinValueValidator(limit_value, message=None)
 
     Raises a :exc:`~django.core.exceptions.ValidationError` with a code of
-    ``'min_value'`` if ``value`` is less than ``min_value``.
+    ``'min_value'`` if ``value`` is less than ``limit_value``, which may be a
+    callable.
+
+    .. versionchanged:: 2.2
+
+        ``limit_value`` can now be a callable.
 
 ``MaxLengthValidator``
 ----------------------
 
-.. class:: MaxLengthValidator(max_length, message=None)
+.. class:: MaxLengthValidator(limit_value, message=None)
 
     Raises a :exc:`~django.core.exceptions.ValidationError` with a code of
-    ``'max_length'`` if the length of ``value`` is greater than ``max_length``.
+    ``'max_length'`` if the length of ``value`` is greater than
+    ``limit_value``, which may be a callable.
+
+    .. versionchanged:: 2.2
+
+        ``limit_value`` can now be a callable.
 
 ``MinLengthValidator``
 ----------------------
 
-.. class:: MinLengthValidator(min_length, message=None)
+.. class:: MinLengthValidator(limit_value, message=None)
 
     Raises a :exc:`~django.core.exceptions.ValidationError` with a code of
-    ``'min_length'`` if the length of ``value`` is less than ``min_length``.
+    ``'min_length'`` if the length of ``value`` is less than ``limit_value``,
+    which may be a callable.
+
+    .. versionchanged:: 2.2
+
+        ``limit_value`` can now be a callable.
 
 ``DecimalValidator``
 --------------------
@@ -281,8 +302,6 @@ to, or in lieu of custom ``field.clean()`` methods.
 
 .. class:: FileExtensionValidator(allowed_extensions, message, code)
 
-    .. versionadded:: 1.11
-
     Raises a :exc:`~django.core.exceptions.ValidationError` with a code of
     ``'invalid_extension'`` if the extension of ``value.name`` (``value`` is
     a :class:`~django.core.files.File`) isn't found in ``allowed_extensions``.
@@ -299,8 +318,6 @@ to, or in lieu of custom ``field.clean()`` methods.
 
 .. data:: validate_image_file_extension
 
-    .. versionadded:: 1.11
-
     Uses Pillow to ensure that ``value.name`` (``value`` is a
     :class:`~django.core.files.File`) has `a valid image extension
     <https://pillow.readthedocs.io/en/latest/handbook/image-file-formats.html>`_.
@@ -309,8 +326,6 @@ to, or in lieu of custom ``field.clean()`` methods.
 -----------------------------------
 
 .. class:: ProhibitNullCharactersValidator(message=None, code=None)
-
-    .. versionadded:: 2.0
 
     Raises a :exc:`~django.core.exceptions.ValidationError` if ``str(value)``
     contains one or more nulls characters (``'\x00'``).

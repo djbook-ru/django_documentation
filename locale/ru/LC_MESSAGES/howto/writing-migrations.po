@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-16 11:56+0200\n"
+"POT-Creation-Date: 2020-02-13 22:13+0300\n"
 "PO-Revision-Date: 2015-03-19 15:06+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -51,6 +51,10 @@ msgstr ""
 msgid ""
 "You can also provide hints that will be passed to the :meth:"
 "`allow_migrate()` method of database routers as ``**hints``:"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:42
+msgid "myapp/dbrouters.py"
 msgstr ""
 
 #: ../../howto/writing-migrations.txt:52
@@ -111,10 +115,18 @@ msgid ""
 "``AlterField``, and add imports of ``uuid`` and ``models``. For example:"
 msgstr ""
 
+#: ../../howto/writing-migrations.txt:100
+msgid "0006_remove_uuid_null.py"
+msgstr ""
+
 #: ../../howto/writing-migrations.txt:121
 msgid ""
 "Edit the first migration file. The generated migration class should look "
 "similar to this:"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:124
+msgid "0004_add_uuid_field.py"
 msgstr ""
 
 #: ../../howto/writing-migrations.txt:141
@@ -130,6 +142,10 @@ msgid ""
 "operations.RunPython` or :class:`~django.db.migrations.operations.RunSQL` "
 "operation to generate a unique value (UUID in the example) for each existing "
 "row. Also add an import of ``uuid``. For example:"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:151
+msgid "0005_populate_uuid_values.py"
 msgstr ""
 
 #: ../../howto/writing-migrations.txt:175
@@ -175,32 +191,35 @@ msgstr ""
 #: ../../howto/writing-migrations.txt:223
 msgid ""
 "The ``atomic`` attribute doesn't have an effect on databases that don't "
-"support DDL transactions (e.g. MySQL, Oracle)."
+"support DDL transactions (e.g. MySQL, Oracle). (MySQL's `atomic DDL "
+"statement support <https://dev.mysql.com/doc/refman/en/atomic-ddl.html>`_ "
+"refers to individual statements rather than multiple statements wrapped in a "
+"transaction that can be rolled back.)"
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:227
+#: ../../howto/writing-migrations.txt:230
 msgid "Controlling the order of migrations"
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:229
+#: ../../howto/writing-migrations.txt:232
 msgid ""
 "Django determines the order in which migrations should be applied not by the "
 "filename of each migration, but by building a graph using two properties on "
 "the ``Migration`` class: ``dependencies`` and ``run_before``."
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:233
+#: ../../howto/writing-migrations.txt:236
 msgid ""
 "If you've used the :djadmin:`makemigrations` command you've probably already "
 "seen ``dependencies`` in action because auto-created migrations have this "
 "defined as part of their creation process."
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:237
+#: ../../howto/writing-migrations.txt:240
 msgid "The ``dependencies`` property is declared like this::"
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:247
+#: ../../howto/writing-migrations.txt:250
 msgid ""
 "Usually this will be enough, but from time to time you may need to ensure "
 "that your migration runs *before* other migrations. This is useful, for "
@@ -208,13 +227,13 @@ msgid ""
 "`AUTH_USER_MODEL` replacement."
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:252
+#: ../../howto/writing-migrations.txt:255
 msgid ""
 "To achieve this, place all migrations that should depend on yours in the "
 "``run_before`` attribute on your ``Migration`` class::"
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:262
+#: ../../howto/writing-migrations.txt:265
 msgid ""
 "Prefer using ``dependencies`` over ``run_before`` when possible. You should "
 "only use ``run_before`` if it is undesirable or impractical to specify "
@@ -222,17 +241,17 @@ msgid ""
 "are writing."
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:268
+#: ../../howto/writing-migrations.txt:271
 msgid "Migrating data between third-party apps"
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:270
+#: ../../howto/writing-migrations.txt:273
 msgid ""
 "You can use a data migration to move data from one third-party application "
 "to another."
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:273
+#: ../../howto/writing-migrations.txt:276
 msgid ""
 "If you plan to remove the old app later, you'll need to set the "
 "``dependencies`` property based on whether or not the old app is installed. "
@@ -243,11 +262,15 @@ msgid ""
 "uninstalling the old app."
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:280
+#: ../../howto/writing-migrations.txt:283
 msgid "Here's a sample migration:"
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:313
+#: ../../howto/writing-migrations.txt:285
+msgid "myapp/migrations/0124_move_old_app_to_new_app.py"
+msgstr ""
+
+#: ../../howto/writing-migrations.txt:316
 msgid ""
 "Also consider what you want to happen when the migration is unapplied. You "
 "could either do nothing (as in the example above) or remove some or all of "
@@ -255,11 +278,11 @@ msgid ""
 "`~django.db.migrations.operations.RunPython` operation accordingly."
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:319
+#: ../../howto/writing-migrations.txt:322
 msgid "Changing an unmanaged model to managed"
 msgstr ""
 
-#: ../../howto/writing-migrations.txt:321
+#: ../../howto/writing-migrations.txt:324
 msgid ""
 "If you want to change an unmanaged model (:attr:`managed=False <django.db."
 "models.Options.managed>`) to managed, you must remove ``managed=False`` and "

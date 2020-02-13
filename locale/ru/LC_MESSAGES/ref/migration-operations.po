@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-16 11:56+0200\n"
+"POT-Creation-Date: 2020-02-13 22:13+0300\n"
 "PO-Revision-Date: 2014-07-11 11:43+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -50,12 +50,11 @@ msgid ""
 "you want to encapsulate a custom change you commonly make."
 msgstr ""
 
-# 934970e5ecab43e49113fd12e44d7752
 #: ../../ref/migration-operations.txt:22
 msgid ""
 "If you need an empty migration file to write your own ``Operation`` objects "
-"into, just use ``python manage.py makemigrations --empty yourappname``, but "
-"be aware that manually adding schema-altering operations can confuse the "
+"into, use ``python manage.py makemigrations --empty yourappname``, but be "
+"aware that manually adding schema-altering operations can confuse the "
 "migration autodetector and make resulting runs of :djadmin:`makemigrations` "
 "output incorrect code."
 msgstr ""
@@ -109,14 +108,13 @@ msgid ""
 "class."
 msgstr ""
 
-# 0ce11fa9f96e4fb58c2987c78ffaa19b
 #: ../../ref/migration-operations.txt:53
 msgid ""
 "``bases`` is an optional list of other classes to have this model inherit "
 "from; it can contain both class objects as well as strings in the format ``"
 "\"appname.ModelName\"`` if you want to depend on another model (so you "
 "inherit from the historical version). If it's not supplied, it defaults to "
-"just inheriting from the standard ``models.Model``."
+"inheriting from the standard ``models.Model``."
 msgstr ""
 
 #: ../../ref/migration-operations.txt:59
@@ -243,16 +241,37 @@ msgid ""
 "always applies them in the Django ORM code."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:154
+#: ../../ref/migration-operations.txt:155
+msgid ""
+"On older databases, adding a field with a default value may cause a full "
+"rewrite of the table. This happens even for nullable fields and may have a "
+"negative performance impact. To avoid that, the following steps should be "
+"taken."
+msgstr ""
+
+#: ../../ref/migration-operations.txt:160
+msgid ""
+"Add the nullable field without the default value and run the :djadmin:"
+"`makemigrations` command. This should generate a migration with an "
+"``AddField`` operation."
+msgstr ""
+
+#: ../../ref/migration-operations.txt:164
+msgid ""
+"Add the default value to your field and run the :djadmin:`makemigrations` "
+"command. This should generate a migration with an ``AlterField`` operation."
+msgstr ""
+
+#: ../../ref/migration-operations.txt:169
 msgid "``RemoveField``"
 msgstr ""
 
 # 6e1321146416463f80f76aa1b8431692
-#: ../../ref/migration-operations.txt:158
+#: ../../ref/migration-operations.txt:173
 msgid "Removes a field from a model."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:160
+#: ../../ref/migration-operations.txt:175
 msgid ""
 "Bear in mind that when reversed, this is actually adding a field to a model. "
 "The operation is reversible (apart from any data loss, which of course is "
@@ -261,19 +280,19 @@ msgid ""
 "does not have a default value, the operation is irreversible."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:167
+#: ../../ref/migration-operations.txt:182
 msgid "``AlterField``"
 msgstr ""
 
 # 39ed1cb689d94d89a73a611152c7f611
-#: ../../ref/migration-operations.txt:171
+#: ../../ref/migration-operations.txt:186
 msgid ""
 "Alters a field's definition, including changes to its type, :attr:`~django."
 "db.models.Field.null`, :attr:`~django.db.models.Field.unique`, :attr:"
 "`~django.db.models.Field.db_column` and other field attributes."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:175
+#: ../../ref/migration-operations.txt:190
 msgid ""
 "The ``preserve_default`` argument indicates whether the field's default "
 "value is permanent and should be baked into the project state (``True``), or "
@@ -285,88 +304,105 @@ msgid ""
 msgstr ""
 
 # 27d18f9b2812412889655fe3f7f624c7
-#: ../../ref/migration-operations.txt:183
+#: ../../ref/migration-operations.txt:198
 msgid ""
 "Note that not all changes are possible on all databases - for example, you "
 "cannot change a text-type field like ``models.TextField()`` into a number-"
 "type field like ``models.IntegerField()`` on most databases."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:188
+#: ../../ref/migration-operations.txt:203
 msgid "``RenameField``"
 msgstr ""
 
 # 61e6f2fab96748e6b3fa918d4d7aa1fb
-#: ../../ref/migration-operations.txt:192
+#: ../../ref/migration-operations.txt:207
 msgid ""
 "Changes a field's name (and, unless :attr:`~django.db.models.Field."
 "db_column` is set, its column name)."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:196
+#: ../../ref/migration-operations.txt:211
 msgid "``AddIndex``"
 msgstr ""
 
-#: ../../ref/migration-operations.txt:202
+#: ../../ref/migration-operations.txt:215
 msgid ""
 "Creates an index in the database table for the model with ``model_name``. "
 "``index`` is an instance of the :class:`~django.db.models.Index` class."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:206
+#: ../../ref/migration-operations.txt:219
 msgid "``RemoveIndex``"
 msgstr ""
 
-#: ../../ref/migration-operations.txt:212
+#: ../../ref/migration-operations.txt:223
 msgid "Removes the index named ``name`` from the model with ``model_name``."
 msgstr ""
 
+#: ../../ref/migration-operations.txt:226
+msgid "``AddConstraint``"
+msgstr ""
+
+#: ../../ref/migration-operations.txt:232
+msgid ""
+"Creates a :doc:`constraint </ref/models/constraints>` in the database table "
+"for the model with ``model_name``."
+msgstr ""
+
+#: ../../ref/migration-operations.txt:236
+msgid "``RemoveConstraint``"
+msgstr ""
+
+#: ../../ref/migration-operations.txt:242
+msgid ""
+"Removes the constraint named ``name`` from the model with ``model_name``."
+msgstr ""
+
 # 76686ff69da34bf586de9e590d6db005
-#: ../../ref/migration-operations.txt:215
+#: ../../ref/migration-operations.txt:245
 msgid "Special Operations"
 msgstr ""
 
-#: ../../ref/migration-operations.txt:218
+#: ../../ref/migration-operations.txt:248
 msgid "``RunSQL``"
 msgstr ""
 
 # 4b6138bb53ea4be7a20b64a39786a87f
-#: ../../ref/migration-operations.txt:222
+#: ../../ref/migration-operations.txt:252
 msgid ""
 "Allows running of arbitrary SQL on the database - useful for more advanced "
 "features of database backends that Django doesn't support directly, like "
 "partial indexes."
 msgstr ""
 
-# 3193b80303134f118807168483c7606c
-#: ../../ref/migration-operations.txt:226
+#: ../../ref/migration-operations.txt:256
 msgid ""
 "``sql``, and ``reverse_sql`` if provided, should be strings of SQL to run on "
 "the database. On most database backends (all but PostgreSQL), Django will "
-"split the SQL into individual statements prior to executing them. This "
-"requires installing the sqlparse_ Python library."
+"split the SQL into individual statements prior to executing them."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:231
+#: ../../ref/migration-operations.txt:260
 msgid ""
 "You can also pass a list of strings or 2-tuples. The latter is used for "
 "passing queries and parameters in the same way as :ref:`cursor.execute() "
 "<executing-custom-sql>`. These three operations are equivalent::"
 msgstr ""
 
-#: ../../ref/migration-operations.txt:239
+#: ../../ref/migration-operations.txt:268
 msgid ""
 "If you want to include literal percent signs in the query, you have to "
 "double them if you are passing parameters."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:242
+#: ../../ref/migration-operations.txt:271
 msgid ""
 "The ``reverse_sql`` queries are executed when the migration is unapplied, so "
 "you can reverse the changes done in the forwards queries::"
 msgstr ""
 
-#: ../../ref/migration-operations.txt:250
+#: ../../ref/migration-operations.txt:279
 msgid ""
 "The ``state_operations`` argument is so you can supply operations that are "
 "equivalent to the SQL in terms of project state; for example, if you are "
@@ -377,7 +413,7 @@ msgid ""
 "again). For example::"
 msgstr ""
 
-#: ../../ref/migration-operations.txt:268
+#: ../../ref/migration-operations.txt:297
 msgid ""
 "The optional ``hints`` argument will be passed as ``**hints`` to the :meth:"
 "`allow_migrate` method of database routers to assist them in making routing "
@@ -385,26 +421,26 @@ msgid ""
 "hints."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:273
-#: ../../ref/migration-operations.txt:305
+#: ../../ref/migration-operations.txt:302
+#: ../../ref/migration-operations.txt:332
 msgid ""
 "The optional ``elidable`` argument determines whether or not the operation "
 "will be removed (elided) when :ref:`squashing migrations <migration-"
 "squashing>`."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:278
+#: ../../ref/migration-operations.txt:307
 msgid ""
 "Pass the ``RunSQL.noop`` attribute to ``sql`` or ``reverse_sql`` when you "
 "want the operation not to do anything in the given direction. This is "
 "especially useful in making the operation reversible."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:285
+#: ../../ref/migration-operations.txt:312
 msgid "``RunPython``"
 msgstr ""
 
-#: ../../ref/migration-operations.txt:289
+#: ../../ref/migration-operations.txt:316
 msgid ""
 "Runs custom Python code in a historical context. ``code`` (and "
 "``reverse_code`` if supplied) should be callable objects that accept two "
@@ -414,14 +450,14 @@ msgid ""
 "backends.base.schema.BaseDatabaseSchemaEditor>`."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:296
+#: ../../ref/migration-operations.txt:323
 msgid ""
 "The ``reverse_code`` argument is called when unapplying migrations. This "
 "callable should undo what is done in the ``code`` callable so that the "
 "migration is reversible."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:300
+#: ../../ref/migration-operations.txt:327
 msgid ""
 "The optional ``hints`` argument will be passed as ``**hints`` to the :meth:"
 "`allow_migrate` method of database routers to assist them in making a "
@@ -429,23 +465,22 @@ msgid ""
 "database hints."
 msgstr ""
 
-# 148ceff56f8c4faf89fc51d86ff162e8
-#: ../../ref/migration-operations.txt:308
+#: ../../ref/migration-operations.txt:335
 msgid ""
 "You are advised to write the code as a separate function above the "
-"``Migration`` class in the migration file, and just pass it to "
-"``RunPython``. Here's an example of using ``RunPython`` to create some "
-"initial objects on a ``Country`` model::"
+"``Migration`` class in the migration file, and pass it to ``RunPython``. "
+"Here's an example of using ``RunPython`` to create some initial objects on a "
+"``Country`` model::"
 msgstr ""
 
-#: ../../ref/migration-operations.txt:341
+#: ../../ref/migration-operations.txt:367
 msgid ""
 "This is generally the operation you would use to create :ref:`data "
 "migrations <data-migrations>`, run custom data updates and alterations, and "
 "anything else you need access to an ORM and/or Python code for."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:346
+#: ../../ref/migration-operations.txt:372
 msgid ""
 "If you're upgrading from South, this is basically the South pattern as an "
 "operation - one or two methods for forwards and backwards, with an ORM and "
@@ -459,7 +494,7 @@ msgid ""
 msgstr ""
 
 # d03d2004c0164f83a04c86696ab12dd1
-#: ../../ref/migration-operations.txt:355
+#: ../../ref/migration-operations.txt:381
 msgid ""
 "Much like :class:`RunSQL`, ensure that if you change schema inside here "
 "you're either doing it outside the scope of the Django model system (e.g. "
@@ -468,7 +503,7 @@ msgid ""
 "the versioned ORM and the autodetector will stop working correctly."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:361
+#: ../../ref/migration-operations.txt:387
 msgid ""
 "By default, ``RunPython`` will run its contents inside a transaction on "
 "databases that do not support DDL transactions (for example, MySQL and "
@@ -477,7 +512,7 @@ msgid ""
 "``atomic=False`` to the ``RunPython`` operation."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:367
+#: ../../ref/migration-operations.txt:393
 msgid ""
 "On databases that do support DDL transactions (SQLite and PostgreSQL), "
 "``RunPython`` operations do not have any transactions automatically added "
@@ -488,14 +523,14 @@ msgid ""
 "trigger events``."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:374
+#: ../../ref/migration-operations.txt:400
 msgid ""
 "If you have a different database and aren't sure if it supports DDL "
 "transactions, check the ``django.db.connection.features.can_rollback_ddl`` "
 "attribute."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:378
+#: ../../ref/migration-operations.txt:404
 msgid ""
 "If the ``RunPython`` operation is part of a :ref:`non-atomic migration <non-"
 "atomic-migrations>`, the operation will only be executed in a transaction if "
@@ -503,7 +538,7 @@ msgid ""
 msgstr ""
 
 # fa6db5a3beaa4fc99498b1a1c59a064a
-#: ../../ref/migration-operations.txt:384
+#: ../../ref/migration-operations.txt:410
 msgid ""
 "``RunPython`` does not magically alter the connection of the models for you; "
 "any model methods you call will go to the default database unless you give "
@@ -511,77 +546,75 @@ msgid ""
 "alias``, where ``schema_editor`` is the second argument to your function)."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:392
+#: ../../ref/migration-operations.txt:418
 msgid ""
 "Pass the ``RunPython.noop`` method to ``code`` or ``reverse_code`` when you "
 "want the operation not to do anything in the given direction. This is "
 "especially useful in making the operation reversible."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:397
+#: ../../ref/migration-operations.txt:423
 msgid "``SeparateDatabaseAndState``"
 msgstr ""
 
 # 8c2f77fd997f4f6499a56686b3a24bc3
-#: ../../ref/migration-operations.txt:401
+#: ../../ref/migration-operations.txt:427
 msgid ""
 "A highly specialized operation that let you mix and match the database "
 "(schema-changing) and state (autodetector-powering) aspects of operations."
 msgstr ""
 
-# 0cdd65d45b514d8aa043e119ae951dec
-#: ../../ref/migration-operations.txt:404
+#: ../../ref/migration-operations.txt:430
 msgid ""
-"It accepts two list of operations, and when asked to apply state will use "
+"It accepts two lists of operations, and when asked to apply state will use "
 "the state list, and when asked to apply changes to the database will use the "
 "database list. Do not use this operation unless you're very sure you know "
 "what you're doing."
 msgstr ""
 
 # a18b6ea469ec4b1e8ebb9e4e898d3759
-#: ../../ref/migration-operations.txt:411
+#: ../../ref/migration-operations.txt:437
 msgid "Writing your own"
 msgstr ""
 
 # 0fb0c59a081643e693dd903ceed5107a
-#: ../../ref/migration-operations.txt:413
+#: ../../ref/migration-operations.txt:439
 msgid ""
 "Operations have a relatively simple API, and they're designed so that you "
 "can easily write your own to supplement the built-in Django ones. The basic "
 "structure of an ``Operation`` looks like this::"
 msgstr ""
 
-#: ../../ref/migration-operations.txt:452
+#: ../../ref/migration-operations.txt:478
 msgid ""
 "You can take this template and work from it, though we suggest looking at "
-"the built-in Django operations in ``django.db.migrations.operations`` - "
-"they're easy to read and cover a lot of the example usage of semi-internal "
-"aspects of the migration framework like ``ProjectState`` and the patterns "
-"used to get historical models, as well as ``ModelState`` and the patterns "
-"used to mutate historical models in ``state_forwards()``."
+"the built-in Django operations in ``django.db.migrations.operations`` - they "
+"cover a lot of the example usage of semi-internal aspects of the migration "
+"framework like ``ProjectState`` and the patterns used to get historical "
+"models, as well as ``ModelState`` and the patterns used to mutate historical "
+"models in ``state_forwards()``."
 msgstr ""
 
 # 92eaa639746e4bcaabd6b92ff26d7a58
-#: ../../ref/migration-operations.txt:459
+#: ../../ref/migration-operations.txt:485
 msgid "Some things to note:"
 msgstr ""
 
-#: ../../ref/migration-operations.txt:461
+#: ../../ref/migration-operations.txt:487
 msgid ""
-"You don't need to learn too much about ``ProjectState`` to just write simple "
-"migrations; just know that it has an ``apps`` property that gives access to "
-"an app registry (which you can then call ``get_model`` on)."
+"You don't need to learn too much about ``ProjectState`` to write migrations; "
+"just know that it has an ``apps`` property that gives access to an app "
+"registry (which you can then call ``get_model`` on)."
 msgstr ""
 
-# 31ae169dc4a948e099f178c7cbccad65
-#: ../../ref/migration-operations.txt:465
+#: ../../ref/migration-operations.txt:491
 msgid ""
 "``database_forwards`` and ``database_backwards`` both get two states passed "
-"to them; these just represent the difference the ``state_forwards`` method "
-"would have applied, but are given to you for convenience and speed reasons."
+"to them; these represent the difference the ``state_forwards`` method would "
+"have applied, but are given to you for convenience and speed reasons."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:469
+#: ../../ref/migration-operations.txt:495
 msgid ""
 "If you want to work with model classes or model instances from the "
 "``from_state`` argument in ``database_forwards()`` or "
@@ -589,12 +622,8 @@ msgid ""
 "``clear_delayed_apps_cache()`` method to make related models available::"
 msgstr ""
 
-#: ../../ref/migration-operations.txt:482
-msgid "This requirement and the ``clear_delayed_apps_cache()`` method is new."
-msgstr ""
-
 # e7c572a77ce1438d86f5f27e19b8b93c
-#: ../../ref/migration-operations.txt:484
+#: ../../ref/migration-operations.txt:506
 msgid ""
 "``to_state`` in the database_backwards method is the *older* state; that is, "
 "the one that will be the current state once the migration has finished "
@@ -602,14 +631,14 @@ msgid ""
 msgstr ""
 
 # 7cf4142c297b4a74b2e274cbc980deae
-#: ../../ref/migration-operations.txt:487
+#: ../../ref/migration-operations.txt:509
 msgid ""
 "You might see implementations of ``references_model`` on the built-in "
 "operations; this is part of the autodetection code and does not matter for "
 "custom operations."
 msgstr ""
 
-#: ../../ref/migration-operations.txt:493
+#: ../../ref/migration-operations.txt:515
 msgid ""
 "For performance reasons, the :class:`~django.db.models.Field` instances in "
 "``ModelState.fields`` are reused across migrations. You must never change "
@@ -619,11 +648,9 @@ msgid ""
 "class:`~django.db.models.Manager` instances in ``ModelState.managers``."
 msgstr ""
 
-# 970db007e87f4d19afb02bef7ac0bc98
-#: ../../ref/migration-operations.txt:501
+#: ../../ref/migration-operations.txt:523
 msgid ""
-"As a simple example, let's make an operation that loads PostgreSQL "
-"extensions (which contain some of PostgreSQL's more exciting features). It's "
-"simple enough; there's no model state changes, and all it does is run one "
-"command::"
+"As an example, let's make an operation that loads PostgreSQL extensions "
+"(which contain some of PostgreSQL's more exciting features). Since there's "
+"no model state changes, all it does is run one command::"
 msgstr ""

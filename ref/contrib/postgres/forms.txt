@@ -15,8 +15,7 @@ Fields
 
 .. class:: SimpleArrayField(base_field, delimiter=',', max_length=None, min_length=None)
 
-    A simple field which maps to an array. It is represented by an HTML
-    ``<input>``.
+    A field which maps to an array. It is represented by an HTML ``<input>``.
 
     .. attribute:: base_field
 
@@ -26,8 +25,8 @@ Fields
         to render any HTML, but it is used to process the submitted data and
         validate it. For example::
 
-            >>> from django.contrib.postgres.forms import SimpleArrayField
             >>> from django import forms
+            >>> from django.contrib.postgres.forms import SimpleArrayField
 
             >>> class NumberListForm(forms.Form):
             ...     numbers = SimpleArrayField(forms.IntegerField())
@@ -48,8 +47,8 @@ Fields
         value is used to split the submitted data. It allows you to chain
         ``SimpleArrayField`` for multidimensional data::
 
-            >>> from django.contrib.postgres.forms import SimpleArrayField
             >>> from django import forms
+            >>> from django.contrib.postgres.forms import SimpleArrayField
 
             >>> class GridForm(forms.Form):
             ...     places = SimpleArrayField(SimpleArrayField(IntegerField()), delimiter='|')
@@ -159,10 +158,6 @@ Fields
         valid for a given field. This can be done using the
         :class:`~django.contrib.postgres.validators.KeysValidator`.
 
-    .. versionchanged:: 1.11
-
-        Added the ability to store nulls.
-
 ``JSONField``
 -------------
 
@@ -197,6 +192,17 @@ not greater than the upper bound. All of these fields use
     :class:`~django.contrib.postgres.fields.IntegerRangeField` and
     :class:`~django.contrib.postgres.fields.BigIntegerRangeField`.
 
+``DecimalRangeField``
+~~~~~~~~~~~~~~~~~~~~~
+
+.. class:: DecimalRangeField
+
+    .. versionadded:: 2.2
+
+    Based on :class:`~django.forms.DecimalField` and translates its input into
+    :class:`~psycopg2:psycopg2.extras.NumericRange`. Default for
+    :class:`~django.contrib.postgres.fields.DecimalRangeField`.
+
 ``FloatRangeField``
 ~~~~~~~~~~~~~~~~~~~
 
@@ -205,6 +211,10 @@ not greater than the upper bound. All of these fields use
     Based on :class:`~django.forms.FloatField` and translates its input into
     :class:`~psycopg2:psycopg2.extras.NumericRange`. Default for
     :class:`~django.contrib.postgres.fields.FloatRangeField`.
+
+    .. deprecated:: 2.2
+
+        Use :class:`DecimalRangeField` instead.
 
 ``DateTimeRangeField``
 ~~~~~~~~~~~~~~~~~~~~~~

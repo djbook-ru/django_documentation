@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-16 11:56+0200\n"
+"POT-Creation-Date: 2020-02-13 22:13+0300\n"
 "PO-Revision-Date: 2017-04-05 11:28+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -58,9 +58,9 @@ msgstr ""
 
 #: ../../releases/1.11.txt:25
 msgid ""
-"Django 1.11 requires Python 2.7, 3.4, 3.5, or 3.6. Django 1.11 is the first "
-"release to support Python 3.6. We **highly recommend** and only officially "
-"support the latest release of each series."
+"Django 1.11 requires Python 2.7, 3.4, 3.5, 3.6, or 3.7 (as of 1.11.17). We "
+"**highly recommend** and only officially support the latest release of each "
+"series."
 msgstr ""
 
 #: ../../releases/1.11.txt:29
@@ -310,7 +310,7 @@ msgstr ""
 msgid ""
 "The OpenLayers-based form widgets now use ``OpenLayers.js`` from ``https://"
 "cdnjs.cloudflare.com`` which is more suitable for production use than the "
-"the old ``http://openlayers.org`` source. They are also updated to use "
+"old ``https://openlayers.org/`` source. They are also updated to use "
 "OpenLayers 3."
 msgstr ""
 
@@ -758,8 +758,8 @@ msgstr ""
 #: ../../releases/1.11.txt:451
 msgid ""
 "``contrib.gis.maps`` is removed as it interfaces with a retired version of "
-"the Google Maps API and seems to be unmaintained. If you're using it, `let "
-"us know <https://code.djangoproject.com/ticket/14284>`_."
+"the Google Maps API and seems to be unmaintained. If you're using it, :"
+"ticket:`let us know <14284>`."
 msgstr ""
 
 #: ../../releases/1.11.txt:455
@@ -857,7 +857,7 @@ msgid ""
 "default value is ``True`` and the ``DatabaseIntrospection."
 "get_constraints()`` method should include an ``'orders'`` key in each of the "
 "returned dictionaries with a list of ``'ASC'`` and/or ``'DESC'`` values "
-"corresponding to the the ordering of each column in the index."
+"corresponding to the ordering of each column in the index."
 msgstr ""
 
 #: ../../releases/1.11.txt:517
@@ -967,7 +967,7 @@ msgid ""
 "Support for ``settings.TIME_ZONE = None`` is removed as the behavior isn't "
 "commonly used and is questionably useful. If you want to automatically "
 "detect the timezone based on the system timezone, you can use `tzlocal "
-"<https://pypi.python.org/pypi/tzlocal>`_::"
+"<https://pypi.org/project/tzlocal/>`_::"
 msgstr ""
 
 #: ../../releases/1.11.txt:585
@@ -1065,11 +1065,28 @@ msgid ""
 "migration operation <writing-your-own-migration-operation>`."
 msgstr ""
 
-#: ../../releases/1.11.txt:644 ../../releases/1.11.txt:799
-msgid "Miscellaneous"
+#: ../../releases/1.11.txt:644
+msgid "Server-side cursors on PostgreSQL"
 msgstr ""
 
 #: ../../releases/1.11.txt:646
+msgid ""
+"The change to make :meth:`.QuerySet.iterator()` use server-side cursors on "
+"PostgreSQL prevents running Django with `pgBouncer` in transaction pooling "
+"mode. To reallow that, use the :setting:`DISABLE_SERVER_SIDE_CURSORS "
+"<DATABASE-DISABLE_SERVER_SIDE_CURSORS>` setting (added in Django 1.11.1) in :"
+"setting:`DATABASES`."
+msgstr ""
+
+#: ../../releases/1.11.txt:652
+msgid "See :ref:`transaction-pooling-server-side-cursors` for more discussion."
+msgstr ""
+
+#: ../../releases/1.11.txt:655 ../../releases/1.11.txt:818
+msgid "Miscellaneous"
+msgstr ""
+
+#: ../../releases/1.11.txt:657
 msgid ""
 "If no items in the feed have a ``pubdate`` or ``updateddate`` attribute, :"
 "meth:`SyndicationFeed.latest_post_date() <django.utils.feedgenerator."
@@ -1077,13 +1094,13 @@ msgid ""
 "instead of a datetime without any timezone information."
 msgstr ""
 
-#: ../../releases/1.11.txt:652
+#: ../../releases/1.11.txt:663
 msgid ""
 "CSRF failures are logged to the ``django.security.csrf`` logger instead of "
 "``django.request``."
 msgstr ""
 
-#: ../../releases/1.11.txt:655
+#: ../../releases/1.11.txt:666
 msgid ""
 ":setting:`ALLOWED_HOSTS` validation is no longer disabled when running "
 "tests. If your application includes tests with custom host names, you must "
@@ -1091,27 +1108,27 @@ msgid ""
 "testing-advanced-multiple-hosts`."
 msgstr ""
 
-#: ../../releases/1.11.txt:660
+#: ../../releases/1.11.txt:671
 msgid ""
 "Using a foreign key's id (e.g. ``'field_id'``) in ``ModelAdmin."
 "list_display`` displays the related object's ID. Remove the ``_id`` suffix "
 "if you want the old behavior of the string representation of the object."
 msgstr ""
 
-#: ../../releases/1.11.txt:664
+#: ../../releases/1.11.txt:675
 msgid ""
 "In model forms, :class:`~django.db.models.CharField` with ``null=True`` now "
 "saves ``NULL`` for blank values instead of empty strings."
 msgstr ""
 
-#: ../../releases/1.11.txt:667
+#: ../../releases/1.11.txt:678
 msgid ""
 "On Oracle, :meth:`Model.validate_unique() <django.db.models.Model."
 "validate_unique>` no longer checks empty strings for uniqueness as the "
 "database interprets the value as ``NULL``."
 msgstr ""
 
-#: ../../releases/1.11.txt:671
+#: ../../releases/1.11.txt:682
 msgid ""
 "If you subclass :class:`.AbstractUser` and override ``clean()``, be sure it "
 "calls ``super()``. :meth:`.BaseUserManager.normalize_email` is called in a "
@@ -1119,21 +1136,21 @@ msgid ""
 "cases like model form validation."
 msgstr ""
 
-#: ../../releases/1.11.txt:676
+#: ../../releases/1.11.txt:687
 msgid ""
 "``EmailField`` and ``URLField`` no longer accept the ``strip`` keyword "
 "argument. Remove it because it doesn't have an effect in older versions of "
 "Django as these fields always strip whitespace."
 msgstr ""
 
-#: ../../releases/1.11.txt:680
+#: ../../releases/1.11.txt:691
 msgid ""
 "The ``checked`` and ``selected`` attribute rendered by form widgets now uses "
 "HTML5 boolean syntax rather than XHTML's ``checked='checked'`` and "
 "``selected='selected'``."
 msgstr ""
 
-#: ../../releases/1.11.txt:684
+#: ../../releases/1.11.txt:695
 msgid ""
 ":meth:`RelatedManager.add() <django.db.models.fields.related.RelatedManager."
 "add>`, :meth:`~django.db.models.fields.related.RelatedManager.remove`, :meth:"
@@ -1142,48 +1159,49 @@ msgid ""
 "``prefetch_related()`` cache."
 msgstr ""
 
-#: ../../releases/1.11.txt:691
+#: ../../releases/1.11.txt:702
 msgid ""
 "To prevent possible loss of saved settings, :func:`~django.test.utils."
 "setup_test_environment` now raises an exception if called a second time "
 "before calling :func:`~django.test.utils.teardown_test_environment`."
 msgstr ""
 
-#: ../../releases/1.11.txt:696
+#: ../../releases/1.11.txt:707
 msgid ""
 "The undocumented ``DateTimeAwareJSONEncoder`` alias for :class:`~django.core."
 "serializers.json.DjangoJSONEncoder` (renamed in Django 1.0) is removed."
 msgstr ""
 
-#: ../../releases/1.11.txt:700
+#: ../../releases/1.11.txt:711
 msgid ""
 "The :class:`cached template loader <django.template.loaders.cached.Loader>` "
-"is now enabled if :setting:`DEBUG` is ``False`` and :setting:"
-"`OPTIONS['loaders'] <TEMPLATES-OPTIONS>` isn't specified. This could be "
+"is now enabled if :setting:`OPTIONS['loaders'] <TEMPLATES-OPTIONS>` isn't "
+"specified and :setting:`OPTIONS['debug'] <TEMPLATES-OPTIONS>` is ``False`` "
+"(the latter option defaults to the value of :setting:`DEBUG`). This could be "
 "backwards-incompatible if you have some :ref:`template tags that aren't "
 "thread safe <template_tag_thread_safety>`."
 msgstr ""
 
-#: ../../releases/1.11.txt:706
+#: ../../releases/1.11.txt:718
 msgid ""
 "The prompt for stale content type deletion no longer occurs after running "
 "the ``migrate`` command. Use the new :djadmin:`remove_stale_contenttypes` "
 "command instead."
 msgstr ""
 
-#: ../../releases/1.11.txt:710
+#: ../../releases/1.11.txt:722
 msgid ""
 "The admin's widget for ``IntegerField`` uses ``type=\"number\"`` rather than "
 "``type=\"text\"``."
 msgstr ""
 
-#: ../../releases/1.11.txt:713
+#: ../../releases/1.11.txt:725
 msgid ""
 "Conditional HTTP headers are now parsed and compared according to the :rfc:"
 "`7232` Conditional Requests specification rather than the older :rfc:`2616`."
 msgstr ""
 
-#: ../../releases/1.11.txt:717
+#: ../../releases/1.11.txt:729
 msgid ""
 ":func:`~django.utils.cache.patch_response_headers` no longer adds a ``Last-"
 "Modified`` header. According to the :rfc:`7234#section-4.2.2`, this header "
@@ -1194,13 +1212,13 @@ msgid ""
 "also affected by this change."
 msgstr ""
 
-#: ../../releases/1.11.txt:725
+#: ../../releases/1.11.txt:737
 msgid ""
 "In the admin templates, ``<p class=\"help\">`` is replaced with a ``<div>`` "
 "tag to allow including lists inside help text."
 msgstr ""
 
-#: ../../releases/1.11.txt:728
+#: ../../releases/1.11.txt:740
 msgid ""
 ":class:`~django.middleware.http.ConditionalGetMiddleware` no longer sets the "
 "``Date`` header as Web servers set that header. It also no longer sets the "
@@ -1208,7 +1226,7 @@ msgid ""
 "common.CommonMiddleware`."
 msgstr ""
 
-#: ../../releases/1.11.txt:733
+#: ../../releases/1.11.txt:745
 msgid ""
 "If you have a middleware that modifies a response's content and appears "
 "before ``CommonMiddleware`` in the ``MIDDLEWARE`` or ``MIDDLEWARE_CLASSES`` "
@@ -1217,7 +1235,7 @@ msgid ""
 "reset the ``Content-Length`` header."
 msgstr ""
 
-#: ../../releases/1.11.txt:739
+#: ../../releases/1.11.txt:751
 msgid ""
 ":meth:`~django.apps.AppConfig.get_model` and :meth:`~django.apps.AppConfig."
 "get_models` now raise :exc:`~django.core.exceptions.AppRegistryNotReady` if "
@@ -1228,36 +1246,36 @@ msgid ""
 "``False``."
 msgstr ""
 
-#: ../../releases/1.11.txt:747
+#: ../../releases/1.11.txt:759
 msgid "The unused ``BaseCommand.can_import_settings`` attribute is removed."
 msgstr ""
 
-#: ../../releases/1.11.txt:749
+#: ../../releases/1.11.txt:761
 msgid "The undocumented ``django.utils.functional.lazy_property`` is removed."
 msgstr ""
 
-#: ../../releases/1.11.txt:751
+#: ../../releases/1.11.txt:763
 msgid ""
 "For consistency with non-multipart requests, ``MultiPartParser.parse()`` now "
 "leaves ``request.POST`` immutable. If you're modifying that ``QueryDict``, "
 "you must now first copy it, e.g. ``request.POST.copy()``."
 msgstr ""
 
-#: ../../releases/1.11.txt:755
+#: ../../releases/1.11.txt:767
 msgid "Support for ``cx_Oracle`` < 5.2 is removed."
 msgstr ""
 
-#: ../../releases/1.11.txt:757
+#: ../../releases/1.11.txt:769
 msgid "Support for IPython < 1.0 is removed from the ``shell`` command."
 msgstr ""
 
-#: ../../releases/1.11.txt:759
+#: ../../releases/1.11.txt:771
 msgid ""
 "The signature of private API ``Widget.build_attrs()`` changed from "
 "``extra_attrs=None, **kwargs`` to ``base_attrs, extra_attrs=None``."
 msgstr ""
 
-#: ../../releases/1.11.txt:762
+#: ../../releases/1.11.txt:774
 msgid ""
 "File-like objects (e.g., :class:`~io.StringIO` and :class:`~io.BytesIO`) "
 "uploaded to an :class:`~django.db.models.ImageField` using the test client "
@@ -1266,36 +1284,46 @@ msgid ""
 "meth:`.Client.post`."
 msgstr ""
 
-#: ../../releases/1.11.txt:771
+#: ../../releases/1.11.txt:780
+msgid ""
+":class:`~django.db.models.FileField` now moves rather than copies the file "
+"it receives. With the default file upload settings, files larger than :"
+"setting:`FILE_UPLOAD_MAX_MEMORY_SIZE` now have the same permissions as "
+"temporary files (often ``0o600``) rather than the system's standard umask "
+"(often ``0o6644``). Set the :setting:`FILE_UPLOAD_PERMISSIONS` if you need "
+"the same permission regardless of file size."
+msgstr ""
+
+#: ../../releases/1.11.txt:790
 msgid "Features deprecated in 1.11"
 msgstr ""
 
-#: ../../releases/1.11.txt:774
+#: ../../releases/1.11.txt:793
 msgid "``models.permalink()`` decorator"
 msgstr ""
 
-#: ../../releases/1.11.txt:776
+#: ../../releases/1.11.txt:795
 msgid "Use :func:`django.urls.reverse` instead. For example::"
 msgstr ""
 
-#: ../../releases/1.11.txt:787
+#: ../../releases/1.11.txt:806
 msgid "becomes::"
 msgstr ""
 
-#: ../../releases/1.11.txt:801
+#: ../../releases/1.11.txt:820
 msgid ""
 "``contrib.auth``’s ``login()`` and ``logout()`` function-based views are "
 "deprecated in favor of new class-based views :class:`~django.contrib.auth."
 "views.LoginView` and :class:`~django.contrib.auth.views.LogoutView`."
 msgstr ""
 
-#: ../../releases/1.11.txt:806
+#: ../../releases/1.11.txt:825
 msgid ""
 "The unused ``extra_context`` parameter of ``contrib.auth.views."
 "logout_then_login()``  is deprecated."
 msgstr ""
 
-#: ../../releases/1.11.txt:809
+#: ../../releases/1.11.txt:828
 msgid ""
 "``contrib.auth``’s ``password_change()``, ``password_change_done()``, "
 "``password_reset()``, ``password_reset_done()``, "
@@ -1309,46 +1337,46 @@ msgid ""
 "PasswordResetCompleteView`."
 msgstr ""
 
-#: ../../releases/1.11.txt:820
+#: ../../releases/1.11.txt:839
 msgid ""
 "``django.test.runner.setup_databases()`` is moved to :func:`django.test."
 "utils.setup_databases`. The old location is deprecated."
 msgstr ""
 
-#: ../../releases/1.11.txt:823
+#: ../../releases/1.11.txt:842
 msgid ""
 "``django.utils.translation.string_concat()`` is deprecated in favor of :func:"
 "`django.utils.text.format_lazy`. ``string_concat(*strings)`` can be replaced "
 "by ``format_lazy('{}' * len(strings), *strings)``."
 msgstr ""
 
-#: ../../releases/1.11.txt:827
+#: ../../releases/1.11.txt:846
 msgid ""
 "For the ``PyLibMCCache`` cache backend, passing ``pylibmc`` behavior "
 "settings as top-level attributes of ``OPTIONS`` is deprecated. Set them "
 "under a ``behaviors`` key within ``OPTIONS`` instead."
 msgstr ""
 
-#: ../../releases/1.11.txt:831
+#: ../../releases/1.11.txt:850
 msgid ""
 "The ``host`` parameter of ``django.utils.http.is_safe_url()`` is deprecated "
 "in favor of the new ``allowed_hosts`` parameter."
 msgstr ""
 
-#: ../../releases/1.11.txt:834
+#: ../../releases/1.11.txt:853
 msgid ""
 "Silencing exceptions raised while rendering the :ttag:`{% include %} "
 "<include>` template tag is deprecated as the behavior is often more "
 "confusing than helpful. In Django 2.1, the exception will be raised."
 msgstr ""
 
-#: ../../releases/1.11.txt:839
+#: ../../releases/1.11.txt:858
 msgid ""
 "``DatabaseIntrospection.get_indexes()`` is deprecated in favor of "
 "``DatabaseIntrospection.get_constraints()``."
 msgstr ""
 
-#: ../../releases/1.11.txt:842
+#: ../../releases/1.11.txt:861
 msgid ""
 ":func:`~django.contrib.auth.authenticate` now passes a ``request`` argument "
 "to the ``authenticate()`` method of authentication backends. Support for "
@@ -1356,7 +1384,7 @@ msgid ""
 "be removed in Django 2.1."
 msgstr ""
 
-#: ../../releases/1.11.txt:847
+#: ../../releases/1.11.txt:866
 msgid ""
 "The ``USE_ETAGS`` setting is deprecated in favor of :class:`~django."
 "middleware.http.ConditionalGetMiddleware` which now adds the ``ETag`` header "
@@ -1365,13 +1393,13 @@ msgid ""
 "deprecation ends."
 msgstr ""
 
-#: ../../releases/1.11.txt:853
+#: ../../releases/1.11.txt:872
 msgid ""
 "``Model._meta.has_auto_field`` is deprecated in favor of checking if ``Model."
 "_meta.auto_field is not None``."
 msgstr ""
 
-#: ../../releases/1.11.txt:856
+#: ../../releases/1.11.txt:875
 msgid ""
 "Using regular expression groups with ``iLmsu#`` in ``url()`` is deprecated. "
 "The only group that's useful is ``(?i)`` for case-insensitive URLs, however, "
@@ -1381,7 +1409,7 @@ msgid ""
 "characters in the URL and redirects to a lowercase equivalent."
 msgstr ""
 
-#: ../../releases/1.11.txt:863
+#: ../../releases/1.11.txt:882
 msgid ""
 "The ``renderer`` argument is added to the :meth:`Widget.render() <django."
 "forms.Widget.render>` method. Methods that don't accept that argument will "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-16 11:56+0200\n"
+"POT-Creation-Date: 2020-02-13 22:13+0300\n"
 "PO-Revision-Date: 2016-12-08 11:07+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid ""
 "The database functions in the ``django.contrib.postgres.search`` module ease "
 "the use of PostgreSQL's `full text search engine <https://www.postgresql.org/"
-"docs/current/static/textsearch.html>`_."
+"docs/current/textsearch.html>`_."
 msgstr ""
 
 #: ../../ref/contrib/postgres/search.txt:9
@@ -47,8 +47,8 @@ msgstr ""
 
 #: ../../ref/contrib/postgres/search.txt:24
 msgid ""
-"The simplest way to use full text search is to search a single term against "
-"a single column in the database. For example::"
+"A common way to use full text search is to search a single term against a "
+"single column in the database. For example::"
 msgstr ""
 
 #: ../../ref/contrib/postgres/search.txt:30
@@ -110,63 +110,77 @@ msgstr ""
 
 #: ../../ref/contrib/postgres/search.txt:80
 msgid ""
+"If ``search_type`` is ``'plain'``, which is the default, the terms are "
+"treated as separate keywords. If ``search_type`` is ``'phrase'``, the terms "
+"are treated as a single phrase. If ``search_type`` is ``'raw'``, then you "
+"can provide a formatted search query with terms and operators. Read "
+"PostgreSQL's `Full Text Search docs`_ to learn about differences and syntax. "
+"Examples:"
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:95
+msgid ""
 "``SearchQuery`` terms can be combined logically to provide more flexibility::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:87
+#: ../../ref/contrib/postgres/search.txt:102
 msgid ""
 "See :ref:`postgresql-fts-search-configuration` for an explanation of the "
 "``config`` parameter."
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:91
+#: ../../ref/contrib/postgres/search.txt:107
+msgid "The `search_type` parameter was added."
+msgstr ""
+
+#: ../../ref/contrib/postgres/search.txt:110
 msgid "``SearchRank``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:95
+#: ../../ref/contrib/postgres/search.txt:114
 msgid ""
-"So far, we've just returned the results for which any match between the "
-"vector and the query are possible. It's likely you may wish to order the "
-"results by some sort of relevancy. PostgreSQL provides a ranking function "
-"which takes into account how often the query terms appear in the document, "
-"how close together the terms are in the document, and how important the part "
-"of the document is where they occur. The better the match, the higher the "
-"value of the rank. To order by relevancy::"
+"So far, we've returned the results for which any match between the vector "
+"and the query are possible. It's likely you may wish to order the results by "
+"some sort of relevancy. PostgreSQL provides a ranking function which takes "
+"into account how often the query terms appear in the document, how close "
+"together the terms are in the document, and how important the part of the "
+"document is where they occur. The better the match, the higher the value of "
+"the rank. To order by relevancy::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:109
+#: ../../ref/contrib/postgres/search.txt:128
 msgid ""
 "See :ref:`postgresql-fts-weighting-queries` for an explanation of the "
 "``weights`` parameter."
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:115
+#: ../../ref/contrib/postgres/search.txt:134
 msgid "Changing the search configuration"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:117
+#: ../../ref/contrib/postgres/search.txt:136
 msgid ""
 "You can specify the ``config`` attribute to a :class:`SearchVector` and :"
 "class:`SearchQuery` to use a different search configuration. This allows "
-"using a different language parsers and dictionaries as defined by the "
+"using different language parsers and dictionaries as defined by the "
 "database::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:127
+#: ../../ref/contrib/postgres/search.txt:146
 msgid "The value of ``config`` could also be stored in another column::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:138
+#: ../../ref/contrib/postgres/search.txt:157
 msgid "Weighting queries"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:140
+#: ../../ref/contrib/postgres/search.txt:159
 msgid ""
 "Every field may not have the same relevance in a query, so you can set "
 "weights of various vectors before you combine them::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:148
+#: ../../ref/contrib/postgres/search.txt:167
 msgid ""
 "The weight should be one of the following letters: D, C, B, A. By default, "
 "these weights refer to the numbers ``0.1``, ``0.2``, ``0.4``, and ``1.0``, "
@@ -174,11 +188,11 @@ msgid ""
 "floats to :class:`SearchRank` as ``weights`` in the same order above::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:157
+#: ../../ref/contrib/postgres/search.txt:176
 msgid "Performance"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:159
+#: ../../ref/contrib/postgres/search.txt:178
 msgid ""
 "Special database configuration isn't necessary to use any of these "
 "functions, however, if you're searching more than a few hundred records, "
@@ -186,20 +200,20 @@ msgid ""
 "intensive process than comparing the size of an integer, for example."
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:164
+#: ../../ref/contrib/postgres/search.txt:183
 msgid ""
 "In the event that all the fields you're querying on are contained within one "
 "particular model, you can create a functional index which matches the search "
 "vector you wish to use. The PostgreSQL documentation has details on "
 "`creating indexes for full text search <https://www.postgresql.org/docs/"
-"current/static/textsearch-tables.html#TEXTSEARCH-TABLES-INDEX>`_."
+"current/textsearch-tables.html#TEXTSEARCH-TABLES-INDEX>`_."
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:171
+#: ../../ref/contrib/postgres/search.txt:190
 msgid "``SearchVectorField``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:175
+#: ../../ref/contrib/postgres/search.txt:194
 msgid ""
 "If this approach becomes too slow, you can add a ``SearchVectorField`` to "
 "your model. You'll need to keep it populated with triggers, for example, as "
@@ -207,45 +221,45 @@ msgid ""
 "as if it were an annotated ``SearchVector``::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:187
+#: ../../ref/contrib/postgres/search.txt:206
 msgid "Trigram similarity"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:189
+#: ../../ref/contrib/postgres/search.txt:208
 msgid ""
 "Another approach to searching is trigram similarity. A trigram is a group of "
 "three consecutive characters. In addition to the :lookup:`trigram_similar` "
 "lookup, you can use a couple of other expressions."
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:193
+#: ../../ref/contrib/postgres/search.txt:212
 msgid ""
 "To use them, you need to activate the `pg_trgm extension <https://www."
-"postgresql.org/docs/current/static/pgtrgm.html>`_ on PostgreSQL. You can "
-"install it using the :class:`~django.contrib.postgres.operations."
-"TrigramExtension` migration operation."
+"postgresql.org/docs/current/pgtrgm.html>`_ on PostgreSQL. You can install it "
+"using the :class:`~django.contrib.postgres.operations.TrigramExtension` "
+"migration operation."
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:200
+#: ../../ref/contrib/postgres/search.txt:219
 msgid "``TrigramSimilarity``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:204
+#: ../../ref/contrib/postgres/search.txt:223
 msgid ""
 "Accepts a field name or expression, and a string or expression. Returns the "
 "trigram similarity between the two arguments."
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:207
 #: ../../ref/contrib/postgres/search.txt:226
+#: ../../ref/contrib/postgres/search.txt:245
 msgid "Usage example::"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:219
+#: ../../ref/contrib/postgres/search.txt:238
 msgid "``TrigramDistance``"
 msgstr ""
 
-#: ../../ref/contrib/postgres/search.txt:223
+#: ../../ref/contrib/postgres/search.txt:242
 msgid ""
 "Accepts a field name or expression, and a string or expression. Returns the "
 "trigram distance between the two arguments."

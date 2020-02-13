@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-16 11:56+0200\n"
+"POT-Creation-Date: 2020-02-13 22:13+0300\n"
 "PO-Revision-Date: 2017-04-05 11:28+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Model index reference"
 msgstr ""
 
-#: ../../ref/models/indexes.txt:11
+#: ../../ref/models/indexes.txt:9
 msgid ""
 "Index classes ease creating database indexes. They can be added using the :"
 "attr:`Meta.indexes <django.db.models.Options.indexes>` option. This document "
@@ -30,11 +30,11 @@ msgid ""
 "options`_."
 msgstr ""
 
-#: ../../ref/models/indexes.txt:16
+#: ../../ref/models/indexes.txt:14
 msgid "Referencing built-in indexes"
 msgstr ""
 
-#: ../../ref/models/indexes.txt:18
+#: ../../ref/models/indexes.txt:16
 msgid ""
 "Indexes are defined in ``django.db.models.indexes``, but for convenience "
 "they're imported into :mod:`django.db.models`. The standard convention is to "
@@ -42,52 +42,42 @@ msgid ""
 "<IndexClass>``."
 msgstr ""
 
-#: ../../ref/models/indexes.txt:24
+#: ../../ref/models/indexes.txt:22
 msgid "``Index`` options"
 msgstr ""
 
-#: ../../ref/models/indexes.txt:28
+#: ../../ref/models/indexes.txt:26
 msgid "Creates an index (B-Tree) in the database."
 msgstr ""
 
-#: ../../ref/models/indexes.txt:31
+#: ../../ref/models/indexes.txt:29
 msgid "``fields``"
 msgstr ""
 
-#: ../../ref/models/indexes.txt:35
-msgid "A list of the name of the fields on which the index is desired."
+#: ../../ref/models/indexes.txt:33
+msgid ""
+"A list or tuple of the name of the fields on which the index is desired."
 msgstr ""
 
-#: ../../ref/models/indexes.txt:37
+#: ../../ref/models/indexes.txt:35
 msgid ""
 "By default, indexes are created with an ascending order for each column. To "
 "define an index with a descending order for a column, add a hyphen before "
 "the field's name."
 msgstr ""
 
-#: ../../ref/models/indexes.txt:41
+#: ../../ref/models/indexes.txt:39
 msgid ""
 "For example ``Index(fields=['headline', '-pub_date'])`` would create SQL "
 "with ``(headline, pub_date DESC)``. Index ordering isn't supported on MySQL. "
 "In that case, a descending index is created as a normal index."
 msgstr ""
 
-#: ../../ref/models/indexes.txt:45
-msgid "Support for column ordering on SQLite"
-msgstr ""
-
-#: ../../ref/models/indexes.txt:47
-msgid ""
-"Column ordering is supported on SQLite 3.3.0+ and only for some database "
-"file formats. Refer to the `SQLite docs <https://www.sqlite.org/"
-"lang_createindex.html>`_ for specifics."
-msgstr ""
-
-#: ../../ref/models/indexes.txt:52
+#: ../../ref/models/indexes.txt:44
 msgid "``name``"
 msgstr ""
 
-#: ../../ref/models/indexes.txt:56
+#: ../../ref/models/indexes.txt:48
 msgid ""
 "The name of the index. If ``name`` isn't provided Django will auto-generate "
 "a name. For compatibility with different databases, index names cannot be "
@@ -95,18 +85,39 @@ msgid ""
 "underscore (_)."
 msgstr ""
 
-#: ../../ref/models/indexes.txt:61
+#: ../../ref/models/indexes.txt:52
+msgid "Partial indexes in abstract base classes"
+msgstr ""
+
+#: ../../ref/models/indexes.txt:54
+msgid ""
+"You must always specify a unique name for an index. As such, you cannot "
+"normally specify a partial index on an abstract base class, since the :attr:"
+"`Meta.indexes <django.db.models.Options.indexes>` option is inherited by "
+"subclasses, with exactly the same values for the attributes (including "
+"``name``) each time. To work around name collisions, part of the name may "
+"contain ``'%(app_label)s'`` and ``'%(class)s'``, which are replaced, "
+"respectively, by the lowercased app label and class name of the concrete "
+"model. For example ``Index(fields=['title'], name='%(app_label)s_"
+"%(class)s_title_index')``."
+msgstr ""
+
+#: ../../ref/models/indexes.txt:66
+msgid "Interpolation of  ``'%(app_label)s'`` and ``'%(class)s'`` was added."
+msgstr ""
+
+#: ../../ref/models/indexes.txt:69
 msgid "``db_tablespace``"
 msgstr ""
 
-#: ../../ref/models/indexes.txt:67
+#: ../../ref/models/indexes.txt:73
 msgid ""
 "The name of the :doc:`database tablespace </topics/db/tablespaces>` to use "
 "for this index. For single field indexes, if ``db_tablespace`` isn't "
 "provided, the index is created in the ``db_tablespace`` of the field."
 msgstr ""
 
-#: ../../ref/models/indexes.txt:71
+#: ../../ref/models/indexes.txt:77
 msgid ""
 "If :attr:`.Field.db_tablespace` isn't specified (or if the index uses "
 "multiple fields), the index is created in tablespace specified in the :attr:"
@@ -115,8 +126,97 @@ msgid ""
 "same tablespace as the table."
 msgstr ""
 
-#: ../../ref/models/indexes.txt:79
+#: ../../ref/models/indexes.txt:85
 msgid ""
 "For a list of PostgreSQL-specific indexes, see :mod:`django.contrib.postgres."
 "indexes`."
+msgstr ""
+
+#: ../../ref/models/indexes.txt:89
+msgid "``opclasses``"
+msgstr ""
+
+#: ../../ref/models/indexes.txt:95
+msgid ""
+"The names of the `PostgreSQL operator classes <https://www.postgresql.org/"
+"docs/current/indexes-opclass.html>`_ to use for this index. If you require a "
+"custom operator class, you must provide one for each field in the index."
+msgstr ""
+
+#: ../../ref/models/indexes.txt:100
+msgid ""
+"For example, ``GinIndex(name='json_index', fields=['jsonfield'], "
+"opclasses=['jsonb_path_ops'])`` creates a gin index on ``jsonfield`` using "
+"``jsonb_path_ops``."
+msgstr ""
+
+#: ../../ref/models/indexes.txt:104
+msgid "``opclasses`` are ignored for databases besides PostgreSQL."
+msgstr ""
+
+#: ../../ref/models/indexes.txt:106
+msgid ":attr:`Index.name` is required when using ``opclasses``."
+msgstr ""
+
+#: ../../ref/models/indexes.txt:109
+msgid "``condition``"
+msgstr ""
+
+#: ../../ref/models/indexes.txt:115
+msgid ""
+"If the table is very large and your queries mostly target a subset of rows, "
+"it may be useful to restrict an index to that subset. Specify a condition as "
+"a :class:`~django.db.models.Q`. For example, ``condition=Q(pages__gt=400)`` "
+"indexes records with more than 400 pages."
+msgstr ""
+
+#: ../../ref/models/indexes.txt:120
+msgid ":attr:`Index.name` is required when using ``condition``."
+msgstr ""
+
+#: ../../ref/models/indexes.txt:122
+msgid "Restrictions on PostgreSQL"
+msgstr ""
+
+#: ../../ref/models/indexes.txt:124
+msgid ""
+"PostgreSQL requires functions referenced in the condition to be marked as "
+"IMMUTABLE. Django doesn't validate this but PostgreSQL will error. This "
+"means that functions such as :ref:`date-functions` and :class:`~django.db."
+"models.functions.Concat` aren't accepted. If you store dates in :class:"
+"`~django.db.models.DateTimeField`, comparison to :class:`~datetime.datetime` "
+"objects may require the ``tzinfo`` argument to be provided because otherwise "
+"the comparison could result in a mutable function due to the casting Django "
+"does for :ref:`lookups <field-lookups>`."
+msgstr ""
+
+#: ../../ref/models/indexes.txt:133
+msgid "Restrictions on SQLite"
+msgstr ""
+
+#: ../../ref/models/indexes.txt:135
+msgid ""
+"SQLite `imposes restrictions <https://www.sqlite.org/partialindex.html>`_ on "
+"how a partial index can be constructed."
+msgstr ""
+
+#: ../../ref/models/indexes.txt:138
+msgid "Oracle"
+msgstr ""
+
+#: ../../ref/models/indexes.txt:140
+msgid ""
+"Oracle does not support partial indexes. Instead, partial indexes can be "
+"emulated using functional indexes. Use a :doc:`migration </topics/"
+"migrations>` to add the index using :class:`.RunSQL`."
+msgstr ""
+
+#: ../../ref/models/indexes.txt:144
+msgid "MySQL and MariaDB"
+msgstr ""
+
+#: ../../ref/models/indexes.txt:146
+msgid ""
+"The ``condition`` argument is ignored with MySQL and MariaDB as neither "
+"supports conditional indexes."
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-16 11:56+0200\n"
+"POT-Creation-Date: 2020-02-13 22:13+0300\n"
 "PO-Revision-Date: 2015-03-19 15:06+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -48,31 +48,36 @@ msgid ""
 "A ``When()`` object is used to encapsulate a condition and its result for "
 "use in the conditional expression. Using a ``When()`` object is similar to "
 "using the :meth:`~django.db.models.query.QuerySet.filter` method. The "
-"condition can be specified using :ref:`field lookups <field-lookups>` or :"
-"class:`~django.db.models.Q` objects. The result is provided using the "
-"``then`` keyword."
+"condition can be specified using :ref:`field lookups <field-lookups>`, :"
+"class:`~django.db.models.Q` objects, or :class:`~django.db.models."
+"Expression` objects that have an ``output_field`` that is a :class:`~django."
+"db.models.BooleanField`. The result is provided using the ``then`` keyword."
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:49
+#: ../../ref/models/conditional-expressions.txt:53
+msgid "Support for boolean :class:`~django.db.models.Expression` was added."
+msgstr ""
+
+#: ../../ref/models/conditional-expressions.txt:55
 msgid "Some examples::"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:64
+#: ../../ref/models/conditional-expressions.txt:76
 msgid "Keep in mind that each of these values can be an expression."
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:68
+#: ../../ref/models/conditional-expressions.txt:80
 msgid ""
 "Since the ``then`` keyword argument is reserved for the result of the "
 "``When()``, there is a potential conflict if a :class:`~django.db.models."
 "Model` has a field named ``then``. This can be resolved in two ways::"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:77
+#: ../../ref/models/conditional-expressions.txt:89
 msgid "``Case``"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:81
+#: ../../ref/models/conditional-expressions.txt:93
 msgid ""
 "A ``Case()`` expression is like the :keyword:`if` ... :keyword:`elif` ... :"
 "keyword:`else` statement in ``Python``. Each ``condition`` in the provided "
@@ -81,11 +86,11 @@ msgid ""
 "returned."
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:87
-msgid "A simple example::"
+#: ../../ref/models/conditional-expressions.txt:99
+msgid "An example::"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:115
+#: ../../ref/models/conditional-expressions.txt:127
 msgid ""
 "``Case()`` accepts any number of ``When()`` objects as individual arguments. "
 "Other options are provided using keyword arguments. If none of the "
@@ -94,13 +99,13 @@ msgid ""
 "provided, ``None`` is used."
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:121
+#: ../../ref/models/conditional-expressions.txt:133
 msgid ""
 "If we wanted to change our previous query to get the discount based on how "
 "long the ``Client`` has been with us, we could do so using lookups::"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:139
+#: ../../ref/models/conditional-expressions.txt:151
 msgid ""
 "Remember that the conditions are evaluated in order, so in the above example "
 "we get the correct result even though the second condition matches both Jane "
@@ -108,58 +113,73 @@ msgid ""
 "`elif` ... :keyword:`else` statement in ``Python``."
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:144
+#: ../../ref/models/conditional-expressions.txt:156
 msgid ""
 "``Case()`` also works in a ``filter()`` clause. For example, to find gold "
 "clients that registered more than a month ago and platinum clients that "
 "registered more than a year ago::"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:159
+#: ../../ref/models/conditional-expressions.txt:171
 msgid "Advanced queries"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:161
+#: ../../ref/models/conditional-expressions.txt:173
 msgid ""
-"Conditional expressions can be used in annotations, aggregations, lookups, "
-"and updates. They can also be combined and nested with other expressions. "
-"This allows you to make powerful conditional queries."
+"Conditional expressions can be used in annotations, aggregations, filters, "
+"lookups, and updates. They can also be combined and nested with other "
+"expressions. This allows you to make powerful conditional queries."
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:166
+#: ../../ref/models/conditional-expressions.txt:178
 msgid "Conditional update"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:168
+#: ../../ref/models/conditional-expressions.txt:180
 msgid ""
 "Let's say we want to change the ``account_type`` for our clients to match "
 "their registration dates. We can do this using a conditional expression and "
 "the :meth:`~django.db.models.query.QuerySet.update` method::"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:190
+#: ../../ref/models/conditional-expressions.txt:202
 msgid "Conditional aggregation"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:192
+#: ../../ref/models/conditional-expressions.txt:204
 msgid ""
 "What if we want to find out how many clients there are for each "
 "``account_type``? We can use the ``filter`` argument of :ref:`aggregate "
 "functions <aggregation-functions>` to achieve this::"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:218
+#: ../../ref/models/conditional-expressions.txt:230
 msgid ""
 "This aggregate produces a query with the SQL 2003 ``FILTER WHERE`` syntax on "
 "databases that support it:"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:228
+#: ../../ref/models/conditional-expressions.txt:240
 msgid "On other databases, this is emulated using a ``CASE`` statement:"
 msgstr ""
 
-#: ../../ref/models/conditional-expressions.txt:237
+#: ../../ref/models/conditional-expressions.txt:249
 msgid ""
 "The two SQL statements are functionally equivalent but the more explicit "
 "``FILTER`` may perform better."
+msgstr ""
+
+#: ../../ref/models/conditional-expressions.txt:253
+msgid "Conditional filter"
+msgstr ""
+
+#: ../../ref/models/conditional-expressions.txt:257
+msgid ""
+"When a conditional expression returns a boolean value, it is possible to use "
+"it directly in filters. This means that it will not be added to the "
+"``SELECT`` columns, but you can still use it to filter results::"
+msgstr ""
+
+#: ../../ref/models/conditional-expressions.txt:266
+msgid "In SQL terms, that evaluates to:"
 msgstr ""

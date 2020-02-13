@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Django 1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-03 16:54+0200\n"
+"POT-Creation-Date: 2020-02-13 22:13+0300\n"
 "PO-Revision-Date: 2017-11-30 12:21+0200\n"
 "Last-Translator: Dmitriy Kostochko <alerion.um@gmail.com>\n"
 "Language-Team: none\n"
@@ -26,35 +26,50 @@ msgid "Pagination"
 msgstr "Постраничный вывод"
 
 # b42bc4fc02e04fc79ca48f5ad8fac5c3
-#: ../../topics/pagination.txt:8
+#: ../../topics/pagination.txt:5
+#, fuzzy
 msgid ""
-"Django provides a few classes that help you manage paginated data -- that "
-"is, data that's split across several pages, with \"Previous/Next\" links. "
-"These classes live in :file:`django/core/paginator.py`."
+"Django provides high-level and low-level ways to help you manage paginated "
+"data -- that is, data that's split across several pages, with \"Previous/Next"
+"\" links."
 msgstr ""
 "Django предоставляет несколько классов, которые помогают реализовать "
 "постраничный вывод данных, т.е. данных, распределённых на несколько страниц "
 "с ссылками «Предыдущая/Следующая». Эти классы располагаются в :file:`django/"
 "core/paginator.py`."
 
+# 6844b51498334093b5ea933ddf230f03
+#: ../../topics/pagination.txt:9
+#, fuzzy
+msgid "The ``Paginator`` class"
+msgstr "Объекты ``Paginator``"
+
+#: ../../topics/pagination.txt:11
+msgid ""
+"Under the hood, all methods of pagination use the :class:`~django.core."
+"paginator.Paginator` class. It does all the heavy lifting of actually "
+"splitting a ``QuerySet`` into :class:`~django.core.paginator.Page` objects."
+msgstr ""
+
 # 43081c2d4f1e4e10aec9ad8b6d3a86f5
-#: ../../topics/pagination.txt:13
+#: ../../topics/pagination.txt:17
 msgid "Example"
 msgstr "Пример"
 
 # 85af592d14104c45aca38fae26e14be9
-#: ../../topics/pagination.txt:15
+#: ../../topics/pagination.txt:19
+#, fuzzy
 msgid ""
-"Give :class:`Paginator` a list of objects, plus the number of items you'd "
-"like to have on each page, and it gives you methods for accessing the items "
-"for each page::"
+"Give :class:`~django.core.paginator.Paginator` a list of objects, plus the "
+"number of items you'd like to have on each page, and it gives you methods "
+"for accessing the items for each page::"
 msgstr ""
 "Передайте в класс :class:`Paginator` список объектов и количество элементов, "
 "которое надо отображать на странице. Класс предоставит методы для доступа к "
 "элементам каждой страницы::"
 
 # 7604c21f8d96498e936ece99eeec7fa3
-#: ../../topics/pagination.txt:69
+#: ../../topics/pagination.txt:73
 msgid ""
 "Note that you can give ``Paginator`` a list/tuple, a Django ``QuerySet``, or "
 "any other object with a ``count()`` or ``__len__()`` method. When "
@@ -72,381 +87,365 @@ msgstr ""
 "подход позволяет объектам, подобным ``QuerySet``, более эффективно "
 "использовать метод ``count()`` при его наличии."
 
+#: ../../topics/pagination.txt:82
+msgid "Paginating a ``ListView``"
+msgstr ""
+
+#: ../../topics/pagination.txt:84
+msgid ""
+":class:`django.views.generic.list.ListView` provides a builtin way to "
+"paginate the displayed list. You can do this by adding a :attr:`~django."
+"views.generic.list.MultipleObjectMixin.paginate_by` attribute to your view "
+"class, for example::"
+msgstr ""
+
+#: ../../topics/pagination.txt:97
+msgid ""
+"This limits the number of objects per page and adds a ``paginator`` and "
+"``page_obj`` to the ``context``. To allow your users to navigate between "
+"pages, add links to the next and previous page, in your template like this:"
+msgstr ""
+
 # ad418150e68f459e8fdb2ac7c4a90cbd
-#: ../../topics/pagination.txt:79
-msgid "Using ``Paginator`` in a view"
+#: ../../topics/pagination.txt:130
+#, fuzzy
+msgid "Using ``Paginator`` in a view function"
 msgstr "Использование ``Paginator`` в представлении"
 
-# adb209cfc95e4380b7ba93e9a6bb0ee0
-#: ../../topics/pagination.txt:81
+#: ../../topics/pagination.txt:132
 msgid ""
-"Here's a slightly more complex example using :class:`Paginator` in a view to "
-"paginate a queryset. We give both the view and the accompanying template to "
-"show how you can display the results. This example assumes you have a "
-"``Contacts`` model that has already been imported."
+"Here's an example using :class:`~django.core.paginator.Paginator` in a view "
+"function to paginate a queryset::"
 msgstr ""
-"Здесь приведён более сложный пример использования класса :class:`Paginator` "
-"в представлении для постраничного вывода результатов запроса. Мы "
-"предоставили представление и его шаблон, чтобы показать, как вы можете "
-"отображать результаты. Данный пример предполагает наличие у вас модели "
-"``Contacts``, которая уже была импортирована."
-
-# db03738855b649dc8e8e414cb7366378
-#: ../../topics/pagination.txt:86
-msgid "The view function looks like this::"
-msgstr "Функция представления может выглядеть так::"
 
 # 7bbf94e37de14fcfbb70c9ca5833eda1
-#: ../../topics/pagination.txt:99
-msgid ""
-"In the template :file:`list.html`, you'll want to include navigation between "
-"pages along with any interesting information from the objects themselves::"
-msgstr "В шаблоне :file:`list.html` подключен блок навигации по страницам::"
-
-# 6844b51498334093b5ea933ddf230f03
-#: ../../topics/pagination.txt:127
-msgid "``Paginator`` objects"
-msgstr "Объекты ``Paginator``"
-
-# d9d726c2dfbc4bea9f78e8e2d0b73e16
-#: ../../topics/pagination.txt:129
-msgid "The :class:`Paginator` class has this constructor:"
-msgstr "У класса :class:`Paginator` есть конструктор:"
-
-# ae5ea2b0546e498db867b837e3f86a08
-#: ../../topics/pagination.txt:134
-msgid "Required arguments"
-msgstr "Обязательные аргументы"
-
-# 8b99cf1b8597432c9120338b3d03454e
 #: ../../topics/pagination.txt:148
 #, fuzzy
-msgid "``object_list``"
-msgstr "object_list"
-
-#: ../../topics/pagination.txt:137
 msgid ""
-"A list, tuple, ``QuerySet``, or other sliceable object with a ``count()`` or "
-"``__len__()`` method. For consistent pagination, ``QuerySet``\\s should be "
-"ordered, e.g. with an :meth:`~django.db.models.query.QuerySet.order_by` "
-"clause or with a default :attr:`~django.db.models.Options.ordering` on the "
-"model."
-msgstr ""
-"Список, кортеж, ``QuerySet`` или другие интериремые объекты с методами "
-"``count()`` или ``__len__()``. Для постоянного постраничного вывода "
-"``QuerySet`` должен быть отсортирован, например, с помощью метода :meth:"
-"`~django.db.models.query.QuerySet.order_by` или атрибутом модели :attr:"
-"`~django.db.models.Options.ordering`."
+"In the template :file:`list.html`, you can include navigation between pages "
+"in the same way as in the template for the ``ListView`` above."
+msgstr "В шаблоне :file:`list.html` подключен блок навигации по страницам::"
 
-#: ../../topics/pagination.txt:143
-msgid "Performance issues paginating large ``QuerySet``\\s"
-msgstr ""
-"Проблемы с производительностью при постраничном выводе больших ``QuerySet``"
+# adb209cfc95e4380b7ba93e9a6bb0ee0
+#~ msgid ""
+#~ "Here's a slightly more complex example using :class:`Paginator` in a view "
+#~ "to paginate a queryset. We give both the view and the accompanying "
+#~ "template to show how you can display the results. This example assumes "
+#~ "you have a ``Contacts`` model that has already been imported."
+#~ msgstr ""
+#~ "Здесь приведён более сложный пример использования класса :class:"
+#~ "`Paginator` в представлении для постраничного вывода результатов запроса. "
+#~ "Мы предоставили представление и его шаблон, чтобы показать, как вы можете "
+#~ "отображать результаты. Данный пример предполагает наличие у вас модели "
+#~ "``Contacts``, которая уже была импортирована."
 
-#: ../../topics/pagination.txt:145
-msgid ""
-"If you're using a ``QuerySet`` with a very large number of items, requesting "
-"high page numbers might be slow on some databases, because the resulting "
-"``LIMIT``/``OFFSET`` query needs to count the number of ``OFFSET`` records "
-"which takes longer as the page number gets higher."
-msgstr ""
-"Если вы используете ``QuerySet`` с большим количеством объектов, запрос "
-"страницы с большим номер может быть очень медленным на некоторых базах "
-"данных, т.к. ``LIMIT``/``OFFSET`` запроса должен учитывать записи до "
-"``OFFSET``, что занимает больше времени, когда номер страницы увеличивается."
+# db03738855b649dc8e8e414cb7366378
+#~ msgid "The view function looks like this::"
+#~ msgstr "Функция представления может выглядеть так::"
+
+# d9d726c2dfbc4bea9f78e8e2d0b73e16
+#~ msgid "The :class:`Paginator` class has this constructor:"
+#~ msgstr "У класса :class:`Paginator` есть конструктор:"
+
+# ae5ea2b0546e498db867b837e3f86a08
+#~ msgid "Required arguments"
+#~ msgstr "Обязательные аргументы"
+
+# 8b99cf1b8597432c9120338b3d03454e
+#, fuzzy
+#~ msgid "``object_list``"
+#~ msgstr "object_list"
+
+#~ msgid ""
+#~ "A list, tuple, ``QuerySet``, or other sliceable object with a ``count()`` "
+#~ "or ``__len__()`` method. For consistent pagination, ``QuerySet``\\s "
+#~ "should be ordered, e.g. with an :meth:`~django.db.models.query.QuerySet."
+#~ "order_by` clause or with a default :attr:`~django.db.models.Options."
+#~ "ordering` on the model."
+#~ msgstr ""
+#~ "Список, кортеж, ``QuerySet`` или другие интериремые объекты с методами "
+#~ "``count()`` или ``__len__()``. Для постоянного постраничного вывода "
+#~ "``QuerySet`` должен быть отсортирован, например, с помощью метода :meth:"
+#~ "`~django.db.models.query.QuerySet.order_by` или атрибутом модели :attr:"
+#~ "`~django.db.models.Options.ordering`."
+
+#~ msgid "Performance issues paginating large ``QuerySet``\\s"
+#~ msgstr ""
+#~ "Проблемы с производительностью при постраничном выводе больших "
+#~ "``QuerySet``"
+
+#~ msgid ""
+#~ "If you're using a ``QuerySet`` with a very large number of items, "
+#~ "requesting high page numbers might be slow on some databases, because the "
+#~ "resulting ``LIMIT``/``OFFSET`` query needs to count the number of "
+#~ "``OFFSET`` records which takes longer as the page number gets higher."
+#~ msgstr ""
+#~ "Если вы используете ``QuerySet`` с большим количеством объектов, запрос "
+#~ "страницы с большим номер может быть очень медленным на некоторых базах "
+#~ "данных, т.к. ``LIMIT``/``OFFSET`` запроса должен учитывать записи до "
+#~ "``OFFSET``, что занимает больше времени, когда номер страницы "
+#~ "увеличивается."
 
 # 5043fdd7e76f46238059ad3fa234a4ec
-#: ../../topics/pagination.txt:152
 #, fuzzy
-msgid "``per_page``"
-msgstr "per_page"
+#~ msgid "``per_page``"
+#~ msgstr "per_page"
 
 # 6b36cc3071194b3891077db2dac112c0
-#: ../../topics/pagination.txt:151
-msgid ""
-"The maximum number of items to include on a page, not including orphans (see "
-"the ``orphans`` optional argument below)."
-msgstr ""
-"Максимальное количество элементов на странице, без учёта остатка (см. далее "
-"необязательный аргумент``orphans``)."
+#~ msgid ""
+#~ "The maximum number of items to include on a page, not including orphans "
+#~ "(see the ``orphans`` optional argument below)."
+#~ msgstr ""
+#~ "Максимальное количество элементов на странице, без учёта остатка (см. "
+#~ "далее необязательный аргумент``orphans``)."
 
 # 13b27d54eb534f5fa0a5cdbdb0c62a4f
-#: ../../topics/pagination.txt:155
-msgid "Optional arguments"
-msgstr "Необязательные аргументы"
+#~ msgid "Optional arguments"
+#~ msgstr "Необязательные аргументы"
 
 # 7a2025423a4e4ea7859dbdf0a07fc694
-#: ../../topics/pagination.txt:165
 #, fuzzy
-msgid "``orphans``"
-msgstr "orphans"
+#~ msgid "``orphans``"
+#~ msgstr "orphans"
 
 # 87bac5dbdbfc4924b740a6a1cab23ca1
-#: ../../topics/pagination.txt:158
-msgid ""
-"Use this when you don't want to have a last page with very few items. If the "
-"last page would normally have a number of items less than or equal to "
-"``orphans``, then those items will be added to the previous page (which "
-"becomes the last page) instead of leaving the items on a page by themselves. "
-"For example, with 23 items, ``per_page=10``, and ``orphans=3``, there will "
-"be two pages; the first page with 10 items and the second (and last) page "
-"with 13 items. ``orphans`` defaults to zero, which means pages are never "
-"combined and the last page may have one item."
-msgstr ""
-"Используйте, когда нежелательно отображать последнюю страницу почти пустой. "
-"Если последняя страница будет содержать количество элементов меньше или "
-"равно ``orphans``, то эти элементы будут добавлены к предыдущей странице "
-"(которая станет последней). Например, для 23 элементов, ``per_page=10``и "
-"``orphans=3``, будет выдано две страницы; первая страница будет содержать 10 "
-"элементов, а вторая (и последняя) — 13. ``orphans`` по умолчанию равен нулю "
-"и последняя страница может содержать один элемент."
+#~ msgid ""
+#~ "Use this when you don't want to have a last page with very few items. If "
+#~ "the last page would normally have a number of items less than or equal to "
+#~ "``orphans``, then those items will be added to the previous page (which "
+#~ "becomes the last page) instead of leaving the items on a page by "
+#~ "themselves. For example, with 23 items, ``per_page=10``, and "
+#~ "``orphans=3``, there will be two pages; the first page with 10 items and "
+#~ "the second (and last) page with 13 items. ``orphans`` defaults to zero, "
+#~ "which means pages are never combined and the last page may have one item."
+#~ msgstr ""
+#~ "Используйте, когда нежелательно отображать последнюю страницу почти "
+#~ "пустой. Если последняя страница будет содержать количество элементов "
+#~ "меньше или равно ``orphans``, то эти элементы будут добавлены к "
+#~ "предыдущей странице (которая станет последней). Например, для 23 "
+#~ "элементов, ``per_page=10``и ``orphans=3``, будет выдано две страницы; "
+#~ "первая страница будет содержать 10 элементов, а вторая (и последняя) — "
+#~ "13. ``orphans`` по умолчанию равен нулю и последняя страница может "
+#~ "содержать один элемент."
 
 # fa0c7015ed134d9fa694e3cc04d4a28e
-#: ../../topics/pagination.txt:169
 #, fuzzy
-msgid "``allow_empty_first_page``"
-msgstr "allow_empty_first_page"
+#~ msgid "``allow_empty_first_page``"
+#~ msgstr "allow_empty_first_page"
 
 # f6f58341c3c8453fae095c4d931f0460
-#: ../../topics/pagination.txt:168
-msgid ""
-"Whether or not the first page is allowed to be empty.  If ``False`` and "
-"``object_list`` is  empty, then an ``EmptyPage`` error will be raised."
-msgstr ""
-"Позволять или нет первой странице быть пустой. Если указан ``False`` и "
-"``object_list`` пустой, то будет вызвано исключение ``EmptyPage``."
+#~ msgid ""
+#~ "Whether or not the first page is allowed to be empty.  If ``False`` and "
+#~ "``object_list`` is  empty, then an ``EmptyPage`` error will be raised."
+#~ msgstr ""
+#~ "Позволять или нет первой странице быть пустой. Если указан ``False`` и "
+#~ "``object_list`` пустой, то будет вызвано исключение ``EmptyPage``."
 
 # 917f90c766ee4edba6e549a2238cc0b9
 # 5d3026b83f0a47868b0ccc2689c08ca5
-#: ../../topics/pagination.txt:172 ../../topics/pagination.txt:255
-msgid "Methods"
-msgstr "Методы"
+#~ msgid "Methods"
+#~ msgstr "Методы"
 
 # ebcbe5a760eb457581ab3d510209b374
-#: ../../topics/pagination.txt:178
-msgid ""
-"Returns a :class:`Page` object with the given 1-based index, while also "
-"handling out of range and invalid page numbers."
-msgstr ""
-"Возвращает объект :class:`Page` по переданному индексу (начинается с "
-"единицы). Проверяет правильный ли номер страницы."
+#~ msgid ""
+#~ "Returns a :class:`Page` object with the given 1-based index, while also "
+#~ "handling out of range and invalid page numbers."
+#~ msgstr ""
+#~ "Возвращает объект :class:`Page` по переданному индексу (начинается с "
+#~ "единицы). Проверяет правильный ли номер страницы."
 
-#: ../../topics/pagination.txt:181
-msgid ""
-"If the page isn't a number, it returns the first page. If the page number is "
-"negative or greater than the number of pages, it returns the last page."
-msgstr ""
-"Если номер страницы не число, возвращает первую страницу. Если номер "
-"страницы отрицательный или больше, чем количество страниц, возвращает "
-"последнюю страницу."
+#~ msgid ""
+#~ "If the page isn't a number, it returns the first page. If the page number "
+#~ "is negative or greater than the number of pages, it returns the last page."
+#~ msgstr ""
+#~ "Если номер страницы не число, возвращает первую страницу. Если номер "
+#~ "страницы отрицательный или больше, чем количество страниц, возвращает "
+#~ "последнюю страницу."
 
-#: ../../topics/pagination.txt:184
-msgid ""
-"It raises an exception (:exc:`EmptyPage`) only if you specify "
-"``Paginator(..., allow_empty_first_page=False)`` and the ``object_list`` is "
-"empty."
-msgstr ""
-"Вызывает исключение (:exc:`EmptyPage`) только если вы указали "
-"``Paginator(..., allow_empty_first_page=False)`` и ``object_list`` пустой."
+#~ msgid ""
+#~ "It raises an exception (:exc:`EmptyPage`) only if you specify "
+#~ "``Paginator(..., allow_empty_first_page=False)`` and the ``object_list`` "
+#~ "is empty."
+#~ msgstr ""
+#~ "Вызывает исключение (:exc:`EmptyPage`) только если вы указали "
+#~ "``Paginator(..., allow_empty_first_page=False)`` и ``object_list`` пустой."
 
 # ebcbe5a760eb457581ab3d510209b374
-#: ../../topics/pagination.txt:190
-msgid ""
-"Returns a :class:`Page` object with the given 1-based index. Raises :exc:"
-"`InvalidPage` if the given page number doesn't exist."
-msgstr ""
-"Возвращает объект :class:`Page` по переданному индексу (начинается с "
-"единицы). Вызывает исключение :exc:`InvalidPage`, если указанная страница не "
-"существует."
+#~ msgid ""
+#~ "Returns a :class:`Page` object with the given 1-based index. Raises :exc:"
+#~ "`InvalidPage` if the given page number doesn't exist."
+#~ msgstr ""
+#~ "Возвращает объект :class:`Page` по переданному индексу (начинается с "
+#~ "единицы). Вызывает исключение :exc:`InvalidPage`, если указанная страница "
+#~ "не существует."
 
 # 88008b90f6f9404db9686d5d6d2f5058
 # 551e01aa50184569be8e949acb7a5608
-#: ../../topics/pagination.txt:194 ../../topics/pagination.txt:294
-msgid "Attributes"
-msgstr "Атрибуты"
+#~ msgid "Attributes"
+#~ msgstr "Атрибуты"
 
 # a65800275b1845229fb102e6b0980e79
-#: ../../topics/pagination.txt:198
-msgid "The total number of objects, across all pages."
-msgstr "Общее количество объектов, распределенных по всем страницам."
+#~ msgid "The total number of objects, across all pages."
+#~ msgstr "Общее количество объектов, распределенных по всем страницам."
 
 # 63b7aaac39a141ae835b57cb7b8792a2
-#: ../../topics/pagination.txt:202
-msgid ""
-"When determining the number of objects contained in ``object_list``, "
-"``Paginator`` will first try calling ``object_list.count()``. If "
-"``object_list`` has no ``count()`` method, then ``Paginator`` will fallback "
-"to using ``len(object_list)``. This allows objects, such as Django's "
-"``QuerySet``, to use a more efficient ``count()`` method when available."
-msgstr ""
-"При определении количества объектов, содержащихся в ``object_list``, "
-"``Paginator`` сначала пробует вызвать ``object_list.count()``. Если у "
-"``object_list`` нет метода ``count()``, то ``Paginator`` попробует вызвать "
-"``len(object_list)``. Такой подход позволяет объектам, подобным ``QuerySet`` "
-"Django, более эффективно использовать метод ``count()`` при его наличии."
+#~ msgid ""
+#~ "When determining the number of objects contained in ``object_list``, "
+#~ "``Paginator`` will first try calling ``object_list.count()``. If "
+#~ "``object_list`` has no ``count()`` method, then ``Paginator`` will "
+#~ "fallback to using ``len(object_list)``. This allows objects, such as "
+#~ "Django's ``QuerySet``, to use a more efficient ``count()`` method when "
+#~ "available."
+#~ msgstr ""
+#~ "При определении количества объектов, содержащихся в ``object_list``, "
+#~ "``Paginator`` сначала пробует вызвать ``object_list.count()``. Если у "
+#~ "``object_list`` нет метода ``count()``, то ``Paginator`` попробует "
+#~ "вызвать ``len(object_list)``. Такой подход позволяет объектам, подобным "
+#~ "``QuerySet`` Django, более эффективно использовать метод ``count()`` при "
+#~ "его наличии."
 
 # 64b9a131c2904b00bbcf411f81e431e1
-#: ../../topics/pagination.txt:211
-msgid "The total number of pages."
-msgstr "Общее количество страниц."
+#~ msgid "The total number of pages."
+#~ msgstr "Общее количество страниц."
 
 # efbb7e5972dd458f8769ff770b357234
-#: ../../topics/pagination.txt:215
-msgid ""
-"A 1-based range iterator of page numbers, e.g. yielding ``[1, 2, 3, 4]``."
-msgstr ""
-"Диапазон номеров страниц, начинающийся с единицы, т.е., ``[1, 2, 3, 4]``."
+#~ msgid ""
+#~ "A 1-based range iterator of page numbers, e.g. yielding ``[1, 2, 3, 4]``."
+#~ msgstr ""
+#~ "Диапазон номеров страниц, начинающийся с единицы, т.е., ``[1, 2, 3, 4]``."
 
 # 4d03313a1eb6426d80a36775995627e9
-#: ../../topics/pagination.txt:218
-msgid "``InvalidPage`` exceptions"
-msgstr "``InvalidPage`` исключения"
+#~ msgid "``InvalidPage`` exceptions"
+#~ msgstr "``InvalidPage`` исключения"
 
 # 662fbf854d2046cd865c55d914274e99
-#: ../../topics/pagination.txt:222
-msgid ""
-"A base class for exceptions raised when a paginator is passed an invalid "
-"page number."
-msgstr ""
-"Базовый класс для исключений, которые вызываются когда происходит запрос "
-"страницы по несуществующему номеру."
+#~ msgid ""
+#~ "A base class for exceptions raised when a paginator is passed an invalid "
+#~ "page number."
+#~ msgstr ""
+#~ "Базовый класс для исключений, которые вызываются когда происходит запрос "
+#~ "страницы по несуществующему номеру."
 
 # 1c8936c63ac34355a51b06238c0c53c0
-#: ../../topics/pagination.txt:225
-msgid ""
-"The :meth:`Paginator.page` method raises an exception if the requested page "
-"is invalid (i.e., not an integer) or contains no objects. Generally, it's "
-"enough to catch the ``InvalidPage`` exception, but if you'd like more "
-"granularity, you can catch either of the following exceptions:"
-msgstr ""
-"Метод :meth:`Paginator.page` вызывает исключение, если номер запрошенной "
-"страницы является неправильным (например, не представлен целым числом) или "
-"не содержит объектов. В общем случае, достаточно обрабатывать исключение "
-"``InvalidPage``, но если вам требуется более тонкий контроль, вы можете "
-"отрабатывать следующие исключения:"
+#~ msgid ""
+#~ "The :meth:`Paginator.page` method raises an exception if the requested "
+#~ "page is invalid (i.e., not an integer) or contains no objects. Generally, "
+#~ "it's enough to catch the ``InvalidPage`` exception, but if you'd like "
+#~ "more granularity, you can catch either of the following exceptions:"
+#~ msgstr ""
+#~ "Метод :meth:`Paginator.page` вызывает исключение, если номер запрошенной "
+#~ "страницы является неправильным (например, не представлен целым числом) "
+#~ "или не содержит объектов. В общем случае, достаточно обрабатывать "
+#~ "исключение ``InvalidPage``, но если вам требуется более тонкий контроль, "
+#~ "вы можете отрабатывать следующие исключения:"
 
 # 1bf9a94bfd854ad29789997747d20053
-#: ../../topics/pagination.txt:232
-msgid "Raised when ``page()`` is given a value that isn't an integer."
-msgstr ""
-"Вызывается, если ``page()`` получает значение, которое не является целым "
-"числом."
+#~ msgid "Raised when ``page()`` is given a value that isn't an integer."
+#~ msgstr ""
+#~ "Вызывается, если ``page()`` получает значение, которое не является целым "
+#~ "числом."
 
 # 9c1b6098949641b9a7634fe5d4f79a67
-#: ../../topics/pagination.txt:236
-msgid ""
-"Raised when ``page()`` is given a valid value but no objects exist on that "
-"page."
-msgstr ""
-"Вызывается, если ``page()`` получает правильное значение, но для указанной "
-"страницы нет объектов."
+#~ msgid ""
+#~ "Raised when ``page()`` is given a valid value but no objects exist on "
+#~ "that page."
+#~ msgstr ""
+#~ "Вызывается, если ``page()`` получает правильное значение, но для "
+#~ "указанной страницы нет объектов."
 
 # 2fdcdb39ab94465890bf71df20098095
-#: ../../topics/pagination.txt:239
-msgid ""
-"Both of the exceptions are subclasses of :exc:`InvalidPage`, so you can "
-"handle them both with a simple ``except InvalidPage``."
-msgstr ""
-"Эти исключения являются потомками класса :exc:`InvalidPage`, таким образом, "
-"вы можете обрабатывать их с помощью простого ``except InvalidPage``."
+#~ msgid ""
+#~ "Both of the exceptions are subclasses of :exc:`InvalidPage`, so you can "
+#~ "handle them both with a simple ``except InvalidPage``."
+#~ msgstr ""
+#~ "Эти исключения являются потомками класса :exc:`InvalidPage`, таким "
+#~ "образом, вы можете обрабатывать их с помощью простого ``except "
+#~ "InvalidPage``."
 
 # 4d9330f22bbf4d85a753ed9929ee938f
-#: ../../topics/pagination.txt:244
-msgid "``Page`` objects"
-msgstr "Объекты ``Page``"
+#~ msgid "``Page`` objects"
+#~ msgstr "Объекты ``Page``"
 
 # 09e59a3eb05f4d5fbba8982511e6942f
-#: ../../topics/pagination.txt:246
-msgid ""
-"You usually won't construct ``Page`` objects by hand -- you'll get them "
-"using :meth:`Paginator.page`."
-msgstr ""
-"Обычно создавать объекты ``Page`` вручную не требуется, так как вы получаете "
-"их с помощью метода :meth:`Paginator.page`."
+#~ msgid ""
+#~ "You usually won't construct ``Page`` objects by hand -- you'll get them "
+#~ "using :meth:`Paginator.page`."
+#~ msgstr ""
+#~ "Обычно создавать объекты ``Page`` вручную не требуется, так как вы "
+#~ "получаете их с помощью метода :meth:`Paginator.page`."
 
 # b581a3f84a1d4d93bbaef93b4770909e
-#: ../../topics/pagination.txt:251
-msgid ""
-"A page acts like a sequence of :attr:`Page.object_list` when using ``len()`` "
-"or iterating it directly."
-msgstr ""
-"Страница работает как срез :attr:`Page.object_list` при использовании "
-"``len()`` или итерации по ней."
+#~ msgid ""
+#~ "A page acts like a sequence of :attr:`Page.object_list` when using "
+#~ "``len()`` or iterating it directly."
+#~ msgstr ""
+#~ "Страница работает как срез :attr:`Page.object_list` при использовании "
+#~ "``len()`` или итерации по ней."
 
 # 0c9bc76ddef545bcbc1f79aa32ac4962
-#: ../../topics/pagination.txt:259
-msgid "Returns ``True`` if there's a next page."
-msgstr "Возвращает ``True``, если следующая страница существует."
+#~ msgid "Returns ``True`` if there's a next page."
+#~ msgstr "Возвращает ``True``, если следующая страница существует."
 
 # 00ca2203da894340926a6e2ba616d9e8
-#: ../../topics/pagination.txt:263
-msgid "Returns ``True`` if there's a previous page."
-msgstr "Возвращает ``True``, если предыдущая страница существует."
+#~ msgid "Returns ``True`` if there's a previous page."
+#~ msgstr "Возвращает ``True``, если предыдущая страница существует."
 
 # 2bbf5efe96b94cc29eeb4b763de186f7
-#: ../../topics/pagination.txt:267
-msgid "Returns ``True`` if there's a next *or* previous page."
-msgstr ""
-"Возвращает ``True``, если существует  следующая *или* предыдущая страница."
+#~ msgid "Returns ``True`` if there's a next *or* previous page."
+#~ msgstr ""
+#~ "Возвращает ``True``, если существует  следующая *или* предыдущая страница."
 
 # d0797ab5816a42bd98d3391908368486
-#: ../../topics/pagination.txt:271
-msgid ""
-"Returns the next page number. Raises :exc:`InvalidPage` if next page doesn't "
-"exist."
-msgstr ""
-"Возвращает номер следующей страницы. Вызывает :exc:`InvalidPage` если "
-"следующая страница не существует."
+#~ msgid ""
+#~ "Returns the next page number. Raises :exc:`InvalidPage` if next page "
+#~ "doesn't exist."
+#~ msgstr ""
+#~ "Возвращает номер следующей страницы. Вызывает :exc:`InvalidPage` если "
+#~ "следующая страница не существует."
 
 # e5807dd09030481ba6c77e5cd28eb465
-#: ../../topics/pagination.txt:276
-msgid ""
-"Returns the previous page number. Raises :exc:`InvalidPage` if previous page "
-"doesn't exist."
-msgstr ""
-"Возвращает номер предыдущей страницы. Вызывает :exc:`InvalidPage` если "
-"предыдущая страница не существует."
+#~ msgid ""
+#~ "Returns the previous page number. Raises :exc:`InvalidPage` if previous "
+#~ "page doesn't exist."
+#~ msgstr ""
+#~ "Возвращает номер предыдущей страницы. Вызывает :exc:`InvalidPage` если "
+#~ "предыдущая страница не существует."
 
 # f6b67b0da2264830a27b02787e814e0a
-#: ../../topics/pagination.txt:281
-msgid ""
-"Returns the 1-based index of the first object on the page, relative to all "
-"of the objects in the paginator's list. For example, when paginating a list "
-"of 5 objects with 2 objects per page, the second page's :meth:`~Page."
-"start_index` would return ``3``."
-msgstr ""
-"Возвращает индекс (начинается с единицы) первого объекта на странице "
-"относительно списка всех объектов. Например, для списка из пяти объектов при "
-"отображении двух объектов на странице, то для второй страницы метод :meth:"
-"`~Page.start_index` вернёт ``3``."
+#~ msgid ""
+#~ "Returns the 1-based index of the first object on the page, relative to "
+#~ "all of the objects in the paginator's list. For example, when paginating "
+#~ "a list of 5 objects with 2 objects per page, the second page's :meth:"
+#~ "`~Page.start_index` would return ``3``."
+#~ msgstr ""
+#~ "Возвращает индекс (начинается с единицы) первого объекта на странице "
+#~ "относительно списка всех объектов. Например, для списка из пяти объектов "
+#~ "при отображении двух объектов на странице, то для второй страницы метод :"
+#~ "meth:`~Page.start_index` вернёт ``3``."
 
 # b8d414d113f046e2b3d9705f35c72981
-#: ../../topics/pagination.txt:288
-msgid ""
-"Returns the 1-based index of the last object on the page, relative to all of "
-"the objects in the paginator's list. For example, when paginating a list of "
-"5 objects with 2 objects per page, the second page's :meth:`~Page.end_index` "
-"would return ``4``."
-msgstr ""
-"Возвращает индекс (начинается с единицы) последнего объекта на странице "
-"относительно списка всех объектов. Например, для списка из пяти объектов при "
-"отображении двух объектов на странице, то для второй страницы метод :meth:"
-"`~Page.end_index` вернёт ``4``."
+#~ msgid ""
+#~ "Returns the 1-based index of the last object on the page, relative to all "
+#~ "of the objects in the paginator's list. For example, when paginating a "
+#~ "list of 5 objects with 2 objects per page, the second page's :meth:`~Page."
+#~ "end_index` would return ``4``."
+#~ msgstr ""
+#~ "Возвращает индекс (начинается с единицы) последнего объекта на странице "
+#~ "относительно списка всех объектов. Например, для списка из пяти объектов "
+#~ "при отображении двух объектов на странице, то для второй страницы метод :"
+#~ "meth:`~Page.end_index` вернёт ``4``."
 
 # 09ed2d806d6a45b9a790ba7d40e65466
-#: ../../topics/pagination.txt:298
-msgid "The list of objects on this page."
-msgstr "Список объектов текущей страницы."
+#~ msgid "The list of objects on this page."
+#~ msgstr "Список объектов текущей страницы."
 
 # a200e2d9a7b1426fa87524cd27a0f835
-#: ../../topics/pagination.txt:302
-msgid "The 1-based page number for this page."
-msgstr "Номер (начинается с единицы) текущей страницы."
+#~ msgid "The 1-based page number for this page."
+#~ msgstr "Номер (начинается с единицы) текущей страницы."
 
 # 4ebec071e6fb49ad92d602f050208aa6
-#: ../../topics/pagination.txt:306
-msgid "The associated :class:`Paginator` object."
-msgstr "Соответствующий объект :class:`Paginator`."
+#~ msgid "The associated :class:`Paginator` object."
+#~ msgstr "Соответствующий объект :class:`Paginator`."
 
 #~ msgid ""
 #~ "In older versions, ``page_range`` returned a list instead of an iterator."

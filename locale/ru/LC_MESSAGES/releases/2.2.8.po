@@ -1,0 +1,116 @@
+# Russian translations for Django package
+# Английские переводы для пакета Django.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the Django package.
+# Automatically generated, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django 3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-13 22:13+0300\n"
+"PO-Revision-Date: 2020-02-13 22:13+0300\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../../releases/2.2.8.txt:3
+msgid "Django 2.2.8 release notes"
+msgstr ""
+
+#: ../../releases/2.2.8.txt:5
+msgid "*December 2, 2019*"
+msgstr ""
+
+#: ../../releases/2.2.8.txt:7
+msgid ""
+"Django 2.2.8 fixes a security issue, several bugs in 2.2.7, and adds "
+"compatibility with Python 3.8."
+msgstr ""
+
+#: ../../releases/2.2.8.txt:11
+msgid "CVE-2019-19118: Privilege escalation in the Django admin."
+msgstr ""
+
+#: ../../releases/2.2.8.txt:13
+msgid ""
+"Since Django 2.1, a Django model admin displaying a parent model with "
+"related model inlines, where the user has view-only permissions to a parent "
+"model but edit permissions to the inline model, would display a read-only "
+"view of the parent model but editable forms for the inline."
+msgstr ""
+
+#: ../../releases/2.2.8.txt:18
+msgid ""
+"Submitting these forms would not allow direct edits to the parent model, but "
+"would trigger the parent model's ``save()`` method, and cause pre and post-"
+"save signal handlers to be invoked. This is a privilege escalation as a user "
+"who lacks permission to edit a model should not be able to trigger its save-"
+"related signals."
+msgstr ""
+
+#: ../../releases/2.2.8.txt:24
+msgid ""
+"To resolve this issue, the permission handling code of the Django admin "
+"interface has been changed. Now, if a user has only the \"view\" permission "
+"for a parent model, the entire displayed form will not be editable, even if "
+"the user has permission to edit models included in inlines."
+msgstr ""
+
+#: ../../releases/2.2.8.txt:29
+msgid ""
+"This is a backwards-incompatible change, and the Django security team is "
+"aware that some users of Django were depending on the ability to allow "
+"editing of inlines in the admin form of an otherwise view-only parent model."
+msgstr ""
+
+#: ../../releases/2.2.8.txt:33
+msgid ""
+"Given the complexity of the Django admin, and in-particular the permissions "
+"related checks, it is the view of the Django security team that this change "
+"was necessary: that it is not currently feasible to maintain the existing "
+"behavior whilst escaping the potential privilege escalation in a way that "
+"would avoid a recurrence of similar issues in the future, and that would be "
+"compatible with Django's *safe by default* philosophy."
+msgstr ""
+
+#: ../../releases/2.2.8.txt:40
+msgid ""
+"For the time being, developers whose applications are affected by this "
+"change should replace the use of inlines in read-only parents with custom "
+"forms and views that explicitly implement the desired functionality. In the "
+"longer term, adding a documented, supported, and properly-tested mechanism "
+"for partially-editable multi-model forms to the admin interface may occur in "
+"Django itself."
+msgstr ""
+
+#: ../../releases/2.2.8.txt:48
+msgid "Bugfixes"
+msgstr ""
+
+#: ../../releases/2.2.8.txt:50
+msgid ""
+"Fixed a data loss possibility in the admin changelist view when a custom :"
+"ref:`formset's prefix <formset-prefix>` contains regular expression special "
+"characters, e.g. `'$'` (:ticket:`31031`)."
+msgstr ""
+
+#: ../../releases/2.2.8.txt:54
+msgid ""
+"Fixed a regression in Django 2.2.1 that caused a crash when migrating "
+"permissions for proxy models with a multiple database setup if the "
+"``default`` entry was empty (:ticket:`31021`)."
+msgstr ""
+
+#: ../../releases/2.2.8.txt:58
+msgid ""
+"Fixed a data loss possibility in the :meth:`~django.db.models.query.QuerySet."
+"select_for_update()`. When using ``'self'`` in the ``of`` argument with :ref:"
+"`multi-table inheritance <multi-table-inheritance>`, a parent model was "
+"locked instead of the queryset's model (:ticket:`30953`)."
+msgstr ""
