@@ -10,17 +10,25 @@ from docutils.parsers.rst import Directive
 from docutils.statemachine import ViewList
 from sphinx import addnodes
 from sphinx.builders.html import StandaloneHTMLBuilder
-from sphinx.directives import CodeBlock
+from sphinx.directives.code import CodeBlock
 from sphinx.domains.std import Cmdoption
 from sphinx.errors import ExtensionError
 from sphinx.util import logging
-from sphinx.util.console import bold
+from sphinx.util.console import bold  # type: ignore
 from sphinx.writers.html import HTMLTranslator
 
 logger = logging.getLogger(__name__)
 # RE for option descriptions without a '--' prefix
 simple_option_desc_re = re.compile(
     r'([-_a-zA-Z0-9]+)(\s*.*?)(?=,\s+(?:/|-|--)|$)')
+
+CONSOLE_BLOCK = '''
+<div class="console-block" id="console-block-%(id)s">
+<input class="c-tab-unix" id="c-tab-%(id)s-unix" type="radio" name="console-%(id)s" checked>
+<label for="c-tab-%(id)s-unix" title="Linux/macOS"><span class="fab fa-linux">&#xf17c;</span>/<span class="fab fa-macos">&#xf179;</span></label>
+<input class="c-tab-win" id="c-tab-%(id)s-win" type="radio" name="console-%(id)s">
+<label for="c-tab-%(id)s-win" title="Windows"><span class="fab fa-windows">&#xf17a</span></label>
+<section class="c-content-unix" id="c-content-%(id)s-unix">\n'''
 
 
 def setup(app):
@@ -44,6 +52,14 @@ def setup(app):
         rolename="lookup",
         indextemplate="pair: %s; field lookup type",
     )
+
+    def parse_django_admin_node(env, sig, signode):
+        command = sig.split(' ')[0]
+        env.ref_context['std:program'] = command
+        title = "django-admin %s" % sig
+        signode += addnodes.desc_name(title, title)
+        return command
+
     app.add_object_type(
         directivename="django-admin",
         rolename="djadmin",
@@ -57,6 +73,47 @@ def setup(app):
     app.add_builder(DjangoStandaloneHTMLBuilder)
     app.set_translator('djangohtml', DjangoHTMLTranslator)
     app.set_translator('json', DjangoHTMLTranslator)
+
+    def visit_console_html(self, node):
+        """Generate HTML for the console directive."""
+        if self.builder.name in ('djangohtml', 'json') and node['win_console_text']:
+            # Put a mark on the document object signaling the fact the directive
+            # has been used on it.
+            self.document._console_directive_used_flag = True
+            uid = node['uid']
+            self.body.append(CONSOLE_BLOCK % {'id': uid})
+            try:
+                self.visit_literal_block(node)
+            except nodes.SkipNode:
+                pass
+            self.body.append('</section>\n')
+
+            self.body.append('<section class="c-content-win" id="c-content-%(id)s-win">\n' % {'id': uid})
+            win_text = node['win_console_text']
+            highlight_args = {'force': True}
+            linenos = node.get('linenos', False)
+
+            def warner(msg):
+                self.builder.warn(msg, (self.builder.current_docname, node.line))
+
+            highlighted = self.highlighter.highlight_block(
+                win_text, 'doscon', warn=warner, linenos=linenos, **highlight_args
+                )
+            self.body.append(highlighted)
+            self.body.append('</section>\n')
+            self.body.append('</div>\n')
+            raise nodes.SkipNode
+        else:
+            self.visit_literal_block(node)
+
+    def visit_console_dummy(self, node):
+        """Defer to the corresponding parent's handler."""
+        self.visit_literal_block(node)
+
+    def depart_console_dummy(self, node):
+        """Defer to the corresponding parent's handler."""
+        self.depart_literal_block(node)
+
     app.add_node(
         ConsoleNode,
         html=(visit_console_html, None),
@@ -66,6 +123,14 @@ def setup(app):
         texinfo=(visit_console_dummy, depart_console_dummy),
     )
     app.add_directive('console', ConsoleDirective)
+
+    def html_page_context_hook(app, pagename, templatename, context, doctree):
+        # Put a bool on the context used to render the template. It's used to
+        # control inclusion of console-tabs.css and activation of the JavaScript.
+        # This way it's include only from HTML files rendered from reST files where
+        # the ConsoleDirective is used.
+        context['include_console_assets'] = getattr(doctree, '_console_directive_used_flag', False)
+
     app.connect('html-page-context', html_page_context_hook)
     return {'parallel_read_safe': True}
 
@@ -114,7 +179,6 @@ class DjangoHTMLTranslator(HTMLTranslator):
     def visit_table(self, node):
         self.context.append(self.compact_p)
         self.compact_p = True
-        self._table_row_index = 0  # Needed by Sphinx
         self.body.append(self.starttag(node, 'table', CLASS='docutils'))
 
     def depart_table(self, node):
@@ -169,14 +233,6 @@ class DjangoHTMLTranslator(HTMLTranslator):
         node['ids'] = old_ids
 
 
-def parse_django_admin_node(env, sig, signode):
-    command = sig.split(' ')[0]
-    env.ref_context['std:program'] = command
-    title = "django-admin %s" % sig
-    signode += addnodes.desc_name(title, title)
-    return command
-
-
 class DjangoStandaloneHTMLBuilder(StandaloneHTMLBuilder):
     """
     Subclass to add some extra things we need.
@@ -221,55 +277,6 @@ class ConsoleNode(nodes.literal_block):
         return getattr(self.wrapped, attr)
 
 
-def visit_console_dummy(self, node):
-    """Defer to the corresponding parent's handler."""
-    self.visit_literal_block(node)
-
-
-def depart_console_dummy(self, node):
-    """Defer to the corresponding parent's handler."""
-    self.depart_literal_block(node)
-
-
-def visit_console_html(self, node):
-    """Generate HTML for the console directive."""
-    if self.builder.name in ('djangohtml', 'json') and node['win_console_text']:
-        # Put a mark on the document object signaling the fact the directive
-        # has been used on it.
-        self.document._console_directive_used_flag = True
-        uid = node['uid']
-        self.body.append('''\
-<div class="console-block" id="console-block-%(id)s">
-<input class="c-tab-unix" id="c-tab-%(id)s-unix" type="radio" name="console-%(id)s" checked>
-<label for="c-tab-%(id)s-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
-<input class="c-tab-win" id="c-tab-%(id)s-win" type="radio" name="console-%(id)s">
-<label for="c-tab-%(id)s-win" title="Windows">&#xf17a</label>
-<section class="c-content-unix" id="c-content-%(id)s-unix">\n''' % {'id': uid})
-        try:
-            self.visit_literal_block(node)
-        except nodes.SkipNode:
-            pass
-        self.body.append('</section>\n')
-
-        self.body.append('<section class="c-content-win" id="c-content-%(id)s-win">\n' % {'id': uid})
-        win_text = node['win_console_text']
-        highlight_args = {'force': True}
-        linenos = node.get('linenos', False)
-
-        def warner(msg):
-            self.builder.warn(msg, (self.builder.current_docname, node.line))
-
-        highlighted = self.highlighter.highlight_block(
-            win_text, 'doscon', warn=warner, linenos=linenos, **highlight_args
-        )
-        self.body.append(highlighted)
-        self.body.append('</section>\n')
-        self.body.append('</div>\n')
-        raise nodes.SkipNode
-    else:
-        self.visit_literal_block(node)
-
-
 class ConsoleDirective(CodeBlock):
     """
     A reStructuredText directive which renders a two-tab code block in which
@@ -283,6 +290,14 @@ class ConsoleDirective(CodeBlock):
     WIN_PROMPT = r'...\> '
 
     def run(self):
+        env = self.state.document.settings.env
+        self.arguments = ['console']
+        lit_blk_obj = super().run()[0]
+
+        # Only do work when the djangohtml HTML Sphinx builder is being used,
+        # invoke the default behavior for the rest.
+        if env.app.builder.name not in ('djangohtml', 'json'):
+            return [lit_blk_obj]
 
         def args_to_win(cmdline):
             changed = False
@@ -341,15 +356,6 @@ class ConsoleDirective(CodeBlock):
                 return ViewList(lines)
             return None
 
-        env = self.state.document.settings.env
-        self.arguments = ['console']
-        lit_blk_obj = super().run()[0]
-
-        # Only do work when the djangohtml HTML Sphinx builder is being used,
-        # invoke the default behavior for the rest.
-        if env.app.builder.name not in ('djangohtml', 'json'):
-            return [lit_blk_obj]
-
         lit_blk_obj['uid'] = '%s' % env.new_serialno('console')
         # Only add the tabbed UI if there is actually a Windows-specific
         # version of the CLI example.
@@ -363,11 +369,3 @@ class ConsoleDirective(CodeBlock):
         # Replace the literal_node object returned by Sphinx's CodeBlock with
         # the ConsoleNode wrapper.
         return [ConsoleNode(lit_blk_obj)]
-
-
-def html_page_context_hook(app, pagename, templatename, context, doctree):
-    # Put a bool on the context used to render the template. It's used to
-    # control inclusion of console-tabs.css and activation of the JavaScript.
-    # This way it's include only from HTML files rendered from reST files where
-    # the ConsoleDirective is used.
-    context['include_console_assets'] = getattr(doctree, '_console_directive_used_flag', False)

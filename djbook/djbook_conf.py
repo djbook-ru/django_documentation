@@ -3,18 +3,19 @@
 # from djbook_conf import *
 
 import sys
-import os
-from git import Repo
-from spelling_filters import IgnoreEnglishFilter
 from datetime import datetime
 
-repo = Repo('.')
-commit = repo.commit()
+# from git import Repo
+
+# from spelling_filters import IgnoreEnglishFilter
+
+# repo = Repo('.')
+# commit = repo.commit()
 
 html_context = {
-    'git_commit': str(commit),
-    'git_commit_date': datetime.fromtimestamp(commit.committed_date),
-    'git_branch': str(repo.active_branch),
+    'git_commit': 'commit here',  #str(commit),
+    'git_commit_date': datetime.now(),  #datetime.fromtimestamp(commit.committed_date),
+    'git_branch': 'branch here',  #str(repo.active_branch),
     'prev_version': '1.10'
 }
 
@@ -27,9 +28,9 @@ gettext_compact = False
 exclude_patterns = ['_build', 'djbook', 'env']
 
 spelling_lang = 'ru_RU'
-spelling_filters = [IgnoreEnglishFilter]
+# spelling_filters = [IgnoreEnglishFilter]
 spelling_show_suggestions = False
 spelling_word_list_filename = 'djbook/spelling_ignore.txt'
-
+#
 if 'spelling' in sys.argv:
     extensions = ["djangodocs", "sphinx.ext.intersphinx", "spelling"]

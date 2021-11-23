@@ -27,20 +27,19 @@ sys.path.insert(1, dirname(dirname(abspath(__file__))))
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.append(abspath(join(dirname(__file__), "_ext")))
-
+sys.path.insert(0, abspath(join(dirname(__file__), "_ext")))
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
-needs_sphinx = '1.6.0'
+needs_sphinx = '4.3.0'
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
-    "djangodocs",
+    'djangodocs',
     'sphinx.ext.extlinks',
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.viewcode",
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.viewcode',
 ]
 
 # Spelling check needs an additional module that is not installed by default.

@@ -1,11 +1,10 @@
-# coding: utf-8
 import re
+
 from enchant.tokenize import Filter
 
 
 class IgnoreEnglishFilter(Filter):
-    """Given a set of words, ignore them all.
-    """
+    """Given a set of words, ignore them all."""
 
     def __init__(self, *args, **kwargs):
         super(IgnoreEnglishFilter, self).__init__(*args, **kwargs)
